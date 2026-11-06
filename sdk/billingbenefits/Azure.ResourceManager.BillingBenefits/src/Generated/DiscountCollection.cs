@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _discountsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, discountName, DiscountData.ToRequestContent(data), context);
+                using HttpMessage message = _discountsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, discountName, DiscountData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingBenefitsArmOperation<DiscountResource> operation = new BillingBenefitsArmOperation<DiscountResource>(
                     new DiscountResourceOperationSource(Client),
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _discountsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, discountName, DiscountData.ToRequestContent(data), context);
+                using HttpMessage message = _discountsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, discountName, DiscountData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingBenefitsArmOperation<DiscountResource> operation = new BillingBenefitsArmOperation<DiscountResource>(
                     new DiscountResourceOperationSource(Client),
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _discountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, discountName, context);
+                using HttpMessage message = _discountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, discountName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DiscountData> response = Response.FromValue(DiscountData.FromResponse(result), result);
                 if (response.Value == null)
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _discountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, discountName, context);
+                using HttpMessage message = _discountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, discountName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DiscountData> response = Response.FromValue(DiscountData.FromResponse(result), result);
                 if (response.Value == null)
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _discountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, discountName, context);
+                using HttpMessage message = _discountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, discountName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DiscountData> response = default;
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _discountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, discountName, context);
+                using HttpMessage message = _discountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, discountName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DiscountData> response = default;
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _discountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, discountName, context);
+                using HttpMessage message = _discountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, discountName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DiscountData> response = default;
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _discountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, discountName, context);
+                using HttpMessage message = _discountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, discountName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DiscountData> response = default;

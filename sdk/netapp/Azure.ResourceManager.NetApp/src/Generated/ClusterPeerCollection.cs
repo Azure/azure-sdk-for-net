@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clusterPeersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peerId, context);
+                using HttpMessage message = _clusterPeersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peerId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ClusterPeerData> response = Response.FromValue(ClusterPeerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clusterPeersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peerId, context);
+                using HttpMessage message = _clusterPeersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peerId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ClusterPeerData> response = Response.FromValue(ClusterPeerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clusterPeersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peerId, context);
+                using HttpMessage message = _clusterPeersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peerId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ClusterPeerData> response = default;
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clusterPeersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peerId, context);
+                using HttpMessage message = _clusterPeersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peerId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ClusterPeerData> response = default;
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clusterPeersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peerId, context);
+                using HttpMessage message = _clusterPeersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peerId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ClusterPeerData> response = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clusterPeersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peerId, context);
+                using HttpMessage message = _clusterPeersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peerId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ClusterPeerData> response = default;

@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appConfigurationPrivateEndpointConnectionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _appConfigurationPrivateEndpointConnectionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppConfigurationPrivateEndpointConnectionData> response = Response.FromValue(AppConfigurationPrivateEndpointConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appConfigurationPrivateEndpointConnectionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _appConfigurationPrivateEndpointConnectionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppConfigurationPrivateEndpointConnectionData> response = Response.FromValue(AppConfigurationPrivateEndpointConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appConfigurationPrivateEndpointConnectionRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _appConfigurationPrivateEndpointConnectionRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppConfigurationArmOperation operation = new AppConfigurationArmOperation(_appConfigurationPrivateEndpointConnectionClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appConfigurationPrivateEndpointConnectionRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _appConfigurationPrivateEndpointConnectionRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppConfigurationArmOperation operation = new AppConfigurationArmOperation(_appConfigurationPrivateEndpointConnectionClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appConfigurationPrivateEndpointConnectionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AppConfigurationPrivateEndpointConnectionData.ToRequestContent(data), context);
+                using HttpMessage message = _appConfigurationPrivateEndpointConnectionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AppConfigurationPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppConfigurationArmOperation<AppConfigurationPrivateEndpointConnectionResource> operation = new AppConfigurationArmOperation<AppConfigurationPrivateEndpointConnectionResource>(
                     new AppConfigurationPrivateEndpointConnectionResourceOperationSource(Client),
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appConfigurationPrivateEndpointConnectionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AppConfigurationPrivateEndpointConnectionData.ToRequestContent(data), context);
+                using HttpMessage message = _appConfigurationPrivateEndpointConnectionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AppConfigurationPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppConfigurationArmOperation<AppConfigurationPrivateEndpointConnectionResource> operation = new AppConfigurationArmOperation<AppConfigurationPrivateEndpointConnectionResource>(
                     new AppConfigurationPrivateEndpointConnectionResourceOperationSource(Client),

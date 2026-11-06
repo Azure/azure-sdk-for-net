@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteExtensionInfoOperationGroupRestClient.CreateInstallSiteExtensionSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteExtensionId, context);
+                using HttpMessage message = _siteExtensionInfoOperationGroupRestClient.CreateInstallSiteExtensionSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteExtensionId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppServiceArmOperation<WebSiteSlotExtensionResource> operation = new AppServiceArmOperation<WebSiteSlotExtensionResource>(
                     new WebSiteSlotExtensionResourceOperationSource(Client),
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteExtensionInfoOperationGroupRestClient.CreateInstallSiteExtensionSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteExtensionId, context);
+                using HttpMessage message = _siteExtensionInfoOperationGroupRestClient.CreateInstallSiteExtensionSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteExtensionId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppServiceArmOperation<WebSiteSlotExtensionResource> operation = new AppServiceArmOperation<WebSiteSlotExtensionResource>(
                     new WebSiteSlotExtensionResourceOperationSource(Client),
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteExtensionInfoOperationGroupRestClient.CreateGetSiteExtensionSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteExtensionId, context);
+                using HttpMessage message = _siteExtensionInfoOperationGroupRestClient.CreateGetSiteExtensionSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteExtensionId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SiteExtensionInfoData> response = Response.FromValue(SiteExtensionInfoData.FromResponse(result), result);
                 if (response.Value == null)
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteExtensionInfoOperationGroupRestClient.CreateGetSiteExtensionSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteExtensionId, context);
+                using HttpMessage message = _siteExtensionInfoOperationGroupRestClient.CreateGetSiteExtensionSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteExtensionId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SiteExtensionInfoData> response = Response.FromValue(SiteExtensionInfoData.FromResponse(result), result);
                 if (response.Value == null)
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteExtensionInfoOperationGroupRestClient.CreateGetSiteExtensionSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteExtensionId, context);
+                using HttpMessage message = _siteExtensionInfoOperationGroupRestClient.CreateGetSiteExtensionSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteExtensionId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SiteExtensionInfoData> response = default;
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteExtensionInfoOperationGroupRestClient.CreateGetSiteExtensionSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteExtensionId, context);
+                using HttpMessage message = _siteExtensionInfoOperationGroupRestClient.CreateGetSiteExtensionSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteExtensionId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SiteExtensionInfoData> response = default;
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteExtensionInfoOperationGroupRestClient.CreateGetSiteExtensionSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteExtensionId, context);
+                using HttpMessage message = _siteExtensionInfoOperationGroupRestClient.CreateGetSiteExtensionSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteExtensionId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SiteExtensionInfoData> response = default;
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteExtensionInfoOperationGroupRestClient.CreateGetSiteExtensionSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteExtensionId, context);
+                using HttpMessage message = _siteExtensionInfoOperationGroupRestClient.CreateGetSiteExtensionSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteExtensionId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SiteExtensionInfoData> response = default;

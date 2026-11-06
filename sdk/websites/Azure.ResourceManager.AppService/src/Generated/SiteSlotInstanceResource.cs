@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webSiteInstanceStatusOperationGroupRestClient.CreateGetInstanceInfoSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _webSiteInstanceStatusOperationGroupRestClient.CreateGetInstanceInfoSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WebSiteInstanceStatusData> response = Response.FromValue(WebSiteInstanceStatusData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webSiteInstanceStatusOperationGroupRestClient.CreateGetInstanceInfoSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _webSiteInstanceStatusOperationGroupRestClient.CreateGetInstanceInfoSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WebSiteInstanceStatusData> response = Response.FromValue(WebSiteInstanceStatusData.FromResponse(result), result);
                 if (response.Value == null)

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fileSharesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, shareName, FileShareData.ToRequestContent(data), expand, context);
+                using HttpMessage message = _fileSharesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, shareName, FileShareData.ToRequestContent(data), expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FileShareData> response = Response.FromValue(FileShareData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fileSharesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, shareName, FileShareData.ToRequestContent(data), expand, context);
+                using HttpMessage message = _fileSharesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, shareName, FileShareData.ToRequestContent(data), expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FileShareData> response = Response.FromValue(FileShareData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fileSharesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, shareName, expand, xMsSnapshot, context);
+                using HttpMessage message = _fileSharesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, shareName, expand, xMsSnapshot, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FileShareData> response = Response.FromValue(FileShareData.FromResponse(result), result);
                 if (response.Value == null)
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fileSharesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, shareName, expand, xMsSnapshot, context);
+                using HttpMessage message = _fileSharesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, shareName, expand, xMsSnapshot, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FileShareData> response = Response.FromValue(FileShareData.FromResponse(result), result);
                 if (response.Value == null)
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fileSharesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, shareName, expand, xMsSnapshot, context);
+                using HttpMessage message = _fileSharesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, shareName, expand, xMsSnapshot, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<FileShareData> response = default;
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fileSharesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, shareName, expand, xMsSnapshot, context);
+                using HttpMessage message = _fileSharesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, shareName, expand, xMsSnapshot, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<FileShareData> response = default;
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fileSharesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, shareName, expand, xMsSnapshot, context);
+                using HttpMessage message = _fileSharesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, shareName, expand, xMsSnapshot, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<FileShareData> response = default;
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fileSharesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, shareName, expand, xMsSnapshot, context);
+                using HttpMessage message = _fileSharesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, shareName, expand, xMsSnapshot, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<FileShareData> response = default;

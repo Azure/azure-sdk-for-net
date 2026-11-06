@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cassandraClustersRestClient.CreateCreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, CassandraClusterData.ToRequestContent(data), context);
+                using HttpMessage message = _cassandraClustersRestClient.CreateCreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, CassandraClusterData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<CassandraClusterResource> operation = new CosmosDBArmOperation<CassandraClusterResource>(
                     new CassandraClusterResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cassandraClustersRestClient.CreateCreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, CassandraClusterData.ToRequestContent(data), context);
+                using HttpMessage message = _cassandraClustersRestClient.CreateCreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, CassandraClusterData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<CassandraClusterResource> operation = new CosmosDBArmOperation<CassandraClusterResource>(
                     new CassandraClusterResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cassandraClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, context);
+                using HttpMessage message = _cassandraClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CassandraClusterData> response = Response.FromValue(CassandraClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cassandraClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, context);
+                using HttpMessage message = _cassandraClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CassandraClusterData> response = Response.FromValue(CassandraClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cassandraClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, context);
+                using HttpMessage message = _cassandraClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CassandraClusterData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cassandraClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, context);
+                using HttpMessage message = _cassandraClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CassandraClusterData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cassandraClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, context);
+                using HttpMessage message = _cassandraClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CassandraClusterData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cassandraClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, context);
+                using HttpMessage message = _cassandraClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CassandraClusterData> response = default;

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlResourcesRestClient.CreateCreateUpdateClientEncryptionKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, clientEncryptionKeyName, CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _sqlResourcesRestClient.CreateCreateUpdateClientEncryptionKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, clientEncryptionKeyName, CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<CosmosDBSqlClientEncryptionKeyResource> operation = new CosmosDBArmOperation<CosmosDBSqlClientEncryptionKeyResource>(
                     new CosmosDBSqlClientEncryptionKeyResourceOperationSource(Client),
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlResourcesRestClient.CreateCreateUpdateClientEncryptionKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, clientEncryptionKeyName, CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _sqlResourcesRestClient.CreateCreateUpdateClientEncryptionKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, clientEncryptionKeyName, CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<CosmosDBSqlClientEncryptionKeyResource> operation = new CosmosDBArmOperation<CosmosDBSqlClientEncryptionKeyResource>(
                     new CosmosDBSqlClientEncryptionKeyResourceOperationSource(Client),
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlResourcesRestClient.CreateGetClientEncryptionKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, clientEncryptionKeyName, context);
+                using HttpMessage message = _sqlResourcesRestClient.CreateGetClientEncryptionKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, clientEncryptionKeyName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CosmosDBSqlClientEncryptionKeyData> response = Response.FromValue(CosmosDBSqlClientEncryptionKeyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlResourcesRestClient.CreateGetClientEncryptionKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, clientEncryptionKeyName, context);
+                using HttpMessage message = _sqlResourcesRestClient.CreateGetClientEncryptionKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, clientEncryptionKeyName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CosmosDBSqlClientEncryptionKeyData> response = Response.FromValue(CosmosDBSqlClientEncryptionKeyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlResourcesRestClient.CreateGetClientEncryptionKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, clientEncryptionKeyName, context);
+                using HttpMessage message = _sqlResourcesRestClient.CreateGetClientEncryptionKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, clientEncryptionKeyName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CosmosDBSqlClientEncryptionKeyData> response = default;
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlResourcesRestClient.CreateGetClientEncryptionKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, clientEncryptionKeyName, context);
+                using HttpMessage message = _sqlResourcesRestClient.CreateGetClientEncryptionKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, clientEncryptionKeyName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CosmosDBSqlClientEncryptionKeyData> response = default;
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlResourcesRestClient.CreateGetClientEncryptionKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, clientEncryptionKeyName, context);
+                using HttpMessage message = _sqlResourcesRestClient.CreateGetClientEncryptionKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, clientEncryptionKeyName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CosmosDBSqlClientEncryptionKeyData> response = default;
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlResourcesRestClient.CreateGetClientEncryptionKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, clientEncryptionKeyName, context);
+                using HttpMessage message = _sqlResourcesRestClient.CreateGetClientEncryptionKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, clientEncryptionKeyName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CosmosDBSqlClientEncryptionKeyData> response = default;

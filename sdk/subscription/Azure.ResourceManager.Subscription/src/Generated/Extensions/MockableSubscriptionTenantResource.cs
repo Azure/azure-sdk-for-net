@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SubscriptionOperationGroupRestClient.CreateAcceptSubscriptionOwnershipRequest(subscriptionId, AcceptOwnershipContent.ToRequestContent(content), context);
+                using HttpMessage message = SubscriptionOperationGroupRestClient.CreateAcceptSubscriptionOwnershipRequest(subscriptionId, AcceptOwnershipContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SubscriptionArmOperation operation = new SubscriptionArmOperation(SubscriptionOperationGroupClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SubscriptionOperationGroupRestClient.CreateAcceptSubscriptionOwnershipRequest(subscriptionId, AcceptOwnershipContent.ToRequestContent(content), context);
+                using HttpMessage message = SubscriptionOperationGroupRestClient.CreateAcceptSubscriptionOwnershipRequest(subscriptionId, AcceptOwnershipContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SubscriptionArmOperation operation = new SubscriptionArmOperation(SubscriptionOperationGroupClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SubscriptionOperationGroupRestClient.CreateGetAcceptOwnershipStatusRequest(subscriptionId, context);
+                using HttpMessage message = SubscriptionOperationGroupRestClient.CreateGetAcceptOwnershipStatusRequest(subscriptionId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AcceptOwnershipStatus> response = Response.FromValue(AcceptOwnershipStatus.FromResponse(result), result);
                 if (response.Value == null)
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SubscriptionOperationGroupRestClient.CreateGetAcceptOwnershipStatusRequest(subscriptionId, context);
+                using HttpMessage message = SubscriptionOperationGroupRestClient.CreateGetAcceptOwnershipStatusRequest(subscriptionId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AcceptOwnershipStatus> response = Response.FromValue(AcceptOwnershipStatus.FromResponse(result), result);
                 if (response.Value == null)
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SubscriptionsOperationGroupRestClient.CreateAcceptTargetDirectoryRequest(subscriptionId, context);
+                using HttpMessage message = SubscriptionsOperationGroupRestClient.CreateAcceptTargetDirectoryRequest(subscriptionId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SubscriptionsOperationGroupRestClient.CreateAcceptTargetDirectoryRequest(subscriptionId, context);
+                using HttpMessage message = SubscriptionsOperationGroupRestClient.CreateAcceptTargetDirectoryRequest(subscriptionId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SubscriptionsOperationGroupRestClient.CreateTargetDirectoryStatusRequest(subscriptionId, context);
+                using HttpMessage message = SubscriptionsOperationGroupRestClient.CreateTargetDirectoryStatusRequest(subscriptionId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TargetDirectoryResultProperties> response = Response.FromValue(TargetDirectoryResultProperties.FromResponse(result), result);
                 if (response.Value == null)
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SubscriptionsOperationGroupRestClient.CreateTargetDirectoryStatusRequest(subscriptionId, context);
+                using HttpMessage message = SubscriptionsOperationGroupRestClient.CreateTargetDirectoryStatusRequest(subscriptionId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TargetDirectoryResultProperties> response = Response.FromValue(TargetDirectoryResultProperties.FromResponse(result), result);
                 if (response.Value == null)

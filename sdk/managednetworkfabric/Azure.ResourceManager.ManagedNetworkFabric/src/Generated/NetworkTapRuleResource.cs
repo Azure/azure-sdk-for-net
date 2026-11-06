@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkTapRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkTapRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkTapRuleData> response = Response.FromValue(NetworkTapRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkTapRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkTapRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkTapRuleData> response = Response.FromValue(NetworkTapRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkTapRulesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTapRulePatchContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkTapRulesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTapRulePatchContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<NetworkTapRuleResource> operation = new ManagedNetworkFabricArmOperation<NetworkTapRuleResource>(
                     new NetworkTapRuleResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkTapRulesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTapRulePatchContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkTapRulesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTapRulePatchContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<NetworkTapRuleResource> operation = new ManagedNetworkFabricArmOperation<NetworkTapRuleResource>(
                     new NetworkTapRuleResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkTapRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkTapRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation operation = new ManagedNetworkFabricArmOperation(_networkTapRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkTapRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkTapRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation operation = new ManagedNetworkFabricArmOperation(_networkTapRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkTapRulesRestClient.CreateStartResyncRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkTapRulesRestClient.CreateStartResyncRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<NetworkTapRuleResyncResult> operation = new ManagedNetworkFabricArmOperation<NetworkTapRuleResyncResult>(
                     new NetworkTapRuleResyncResultOperationSource(),
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkTapRulesRestClient.CreateStartResyncRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkTapRulesRestClient.CreateStartResyncRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<NetworkTapRuleResyncResult> operation = new ManagedNetworkFabricArmOperation<NetworkTapRuleResyncResult>(
                     new NetworkTapRuleResyncResultOperationSource(),
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkTapRulesRestClient.CreateUpdateAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UpdateAdministrativeStateContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkTapRulesRestClient.CreateUpdateAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UpdateAdministrativeStateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<StateUpdateCommonPostActionResult> operation = new ManagedNetworkFabricArmOperation<StateUpdateCommonPostActionResult>(
                     new StateUpdateCommonPostActionResultOperationSource(),
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkTapRulesRestClient.CreateUpdateAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UpdateAdministrativeStateContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkTapRulesRestClient.CreateUpdateAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UpdateAdministrativeStateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<StateUpdateCommonPostActionResult> operation = new ManagedNetworkFabricArmOperation<StateUpdateCommonPostActionResult>(
                     new StateUpdateCommonPostActionResultOperationSource(),
@@ -666,7 +666,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkTapRulesRestClient.CreateValidateConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkTapRulesRestClient.CreateValidateConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<ValidateConfigurationResult> operation = new ManagedNetworkFabricArmOperation<ValidateConfigurationResult>(
                     new ValidateConfigurationResultOperationSource(),
@@ -721,7 +721,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkTapRulesRestClient.CreateValidateConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkTapRulesRestClient.CreateValidateConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<ValidateConfigurationResult> operation = new ManagedNetworkFabricArmOperation<ValidateConfigurationResult>(
                     new ValidateConfigurationResultOperationSource(),
@@ -766,7 +766,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _networkTapRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _networkTapRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NetworkTapRuleData> response = Response.FromValue(NetworkTapRuleData.FromResponse(result), result);
                     return Response.FromValue(new NetworkTapRuleResource(Client, response.Value), response.GetRawResponse());
@@ -814,7 +814,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _networkTapRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _networkTapRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NetworkTapRuleData> response = Response.FromValue(NetworkTapRuleData.FromResponse(result), result);
                     return Response.FromValue(new NetworkTapRuleResource(Client, response.Value), response.GetRawResponse());
@@ -860,7 +860,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _networkTapRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _networkTapRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NetworkTapRuleData> response = Response.FromValue(NetworkTapRuleData.FromResponse(result), result);
                     return Response.FromValue(new NetworkTapRuleResource(Client, response.Value), response.GetRawResponse());
@@ -902,7 +902,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _networkTapRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _networkTapRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NetworkTapRuleData> response = Response.FromValue(NetworkTapRuleData.FromResponse(result), result);
                     return Response.FromValue(new NetworkTapRuleResource(Client, response.Value), response.GetRawResponse());
@@ -944,7 +944,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _networkTapRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _networkTapRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NetworkTapRuleData> response = Response.FromValue(NetworkTapRuleData.FromResponse(result), result);
                     return Response.FromValue(new NetworkTapRuleResource(Client, response.Value), response.GetRawResponse());
@@ -990,7 +990,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _networkTapRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _networkTapRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NetworkTapRuleData> response = Response.FromValue(NetworkTapRuleData.FromResponse(result), result);
                     return Response.FromValue(new NetworkTapRuleResource(Client, response.Value), response.GetRawResponse());

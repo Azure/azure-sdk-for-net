@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, SqlDatabaseData.ToRequestContent(data), context);
+                using HttpMessage message = _databasesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, SqlDatabaseData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation<SqlDatabaseResource> operation = new SqlArmOperation<SqlDatabaseResource>(
                     new SqlDatabaseResourceOperationSource(Client),
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, SqlDatabaseData.ToRequestContent(data), context);
+                using HttpMessage message = _databasesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, SqlDatabaseData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation<SqlDatabaseResource> operation = new SqlArmOperation<SqlDatabaseResource>(
                     new SqlDatabaseResourceOperationSource(Client),
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, expand, filter, context);
+                using HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, expand, filter, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SqlDatabaseData> response = Response.FromValue(SqlDatabaseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, expand, filter, context);
+                using HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, expand, filter, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SqlDatabaseData> response = Response.FromValue(SqlDatabaseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, expand, filter, context);
+                using HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, expand, filter, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SqlDatabaseData> response = default;
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, expand, filter, context);
+                using HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, expand, filter, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SqlDatabaseData> response = default;
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, expand, filter, context);
+                using HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, expand, filter, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SqlDatabaseData> response = default;
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, expand, filter, context);
+                using HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, expand, filter, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SqlDatabaseData> response = default;

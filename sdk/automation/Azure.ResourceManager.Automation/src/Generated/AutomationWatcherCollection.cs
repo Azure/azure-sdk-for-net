@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _watcherRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, watcherName, AutomationWatcherData.ToRequestContent(data), context);
+                using HttpMessage message = _watcherRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, watcherName, AutomationWatcherData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AutomationWatcherData> response = Response.FromValue(AutomationWatcherData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _watcherRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, watcherName, AutomationWatcherData.ToRequestContent(data), context);
+                using HttpMessage message = _watcherRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, watcherName, AutomationWatcherData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AutomationWatcherData> response = Response.FromValue(AutomationWatcherData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _watcherRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, watcherName, context);
+                using HttpMessage message = _watcherRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, watcherName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AutomationWatcherData> response = Response.FromValue(AutomationWatcherData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _watcherRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, watcherName, context);
+                using HttpMessage message = _watcherRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, watcherName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AutomationWatcherData> response = Response.FromValue(AutomationWatcherData.FromResponse(result), result);
                 if (response.Value == null)
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _watcherRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, watcherName, context);
+                using HttpMessage message = _watcherRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, watcherName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AutomationWatcherData> response = default;
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _watcherRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, watcherName, context);
+                using HttpMessage message = _watcherRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, watcherName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AutomationWatcherData> response = default;
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _watcherRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, watcherName, context);
+                using HttpMessage message = _watcherRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, watcherName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AutomationWatcherData> response = default;
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _watcherRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, watcherName, context);
+                using HttpMessage message = _watcherRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, watcherName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AutomationWatcherData> response = default;

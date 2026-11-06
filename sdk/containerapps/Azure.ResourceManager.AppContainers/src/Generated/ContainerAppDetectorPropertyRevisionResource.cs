@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppsDiagnosticsRestClient.CreateGetRevisionDiagnosticRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
+                using HttpMessage message = _containerAppsDiagnosticsRestClient.CreateGetRevisionDiagnosticRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerAppRevisionData> response = Response.FromValue(ContainerAppRevisionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppsDiagnosticsRestClient.CreateGetRevisionDiagnosticRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
+                using HttpMessage message = _containerAppsDiagnosticsRestClient.CreateGetRevisionDiagnosticRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerAppRevisionData> response = Response.FromValue(ContainerAppRevisionData.FromResponse(result), result);
                 if (response.Value == null)

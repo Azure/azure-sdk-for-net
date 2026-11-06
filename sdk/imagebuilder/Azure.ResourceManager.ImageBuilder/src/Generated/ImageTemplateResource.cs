@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ImageBuilder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ImageTemplateData> response = Response.FromValue(ImageTemplateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ImageBuilder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ImageTemplateData> response = Response.FromValue(ImageTemplateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ImageBuilder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ImageTemplatePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ImageTemplatePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ImageBuilderArmOperation<ImageTemplateResource> operation = new ImageBuilderArmOperation<ImageTemplateResource>(
                     new ImageTemplateResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.ImageBuilder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ImageTemplatePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ImageTemplatePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ImageBuilderArmOperation<ImageTemplateResource> operation = new ImageBuilderArmOperation<ImageTemplateResource>(
                     new ImageTemplateResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.ImageBuilder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ImageBuilderArmOperation operation = new ImageBuilderArmOperation(_virtualMachineImageTemplatesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.ImageBuilder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ImageBuilderArmOperation operation = new ImageBuilderArmOperation(_virtualMachineImageTemplatesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.ImageBuilder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateCancelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateCancelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ImageBuilderArmOperation operation = new ImageBuilderArmOperation(_virtualMachineImageTemplatesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.ImageBuilder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateCancelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateCancelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ImageBuilderArmOperation operation = new ImageBuilderArmOperation(_virtualMachineImageTemplatesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.ImageBuilder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateRunRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateRunRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ImageBuilderArmOperation operation = new ImageBuilderArmOperation(_virtualMachineImageTemplatesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.ImageBuilder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateRunRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateRunRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ImageBuilderArmOperation operation = new ImageBuilderArmOperation(_virtualMachineImageTemplatesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.ImageBuilder
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ImageTemplateData> response = Response.FromValue(ImageTemplateData.FromResponse(result), result);
                     return Response.FromValue(new ImageTemplateResource(Client, response.Value), response.GetRawResponse());
@@ -672,7 +672,7 @@ namespace Azure.ResourceManager.ImageBuilder
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ImageTemplateData> response = Response.FromValue(ImageTemplateData.FromResponse(result), result);
                     return Response.FromValue(new ImageTemplateResource(Client, response.Value), response.GetRawResponse());
@@ -718,7 +718,7 @@ namespace Azure.ResourceManager.ImageBuilder
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ImageTemplateData> response = Response.FromValue(ImageTemplateData.FromResponse(result), result);
                     return Response.FromValue(new ImageTemplateResource(Client, response.Value), response.GetRawResponse());
@@ -760,7 +760,7 @@ namespace Azure.ResourceManager.ImageBuilder
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ImageTemplateData> response = Response.FromValue(ImageTemplateData.FromResponse(result), result);
                     return Response.FromValue(new ImageTemplateResource(Client, response.Value), response.GetRawResponse());
@@ -802,7 +802,7 @@ namespace Azure.ResourceManager.ImageBuilder
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ImageTemplateData> response = Response.FromValue(ImageTemplateData.FromResponse(result), result);
                     return Response.FromValue(new ImageTemplateResource(Client, response.Value), response.GetRawResponse());
@@ -848,7 +848,7 @@ namespace Azure.ResourceManager.ImageBuilder
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ImageTemplateData> response = Response.FromValue(ImageTemplateData.FromResponse(result), result);
                     return Response.FromValue(new ImageTemplateResource(Client, response.Value), response.GetRawResponse());

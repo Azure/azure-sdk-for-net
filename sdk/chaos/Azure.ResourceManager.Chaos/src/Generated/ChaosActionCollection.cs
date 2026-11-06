@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _actionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, actionName, context);
+                using HttpMessage message = _actionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, actionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ChaosActionData> response = Response.FromValue(ChaosActionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _actionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, actionName, context);
+                using HttpMessage message = _actionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, actionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ChaosActionData> response = Response.FromValue(ChaosActionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _actionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, actionName, context);
+                using HttpMessage message = _actionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, actionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ChaosActionData> response = default;
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _actionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, actionName, context);
+                using HttpMessage message = _actionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, actionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ChaosActionData> response = default;
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _actionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, actionName, context);
+                using HttpMessage message = _actionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, actionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ChaosActionData> response = default;
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _actionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, actionName, context);
+                using HttpMessage message = _actionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, actionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ChaosActionData> response = default;

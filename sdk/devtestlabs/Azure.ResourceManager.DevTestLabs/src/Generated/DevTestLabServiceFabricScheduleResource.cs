@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, context);
+                using HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevTestLabScheduleData> response = Response.FromValue(DevTestLabScheduleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, context);
+                using HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevTestLabScheduleData> response = Response.FromValue(DevTestLabScheduleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, DevTestLabSchedulePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, DevTestLabSchedulePatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevTestLabScheduleData> response = Response.FromValue(DevTestLabScheduleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, DevTestLabSchedulePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, DevTestLabSchedulePatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevTestLabScheduleData> response = Response.FromValue(DevTestLabScheduleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateExecuteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateExecuteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_devTestLabServiceFabricSchedulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateExecuteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateExecuteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_devTestLabServiceFabricSchedulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, default, context);
+                    using HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DevTestLabScheduleData> response = Response.FromValue(DevTestLabScheduleData.FromResponse(result), result);
                     return Response.FromValue(new DevTestLabServiceFabricScheduleResource(Client, response.Value), response.GetRawResponse());
@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, default, context);
+                    using HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DevTestLabScheduleData> response = Response.FromValue(DevTestLabScheduleData.FromResponse(result), result);
                     return Response.FromValue(new DevTestLabServiceFabricScheduleResource(Client, response.Value), response.GetRawResponse());
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, default, context);
+                    using HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DevTestLabScheduleData> response = Response.FromValue(DevTestLabScheduleData.FromResponse(result), result);
                     return Response.FromValue(new DevTestLabServiceFabricScheduleResource(Client, response.Value), response.GetRawResponse());
@@ -658,7 +658,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, default, context);
+                    using HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DevTestLabScheduleData> response = Response.FromValue(DevTestLabScheduleData.FromResponse(result), result);
                     return Response.FromValue(new DevTestLabServiceFabricScheduleResource(Client, response.Value), response.GetRawResponse());
@@ -700,7 +700,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, default, context);
+                    using HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DevTestLabScheduleData> response = Response.FromValue(DevTestLabScheduleData.FromResponse(result), result);
                     return Response.FromValue(new DevTestLabServiceFabricScheduleResource(Client, response.Value), response.GetRawResponse());
@@ -746,7 +746,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, default, context);
+                    using HttpMessage message = _devTestLabServiceFabricSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DevTestLabScheduleData> response = Response.FromValue(DevTestLabScheduleData.FromResponse(result), result);
                     return Response.FromValue(new DevTestLabServiceFabricScheduleResource(Client, response.Value), response.GetRawResponse());

@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CosmosDBForPostgreSqlClusterData> response = Response.FromValue(CosmosDBForPostgreSqlClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CosmosDBForPostgreSqlClusterData> response = Response.FromValue(CosmosDBForPostgreSqlClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CosmosDBForPostgreSqlClusterPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _clustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CosmosDBForPostgreSqlClusterPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlClusterResource> operation = new CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlClusterResource>(
                     new CosmosDBForPostgreSqlClusterResourceOperationSource(Client),
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CosmosDBForPostgreSqlClusterPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _clustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CosmosDBForPostgreSqlClusterPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlClusterResource> operation = new CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlClusterResource>(
                     new CosmosDBForPostgreSqlClusterResourceOperationSource(Client),
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _clustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBForPostgreSqlArmOperation operation = new CosmosDBForPostgreSqlArmOperation(_clustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _clustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBForPostgreSqlArmOperation operation = new CosmosDBForPostgreSqlArmOperation(_clustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreatePromoteReadReplicaRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CosmosDBForPostgreSqlPromoteRequestContent.ToRequestContent(content), context);
+                using HttpMessage message = _clustersRestClient.CreatePromoteReadReplicaRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CosmosDBForPostgreSqlPromoteRequestContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBForPostgreSqlArmOperation operation = new CosmosDBForPostgreSqlArmOperation(_clustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreatePromoteReadReplicaRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CosmosDBForPostgreSqlPromoteRequestContent.ToRequestContent(content), context);
+                using HttpMessage message = _clustersRestClient.CreatePromoteReadReplicaRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CosmosDBForPostgreSqlPromoteRequestContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBForPostgreSqlArmOperation operation = new CosmosDBForPostgreSqlArmOperation(_clustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _clustersRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBForPostgreSqlArmOperation operation = new CosmosDBForPostgreSqlArmOperation(_clustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _clustersRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBForPostgreSqlArmOperation operation = new CosmosDBForPostgreSqlArmOperation(_clustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _clustersRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBForPostgreSqlArmOperation operation = new CosmosDBForPostgreSqlArmOperation(_clustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _clustersRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBForPostgreSqlArmOperation operation = new CosmosDBForPostgreSqlArmOperation(_clustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -741,7 +741,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _clustersRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBForPostgreSqlArmOperation operation = new CosmosDBForPostgreSqlArmOperation(_clustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -790,7 +790,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _clustersRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBForPostgreSqlArmOperation operation = new CosmosDBForPostgreSqlArmOperation(_clustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -829,7 +829,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<CosmosDBForPostgreSqlClusterData> response = Response.FromValue(CosmosDBForPostgreSqlClusterData.FromResponse(result), result);
                     return Response.FromValue(new CosmosDBForPostgreSqlClusterResource(Client, response.Value), response.GetRawResponse());
@@ -877,7 +877,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<CosmosDBForPostgreSqlClusterData> response = Response.FromValue(CosmosDBForPostgreSqlClusterData.FromResponse(result), result);
                     return Response.FromValue(new CosmosDBForPostgreSqlClusterResource(Client, response.Value), response.GetRawResponse());
@@ -923,7 +923,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<CosmosDBForPostgreSqlClusterData> response = Response.FromValue(CosmosDBForPostgreSqlClusterData.FromResponse(result), result);
                     return Response.FromValue(new CosmosDBForPostgreSqlClusterResource(Client, response.Value), response.GetRawResponse());
@@ -965,7 +965,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<CosmosDBForPostgreSqlClusterData> response = Response.FromValue(CosmosDBForPostgreSqlClusterData.FromResponse(result), result);
                     return Response.FromValue(new CosmosDBForPostgreSqlClusterResource(Client, response.Value), response.GetRawResponse());
@@ -1007,7 +1007,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<CosmosDBForPostgreSqlClusterData> response = Response.FromValue(CosmosDBForPostgreSqlClusterData.FromResponse(result), result);
                     return Response.FromValue(new CosmosDBForPostgreSqlClusterResource(Client, response.Value), response.GetRawResponse());
@@ -1053,7 +1053,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<CosmosDBForPostgreSqlClusterData> response = Response.FromValue(CosmosDBForPostgreSqlClusterData.FromResponse(result), result);
                     return Response.FromValue(new CosmosDBForPostgreSqlClusterResource(Client, response.Value), response.GetRawResponse());

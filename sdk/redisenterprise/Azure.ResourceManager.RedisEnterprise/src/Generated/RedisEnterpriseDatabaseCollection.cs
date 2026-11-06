@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, RedisEnterpriseDatabaseData.ToRequestContent(data), context);
+                using HttpMessage message = _databasesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, RedisEnterpriseDatabaseData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RedisEnterpriseArmOperation<RedisEnterpriseDatabaseResource> operation = new RedisEnterpriseArmOperation<RedisEnterpriseDatabaseResource>(
                     new RedisEnterpriseDatabaseResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, RedisEnterpriseDatabaseData.ToRequestContent(data), context);
+                using HttpMessage message = _databasesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, RedisEnterpriseDatabaseData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RedisEnterpriseArmOperation<RedisEnterpriseDatabaseResource> operation = new RedisEnterpriseArmOperation<RedisEnterpriseDatabaseResource>(
                     new RedisEnterpriseDatabaseResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, context);
+                using HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RedisEnterpriseDatabaseData> response = Response.FromValue(RedisEnterpriseDatabaseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, context);
+                using HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RedisEnterpriseDatabaseData> response = Response.FromValue(RedisEnterpriseDatabaseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, context);
+                using HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RedisEnterpriseDatabaseData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, context);
+                using HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RedisEnterpriseDatabaseData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, context);
+                using HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RedisEnterpriseDatabaseData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, context);
+                using HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RedisEnterpriseDatabaseData> response = default;

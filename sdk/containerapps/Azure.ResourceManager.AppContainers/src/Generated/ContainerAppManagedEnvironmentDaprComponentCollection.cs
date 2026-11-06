@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppManagedEnvironmentDaprComponentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, componentName, ContainerAppDaprComponentData.ToRequestContent(data), context);
+                using HttpMessage message = _containerAppManagedEnvironmentDaprComponentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, componentName, ContainerAppDaprComponentData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerAppDaprComponentData> response = Response.FromValue(ContainerAppDaprComponentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppManagedEnvironmentDaprComponentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, componentName, ContainerAppDaprComponentData.ToRequestContent(data), context);
+                using HttpMessage message = _containerAppManagedEnvironmentDaprComponentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, componentName, ContainerAppDaprComponentData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerAppDaprComponentData> response = Response.FromValue(ContainerAppDaprComponentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppManagedEnvironmentDaprComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, componentName, context);
+                using HttpMessage message = _containerAppManagedEnvironmentDaprComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, componentName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerAppDaprComponentData> response = Response.FromValue(ContainerAppDaprComponentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppManagedEnvironmentDaprComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, componentName, context);
+                using HttpMessage message = _containerAppManagedEnvironmentDaprComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, componentName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerAppDaprComponentData> response = Response.FromValue(ContainerAppDaprComponentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppManagedEnvironmentDaprComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, componentName, context);
+                using HttpMessage message = _containerAppManagedEnvironmentDaprComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, componentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ContainerAppDaprComponentData> response = default;
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppManagedEnvironmentDaprComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, componentName, context);
+                using HttpMessage message = _containerAppManagedEnvironmentDaprComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, componentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ContainerAppDaprComponentData> response = default;
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppManagedEnvironmentDaprComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, componentName, context);
+                using HttpMessage message = _containerAppManagedEnvironmentDaprComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, componentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ContainerAppDaprComponentData> response = default;
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppManagedEnvironmentDaprComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, componentName, context);
+                using HttpMessage message = _containerAppManagedEnvironmentDaprComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, componentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ContainerAppDaprComponentData> response = default;

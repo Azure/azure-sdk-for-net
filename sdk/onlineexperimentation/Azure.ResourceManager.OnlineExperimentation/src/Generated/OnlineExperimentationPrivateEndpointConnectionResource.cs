@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OnlineExperimentationPrivateEndpointConnectionData> response = Response.FromValue(OnlineExperimentationPrivateEndpointConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OnlineExperimentationPrivateEndpointConnectionData> response = Response.FromValue(OnlineExperimentationPrivateEndpointConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _privateEndpointConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OnlineExperimentationArmOperation operation = new OnlineExperimentationArmOperation(_privateEndpointConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _privateEndpointConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OnlineExperimentationArmOperation operation = new OnlineExperimentationArmOperation(_privateEndpointConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, OnlineExperimentationPrivateEndpointConnectionData.ToRequestContent(data), context);
+                using HttpMessage message = _privateEndpointConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, OnlineExperimentationPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OnlineExperimentationPrivateEndpointConnectionData> response = Response.FromValue(OnlineExperimentationPrivateEndpointConnectionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, OnlineExperimentationPrivateEndpointConnectionData.ToRequestContent(data), context);
+                using HttpMessage message = _privateEndpointConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, OnlineExperimentationPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OnlineExperimentationPrivateEndpointConnectionData> response = Response.FromValue(OnlineExperimentationPrivateEndpointConnectionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

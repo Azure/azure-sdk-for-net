@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineExtensionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmExtensionName, VirtualMachineExtensionData.ToRequestContent(data), context);
+                using HttpMessage message = _virtualMachineExtensionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmExtensionName, VirtualMachineExtensionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation<VirtualMachineExtensionResource> operation = new ComputeArmOperation<VirtualMachineExtensionResource>(
                     new VirtualMachineExtensionResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineExtensionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmExtensionName, VirtualMachineExtensionData.ToRequestContent(data), context);
+                using HttpMessage message = _virtualMachineExtensionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmExtensionName, VirtualMachineExtensionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation<VirtualMachineExtensionResource> operation = new ComputeArmOperation<VirtualMachineExtensionResource>(
                     new VirtualMachineExtensionResourceOperationSource(Client),
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineExtensionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmExtensionName, expand, context);
+                using HttpMessage message = _virtualMachineExtensionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmExtensionName, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<VirtualMachineExtensionData> response = Response.FromValue(VirtualMachineExtensionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineExtensionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmExtensionName, expand, context);
+                using HttpMessage message = _virtualMachineExtensionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmExtensionName, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<VirtualMachineExtensionData> response = Response.FromValue(VirtualMachineExtensionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineExtensionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmExtensionName, expand, context);
+                using HttpMessage message = _virtualMachineExtensionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmExtensionName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<VirtualMachineExtensionData> response = default;
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineExtensionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmExtensionName, expand, context);
+                using HttpMessage message = _virtualMachineExtensionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmExtensionName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<VirtualMachineExtensionData> response = default;
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineExtensionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmExtensionName, expand, context);
+                using HttpMessage message = _virtualMachineExtensionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmExtensionName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<VirtualMachineExtensionData> response = default;
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineExtensionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmExtensionName, expand, context);
+                using HttpMessage message = _virtualMachineExtensionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmExtensionName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<VirtualMachineExtensionData> response = default;

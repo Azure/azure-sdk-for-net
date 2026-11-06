@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Support.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ClassifyServicesRestClient.CreateClassifyServicesRequest(Guid.Parse(Id.SubscriptionId), SupportServiceClassificationContent.ToRequestContent(content), context);
+                using HttpMessage message = ClassifyServicesRestClient.CreateClassifyServicesRequest(Guid.Parse(Id.SubscriptionId), SupportServiceClassificationContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SupportServiceClassificationOutput> response = Response.FromValue(SupportServiceClassificationOutput.FromResponse(result), result);
                 if (response.Value == null)
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Support.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ClassifyServicesRestClient.CreateClassifyServicesRequest(Guid.Parse(Id.SubscriptionId), SupportServiceClassificationContent.ToRequestContent(content), context);
+                using HttpMessage message = ClassifyServicesRestClient.CreateClassifyServicesRequest(Guid.Parse(Id.SubscriptionId), SupportServiceClassificationContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SupportServiceClassificationOutput> response = Response.FromValue(SupportServiceClassificationOutput.FromResponse(result), result);
                 if (response.Value == null)
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Support.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ClassifyProblemsRestClient.CreateClassifyProblemsRequest(Guid.Parse(Id.SubscriptionId), problemServiceName, ProblemClassificationsClassificationInput.ToRequestContent(content), context);
+                using HttpMessage message = ClassifyProblemsRestClient.CreateClassifyProblemsRequest(Guid.Parse(Id.SubscriptionId), problemServiceName, ProblemClassificationsClassificationInput.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ProblemClassificationsClassificationOutput> response = Response.FromValue(ProblemClassificationsClassificationOutput.FromResponse(result), result);
                 if (response.Value == null)
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Support.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ClassifyProblemsRestClient.CreateClassifyProblemsRequest(Guid.Parse(Id.SubscriptionId), problemServiceName, ProblemClassificationsClassificationInput.ToRequestContent(content), context);
+                using HttpMessage message = ClassifyProblemsRestClient.CreateClassifyProblemsRequest(Guid.Parse(Id.SubscriptionId), problemServiceName, ProblemClassificationsClassificationInput.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ProblemClassificationsClassificationOutput> response = Response.FromValue(ProblemClassificationsClassificationOutput.FromResponse(result), result);
                 if (response.Value == null)
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Support.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SubscriptionSupportTicketRestClient.CreateCheckSupportTicketNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), SupportNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = SubscriptionSupportTicketRestClient.CreateCheckSupportTicketNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), SupportNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SupportNameAvailabilityResult> response = Response.FromValue(SupportNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.Support.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SubscriptionSupportTicketRestClient.CreateCheckSupportTicketNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), SupportNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = SubscriptionSupportTicketRestClient.CreateCheckSupportTicketNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), SupportNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SupportNameAvailabilityResult> response = Response.FromValue(SupportNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _impactCategoriesRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, context);
+                using HttpMessage message = _impactCategoriesRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ImpactCategoryData> response = Response.FromValue(ImpactCategoryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _impactCategoriesRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, context);
+                using HttpMessage message = _impactCategoriesRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ImpactCategoryData> response = Response.FromValue(ImpactCategoryData.FromResponse(result), result);
                 if (response.Value == null)

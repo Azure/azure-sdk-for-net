@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _authorizationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationId, AuthorizationContractData.ToRequestContent(data), ifMatch, context);
+                using HttpMessage message = _authorizationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationId, AuthorizationContractData.ToRequestContent(data), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AuthorizationContractData> response = Response.FromValue(AuthorizationContractData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _authorizationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationId, AuthorizationContractData.ToRequestContent(data), ifMatch, context);
+                using HttpMessage message = _authorizationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationId, AuthorizationContractData.ToRequestContent(data), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AuthorizationContractData> response = Response.FromValue(AuthorizationContractData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _authorizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationId, context);
+                using HttpMessage message = _authorizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AuthorizationContractData> response = Response.FromValue(AuthorizationContractData.FromResponse(result), result);
                 if (response.Value == null)
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _authorizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationId, context);
+                using HttpMessage message = _authorizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AuthorizationContractData> response = Response.FromValue(AuthorizationContractData.FromResponse(result), result);
                 if (response.Value == null)
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _authorizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationId, context);
+                using HttpMessage message = _authorizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AuthorizationContractData> response = default;
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _authorizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationId, context);
+                using HttpMessage message = _authorizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AuthorizationContractData> response = default;
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _authorizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationId, context);
+                using HttpMessage message = _authorizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AuthorizationContractData> response = default;
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _authorizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationId, context);
+                using HttpMessage message = _authorizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AuthorizationContractData> response = default;

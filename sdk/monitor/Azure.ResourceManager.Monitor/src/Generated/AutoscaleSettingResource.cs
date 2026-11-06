@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoscaleSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _autoscaleSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AutoscaleSettingData> response = Response.FromValue(AutoscaleSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoscaleSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _autoscaleSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AutoscaleSettingData> response = Response.FromValue(AutoscaleSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoscaleSettingsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AutoscaleSettingPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _autoscaleSettingsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AutoscaleSettingPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AutoscaleSettingData> response = Response.FromValue(AutoscaleSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoscaleSettingsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AutoscaleSettingPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _autoscaleSettingsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AutoscaleSettingPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AutoscaleSettingData> response = Response.FromValue(AutoscaleSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoscaleSettingsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _autoscaleSettingsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoscaleSettingsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _autoscaleSettingsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _predictiveMetricRestClient.CreateGetPredictiveMetricRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, timespan, interval, metricNamespace, metricName, aggregation, context);
+                using HttpMessage message = _predictiveMetricRestClient.CreateGetPredictiveMetricRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, timespan, interval, metricNamespace, metricName, aggregation, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AutoscaleSettingPredicativeResult> response = Response.FromValue(AutoscaleSettingPredicativeResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _predictiveMetricRestClient.CreateGetPredictiveMetricRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, timespan, interval, metricNamespace, metricName, aggregation, context);
+                using HttpMessage message = _predictiveMetricRestClient.CreateGetPredictiveMetricRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, timespan, interval, metricNamespace, metricName, aggregation, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AutoscaleSettingPredicativeResult> response = Response.FromValue(AutoscaleSettingPredicativeResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _autoscaleSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _autoscaleSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<AutoscaleSettingData> response = Response.FromValue(AutoscaleSettingData.FromResponse(result), result);
                     return Response.FromValue(new AutoscaleSettingResource(Client, response.Value), response.GetRawResponse());
@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _autoscaleSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _autoscaleSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<AutoscaleSettingData> response = Response.FromValue(AutoscaleSettingData.FromResponse(result), result);
                     return Response.FromValue(new AutoscaleSettingResource(Client, response.Value), response.GetRawResponse());
@@ -637,7 +637,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _autoscaleSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _autoscaleSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<AutoscaleSettingData> response = Response.FromValue(AutoscaleSettingData.FromResponse(result), result);
                     return Response.FromValue(new AutoscaleSettingResource(Client, response.Value), response.GetRawResponse());
@@ -679,7 +679,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _autoscaleSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _autoscaleSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<AutoscaleSettingData> response = Response.FromValue(AutoscaleSettingData.FromResponse(result), result);
                     return Response.FromValue(new AutoscaleSettingResource(Client, response.Value), response.GetRawResponse());
@@ -721,7 +721,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _autoscaleSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _autoscaleSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<AutoscaleSettingData> response = Response.FromValue(AutoscaleSettingData.FromResponse(result), result);
                     return Response.FromValue(new AutoscaleSettingResource(Client, response.Value), response.GetRawResponse());
@@ -767,7 +767,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _autoscaleSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _autoscaleSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<AutoscaleSettingData> response = Response.FromValue(AutoscaleSettingData.FromResponse(result), result);
                     return Response.FromValue(new AutoscaleSettingResource(Client, response.Value), response.GetRawResponse());

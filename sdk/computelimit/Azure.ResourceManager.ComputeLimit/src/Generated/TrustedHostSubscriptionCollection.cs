@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _trustedHostSubscriptionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), _location, hostSubscriptionId, TrustedHostSubscriptionData.ToRequestContent(data), context);
+                using HttpMessage message = _trustedHostSubscriptionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), _location, hostSubscriptionId, TrustedHostSubscriptionData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TrustedHostSubscriptionData> response = Response.FromValue(TrustedHostSubscriptionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _trustedHostSubscriptionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), _location, hostSubscriptionId, TrustedHostSubscriptionData.ToRequestContent(data), context);
+                using HttpMessage message = _trustedHostSubscriptionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), _location, hostSubscriptionId, TrustedHostSubscriptionData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TrustedHostSubscriptionData> response = Response.FromValue(TrustedHostSubscriptionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _trustedHostSubscriptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, hostSubscriptionId, context);
+                using HttpMessage message = _trustedHostSubscriptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, hostSubscriptionId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TrustedHostSubscriptionData> response = Response.FromValue(TrustedHostSubscriptionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _trustedHostSubscriptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, hostSubscriptionId, context);
+                using HttpMessage message = _trustedHostSubscriptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, hostSubscriptionId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TrustedHostSubscriptionData> response = Response.FromValue(TrustedHostSubscriptionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _trustedHostSubscriptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, hostSubscriptionId, context);
+                using HttpMessage message = _trustedHostSubscriptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, hostSubscriptionId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<TrustedHostSubscriptionData> response = default;
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _trustedHostSubscriptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, hostSubscriptionId, context);
+                using HttpMessage message = _trustedHostSubscriptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, hostSubscriptionId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<TrustedHostSubscriptionData> response = default;
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _trustedHostSubscriptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, hostSubscriptionId, context);
+                using HttpMessage message = _trustedHostSubscriptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, hostSubscriptionId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<TrustedHostSubscriptionData> response = default;
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _trustedHostSubscriptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, hostSubscriptionId, context);
+                using HttpMessage message = _trustedHostSubscriptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, hostSubscriptionId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<TrustedHostSubscriptionData> response = default;

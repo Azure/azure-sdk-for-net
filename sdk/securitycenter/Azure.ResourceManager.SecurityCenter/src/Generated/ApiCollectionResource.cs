@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiCollectionsRestClient.CreateGetByAzureApiManagementServiceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _apiCollectionsRestClient.CreateGetByAzureApiManagementServiceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiCollectionData> response = Response.FromValue(ApiCollectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiCollectionsRestClient.CreateGetByAzureApiManagementServiceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _apiCollectionsRestClient.CreateGetByAzureApiManagementServiceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiCollectionData> response = Response.FromValue(ApiCollectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiCollectionsRestClient.CreateOffboardAzureApiManagementApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _apiCollectionsRestClient.CreateOffboardAzureApiManagementApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiCollectionsRestClient.CreateOffboardAzureApiManagementApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _apiCollectionsRestClient.CreateOffboardAzureApiManagementApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiCollectionsRestClient.CreateOnboardAzureApiManagementApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _apiCollectionsRestClient.CreateOnboardAzureApiManagementApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SecurityCenterArmOperation<ApiCollectionResource> operation = new SecurityCenterArmOperation<ApiCollectionResource>(
                     new ApiCollectionResourceOperationSource(Client),
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiCollectionsRestClient.CreateOnboardAzureApiManagementApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _apiCollectionsRestClient.CreateOnboardAzureApiManagementApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SecurityCenterArmOperation<ApiCollectionResource> operation = new SecurityCenterArmOperation<ApiCollectionResource>(
                     new ApiCollectionResourceOperationSource(Client),

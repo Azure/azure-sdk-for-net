@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _advancedThreatProtectionRestClient.CreateCreateRequest(Id.Parent.ToString(), "current", AdvancedThreatProtectionSettingData.ToRequestContent(data), context);
+                using HttpMessage message = _advancedThreatProtectionRestClient.CreateCreateRequest(Id.Parent.ToString(), "current", AdvancedThreatProtectionSettingData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AdvancedThreatProtectionSettingData> response = Response.FromValue(AdvancedThreatProtectionSettingData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _advancedThreatProtectionRestClient.CreateCreateRequest(Id.Parent.ToString(), "current", AdvancedThreatProtectionSettingData.ToRequestContent(data), context);
+                using HttpMessage message = _advancedThreatProtectionRestClient.CreateCreateRequest(Id.Parent.ToString(), "current", AdvancedThreatProtectionSettingData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AdvancedThreatProtectionSettingData> response = Response.FromValue(AdvancedThreatProtectionSettingData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _advancedThreatProtectionRestClient.CreateGetRequest(Id.Parent.ToString(), "current", context);
+                using HttpMessage message = _advancedThreatProtectionRestClient.CreateGetRequest(Id.Parent.ToString(), "current", context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AdvancedThreatProtectionSettingData> response = Response.FromValue(AdvancedThreatProtectionSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _advancedThreatProtectionRestClient.CreateGetRequest(Id.Parent.ToString(), "current", context);
+                using HttpMessage message = _advancedThreatProtectionRestClient.CreateGetRequest(Id.Parent.ToString(), "current", context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AdvancedThreatProtectionSettingData> response = Response.FromValue(AdvancedThreatProtectionSettingData.FromResponse(result), result);
                 if (response.Value == null)

@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateGetPortMirroringRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateGetPortMirroringRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WorkloadNetworkPortMirroringProfileData> response = Response.FromValue(WorkloadNetworkPortMirroringProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateGetPortMirroringRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateGetPortMirroringRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WorkloadNetworkPortMirroringProfileData> response = Response.FromValue(WorkloadNetworkPortMirroringProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateUpdatePortMirroringRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, WorkloadNetworkPortMirroringProfileData.ToRequestContent(data), context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateUpdatePortMirroringRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, WorkloadNetworkPortMirroringProfileData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation<WorkloadNetworkPortMirroringProfileResource> operation = new AvsArmOperation<WorkloadNetworkPortMirroringProfileResource>(
                     new WorkloadNetworkPortMirroringProfileResourceOperationSource(Client),
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateUpdatePortMirroringRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, WorkloadNetworkPortMirroringProfileData.ToRequestContent(data), context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateUpdatePortMirroringRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, WorkloadNetworkPortMirroringProfileData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation<WorkloadNetworkPortMirroringProfileResource> operation = new AvsArmOperation<WorkloadNetworkPortMirroringProfileResource>(
                     new WorkloadNetworkPortMirroringProfileResourceOperationSource(Client),
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateDeletePortMirroringRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, Id.Parent.Parent.Name, context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateDeletePortMirroringRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, Id.Parent.Parent.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation operation = new AvsArmOperation(_workloadNetworksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateDeletePortMirroringRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, Id.Parent.Parent.Name, context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateDeletePortMirroringRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, Id.Parent.Parent.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation operation = new AvsArmOperation(_workloadNetworksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fqdnListLocalRulestackRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, LocalRulestackFqdnData.ToRequestContent(data), context);
+                using HttpMessage message = _fqdnListLocalRulestackRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, LocalRulestackFqdnData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NgfwArmOperation<LocalRulestackFqdnResource> operation = new NgfwArmOperation<LocalRulestackFqdnResource>(
                     new LocalRulestackFqdnResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fqdnListLocalRulestackRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, LocalRulestackFqdnData.ToRequestContent(data), context);
+                using HttpMessage message = _fqdnListLocalRulestackRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, LocalRulestackFqdnData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NgfwArmOperation<LocalRulestackFqdnResource> operation = new NgfwArmOperation<LocalRulestackFqdnResource>(
                     new LocalRulestackFqdnResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fqdnListLocalRulestackRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _fqdnListLocalRulestackRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LocalRulestackFqdnData> response = Response.FromValue(LocalRulestackFqdnData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fqdnListLocalRulestackRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _fqdnListLocalRulestackRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LocalRulestackFqdnData> response = Response.FromValue(LocalRulestackFqdnData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fqdnListLocalRulestackRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _fqdnListLocalRulestackRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<LocalRulestackFqdnData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fqdnListLocalRulestackRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _fqdnListLocalRulestackRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<LocalRulestackFqdnData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fqdnListLocalRulestackRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _fqdnListLocalRulestackRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<LocalRulestackFqdnData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fqdnListLocalRulestackRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _fqdnListLocalRulestackRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<LocalRulestackFqdnData> response = default;

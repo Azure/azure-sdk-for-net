@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlResourcesRestClient.CreateGetSqlContainerRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _sqlResourcesRestClient.CreateGetSqlContainerRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CosmosDBSqlContainerData> response = Response.FromValue(CosmosDBSqlContainerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlResourcesRestClient.CreateGetSqlContainerRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _sqlResourcesRestClient.CreateGetSqlContainerRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CosmosDBSqlContainerData> response = Response.FromValue(CosmosDBSqlContainerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlResourcesRestClient.CreateDeleteSqlContainerRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _sqlResourcesRestClient.CreateDeleteSqlContainerRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation operation = new CosmosDBArmOperation(_sqlResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlResourcesRestClient.CreateDeleteSqlContainerRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _sqlResourcesRestClient.CreateDeleteSqlContainerRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation operation = new CosmosDBArmOperation(_sqlResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlResourcesRestClient.CreateGetSqlContainerPartitionMergeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, MergeContent.ToRequestContent(content), context);
+                using HttpMessage message = _sqlResourcesRestClient.CreateGetSqlContainerPartitionMergeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, MergeContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<CosmosDBPhysicalPartitionStorageInfoList> operation = new CosmosDBArmOperation<CosmosDBPhysicalPartitionStorageInfoList>(
                     new CosmosDBPhysicalPartitionStorageInfoListOperationSource(),
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlResourcesRestClient.CreateGetSqlContainerPartitionMergeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, MergeContent.ToRequestContent(content), context);
+                using HttpMessage message = _sqlResourcesRestClient.CreateGetSqlContainerPartitionMergeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, MergeContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<CosmosDBPhysicalPartitionStorageInfoList> operation = new CosmosDBArmOperation<CosmosDBPhysicalPartitionStorageInfoList>(
                     new CosmosDBPhysicalPartitionStorageInfoListOperationSource(),
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlResourcesRestClient.CreateRetrieveContinuousBackupInformationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ContinuousBackupRestoreLocation.ToRequestContent(location), context);
+                using HttpMessage message = _sqlResourcesRestClient.CreateRetrieveContinuousBackupInformationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ContinuousBackupRestoreLocation.ToRequestContent(location), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<CosmosDBBackupInformation> operation = new CosmosDBArmOperation<CosmosDBBackupInformation>(
                     new CosmosDBBackupInformationOperationSource(),
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlResourcesRestClient.CreateRetrieveContinuousBackupInformationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ContinuousBackupRestoreLocation.ToRequestContent(location), context);
+                using HttpMessage message = _sqlResourcesRestClient.CreateRetrieveContinuousBackupInformationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ContinuousBackupRestoreLocation.ToRequestContent(location), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<CosmosDBBackupInformation> operation = new CosmosDBArmOperation<CosmosDBBackupInformation>(
                     new CosmosDBBackupInformationOperationSource(),
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlResourcesRestClient.CreateCreateUpdateSqlContainerRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CosmosDBSqlContainerCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _sqlResourcesRestClient.CreateCreateUpdateSqlContainerRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CosmosDBSqlContainerCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<CosmosDBSqlContainerResource> operation = new CosmosDBArmOperation<CosmosDBSqlContainerResource>(
                     new CosmosDBSqlContainerResourceOperationSource(Client),
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlResourcesRestClient.CreateCreateUpdateSqlContainerRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CosmosDBSqlContainerCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _sqlResourcesRestClient.CreateCreateUpdateSqlContainerRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CosmosDBSqlContainerCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<CosmosDBSqlContainerResource> operation = new CosmosDBArmOperation<CosmosDBSqlContainerResource>(
                     new CosmosDBSqlContainerResourceOperationSource(Client),

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCircuitsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, circuitName, ExpressRouteCircuitData.ToRequestContent(data), context);
+                using HttpMessage message = _expressRouteCircuitsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, circuitName, ExpressRouteCircuitData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<ExpressRouteCircuitResource> operation = new NetworkArmOperation<ExpressRouteCircuitResource>(
                     new ExpressRouteCircuitResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCircuitsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, circuitName, ExpressRouteCircuitData.ToRequestContent(data), context);
+                using HttpMessage message = _expressRouteCircuitsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, circuitName, ExpressRouteCircuitData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<ExpressRouteCircuitResource> operation = new NetworkArmOperation<ExpressRouteCircuitResource>(
                     new ExpressRouteCircuitResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCircuitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, circuitName, context);
+                using HttpMessage message = _expressRouteCircuitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, circuitName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExpressRouteCircuitData> response = Response.FromValue(ExpressRouteCircuitData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCircuitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, circuitName, context);
+                using HttpMessage message = _expressRouteCircuitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, circuitName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExpressRouteCircuitData> response = Response.FromValue(ExpressRouteCircuitData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCircuitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, circuitName, context);
+                using HttpMessage message = _expressRouteCircuitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, circuitName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ExpressRouteCircuitData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCircuitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, circuitName, context);
+                using HttpMessage message = _expressRouteCircuitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, circuitName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ExpressRouteCircuitData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCircuitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, circuitName, context);
+                using HttpMessage message = _expressRouteCircuitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, circuitName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ExpressRouteCircuitData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCircuitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, circuitName, context);
+                using HttpMessage message = _expressRouteCircuitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, circuitName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ExpressRouteCircuitData> response = default;

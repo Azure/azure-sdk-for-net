@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _managedDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ManagedDatabaseData> response = Response.FromValue(ManagedDatabaseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _managedDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ManagedDatabaseData> response = Response.FromValue(ManagedDatabaseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedDatabasesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ManagedDatabasePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _managedDatabasesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ManagedDatabasePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation<ManagedDatabaseResource> operation = new SqlArmOperation<ManagedDatabaseResource>(
                     new ManagedDatabaseResourceOperationSource(Client),
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedDatabasesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ManagedDatabasePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _managedDatabasesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ManagedDatabasePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation<ManagedDatabaseResource> operation = new SqlArmOperation<ManagedDatabaseResource>(
                     new ManagedDatabaseResourceOperationSource(Client),
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedDatabasesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _managedDatabasesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation operation = new SqlArmOperation(_managedDatabasesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedDatabasesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _managedDatabasesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation operation = new SqlArmOperation(_managedDatabasesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedDatabasesRestClient.CreateCancelMoveRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ManagedDatabaseMoveDefinition.ToRequestContent(managedDatabaseMoveDefinition), context);
+                using HttpMessage message = _managedDatabasesRestClient.CreateCancelMoveRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ManagedDatabaseMoveDefinition.ToRequestContent(managedDatabaseMoveDefinition), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation operation = new SqlArmOperation(_managedDatabasesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedDatabasesRestClient.CreateCancelMoveRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ManagedDatabaseMoveDefinition.ToRequestContent(managedDatabaseMoveDefinition), context);
+                using HttpMessage message = _managedDatabasesRestClient.CreateCancelMoveRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ManagedDatabaseMoveDefinition.ToRequestContent(managedDatabaseMoveDefinition), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation operation = new SqlArmOperation(_managedDatabasesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedDatabasesRestClient.CreateCompleteMoveRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ManagedDatabaseMoveDefinition.ToRequestContent(managedDatabaseMoveDefinition), context);
+                using HttpMessage message = _managedDatabasesRestClient.CreateCompleteMoveRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ManagedDatabaseMoveDefinition.ToRequestContent(managedDatabaseMoveDefinition), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation operation = new SqlArmOperation(_managedDatabasesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedDatabasesRestClient.CreateCompleteMoveRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ManagedDatabaseMoveDefinition.ToRequestContent(managedDatabaseMoveDefinition), context);
+                using HttpMessage message = _managedDatabasesRestClient.CreateCompleteMoveRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ManagedDatabaseMoveDefinition.ToRequestContent(managedDatabaseMoveDefinition), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation operation = new SqlArmOperation(_managedDatabasesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -672,7 +672,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedDatabasesRestClient.CreateCompleteRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CompleteDatabaseRestoreDefinition.ToRequestContent(completeDatabaseRestoreDefinition), context);
+                using HttpMessage message = _managedDatabasesRestClient.CreateCompleteRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CompleteDatabaseRestoreDefinition.ToRequestContent(completeDatabaseRestoreDefinition), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation operation = new SqlArmOperation(_managedDatabasesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -725,7 +725,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedDatabasesRestClient.CreateCompleteRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CompleteDatabaseRestoreDefinition.ToRequestContent(completeDatabaseRestoreDefinition), context);
+                using HttpMessage message = _managedDatabasesRestClient.CreateCompleteRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CompleteDatabaseRestoreDefinition.ToRequestContent(completeDatabaseRestoreDefinition), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation operation = new SqlArmOperation(_managedDatabasesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -777,7 +777,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedDatabaseRecommendedSensitivityLabelsRestClient.CreateUpdateRecommendedManagedDatabaseSensitivityLabelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RecommendedSensitivityLabelUpdateList.ToRequestContent(recommendedSensitivityLabelUpdateList), context);
+                using HttpMessage message = _managedDatabaseRecommendedSensitivityLabelsRestClient.CreateUpdateRecommendedManagedDatabaseSensitivityLabelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RecommendedSensitivityLabelUpdateList.ToRequestContent(recommendedSensitivityLabelUpdateList), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -824,7 +824,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedDatabaseRecommendedSensitivityLabelsRestClient.CreateUpdateRecommendedManagedDatabaseSensitivityLabelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RecommendedSensitivityLabelUpdateList.ToRequestContent(recommendedSensitivityLabelUpdateList), context);
+                using HttpMessage message = _managedDatabaseRecommendedSensitivityLabelsRestClient.CreateUpdateRecommendedManagedDatabaseSensitivityLabelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RecommendedSensitivityLabelUpdateList.ToRequestContent(recommendedSensitivityLabelUpdateList), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -965,7 +965,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedDatabaseSensitivityLabelsRestClient.CreateUpdateManagedDatabaseSensitivityLabelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SensitivityLabelUpdateList.ToRequestContent(sensitivityLabelUpdateList), context);
+                using HttpMessage message = _managedDatabaseSensitivityLabelsRestClient.CreateUpdateManagedDatabaseSensitivityLabelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SensitivityLabelUpdateList.ToRequestContent(sensitivityLabelUpdateList), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -1012,7 +1012,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedDatabaseSensitivityLabelsRestClient.CreateUpdateManagedDatabaseSensitivityLabelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SensitivityLabelUpdateList.ToRequestContent(sensitivityLabelUpdateList), context);
+                using HttpMessage message = _managedDatabaseSensitivityLabelsRestClient.CreateUpdateManagedDatabaseSensitivityLabelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SensitivityLabelUpdateList.ToRequestContent(sensitivityLabelUpdateList), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -1056,7 +1056,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedDatabasesRestClient.CreateReevaluateInaccessibleDatabaseStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _managedDatabasesRestClient.CreateReevaluateInaccessibleDatabaseStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation<ManagedDatabaseResource> operation = new SqlArmOperation<ManagedDatabaseResource>(
                     new ManagedDatabaseResourceOperationSource(Client),
@@ -1111,7 +1111,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedDatabasesRestClient.CreateReevaluateInaccessibleDatabaseStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _managedDatabasesRestClient.CreateReevaluateInaccessibleDatabaseStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation<ManagedDatabaseResource> operation = new SqlArmOperation<ManagedDatabaseResource>(
                     new ManagedDatabaseResourceOperationSource(Client),
@@ -1170,7 +1170,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedDatabasesRestClient.CreateStartMoveRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ManagedDatabaseStartMoveDefinition.ToRequestContent(managedDatabaseStartMoveDefinition), context);
+                using HttpMessage message = _managedDatabasesRestClient.CreateStartMoveRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ManagedDatabaseStartMoveDefinition.ToRequestContent(managedDatabaseStartMoveDefinition), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation operation = new SqlArmOperation(_managedDatabasesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1223,7 +1223,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedDatabasesRestClient.CreateStartMoveRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ManagedDatabaseStartMoveDefinition.ToRequestContent(managedDatabaseStartMoveDefinition), context);
+                using HttpMessage message = _managedDatabasesRestClient.CreateStartMoveRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ManagedDatabaseStartMoveDefinition.ToRequestContent(managedDatabaseStartMoveDefinition), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation operation = new SqlArmOperation(_managedDatabasesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1262,7 +1262,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _managedDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _managedDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ManagedDatabaseData> response = Response.FromValue(ManagedDatabaseData.FromResponse(result), result);
                     return Response.FromValue(new ManagedDatabaseResource(Client, response.Value), response.GetRawResponse());
@@ -1310,7 +1310,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _managedDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _managedDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ManagedDatabaseData> response = Response.FromValue(ManagedDatabaseData.FromResponse(result), result);
                     return Response.FromValue(new ManagedDatabaseResource(Client, response.Value), response.GetRawResponse());
@@ -1356,7 +1356,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _managedDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _managedDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ManagedDatabaseData> response = Response.FromValue(ManagedDatabaseData.FromResponse(result), result);
                     return Response.FromValue(new ManagedDatabaseResource(Client, response.Value), response.GetRawResponse());
@@ -1398,7 +1398,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _managedDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _managedDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ManagedDatabaseData> response = Response.FromValue(ManagedDatabaseData.FromResponse(result), result);
                     return Response.FromValue(new ManagedDatabaseResource(Client, response.Value), response.GetRawResponse());
@@ -1440,7 +1440,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _managedDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _managedDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ManagedDatabaseData> response = Response.FromValue(ManagedDatabaseData.FromResponse(result), result);
                     return Response.FromValue(new ManagedDatabaseResource(Client, response.Value), response.GetRawResponse());
@@ -1486,7 +1486,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _managedDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _managedDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ManagedDatabaseData> response = Response.FromValue(ManagedDatabaseData.FromResponse(result), result);
                     return Response.FromValue(new ManagedDatabaseResource(Client, response.Value), response.GetRawResponse());

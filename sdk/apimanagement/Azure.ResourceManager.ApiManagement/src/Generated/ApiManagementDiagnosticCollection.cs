@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _diagnosticRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diagnosticId, DiagnosticContractData.ToRequestContent(data), ifMatch, context);
+                using HttpMessage message = _diagnosticRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diagnosticId, DiagnosticContractData.ToRequestContent(data), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DiagnosticContractData> response = Response.FromValue(DiagnosticContractData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _diagnosticRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diagnosticId, DiagnosticContractData.ToRequestContent(data), ifMatch, context);
+                using HttpMessage message = _diagnosticRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diagnosticId, DiagnosticContractData.ToRequestContent(data), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DiagnosticContractData> response = Response.FromValue(DiagnosticContractData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _diagnosticRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diagnosticId, context);
+                using HttpMessage message = _diagnosticRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diagnosticId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DiagnosticContractData> response = Response.FromValue(DiagnosticContractData.FromResponse(result), result);
                 if (response.Value == null)
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _diagnosticRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diagnosticId, context);
+                using HttpMessage message = _diagnosticRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diagnosticId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DiagnosticContractData> response = Response.FromValue(DiagnosticContractData.FromResponse(result), result);
                 if (response.Value == null)
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _diagnosticRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diagnosticId, context);
+                using HttpMessage message = _diagnosticRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diagnosticId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DiagnosticContractData> response = default;
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _diagnosticRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diagnosticId, context);
+                using HttpMessage message = _diagnosticRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diagnosticId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DiagnosticContractData> response = default;
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _diagnosticRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diagnosticId, context);
+                using HttpMessage message = _diagnosticRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diagnosticId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DiagnosticContractData> response = default;
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _diagnosticRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diagnosticId, context);
+                using HttpMessage message = _diagnosticRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diagnosticId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DiagnosticContractData> response = default;

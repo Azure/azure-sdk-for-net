@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetManagedNamespacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNamespaceName, ContainerServiceFleetManagedNamespaceData.ToRequestContent(data), matchConditions, context);
+                using HttpMessage message = _fleetManagedNamespacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNamespaceName, ContainerServiceFleetManagedNamespaceData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceFleetArmOperation<ContainerServiceFleetManagedNamespaceResource> operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetManagedNamespaceResource>(
                     new ContainerServiceFleetManagedNamespaceResourceOperationSource(Client),
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetManagedNamespacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNamespaceName, ContainerServiceFleetManagedNamespaceData.ToRequestContent(data), matchConditions, context);
+                using HttpMessage message = _fleetManagedNamespacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNamespaceName, ContainerServiceFleetManagedNamespaceData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceFleetArmOperation<ContainerServiceFleetManagedNamespaceResource> operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetManagedNamespaceResource>(
                     new ContainerServiceFleetManagedNamespaceResourceOperationSource(Client),
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetManagedNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNamespaceName, context);
+                using HttpMessage message = _fleetManagedNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNamespaceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerServiceFleetManagedNamespaceData> response = Response.FromValue(ContainerServiceFleetManagedNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetManagedNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNamespaceName, context);
+                using HttpMessage message = _fleetManagedNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNamespaceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerServiceFleetManagedNamespaceData> response = Response.FromValue(ContainerServiceFleetManagedNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetManagedNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNamespaceName, context);
+                using HttpMessage message = _fleetManagedNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNamespaceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ContainerServiceFleetManagedNamespaceData> response = default;
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetManagedNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNamespaceName, context);
+                using HttpMessage message = _fleetManagedNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNamespaceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ContainerServiceFleetManagedNamespaceData> response = default;
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetManagedNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNamespaceName, context);
+                using HttpMessage message = _fleetManagedNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNamespaceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ContainerServiceFleetManagedNamespaceData> response = default;
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetManagedNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNamespaceName, context);
+                using HttpMessage message = _fleetManagedNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNamespaceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ContainerServiceFleetManagedNamespaceData> response = default;

@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _updateRunsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _updateRunsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HciClusterUpdateRunData> response = Response.FromValue(HciClusterUpdateRunData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _updateRunsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _updateRunsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HciClusterUpdateRunData> response = Response.FromValue(HciClusterUpdateRunData.FromResponse(result), result);
                 if (response.Value == null)
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _updateRunsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _updateRunsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation operation = new HciArmOperation(_updateRunsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _updateRunsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _updateRunsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation operation = new HciArmOperation(_updateRunsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _updateRunsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, HciClusterUpdateRunData.ToRequestContent(data), context);
+                using HttpMessage message = _updateRunsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, HciClusterUpdateRunData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HciClusterUpdateRunData> response = Response.FromValue(HciClusterUpdateRunData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _updateRunsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, HciClusterUpdateRunData.ToRequestContent(data), context);
+                using HttpMessage message = _updateRunsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, HciClusterUpdateRunData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HciClusterUpdateRunData> response = Response.FromValue(HciClusterUpdateRunData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

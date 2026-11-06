@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tasksRestClient.CreateGetResourceGroupLevelTaskRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, taskName, context);
+                using HttpMessage message = _tasksRestClient.CreateGetResourceGroupLevelTaskRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, taskName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityTaskData> response = Response.FromValue(SecurityTaskData.FromResponse(result), result);
                 if (response.Value == null)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tasksRestClient.CreateGetResourceGroupLevelTaskRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, taskName, context);
+                using HttpMessage message = _tasksRestClient.CreateGetResourceGroupLevelTaskRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, taskName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityTaskData> response = Response.FromValue(SecurityTaskData.FromResponse(result), result);
                 if (response.Value == null)
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tasksRestClient.CreateGetResourceGroupLevelTaskRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, taskName, context);
+                using HttpMessage message = _tasksRestClient.CreateGetResourceGroupLevelTaskRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, taskName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SecurityTaskData> response = default;
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tasksRestClient.CreateGetResourceGroupLevelTaskRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, taskName, context);
+                using HttpMessage message = _tasksRestClient.CreateGetResourceGroupLevelTaskRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, taskName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SecurityTaskData> response = default;
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tasksRestClient.CreateGetResourceGroupLevelTaskRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, taskName, context);
+                using HttpMessage message = _tasksRestClient.CreateGetResourceGroupLevelTaskRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, taskName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SecurityTaskData> response = default;
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tasksRestClient.CreateGetResourceGroupLevelTaskRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, taskName, context);
+                using HttpMessage message = _tasksRestClient.CreateGetResourceGroupLevelTaskRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, taskName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SecurityTaskData> response = default;

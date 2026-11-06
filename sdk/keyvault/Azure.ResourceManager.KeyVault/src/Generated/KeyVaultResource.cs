@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _vaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<KeyVaultData> response = Response.FromValue(KeyVaultData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _vaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<KeyVaultData> response = Response.FromValue(KeyVaultData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vaultsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, KeyVaultPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _vaultsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, KeyVaultPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<KeyVaultData> response = Response.FromValue(KeyVaultData.FromResponse(result), result);
                 if (response.Value == null)
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vaultsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, KeyVaultPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _vaultsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, KeyVaultPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<KeyVaultData> response = Response.FromValue(KeyVaultData.FromResponse(result), result);
                 if (response.Value == null)
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vaultsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _vaultsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vaultsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _vaultsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vaultsRestClient.CreateUpdateAccessPolicyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, operationKind.ToSerialString(), KeyVaultAccessPolicyParameters.ToRequestContent(content), context);
+                using HttpMessage message = _vaultsRestClient.CreateUpdateAccessPolicyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, operationKind.ToSerialString(), KeyVaultAccessPolicyParameters.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<KeyVaultAccessPolicyParameters> response = Response.FromValue(KeyVaultAccessPolicyParameters.FromResponse(result), result);
                 if (response.Value == null)
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vaultsRestClient.CreateUpdateAccessPolicyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, operationKind.ToSerialString(), KeyVaultAccessPolicyParameters.ToRequestContent(content), context);
+                using HttpMessage message = _vaultsRestClient.CreateUpdateAccessPolicyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, operationKind.ToSerialString(), KeyVaultAccessPolicyParameters.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<KeyVaultAccessPolicyParameters> response = Response.FromValue(KeyVaultAccessPolicyParameters.FromResponse(result), result);
                 if (response.Value == null)
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _vaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _vaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<KeyVaultData> response = Response.FromValue(KeyVaultData.FromResponse(result), result);
                     return Response.FromValue(new KeyVaultResource(Client, response.Value), response.GetRawResponse());
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _vaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _vaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<KeyVaultData> response = Response.FromValue(KeyVaultData.FromResponse(result), result);
                     return Response.FromValue(new KeyVaultResource(Client, response.Value), response.GetRawResponse());
@@ -694,7 +694,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _vaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _vaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<KeyVaultData> response = Response.FromValue(KeyVaultData.FromResponse(result), result);
                     return Response.FromValue(new KeyVaultResource(Client, response.Value), response.GetRawResponse());
@@ -736,7 +736,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _vaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _vaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<KeyVaultData> response = Response.FromValue(KeyVaultData.FromResponse(result), result);
                     return Response.FromValue(new KeyVaultResource(Client, response.Value), response.GetRawResponse());
@@ -778,7 +778,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _vaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _vaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<KeyVaultData> response = Response.FromValue(KeyVaultData.FromResponse(result), result);
                     return Response.FromValue(new KeyVaultResource(Client, response.Value), response.GetRawResponse());
@@ -824,7 +824,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _vaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _vaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<KeyVaultData> response = Response.FromValue(KeyVaultData.FromResponse(result), result);
                     return Response.FromValue(new KeyVaultResource(Client, response.Value), response.GetRawResponse());

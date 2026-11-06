@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _runbookRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runbookName, AutomationRunbookCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _runbookRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runbookName, AutomationRunbookCreateOrUpdateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AutomationRunbookData> response = Response.FromValue(AutomationRunbookData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _runbookRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runbookName, AutomationRunbookCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _runbookRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runbookName, AutomationRunbookCreateOrUpdateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AutomationRunbookData> response = Response.FromValue(AutomationRunbookData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _runbookRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runbookName, context);
+                using HttpMessage message = _runbookRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runbookName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AutomationRunbookData> response = Response.FromValue(AutomationRunbookData.FromResponse(result), result);
                 if (response.Value == null)
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _runbookRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runbookName, context);
+                using HttpMessage message = _runbookRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runbookName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AutomationRunbookData> response = Response.FromValue(AutomationRunbookData.FromResponse(result), result);
                 if (response.Value == null)
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _runbookRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runbookName, context);
+                using HttpMessage message = _runbookRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runbookName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AutomationRunbookData> response = default;
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _runbookRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runbookName, context);
+                using HttpMessage message = _runbookRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runbookName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AutomationRunbookData> response = default;
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _runbookRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runbookName, context);
+                using HttpMessage message = _runbookRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runbookName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AutomationRunbookData> response = default;
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _runbookRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runbookName, context);
+                using HttpMessage message = _runbookRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runbookName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AutomationRunbookData> response = default;

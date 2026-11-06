@@ -1550,7 +1550,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = MdeOnboardingsRestClient.CreateGetMdeOnboardingsRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = MdeOnboardingsRestClient.CreateGetMdeOnboardingsRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MdeOnboardingDataList> response = Response.FromValue(MdeOnboardingDataList.FromResponse(result), result);
                 if (response.Value == null)
@@ -1594,7 +1594,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = MdeOnboardingsRestClient.CreateGetMdeOnboardingsRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = MdeOnboardingsRestClient.CreateGetMdeOnboardingsRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MdeOnboardingDataList> response = Response.FromValue(MdeOnboardingDataList.FromResponse(result), result);
                 if (response.Value == null)
@@ -1862,7 +1862,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SecuritySolutionsReferenceDataOperationGroupRestClient.CreateGetAllSecuritySolutionsReferenceDataRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = SecuritySolutionsReferenceDataOperationGroupRestClient.CreateGetAllSecuritySolutionsReferenceDataRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecuritySolutionsReferenceInfoList> response = Response.FromValue(SecuritySolutionsReferenceInfoList.FromResponse(result), result);
                 if (response.Value == null)
@@ -1906,7 +1906,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SecuritySolutionsReferenceDataOperationGroupRestClient.CreateGetAllSecuritySolutionsReferenceDataRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = SecuritySolutionsReferenceDataOperationGroupRestClient.CreateGetAllSecuritySolutionsReferenceDataRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecuritySolutionsReferenceInfoList> response = Response.FromValue(SecuritySolutionsReferenceInfoList.FromResponse(result), result);
                 if (response.Value == null)

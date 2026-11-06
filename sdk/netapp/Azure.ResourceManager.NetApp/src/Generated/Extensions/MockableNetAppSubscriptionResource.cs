@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NetAppResourceRestClient.CreateCheckNetAppNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, NetAppNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = NetAppResourceRestClient.CreateCheckNetAppNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, NetAppNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetAppCheckAvailabilityResult> response = Response.FromValue(NetAppCheckAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NetAppResourceRestClient.CreateCheckNetAppNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, NetAppNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = NetAppResourceRestClient.CreateCheckNetAppNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, NetAppNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetAppCheckAvailabilityResult> response = Response.FromValue(NetAppCheckAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NetAppResourceRestClient.CreateCheckNetAppFilePathAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, NetAppFilePathAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = NetAppResourceRestClient.CreateCheckNetAppFilePathAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, NetAppFilePathAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetAppCheckAvailabilityResult> response = Response.FromValue(NetAppCheckAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NetAppResourceRestClient.CreateCheckNetAppFilePathAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, NetAppFilePathAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = NetAppResourceRestClient.CreateCheckNetAppFilePathAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, NetAppFilePathAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetAppCheckAvailabilityResult> response = Response.FromValue(NetAppCheckAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NetAppResourceRestClient.CreateCheckNetAppQuotaAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, NetAppQuotaAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = NetAppResourceRestClient.CreateCheckNetAppQuotaAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, NetAppQuotaAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetAppCheckAvailabilityResult> response = Response.FromValue(NetAppCheckAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NetAppResourceRestClient.CreateCheckNetAppQuotaAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, NetAppQuotaAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = NetAppResourceRestClient.CreateCheckNetAppQuotaAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, NetAppQuotaAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetAppCheckAvailabilityResult> response = Response.FromValue(NetAppCheckAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -662,7 +662,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NetAppResourceRestClient.CreateQueryRegionInfoNetAppResourceRequest(Guid.Parse(Id.SubscriptionId), location, context);
+                using HttpMessage message = NetAppResourceRestClient.CreateQueryRegionInfoNetAppResourceRequest(Guid.Parse(Id.SubscriptionId), location, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetAppRegionInfo> response = Response.FromValue(NetAppRegionInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -707,7 +707,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NetAppResourceRestClient.CreateQueryRegionInfoNetAppResourceRequest(Guid.Parse(Id.SubscriptionId), location, context);
+                using HttpMessage message = NetAppResourceRestClient.CreateQueryRegionInfoNetAppResourceRequest(Guid.Parse(Id.SubscriptionId), location, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetAppRegionInfo> response = Response.FromValue(NetAppRegionInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -756,7 +756,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NetAppResourceRestClient.CreateQueryNetworkSiblingSetNetAppResourceRequest(Guid.Parse(Id.SubscriptionId), location, QueryNetworkSiblingSetContent.ToRequestContent(content), context);
+                using HttpMessage message = NetAppResourceRestClient.CreateQueryNetworkSiblingSetNetAppResourceRequest(Guid.Parse(Id.SubscriptionId), location, QueryNetworkSiblingSetContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkSiblingSet> response = Response.FromValue(NetworkSiblingSet.FromResponse(result), result);
                 if (response.Value == null)
@@ -805,7 +805,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NetAppResourceRestClient.CreateQueryNetworkSiblingSetNetAppResourceRequest(Guid.Parse(Id.SubscriptionId), location, QueryNetworkSiblingSetContent.ToRequestContent(content), context);
+                using HttpMessage message = NetAppResourceRestClient.CreateQueryNetworkSiblingSetNetAppResourceRequest(Guid.Parse(Id.SubscriptionId), location, QueryNetworkSiblingSetContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkSiblingSet> response = Response.FromValue(NetworkSiblingSet.FromResponse(result), result);
                 if (response.Value == null)
@@ -855,7 +855,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NetAppResourceRestClient.CreateUpdateNetworkSiblingSetNetAppResourceRequest(Guid.Parse(Id.SubscriptionId), location, UpdateNetworkSiblingSetContent.ToRequestContent(content), context);
+                using HttpMessage message = NetAppResourceRestClient.CreateUpdateNetworkSiblingSetNetAppResourceRequest(Guid.Parse(Id.SubscriptionId), location, UpdateNetworkSiblingSetContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation<NetworkSiblingSet> operation = new NetAppArmOperation<NetworkSiblingSet>(
                     new NetworkSiblingSetOperationSource(),
@@ -911,7 +911,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NetAppResourceRestClient.CreateUpdateNetworkSiblingSetNetAppResourceRequest(Guid.Parse(Id.SubscriptionId), location, UpdateNetworkSiblingSetContent.ToRequestContent(content), context);
+                using HttpMessage message = NetAppResourceRestClient.CreateUpdateNetworkSiblingSetNetAppResourceRequest(Guid.Parse(Id.SubscriptionId), location, UpdateNetworkSiblingSetContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation<NetworkSiblingSet> operation = new NetAppArmOperation<NetworkSiblingSet>(
                     new NetworkSiblingSetOperationSource(),
@@ -1025,7 +1025,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NetAppResourceUsagesRestClient.CreateGetNetAppResourceUsageRequest(Guid.Parse(Id.SubscriptionId), location, usageType, context);
+                using HttpMessage message = NetAppResourceUsagesRestClient.CreateGetNetAppResourceUsageRequest(Guid.Parse(Id.SubscriptionId), location, usageType, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetAppUsageResult> response = Response.FromValue(NetAppUsageResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1075,7 +1075,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NetAppResourceUsagesRestClient.CreateGetNetAppResourceUsageRequest(Guid.Parse(Id.SubscriptionId), location, usageType, context);
+                using HttpMessage message = NetAppResourceUsagesRestClient.CreateGetNetAppResourceUsageRequest(Guid.Parse(Id.SubscriptionId), location, usageType, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetAppUsageResult> response = Response.FromValue(NetAppUsageResult.FromResponse(result), result);
                 if (response.Value == null)

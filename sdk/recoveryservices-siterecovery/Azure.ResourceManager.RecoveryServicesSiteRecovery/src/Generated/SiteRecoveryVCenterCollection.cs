@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationvCentersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, vCenterName, SiteRecoveryVCenterCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _replicationvCentersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, vCenterName, SiteRecoveryVCenterCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryVCenterResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryVCenterResource>(
                     new SiteRecoveryVCenterResourceOperationSource(Client),
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationvCentersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, vCenterName, SiteRecoveryVCenterCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _replicationvCentersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, vCenterName, SiteRecoveryVCenterCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryVCenterResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryVCenterResource>(
                     new SiteRecoveryVCenterResourceOperationSource(Client),
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationvCentersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, vCenterName, context);
+                using HttpMessage message = _replicationvCentersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, vCenterName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SiteRecoveryVCenterData> response = Response.FromValue(SiteRecoveryVCenterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationvCentersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, vCenterName, context);
+                using HttpMessage message = _replicationvCentersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, vCenterName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SiteRecoveryVCenterData> response = Response.FromValue(SiteRecoveryVCenterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationvCentersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, vCenterName, context);
+                using HttpMessage message = _replicationvCentersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, vCenterName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SiteRecoveryVCenterData> response = default;
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationvCentersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, vCenterName, context);
+                using HttpMessage message = _replicationvCentersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, vCenterName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SiteRecoveryVCenterData> response = default;
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationvCentersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, vCenterName, context);
+                using HttpMessage message = _replicationvCentersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, vCenterName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SiteRecoveryVCenterData> response = default;
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationvCentersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, vCenterName, context);
+                using HttpMessage message = _replicationvCentersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, vCenterName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SiteRecoveryVCenterData> response = default;

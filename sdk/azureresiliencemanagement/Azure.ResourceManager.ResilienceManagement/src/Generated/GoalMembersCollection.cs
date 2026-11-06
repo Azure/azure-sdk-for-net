@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ResilienceManagement
     /// <summary>
     /// A class representing a collection of <see cref="GoalMembersResource"/> and their operations.
     /// Each <see cref="GoalMembersResource"/> in the collection will belong to the same instance of <see cref="GoalAssignmentResource"/>.
-    /// To get a <see cref="GoalMembersCollection"/> instance call the GetGoalMembers method from an instance of <see cref="GoalAssignmentResource"/>.
+    /// To get a <see cref="GoalMembersCollection"/> instance call the GetAllGoalMembers method from an instance of <see cref="GoalAssignmentResource"/>.
     /// </summary>
     public partial class GoalMembersCollection : ArmCollection, IEnumerable<GoalMembersResource>, IAsyncEnumerable<GoalMembersResource>
     {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _goalResourcesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, goalResourceName, context);
+                using HttpMessage message = _goalResourcesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, goalResourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GoalMembersData> response = Response.FromValue(GoalMembersData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _goalResourcesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, goalResourceName, context);
+                using HttpMessage message = _goalResourcesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, goalResourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GoalMembersData> response = Response.FromValue(GoalMembersData.FromResponse(result), result);
                 if (response.Value == null)
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _goalResourcesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, goalResourceName, context);
+                using HttpMessage message = _goalResourcesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, goalResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<GoalMembersData> response = default;
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _goalResourcesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, goalResourceName, context);
+                using HttpMessage message = _goalResourcesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, goalResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<GoalMembersData> response = default;
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _goalResourcesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, goalResourceName, context);
+                using HttpMessage message = _goalResourcesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, goalResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<GoalMembersData> response = default;
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _goalResourcesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, goalResourceName, context);
+                using HttpMessage message = _goalResourcesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, goalResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<GoalMembersData> response = default;

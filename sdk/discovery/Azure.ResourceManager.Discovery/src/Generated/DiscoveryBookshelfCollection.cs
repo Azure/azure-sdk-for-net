@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bookshelvesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, bookshelfName, DiscoveryBookshelfData.ToRequestContent(data), context);
+                using HttpMessage message = _bookshelvesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, bookshelfName, DiscoveryBookshelfData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DiscoveryArmOperation<DiscoveryBookshelfResource> operation = new DiscoveryArmOperation<DiscoveryBookshelfResource>(
                     new DiscoveryBookshelfResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bookshelvesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, bookshelfName, DiscoveryBookshelfData.ToRequestContent(data), context);
+                using HttpMessage message = _bookshelvesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, bookshelfName, DiscoveryBookshelfData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DiscoveryArmOperation<DiscoveryBookshelfResource> operation = new DiscoveryArmOperation<DiscoveryBookshelfResource>(
                     new DiscoveryBookshelfResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bookshelvesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, bookshelfName, context);
+                using HttpMessage message = _bookshelvesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, bookshelfName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DiscoveryBookshelfData> response = Response.FromValue(DiscoveryBookshelfData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bookshelvesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, bookshelfName, context);
+                using HttpMessage message = _bookshelvesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, bookshelfName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DiscoveryBookshelfData> response = Response.FromValue(DiscoveryBookshelfData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bookshelvesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, bookshelfName, context);
+                using HttpMessage message = _bookshelvesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, bookshelfName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DiscoveryBookshelfData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bookshelvesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, bookshelfName, context);
+                using HttpMessage message = _bookshelvesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, bookshelfName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DiscoveryBookshelfData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bookshelvesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, bookshelfName, context);
+                using HttpMessage message = _bookshelvesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, bookshelfName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DiscoveryBookshelfData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bookshelvesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, bookshelfName, context);
+                using HttpMessage message = _bookshelvesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, bookshelfName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DiscoveryBookshelfData> response = default;

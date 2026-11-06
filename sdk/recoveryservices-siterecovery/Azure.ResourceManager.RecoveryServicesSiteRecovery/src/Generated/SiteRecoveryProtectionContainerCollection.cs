@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationProtectionContainersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, protectionContainerName, SiteRecoveryProtectionContainerCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _replicationProtectionContainersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, protectionContainerName, SiteRecoveryProtectionContainerCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryProtectionContainerResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryProtectionContainerResource>(
                     new SiteRecoveryProtectionContainerResourceOperationSource(Client),
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationProtectionContainersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, protectionContainerName, SiteRecoveryProtectionContainerCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _replicationProtectionContainersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, protectionContainerName, SiteRecoveryProtectionContainerCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryProtectionContainerResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryProtectionContainerResource>(
                     new SiteRecoveryProtectionContainerResourceOperationSource(Client),
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationProtectionContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, protectionContainerName, context);
+                using HttpMessage message = _replicationProtectionContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, protectionContainerName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SiteRecoveryProtectionContainerData> response = Response.FromValue(SiteRecoveryProtectionContainerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationProtectionContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, protectionContainerName, context);
+                using HttpMessage message = _replicationProtectionContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, protectionContainerName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SiteRecoveryProtectionContainerData> response = Response.FromValue(SiteRecoveryProtectionContainerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationProtectionContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, protectionContainerName, context);
+                using HttpMessage message = _replicationProtectionContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, protectionContainerName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SiteRecoveryProtectionContainerData> response = default;
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationProtectionContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, protectionContainerName, context);
+                using HttpMessage message = _replicationProtectionContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, protectionContainerName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SiteRecoveryProtectionContainerData> response = default;
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationProtectionContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, protectionContainerName, context);
+                using HttpMessage message = _replicationProtectionContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, protectionContainerName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SiteRecoveryProtectionContainerData> response = default;
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationProtectionContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, protectionContainerName, context);
+                using HttpMessage message = _replicationProtectionContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, protectionContainerName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SiteRecoveryProtectionContainerData> response = default;

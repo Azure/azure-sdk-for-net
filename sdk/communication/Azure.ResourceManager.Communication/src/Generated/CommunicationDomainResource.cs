@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Communication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _domainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CommunicationDomainResourceData> response = Response.FromValue(CommunicationDomainResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Communication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _domainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CommunicationDomainResourceData> response = Response.FromValue(CommunicationDomainResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Communication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CommunicationDomainResourcePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _domainsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CommunicationDomainResourcePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CommunicationArmOperation<CommunicationDomainResource> operation = new CommunicationArmOperation<CommunicationDomainResource>(
                     new CommunicationDomainResourceOperationSource(Client),
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Communication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CommunicationDomainResourcePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _domainsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CommunicationDomainResourcePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CommunicationArmOperation<CommunicationDomainResource> operation = new CommunicationArmOperation<CommunicationDomainResource>(
                     new CommunicationDomainResourceOperationSource(Client),
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Communication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _domainsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CommunicationArmOperation operation = new CommunicationArmOperation(_domainsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.Communication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _domainsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CommunicationArmOperation operation = new CommunicationArmOperation(_domainsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.Communication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainsRestClient.CreateCancelVerificationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DomainsRecordVerificationContent.ToRequestContent(content), context);
+                using HttpMessage message = _domainsRestClient.CreateCancelVerificationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DomainsRecordVerificationContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CommunicationArmOperation operation = new CommunicationArmOperation(_domainsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.Communication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainsRestClient.CreateCancelVerificationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DomainsRecordVerificationContent.ToRequestContent(content), context);
+                using HttpMessage message = _domainsRestClient.CreateCancelVerificationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DomainsRecordVerificationContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CommunicationArmOperation operation = new CommunicationArmOperation(_domainsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.Communication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainsRestClient.CreateInitiateVerificationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DomainsRecordVerificationContent.ToRequestContent(content), context);
+                using HttpMessage message = _domainsRestClient.CreateInitiateVerificationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DomainsRecordVerificationContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CommunicationArmOperation operation = new CommunicationArmOperation(_domainsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.Communication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainsRestClient.CreateInitiateVerificationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DomainsRecordVerificationContent.ToRequestContent(content), context);
+                using HttpMessage message = _domainsRestClient.CreateInitiateVerificationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DomainsRecordVerificationContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CommunicationArmOperation operation = new CommunicationArmOperation(_domainsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -642,7 +642,7 @@ namespace Azure.ResourceManager.Communication
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _domainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _domainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<CommunicationDomainResourceData> response = Response.FromValue(CommunicationDomainResourceData.FromResponse(result), result);
                     return Response.FromValue(new CommunicationDomainResource(Client, response.Value), response.GetRawResponse());
@@ -690,7 +690,7 @@ namespace Azure.ResourceManager.Communication
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _domainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _domainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<CommunicationDomainResourceData> response = Response.FromValue(CommunicationDomainResourceData.FromResponse(result), result);
                     return Response.FromValue(new CommunicationDomainResource(Client, response.Value), response.GetRawResponse());
@@ -736,7 +736,7 @@ namespace Azure.ResourceManager.Communication
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _domainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _domainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<CommunicationDomainResourceData> response = Response.FromValue(CommunicationDomainResourceData.FromResponse(result), result);
                     return Response.FromValue(new CommunicationDomainResource(Client, response.Value), response.GetRawResponse());
@@ -778,7 +778,7 @@ namespace Azure.ResourceManager.Communication
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _domainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _domainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<CommunicationDomainResourceData> response = Response.FromValue(CommunicationDomainResourceData.FromResponse(result), result);
                     return Response.FromValue(new CommunicationDomainResource(Client, response.Value), response.GetRawResponse());
@@ -820,7 +820,7 @@ namespace Azure.ResourceManager.Communication
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _domainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _domainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<CommunicationDomainResourceData> response = Response.FromValue(CommunicationDomainResourceData.FromResponse(result), result);
                     return Response.FromValue(new CommunicationDomainResource(Client, response.Value), response.GetRawResponse());
@@ -866,7 +866,7 @@ namespace Azure.ResourceManager.Communication
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _domainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _domainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<CommunicationDomainResourceData> response = Response.FromValue(CommunicationDomainResourceData.FromResponse(result), result);
                     return Response.FromValue(new CommunicationDomainResource(Client, response.Value), response.GetRawResponse());

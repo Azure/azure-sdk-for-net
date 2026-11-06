@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loggerRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, loggerId, ApiManagementLoggerData.ToRequestContent(data), ifMatch, context);
+                using HttpMessage message = _loggerRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, loggerId, ApiManagementLoggerData.ToRequestContent(data), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementLoggerData> response = Response.FromValue(ApiManagementLoggerData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loggerRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, loggerId, ApiManagementLoggerData.ToRequestContent(data), ifMatch, context);
+                using HttpMessage message = _loggerRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, loggerId, ApiManagementLoggerData.ToRequestContent(data), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementLoggerData> response = Response.FromValue(ApiManagementLoggerData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loggerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, loggerId, context);
+                using HttpMessage message = _loggerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, loggerId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementLoggerData> response = Response.FromValue(ApiManagementLoggerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loggerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, loggerId, context);
+                using HttpMessage message = _loggerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, loggerId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementLoggerData> response = Response.FromValue(ApiManagementLoggerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loggerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, loggerId, context);
+                using HttpMessage message = _loggerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, loggerId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementLoggerData> response = default;
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loggerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, loggerId, context);
+                using HttpMessage message = _loggerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, loggerId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementLoggerData> response = default;
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loggerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, loggerId, context);
+                using HttpMessage message = _loggerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, loggerId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementLoggerData> response = default;
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loggerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, loggerId, context);
+                using HttpMessage message = _loggerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, loggerId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementLoggerData> response = default;

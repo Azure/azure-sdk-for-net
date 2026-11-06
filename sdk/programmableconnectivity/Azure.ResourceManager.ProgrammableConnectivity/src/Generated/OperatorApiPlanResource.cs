@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _operatorApiPlansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _operatorApiPlansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OperatorApiPlanData> response = Response.FromValue(OperatorApiPlanData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _operatorApiPlansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _operatorApiPlansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OperatorApiPlanData> response = Response.FromValue(OperatorApiPlanData.FromResponse(result), result);
                 if (response.Value == null)

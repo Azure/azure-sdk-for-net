@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _operatorApiConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _operatorApiConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OperatorApiConnectionData> response = Response.FromValue(OperatorApiConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _operatorApiConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _operatorApiConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OperatorApiConnectionData> response = Response.FromValue(OperatorApiConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _operatorApiConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, OperatorApiConnectionPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _operatorApiConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, OperatorApiConnectionPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ProgrammableConnectivityArmOperation<OperatorApiConnectionResource> operation = new ProgrammableConnectivityArmOperation<OperatorApiConnectionResource>(
                     new OperatorApiConnectionResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _operatorApiConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, OperatorApiConnectionPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _operatorApiConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, OperatorApiConnectionPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ProgrammableConnectivityArmOperation<OperatorApiConnectionResource> operation = new ProgrammableConnectivityArmOperation<OperatorApiConnectionResource>(
                     new OperatorApiConnectionResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _operatorApiConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _operatorApiConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ProgrammableConnectivityArmOperation operation = new ProgrammableConnectivityArmOperation(_operatorApiConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _operatorApiConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _operatorApiConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ProgrammableConnectivityArmOperation operation = new ProgrammableConnectivityArmOperation(_operatorApiConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _operatorApiConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _operatorApiConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<OperatorApiConnectionData> response = Response.FromValue(OperatorApiConnectionData.FromResponse(result), result);
                     return Response.FromValue(new OperatorApiConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _operatorApiConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _operatorApiConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<OperatorApiConnectionData> response = Response.FromValue(OperatorApiConnectionData.FromResponse(result), result);
                     return Response.FromValue(new OperatorApiConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _operatorApiConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _operatorApiConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<OperatorApiConnectionData> response = Response.FromValue(OperatorApiConnectionData.FromResponse(result), result);
                     return Response.FromValue(new OperatorApiConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _operatorApiConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _operatorApiConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<OperatorApiConnectionData> response = Response.FromValue(OperatorApiConnectionData.FromResponse(result), result);
                     return Response.FromValue(new OperatorApiConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _operatorApiConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _operatorApiConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<OperatorApiConnectionData> response = Response.FromValue(OperatorApiConnectionData.FromResponse(result), result);
                     return Response.FromValue(new OperatorApiConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _operatorApiConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _operatorApiConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<OperatorApiConnectionData> response = Response.FromValue(OperatorApiConnectionData.FromResponse(result), result);
                     return Response.FromValue(new OperatorApiConnectionResource(Client, response.Value), response.GetRawResponse());

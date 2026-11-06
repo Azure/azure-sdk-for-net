@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _geoCatalogsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, catalogName, PlanetaryComputerGeoCatalogData.ToRequestContent(data), context);
+                using HttpMessage message = _geoCatalogsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, catalogName, PlanetaryComputerGeoCatalogData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PlanetaryComputerArmOperation<PlanetaryComputerGeoCatalogResource> operation = new PlanetaryComputerArmOperation<PlanetaryComputerGeoCatalogResource>(
                     new PlanetaryComputerGeoCatalogResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _geoCatalogsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, catalogName, PlanetaryComputerGeoCatalogData.ToRequestContent(data), context);
+                using HttpMessage message = _geoCatalogsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, catalogName, PlanetaryComputerGeoCatalogData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PlanetaryComputerArmOperation<PlanetaryComputerGeoCatalogResource> operation = new PlanetaryComputerArmOperation<PlanetaryComputerGeoCatalogResource>(
                     new PlanetaryComputerGeoCatalogResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _geoCatalogsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, catalogName, context);
+                using HttpMessage message = _geoCatalogsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, catalogName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PlanetaryComputerGeoCatalogData> response = Response.FromValue(PlanetaryComputerGeoCatalogData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _geoCatalogsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, catalogName, context);
+                using HttpMessage message = _geoCatalogsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, catalogName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PlanetaryComputerGeoCatalogData> response = Response.FromValue(PlanetaryComputerGeoCatalogData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _geoCatalogsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, catalogName, context);
+                using HttpMessage message = _geoCatalogsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, catalogName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PlanetaryComputerGeoCatalogData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _geoCatalogsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, catalogName, context);
+                using HttpMessage message = _geoCatalogsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, catalogName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PlanetaryComputerGeoCatalogData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _geoCatalogsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, catalogName, context);
+                using HttpMessage message = _geoCatalogsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, catalogName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PlanetaryComputerGeoCatalogData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _geoCatalogsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, catalogName, context);
+                using HttpMessage message = _geoCatalogsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, catalogName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PlanetaryComputerGeoCatalogData> response = default;

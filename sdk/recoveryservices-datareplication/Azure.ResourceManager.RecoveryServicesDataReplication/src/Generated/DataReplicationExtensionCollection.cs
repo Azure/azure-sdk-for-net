@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationExtensionRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicationExtensionName, DataReplicationExtensionData.ToRequestContent(data), context);
+                using HttpMessage message = _replicationExtensionRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicationExtensionName, DataReplicationExtensionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesDataReplicationArmOperation<DataReplicationExtensionResource> operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationExtensionResource>(
                     new DataReplicationExtensionResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationExtensionRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicationExtensionName, DataReplicationExtensionData.ToRequestContent(data), context);
+                using HttpMessage message = _replicationExtensionRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicationExtensionName, DataReplicationExtensionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesDataReplicationArmOperation<DataReplicationExtensionResource> operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationExtensionResource>(
                     new DataReplicationExtensionResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationExtensionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicationExtensionName, context);
+                using HttpMessage message = _replicationExtensionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicationExtensionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataReplicationExtensionData> response = Response.FromValue(DataReplicationExtensionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationExtensionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicationExtensionName, context);
+                using HttpMessage message = _replicationExtensionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicationExtensionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataReplicationExtensionData> response = Response.FromValue(DataReplicationExtensionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationExtensionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicationExtensionName, context);
+                using HttpMessage message = _replicationExtensionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicationExtensionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DataReplicationExtensionData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationExtensionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicationExtensionName, context);
+                using HttpMessage message = _replicationExtensionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicationExtensionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DataReplicationExtensionData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationExtensionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicationExtensionName, context);
+                using HttpMessage message = _replicationExtensionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicationExtensionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DataReplicationExtensionData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationExtensionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicationExtensionName, context);
+                using HttpMessage message = _replicationExtensionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicationExtensionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DataReplicationExtensionData> response = default;

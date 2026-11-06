@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkServiceDesignGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkServiceDesignGroupName, NetworkServiceDesignGroupData.ToRequestContent(data), context);
+                using HttpMessage message = _networkServiceDesignGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkServiceDesignGroupName, NetworkServiceDesignGroupData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridNetworkArmOperation<NetworkServiceDesignGroupResource> operation = new HybridNetworkArmOperation<NetworkServiceDesignGroupResource>(
                     new NetworkServiceDesignGroupResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkServiceDesignGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkServiceDesignGroupName, NetworkServiceDesignGroupData.ToRequestContent(data), context);
+                using HttpMessage message = _networkServiceDesignGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkServiceDesignGroupName, NetworkServiceDesignGroupData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridNetworkArmOperation<NetworkServiceDesignGroupResource> operation = new HybridNetworkArmOperation<NetworkServiceDesignGroupResource>(
                     new NetworkServiceDesignGroupResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkServiceDesignGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkServiceDesignGroupName, context);
+                using HttpMessage message = _networkServiceDesignGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkServiceDesignGroupName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkServiceDesignGroupData> response = Response.FromValue(NetworkServiceDesignGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkServiceDesignGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkServiceDesignGroupName, context);
+                using HttpMessage message = _networkServiceDesignGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkServiceDesignGroupName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkServiceDesignGroupData> response = Response.FromValue(NetworkServiceDesignGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkServiceDesignGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkServiceDesignGroupName, context);
+                using HttpMessage message = _networkServiceDesignGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkServiceDesignGroupName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkServiceDesignGroupData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkServiceDesignGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkServiceDesignGroupName, context);
+                using HttpMessage message = _networkServiceDesignGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkServiceDesignGroupName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkServiceDesignGroupData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkServiceDesignGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkServiceDesignGroupName, context);
+                using HttpMessage message = _networkServiceDesignGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkServiceDesignGroupName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkServiceDesignGroupData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkServiceDesignGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkServiceDesignGroupName, context);
+                using HttpMessage message = _networkServiceDesignGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkServiceDesignGroupName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkServiceDesignGroupData> response = default;

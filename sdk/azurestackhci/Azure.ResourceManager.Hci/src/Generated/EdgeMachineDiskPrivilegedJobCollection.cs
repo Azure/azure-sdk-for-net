@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeMachineDiskPrivilegedJobsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, privilegedJobName, EdgeMachineDiskPrivilegedJobData.ToRequestContent(data), context);
+                using HttpMessage message = _edgeMachineDiskPrivilegedJobsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, privilegedJobName, EdgeMachineDiskPrivilegedJobData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation<EdgeMachineDiskPrivilegedJobResource> operation = new HciArmOperation<EdgeMachineDiskPrivilegedJobResource>(
                     new EdgeMachineDiskPrivilegedJobResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeMachineDiskPrivilegedJobsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, privilegedJobName, EdgeMachineDiskPrivilegedJobData.ToRequestContent(data), context);
+                using HttpMessage message = _edgeMachineDiskPrivilegedJobsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, privilegedJobName, EdgeMachineDiskPrivilegedJobData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation<EdgeMachineDiskPrivilegedJobResource> operation = new HciArmOperation<EdgeMachineDiskPrivilegedJobResource>(
                     new EdgeMachineDiskPrivilegedJobResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeMachineDiskPrivilegedJobsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, privilegedJobName, context);
+                using HttpMessage message = _edgeMachineDiskPrivilegedJobsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, privilegedJobName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EdgeMachineDiskPrivilegedJobData> response = Response.FromValue(EdgeMachineDiskPrivilegedJobData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeMachineDiskPrivilegedJobsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, privilegedJobName, context);
+                using HttpMessage message = _edgeMachineDiskPrivilegedJobsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, privilegedJobName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EdgeMachineDiskPrivilegedJobData> response = Response.FromValue(EdgeMachineDiskPrivilegedJobData.FromResponse(result), result);
                 if (response.Value == null)
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeMachineDiskPrivilegedJobsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, privilegedJobName, context);
+                using HttpMessage message = _edgeMachineDiskPrivilegedJobsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, privilegedJobName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EdgeMachineDiskPrivilegedJobData> response = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeMachineDiskPrivilegedJobsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, privilegedJobName, context);
+                using HttpMessage message = _edgeMachineDiskPrivilegedJobsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, privilegedJobName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EdgeMachineDiskPrivilegedJobData> response = default;
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeMachineDiskPrivilegedJobsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, privilegedJobName, context);
+                using HttpMessage message = _edgeMachineDiskPrivilegedJobsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, privilegedJobName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EdgeMachineDiskPrivilegedJobData> response = default;
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeMachineDiskPrivilegedJobsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, privilegedJobName, context);
+                using HttpMessage message = _edgeMachineDiskPrivilegedJobsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, privilegedJobName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EdgeMachineDiskPrivilegedJobData> response = default;

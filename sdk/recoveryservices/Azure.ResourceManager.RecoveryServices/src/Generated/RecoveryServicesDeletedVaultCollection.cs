@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedVaultsRestClient.CreateGetRequest(Id.SubscriptionId, _location, deletedVaultName, context);
+                using HttpMessage message = _deletedVaultsRestClient.CreateGetRequest(Id.SubscriptionId, _location, deletedVaultName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RecoveryServicesDeletedVaultData> response = Response.FromValue(RecoveryServicesDeletedVaultData.FromResponse(result), result);
                 if (response.Value == null)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedVaultsRestClient.CreateGetRequest(Id.SubscriptionId, _location, deletedVaultName, context);
+                using HttpMessage message = _deletedVaultsRestClient.CreateGetRequest(Id.SubscriptionId, _location, deletedVaultName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RecoveryServicesDeletedVaultData> response = Response.FromValue(RecoveryServicesDeletedVaultData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedVaultsRestClient.CreateGetRequest(Id.SubscriptionId, _location, deletedVaultName, context);
+                using HttpMessage message = _deletedVaultsRestClient.CreateGetRequest(Id.SubscriptionId, _location, deletedVaultName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RecoveryServicesDeletedVaultData> response = default;
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedVaultsRestClient.CreateGetRequest(Id.SubscriptionId, _location, deletedVaultName, context);
+                using HttpMessage message = _deletedVaultsRestClient.CreateGetRequest(Id.SubscriptionId, _location, deletedVaultName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RecoveryServicesDeletedVaultData> response = default;
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedVaultsRestClient.CreateGetRequest(Id.SubscriptionId, _location, deletedVaultName, context);
+                using HttpMessage message = _deletedVaultsRestClient.CreateGetRequest(Id.SubscriptionId, _location, deletedVaultName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RecoveryServicesDeletedVaultData> response = default;
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedVaultsRestClient.CreateGetRequest(Id.SubscriptionId, _location, deletedVaultName, context);
+                using HttpMessage message = _deletedVaultsRestClient.CreateGetRequest(Id.SubscriptionId, _location, deletedVaultName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RecoveryServicesDeletedVaultData> response = default;

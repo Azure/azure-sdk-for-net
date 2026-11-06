@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _guestConfigurationConnectedVMwarevSphereAssignmentsRestClient.CreateGetForConnectedVMwarevSphereRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _guestConfigurationConnectedVMwarevSphereAssignmentsRestClient.CreateGetForConnectedVMwarevSphereRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GuestConfigurationAssignmentData> response = Response.FromValue(GuestConfigurationAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _guestConfigurationConnectedVMwarevSphereAssignmentsRestClient.CreateGetForConnectedVMwarevSphereRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _guestConfigurationConnectedVMwarevSphereAssignmentsRestClient.CreateGetForConnectedVMwarevSphereRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GuestConfigurationAssignmentData> response = Response.FromValue(GuestConfigurationAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _guestConfigurationConnectedVMwarevSphereAssignmentsRestClient.CreateDeleteForConnectedVMwarevSphereRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _guestConfigurationConnectedVMwarevSphereAssignmentsRestClient.CreateDeleteForConnectedVMwarevSphereRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _guestConfigurationConnectedVMwarevSphereAssignmentsRestClient.CreateDeleteForConnectedVMwarevSphereRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _guestConfigurationConnectedVMwarevSphereAssignmentsRestClient.CreateDeleteForConnectedVMwarevSphereRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _guestConfigurationConnectedVMwarevSphereAssignmentsReportsRestClient.CreateGetReportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, reportId, context);
+                using HttpMessage message = _guestConfigurationConnectedVMwarevSphereAssignmentsReportsRestClient.CreateGetReportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, reportId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GuestConfigurationAssignmentReport> response = Response.FromValue(GuestConfigurationAssignmentReport.FromResponse(result), result);
                 if (response.Value == null)
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _guestConfigurationConnectedVMwarevSphereAssignmentsReportsRestClient.CreateGetReportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, reportId, context);
+                using HttpMessage message = _guestConfigurationConnectedVMwarevSphereAssignmentsReportsRestClient.CreateGetReportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, reportId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GuestConfigurationAssignmentReport> response = Response.FromValue(GuestConfigurationAssignmentReport.FromResponse(result), result);
                 if (response.Value == null)
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _guestConfigurationConnectedVMwarevSphereAssignmentsRestClient.CreateCreateOrUpdateForConnectedVMwarevSphereRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, GuestConfigurationAssignmentData.ToRequestContent(data), context);
+                using HttpMessage message = _guestConfigurationConnectedVMwarevSphereAssignmentsRestClient.CreateCreateOrUpdateForConnectedVMwarevSphereRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, GuestConfigurationAssignmentData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GuestConfigurationAssignmentData> response = Response.FromValue(GuestConfigurationAssignmentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _guestConfigurationConnectedVMwarevSphereAssignmentsRestClient.CreateCreateOrUpdateForConnectedVMwarevSphereRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, GuestConfigurationAssignmentData.ToRequestContent(data), context);
+                using HttpMessage message = _guestConfigurationConnectedVMwarevSphereAssignmentsRestClient.CreateCreateOrUpdateForConnectedVMwarevSphereRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, GuestConfigurationAssignmentData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GuestConfigurationAssignmentData> response = Response.FromValue(GuestConfigurationAssignmentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

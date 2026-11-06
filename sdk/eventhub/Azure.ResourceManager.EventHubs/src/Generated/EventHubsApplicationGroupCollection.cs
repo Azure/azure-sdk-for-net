@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationGroupRestClient.CreateCreateOrUpdateApplicationGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationGroupName, EventHubsApplicationGroupData.ToRequestContent(data), context);
+                using HttpMessage message = _applicationGroupRestClient.CreateCreateOrUpdateApplicationGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationGroupName, EventHubsApplicationGroupData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EventHubsApplicationGroupData> response = Response.FromValue(EventHubsApplicationGroupData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationGroupRestClient.CreateCreateOrUpdateApplicationGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationGroupName, EventHubsApplicationGroupData.ToRequestContent(data), context);
+                using HttpMessage message = _applicationGroupRestClient.CreateCreateOrUpdateApplicationGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationGroupName, EventHubsApplicationGroupData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EventHubsApplicationGroupData> response = Response.FromValue(EventHubsApplicationGroupData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationGroupName, context);
+                using HttpMessage message = _applicationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationGroupName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EventHubsApplicationGroupData> response = Response.FromValue(EventHubsApplicationGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationGroupName, context);
+                using HttpMessage message = _applicationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationGroupName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EventHubsApplicationGroupData> response = Response.FromValue(EventHubsApplicationGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationGroupName, context);
+                using HttpMessage message = _applicationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationGroupName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EventHubsApplicationGroupData> response = default;
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationGroupName, context);
+                using HttpMessage message = _applicationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationGroupName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EventHubsApplicationGroupData> response = default;
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationGroupName, context);
+                using HttpMessage message = _applicationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationGroupName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EventHubsApplicationGroupData> response = default;
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationGroupName, context);
+                using HttpMessage message = _applicationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationGroupName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EventHubsApplicationGroupData> response = default;

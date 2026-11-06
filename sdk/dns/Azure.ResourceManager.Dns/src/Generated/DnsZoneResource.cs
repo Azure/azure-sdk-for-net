@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Dns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _zonesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _zonesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DnsZoneData> response = Response.FromValue(DnsZoneData.FromResponse(result), result);
                 if (response.Value == null)
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Dns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _zonesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _zonesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DnsZoneData> response = Response.FromValue(DnsZoneData.FromResponse(result), result);
                 if (response.Value == null)
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Dns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _zonesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch, context);
+                using HttpMessage message = _zonesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DnsArmOperation operation = new DnsArmOperation(_zonesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Dns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _zonesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch, context);
+                using HttpMessage message = _zonesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DnsArmOperation operation = new DnsArmOperation(_zonesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.Dns
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _zonesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _zonesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DnsZoneData> response = Response.FromValue(DnsZoneData.FromResponse(result), result);
                     return Response.FromValue(new DnsZoneResource(Client, response.Value), response.GetRawResponse());
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.Dns
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _zonesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _zonesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DnsZoneData> response = Response.FromValue(DnsZoneData.FromResponse(result), result);
                     return Response.FromValue(new DnsZoneResource(Client, response.Value), response.GetRawResponse());
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.Dns
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _zonesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _zonesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DnsZoneData> response = Response.FromValue(DnsZoneData.FromResponse(result), result);
                     return Response.FromValue(new DnsZoneResource(Client, response.Value), response.GetRawResponse());
@@ -625,7 +625,7 @@ namespace Azure.ResourceManager.Dns
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _zonesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _zonesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DnsZoneData> response = Response.FromValue(DnsZoneData.FromResponse(result), result);
                     return Response.FromValue(new DnsZoneResource(Client, response.Value), response.GetRawResponse());
@@ -667,7 +667,7 @@ namespace Azure.ResourceManager.Dns
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _zonesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _zonesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DnsZoneData> response = Response.FromValue(DnsZoneData.FromResponse(result), result);
                     return Response.FromValue(new DnsZoneResource(Client, response.Value), response.GetRawResponse());
@@ -713,7 +713,7 @@ namespace Azure.ResourceManager.Dns
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _zonesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _zonesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DnsZoneData> response = Response.FromValue(DnsZoneData.FromResponse(result), result);
                     return Response.FromValue(new DnsZoneResource(Client, response.Value), response.GetRawResponse());

@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _settingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _settingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecuritySettingData> response = Response.FromValue(SecuritySettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _settingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _settingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecuritySettingData> response = Response.FromValue(SecuritySettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _settingsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, SecuritySettingData.ToRequestContent(data), context);
+                using HttpMessage message = _settingsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, SecuritySettingData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecuritySettingData> response = Response.FromValue(SecuritySettingData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _settingsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, SecuritySettingData.ToRequestContent(data), context);
+                using HttpMessage message = _settingsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, SecuritySettingData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecuritySettingData> response = Response.FromValue(SecuritySettingData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

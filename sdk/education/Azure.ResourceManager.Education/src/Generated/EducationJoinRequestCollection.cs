@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _joinRequestsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, joinRequestName, context);
+                using HttpMessage message = _joinRequestsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, joinRequestName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EducationJoinRequestData> response = Response.FromValue(EducationJoinRequestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _joinRequestsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, joinRequestName, context);
+                using HttpMessage message = _joinRequestsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, joinRequestName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EducationJoinRequestData> response = Response.FromValue(EducationJoinRequestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _joinRequestsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, joinRequestName, context);
+                using HttpMessage message = _joinRequestsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, joinRequestName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EducationJoinRequestData> response = default;
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _joinRequestsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, joinRequestName, context);
+                using HttpMessage message = _joinRequestsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, joinRequestName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EducationJoinRequestData> response = default;
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _joinRequestsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, joinRequestName, context);
+                using HttpMessage message = _joinRequestsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, joinRequestName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EducationJoinRequestData> response = default;
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _joinRequestsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, joinRequestName, context);
+                using HttpMessage message = _joinRequestsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, joinRequestName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EducationJoinRequestData> response = default;

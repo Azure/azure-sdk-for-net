@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sharedPrivateLinkResourceName, WebPubSubSharedPrivateLinkData.ToRequestContent(data), context);
+                using HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sharedPrivateLinkResourceName, WebPubSubSharedPrivateLinkData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WebPubSubArmOperation<WebPubSubReplicaSharedPrivateLinkResource> operation = new WebPubSubArmOperation<WebPubSubReplicaSharedPrivateLinkResource>(
                     new WebPubSubReplicaSharedPrivateLinkResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sharedPrivateLinkResourceName, WebPubSubSharedPrivateLinkData.ToRequestContent(data), context);
+                using HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sharedPrivateLinkResourceName, WebPubSubSharedPrivateLinkData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WebPubSubArmOperation<WebPubSubReplicaSharedPrivateLinkResource> operation = new WebPubSubArmOperation<WebPubSubReplicaSharedPrivateLinkResource>(
                     new WebPubSubReplicaSharedPrivateLinkResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sharedPrivateLinkResourceName, context);
+                using HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sharedPrivateLinkResourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WebPubSubSharedPrivateLinkData> response = Response.FromValue(WebPubSubSharedPrivateLinkData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sharedPrivateLinkResourceName, context);
+                using HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sharedPrivateLinkResourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WebPubSubSharedPrivateLinkData> response = Response.FromValue(WebPubSubSharedPrivateLinkData.FromResponse(result), result);
                 if (response.Value == null)
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sharedPrivateLinkResourceName, context);
+                using HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sharedPrivateLinkResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WebPubSubSharedPrivateLinkData> response = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sharedPrivateLinkResourceName, context);
+                using HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sharedPrivateLinkResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WebPubSubSharedPrivateLinkData> response = default;
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sharedPrivateLinkResourceName, context);
+                using HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sharedPrivateLinkResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WebPubSubSharedPrivateLinkData> response = default;
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sharedPrivateLinkResourceName, context);
+                using HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sharedPrivateLinkResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WebPubSubSharedPrivateLinkData> response = default;

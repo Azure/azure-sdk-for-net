@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = DenyAssignmentsRestClient.CreateGetByIdRequest(denyAssignmentId, context);
+                using HttpMessage message = DenyAssignmentsRestClient.CreateGetByIdRequest(denyAssignmentId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DenyAssignmentData> response = Response.FromValue(DenyAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = DenyAssignmentsRestClient.CreateGetByIdRequest(denyAssignmentId, context);
+                using HttpMessage message = DenyAssignmentsRestClient.CreateGetByIdRequest(denyAssignmentId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DenyAssignmentData> response = Response.FromValue(DenyAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RoleAssignmentsRestClient.CreateGetByIdRequest(roleAssignmentId, tenantId, context);
+                using HttpMessage message = RoleAssignmentsRestClient.CreateGetByIdRequest(roleAssignmentId, tenantId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RoleAssignmentData> response = Response.FromValue(RoleAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RoleAssignmentsRestClient.CreateGetByIdRequest(roleAssignmentId, tenantId, context);
+                using HttpMessage message = RoleAssignmentsRestClient.CreateGetByIdRequest(roleAssignmentId, tenantId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RoleAssignmentData> response = Response.FromValue(RoleAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RoleAssignmentsRestClient.CreateCreateByIdRequest(roleAssignmentId, RoleAssignmentCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = RoleAssignmentsRestClient.CreateCreateByIdRequest(roleAssignmentId, RoleAssignmentCreateOrUpdateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RoleAssignmentData> response = Response.FromValue(RoleAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RoleAssignmentsRestClient.CreateCreateByIdRequest(roleAssignmentId, RoleAssignmentCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = RoleAssignmentsRestClient.CreateCreateByIdRequest(roleAssignmentId, RoleAssignmentCreateOrUpdateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RoleAssignmentData> response = Response.FromValue(RoleAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RoleAssignmentsRestClient.CreateDeleteByIdRequest(roleAssignmentId, tenantId, context);
+                using HttpMessage message = RoleAssignmentsRestClient.CreateDeleteByIdRequest(roleAssignmentId, tenantId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RoleAssignmentData> response = Response.FromValue(RoleAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -626,7 +626,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RoleAssignmentsRestClient.CreateDeleteByIdRequest(roleAssignmentId, tenantId, context);
+                using HttpMessage message = RoleAssignmentsRestClient.CreateDeleteByIdRequest(roleAssignmentId, tenantId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RoleAssignmentData> response = Response.FromValue(RoleAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -671,7 +671,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RoleDefinitionsRestClient.CreateGetAuthorizationRoleDefinitionRequest(roleId, context);
+                using HttpMessage message = RoleDefinitionsRestClient.CreateGetAuthorizationRoleDefinitionRequest(roleId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AuthorizationRoleDefinitionData> response = Response.FromValue(AuthorizationRoleDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -716,7 +716,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RoleDefinitionsRestClient.CreateGetAuthorizationRoleDefinitionRequest(roleId, context);
+                using HttpMessage message = RoleDefinitionsRestClient.CreateGetAuthorizationRoleDefinitionRequest(roleId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AuthorizationRoleDefinitionData> response = Response.FromValue(AuthorizationRoleDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -818,7 +818,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GlobalAdministratorRestClient.CreateElevateAccessGlobalAdministratorRequest(context);
+                using HttpMessage message = GlobalAdministratorRestClient.CreateElevateAccessGlobalAdministratorRequest(context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -857,7 +857,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GlobalAdministratorRestClient.CreateElevateAccessGlobalAdministratorRequest(context);
+                using HttpMessage message = GlobalAdministratorRestClient.CreateElevateAccessGlobalAdministratorRequest(context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }

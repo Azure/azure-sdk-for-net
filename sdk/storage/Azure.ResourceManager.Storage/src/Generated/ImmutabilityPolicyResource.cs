@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _blobContainersRestClient.CreateCreateOrUpdateImmutabilityPolicyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Name, ImmutabilityPolicyData.ToRequestContent(data), ifMatch, context);
+                using HttpMessage message = _blobContainersRestClient.CreateCreateOrUpdateImmutabilityPolicyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Name, ImmutabilityPolicyData.ToRequestContent(data), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ImmutabilityPolicyData> response = Response.FromValue(ImmutabilityPolicyData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _blobContainersRestClient.CreateCreateOrUpdateImmutabilityPolicyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Name, ImmutabilityPolicyData.ToRequestContent(data), ifMatch, context);
+                using HttpMessage message = _blobContainersRestClient.CreateCreateOrUpdateImmutabilityPolicyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Name, ImmutabilityPolicyData.ToRequestContent(data), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ImmutabilityPolicyData> response = Response.FromValue(ImmutabilityPolicyData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _blobContainersRestClient.CreateGetImmutabilityPolicyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Name, ifMatch, context);
+                using HttpMessage message = _blobContainersRestClient.CreateGetImmutabilityPolicyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Name, ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ImmutabilityPolicyData> response = Response.FromValue(ImmutabilityPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _blobContainersRestClient.CreateGetImmutabilityPolicyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Name, ifMatch, context);
+                using HttpMessage message = _blobContainersRestClient.CreateGetImmutabilityPolicyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Name, ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ImmutabilityPolicyData> response = Response.FromValue(ImmutabilityPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _blobContainersRestClient.CreateExtendImmutabilityPolicyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Name, ifMatch, ImmutabilityPolicyData.ToRequestContent(data), context);
+                using HttpMessage message = _blobContainersRestClient.CreateExtendImmutabilityPolicyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Name, ifMatch, ImmutabilityPolicyData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ImmutabilityPolicyData> response = Response.FromValue(ImmutabilityPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _blobContainersRestClient.CreateExtendImmutabilityPolicyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Name, ifMatch, ImmutabilityPolicyData.ToRequestContent(data), context);
+                using HttpMessage message = _blobContainersRestClient.CreateExtendImmutabilityPolicyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Name, ifMatch, ImmutabilityPolicyData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ImmutabilityPolicyData> response = Response.FromValue(ImmutabilityPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _blobContainersRestClient.CreateLockImmutabilityPolicyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Name, ifMatch, context);
+                using HttpMessage message = _blobContainersRestClient.CreateLockImmutabilityPolicyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Name, ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ImmutabilityPolicyData> response = Response.FromValue(ImmutabilityPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _blobContainersRestClient.CreateLockImmutabilityPolicyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Name, ifMatch, context);
+                using HttpMessage message = _blobContainersRestClient.CreateLockImmutabilityPolicyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Name, ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ImmutabilityPolicyData> response = Response.FromValue(ImmutabilityPolicyData.FromResponse(result), result);
                 if (response.Value == null)

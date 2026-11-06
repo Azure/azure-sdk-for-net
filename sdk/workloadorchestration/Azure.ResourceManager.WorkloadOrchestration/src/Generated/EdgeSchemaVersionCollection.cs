@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schemaVersionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaVersionName, EdgeSchemaVersionData.ToRequestContent(data), context);
+                using HttpMessage message = _schemaVersionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaVersionName, EdgeSchemaVersionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation<EdgeSchemaVersionResource> operation = new WorkloadOrchestrationArmOperation<EdgeSchemaVersionResource>(
                     new EdgeSchemaVersionResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schemaVersionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaVersionName, EdgeSchemaVersionData.ToRequestContent(data), context);
+                using HttpMessage message = _schemaVersionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaVersionName, EdgeSchemaVersionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation<EdgeSchemaVersionResource> operation = new WorkloadOrchestrationArmOperation<EdgeSchemaVersionResource>(
                     new EdgeSchemaVersionResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schemaVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaVersionName, context);
+                using HttpMessage message = _schemaVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaVersionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EdgeSchemaVersionData> response = Response.FromValue(EdgeSchemaVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schemaVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaVersionName, context);
+                using HttpMessage message = _schemaVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaVersionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EdgeSchemaVersionData> response = Response.FromValue(EdgeSchemaVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schemaVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaVersionName, context);
+                using HttpMessage message = _schemaVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaVersionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EdgeSchemaVersionData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schemaVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaVersionName, context);
+                using HttpMessage message = _schemaVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaVersionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EdgeSchemaVersionData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schemaVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaVersionName, context);
+                using HttpMessage message = _schemaVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaVersionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EdgeSchemaVersionData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schemaVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaVersionName, context);
+                using HttpMessage message = _schemaVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaVersionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EdgeSchemaVersionData> response = default;

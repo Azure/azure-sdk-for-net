@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Resources.Bicep.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = DecompileOperationGroupRestClient.CreateBicepDecompileRequest(Guid.Parse(Id.SubscriptionId), DecompileOperationContent.ToRequestContent(content), context);
+                using HttpMessage message = DecompileOperationGroupRestClient.CreateBicepDecompileRequest(Guid.Parse(Id.SubscriptionId), DecompileOperationContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DecompileOperationSuccessResult> response = Response.FromValue(DecompileOperationSuccessResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Resources.Bicep.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = DecompileOperationGroupRestClient.CreateBicepDecompileRequest(Guid.Parse(Id.SubscriptionId), DecompileOperationContent.ToRequestContent(content), context);
+                using HttpMessage message = DecompileOperationGroupRestClient.CreateBicepDecompileRequest(Guid.Parse(Id.SubscriptionId), DecompileOperationContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DecompileOperationSuccessResult> response = Response.FromValue(DecompileOperationSuccessResult.FromResponse(result), result);
                 if (response.Value == null)

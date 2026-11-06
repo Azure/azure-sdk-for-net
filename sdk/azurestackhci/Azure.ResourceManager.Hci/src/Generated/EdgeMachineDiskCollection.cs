@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeMachineDisksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diskName, EdgeMachineDiskData.ToRequestContent(data), context);
+                using HttpMessage message = _edgeMachineDisksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diskName, EdgeMachineDiskData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation<EdgeMachineDiskResource> operation = new HciArmOperation<EdgeMachineDiskResource>(
                     new EdgeMachineDiskResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeMachineDisksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diskName, EdgeMachineDiskData.ToRequestContent(data), context);
+                using HttpMessage message = _edgeMachineDisksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diskName, EdgeMachineDiskData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation<EdgeMachineDiskResource> operation = new HciArmOperation<EdgeMachineDiskResource>(
                     new EdgeMachineDiskResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeMachineDisksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diskName, context);
+                using HttpMessage message = _edgeMachineDisksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diskName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EdgeMachineDiskData> response = Response.FromValue(EdgeMachineDiskData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeMachineDisksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diskName, context);
+                using HttpMessage message = _edgeMachineDisksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diskName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EdgeMachineDiskData> response = Response.FromValue(EdgeMachineDiskData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeMachineDisksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diskName, context);
+                using HttpMessage message = _edgeMachineDisksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diskName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EdgeMachineDiskData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeMachineDisksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diskName, context);
+                using HttpMessage message = _edgeMachineDisksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diskName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EdgeMachineDiskData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeMachineDisksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diskName, context);
+                using HttpMessage message = _edgeMachineDisksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diskName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EdgeMachineDiskData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeMachineDisksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diskName, context);
+                using HttpMessage message = _edgeMachineDisksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diskName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EdgeMachineDiskData> response = default;

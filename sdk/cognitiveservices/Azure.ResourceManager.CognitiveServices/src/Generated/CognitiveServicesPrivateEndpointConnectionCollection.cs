@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, CognitiveServicesPrivateEndpointConnectionData.ToRequestContent(data), context);
+                using HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, CognitiveServicesPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CognitiveServicesArmOperation<CognitiveServicesPrivateEndpointConnectionResource> operation = new CognitiveServicesArmOperation<CognitiveServicesPrivateEndpointConnectionResource>(
                     new CognitiveServicesPrivateEndpointConnectionResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, CognitiveServicesPrivateEndpointConnectionData.ToRequestContent(data), context);
+                using HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, CognitiveServicesPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CognitiveServicesArmOperation<CognitiveServicesPrivateEndpointConnectionResource> operation = new CognitiveServicesArmOperation<CognitiveServicesPrivateEndpointConnectionResource>(
                     new CognitiveServicesPrivateEndpointConnectionResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
+                using HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CognitiveServicesPrivateEndpointConnectionData> response = Response.FromValue(CognitiveServicesPrivateEndpointConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
+                using HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CognitiveServicesPrivateEndpointConnectionData> response = Response.FromValue(CognitiveServicesPrivateEndpointConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
+                using HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CognitiveServicesPrivateEndpointConnectionData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
+                using HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CognitiveServicesPrivateEndpointConnectionData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
+                using HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CognitiveServicesPrivateEndpointConnectionData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
+                using HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CognitiveServicesPrivateEndpointConnectionData> response = default;

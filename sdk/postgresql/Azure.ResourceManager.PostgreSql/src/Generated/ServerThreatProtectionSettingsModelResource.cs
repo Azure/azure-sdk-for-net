@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _advancedThreatProtectionSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _advancedThreatProtectionSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServerThreatProtectionSettingsModelData> response = Response.FromValue(ServerThreatProtectionSettingsModelData.FromResponse(result), result);
                 if (response.Value == null)
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _advancedThreatProtectionSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _advancedThreatProtectionSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServerThreatProtectionSettingsModelData> response = Response.FromValue(ServerThreatProtectionSettingsModelData.FromResponse(result), result);
                 if (response.Value == null)
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverThreatProtectionSettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ServerThreatProtectionSettingsModelData.ToRequestContent(data), context);
+                using HttpMessage message = _serverThreatProtectionSettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ServerThreatProtectionSettingsModelData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FlexibleServersArmOperation<ServerThreatProtectionSettingsModelResource> operation = new FlexibleServersArmOperation<ServerThreatProtectionSettingsModelResource>(
                     new ServerThreatProtectionSettingsModelResourceOperationSource(Client),
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverThreatProtectionSettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ServerThreatProtectionSettingsModelData.ToRequestContent(data), context);
+                using HttpMessage message = _serverThreatProtectionSettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ServerThreatProtectionSettingsModelData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FlexibleServersArmOperation<ServerThreatProtectionSettingsModelResource> operation = new FlexibleServersArmOperation<ServerThreatProtectionSettingsModelResource>(
                     new ServerThreatProtectionSettingsModelResourceOperationSource(Client),

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tableResourcesRestClient.CreateCreateUpdateTableRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleAssignmentId, CosmosDBTableRoleAssignmentData.ToRequestContent(data), context);
+                using HttpMessage message = _tableResourcesRestClient.CreateCreateUpdateTableRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleAssignmentId, CosmosDBTableRoleAssignmentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<CosmosDBTableRoleAssignmentResource> operation = new CosmosDBArmOperation<CosmosDBTableRoleAssignmentResource>(
                     new CosmosDBTableRoleAssignmentResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tableResourcesRestClient.CreateCreateUpdateTableRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleAssignmentId, CosmosDBTableRoleAssignmentData.ToRequestContent(data), context);
+                using HttpMessage message = _tableResourcesRestClient.CreateCreateUpdateTableRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleAssignmentId, CosmosDBTableRoleAssignmentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<CosmosDBTableRoleAssignmentResource> operation = new CosmosDBArmOperation<CosmosDBTableRoleAssignmentResource>(
                     new CosmosDBTableRoleAssignmentResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tableResourcesRestClient.CreateGetTableRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleAssignmentId, context);
+                using HttpMessage message = _tableResourcesRestClient.CreateGetTableRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleAssignmentId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CosmosDBTableRoleAssignmentData> response = Response.FromValue(CosmosDBTableRoleAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tableResourcesRestClient.CreateGetTableRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleAssignmentId, context);
+                using HttpMessage message = _tableResourcesRestClient.CreateGetTableRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleAssignmentId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CosmosDBTableRoleAssignmentData> response = Response.FromValue(CosmosDBTableRoleAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tableResourcesRestClient.CreateGetTableRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleAssignmentId, context);
+                using HttpMessage message = _tableResourcesRestClient.CreateGetTableRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleAssignmentId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CosmosDBTableRoleAssignmentData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tableResourcesRestClient.CreateGetTableRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleAssignmentId, context);
+                using HttpMessage message = _tableResourcesRestClient.CreateGetTableRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleAssignmentId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CosmosDBTableRoleAssignmentData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tableResourcesRestClient.CreateGetTableRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleAssignmentId, context);
+                using HttpMessage message = _tableResourcesRestClient.CreateGetTableRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleAssignmentId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CosmosDBTableRoleAssignmentData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tableResourcesRestClient.CreateGetTableRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleAssignmentId, context);
+                using HttpMessage message = _tableResourcesRestClient.CreateGetTableRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleAssignmentId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CosmosDBTableRoleAssignmentData> response = default;

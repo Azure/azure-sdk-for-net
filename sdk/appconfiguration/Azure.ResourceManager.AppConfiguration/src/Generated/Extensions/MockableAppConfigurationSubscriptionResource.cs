@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OperationsRestClient.CreateCheckAppConfigurationNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), AppConfigurationNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = OperationsRestClient.CreateCheckAppConfigurationNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), AppConfigurationNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppConfigurationNameAvailabilityResult> response = Response.FromValue(AppConfigurationNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OperationsRestClient.CreateCheckAppConfigurationNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), AppConfigurationNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = OperationsRestClient.CreateCheckAppConfigurationNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), AppConfigurationNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppConfigurationNameAvailabilityResult> response = Response.FromValue(AppConfigurationNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OperationsRestClient.CreateCheckAppConfigurationRegionalNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, AppConfigurationNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = OperationsRestClient.CreateCheckAppConfigurationRegionalNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, AppConfigurationNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppConfigurationNameAvailabilityResult> response = Response.FromValue(AppConfigurationNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OperationsRestClient.CreateCheckAppConfigurationRegionalNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, AppConfigurationNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = OperationsRestClient.CreateCheckAppConfigurationRegionalNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, AppConfigurationNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppConfigurationNameAvailabilityResult> response = Response.FromValue(AppConfigurationNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Databricks
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, DatabricksWorkspaceData.ToRequestContent(data), context);
+                using HttpMessage message = _workspacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, DatabricksWorkspaceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DatabricksArmOperation<DatabricksWorkspaceResource> operation = new DatabricksArmOperation<DatabricksWorkspaceResource>(
                     new DatabricksWorkspaceResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Databricks
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, DatabricksWorkspaceData.ToRequestContent(data), context);
+                using HttpMessage message = _workspacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, DatabricksWorkspaceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DatabricksArmOperation<DatabricksWorkspaceResource> operation = new DatabricksArmOperation<DatabricksWorkspaceResource>(
                     new DatabricksWorkspaceResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Databricks
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, context);
+                using HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DatabricksWorkspaceData> response = Response.FromValue(DatabricksWorkspaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Databricks
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, context);
+                using HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DatabricksWorkspaceData> response = Response.FromValue(DatabricksWorkspaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Databricks
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, context);
+                using HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DatabricksWorkspaceData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Databricks
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, context);
+                using HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DatabricksWorkspaceData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Databricks
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, context);
+                using HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DatabricksWorkspaceData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Databricks
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, context);
+                using HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DatabricksWorkspaceData> response = default;

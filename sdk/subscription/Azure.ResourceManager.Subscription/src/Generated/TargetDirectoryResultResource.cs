@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetDirectoryResultsRestClient.CreatePutTargetDirectoryRequest(Guid.Parse(Id.SubscriptionId), TargetDirectoryContent.ToRequestContent(content), context);
+                using HttpMessage message = _targetDirectoryResultsRestClient.CreatePutTargetDirectoryRequest(Guid.Parse(Id.SubscriptionId), TargetDirectoryContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TargetDirectoryResultData> response = Response.FromValue(TargetDirectoryResultData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetDirectoryResultsRestClient.CreatePutTargetDirectoryRequest(Guid.Parse(Id.SubscriptionId), TargetDirectoryContent.ToRequestContent(content), context);
+                using HttpMessage message = _targetDirectoryResultsRestClient.CreatePutTargetDirectoryRequest(Guid.Parse(Id.SubscriptionId), TargetDirectoryContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TargetDirectoryResultData> response = Response.FromValue(TargetDirectoryResultData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetDirectoryResultsRestClient.CreateGetTargetDirectoryRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = _targetDirectoryResultsRestClient.CreateGetTargetDirectoryRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TargetDirectoryResultData> response = Response.FromValue(TargetDirectoryResultData.FromResponse(result), result);
                 if (response.Value == null)
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetDirectoryResultsRestClient.CreateGetTargetDirectoryRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = _targetDirectoryResultsRestClient.CreateGetTargetDirectoryRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TargetDirectoryResultData> response = Response.FromValue(TargetDirectoryResultData.FromResponse(result), result);
                 if (response.Value == null)
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetDirectoryResultsRestClient.CreateDeleteTargetDirectoryRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = _targetDirectoryResultsRestClient.CreateDeleteTargetDirectoryRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetDirectoryResultsRestClient.CreateDeleteTargetDirectoryRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = _targetDirectoryResultsRestClient.CreateDeleteTargetDirectoryRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());

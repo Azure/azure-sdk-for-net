@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkAppliancesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualNetworkApplianceName, VirtualNetworkApplianceData.ToRequestContent(data), context);
+                using HttpMessage message = _virtualNetworkAppliancesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualNetworkApplianceName, VirtualNetworkApplianceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<VirtualNetworkApplianceResource> operation = new NetworkArmOperation<VirtualNetworkApplianceResource>(
                     new VirtualNetworkApplianceResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkAppliancesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualNetworkApplianceName, VirtualNetworkApplianceData.ToRequestContent(data), context);
+                using HttpMessage message = _virtualNetworkAppliancesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualNetworkApplianceName, VirtualNetworkApplianceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<VirtualNetworkApplianceResource> operation = new NetworkArmOperation<VirtualNetworkApplianceResource>(
                     new VirtualNetworkApplianceResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkAppliancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualNetworkApplianceName, context);
+                using HttpMessage message = _virtualNetworkAppliancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualNetworkApplianceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<VirtualNetworkApplianceData> response = Response.FromValue(VirtualNetworkApplianceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkAppliancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualNetworkApplianceName, context);
+                using HttpMessage message = _virtualNetworkAppliancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualNetworkApplianceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<VirtualNetworkApplianceData> response = Response.FromValue(VirtualNetworkApplianceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkAppliancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualNetworkApplianceName, context);
+                using HttpMessage message = _virtualNetworkAppliancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualNetworkApplianceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<VirtualNetworkApplianceData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkAppliancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualNetworkApplianceName, context);
+                using HttpMessage message = _virtualNetworkAppliancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualNetworkApplianceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<VirtualNetworkApplianceData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkAppliancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualNetworkApplianceName, context);
+                using HttpMessage message = _virtualNetworkAppliancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualNetworkApplianceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<VirtualNetworkApplianceData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkAppliancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualNetworkApplianceName, context);
+                using HttpMessage message = _virtualNetworkAppliancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualNetworkApplianceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<VirtualNetworkApplianceData> response = default;

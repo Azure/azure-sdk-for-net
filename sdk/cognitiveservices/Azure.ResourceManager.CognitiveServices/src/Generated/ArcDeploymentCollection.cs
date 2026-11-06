@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _arcDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentName, ArcDeploymentData.ToRequestContent(data), context);
+                using HttpMessage message = _arcDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentName, ArcDeploymentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CognitiveServicesArmOperation<ArcDeploymentResource> operation = new CognitiveServicesArmOperation<ArcDeploymentResource>(
                     new ArcDeploymentResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _arcDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentName, ArcDeploymentData.ToRequestContent(data), context);
+                using HttpMessage message = _arcDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentName, ArcDeploymentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CognitiveServicesArmOperation<ArcDeploymentResource> operation = new CognitiveServicesArmOperation<ArcDeploymentResource>(
                     new ArcDeploymentResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _arcDeploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentName, context);
+                using HttpMessage message = _arcDeploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ArcDeploymentData> response = Response.FromValue(ArcDeploymentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _arcDeploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentName, context);
+                using HttpMessage message = _arcDeploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ArcDeploymentData> response = Response.FromValue(ArcDeploymentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _arcDeploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentName, context);
+                using HttpMessage message = _arcDeploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ArcDeploymentData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _arcDeploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentName, context);
+                using HttpMessage message = _arcDeploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ArcDeploymentData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _arcDeploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentName, context);
+                using HttpMessage message = _arcDeploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ArcDeploymentData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _arcDeploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentName, context);
+                using HttpMessage message = _arcDeploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ArcDeploymentData> response = default;

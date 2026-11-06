@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _artifactManifestsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactManifestName, ArtifactManifestData.ToRequestContent(data), context);
+                using HttpMessage message = _artifactManifestsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactManifestName, ArtifactManifestData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridNetworkArmOperation<ArtifactManifestResource> operation = new HybridNetworkArmOperation<ArtifactManifestResource>(
                     new ArtifactManifestResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _artifactManifestsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactManifestName, ArtifactManifestData.ToRequestContent(data), context);
+                using HttpMessage message = _artifactManifestsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactManifestName, ArtifactManifestData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridNetworkArmOperation<ArtifactManifestResource> operation = new HybridNetworkArmOperation<ArtifactManifestResource>(
                     new ArtifactManifestResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _artifactManifestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactManifestName, context);
+                using HttpMessage message = _artifactManifestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactManifestName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ArtifactManifestData> response = Response.FromValue(ArtifactManifestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _artifactManifestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactManifestName, context);
+                using HttpMessage message = _artifactManifestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactManifestName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ArtifactManifestData> response = Response.FromValue(ArtifactManifestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _artifactManifestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactManifestName, context);
+                using HttpMessage message = _artifactManifestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactManifestName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ArtifactManifestData> response = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _artifactManifestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactManifestName, context);
+                using HttpMessage message = _artifactManifestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactManifestName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ArtifactManifestData> response = default;
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _artifactManifestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactManifestName, context);
+                using HttpMessage message = _artifactManifestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactManifestName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ArtifactManifestData> response = default;
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _artifactManifestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactManifestName, context);
+                using HttpMessage message = _artifactManifestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactManifestName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ArtifactManifestData> response = default;

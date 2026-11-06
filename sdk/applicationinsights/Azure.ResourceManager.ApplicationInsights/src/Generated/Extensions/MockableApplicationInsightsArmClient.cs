@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LiveTokenRestClient.CreateGetLiveTokenRequest(scope.ToString(), context);
+                using HttpMessage message = LiveTokenRestClient.CreateGetLiveTokenRequest(scope.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LiveTokenResult> response = Response.FromValue(LiveTokenResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LiveTokenRestClient.CreateGetLiveTokenRequest(scope.ToString(), context);
+                using HttpMessage message = LiveTokenRestClient.CreateGetLiveTokenRequest(scope.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LiveTokenResult> response = Response.FromValue(LiveTokenResult.FromResponse(result), result);
                 if (response.Value == null)

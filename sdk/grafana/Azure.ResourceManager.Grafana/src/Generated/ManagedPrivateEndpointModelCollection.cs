@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Grafana
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedPrivateEndpointModelsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, ManagedPrivateEndpointModelData.ToRequestContent(data), context);
+                using HttpMessage message = _managedPrivateEndpointModelsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, ManagedPrivateEndpointModelData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 GrafanaArmOperation<ManagedPrivateEndpointModelResource> operation = new GrafanaArmOperation<ManagedPrivateEndpointModelResource>(
                     new ManagedPrivateEndpointModelResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Grafana
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedPrivateEndpointModelsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, ManagedPrivateEndpointModelData.ToRequestContent(data), context);
+                using HttpMessage message = _managedPrivateEndpointModelsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, ManagedPrivateEndpointModelData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 GrafanaArmOperation<ManagedPrivateEndpointModelResource> operation = new GrafanaArmOperation<ManagedPrivateEndpointModelResource>(
                     new ManagedPrivateEndpointModelResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Grafana
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedPrivateEndpointModelsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, context);
+                using HttpMessage message = _managedPrivateEndpointModelsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ManagedPrivateEndpointModelData> response = Response.FromValue(ManagedPrivateEndpointModelData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Grafana
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedPrivateEndpointModelsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, context);
+                using HttpMessage message = _managedPrivateEndpointModelsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ManagedPrivateEndpointModelData> response = Response.FromValue(ManagedPrivateEndpointModelData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Grafana
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedPrivateEndpointModelsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, context);
+                using HttpMessage message = _managedPrivateEndpointModelsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ManagedPrivateEndpointModelData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Grafana
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedPrivateEndpointModelsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, context);
+                using HttpMessage message = _managedPrivateEndpointModelsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ManagedPrivateEndpointModelData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Grafana
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedPrivateEndpointModelsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, context);
+                using HttpMessage message = _managedPrivateEndpointModelsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ManagedPrivateEndpointModelData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Grafana
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedPrivateEndpointModelsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, context);
+                using HttpMessage message = _managedPrivateEndpointModelsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ManagedPrivateEndpointModelData> response = default;

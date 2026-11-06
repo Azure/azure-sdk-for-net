@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Elastic
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tagRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, ElasticTagRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _tagRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, ElasticTagRuleData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ElasticTagRuleData> response = Response.FromValue(ElasticTagRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Elastic
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tagRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, ElasticTagRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _tagRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, ElasticTagRuleData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ElasticTagRuleData> response = Response.FromValue(ElasticTagRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Elastic
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tagRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, context);
+                using HttpMessage message = _tagRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ElasticTagRuleData> response = Response.FromValue(ElasticTagRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Elastic
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tagRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, context);
+                using HttpMessage message = _tagRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ElasticTagRuleData> response = Response.FromValue(ElasticTagRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Elastic
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tagRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, context);
+                using HttpMessage message = _tagRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ElasticTagRuleData> response = default;
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.Elastic
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tagRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, context);
+                using HttpMessage message = _tagRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ElasticTagRuleData> response = default;
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.Elastic
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tagRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, context);
+                using HttpMessage message = _tagRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ElasticTagRuleData> response = default;
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.Elastic
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tagRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, context);
+                using HttpMessage message = _tagRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ElasticTagRuleData> response = default;

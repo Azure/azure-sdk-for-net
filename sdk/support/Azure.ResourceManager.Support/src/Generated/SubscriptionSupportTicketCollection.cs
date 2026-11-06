@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionSupportTicketRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), supportTicketName, SupportTicketData.ToRequestContent(data), context);
+                using HttpMessage message = _subscriptionSupportTicketRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), supportTicketName, SupportTicketData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SupportArmOperation<SubscriptionSupportTicketResource> operation = new SupportArmOperation<SubscriptionSupportTicketResource>(
                     new SubscriptionSupportTicketResourceOperationSource(Client),
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionSupportTicketRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), supportTicketName, SupportTicketData.ToRequestContent(data), context);
+                using HttpMessage message = _subscriptionSupportTicketRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), supportTicketName, SupportTicketData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SupportArmOperation<SubscriptionSupportTicketResource> operation = new SupportArmOperation<SubscriptionSupportTicketResource>(
                     new SubscriptionSupportTicketResourceOperationSource(Client),
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionSupportTicketRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), supportTicketName, context);
+                using HttpMessage message = _subscriptionSupportTicketRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), supportTicketName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SupportTicketData> response = Response.FromValue(SupportTicketData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionSupportTicketRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), supportTicketName, context);
+                using HttpMessage message = _subscriptionSupportTicketRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), supportTicketName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SupportTicketData> response = Response.FromValue(SupportTicketData.FromResponse(result), result);
                 if (response.Value == null)
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionSupportTicketRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), supportTicketName, context);
+                using HttpMessage message = _subscriptionSupportTicketRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), supportTicketName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SupportTicketData> response = default;
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionSupportTicketRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), supportTicketName, context);
+                using HttpMessage message = _subscriptionSupportTicketRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), supportTicketName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SupportTicketData> response = default;
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionSupportTicketRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), supportTicketName, context);
+                using HttpMessage message = _subscriptionSupportTicketRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), supportTicketName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SupportTicketData> response = default;
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionSupportTicketRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), supportTicketName, context);
+                using HttpMessage message = _subscriptionSupportTicketRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), supportTicketName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SupportTicketData> response = default;

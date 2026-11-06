@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineExtensionImagesRestClient.CreateGetRequest(Id.SubscriptionId, _location, _publisherName, @type, version, context);
+                using HttpMessage message = _virtualMachineExtensionImagesRestClient.CreateGetRequest(Id.SubscriptionId, _location, _publisherName, @type, version, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<VirtualMachineExtensionImageData> response = Response.FromValue(VirtualMachineExtensionImageData.FromResponse(result), result);
                 if (response.Value == null)
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineExtensionImagesRestClient.CreateGetRequest(Id.SubscriptionId, _location, _publisherName, @type, version, context);
+                using HttpMessage message = _virtualMachineExtensionImagesRestClient.CreateGetRequest(Id.SubscriptionId, _location, _publisherName, @type, version, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<VirtualMachineExtensionImageData> response = Response.FromValue(VirtualMachineExtensionImageData.FromResponse(result), result);
                 if (response.Value == null)
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineExtensionImagesRestClient.CreateGetRequest(Id.SubscriptionId, _location, _publisherName, @type, version, context);
+                using HttpMessage message = _virtualMachineExtensionImagesRestClient.CreateGetRequest(Id.SubscriptionId, _location, _publisherName, @type, version, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<VirtualMachineExtensionImageData> response = default;
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineExtensionImagesRestClient.CreateGetRequest(Id.SubscriptionId, _location, _publisherName, @type, version, context);
+                using HttpMessage message = _virtualMachineExtensionImagesRestClient.CreateGetRequest(Id.SubscriptionId, _location, _publisherName, @type, version, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<VirtualMachineExtensionImageData> response = default;
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineExtensionImagesRestClient.CreateGetRequest(Id.SubscriptionId, _location, _publisherName, @type, version, context);
+                using HttpMessage message = _virtualMachineExtensionImagesRestClient.CreateGetRequest(Id.SubscriptionId, _location, _publisherName, @type, version, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<VirtualMachineExtensionImageData> response = default;
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineExtensionImagesRestClient.CreateGetRequest(Id.SubscriptionId, _location, _publisherName, @type, version, context);
+                using HttpMessage message = _virtualMachineExtensionImagesRestClient.CreateGetRequest(Id.SubscriptionId, _location, _publisherName, @type, version, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<VirtualMachineExtensionImageData> response = default;

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Hci
     /// <summary>
     /// A class representing a collection of <see cref="EdgeMachineSecuritySettingsResource"/> and their operations.
     /// Each <see cref="EdgeMachineSecuritySettingsResource"/> in the collection will belong to the same instance of <see cref="EdgeMachineResource"/>.
-    /// To get a <see cref="EdgeMachineSecuritySettingsCollection"/> instance call the GetEdgeMachineSecuritySettings method from an instance of <see cref="EdgeMachineResource"/>.
+    /// To get a <see cref="EdgeMachineSecuritySettingsCollection"/> instance call the GetAllEdgeMachineSecuritySettings method from an instance of <see cref="EdgeMachineResource"/>.
     /// </summary>
     public partial class EdgeMachineSecuritySettingsCollection : ArmCollection, IEnumerable<EdgeMachineSecuritySettingsResource>, IAsyncEnumerable<EdgeMachineSecuritySettingsResource>
     {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeMachineSecuritySettingsOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, securitySettingsName, EdgeMachineSecuritySettingsData.ToRequestContent(data), context);
+                using HttpMessage message = _edgeMachineSecuritySettingsOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, securitySettingsName, EdgeMachineSecuritySettingsData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation<EdgeMachineSecuritySettingsResource> operation = new HciArmOperation<EdgeMachineSecuritySettingsResource>(
                     new EdgeMachineSecuritySettingsResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeMachineSecuritySettingsOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, securitySettingsName, EdgeMachineSecuritySettingsData.ToRequestContent(data), context);
+                using HttpMessage message = _edgeMachineSecuritySettingsOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, securitySettingsName, EdgeMachineSecuritySettingsData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation<EdgeMachineSecuritySettingsResource> operation = new HciArmOperation<EdgeMachineSecuritySettingsResource>(
                     new EdgeMachineSecuritySettingsResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeMachineSecuritySettingsOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, securitySettingsName, context);
+                using HttpMessage message = _edgeMachineSecuritySettingsOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, securitySettingsName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EdgeMachineSecuritySettingsData> response = Response.FromValue(EdgeMachineSecuritySettingsData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeMachineSecuritySettingsOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, securitySettingsName, context);
+                using HttpMessage message = _edgeMachineSecuritySettingsOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, securitySettingsName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EdgeMachineSecuritySettingsData> response = Response.FromValue(EdgeMachineSecuritySettingsData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeMachineSecuritySettingsOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, securitySettingsName, context);
+                using HttpMessage message = _edgeMachineSecuritySettingsOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, securitySettingsName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EdgeMachineSecuritySettingsData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeMachineSecuritySettingsOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, securitySettingsName, context);
+                using HttpMessage message = _edgeMachineSecuritySettingsOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, securitySettingsName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EdgeMachineSecuritySettingsData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeMachineSecuritySettingsOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, securitySettingsName, context);
+                using HttpMessage message = _edgeMachineSecuritySettingsOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, securitySettingsName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EdgeMachineSecuritySettingsData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeMachineSecuritySettingsOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, securitySettingsName, context);
+                using HttpMessage message = _edgeMachineSecuritySettingsOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, securitySettingsName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EdgeMachineSecuritySettingsData> response = default;

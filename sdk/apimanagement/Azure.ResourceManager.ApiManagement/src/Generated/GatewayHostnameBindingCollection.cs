@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hostnameBindingName, GatewayHostnameBindingData.ToRequestContent(data), ifMatch, context);
+                using HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hostnameBindingName, GatewayHostnameBindingData.ToRequestContent(data), ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ApiManagementArmOperation<GatewayHostnameBindingResource> operation = new ApiManagementArmOperation<GatewayHostnameBindingResource>(
                     new GatewayHostnameBindingResourceOperationSource(Client),
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hostnameBindingName, GatewayHostnameBindingData.ToRequestContent(data), ifMatch, context);
+                using HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hostnameBindingName, GatewayHostnameBindingData.ToRequestContent(data), ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ApiManagementArmOperation<GatewayHostnameBindingResource> operation = new ApiManagementArmOperation<GatewayHostnameBindingResource>(
                     new GatewayHostnameBindingResourceOperationSource(Client),
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hostnameBindingName, context);
+                using HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hostnameBindingName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GatewayHostnameBindingData> response = Response.FromValue(GatewayHostnameBindingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hostnameBindingName, context);
+                using HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hostnameBindingName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GatewayHostnameBindingData> response = Response.FromValue(GatewayHostnameBindingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hostnameBindingName, context);
+                using HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hostnameBindingName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<GatewayHostnameBindingData> response = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hostnameBindingName, context);
+                using HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hostnameBindingName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<GatewayHostnameBindingData> response = default;
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hostnameBindingName, context);
+                using HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hostnameBindingName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<GatewayHostnameBindingData> response = default;
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hostnameBindingName, context);
+                using HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hostnameBindingName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<GatewayHostnameBindingData> response = default;

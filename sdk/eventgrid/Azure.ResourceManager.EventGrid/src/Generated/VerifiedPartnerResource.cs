@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _verifiedPartnersRestClient.CreateGetRequest(Id.Name, context);
+                using HttpMessage message = _verifiedPartnersRestClient.CreateGetRequest(Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<VerifiedPartnerData> response = Response.FromValue(VerifiedPartnerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _verifiedPartnersRestClient.CreateGetRequest(Id.Name, context);
+                using HttpMessage message = _verifiedPartnersRestClient.CreateGetRequest(Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<VerifiedPartnerData> response = Response.FromValue(VerifiedPartnerData.FromResponse(result), result);
                 if (response.Value == null)

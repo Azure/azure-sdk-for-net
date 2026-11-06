@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedPrivateEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, KustoManagedPrivateEndpointData.ToRequestContent(data), context);
+                using HttpMessage message = _managedPrivateEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, KustoManagedPrivateEndpointData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 KustoArmOperation<KustoManagedPrivateEndpointResource> operation = new KustoArmOperation<KustoManagedPrivateEndpointResource>(
                     new KustoManagedPrivateEndpointResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedPrivateEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, KustoManagedPrivateEndpointData.ToRequestContent(data), context);
+                using HttpMessage message = _managedPrivateEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, KustoManagedPrivateEndpointData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 KustoArmOperation<KustoManagedPrivateEndpointResource> operation = new KustoArmOperation<KustoManagedPrivateEndpointResource>(
                     new KustoManagedPrivateEndpointResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedPrivateEndpointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, context);
+                using HttpMessage message = _managedPrivateEndpointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<KustoManagedPrivateEndpointData> response = Response.FromValue(KustoManagedPrivateEndpointData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedPrivateEndpointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, context);
+                using HttpMessage message = _managedPrivateEndpointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<KustoManagedPrivateEndpointData> response = Response.FromValue(KustoManagedPrivateEndpointData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedPrivateEndpointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, context);
+                using HttpMessage message = _managedPrivateEndpointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<KustoManagedPrivateEndpointData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedPrivateEndpointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, context);
+                using HttpMessage message = _managedPrivateEndpointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<KustoManagedPrivateEndpointData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedPrivateEndpointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, context);
+                using HttpMessage message = _managedPrivateEndpointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<KustoManagedPrivateEndpointData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedPrivateEndpointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, context);
+                using HttpMessage message = _managedPrivateEndpointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<KustoManagedPrivateEndpointData> response = default;

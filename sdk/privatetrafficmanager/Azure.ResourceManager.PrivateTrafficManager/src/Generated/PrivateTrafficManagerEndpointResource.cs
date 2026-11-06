@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _endpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PrivateTrafficManagerEndpointData> response = Response.FromValue(PrivateTrafficManagerEndpointData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _endpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PrivateTrafficManagerEndpointData> response = Response.FromValue(PrivateTrafficManagerEndpointData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, PrivateTrafficManagerEndpointPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _endpointsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, PrivateTrafficManagerEndpointPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PrivateTrafficManagerArmOperation<PrivateTrafficManagerEndpointResource> operation = new PrivateTrafficManagerArmOperation<PrivateTrafficManagerEndpointResource>(
                     new PrivateTrafficManagerEndpointResourceOperationSource(Client),
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, PrivateTrafficManagerEndpointPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _endpointsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, PrivateTrafficManagerEndpointPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PrivateTrafficManagerArmOperation<PrivateTrafficManagerEndpointResource> operation = new PrivateTrafficManagerArmOperation<PrivateTrafficManagerEndpointResource>(
                     new PrivateTrafficManagerEndpointResourceOperationSource(Client),
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _endpointsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PrivateTrafficManagerArmOperation operation = new PrivateTrafficManagerArmOperation(_endpointsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _endpointsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PrivateTrafficManagerArmOperation operation = new PrivateTrafficManagerArmOperation(_endpointsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

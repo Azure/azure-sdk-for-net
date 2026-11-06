@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peConnectionName, CloudHsmClusterPrivateEndpointConnectionData.ToRequestContent(data), context);
+                using HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peConnectionName, CloudHsmClusterPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CloudHsmClusterPrivateEndpointConnectionData> response = Response.FromValue(CloudHsmClusterPrivateEndpointConnectionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peConnectionName, CloudHsmClusterPrivateEndpointConnectionData.ToRequestContent(data), context);
+                using HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peConnectionName, CloudHsmClusterPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CloudHsmClusterPrivateEndpointConnectionData> response = Response.FromValue(CloudHsmClusterPrivateEndpointConnectionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peConnectionName, context);
+                using HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peConnectionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CloudHsmClusterPrivateEndpointConnectionData> response = Response.FromValue(CloudHsmClusterPrivateEndpointConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peConnectionName, context);
+                using HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peConnectionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CloudHsmClusterPrivateEndpointConnectionData> response = Response.FromValue(CloudHsmClusterPrivateEndpointConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peConnectionName, context);
+                using HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peConnectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CloudHsmClusterPrivateEndpointConnectionData> response = default;
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peConnectionName, context);
+                using HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peConnectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CloudHsmClusterPrivateEndpointConnectionData> response = default;
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peConnectionName, context);
+                using HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peConnectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CloudHsmClusterPrivateEndpointConnectionData> response = default;
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peConnectionName, context);
+                using HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peConnectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CloudHsmClusterPrivateEndpointConnectionData> response = default;

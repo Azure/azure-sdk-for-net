@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentSettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deploymentSettingsName, HciClusterDeploymentSettingData.ToRequestContent(data), context);
+                using HttpMessage message = _deploymentSettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deploymentSettingsName, HciClusterDeploymentSettingData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation<HciClusterDeploymentSettingResource> operation = new HciArmOperation<HciClusterDeploymentSettingResource>(
                     new HciClusterDeploymentSettingResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentSettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deploymentSettingsName, HciClusterDeploymentSettingData.ToRequestContent(data), context);
+                using HttpMessage message = _deploymentSettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deploymentSettingsName, HciClusterDeploymentSettingData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation<HciClusterDeploymentSettingResource> operation = new HciArmOperation<HciClusterDeploymentSettingResource>(
                     new HciClusterDeploymentSettingResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deploymentSettingsName, context);
+                using HttpMessage message = _deploymentSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deploymentSettingsName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HciClusterDeploymentSettingData> response = Response.FromValue(HciClusterDeploymentSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deploymentSettingsName, context);
+                using HttpMessage message = _deploymentSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deploymentSettingsName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HciClusterDeploymentSettingData> response = Response.FromValue(HciClusterDeploymentSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deploymentSettingsName, context);
+                using HttpMessage message = _deploymentSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deploymentSettingsName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HciClusterDeploymentSettingData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deploymentSettingsName, context);
+                using HttpMessage message = _deploymentSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deploymentSettingsName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HciClusterDeploymentSettingData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deploymentSettingsName, context);
+                using HttpMessage message = _deploymentSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deploymentSettingsName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HciClusterDeploymentSettingData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deploymentSettingsName, context);
+                using HttpMessage message = _deploymentSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deploymentSettingsName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HciClusterDeploymentSettingData> response = default;

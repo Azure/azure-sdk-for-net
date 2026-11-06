@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventHubsDisasterRecoveryAuthorizationRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, @alias, EventHubsDisasterRecoveryData.ToRequestContent(data), context);
+                using HttpMessage message = _eventHubsDisasterRecoveryAuthorizationRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, @alias, EventHubsDisasterRecoveryData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EventHubsDisasterRecoveryData> response = Response.FromValue(EventHubsDisasterRecoveryData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventHubsDisasterRecoveryAuthorizationRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, @alias, EventHubsDisasterRecoveryData.ToRequestContent(data), context);
+                using HttpMessage message = _eventHubsDisasterRecoveryAuthorizationRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, @alias, EventHubsDisasterRecoveryData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EventHubsDisasterRecoveryData> response = Response.FromValue(EventHubsDisasterRecoveryData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventHubsDisasterRecoveryAuthorizationRuleRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, @alias, context);
+                using HttpMessage message = _eventHubsDisasterRecoveryAuthorizationRuleRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, @alias, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EventHubsDisasterRecoveryData> response = Response.FromValue(EventHubsDisasterRecoveryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventHubsDisasterRecoveryAuthorizationRuleRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, @alias, context);
+                using HttpMessage message = _eventHubsDisasterRecoveryAuthorizationRuleRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, @alias, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EventHubsDisasterRecoveryData> response = Response.FromValue(EventHubsDisasterRecoveryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventHubsDisasterRecoveryAuthorizationRuleRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, @alias, context);
+                using HttpMessage message = _eventHubsDisasterRecoveryAuthorizationRuleRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, @alias, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EventHubsDisasterRecoveryData> response = default;
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventHubsDisasterRecoveryAuthorizationRuleRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, @alias, context);
+                using HttpMessage message = _eventHubsDisasterRecoveryAuthorizationRuleRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, @alias, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EventHubsDisasterRecoveryData> response = default;
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventHubsDisasterRecoveryAuthorizationRuleRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, @alias, context);
+                using HttpMessage message = _eventHubsDisasterRecoveryAuthorizationRuleRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, @alias, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EventHubsDisasterRecoveryData> response = default;
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventHubsDisasterRecoveryAuthorizationRuleRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, @alias, context);
+                using HttpMessage message = _eventHubsDisasterRecoveryAuthorizationRuleRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, @alias, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EventHubsDisasterRecoveryData> response = default;

@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapLandscapeMonitorRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, SapLandscapeMonitorData.ToRequestContent(data), context);
+                using HttpMessage message = _sapLandscapeMonitorRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, SapLandscapeMonitorData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SapLandscapeMonitorData> response = Response.FromValue(SapLandscapeMonitorData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapLandscapeMonitorRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, SapLandscapeMonitorData.ToRequestContent(data), context);
+                using HttpMessage message = _sapLandscapeMonitorRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, SapLandscapeMonitorData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SapLandscapeMonitorData> response = Response.FromValue(SapLandscapeMonitorData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapLandscapeMonitorRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _sapLandscapeMonitorRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SapLandscapeMonitorData> response = Response.FromValue(SapLandscapeMonitorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapLandscapeMonitorRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _sapLandscapeMonitorRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SapLandscapeMonitorData> response = Response.FromValue(SapLandscapeMonitorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapLandscapeMonitorRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, SapLandscapeMonitorData.ToRequestContent(data), context);
+                using HttpMessage message = _sapLandscapeMonitorRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, SapLandscapeMonitorData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SapLandscapeMonitorData> response = Response.FromValue(SapLandscapeMonitorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapLandscapeMonitorRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, SapLandscapeMonitorData.ToRequestContent(data), context);
+                using HttpMessage message = _sapLandscapeMonitorRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, SapLandscapeMonitorData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SapLandscapeMonitorData> response = Response.FromValue(SapLandscapeMonitorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapLandscapeMonitorRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _sapLandscapeMonitorRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapLandscapeMonitorRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _sapLandscapeMonitorRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());

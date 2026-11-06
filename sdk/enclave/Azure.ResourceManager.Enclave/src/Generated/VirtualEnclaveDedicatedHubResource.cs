@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Enclave
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dedicatedHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _dedicatedHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<VirtualEnclaveDedicatedHubData> response = Response.FromValue(VirtualEnclaveDedicatedHubData.FromResponse(result), result);
                 if (response.Value == null)
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Enclave
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dedicatedHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _dedicatedHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<VirtualEnclaveDedicatedHubData> response = Response.FromValue(VirtualEnclaveDedicatedHubData.FromResponse(result), result);
                 if (response.Value == null)
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Enclave
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dedicatedHubRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, VirtualEnclaveDedicatedHubPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _dedicatedHubRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, VirtualEnclaveDedicatedHubPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 EnclaveArmOperation<VirtualEnclaveDedicatedHubResource> operation = new EnclaveArmOperation<VirtualEnclaveDedicatedHubResource>(
                     new VirtualEnclaveDedicatedHubResourceOperationSource(Client),
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Enclave
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dedicatedHubRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, VirtualEnclaveDedicatedHubPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _dedicatedHubRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, VirtualEnclaveDedicatedHubPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 EnclaveArmOperation<VirtualEnclaveDedicatedHubResource> operation = new EnclaveArmOperation<VirtualEnclaveDedicatedHubResource>(
                     new VirtualEnclaveDedicatedHubResourceOperationSource(Client),
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.Enclave
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dedicatedHubRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _dedicatedHubRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 EnclaveArmOperation operation = new EnclaveArmOperation(_dedicatedHubClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.Enclave
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dedicatedHubRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _dedicatedHubRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 EnclaveArmOperation operation = new EnclaveArmOperation(_dedicatedHubClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.Enclave
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _dedicatedHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _dedicatedHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<VirtualEnclaveDedicatedHubData> response = Response.FromValue(VirtualEnclaveDedicatedHubData.FromResponse(result), result);
                     return Response.FromValue(new VirtualEnclaveDedicatedHubResource(Client, response.Value), response.GetRawResponse());
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.Enclave
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _dedicatedHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _dedicatedHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<VirtualEnclaveDedicatedHubData> response = Response.FromValue(VirtualEnclaveDedicatedHubData.FromResponse(result), result);
                     return Response.FromValue(new VirtualEnclaveDedicatedHubResource(Client, response.Value), response.GetRawResponse());
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.Enclave
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _dedicatedHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _dedicatedHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<VirtualEnclaveDedicatedHubData> response = Response.FromValue(VirtualEnclaveDedicatedHubData.FromResponse(result), result);
                     return Response.FromValue(new VirtualEnclaveDedicatedHubResource(Client, response.Value), response.GetRawResponse());
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.Enclave
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _dedicatedHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _dedicatedHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<VirtualEnclaveDedicatedHubData> response = Response.FromValue(VirtualEnclaveDedicatedHubData.FromResponse(result), result);
                     return Response.FromValue(new VirtualEnclaveDedicatedHubResource(Client, response.Value), response.GetRawResponse());
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.Enclave
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _dedicatedHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _dedicatedHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<VirtualEnclaveDedicatedHubData> response = Response.FromValue(VirtualEnclaveDedicatedHubData.FromResponse(result), result);
                     return Response.FromValue(new VirtualEnclaveDedicatedHubResource(Client, response.Value), response.GetRawResponse());
@@ -653,7 +653,7 @@ namespace Azure.ResourceManager.Enclave
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _dedicatedHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _dedicatedHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<VirtualEnclaveDedicatedHubData> response = Response.FromValue(VirtualEnclaveDedicatedHubData.FromResponse(result), result);
                     return Response.FromValue(new VirtualEnclaveDedicatedHubResource(Client, response.Value), response.GetRawResponse());

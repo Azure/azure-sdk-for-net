@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _onlineEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, MachineLearningOnlineEndpointData.ToRequestContent(data), context);
+                using HttpMessage message = _onlineEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, MachineLearningOnlineEndpointData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MachineLearningArmOperation<MachineLearningOnlineEndpointResource> operation = new MachineLearningArmOperation<MachineLearningOnlineEndpointResource>(
                     new MachineLearningOnlineEndpointResourceOperationSource(Client),
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _onlineEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, MachineLearningOnlineEndpointData.ToRequestContent(data), context);
+                using HttpMessage message = _onlineEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, MachineLearningOnlineEndpointData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MachineLearningArmOperation<MachineLearningOnlineEndpointResource> operation = new MachineLearningArmOperation<MachineLearningOnlineEndpointResource>(
                     new MachineLearningOnlineEndpointResourceOperationSource(Client),
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _onlineEndpointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, context);
+                using HttpMessage message = _onlineEndpointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MachineLearningOnlineEndpointData> response = Response.FromValue(MachineLearningOnlineEndpointData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _onlineEndpointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, context);
+                using HttpMessage message = _onlineEndpointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MachineLearningOnlineEndpointData> response = Response.FromValue(MachineLearningOnlineEndpointData.FromResponse(result), result);
                 if (response.Value == null)
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _onlineEndpointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, context);
+                using HttpMessage message = _onlineEndpointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MachineLearningOnlineEndpointData> response = default;
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _onlineEndpointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, context);
+                using HttpMessage message = _onlineEndpointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MachineLearningOnlineEndpointData> response = default;
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _onlineEndpointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, context);
+                using HttpMessage message = _onlineEndpointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MachineLearningOnlineEndpointData> response = default;
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _onlineEndpointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, context);
+                using HttpMessage message = _onlineEndpointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MachineLearningOnlineEndpointData> response = default;

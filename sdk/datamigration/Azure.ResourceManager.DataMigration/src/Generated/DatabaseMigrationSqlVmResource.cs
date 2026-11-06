@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="sqlVirtualMachineName"> The sqlVirtualMachineName. </param>
-        /// <param name="targetDBName"> The targetDbName. </param>
+        /// <param name="targetDBName"> The targetDBName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string sqlVirtualMachineName, string targetDBName)
         {
             string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/{sqlVirtualMachineName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDBName}";
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseMigrationsSqlVmRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, migrationOperationId, expand, context);
+                using HttpMessage message = _databaseMigrationsSqlVmRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, migrationOperationId, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DatabaseMigrationSqlVmData> response = Response.FromValue(DatabaseMigrationSqlVmData.FromResponse(result), result);
                 if (response.Value == null)
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseMigrationsSqlVmRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, migrationOperationId, expand, context);
+                using HttpMessage message = _databaseMigrationsSqlVmRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, migrationOperationId, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DatabaseMigrationSqlVmData> response = Response.FromValue(DatabaseMigrationSqlVmData.FromResponse(result), result);
                 if (response.Value == null)
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseMigrationsSqlVmRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MigrationOperationInput.ToRequestContent(input), context);
+                using HttpMessage message = _databaseMigrationsSqlVmRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MigrationOperationInput.ToRequestContent(input), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataMigrationArmOperation operation = new DataMigrationArmOperation(_databaseMigrationsSqlVmClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseMigrationsSqlVmRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MigrationOperationInput.ToRequestContent(input), context);
+                using HttpMessage message = _databaseMigrationsSqlVmRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MigrationOperationInput.ToRequestContent(input), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataMigrationArmOperation operation = new DataMigrationArmOperation(_databaseMigrationsSqlVmClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseMigrationsSqlVmRestClient.CreateCutoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MigrationOperationInput.ToRequestContent(input), context);
+                using HttpMessage message = _databaseMigrationsSqlVmRestClient.CreateCutoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MigrationOperationInput.ToRequestContent(input), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataMigrationArmOperation operation = new DataMigrationArmOperation(_databaseMigrationsSqlVmClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseMigrationsSqlVmRestClient.CreateCutoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MigrationOperationInput.ToRequestContent(input), context);
+                using HttpMessage message = _databaseMigrationsSqlVmRestClient.CreateCutoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MigrationOperationInput.ToRequestContent(input), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataMigrationArmOperation operation = new DataMigrationArmOperation(_databaseMigrationsSqlVmClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseMigrationsSqlVmRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DatabaseMigrationSqlVmData.ToRequestContent(data), context);
+                using HttpMessage message = _databaseMigrationsSqlVmRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DatabaseMigrationSqlVmData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataMigrationArmOperation<DatabaseMigrationSqlVmResource> operation = new DataMigrationArmOperation<DatabaseMigrationSqlVmResource>(
                     new DatabaseMigrationSqlVmResourceOperationSource(Client),
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseMigrationsSqlVmRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DatabaseMigrationSqlVmData.ToRequestContent(data), context);
+                using HttpMessage message = _databaseMigrationsSqlVmRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DatabaseMigrationSqlVmData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataMigrationArmOperation<DatabaseMigrationSqlVmResource> operation = new DataMigrationArmOperation<DatabaseMigrationSqlVmResource>(
                     new DatabaseMigrationSqlVmResourceOperationSource(Client),

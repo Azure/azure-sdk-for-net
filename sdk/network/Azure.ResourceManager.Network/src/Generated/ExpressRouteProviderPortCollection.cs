@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteProviderPortsRestClient.CreateExpressRouteProviderPortRequest(Guid.Parse(Id.SubscriptionId), providerport, context);
+                using HttpMessage message = _expressRouteProviderPortsRestClient.CreateExpressRouteProviderPortRequest(Guid.Parse(Id.SubscriptionId), providerport, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExpressRouteProviderPortData> response = Response.FromValue(ExpressRouteProviderPortData.FromResponse(result), result);
                 if (response.Value == null)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteProviderPortsRestClient.CreateExpressRouteProviderPortRequest(Guid.Parse(Id.SubscriptionId), providerport, context);
+                using HttpMessage message = _expressRouteProviderPortsRestClient.CreateExpressRouteProviderPortRequest(Guid.Parse(Id.SubscriptionId), providerport, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExpressRouteProviderPortData> response = Response.FromValue(ExpressRouteProviderPortData.FromResponse(result), result);
                 if (response.Value == null)
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteProviderPortsRestClient.CreateExpressRouteProviderPortRequest(Guid.Parse(Id.SubscriptionId), providerport, context);
+                using HttpMessage message = _expressRouteProviderPortsRestClient.CreateExpressRouteProviderPortRequest(Guid.Parse(Id.SubscriptionId), providerport, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ExpressRouteProviderPortData> response = default;
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteProviderPortsRestClient.CreateExpressRouteProviderPortRequest(Guid.Parse(Id.SubscriptionId), providerport, context);
+                using HttpMessage message = _expressRouteProviderPortsRestClient.CreateExpressRouteProviderPortRequest(Guid.Parse(Id.SubscriptionId), providerport, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ExpressRouteProviderPortData> response = default;
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteProviderPortsRestClient.CreateExpressRouteProviderPortRequest(Guid.Parse(Id.SubscriptionId), providerport, context);
+                using HttpMessage message = _expressRouteProviderPortsRestClient.CreateExpressRouteProviderPortRequest(Guid.Parse(Id.SubscriptionId), providerport, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ExpressRouteProviderPortData> response = default;
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteProviderPortsRestClient.CreateExpressRouteProviderPortRequest(Guid.Parse(Id.SubscriptionId), providerport, context);
+                using HttpMessage message = _expressRouteProviderPortsRestClient.CreateExpressRouteProviderPortRequest(Guid.Parse(Id.SubscriptionId), providerport, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ExpressRouteProviderPortData> response = default;

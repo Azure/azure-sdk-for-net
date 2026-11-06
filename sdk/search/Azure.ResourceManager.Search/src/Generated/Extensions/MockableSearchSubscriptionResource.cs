@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Search.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SearchClientRestClient.CreateUsageBySubscriptionSkuRequest(location, Guid.Parse(Id.SubscriptionId), skuName, default, context);
+                using HttpMessage message = SearchClientRestClient.CreateUsageBySubscriptionSkuRequest(location, Guid.Parse(Id.SubscriptionId), skuName, default, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<QuotaUsageResult> response = Response.FromValue(QuotaUsageResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Search.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SearchClientRestClient.CreateUsageBySubscriptionSkuRequest(location, Guid.Parse(Id.SubscriptionId), skuName, default, context);
+                using HttpMessage message = SearchClientRestClient.CreateUsageBySubscriptionSkuRequest(location, Guid.Parse(Id.SubscriptionId), skuName, default, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<QuotaUsageResult> response = Response.FromValue(QuotaUsageResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Search.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ServicesRestClient.CreateCheckSearchServiceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), SearchServiceNameAvailabilityContent.ToRequestContent(content), default, context);
+                using HttpMessage message = ServicesRestClient.CreateCheckSearchServiceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), SearchServiceNameAvailabilityContent.ToRequestContent(content), default, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SearchServiceNameAvailabilityResult> response = Response.FromValue(SearchServiceNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Search.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ServicesRestClient.CreateCheckSearchServiceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), SearchServiceNameAvailabilityContent.ToRequestContent(content), default, context);
+                using HttpMessage message = ServicesRestClient.CreateCheckSearchServiceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), SearchServiceNameAvailabilityContent.ToRequestContent(content), default, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SearchServiceNameAvailabilityResult> response = Response.FromValue(SearchServiceNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

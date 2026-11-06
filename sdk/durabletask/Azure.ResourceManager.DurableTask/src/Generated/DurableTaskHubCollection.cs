@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DurableTask
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _taskHubsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, taskHubName, DurableTaskHubData.ToRequestContent(data), context);
+                using HttpMessage message = _taskHubsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, taskHubName, DurableTaskHubData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DurableTaskArmOperation<DurableTaskHubResource> operation = new DurableTaskArmOperation<DurableTaskHubResource>(
                     new DurableTaskHubResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DurableTask
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _taskHubsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, taskHubName, DurableTaskHubData.ToRequestContent(data), context);
+                using HttpMessage message = _taskHubsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, taskHubName, DurableTaskHubData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DurableTaskArmOperation<DurableTaskHubResource> operation = new DurableTaskArmOperation<DurableTaskHubResource>(
                     new DurableTaskHubResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DurableTask
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _taskHubsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, taskHubName, context);
+                using HttpMessage message = _taskHubsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, taskHubName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DurableTaskHubData> response = Response.FromValue(DurableTaskHubData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DurableTask
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _taskHubsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, taskHubName, context);
+                using HttpMessage message = _taskHubsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, taskHubName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DurableTaskHubData> response = Response.FromValue(DurableTaskHubData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.DurableTask
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _taskHubsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, taskHubName, context);
+                using HttpMessage message = _taskHubsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, taskHubName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DurableTaskHubData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.DurableTask
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _taskHubsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, taskHubName, context);
+                using HttpMessage message = _taskHubsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, taskHubName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DurableTaskHubData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.DurableTask
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _taskHubsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, taskHubName, context);
+                using HttpMessage message = _taskHubsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, taskHubName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DurableTaskHubData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.DurableTask
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _taskHubsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, taskHubName, context);
+                using HttpMessage message = _taskHubsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, taskHubName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DurableTaskHubData> response = default;

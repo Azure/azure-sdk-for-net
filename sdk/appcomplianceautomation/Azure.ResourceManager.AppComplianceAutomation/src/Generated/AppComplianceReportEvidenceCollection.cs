@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _evidenceRestClient.CreateCreateOrUpdateRequest(Id.Name, evidenceName, AppComplianceReportEvidenceData.ToRequestContent(data), offerGuid, reportCreatorTenantId, context);
+                using HttpMessage message = _evidenceRestClient.CreateCreateOrUpdateRequest(Id.Name, evidenceName, AppComplianceReportEvidenceData.ToRequestContent(data), offerGuid, reportCreatorTenantId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppComplianceReportEvidenceData> response = Response.FromValue(AppComplianceReportEvidenceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _evidenceRestClient.CreateCreateOrUpdateRequest(Id.Name, evidenceName, AppComplianceReportEvidenceData.ToRequestContent(data), offerGuid, reportCreatorTenantId, context);
+                using HttpMessage message = _evidenceRestClient.CreateCreateOrUpdateRequest(Id.Name, evidenceName, AppComplianceReportEvidenceData.ToRequestContent(data), offerGuid, reportCreatorTenantId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppComplianceReportEvidenceData> response = Response.FromValue(AppComplianceReportEvidenceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _evidenceRestClient.CreateGetRequest(Id.Name, evidenceName, context);
+                using HttpMessage message = _evidenceRestClient.CreateGetRequest(Id.Name, evidenceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppComplianceReportEvidenceData> response = Response.FromValue(AppComplianceReportEvidenceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _evidenceRestClient.CreateGetRequest(Id.Name, evidenceName, context);
+                using HttpMessage message = _evidenceRestClient.CreateGetRequest(Id.Name, evidenceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppComplianceReportEvidenceData> response = Response.FromValue(AppComplianceReportEvidenceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _evidenceRestClient.CreateGetRequest(Id.Name, evidenceName, context);
+                using HttpMessage message = _evidenceRestClient.CreateGetRequest(Id.Name, evidenceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AppComplianceReportEvidenceData> response = default;
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _evidenceRestClient.CreateGetRequest(Id.Name, evidenceName, context);
+                using HttpMessage message = _evidenceRestClient.CreateGetRequest(Id.Name, evidenceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AppComplianceReportEvidenceData> response = default;
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _evidenceRestClient.CreateGetRequest(Id.Name, evidenceName, context);
+                using HttpMessage message = _evidenceRestClient.CreateGetRequest(Id.Name, evidenceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AppComplianceReportEvidenceData> response = default;
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _evidenceRestClient.CreateGetRequest(Id.Name, evidenceName, context);
+                using HttpMessage message = _evidenceRestClient.CreateGetRequest(Id.Name, evidenceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AppComplianceReportEvidenceData> response = default;

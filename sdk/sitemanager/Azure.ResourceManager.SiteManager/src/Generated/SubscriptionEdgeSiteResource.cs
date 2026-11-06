@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionEdgeSiteRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _subscriptionEdgeSiteRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EdgeSiteData> response = Response.FromValue(EdgeSiteData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionEdgeSiteRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _subscriptionEdgeSiteRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EdgeSiteData> response = Response.FromValue(EdgeSiteData.FromResponse(result), result);
                 if (response.Value == null)
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionEdgeSiteRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, EdgeSitePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _subscriptionEdgeSiteRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, EdgeSitePatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EdgeSiteData> response = Response.FromValue(EdgeSiteData.FromResponse(result), result);
                 if (response.Value == null)
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionEdgeSiteRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, EdgeSitePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _subscriptionEdgeSiteRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, EdgeSitePatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EdgeSiteData> response = Response.FromValue(EdgeSiteData.FromResponse(result), result);
                 if (response.Value == null)
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionEdgeSiteRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _subscriptionEdgeSiteRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionEdgeSiteRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _subscriptionEdgeSiteRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());

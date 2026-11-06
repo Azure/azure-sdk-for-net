@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _grantsRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, includeAllocatedBudget, context);
+                using HttpMessage message = _grantsRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, includeAllocatedBudget, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GrantDetailsData> response = Response.FromValue(GrantDetailsData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _grantsRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, includeAllocatedBudget, context);
+                using HttpMessage message = _grantsRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, includeAllocatedBudget, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GrantDetailsData> response = Response.FromValue(GrantDetailsData.FromResponse(result), result);
                 if (response.Value == null)

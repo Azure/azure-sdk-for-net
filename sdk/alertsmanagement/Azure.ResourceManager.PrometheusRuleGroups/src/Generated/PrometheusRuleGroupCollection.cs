@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _prometheusRuleGroupResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ruleGroupName, PrometheusRuleGroupData.ToRequestContent(data), context);
+                using HttpMessage message = _prometheusRuleGroupResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ruleGroupName, PrometheusRuleGroupData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PrometheusRuleGroupData> response = Response.FromValue(PrometheusRuleGroupData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _prometheusRuleGroupResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ruleGroupName, PrometheusRuleGroupData.ToRequestContent(data), context);
+                using HttpMessage message = _prometheusRuleGroupResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ruleGroupName, PrometheusRuleGroupData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PrometheusRuleGroupData> response = Response.FromValue(PrometheusRuleGroupData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _prometheusRuleGroupResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, ruleGroupName, context);
+                using HttpMessage message = _prometheusRuleGroupResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, ruleGroupName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PrometheusRuleGroupData> response = Response.FromValue(PrometheusRuleGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _prometheusRuleGroupResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, ruleGroupName, context);
+                using HttpMessage message = _prometheusRuleGroupResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, ruleGroupName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PrometheusRuleGroupData> response = Response.FromValue(PrometheusRuleGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _prometheusRuleGroupResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, ruleGroupName, context);
+                using HttpMessage message = _prometheusRuleGroupResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, ruleGroupName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PrometheusRuleGroupData> response = default;
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _prometheusRuleGroupResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, ruleGroupName, context);
+                using HttpMessage message = _prometheusRuleGroupResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, ruleGroupName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PrometheusRuleGroupData> response = default;
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _prometheusRuleGroupResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, ruleGroupName, context);
+                using HttpMessage message = _prometheusRuleGroupResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, ruleGroupName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PrometheusRuleGroupData> response = default;
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _prometheusRuleGroupResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, ruleGroupName, context);
+                using HttpMessage message = _prometheusRuleGroupResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, ruleGroupName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PrometheusRuleGroupData> response = default;

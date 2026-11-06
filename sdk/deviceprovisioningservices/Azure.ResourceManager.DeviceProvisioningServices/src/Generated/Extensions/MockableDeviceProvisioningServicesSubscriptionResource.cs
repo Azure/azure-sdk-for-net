@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = IotDpsResourceOperationGroupRestClient.CreateCheckDeviceProvisioningServicesNameAvailabilityRequest(Id.SubscriptionId, DeviceProvisioningServicesNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = IotDpsResourceOperationGroupRestClient.CreateCheckDeviceProvisioningServicesNameAvailabilityRequest(Id.SubscriptionId, DeviceProvisioningServicesNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DeviceProvisioningServicesNameAvailabilityResult> response = Response.FromValue(DeviceProvisioningServicesNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = IotDpsResourceOperationGroupRestClient.CreateCheckDeviceProvisioningServicesNameAvailabilityRequest(Id.SubscriptionId, DeviceProvisioningServicesNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = IotDpsResourceOperationGroupRestClient.CreateCheckDeviceProvisioningServicesNameAvailabilityRequest(Id.SubscriptionId, DeviceProvisioningServicesNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DeviceProvisioningServicesNameAvailabilityResult> response = Response.FromValue(DeviceProvisioningServicesNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

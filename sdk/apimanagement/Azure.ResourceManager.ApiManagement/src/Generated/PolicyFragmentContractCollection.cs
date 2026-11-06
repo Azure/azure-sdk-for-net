@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyFragmentRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, id, PolicyFragmentContractData.ToRequestContent(data), ifMatch, context);
+                using HttpMessage message = _policyFragmentRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, id, PolicyFragmentContractData.ToRequestContent(data), ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ApiManagementArmOperation<PolicyFragmentContractResource> operation = new ApiManagementArmOperation<PolicyFragmentContractResource>(
                     new PolicyFragmentContractResourceOperationSource(Client),
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyFragmentRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, id, PolicyFragmentContractData.ToRequestContent(data), ifMatch, context);
+                using HttpMessage message = _policyFragmentRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, id, PolicyFragmentContractData.ToRequestContent(data), ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ApiManagementArmOperation<PolicyFragmentContractResource> operation = new ApiManagementArmOperation<PolicyFragmentContractResource>(
                     new PolicyFragmentContractResourceOperationSource(Client),
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyFragmentRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, id, format?.ToString(), context);
+                using HttpMessage message = _policyFragmentRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, id, format?.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PolicyFragmentContractData> response = Response.FromValue(PolicyFragmentContractData.FromResponse(result), result);
                 if (response.Value == null)
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyFragmentRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, id, format?.ToString(), context);
+                using HttpMessage message = _policyFragmentRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, id, format?.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PolicyFragmentContractData> response = Response.FromValue(PolicyFragmentContractData.FromResponse(result), result);
                 if (response.Value == null)
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyFragmentRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, id, format?.ToString(), context);
+                using HttpMessage message = _policyFragmentRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, id, format?.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PolicyFragmentContractData> response = default;
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyFragmentRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, id, format?.ToString(), context);
+                using HttpMessage message = _policyFragmentRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, id, format?.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PolicyFragmentContractData> response = default;
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyFragmentRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, id, format?.ToString(), context);
+                using HttpMessage message = _policyFragmentRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, id, format?.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PolicyFragmentContractData> response = default;
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyFragmentRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, id, format?.ToString(), context);
+                using HttpMessage message = _policyFragmentRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, id, format?.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PolicyFragmentContractData> response = default;

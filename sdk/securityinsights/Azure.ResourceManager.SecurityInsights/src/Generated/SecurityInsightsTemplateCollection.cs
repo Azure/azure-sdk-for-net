@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _contentTemplateRestClient.CreateInstallRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, templateId, SecurityInsightsTemplateData.ToRequestContent(data), context);
+                using HttpMessage message = _contentTemplateRestClient.CreateInstallRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, templateId, SecurityInsightsTemplateData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityInsightsTemplateData> response = Response.FromValue(SecurityInsightsTemplateData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _contentTemplateRestClient.CreateInstallRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, templateId, SecurityInsightsTemplateData.ToRequestContent(data), context);
+                using HttpMessage message = _contentTemplateRestClient.CreateInstallRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, templateId, SecurityInsightsTemplateData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityInsightsTemplateData> response = Response.FromValue(SecurityInsightsTemplateData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _contentTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, templateId, context);
+                using HttpMessage message = _contentTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, templateId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityInsightsTemplateData> response = Response.FromValue(SecurityInsightsTemplateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _contentTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, templateId, context);
+                using HttpMessage message = _contentTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, templateId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityInsightsTemplateData> response = Response.FromValue(SecurityInsightsTemplateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _contentTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, templateId, context);
+                using HttpMessage message = _contentTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, templateId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SecurityInsightsTemplateData> response = default;
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _contentTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, templateId, context);
+                using HttpMessage message = _contentTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, templateId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SecurityInsightsTemplateData> response = default;
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _contentTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, templateId, context);
+                using HttpMessage message = _contentTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, templateId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SecurityInsightsTemplateData> response = default;
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _contentTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, templateId, context);
+                using HttpMessage message = _contentTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, templateId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SecurityInsightsTemplateData> response = default;

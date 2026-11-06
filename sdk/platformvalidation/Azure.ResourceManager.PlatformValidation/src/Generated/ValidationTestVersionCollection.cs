@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.PlatformValidation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _validationTestVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, version, context);
+                using HttpMessage message = _validationTestVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, version, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ValidationTestVersionData> response = Response.FromValue(ValidationTestVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.PlatformValidation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _validationTestVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, version, context);
+                using HttpMessage message = _validationTestVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, version, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ValidationTestVersionData> response = Response.FromValue(ValidationTestVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.PlatformValidation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _validationTestVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, version, context);
+                using HttpMessage message = _validationTestVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, version, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ValidationTestVersionData> response = default;
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.PlatformValidation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _validationTestVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, version, context);
+                using HttpMessage message = _validationTestVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, version, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ValidationTestVersionData> response = default;
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.PlatformValidation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _validationTestVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, version, context);
+                using HttpMessage message = _validationTestVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, version, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ValidationTestVersionData> response = default;
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.PlatformValidation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _validationTestVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, version, context);
+                using HttpMessage message = _validationTestVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, version, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ValidationTestVersionData> response = default;

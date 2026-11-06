@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteBasicAuthPropertiesARMResourcesRestClient.CreateCreateOrUpdateBasicAuthRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, basicAuthName.ToString(), StaticSiteBasicAuthPropertyData.ToRequestContent(data), context);
+                using HttpMessage message = _staticSiteBasicAuthPropertiesARMResourcesRestClient.CreateCreateOrUpdateBasicAuthRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, basicAuthName.ToString(), StaticSiteBasicAuthPropertyData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<StaticSiteBasicAuthPropertyData> response = Response.FromValue(StaticSiteBasicAuthPropertyData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteBasicAuthPropertiesARMResourcesRestClient.CreateCreateOrUpdateBasicAuthRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, basicAuthName.ToString(), StaticSiteBasicAuthPropertyData.ToRequestContent(data), context);
+                using HttpMessage message = _staticSiteBasicAuthPropertiesARMResourcesRestClient.CreateCreateOrUpdateBasicAuthRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, basicAuthName.ToString(), StaticSiteBasicAuthPropertyData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<StaticSiteBasicAuthPropertyData> response = Response.FromValue(StaticSiteBasicAuthPropertyData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteBasicAuthPropertiesARMResourcesRestClient.CreateGetBasicAuthRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, basicAuthName.ToString(), context);
+                using HttpMessage message = _staticSiteBasicAuthPropertiesARMResourcesRestClient.CreateGetBasicAuthRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, basicAuthName.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<StaticSiteBasicAuthPropertyData> response = Response.FromValue(StaticSiteBasicAuthPropertyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteBasicAuthPropertiesARMResourcesRestClient.CreateGetBasicAuthRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, basicAuthName.ToString(), context);
+                using HttpMessage message = _staticSiteBasicAuthPropertiesARMResourcesRestClient.CreateGetBasicAuthRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, basicAuthName.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<StaticSiteBasicAuthPropertyData> response = Response.FromValue(StaticSiteBasicAuthPropertyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteBasicAuthPropertiesARMResourcesRestClient.CreateGetBasicAuthRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, basicAuthName.ToString(), context);
+                using HttpMessage message = _staticSiteBasicAuthPropertiesARMResourcesRestClient.CreateGetBasicAuthRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, basicAuthName.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<StaticSiteBasicAuthPropertyData> response = default;
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteBasicAuthPropertiesARMResourcesRestClient.CreateGetBasicAuthRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, basicAuthName.ToString(), context);
+                using HttpMessage message = _staticSiteBasicAuthPropertiesARMResourcesRestClient.CreateGetBasicAuthRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, basicAuthName.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<StaticSiteBasicAuthPropertyData> response = default;
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteBasicAuthPropertiesARMResourcesRestClient.CreateGetBasicAuthRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, basicAuthName.ToString(), context);
+                using HttpMessage message = _staticSiteBasicAuthPropertiesARMResourcesRestClient.CreateGetBasicAuthRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, basicAuthName.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<StaticSiteBasicAuthPropertyData> response = default;
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteBasicAuthPropertiesARMResourcesRestClient.CreateGetBasicAuthRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, basicAuthName.ToString(), context);
+                using HttpMessage message = _staticSiteBasicAuthPropertiesARMResourcesRestClient.CreateGetBasicAuthRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, basicAuthName.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<StaticSiteBasicAuthPropertyData> response = default;

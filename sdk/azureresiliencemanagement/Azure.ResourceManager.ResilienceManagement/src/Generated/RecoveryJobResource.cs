@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryJobsRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _recoveryJobsRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RecoveryJobData> response = Response.FromValue(RecoveryJobData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryJobsRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _recoveryJobsRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RecoveryJobData> response = Response.FromValue(RecoveryJobData.FromResponse(result), result);
                 if (response.Value == null)
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryJobsRestClient.CreateCancelRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, operationId, RecoveryActionContent.ToRequestContent(content), context);
+                using HttpMessage message = _recoveryJobsRestClient.CreateCancelRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, operationId, RecoveryActionContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResilienceManagementArmOperation<ArmResponseErrorResponseResult> operation = new ResilienceManagementArmOperation<ArmResponseErrorResponseResult>(
                     new ArmResponseErrorResponseResultOperationSource(),
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryJobsRestClient.CreateCancelRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, operationId, RecoveryActionContent.ToRequestContent(content), context);
+                using HttpMessage message = _recoveryJobsRestClient.CreateCancelRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, operationId, RecoveryActionContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResilienceManagementArmOperation<ArmResponseErrorResponseResult> operation = new ResilienceManagementArmOperation<ArmResponseErrorResponseResult>(
                     new ArmResponseErrorResponseResultOperationSource(),
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryJobsRestClient.CreateResumeRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, operationId, RecoveryActionContent.ToRequestContent(content), context);
+                using HttpMessage message = _recoveryJobsRestClient.CreateResumeRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, operationId, RecoveryActionContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResilienceManagementArmOperation<ArmResponseErrorResponseResult> operation = new ResilienceManagementArmOperation<ArmResponseErrorResponseResult>(
                     new ArmResponseErrorResponseResultOperationSource(),
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryJobsRestClient.CreateResumeRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, operationId, RecoveryActionContent.ToRequestContent(content), context);
+                using HttpMessage message = _recoveryJobsRestClient.CreateResumeRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, operationId, RecoveryActionContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResilienceManagementArmOperation<ArmResponseErrorResponseResult> operation = new ResilienceManagementArmOperation<ArmResponseErrorResponseResult>(
                     new ArmResponseErrorResponseResultOperationSource(),
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryJobsRestClient.CreateRetryRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, operationId, context);
+                using HttpMessage message = _recoveryJobsRestClient.CreateRetryRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, operationId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResilienceManagementArmOperation<ArmResponseErrorResponseResult> operation = new ResilienceManagementArmOperation<ArmResponseErrorResponseResult>(
                     new ArmResponseErrorResponseResultOperationSource(),
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryJobsRestClient.CreateRetryRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, operationId, context);
+                using HttpMessage message = _recoveryJobsRestClient.CreateRetryRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, operationId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResilienceManagementArmOperation<ArmResponseErrorResponseResult> operation = new ResilienceManagementArmOperation<ArmResponseErrorResponseResult>(
                     new ArmResponseErrorResponseResultOperationSource(),

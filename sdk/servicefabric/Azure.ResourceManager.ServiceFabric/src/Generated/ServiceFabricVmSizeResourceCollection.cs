@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _unsupportedVmSizesRestClient.CreateGetRequest(Id.SubscriptionId, _location, vmSize, context);
+                using HttpMessage message = _unsupportedVmSizesRestClient.CreateGetRequest(Id.SubscriptionId, _location, vmSize, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceFabricVmSizeResourceData> response = Response.FromValue(ServiceFabricVmSizeResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _unsupportedVmSizesRestClient.CreateGetRequest(Id.SubscriptionId, _location, vmSize, context);
+                using HttpMessage message = _unsupportedVmSizesRestClient.CreateGetRequest(Id.SubscriptionId, _location, vmSize, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceFabricVmSizeResourceData> response = Response.FromValue(ServiceFabricVmSizeResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _unsupportedVmSizesRestClient.CreateGetRequest(Id.SubscriptionId, _location, vmSize, context);
+                using HttpMessage message = _unsupportedVmSizesRestClient.CreateGetRequest(Id.SubscriptionId, _location, vmSize, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ServiceFabricVmSizeResourceData> response = default;
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _unsupportedVmSizesRestClient.CreateGetRequest(Id.SubscriptionId, _location, vmSize, context);
+                using HttpMessage message = _unsupportedVmSizesRestClient.CreateGetRequest(Id.SubscriptionId, _location, vmSize, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ServiceFabricVmSizeResourceData> response = default;
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _unsupportedVmSizesRestClient.CreateGetRequest(Id.SubscriptionId, _location, vmSize, context);
+                using HttpMessage message = _unsupportedVmSizesRestClient.CreateGetRequest(Id.SubscriptionId, _location, vmSize, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ServiceFabricVmSizeResourceData> response = default;
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _unsupportedVmSizesRestClient.CreateGetRequest(Id.SubscriptionId, _location, vmSize, context);
+                using HttpMessage message = _unsupportedVmSizesRestClient.CreateGetRequest(Id.SubscriptionId, _location, vmSize, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ServiceFabricVmSizeResourceData> response = default;

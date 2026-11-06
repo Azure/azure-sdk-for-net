@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = WorkspacesRestClient.CreateFailoverWorkspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, workspaceName, context);
+                using HttpMessage message = WorkspacesRestClient.CreateFailoverWorkspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, workspaceName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OperationalInsightsArmOperation operation = new OperationalInsightsArmOperation(WorkspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = WorkspacesRestClient.CreateFailoverWorkspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, workspaceName, context);
+                using HttpMessage message = WorkspacesRestClient.CreateFailoverWorkspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, workspaceName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OperationalInsightsArmOperation operation = new OperationalInsightsArmOperation(WorkspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = QueryPacksRestClient.CreateCreateOrUpdateWithoutNameQueryPackRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, LogAnalyticsQueryPackData.ToRequestContent(data), context);
+                using HttpMessage message = QueryPacksRestClient.CreateCreateOrUpdateWithoutNameQueryPackRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, LogAnalyticsQueryPackData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LogAnalyticsQueryPackData> response = Response.FromValue(LogAnalyticsQueryPackData.FromResponse(result), result);
                 if (response.Value == null)
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = QueryPacksRestClient.CreateCreateOrUpdateWithoutNameQueryPackRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, LogAnalyticsQueryPackData.ToRequestContent(data), context);
+                using HttpMessage message = QueryPacksRestClient.CreateCreateOrUpdateWithoutNameQueryPackRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, LogAnalyticsQueryPackData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LogAnalyticsQueryPackData> response = Response.FromValue(LogAnalyticsQueryPackData.FromResponse(result), result);
                 if (response.Value == null)

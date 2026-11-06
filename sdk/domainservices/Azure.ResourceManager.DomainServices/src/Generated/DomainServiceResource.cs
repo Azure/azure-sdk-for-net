@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DomainServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainServiceOperationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _domainServiceOperationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DomainServiceData> response = Response.FromValue(DomainServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DomainServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainServiceOperationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _domainServiceOperationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DomainServiceData> response = Response.FromValue(DomainServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.DomainServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainServiceOperationGroupRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DomainServiceData.ToRequestContent(data), context);
+                using HttpMessage message = _domainServiceOperationGroupRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DomainServiceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DomainServicesArmOperation<DomainServiceResource> operation = new DomainServicesArmOperation<DomainServiceResource>(
                     new DomainServiceResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.DomainServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainServiceOperationGroupRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DomainServiceData.ToRequestContent(data), context);
+                using HttpMessage message = _domainServiceOperationGroupRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DomainServiceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DomainServicesArmOperation<DomainServiceResource> operation = new DomainServicesArmOperation<DomainServiceResource>(
                     new DomainServiceResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.DomainServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainServiceOperationGroupRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _domainServiceOperationGroupRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DomainServicesArmOperation operation = new DomainServicesArmOperation(_domainServiceOperationGroupClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.DomainServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainServiceOperationGroupRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _domainServiceOperationGroupRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DomainServicesArmOperation operation = new DomainServicesArmOperation(_domainServiceOperationGroupClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.DomainServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainServiceOperationGroupRestClient.CreateUnsuspendRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _domainServiceOperationGroupRestClient.CreateUnsuspendRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DomainServiceUnsuspendResult> response = Response.FromValue(DomainServiceUnsuspendResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.DomainServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainServiceOperationGroupRestClient.CreateUnsuspendRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _domainServiceOperationGroupRestClient.CreateUnsuspendRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DomainServiceUnsuspendResult> response = Response.FromValue(DomainServiceUnsuspendResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.DomainServices
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _domainServiceOperationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _domainServiceOperationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DomainServiceData> response = Response.FromValue(DomainServiceData.FromResponse(result), result);
                     return Response.FromValue(new DomainServiceResource(Client, response.Value), response.GetRawResponse());
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.DomainServices
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _domainServiceOperationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _domainServiceOperationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DomainServiceData> response = Response.FromValue(DomainServiceData.FromResponse(result), result);
                     return Response.FromValue(new DomainServiceResource(Client, response.Value), response.GetRawResponse());
@@ -618,7 +618,7 @@ namespace Azure.ResourceManager.DomainServices
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _domainServiceOperationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _domainServiceOperationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DomainServiceData> response = Response.FromValue(DomainServiceData.FromResponse(result), result);
                     return Response.FromValue(new DomainServiceResource(Client, response.Value), response.GetRawResponse());
@@ -660,7 +660,7 @@ namespace Azure.ResourceManager.DomainServices
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _domainServiceOperationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _domainServiceOperationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DomainServiceData> response = Response.FromValue(DomainServiceData.FromResponse(result), result);
                     return Response.FromValue(new DomainServiceResource(Client, response.Value), response.GetRawResponse());
@@ -702,7 +702,7 @@ namespace Azure.ResourceManager.DomainServices
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _domainServiceOperationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _domainServiceOperationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DomainServiceData> response = Response.FromValue(DomainServiceData.FromResponse(result), result);
                     return Response.FromValue(new DomainServiceResource(Client, response.Value), response.GetRawResponse());
@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.DomainServices
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _domainServiceOperationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _domainServiceOperationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DomainServiceData> response = Response.FromValue(DomainServiceData.FromResponse(result), result);
                     return Response.FromValue(new DomainServiceResource(Client, response.Value), response.GetRawResponse());

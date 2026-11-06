@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, HDInsightApplicationData.ToRequestContent(data), context);
+                using HttpMessage message = _applicationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, HDInsightApplicationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HDInsightArmOperation<HDInsightApplicationResource> operation = new HDInsightArmOperation<HDInsightApplicationResource>(
                     new HDInsightApplicationResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, HDInsightApplicationData.ToRequestContent(data), context);
+                using HttpMessage message = _applicationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, HDInsightApplicationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HDInsightArmOperation<HDInsightApplicationResource> operation = new HDInsightArmOperation<HDInsightApplicationResource>(
                     new HDInsightApplicationResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, context);
+                using HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HDInsightApplicationData> response = Response.FromValue(HDInsightApplicationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, context);
+                using HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HDInsightApplicationData> response = Response.FromValue(HDInsightApplicationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, context);
+                using HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HDInsightApplicationData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, context);
+                using HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HDInsightApplicationData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, context);
+                using HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HDInsightApplicationData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, context);
+                using HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HDInsightApplicationData> response = default;

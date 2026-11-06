@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkSecurityGroupName, NetworkSecurityGroupData.ToRequestContent(data), context);
+                using HttpMessage message = _networkSecurityGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkSecurityGroupName, NetworkSecurityGroupData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<NetworkSecurityGroupResource> operation = new NetworkArmOperation<NetworkSecurityGroupResource>(
                     new NetworkSecurityGroupResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkSecurityGroupName, NetworkSecurityGroupData.ToRequestContent(data), context);
+                using HttpMessage message = _networkSecurityGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkSecurityGroupName, NetworkSecurityGroupData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<NetworkSecurityGroupResource> operation = new NetworkArmOperation<NetworkSecurityGroupResource>(
                     new NetworkSecurityGroupResourceOperationSource(Client),
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkSecurityGroupName, expand, context);
+                using HttpMessage message = _networkSecurityGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkSecurityGroupName, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkSecurityGroupData> response = Response.FromValue(NetworkSecurityGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkSecurityGroupName, expand, context);
+                using HttpMessage message = _networkSecurityGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkSecurityGroupName, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkSecurityGroupData> response = Response.FromValue(NetworkSecurityGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkSecurityGroupName, expand, context);
+                using HttpMessage message = _networkSecurityGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkSecurityGroupName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkSecurityGroupData> response = default;
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkSecurityGroupName, expand, context);
+                using HttpMessage message = _networkSecurityGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkSecurityGroupName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkSecurityGroupData> response = default;
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkSecurityGroupName, expand, context);
+                using HttpMessage message = _networkSecurityGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkSecurityGroupName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkSecurityGroupData> response = default;
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkSecurityGroupName, expand, context);
+                using HttpMessage message = _networkSecurityGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkSecurityGroupName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkSecurityGroupData> response = default;

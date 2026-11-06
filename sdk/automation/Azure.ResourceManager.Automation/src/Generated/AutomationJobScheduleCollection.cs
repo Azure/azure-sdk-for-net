@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobScheduleRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobScheduleId, AutomationJobScheduleCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _jobScheduleRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobScheduleId, AutomationJobScheduleCreateOrUpdateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AutomationJobScheduleData> response = Response.FromValue(AutomationJobScheduleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobScheduleRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobScheduleId, AutomationJobScheduleCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _jobScheduleRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobScheduleId, AutomationJobScheduleCreateOrUpdateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AutomationJobScheduleData> response = Response.FromValue(AutomationJobScheduleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobScheduleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobScheduleId, context);
+                using HttpMessage message = _jobScheduleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobScheduleId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AutomationJobScheduleData> response = Response.FromValue(AutomationJobScheduleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobScheduleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobScheduleId, context);
+                using HttpMessage message = _jobScheduleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobScheduleId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AutomationJobScheduleData> response = Response.FromValue(AutomationJobScheduleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobScheduleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobScheduleId, context);
+                using HttpMessage message = _jobScheduleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobScheduleId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AutomationJobScheduleData> response = default;
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobScheduleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobScheduleId, context);
+                using HttpMessage message = _jobScheduleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobScheduleId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AutomationJobScheduleData> response = default;
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobScheduleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobScheduleId, context);
+                using HttpMessage message = _jobScheduleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobScheduleId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AutomationJobScheduleData> response = default;
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobScheduleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobScheduleId, context);
+                using HttpMessage message = _jobScheduleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobScheduleId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AutomationJobScheduleData> response = default;

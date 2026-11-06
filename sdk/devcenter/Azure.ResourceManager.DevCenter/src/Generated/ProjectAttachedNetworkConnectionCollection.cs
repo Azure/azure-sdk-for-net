@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attachedNetworkConnectionsRestClient.CreateGetByProjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, attachedNetworkConnectionName, context);
+                using HttpMessage message = _attachedNetworkConnectionsRestClient.CreateGetByProjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, attachedNetworkConnectionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AttachedNetworkConnectionData> response = Response.FromValue(AttachedNetworkConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attachedNetworkConnectionsRestClient.CreateGetByProjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, attachedNetworkConnectionName, context);
+                using HttpMessage message = _attachedNetworkConnectionsRestClient.CreateGetByProjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, attachedNetworkConnectionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AttachedNetworkConnectionData> response = Response.FromValue(AttachedNetworkConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attachedNetworkConnectionsRestClient.CreateGetByProjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, attachedNetworkConnectionName, context);
+                using HttpMessage message = _attachedNetworkConnectionsRestClient.CreateGetByProjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, attachedNetworkConnectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AttachedNetworkConnectionData> response = default;
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attachedNetworkConnectionsRestClient.CreateGetByProjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, attachedNetworkConnectionName, context);
+                using HttpMessage message = _attachedNetworkConnectionsRestClient.CreateGetByProjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, attachedNetworkConnectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AttachedNetworkConnectionData> response = default;
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attachedNetworkConnectionsRestClient.CreateGetByProjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, attachedNetworkConnectionName, context);
+                using HttpMessage message = _attachedNetworkConnectionsRestClient.CreateGetByProjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, attachedNetworkConnectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AttachedNetworkConnectionData> response = default;
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attachedNetworkConnectionsRestClient.CreateGetByProjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, attachedNetworkConnectionName, context);
+                using HttpMessage message = _attachedNetworkConnectionsRestClient.CreateGetByProjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, attachedNetworkConnectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AttachedNetworkConnectionData> response = default;

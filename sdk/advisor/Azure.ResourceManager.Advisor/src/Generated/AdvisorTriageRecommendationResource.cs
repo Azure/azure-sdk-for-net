@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _triageRecommendationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _triageRecommendationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AdvisorTriageRecommendationData> response = Response.FromValue(AdvisorTriageRecommendationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _triageRecommendationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _triageRecommendationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AdvisorTriageRecommendationData> response = Response.FromValue(AdvisorTriageRecommendationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _triageRecommendationsRestClient.CreateApproveTriageRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _triageRecommendationsRestClient.CreateApproveTriageRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _triageRecommendationsRestClient.CreateApproveTriageRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _triageRecommendationsRestClient.CreateApproveTriageRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _triageRecommendationsRestClient.CreateRejectTriageRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, RecommendationRejectContent.ToRequestContent(content), context);
+                using HttpMessage message = _triageRecommendationsRestClient.CreateRejectTriageRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, RecommendationRejectContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _triageRecommendationsRestClient.CreateRejectTriageRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, RecommendationRejectContent.ToRequestContent(content), context);
+                using HttpMessage message = _triageRecommendationsRestClient.CreateRejectTriageRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, RecommendationRejectContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _triageRecommendationsRestClient.CreateResetTriageRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _triageRecommendationsRestClient.CreateResetTriageRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _triageRecommendationsRestClient.CreateResetTriageRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _triageRecommendationsRestClient.CreateResetTriageRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }

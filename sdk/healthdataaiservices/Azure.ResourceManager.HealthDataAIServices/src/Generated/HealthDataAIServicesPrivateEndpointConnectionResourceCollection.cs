@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, HealthDataAIServicesPrivateEndpointConnectionResourceData.ToRequestContent(data), context);
+                using HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, HealthDataAIServicesPrivateEndpointConnectionResourceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HealthDataAIServicesArmOperation<HealthDataAIServicesPrivateEndpointConnectionResource> operation = new HealthDataAIServicesArmOperation<HealthDataAIServicesPrivateEndpointConnectionResource>(
                     new HealthDataAIServicesPrivateEndpointConnectionResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, HealthDataAIServicesPrivateEndpointConnectionResourceData.ToRequestContent(data), context);
+                using HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, HealthDataAIServicesPrivateEndpointConnectionResourceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HealthDataAIServicesArmOperation<HealthDataAIServicesPrivateEndpointConnectionResource> operation = new HealthDataAIServicesArmOperation<HealthDataAIServicesPrivateEndpointConnectionResource>(
                     new HealthDataAIServicesPrivateEndpointConnectionResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
+                using HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HealthDataAIServicesPrivateEndpointConnectionResourceData> response = Response.FromValue(HealthDataAIServicesPrivateEndpointConnectionResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
+                using HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HealthDataAIServicesPrivateEndpointConnectionResourceData> response = Response.FromValue(HealthDataAIServicesPrivateEndpointConnectionResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
+                using HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HealthDataAIServicesPrivateEndpointConnectionResourceData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
+                using HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HealthDataAIServicesPrivateEndpointConnectionResourceData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
+                using HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HealthDataAIServicesPrivateEndpointConnectionResourceData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
+                using HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HealthDataAIServicesPrivateEndpointConnectionResourceData> response = default;

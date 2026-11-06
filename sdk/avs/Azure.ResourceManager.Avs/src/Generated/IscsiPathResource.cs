@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iscsiPathsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, IscsiPathData.ToRequestContent(data), context);
+                using HttpMessage message = _iscsiPathsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, IscsiPathData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation<IscsiPathResource> operation = new AvsArmOperation<IscsiPathResource>(
                     new IscsiPathResourceOperationSource(Client),
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iscsiPathsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, IscsiPathData.ToRequestContent(data), context);
+                using HttpMessage message = _iscsiPathsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, IscsiPathData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation<IscsiPathResource> operation = new AvsArmOperation<IscsiPathResource>(
                     new IscsiPathResourceOperationSource(Client),
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iscsiPathsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _iscsiPathsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<IscsiPathData> response = Response.FromValue(IscsiPathData.FromResponse(result), result);
                 if (response.Value == null)
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iscsiPathsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _iscsiPathsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<IscsiPathData> response = Response.FromValue(IscsiPathData.FromResponse(result), result);
                 if (response.Value == null)
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iscsiPathsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _iscsiPathsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation operation = new AvsArmOperation(_iscsiPathsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iscsiPathsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _iscsiPathsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation operation = new AvsArmOperation(_iscsiPathsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

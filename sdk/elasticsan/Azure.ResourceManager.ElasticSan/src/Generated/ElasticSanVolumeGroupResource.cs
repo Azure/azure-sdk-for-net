@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _volumeGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _volumeGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ElasticSanVolumeGroupData> response = Response.FromValue(ElasticSanVolumeGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _volumeGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _volumeGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ElasticSanVolumeGroupData> response = Response.FromValue(ElasticSanVolumeGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _volumeGroupsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ElasticSanVolumeGroupPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _volumeGroupsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ElasticSanVolumeGroupPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ElasticSanArmOperation<ElasticSanVolumeGroupResource> operation = new ElasticSanArmOperation<ElasticSanVolumeGroupResource>(
                     new ElasticSanVolumeGroupResourceOperationSource(Client),
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _volumeGroupsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ElasticSanVolumeGroupPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _volumeGroupsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ElasticSanVolumeGroupPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ElasticSanArmOperation<ElasticSanVolumeGroupResource> operation = new ElasticSanArmOperation<ElasticSanVolumeGroupResource>(
                     new ElasticSanVolumeGroupResourceOperationSource(Client),
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _volumeGroupsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _volumeGroupsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ElasticSanArmOperation operation = new ElasticSanArmOperation(_volumeGroupsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _volumeGroupsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _volumeGroupsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ElasticSanArmOperation operation = new ElasticSanArmOperation(_volumeGroupsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _volumesRestClient.CreatePreBackupVolumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ElasticSanVolumeNameListContent.ToRequestContent(content), context);
+                using HttpMessage message = _volumesRestClient.CreatePreBackupVolumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ElasticSanVolumeNameListContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ElasticSanArmOperation<ElasticSanPreValidationResult> operation = new ElasticSanArmOperation<ElasticSanPreValidationResult>(
                     new ElasticSanPreValidationResultOperationSource(),
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _volumesRestClient.CreatePreBackupVolumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ElasticSanVolumeNameListContent.ToRequestContent(content), context);
+                using HttpMessage message = _volumesRestClient.CreatePreBackupVolumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ElasticSanVolumeNameListContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ElasticSanArmOperation<ElasticSanPreValidationResult> operation = new ElasticSanArmOperation<ElasticSanPreValidationResult>(
                     new ElasticSanPreValidationResultOperationSource(),
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _volumesRestClient.CreatePreRestoreVolumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DiskSnapshotListContent.ToRequestContent(content), context);
+                using HttpMessage message = _volumesRestClient.CreatePreRestoreVolumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DiskSnapshotListContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ElasticSanArmOperation<ElasticSanPreValidationResult> operation = new ElasticSanArmOperation<ElasticSanPreValidationResult>(
                     new ElasticSanPreValidationResultOperationSource(),
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _volumesRestClient.CreatePreRestoreVolumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DiskSnapshotListContent.ToRequestContent(content), context);
+                using HttpMessage message = _volumesRestClient.CreatePreRestoreVolumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DiskSnapshotListContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ElasticSanArmOperation<ElasticSanPreValidationResult> operation = new ElasticSanArmOperation<ElasticSanPreValidationResult>(
                     new ElasticSanPreValidationResultOperationSource(),

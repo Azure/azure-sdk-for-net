@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Billing.Trust
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _assessmentsRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), BillingTrustAssessmentData.ToRequestContent(data), context);
+                using HttpMessage message = _assessmentsRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), BillingTrustAssessmentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TrustArmOperation<BillingTrustAssessmentResource> operation = new TrustArmOperation<BillingTrustAssessmentResource>(
                     new BillingTrustAssessmentResourceOperationSource(Client),
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Billing.Trust
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _assessmentsRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), BillingTrustAssessmentData.ToRequestContent(data), context);
+                using HttpMessage message = _assessmentsRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), BillingTrustAssessmentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TrustArmOperation<BillingTrustAssessmentResource> operation = new TrustArmOperation<BillingTrustAssessmentResource>(
                     new BillingTrustAssessmentResourceOperationSource(Client),
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Billing.Trust
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _assessmentsRestClient.CreateGetRequest(Id.Parent.ToString(), context);
+                using HttpMessage message = _assessmentsRestClient.CreateGetRequest(Id.Parent.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingTrustAssessmentData> response = Response.FromValue(BillingTrustAssessmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Billing.Trust
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _assessmentsRestClient.CreateGetRequest(Id.Parent.ToString(), context);
+                using HttpMessage message = _assessmentsRestClient.CreateGetRequest(Id.Parent.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingTrustAssessmentData> response = Response.FromValue(BillingTrustAssessmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Billing.Trust
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _assessmentsRestClient.CreateDeleteRequest(Id.Parent.ToString(), context);
+                using HttpMessage message = _assessmentsRestClient.CreateDeleteRequest(Id.Parent.ToString(), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TrustArmOperation operation = new TrustArmOperation(_assessmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.Billing.Trust
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _assessmentsRestClient.CreateDeleteRequest(Id.Parent.ToString(), context);
+                using HttpMessage message = _assessmentsRestClient.CreateDeleteRequest(Id.Parent.ToString(), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TrustArmOperation operation = new TrustArmOperation(_assessmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.Billing.Trust
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _assessmentsRestClient.CreateGetUploadTokenRequest(Id.Parent.ToString(), context);
+                using HttpMessage message = _assessmentsRestClient.CreateGetUploadTokenRequest(Id.Parent.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GenerateUploadTokenResult> response = Response.FromValue(GenerateUploadTokenResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Billing.Trust
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _assessmentsRestClient.CreateGetUploadTokenRequest(Id.Parent.ToString(), context);
+                using HttpMessage message = _assessmentsRestClient.CreateGetUploadTokenRequest(Id.Parent.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GenerateUploadTokenResult> response = Response.FromValue(GenerateUploadTokenResult.FromResponse(result), result);
                 if (response.Value == null)

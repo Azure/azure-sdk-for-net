@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _savingsPlanRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, expand, context);
+                using HttpMessage message = _savingsPlanRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingBenefitsSavingsPlanData> response = Response.FromValue(BillingBenefitsSavingsPlanData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _savingsPlanRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, expand, context);
+                using HttpMessage message = _savingsPlanRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingBenefitsSavingsPlanData> response = Response.FromValue(BillingBenefitsSavingsPlanData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _savingsPlanRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, BillingBenefitsSavingsPlanPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _savingsPlanRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, BillingBenefitsSavingsPlanPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingBenefitsArmOperation<BillingBenefitsSavingsPlanResource> operation = new BillingBenefitsArmOperation<BillingBenefitsSavingsPlanResource>(
                     new BillingBenefitsSavingsPlanResourceOperationSource(Client),
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _savingsPlanRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, BillingBenefitsSavingsPlanPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _savingsPlanRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, BillingBenefitsSavingsPlanPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingBenefitsArmOperation<BillingBenefitsSavingsPlanResource> operation = new BillingBenefitsArmOperation<BillingBenefitsSavingsPlanResource>(
                     new BillingBenefitsSavingsPlanResourceOperationSource(Client),
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _savingsPlanRestClient.CreateValidateUpdateRequest(Id.Parent.Name, Id.Name, SavingsPlanUpdateValidateContent.ToRequestContent(content), context);
+                using HttpMessage message = _savingsPlanRestClient.CreateValidateUpdateRequest(Id.Parent.Name, Id.Name, SavingsPlanUpdateValidateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SavingsPlanValidateResult> response = Response.FromValue(SavingsPlanValidateResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _savingsPlanRestClient.CreateValidateUpdateRequest(Id.Parent.Name, Id.Name, SavingsPlanUpdateValidateContent.ToRequestContent(content), context);
+                using HttpMessage message = _savingsPlanRestClient.CreateValidateUpdateRequest(Id.Parent.Name, Id.Name, SavingsPlanUpdateValidateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SavingsPlanValidateResult> response = Response.FromValue(SavingsPlanValidateResult.FromResponse(result), result);
                 if (response.Value == null)

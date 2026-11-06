@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dynamicSchemaVersionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, dynamicSchemaVersionName, EdgeDynamicSchemaVersionData.ToRequestContent(data), context);
+                using HttpMessage message = _dynamicSchemaVersionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, dynamicSchemaVersionName, EdgeDynamicSchemaVersionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation<EdgeDynamicSchemaVersionResource> operation = new WorkloadOrchestrationArmOperation<EdgeDynamicSchemaVersionResource>(
                     new EdgeDynamicSchemaVersionResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dynamicSchemaVersionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, dynamicSchemaVersionName, EdgeDynamicSchemaVersionData.ToRequestContent(data), context);
+                using HttpMessage message = _dynamicSchemaVersionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, dynamicSchemaVersionName, EdgeDynamicSchemaVersionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation<EdgeDynamicSchemaVersionResource> operation = new WorkloadOrchestrationArmOperation<EdgeDynamicSchemaVersionResource>(
                     new EdgeDynamicSchemaVersionResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dynamicSchemaVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, dynamicSchemaVersionName, context);
+                using HttpMessage message = _dynamicSchemaVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, dynamicSchemaVersionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EdgeDynamicSchemaVersionData> response = Response.FromValue(EdgeDynamicSchemaVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dynamicSchemaVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, dynamicSchemaVersionName, context);
+                using HttpMessage message = _dynamicSchemaVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, dynamicSchemaVersionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EdgeDynamicSchemaVersionData> response = Response.FromValue(EdgeDynamicSchemaVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dynamicSchemaVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, dynamicSchemaVersionName, context);
+                using HttpMessage message = _dynamicSchemaVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, dynamicSchemaVersionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EdgeDynamicSchemaVersionData> response = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dynamicSchemaVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, dynamicSchemaVersionName, context);
+                using HttpMessage message = _dynamicSchemaVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, dynamicSchemaVersionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EdgeDynamicSchemaVersionData> response = default;
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dynamicSchemaVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, dynamicSchemaVersionName, context);
+                using HttpMessage message = _dynamicSchemaVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, dynamicSchemaVersionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EdgeDynamicSchemaVersionData> response = default;
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dynamicSchemaVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, dynamicSchemaVersionName, context);
+                using HttpMessage message = _dynamicSchemaVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, dynamicSchemaVersionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EdgeDynamicSchemaVersionData> response = default;

@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ServicesRestClient.CreateCheckHealthcareApisNameAvailabilityRequest(Id.SubscriptionId, HealthcareApisNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = ServicesRestClient.CreateCheckHealthcareApisNameAvailabilityRequest(Id.SubscriptionId, HealthcareApisNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HealthcareApisNameAvailabilityResult> response = Response.FromValue(HealthcareApisNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ServicesRestClient.CreateCheckHealthcareApisNameAvailabilityRequest(Id.SubscriptionId, HealthcareApisNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = ServicesRestClient.CreateCheckHealthcareApisNameAvailabilityRequest(Id.SubscriptionId, HealthcareApisNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HealthcareApisNameAvailabilityResult> response = Response.FromValue(HealthcareApisNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OperationResultsRestClient.CreateGetRequest(Id.SubscriptionId, locationName, operationResultId, context);
+                using HttpMessage message = OperationResultsRestClient.CreateGetRequest(Id.SubscriptionId, locationName, operationResultId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OperationResultsDescription> response = Response.FromValue(OperationResultsDescription.FromResponse(result), result);
                 if (response.Value == null)
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OperationResultsRestClient.CreateGetRequest(Id.SubscriptionId, locationName, operationResultId, context);
+                using HttpMessage message = OperationResultsRestClient.CreateGetRequest(Id.SubscriptionId, locationName, operationResultId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OperationResultsDescription> response = Response.FromValue(OperationResultsDescription.FromResponse(result), result);
                 if (response.Value == null)

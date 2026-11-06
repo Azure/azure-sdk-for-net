@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkInterfacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expand, context);
+                using HttpMessage message = _networkInterfacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkInterfaceData> response = Response.FromValue(NetworkInterfaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkInterfacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expand, context);
+                using HttpMessage message = _networkInterfacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkInterfaceData> response = Response.FromValue(NetworkInterfaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkInterfacesRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTagsObject.ToRequestContent(networkTagsObject), context);
+                using HttpMessage message = _networkInterfacesRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTagsObject.ToRequestContent(networkTagsObject), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkInterfaceData> response = Response.FromValue(NetworkInterfaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkInterfacesRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTagsObject.ToRequestContent(networkTagsObject), context);
+                using HttpMessage message = _networkInterfacesRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTagsObject.ToRequestContent(networkTagsObject), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkInterfaceData> response = Response.FromValue(NetworkInterfaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkInterfacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkInterfacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation operation = new NetworkArmOperation(_networkInterfacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkInterfacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkInterfacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation operation = new NetworkArmOperation(_networkInterfacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkInterfacesRestClient.CreateGetEffectiveRouteTableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkInterfacesRestClient.CreateGetEffectiveRouteTableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<EffectiveRouteListResult> operation = new NetworkArmOperation<EffectiveRouteListResult>(
                     new EffectiveRouteListResultOperationSource(),
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkInterfacesRestClient.CreateGetEffectiveRouteTableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkInterfacesRestClient.CreateGetEffectiveRouteTableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<EffectiveRouteListResult> operation = new NetworkArmOperation<EffectiveRouteListResult>(
                     new EffectiveRouteListResultOperationSource(),
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkInterfacesRestClient.CreateGetEffectiveNetworkSecurityGroupsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkInterfacesRestClient.CreateGetEffectiveNetworkSecurityGroupsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<EffectiveNetworkSecurityGroupListResult> operation = new NetworkArmOperation<EffectiveNetworkSecurityGroupListResult>(
                     new EffectiveNetworkSecurityGroupListResultOperationSource(),
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkInterfacesRestClient.CreateGetEffectiveNetworkSecurityGroupsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkInterfacesRestClient.CreateGetEffectiveNetworkSecurityGroupsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<EffectiveNetworkSecurityGroupListResult> operation = new NetworkArmOperation<EffectiveNetworkSecurityGroupListResult>(
                     new EffectiveNetworkSecurityGroupListResultOperationSource(),
@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _networkInterfacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _networkInterfacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NetworkInterfaceData> response = Response.FromValue(NetworkInterfaceData.FromResponse(result), result);
                     return Response.FromValue(new NetworkInterfaceResource(Client, response.Value), response.GetRawResponse());
@@ -765,7 +765,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _networkInterfacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _networkInterfacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NetworkInterfaceData> response = Response.FromValue(NetworkInterfaceData.FromResponse(result), result);
                     return Response.FromValue(new NetworkInterfaceResource(Client, response.Value), response.GetRawResponse());
@@ -811,7 +811,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _networkInterfacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _networkInterfacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NetworkInterfaceData> response = Response.FromValue(NetworkInterfaceData.FromResponse(result), result);
                     return Response.FromValue(new NetworkInterfaceResource(Client, response.Value), response.GetRawResponse());
@@ -853,7 +853,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _networkInterfacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _networkInterfacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NetworkInterfaceData> response = Response.FromValue(NetworkInterfaceData.FromResponse(result), result);
                     return Response.FromValue(new NetworkInterfaceResource(Client, response.Value), response.GetRawResponse());
@@ -895,7 +895,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _networkInterfacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _networkInterfacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NetworkInterfaceData> response = Response.FromValue(NetworkInterfaceData.FromResponse(result), result);
                     return Response.FromValue(new NetworkInterfaceResource(Client, response.Value), response.GetRawResponse());
@@ -941,7 +941,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _networkInterfacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _networkInterfacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NetworkInterfaceData> response = Response.FromValue(NetworkInterfaceData.FromResponse(result), result);
                     return Response.FromValue(new NetworkInterfaceResource(Client, response.Value), response.GetRawResponse());

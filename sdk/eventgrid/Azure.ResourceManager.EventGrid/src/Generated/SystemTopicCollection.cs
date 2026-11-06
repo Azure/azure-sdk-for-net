@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _systemTopicsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, systemTopicName, SystemTopicData.ToRequestContent(data), context);
+                using HttpMessage message = _systemTopicsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, systemTopicName, SystemTopicData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 EventGridArmOperation<SystemTopicResource> operation = new EventGridArmOperation<SystemTopicResource>(
                     new SystemTopicResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _systemTopicsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, systemTopicName, SystemTopicData.ToRequestContent(data), context);
+                using HttpMessage message = _systemTopicsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, systemTopicName, SystemTopicData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 EventGridArmOperation<SystemTopicResource> operation = new EventGridArmOperation<SystemTopicResource>(
                     new SystemTopicResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _systemTopicsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, systemTopicName, context);
+                using HttpMessage message = _systemTopicsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, systemTopicName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SystemTopicData> response = Response.FromValue(SystemTopicData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _systemTopicsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, systemTopicName, context);
+                using HttpMessage message = _systemTopicsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, systemTopicName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SystemTopicData> response = Response.FromValue(SystemTopicData.FromResponse(result), result);
                 if (response.Value == null)
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _systemTopicsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, systemTopicName, context);
+                using HttpMessage message = _systemTopicsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, systemTopicName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SystemTopicData> response = default;
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _systemTopicsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, systemTopicName, context);
+                using HttpMessage message = _systemTopicsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, systemTopicName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SystemTopicData> response = default;
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _systemTopicsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, systemTopicName, context);
+                using HttpMessage message = _systemTopicsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, systemTopicName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SystemTopicData> response = default;
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _systemTopicsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, systemTopicName, context);
+                using HttpMessage message = _systemTopicsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, systemTopicName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SystemTopicData> response = default;

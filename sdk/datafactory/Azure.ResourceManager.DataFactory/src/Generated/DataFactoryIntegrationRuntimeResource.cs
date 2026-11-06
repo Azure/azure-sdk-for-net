@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifNoneMatch, context);
+                using HttpMessage message = _integrationRuntimesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifNoneMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataFactoryIntegrationRuntimeData> response = Response.FromValue(DataFactoryIntegrationRuntimeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifNoneMatch, context);
+                using HttpMessage message = _integrationRuntimesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifNoneMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataFactoryIntegrationRuntimeData> response = Response.FromValue(DataFactoryIntegrationRuntimeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataFactoryIntegrationRuntimePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _integrationRuntimesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataFactoryIntegrationRuntimePatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataFactoryIntegrationRuntimeData> response = Response.FromValue(DataFactoryIntegrationRuntimeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataFactoryIntegrationRuntimePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _integrationRuntimesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataFactoryIntegrationRuntimePatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataFactoryIntegrationRuntimeData> response = Response.FromValue(DataFactoryIntegrationRuntimeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _integrationRuntimesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _integrationRuntimesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimesRestClient.CreateCreateLinkedIntegrationRuntimeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CreateLinkedIntegrationRuntimeContent.ToRequestContent(content), context);
+                using HttpMessage message = _integrationRuntimesRestClient.CreateCreateLinkedIntegrationRuntimeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CreateLinkedIntegrationRuntimeContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataFactoryIntegrationRuntimeStatusResult> response = Response.FromValue(DataFactoryIntegrationRuntimeStatusResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimesRestClient.CreateCreateLinkedIntegrationRuntimeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CreateLinkedIntegrationRuntimeContent.ToRequestContent(content), context);
+                using HttpMessage message = _integrationRuntimesRestClient.CreateCreateLinkedIntegrationRuntimeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CreateLinkedIntegrationRuntimeContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataFactoryIntegrationRuntimeStatusResult> response = Response.FromValue(DataFactoryIntegrationRuntimeStatusResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimeRestClient.CreateDisableInteractiveQueryIntegrationRuntimeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _integrationRuntimeRestClient.CreateDisableInteractiveQueryIntegrationRuntimeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataFactoryArmOperation<DataFactoryIntegrationRuntimeResource> operation = new DataFactoryArmOperation<DataFactoryIntegrationRuntimeResource>(
                     new DataFactoryIntegrationRuntimeResourceOperationSource(Client),
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimeRestClient.CreateDisableInteractiveQueryIntegrationRuntimeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _integrationRuntimeRestClient.CreateDisableInteractiveQueryIntegrationRuntimeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataFactoryArmOperation<DataFactoryIntegrationRuntimeResource> operation = new DataFactoryArmOperation<DataFactoryIntegrationRuntimeResource>(
                     new DataFactoryIntegrationRuntimeResourceOperationSource(Client),
@@ -663,7 +663,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimeRestClient.CreateEnableInteractiveQueryIntegrationRuntimeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EnableInteractiveQueryContent.ToRequestContent(content), context);
+                using HttpMessage message = _integrationRuntimeRestClient.CreateEnableInteractiveQueryIntegrationRuntimeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EnableInteractiveQueryContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataFactoryArmOperation<DataFactoryIntegrationRuntimeResource> operation = new DataFactoryArmOperation<DataFactoryIntegrationRuntimeResource>(
                     new DataFactoryIntegrationRuntimeResourceOperationSource(Client),
@@ -722,7 +722,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimeRestClient.CreateEnableInteractiveQueryIntegrationRuntimeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EnableInteractiveQueryContent.ToRequestContent(content), context);
+                using HttpMessage message = _integrationRuntimeRestClient.CreateEnableInteractiveQueryIntegrationRuntimeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EnableInteractiveQueryContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataFactoryArmOperation<DataFactoryIntegrationRuntimeResource> operation = new DataFactoryArmOperation<DataFactoryIntegrationRuntimeResource>(
                     new DataFactoryIntegrationRuntimeResourceOperationSource(Client),
@@ -776,7 +776,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimesRestClient.CreateGetConnectionInfoRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _integrationRuntimesRestClient.CreateGetConnectionInfoRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<IntegrationRuntimeConnectionInfo> response = Response.FromValue(IntegrationRuntimeConnectionInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -824,7 +824,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimesRestClient.CreateGetConnectionInfoRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _integrationRuntimesRestClient.CreateGetConnectionInfoRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<IntegrationRuntimeConnectionInfo> response = Response.FromValue(IntegrationRuntimeConnectionInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -877,7 +877,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimeNodesRestClient.CreateGetIPAddressIntegrationRuntimeNodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, nodeName, context);
+                using HttpMessage message = _integrationRuntimeNodesRestClient.CreateGetIPAddressIntegrationRuntimeNodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, nodeName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<IntegrationRuntimeNodeIPAddress> response = Response.FromValue(IntegrationRuntimeNodeIPAddress.FromResponse(result), result);
                 if (response.Value == null)
@@ -930,7 +930,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimeNodesRestClient.CreateGetIPAddressIntegrationRuntimeNodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, nodeName, context);
+                using HttpMessage message = _integrationRuntimeNodesRestClient.CreateGetIPAddressIntegrationRuntimeNodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, nodeName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<IntegrationRuntimeNodeIPAddress> response = Response.FromValue(IntegrationRuntimeNodeIPAddress.FromResponse(result), result);
                 if (response.Value == null)
@@ -978,7 +978,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimesRestClient.CreateGetMonitoringDataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _integrationRuntimesRestClient.CreateGetMonitoringDataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<IntegrationRuntimeMonitoringData> response = Response.FromValue(IntegrationRuntimeMonitoringData.FromResponse(result), result);
                 if (response.Value == null)
@@ -1026,7 +1026,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimesRestClient.CreateGetMonitoringDataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _integrationRuntimesRestClient.CreateGetMonitoringDataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<IntegrationRuntimeMonitoringData> response = Response.FromValue(IntegrationRuntimeMonitoringData.FromResponse(result), result);
                 if (response.Value == null)
@@ -1074,7 +1074,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimesRestClient.CreateGetStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _integrationRuntimesRestClient.CreateGetStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataFactoryIntegrationRuntimeStatusResult> response = Response.FromValue(DataFactoryIntegrationRuntimeStatusResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1122,7 +1122,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimesRestClient.CreateGetStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _integrationRuntimesRestClient.CreateGetStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataFactoryIntegrationRuntimeStatusResult> response = Response.FromValue(DataFactoryIntegrationRuntimeStatusResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1175,7 +1175,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimeNodesRestClient.CreateDeleteIntegrationRuntimeNodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, nodeName, context);
+                using HttpMessage message = _integrationRuntimeNodesRestClient.CreateDeleteIntegrationRuntimeNodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, nodeName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -1223,7 +1223,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimeNodesRestClient.CreateDeleteIntegrationRuntimeNodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, nodeName, context);
+                using HttpMessage message = _integrationRuntimeNodesRestClient.CreateDeleteIntegrationRuntimeNodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, nodeName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -1271,7 +1271,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimeNodesRestClient.CreateGetIntegrationRuntimeNodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, nodeName, context);
+                using HttpMessage message = _integrationRuntimeNodesRestClient.CreateGetIntegrationRuntimeNodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, nodeName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SelfHostedIntegrationRuntimeNode> response = Response.FromValue(SelfHostedIntegrationRuntimeNode.FromResponse(result), result);
                 if (response.Value == null)
@@ -1324,7 +1324,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimeNodesRestClient.CreateGetIntegrationRuntimeNodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, nodeName, context);
+                using HttpMessage message = _integrationRuntimeNodesRestClient.CreateGetIntegrationRuntimeNodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, nodeName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SelfHostedIntegrationRuntimeNode> response = Response.FromValue(SelfHostedIntegrationRuntimeNode.FromResponse(result), result);
                 if (response.Value == null)
@@ -1379,7 +1379,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimeNodesRestClient.CreateUpdateIntegrationRuntimeNodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, nodeName, UpdateIntegrationRuntimeNodeContent.ToRequestContent(content), context);
+                using HttpMessage message = _integrationRuntimeNodesRestClient.CreateUpdateIntegrationRuntimeNodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, nodeName, UpdateIntegrationRuntimeNodeContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SelfHostedIntegrationRuntimeNode> response = Response.FromValue(SelfHostedIntegrationRuntimeNode.FromResponse(result), result);
                 if (response.Value == null)
@@ -1434,7 +1434,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimeNodesRestClient.CreateUpdateIntegrationRuntimeNodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, nodeName, UpdateIntegrationRuntimeNodeContent.ToRequestContent(content), context);
+                using HttpMessage message = _integrationRuntimeNodesRestClient.CreateUpdateIntegrationRuntimeNodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, nodeName, UpdateIntegrationRuntimeNodeContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SelfHostedIntegrationRuntimeNode> response = Response.FromValue(SelfHostedIntegrationRuntimeNode.FromResponse(result), result);
                 if (response.Value == null)
@@ -1564,7 +1564,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimesRestClient.CreateGetAuthKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _integrationRuntimesRestClient.CreateGetAuthKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<IntegrationRuntimeAuthKeys> response = Response.FromValue(IntegrationRuntimeAuthKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -1612,7 +1612,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimesRestClient.CreateGetAuthKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _integrationRuntimesRestClient.CreateGetAuthKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<IntegrationRuntimeAuthKeys> response = Response.FromValue(IntegrationRuntimeAuthKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -1739,7 +1739,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimeObjectMetadataRestClient.CreateRefreshIntegrationRuntimeObjectMetadataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _integrationRuntimeObjectMetadataRestClient.CreateRefreshIntegrationRuntimeObjectMetadataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataFactoryArmOperation<SsisObjectMetadataStatusResult> operation = new DataFactoryArmOperation<SsisObjectMetadataStatusResult>(
                     new SsisObjectMetadataStatusResultOperationSource(),
@@ -1794,7 +1794,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimeObjectMetadataRestClient.CreateRefreshIntegrationRuntimeObjectMetadataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _integrationRuntimeObjectMetadataRestClient.CreateRefreshIntegrationRuntimeObjectMetadataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataFactoryArmOperation<SsisObjectMetadataStatusResult> operation = new DataFactoryArmOperation<SsisObjectMetadataStatusResult>(
                     new SsisObjectMetadataStatusResultOperationSource(),
@@ -1852,7 +1852,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimesRestClient.CreateRegenerateAuthKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IntegrationRuntimeRegenerateKeyContent.ToRequestContent(content), context);
+                using HttpMessage message = _integrationRuntimesRestClient.CreateRegenerateAuthKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IntegrationRuntimeRegenerateKeyContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<IntegrationRuntimeAuthKeys> response = Response.FromValue(IntegrationRuntimeAuthKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -1904,7 +1904,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimesRestClient.CreateRegenerateAuthKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IntegrationRuntimeRegenerateKeyContent.ToRequestContent(content), context);
+                using HttpMessage message = _integrationRuntimesRestClient.CreateRegenerateAuthKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IntegrationRuntimeRegenerateKeyContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<IntegrationRuntimeAuthKeys> response = Response.FromValue(IntegrationRuntimeAuthKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -1956,7 +1956,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimesRestClient.CreateRemoveLinksRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, LinkedIntegrationRuntimeContent.ToRequestContent(content), context);
+                using HttpMessage message = _integrationRuntimesRestClient.CreateRemoveLinksRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, LinkedIntegrationRuntimeContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -2003,7 +2003,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimesRestClient.CreateRemoveLinksRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, LinkedIntegrationRuntimeContent.ToRequestContent(content), context);
+                using HttpMessage message = _integrationRuntimesRestClient.CreateRemoveLinksRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, LinkedIntegrationRuntimeContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -2047,7 +2047,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimesRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _integrationRuntimesRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataFactoryArmOperation<DataFactoryIntegrationRuntimeStatusResult> operation = new DataFactoryArmOperation<DataFactoryIntegrationRuntimeStatusResult>(
                     new DataFactoryIntegrationRuntimeStatusResultOperationSource(),
@@ -2102,7 +2102,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimesRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _integrationRuntimesRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataFactoryArmOperation<DataFactoryIntegrationRuntimeStatusResult> operation = new DataFactoryArmOperation<DataFactoryIntegrationRuntimeStatusResult>(
                     new DataFactoryIntegrationRuntimeStatusResultOperationSource(),
@@ -2157,7 +2157,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimesRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _integrationRuntimesRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataFactoryArmOperation operation = new DataFactoryArmOperation(_integrationRuntimesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2206,7 +2206,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimesRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _integrationRuntimesRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataFactoryArmOperation operation = new DataFactoryArmOperation(_integrationRuntimesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2254,7 +2254,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimesRestClient.CreateSyncCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _integrationRuntimesRestClient.CreateSyncCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -2297,7 +2297,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimesRestClient.CreateSyncCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _integrationRuntimesRestClient.CreateSyncCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -2340,7 +2340,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimesRestClient.CreateUpgradeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _integrationRuntimesRestClient.CreateUpgradeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -2383,7 +2383,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimesRestClient.CreateUpgradeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _integrationRuntimesRestClient.CreateUpgradeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }

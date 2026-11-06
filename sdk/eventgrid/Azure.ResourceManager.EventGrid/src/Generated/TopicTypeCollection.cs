@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _topicTypesRestClient.CreateGetRequest(topicTypeName, context);
+                using HttpMessage message = _topicTypesRestClient.CreateGetRequest(topicTypeName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TopicTypeData> response = Response.FromValue(TopicTypeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _topicTypesRestClient.CreateGetRequest(topicTypeName, context);
+                using HttpMessage message = _topicTypesRestClient.CreateGetRequest(topicTypeName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TopicTypeData> response = Response.FromValue(TopicTypeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _topicTypesRestClient.CreateGetRequest(topicTypeName, context);
+                using HttpMessage message = _topicTypesRestClient.CreateGetRequest(topicTypeName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<TopicTypeData> response = default;
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _topicTypesRestClient.CreateGetRequest(topicTypeName, context);
+                using HttpMessage message = _topicTypesRestClient.CreateGetRequest(topicTypeName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<TopicTypeData> response = default;
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _topicTypesRestClient.CreateGetRequest(topicTypeName, context);
+                using HttpMessage message = _topicTypesRestClient.CreateGetRequest(topicTypeName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<TopicTypeData> response = default;
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _topicTypesRestClient.CreateGetRequest(topicTypeName, context);
+                using HttpMessage message = _topicTypesRestClient.CreateGetRequest(topicTypeName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<TopicTypeData> response = default;

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capabilitiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, capabilityName, WorkloadCapabilityData.ToRequestContent(data), context);
+                using HttpMessage message = _capabilitiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, capabilityName, WorkloadCapabilityData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadManagerArmOperation<WorkloadCapabilityResource> operation = new WorkloadManagerArmOperation<WorkloadCapabilityResource>(
                     new WorkloadCapabilityResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capabilitiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, capabilityName, WorkloadCapabilityData.ToRequestContent(data), context);
+                using HttpMessage message = _capabilitiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, capabilityName, WorkloadCapabilityData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadManagerArmOperation<WorkloadCapabilityResource> operation = new WorkloadManagerArmOperation<WorkloadCapabilityResource>(
                     new WorkloadCapabilityResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capabilitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, capabilityName, context);
+                using HttpMessage message = _capabilitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, capabilityName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WorkloadCapabilityData> response = Response.FromValue(WorkloadCapabilityData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capabilitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, capabilityName, context);
+                using HttpMessage message = _capabilitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, capabilityName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WorkloadCapabilityData> response = Response.FromValue(WorkloadCapabilityData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capabilitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, capabilityName, context);
+                using HttpMessage message = _capabilitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, capabilityName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WorkloadCapabilityData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capabilitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, capabilityName, context);
+                using HttpMessage message = _capabilitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, capabilityName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WorkloadCapabilityData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capabilitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, capabilityName, context);
+                using HttpMessage message = _capabilitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, capabilityName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WorkloadCapabilityData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capabilitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, capabilityName, context);
+                using HttpMessage message = _capabilitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, capabilityName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WorkloadCapabilityData> response = default;

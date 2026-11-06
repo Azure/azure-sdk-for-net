@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ContainerServiceSafeguards
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentSafeguardsRestClient.CreateCreateRequest(Id.Parent.ToString(), DeploymentSafeguardData.ToRequestContent(data), context);
+                using HttpMessage message = _deploymentSafeguardsRestClient.CreateCreateRequest(Id.Parent.ToString(), DeploymentSafeguardData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceSafeguardsArmOperation<DeploymentSafeguardResource> operation = new ContainerServiceSafeguardsArmOperation<DeploymentSafeguardResource>(
                     new DeploymentSafeguardResourceOperationSource(Client),
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ContainerServiceSafeguards
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentSafeguardsRestClient.CreateCreateRequest(Id.Parent.ToString(), DeploymentSafeguardData.ToRequestContent(data), context);
+                using HttpMessage message = _deploymentSafeguardsRestClient.CreateCreateRequest(Id.Parent.ToString(), DeploymentSafeguardData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceSafeguardsArmOperation<DeploymentSafeguardResource> operation = new ContainerServiceSafeguardsArmOperation<DeploymentSafeguardResource>(
                     new DeploymentSafeguardResourceOperationSource(Client),
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.ContainerServiceSafeguards
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentSafeguardsRestClient.CreateGetRequest(Id.Parent.ToString(), context);
+                using HttpMessage message = _deploymentSafeguardsRestClient.CreateGetRequest(Id.Parent.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DeploymentSafeguardData> response = Response.FromValue(DeploymentSafeguardData.FromResponse(result), result);
                 if (response.Value == null)
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ContainerServiceSafeguards
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentSafeguardsRestClient.CreateGetRequest(Id.Parent.ToString(), context);
+                using HttpMessage message = _deploymentSafeguardsRestClient.CreateGetRequest(Id.Parent.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DeploymentSafeguardData> response = Response.FromValue(DeploymentSafeguardData.FromResponse(result), result);
                 if (response.Value == null)
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.ContainerServiceSafeguards
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentSafeguardsRestClient.CreateDeleteRequest(Id.Parent.ToString(), context);
+                using HttpMessage message = _deploymentSafeguardsRestClient.CreateDeleteRequest(Id.Parent.ToString(), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceSafeguardsArmOperation operation = new ContainerServiceSafeguardsArmOperation(_deploymentSafeguardsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.ContainerServiceSafeguards
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentSafeguardsRestClient.CreateDeleteRequest(Id.Parent.ToString(), context);
+                using HttpMessage message = _deploymentSafeguardsRestClient.CreateDeleteRequest(Id.Parent.ToString(), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceSafeguardsArmOperation operation = new ContainerServiceSafeguardsArmOperation(_deploymentSafeguardsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

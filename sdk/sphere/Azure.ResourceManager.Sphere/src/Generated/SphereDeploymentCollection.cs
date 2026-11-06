@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, SphereDeploymentData.ToRequestContent(data), context);
+                using HttpMessage message = _deploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, SphereDeploymentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SphereArmOperation<SphereDeploymentResource> operation = new SphereArmOperation<SphereDeploymentResource>(
                     new SphereDeploymentResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, SphereDeploymentData.ToRequestContent(data), context);
+                using HttpMessage message = _deploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, SphereDeploymentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SphereArmOperation<SphereDeploymentResource> operation = new SphereArmOperation<SphereDeploymentResource>(
                     new SphereDeploymentResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, context);
+                using HttpMessage message = _deploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SphereDeploymentData> response = Response.FromValue(SphereDeploymentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, context);
+                using HttpMessage message = _deploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SphereDeploymentData> response = Response.FromValue(SphereDeploymentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, context);
+                using HttpMessage message = _deploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SphereDeploymentData> response = default;
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, context);
+                using HttpMessage message = _deploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SphereDeploymentData> response = default;
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, context);
+                using HttpMessage message = _deploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SphereDeploymentData> response = default;
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, context);
+                using HttpMessage message = _deploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SphereDeploymentData> response = default;

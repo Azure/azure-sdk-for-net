@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFabricSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _networkFabricSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkFabricSkuData> response = Response.FromValue(NetworkFabricSkuData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFabricSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _networkFabricSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkFabricSkuData> response = Response.FromValue(NetworkFabricSkuData.FromResponse(result), result);
                 if (response.Value == null)

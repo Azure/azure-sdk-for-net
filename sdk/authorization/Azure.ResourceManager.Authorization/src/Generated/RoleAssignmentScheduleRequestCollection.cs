@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleAssignmentScheduleRequestsRestClient.CreateCreateRequest(Id.ToString(), roleAssignmentScheduleRequestName, RoleAssignmentScheduleRequestData.ToRequestContent(data), context);
+                using HttpMessage message = _roleAssignmentScheduleRequestsRestClient.CreateCreateRequest(Id.ToString(), roleAssignmentScheduleRequestName, RoleAssignmentScheduleRequestData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RoleAssignmentScheduleRequestData> response = Response.FromValue(RoleAssignmentScheduleRequestData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleAssignmentScheduleRequestsRestClient.CreateCreateRequest(Id.ToString(), roleAssignmentScheduleRequestName, RoleAssignmentScheduleRequestData.ToRequestContent(data), context);
+                using HttpMessage message = _roleAssignmentScheduleRequestsRestClient.CreateCreateRequest(Id.ToString(), roleAssignmentScheduleRequestName, RoleAssignmentScheduleRequestData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RoleAssignmentScheduleRequestData> response = Response.FromValue(RoleAssignmentScheduleRequestData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleAssignmentScheduleRequestsRestClient.CreateGetRequest(Id.ToString(), roleAssignmentScheduleRequestName, context);
+                using HttpMessage message = _roleAssignmentScheduleRequestsRestClient.CreateGetRequest(Id.ToString(), roleAssignmentScheduleRequestName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RoleAssignmentScheduleRequestData> response = Response.FromValue(RoleAssignmentScheduleRequestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleAssignmentScheduleRequestsRestClient.CreateGetRequest(Id.ToString(), roleAssignmentScheduleRequestName, context);
+                using HttpMessage message = _roleAssignmentScheduleRequestsRestClient.CreateGetRequest(Id.ToString(), roleAssignmentScheduleRequestName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RoleAssignmentScheduleRequestData> response = Response.FromValue(RoleAssignmentScheduleRequestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleAssignmentScheduleRequestsRestClient.CreateGetRequest(Id.ToString(), roleAssignmentScheduleRequestName, context);
+                using HttpMessage message = _roleAssignmentScheduleRequestsRestClient.CreateGetRequest(Id.ToString(), roleAssignmentScheduleRequestName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RoleAssignmentScheduleRequestData> response = default;
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleAssignmentScheduleRequestsRestClient.CreateGetRequest(Id.ToString(), roleAssignmentScheduleRequestName, context);
+                using HttpMessage message = _roleAssignmentScheduleRequestsRestClient.CreateGetRequest(Id.ToString(), roleAssignmentScheduleRequestName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RoleAssignmentScheduleRequestData> response = default;
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleAssignmentScheduleRequestsRestClient.CreateGetRequest(Id.ToString(), roleAssignmentScheduleRequestName, context);
+                using HttpMessage message = _roleAssignmentScheduleRequestsRestClient.CreateGetRequest(Id.ToString(), roleAssignmentScheduleRequestName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RoleAssignmentScheduleRequestData> response = default;
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleAssignmentScheduleRequestsRestClient.CreateGetRequest(Id.ToString(), roleAssignmentScheduleRequestName, context);
+                using HttpMessage message = _roleAssignmentScheduleRequestsRestClient.CreateGetRequest(Id.ToString(), roleAssignmentScheduleRequestName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RoleAssignmentScheduleRequestData> response = default;

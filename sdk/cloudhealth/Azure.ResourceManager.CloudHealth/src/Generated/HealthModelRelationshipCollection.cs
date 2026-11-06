@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _relationshipsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, relationshipName, HealthModelRelationshipData.ToRequestContent(data), context);
+                using HttpMessage message = _relationshipsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, relationshipName, HealthModelRelationshipData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CloudHealthArmOperation<HealthModelRelationshipResource> operation = new CloudHealthArmOperation<HealthModelRelationshipResource>(
                     new HealthModelRelationshipResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _relationshipsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, relationshipName, HealthModelRelationshipData.ToRequestContent(data), context);
+                using HttpMessage message = _relationshipsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, relationshipName, HealthModelRelationshipData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CloudHealthArmOperation<HealthModelRelationshipResource> operation = new CloudHealthArmOperation<HealthModelRelationshipResource>(
                     new HealthModelRelationshipResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _relationshipsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, relationshipName, context);
+                using HttpMessage message = _relationshipsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, relationshipName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HealthModelRelationshipData> response = Response.FromValue(HealthModelRelationshipData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _relationshipsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, relationshipName, context);
+                using HttpMessage message = _relationshipsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, relationshipName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HealthModelRelationshipData> response = Response.FromValue(HealthModelRelationshipData.FromResponse(result), result);
                 if (response.Value == null)
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _relationshipsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, relationshipName, context);
+                using HttpMessage message = _relationshipsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, relationshipName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HealthModelRelationshipData> response = default;
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _relationshipsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, relationshipName, context);
+                using HttpMessage message = _relationshipsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, relationshipName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HealthModelRelationshipData> response = default;
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _relationshipsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, relationshipName, context);
+                using HttpMessage message = _relationshipsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, relationshipName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HealthModelRelationshipData> response = default;
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _relationshipsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, relationshipName, context);
+                using HttpMessage message = _relationshipsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, relationshipName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HealthModelRelationshipData> response = default;

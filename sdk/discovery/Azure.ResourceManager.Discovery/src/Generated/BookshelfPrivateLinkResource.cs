@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bookshelfPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _bookshelfPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BookshelfPrivateLinkResourceData> response = Response.FromValue(BookshelfPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bookshelfPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _bookshelfPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BookshelfPrivateLinkResourceData> response = Response.FromValue(BookshelfPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)

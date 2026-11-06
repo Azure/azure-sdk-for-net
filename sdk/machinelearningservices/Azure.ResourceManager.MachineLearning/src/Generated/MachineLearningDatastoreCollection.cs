@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _datastoresRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, MachineLearningDatastoreData.ToRequestContent(data), skipValidation, context);
+                using HttpMessage message = _datastoresRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, MachineLearningDatastoreData.ToRequestContent(data), skipValidation, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MachineLearningDatastoreData> response = Response.FromValue(MachineLearningDatastoreData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _datastoresRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, MachineLearningDatastoreData.ToRequestContent(data), skipValidation, context);
+                using HttpMessage message = _datastoresRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, MachineLearningDatastoreData.ToRequestContent(data), skipValidation, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MachineLearningDatastoreData> response = Response.FromValue(MachineLearningDatastoreData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _datastoresRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _datastoresRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MachineLearningDatastoreData> response = Response.FromValue(MachineLearningDatastoreData.FromResponse(result), result);
                 if (response.Value == null)
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _datastoresRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _datastoresRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MachineLearningDatastoreData> response = Response.FromValue(MachineLearningDatastoreData.FromResponse(result), result);
                 if (response.Value == null)
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _datastoresRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _datastoresRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MachineLearningDatastoreData> response = default;
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _datastoresRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _datastoresRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MachineLearningDatastoreData> response = default;
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _datastoresRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _datastoresRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MachineLearningDatastoreData> response = default;
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _datastoresRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _datastoresRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MachineLearningDatastoreData> response = default;

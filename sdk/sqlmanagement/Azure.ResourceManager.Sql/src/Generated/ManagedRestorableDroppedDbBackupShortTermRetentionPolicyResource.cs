@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _managedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ManagedBackupShortTermRetentionPolicyData> response = Response.FromValue(ManagedBackupShortTermRetentionPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _managedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ManagedBackupShortTermRetentionPolicyData> response = Response.FromValue(ManagedBackupShortTermRetentionPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ManagedBackupShortTermRetentionPolicyData.ToRequestContent(data), context);
+                using HttpMessage message = _managedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ManagedBackupShortTermRetentionPolicyData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation<ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource> operation = new SqlArmOperation<ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource>(
                     new ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ManagedBackupShortTermRetentionPolicyData.ToRequestContent(data), context);
+                using HttpMessage message = _managedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ManagedBackupShortTermRetentionPolicyData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation<ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource> operation = new SqlArmOperation<ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource>(
                     new ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResourceOperationSource(Client),

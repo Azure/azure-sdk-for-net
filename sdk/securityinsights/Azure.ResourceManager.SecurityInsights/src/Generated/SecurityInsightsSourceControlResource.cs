@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sourceControlsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _sourceControlsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityInsightsSourceControlData> response = Response.FromValue(SecurityInsightsSourceControlData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sourceControlsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _sourceControlsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityInsightsSourceControlData> response = Response.FromValue(SecurityInsightsSourceControlData.FromResponse(result), result);
                 if (response.Value == null)
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sourceControlsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RepositoryAccessProperties.ToRequestContent(repositoryAccess), context);
+                using HttpMessage message = _sourceControlsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RepositoryAccessProperties.ToRequestContent(repositoryAccess), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SourceControlOperationWarning> response = Response.FromValue(SourceControlOperationWarning.FromResponse(result), result);
                 if (response.Value == null)
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sourceControlsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RepositoryAccessProperties.ToRequestContent(repositoryAccess), context);
+                using HttpMessage message = _sourceControlsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RepositoryAccessProperties.ToRequestContent(repositoryAccess), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SourceControlOperationWarning> response = Response.FromValue(SourceControlOperationWarning.FromResponse(result), result);
                 if (response.Value == null)
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sourceControlsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SecurityInsightsSourceControlData.ToRequestContent(data), context);
+                using HttpMessage message = _sourceControlsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SecurityInsightsSourceControlData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityInsightsSourceControlData> response = Response.FromValue(SecurityInsightsSourceControlData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sourceControlsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SecurityInsightsSourceControlData.ToRequestContent(data), context);
+                using HttpMessage message = _sourceControlsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SecurityInsightsSourceControlData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityInsightsSourceControlData> response = Response.FromValue(SecurityInsightsSourceControlData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

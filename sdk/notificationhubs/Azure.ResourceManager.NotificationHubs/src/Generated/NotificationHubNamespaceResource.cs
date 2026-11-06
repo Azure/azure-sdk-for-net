@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NotificationHubNamespaceData> response = Response.FromValue(NotificationHubNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NotificationHubNamespaceData> response = Response.FromValue(NotificationHubNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NotificationHubNamespacePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _namespacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NotificationHubNamespacePatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NotificationHubNamespaceData> response = Response.FromValue(NotificationHubNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NotificationHubNamespacePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _namespacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NotificationHubNamespacePatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NotificationHubNamespaceData> response = Response.FromValue(NotificationHubNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _namespacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _namespacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespaceResourcesRestClient.CreateCheckNotificationHubAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NotificationHubAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = _namespaceResourcesRestClient.CreateCheckNotificationHubAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NotificationHubAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NotificationHubAvailabilityResult> response = Response.FromValue(NotificationHubAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespaceResourcesRestClient.CreateCheckNotificationHubAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NotificationHubAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = _namespaceResourcesRestClient.CreateCheckNotificationHubAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NotificationHubAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NotificationHubAvailabilityResult> response = Response.FromValue(NotificationHubAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetPnsCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _namespacesRestClient.CreateGetPnsCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NotificationHubPnsCredentials> response = Response.FromValue(NotificationHubPnsCredentials.FromResponse(result), result);
                 if (response.Value == null)
@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetPnsCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _namespacesRestClient.CreateGetPnsCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NotificationHubPnsCredentials> response = Response.FromValue(NotificationHubPnsCredentials.FromResponse(result), result);
                 if (response.Value == null)
@@ -629,7 +629,7 @@ namespace Azure.ResourceManager.NotificationHubs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NotificationHubNamespaceData> response = Response.FromValue(NotificationHubNamespaceData.FromResponse(result), result);
                     return Response.FromValue(new NotificationHubNamespaceResource(Client, response.Value), response.GetRawResponse());
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.NotificationHubs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NotificationHubNamespaceData> response = Response.FromValue(NotificationHubNamespaceData.FromResponse(result), result);
                     return Response.FromValue(new NotificationHubNamespaceResource(Client, response.Value), response.GetRawResponse());
@@ -723,7 +723,7 @@ namespace Azure.ResourceManager.NotificationHubs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NotificationHubNamespaceData> response = Response.FromValue(NotificationHubNamespaceData.FromResponse(result), result);
                     return Response.FromValue(new NotificationHubNamespaceResource(Client, response.Value), response.GetRawResponse());
@@ -765,7 +765,7 @@ namespace Azure.ResourceManager.NotificationHubs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NotificationHubNamespaceData> response = Response.FromValue(NotificationHubNamespaceData.FromResponse(result), result);
                     return Response.FromValue(new NotificationHubNamespaceResource(Client, response.Value), response.GetRawResponse());
@@ -807,7 +807,7 @@ namespace Azure.ResourceManager.NotificationHubs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NotificationHubNamespaceData> response = Response.FromValue(NotificationHubNamespaceData.FromResponse(result), result);
                     return Response.FromValue(new NotificationHubNamespaceResource(Client, response.Value), response.GetRawResponse());
@@ -853,7 +853,7 @@ namespace Azure.ResourceManager.NotificationHubs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NotificationHubNamespaceData> response = Response.FromValue(NotificationHubNamespaceData.FromResponse(result), result);
                     return Response.FromValue(new NotificationHubNamespaceResource(Client, response.Value), response.GetRawResponse());

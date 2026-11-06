@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Reservations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationOrderRestClient.CreateGetRequest(Guid.Parse(Id.Name), expand, context);
+                using HttpMessage message = _reservationOrderRestClient.CreateGetRequest(Guid.Parse(Id.Name), expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ReservationOrderData> response = Response.FromValue(ReservationOrderData.FromResponse(result), result);
                 if (response.Value == null)
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Reservations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationOrderRestClient.CreateGetRequest(Guid.Parse(Id.Name), expand, context);
+                using HttpMessage message = _reservationOrderRestClient.CreateGetRequest(Guid.Parse(Id.Name), expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ReservationOrderData> response = Response.FromValue(ReservationOrderData.FromResponse(result), result);
                 if (response.Value == null)
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Reservations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationOrderRestClient.CreateChangeDirectoryRequest(Guid.Parse(Id.Name), ChangeDirectoryContent.ToRequestContent(content), context);
+                using HttpMessage message = _reservationOrderRestClient.CreateChangeDirectoryRequest(Guid.Parse(Id.Name), ChangeDirectoryContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ChangeDirectoryDetail> response = Response.FromValue(ChangeDirectoryDetail.FromResponse(result), result);
                 if (response.Value == null)
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Reservations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationOrderRestClient.CreateChangeDirectoryRequest(Guid.Parse(Id.Name), ChangeDirectoryContent.ToRequestContent(content), context);
+                using HttpMessage message = _reservationOrderRestClient.CreateChangeDirectoryRequest(Guid.Parse(Id.Name), ChangeDirectoryContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ChangeDirectoryDetail> response = Response.FromValue(ChangeDirectoryDetail.FromResponse(result), result);
                 if (response.Value == null)
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Reservations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationRestClient.CreateMergeReservationRequest(Guid.Parse(Id.Name), MergeContent.ToRequestContent(content), context);
+                using HttpMessage message = _reservationRestClient.CreateMergeReservationRequest(Guid.Parse(Id.Name), MergeContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ReservationsArmOperation<IList<ReservationDetailData>> operation = new ReservationsArmOperation<IList<ReservationDetailData>>(
                     new IListOfReservationDetailDataOperationSource(),
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.Reservations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationRestClient.CreateMergeReservationRequest(Guid.Parse(Id.Name), MergeContent.ToRequestContent(content), context);
+                using HttpMessage message = _reservationRestClient.CreateMergeReservationRequest(Guid.Parse(Id.Name), MergeContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ReservationsArmOperation<IList<ReservationDetailData>> operation = new ReservationsArmOperation<IList<ReservationDetailData>>(
                     new IListOfReservationDetailDataOperationSource(),
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.Reservations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _calculateRefundRestClient.CreateCalculateRefundRequest(Guid.Parse(Id.Name), ReservationCalculateRefundContent.ToRequestContent(content), context);
+                using HttpMessage message = _calculateRefundRestClient.CreateCalculateRefundRequest(Guid.Parse(Id.Name), ReservationCalculateRefundContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ReservationCalculateRefundResult> response = Response.FromValue(ReservationCalculateRefundResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.Reservations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _calculateRefundRestClient.CreateCalculateRefundRequest(Guid.Parse(Id.Name), ReservationCalculateRefundContent.ToRequestContent(content), context);
+                using HttpMessage message = _calculateRefundRestClient.CreateCalculateRefundRequest(Guid.Parse(Id.Name), ReservationCalculateRefundContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ReservationCalculateRefundResult> response = Response.FromValue(ReservationCalculateRefundResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.Reservations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _returnRestClient.CreateReturnRequest(Guid.Parse(Id.Name), ReservationRefundContent.ToRequestContent(content), context);
+                using HttpMessage message = _returnRestClient.CreateReturnRequest(Guid.Parse(Id.Name), ReservationRefundContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ReservationsArmOperation<ReservationOrderResource> operation = new ReservationsArmOperation<ReservationOrderResource>(
                     new ReservationOrderResourceOperationSource(Client),
@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.Reservations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _returnRestClient.CreateReturnRequest(Guid.Parse(Id.Name), ReservationRefundContent.ToRequestContent(content), context);
+                using HttpMessage message = _returnRestClient.CreateReturnRequest(Guid.Parse(Id.Name), ReservationRefundContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ReservationsArmOperation<ReservationOrderResource> operation = new ReservationsArmOperation<ReservationOrderResource>(
                     new ReservationOrderResourceOperationSource(Client),
@@ -682,7 +682,7 @@ namespace Azure.ResourceManager.Reservations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationRestClient.CreateSplitReservationRequest(Guid.Parse(Id.Name), SplitContent.ToRequestContent(content), context);
+                using HttpMessage message = _reservationRestClient.CreateSplitReservationRequest(Guid.Parse(Id.Name), SplitContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ReservationsArmOperation<IList<ReservationDetailData>> operation = new ReservationsArmOperation<IList<ReservationDetailData>>(
                     new IListOfReservationDetailDataOperationSource(),
@@ -741,7 +741,7 @@ namespace Azure.ResourceManager.Reservations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationRestClient.CreateSplitReservationRequest(Guid.Parse(Id.Name), SplitContent.ToRequestContent(content), context);
+                using HttpMessage message = _reservationRestClient.CreateSplitReservationRequest(Guid.Parse(Id.Name), SplitContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ReservationsArmOperation<IList<ReservationDetailData>> operation = new ReservationsArmOperation<IList<ReservationDetailData>>(
                     new IListOfReservationDetailDataOperationSource(),
@@ -800,7 +800,7 @@ namespace Azure.ResourceManager.Reservations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationOrderRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.Name), ReservationPurchaseContent.ToRequestContent(content), context);
+                using HttpMessage message = _reservationOrderRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.Name), ReservationPurchaseContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ReservationsArmOperation<ReservationOrderResource> operation = new ReservationsArmOperation<ReservationOrderResource>(
                     new ReservationOrderResourceOperationSource(Client),
@@ -859,7 +859,7 @@ namespace Azure.ResourceManager.Reservations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationOrderRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.Name), ReservationPurchaseContent.ToRequestContent(content), context);
+                using HttpMessage message = _reservationOrderRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.Name), ReservationPurchaseContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ReservationsArmOperation<ReservationOrderResource> operation = new ReservationsArmOperation<ReservationOrderResource>(
                     new ReservationOrderResourceOperationSource(Client),

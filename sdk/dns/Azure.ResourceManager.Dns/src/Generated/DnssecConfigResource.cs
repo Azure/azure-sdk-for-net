@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Dns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dnssecConfigsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, matchConditions, context);
+                using HttpMessage message = _dnssecConfigsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DnsArmOperation<DnssecConfigResource> operation = new DnsArmOperation<DnssecConfigResource>(
                     new DnssecConfigResourceOperationSource(Client),
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Dns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dnssecConfigsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, matchConditions, context);
+                using HttpMessage message = _dnssecConfigsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DnsArmOperation<DnssecConfigResource> operation = new DnsArmOperation<DnssecConfigResource>(
                     new DnssecConfigResourceOperationSource(Client),
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Dns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dnssecConfigsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _dnssecConfigsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DnssecConfigData> response = Response.FromValue(DnssecConfigData.FromResponse(result), result);
                 if (response.Value == null)
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Dns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dnssecConfigsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _dnssecConfigsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DnssecConfigData> response = Response.FromValue(DnssecConfigData.FromResponse(result), result);
                 if (response.Value == null)
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Dns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dnssecConfigsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, ifMatch, context);
+                using HttpMessage message = _dnssecConfigsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DnsArmOperation operation = new DnsArmOperation(_dnssecConfigsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Dns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dnssecConfigsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, ifMatch, context);
+                using HttpMessage message = _dnssecConfigsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DnsArmOperation operation = new DnsArmOperation(_dnssecConfigsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

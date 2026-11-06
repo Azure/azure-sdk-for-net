@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _projectCatalogImageDefinitionBuildRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _projectCatalogImageDefinitionBuildRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ImageDefinitionBuildData> response = Response.FromValue(ImageDefinitionBuildData.FromResponse(result), result);
                 if (response.Value == null)
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _projectCatalogImageDefinitionBuildRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _projectCatalogImageDefinitionBuildRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ImageDefinitionBuildData> response = Response.FromValue(ImageDefinitionBuildData.FromResponse(result), result);
                 if (response.Value == null)
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _projectCatalogImageDefinitionBuildRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _projectCatalogImageDefinitionBuildRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevCenterArmOperation operation = new DevCenterArmOperation(_projectCatalogImageDefinitionBuildClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _projectCatalogImageDefinitionBuildRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _projectCatalogImageDefinitionBuildRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevCenterArmOperation operation = new DevCenterArmOperation(_projectCatalogImageDefinitionBuildClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _projectCatalogImageDefinitionBuildRestClient.CreateGetBuildDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _projectCatalogImageDefinitionBuildRestClient.CreateGetBuildDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevCenterImageDefinitionBuildDetails> response = Response.FromValue(DevCenterImageDefinitionBuildDetails.FromResponse(result), result);
                 if (response.Value == null)
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _projectCatalogImageDefinitionBuildRestClient.CreateGetBuildDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _projectCatalogImageDefinitionBuildRestClient.CreateGetBuildDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevCenterImageDefinitionBuildDetails> response = Response.FromValue(DevCenterImageDefinitionBuildDetails.FromResponse(result), result);
                 if (response.Value == null)

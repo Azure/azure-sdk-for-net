@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantActivityLogAlertResourcesRestClient.CreateCreateOrUpdateRequest(Id.Name, alertRuleName, TenantActivityLogAlertData.ToRequestContent(data), context);
+                using HttpMessage message = _tenantActivityLogAlertResourcesRestClient.CreateCreateOrUpdateRequest(Id.Name, alertRuleName, TenantActivityLogAlertData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TenantActivityLogAlertData> response = Response.FromValue(TenantActivityLogAlertData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantActivityLogAlertResourcesRestClient.CreateCreateOrUpdateRequest(Id.Name, alertRuleName, TenantActivityLogAlertData.ToRequestContent(data), context);
+                using HttpMessage message = _tenantActivityLogAlertResourcesRestClient.CreateCreateOrUpdateRequest(Id.Name, alertRuleName, TenantActivityLogAlertData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TenantActivityLogAlertData> response = Response.FromValue(TenantActivityLogAlertData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantActivityLogAlertResourcesRestClient.CreateGetRequest(Id.Name, alertRuleName, context);
+                using HttpMessage message = _tenantActivityLogAlertResourcesRestClient.CreateGetRequest(Id.Name, alertRuleName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TenantActivityLogAlertData> response = Response.FromValue(TenantActivityLogAlertData.FromResponse(result), result);
                 if (response.Value == null)
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantActivityLogAlertResourcesRestClient.CreateGetRequest(Id.Name, alertRuleName, context);
+                using HttpMessage message = _tenantActivityLogAlertResourcesRestClient.CreateGetRequest(Id.Name, alertRuleName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TenantActivityLogAlertData> response = Response.FromValue(TenantActivityLogAlertData.FromResponse(result), result);
                 if (response.Value == null)
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantActivityLogAlertResourcesRestClient.CreateGetRequest(Id.Name, alertRuleName, context);
+                using HttpMessage message = _tenantActivityLogAlertResourcesRestClient.CreateGetRequest(Id.Name, alertRuleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<TenantActivityLogAlertData> response = default;
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantActivityLogAlertResourcesRestClient.CreateGetRequest(Id.Name, alertRuleName, context);
+                using HttpMessage message = _tenantActivityLogAlertResourcesRestClient.CreateGetRequest(Id.Name, alertRuleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<TenantActivityLogAlertData> response = default;
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantActivityLogAlertResourcesRestClient.CreateGetRequest(Id.Name, alertRuleName, context);
+                using HttpMessage message = _tenantActivityLogAlertResourcesRestClient.CreateGetRequest(Id.Name, alertRuleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<TenantActivityLogAlertData> response = default;
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantActivityLogAlertResourcesRestClient.CreateGetRequest(Id.Name, alertRuleName, context);
+                using HttpMessage message = _tenantActivityLogAlertResourcesRestClient.CreateGetRequest(Id.Name, alertRuleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<TenantActivityLogAlertData> response = default;

@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SaaSOperationGroupRestClient.CreateActivateResourceRequest(Id.SubscriptionId, DatadogActivateSaaSContent.ToRequestContent(content), context);
+                using HttpMessage message = SaaSOperationGroupRestClient.CreateActivateResourceRequest(Id.SubscriptionId, DatadogActivateSaaSContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DatadogSaaSResourceDetailsData> response = Response.FromValue(DatadogSaaSResourceDetailsData.FromResponse(result), result);
                 if (response.Value == null)
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SaaSOperationGroupRestClient.CreateActivateResourceRequest(Id.SubscriptionId, DatadogActivateSaaSContent.ToRequestContent(content), context);
+                using HttpMessage message = SaaSOperationGroupRestClient.CreateActivateResourceRequest(Id.SubscriptionId, DatadogActivateSaaSContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DatadogSaaSResourceDetailsData> response = Response.FromValue(DatadogSaaSResourceDetailsData.FromResponse(result), result);
                 if (response.Value == null)
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = MarketplaceAgreementsRestClient.CreateCreateOrUpdateMarketplaceAgreementRequest(Id.SubscriptionId, DatadogAgreement.ToRequestContent(body), context);
+                using HttpMessage message = MarketplaceAgreementsRestClient.CreateCreateOrUpdateMarketplaceAgreementRequest(Id.SubscriptionId, DatadogAgreement.ToRequestContent(body), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DatadogAgreement> response = Response.FromValue(DatadogAgreement.FromResponse(result), result);
                 if (response.Value == null)
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = MarketplaceAgreementsRestClient.CreateCreateOrUpdateMarketplaceAgreementRequest(Id.SubscriptionId, DatadogAgreement.ToRequestContent(body), context);
+                using HttpMessage message = MarketplaceAgreementsRestClient.CreateCreateOrUpdateMarketplaceAgreementRequest(Id.SubscriptionId, DatadogAgreement.ToRequestContent(body), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DatadogAgreement> response = Response.FromValue(DatadogAgreement.FromResponse(result), result);
                 if (response.Value == null)
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CreationSupportedRestClient.CreateGetSubscriptionStatusRequest(Id.SubscriptionId, datadogOrganizationId, context);
+                using HttpMessage message = CreationSupportedRestClient.CreateGetSubscriptionStatusRequest(Id.SubscriptionId, datadogOrganizationId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DatadogSubscriptionStatusResult> response = Response.FromValue(DatadogSubscriptionStatusResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CreationSupportedRestClient.CreateGetSubscriptionStatusRequest(Id.SubscriptionId, datadogOrganizationId, context);
+                using HttpMessage message = CreationSupportedRestClient.CreateGetSubscriptionStatusRequest(Id.SubscriptionId, datadogOrganizationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DatadogSubscriptionStatusResult> response = Response.FromValue(DatadogSubscriptionStatusResult.FromResponse(result), result);
                 if (response.Value == null)

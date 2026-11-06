@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _projectsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, projectName, MongoDBAtlasProjectData.ToRequestContent(data), context);
+                using HttpMessage message = _projectsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, projectName, MongoDBAtlasProjectData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MongoDBAtlasArmOperation<MongoDBAtlasProjectResource> operation = new MongoDBAtlasArmOperation<MongoDBAtlasProjectResource>(
                     new MongoDBAtlasProjectResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _projectsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, projectName, MongoDBAtlasProjectData.ToRequestContent(data), context);
+                using HttpMessage message = _projectsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, projectName, MongoDBAtlasProjectData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MongoDBAtlasArmOperation<MongoDBAtlasProjectResource> operation = new MongoDBAtlasArmOperation<MongoDBAtlasProjectResource>(
                     new MongoDBAtlasProjectResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _projectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, projectName, context);
+                using HttpMessage message = _projectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, projectName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MongoDBAtlasProjectData> response = Response.FromValue(MongoDBAtlasProjectData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _projectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, projectName, context);
+                using HttpMessage message = _projectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, projectName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MongoDBAtlasProjectData> response = Response.FromValue(MongoDBAtlasProjectData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _projectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, projectName, context);
+                using HttpMessage message = _projectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, projectName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MongoDBAtlasProjectData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _projectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, projectName, context);
+                using HttpMessage message = _projectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, projectName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MongoDBAtlasProjectData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _projectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, projectName, context);
+                using HttpMessage message = _projectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, projectName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MongoDBAtlasProjectData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _projectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, projectName, context);
+                using HttpMessage message = _projectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, projectName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MongoDBAtlasProjectData> response = default;

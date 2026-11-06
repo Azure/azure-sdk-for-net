@@ -1342,7 +1342,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ServerVulnerabilityAssessmentRestClient.CreateGetByExtendedResourceRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.ResourceType.Namespace, scope.ResourceType.Type, scope.Name, context);
+                using HttpMessage message = ServerVulnerabilityAssessmentRestClient.CreateGetByExtendedResourceRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.ResourceType.Namespace, scope.ResourceType.Type, scope.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServerVulnerabilityAssessmentsList> response = Response.FromValue(ServerVulnerabilityAssessmentsList.FromResponse(result), result);
                 if (response.Value == null)
@@ -1390,7 +1390,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ServerVulnerabilityAssessmentRestClient.CreateGetByExtendedResourceRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.ResourceType.Namespace, scope.ResourceType.Type, scope.Name, context);
+                using HttpMessage message = ServerVulnerabilityAssessmentRestClient.CreateGetByExtendedResourceRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.ResourceType.Namespace, scope.ResourceType.Type, scope.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServerVulnerabilityAssessmentsList> response = Response.FromValue(ServerVulnerabilityAssessmentsList.FromResponse(result), result);
                 if (response.Value == null)

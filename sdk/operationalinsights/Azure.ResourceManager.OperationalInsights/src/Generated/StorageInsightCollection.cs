@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageInsightConfigsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageInsightName, StorageInsightData.ToRequestContent(data), context);
+                using HttpMessage message = _storageInsightConfigsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageInsightName, StorageInsightData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<StorageInsightData> response = Response.FromValue(StorageInsightData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageInsightConfigsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageInsightName, StorageInsightData.ToRequestContent(data), context);
+                using HttpMessage message = _storageInsightConfigsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageInsightName, StorageInsightData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<StorageInsightData> response = Response.FromValue(StorageInsightData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageInsightConfigsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageInsightName, context);
+                using HttpMessage message = _storageInsightConfigsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageInsightName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<StorageInsightData> response = Response.FromValue(StorageInsightData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageInsightConfigsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageInsightName, context);
+                using HttpMessage message = _storageInsightConfigsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageInsightName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<StorageInsightData> response = Response.FromValue(StorageInsightData.FromResponse(result), result);
                 if (response.Value == null)
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageInsightConfigsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageInsightName, context);
+                using HttpMessage message = _storageInsightConfigsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageInsightName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<StorageInsightData> response = default;
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageInsightConfigsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageInsightName, context);
+                using HttpMessage message = _storageInsightConfigsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageInsightName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<StorageInsightData> response = default;
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageInsightConfigsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageInsightName, context);
+                using HttpMessage message = _storageInsightConfigsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageInsightName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<StorageInsightData> response = default;
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageInsightConfigsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageInsightName, context);
+                using HttpMessage message = _storageInsightConfigsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageInsightName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<StorageInsightData> response = default;

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _snapshotsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, ElasticSanSnapshotData.ToRequestContent(data), context);
+                using HttpMessage message = _snapshotsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, ElasticSanSnapshotData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ElasticSanArmOperation<ElasticSanSnapshotResource> operation = new ElasticSanArmOperation<ElasticSanSnapshotResource>(
                     new ElasticSanSnapshotResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _snapshotsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, ElasticSanSnapshotData.ToRequestContent(data), context);
+                using HttpMessage message = _snapshotsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, ElasticSanSnapshotData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ElasticSanArmOperation<ElasticSanSnapshotResource> operation = new ElasticSanArmOperation<ElasticSanSnapshotResource>(
                     new ElasticSanSnapshotResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _snapshotsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, context);
+                using HttpMessage message = _snapshotsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ElasticSanSnapshotData> response = Response.FromValue(ElasticSanSnapshotData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _snapshotsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, context);
+                using HttpMessage message = _snapshotsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ElasticSanSnapshotData> response = Response.FromValue(ElasticSanSnapshotData.FromResponse(result), result);
                 if (response.Value == null)
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _snapshotsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, context);
+                using HttpMessage message = _snapshotsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ElasticSanSnapshotData> response = default;
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _snapshotsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, context);
+                using HttpMessage message = _snapshotsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ElasticSanSnapshotData> response = default;
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _snapshotsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, context);
+                using HttpMessage message = _snapshotsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ElasticSanSnapshotData> response = default;
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _snapshotsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, context);
+                using HttpMessage message = _snapshotsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ElasticSanSnapshotData> response = default;

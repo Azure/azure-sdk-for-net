@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _contextCacheContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _contextCacheContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContextCacheContainerData> response = Response.FromValue(ContextCacheContainerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _contextCacheContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _contextCacheContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContextCacheContainerData> response = Response.FromValue(ContextCacheContainerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _contextCacheContainersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContextCacheContainerPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _contextCacheContainersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContextCacheContainerPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageArmOperation<ContextCacheContainerResource> operation = new StorageArmOperation<ContextCacheContainerResource>(
                     new ContextCacheContainerResourceOperationSource(Client),
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _contextCacheContainersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContextCacheContainerPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _contextCacheContainersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContextCacheContainerPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageArmOperation<ContextCacheContainerResource> operation = new StorageArmOperation<ContextCacheContainerResource>(
                     new ContextCacheContainerResourceOperationSource(Client),
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _contextCacheContainersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _contextCacheContainersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageArmOperation operation = new StorageArmOperation(_contextCacheContainersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _contextCacheContainersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _contextCacheContainersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageArmOperation operation = new StorageArmOperation(_contextCacheContainersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

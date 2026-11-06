@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _pipelineGroupOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, pipelineGroupName, PipelineGroupData.ToRequestContent(data), context);
+                using HttpMessage message = _pipelineGroupOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, pipelineGroupName, PipelineGroupData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PipelineGroupsArmOperation<PipelineGroupResource> operation = new PipelineGroupsArmOperation<PipelineGroupResource>(
                     new PipelineGroupResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _pipelineGroupOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, pipelineGroupName, PipelineGroupData.ToRequestContent(data), context);
+                using HttpMessage message = _pipelineGroupOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, pipelineGroupName, PipelineGroupData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PipelineGroupsArmOperation<PipelineGroupResource> operation = new PipelineGroupsArmOperation<PipelineGroupResource>(
                     new PipelineGroupResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _pipelineGroupOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, pipelineGroupName, context);
+                using HttpMessage message = _pipelineGroupOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, pipelineGroupName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PipelineGroupData> response = Response.FromValue(PipelineGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _pipelineGroupOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, pipelineGroupName, context);
+                using HttpMessage message = _pipelineGroupOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, pipelineGroupName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PipelineGroupData> response = Response.FromValue(PipelineGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _pipelineGroupOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, pipelineGroupName, context);
+                using HttpMessage message = _pipelineGroupOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, pipelineGroupName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PipelineGroupData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _pipelineGroupOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, pipelineGroupName, context);
+                using HttpMessage message = _pipelineGroupOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, pipelineGroupName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PipelineGroupData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _pipelineGroupOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, pipelineGroupName, context);
+                using HttpMessage message = _pipelineGroupOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, pipelineGroupName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PipelineGroupData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _pipelineGroupOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, pipelineGroupName, context);
+                using HttpMessage message = _pipelineGroupOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, pipelineGroupName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PipelineGroupData> response = default;

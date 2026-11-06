@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Dns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recordSetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, "NAPTR", DnsNaptrRecordData.ToRequestContent(parameters), matchConditions, context);
+                using HttpMessage message = _recordSetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, "NAPTR", DnsNaptrRecordData.ToRequestContent(parameters), matchConditions, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DnsNaptrRecordData> response = Response.FromValue(DnsNaptrRecordData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Dns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recordSetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, "NAPTR", DnsNaptrRecordData.ToRequestContent(parameters), matchConditions, context);
+                using HttpMessage message = _recordSetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, "NAPTR", DnsNaptrRecordData.ToRequestContent(parameters), matchConditions, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DnsNaptrRecordData> response = Response.FromValue(DnsNaptrRecordData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Dns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, "NAPTR", context);
+                using HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, "NAPTR", context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DnsNaptrRecordData> response = Response.FromValue(DnsNaptrRecordData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Dns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, "NAPTR", context);
+                using HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, "NAPTR", context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DnsNaptrRecordData> response = Response.FromValue(DnsNaptrRecordData.FromResponse(result), result);
                 if (response.Value == null)
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Dns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, "NAPTR", context);
+                using HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, "NAPTR", context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DnsNaptrRecordData> response = default;
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.Dns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, "NAPTR", context);
+                using HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, "NAPTR", context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DnsNaptrRecordData> response = default;
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Dns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, "NAPTR", context);
+                using HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, "NAPTR", context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DnsNaptrRecordData> response = default;
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Dns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, "NAPTR", context);
+                using HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, "NAPTR", context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DnsNaptrRecordData> response = default;

@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AppServiceCertificateOrdersOperationGroupRestClient.CreateValidatePurchaseInformationRequest(Id.SubscriptionId, AppServiceCertificateOrderData.ToRequestContent(data), context);
+                using HttpMessage message = AppServiceCertificateOrdersOperationGroupRestClient.CreateValidatePurchaseInformationRequest(Id.SubscriptionId, AppServiceCertificateOrderData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AppServiceCertificateOrdersOperationGroupRestClient.CreateValidatePurchaseInformationRequest(Id.SubscriptionId, AppServiceCertificateOrderData.ToRequestContent(data), context);
+                using HttpMessage message = AppServiceCertificateOrdersOperationGroupRestClient.CreateValidatePurchaseInformationRequest(Id.SubscriptionId, AppServiceCertificateOrderData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }

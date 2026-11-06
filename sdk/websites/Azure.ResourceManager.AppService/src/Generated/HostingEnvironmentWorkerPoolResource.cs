@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceEnvironmentsRestClient.CreateGetWorkerPoolRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _appServiceEnvironmentsRestClient.CreateGetWorkerPoolRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceWorkerPoolData> response = Response.FromValue(AppServiceWorkerPoolData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceEnvironmentsRestClient.CreateGetWorkerPoolRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _appServiceEnvironmentsRestClient.CreateGetWorkerPoolRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceWorkerPoolData> response = Response.FromValue(AppServiceWorkerPoolData.FromResponse(result), result);
                 if (response.Value == null)
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceEnvironmentsRestClient.CreateUpdateWorkerPoolRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AppServiceWorkerPoolData.ToRequestContent(data), context);
+                using HttpMessage message = _appServiceEnvironmentsRestClient.CreateUpdateWorkerPoolRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AppServiceWorkerPoolData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceWorkerPoolData> response = Response.FromValue(AppServiceWorkerPoolData.FromResponse(result), result);
                 if (response.Value == null)
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceEnvironmentsRestClient.CreateUpdateWorkerPoolRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AppServiceWorkerPoolData.ToRequestContent(data), context);
+                using HttpMessage message = _appServiceEnvironmentsRestClient.CreateUpdateWorkerPoolRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AppServiceWorkerPoolData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceWorkerPoolData> response = Response.FromValue(AppServiceWorkerPoolData.FromResponse(result), result);
                 if (response.Value == null)

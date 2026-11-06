@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkLinksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, DnsForwardingRulesetVirtualNetworkLinkData.ToRequestContent(data), matchConditions, context);
+                using HttpMessage message = _virtualNetworkLinksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, DnsForwardingRulesetVirtualNetworkLinkData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DnsResolverArmOperation<DnsForwardingRulesetVirtualNetworkLinkResource> operation = new DnsResolverArmOperation<DnsForwardingRulesetVirtualNetworkLinkResource>(
                     new DnsForwardingRulesetVirtualNetworkLinkResourceOperationSource(Client),
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkLinksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, DnsForwardingRulesetVirtualNetworkLinkData.ToRequestContent(data), matchConditions, context);
+                using HttpMessage message = _virtualNetworkLinksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, DnsForwardingRulesetVirtualNetworkLinkData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DnsResolverArmOperation<DnsForwardingRulesetVirtualNetworkLinkResource> operation = new DnsResolverArmOperation<DnsForwardingRulesetVirtualNetworkLinkResource>(
                     new DnsForwardingRulesetVirtualNetworkLinkResourceOperationSource(Client),
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, context);
+                using HttpMessage message = _virtualNetworkLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DnsForwardingRulesetVirtualNetworkLinkData> response = Response.FromValue(DnsForwardingRulesetVirtualNetworkLinkData.FromResponse(result), result);
                 if (response.Value == null)
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, context);
+                using HttpMessage message = _virtualNetworkLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DnsForwardingRulesetVirtualNetworkLinkData> response = Response.FromValue(DnsForwardingRulesetVirtualNetworkLinkData.FromResponse(result), result);
                 if (response.Value == null)
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, context);
+                using HttpMessage message = _virtualNetworkLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DnsForwardingRulesetVirtualNetworkLinkData> response = default;
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, context);
+                using HttpMessage message = _virtualNetworkLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DnsForwardingRulesetVirtualNetworkLinkData> response = default;
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, context);
+                using HttpMessage message = _virtualNetworkLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DnsForwardingRulesetVirtualNetworkLinkData> response = default;
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, context);
+                using HttpMessage message = _virtualNetworkLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DnsForwardingRulesetVirtualNetworkLinkData> response = default;

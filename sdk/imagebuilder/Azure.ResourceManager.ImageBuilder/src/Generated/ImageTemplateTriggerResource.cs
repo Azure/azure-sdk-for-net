@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ImageBuilder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _triggersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _triggersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ImageTemplateTriggerData> response = Response.FromValue(ImageTemplateTriggerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ImageBuilder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _triggersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _triggersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ImageTemplateTriggerData> response = Response.FromValue(ImageTemplateTriggerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.ImageBuilder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _triggersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _triggersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ImageBuilderArmOperation operation = new ImageBuilderArmOperation(_triggersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.ImageBuilder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _triggersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _triggersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ImageBuilderArmOperation operation = new ImageBuilderArmOperation(_triggersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ImageBuilder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _triggersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ImageTemplateTriggerData.ToRequestContent(data), context);
+                using HttpMessage message = _triggersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ImageTemplateTriggerData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ImageBuilderArmOperation<ImageTemplateTriggerResource> operation = new ImageBuilderArmOperation<ImageTemplateTriggerResource>(
                     new ImageTemplateTriggerResourceOperationSource(Client),
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.ImageBuilder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _triggersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ImageTemplateTriggerData.ToRequestContent(data), context);
+                using HttpMessage message = _triggersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ImageTemplateTriggerData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ImageBuilderArmOperation<ImageTemplateTriggerResource> operation = new ImageBuilderArmOperation<ImageTemplateTriggerResource>(
                     new ImageTemplateTriggerResourceOperationSource(Client),

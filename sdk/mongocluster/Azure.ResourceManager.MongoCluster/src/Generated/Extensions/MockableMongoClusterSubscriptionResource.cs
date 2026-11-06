@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = MongoClustersRestClient.CreateCheckMongoClusterNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, MongoClusterNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = MongoClustersRestClient.CreateCheckMongoClusterNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, MongoClusterNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MongoClusterNameAvailabilityResult> response = Response.FromValue(MongoClusterNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = MongoClustersRestClient.CreateCheckMongoClusterNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, MongoClusterNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = MongoClustersRestClient.CreateCheckMongoClusterNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, MongoClusterNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MongoClusterNameAvailabilityResult> response = Response.FromValue(MongoClusterNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

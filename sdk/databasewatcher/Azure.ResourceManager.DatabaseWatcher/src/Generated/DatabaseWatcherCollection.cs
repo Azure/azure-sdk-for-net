@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _watchersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, watcherName, DatabaseWatcherData.ToRequestContent(data), context);
+                using HttpMessage message = _watchersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, watcherName, DatabaseWatcherData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DatabaseWatcherArmOperation<DatabaseWatcherResource> operation = new DatabaseWatcherArmOperation<DatabaseWatcherResource>(
                     new DatabaseWatcherResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _watchersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, watcherName, DatabaseWatcherData.ToRequestContent(data), context);
+                using HttpMessage message = _watchersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, watcherName, DatabaseWatcherData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DatabaseWatcherArmOperation<DatabaseWatcherResource> operation = new DatabaseWatcherArmOperation<DatabaseWatcherResource>(
                     new DatabaseWatcherResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _watchersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, watcherName, context);
+                using HttpMessage message = _watchersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, watcherName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DatabaseWatcherData> response = Response.FromValue(DatabaseWatcherData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _watchersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, watcherName, context);
+                using HttpMessage message = _watchersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, watcherName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DatabaseWatcherData> response = Response.FromValue(DatabaseWatcherData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _watchersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, watcherName, context);
+                using HttpMessage message = _watchersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, watcherName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DatabaseWatcherData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _watchersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, watcherName, context);
+                using HttpMessage message = _watchersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, watcherName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DatabaseWatcherData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _watchersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, watcherName, context);
+                using HttpMessage message = _watchersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, watcherName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DatabaseWatcherData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _watchersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, watcherName, context);
+                using HttpMessage message = _watchersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, watcherName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DatabaseWatcherData> response = default;

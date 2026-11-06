@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _externalSvmsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, externalSvmName, ExternalSvmData.ToRequestContent(data), context);
+                using HttpMessage message = _externalSvmsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, externalSvmName, ExternalSvmData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation<ExternalSvmResource> operation = new NetAppArmOperation<ExternalSvmResource>(
                     new ExternalSvmResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _externalSvmsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, externalSvmName, ExternalSvmData.ToRequestContent(data), context);
+                using HttpMessage message = _externalSvmsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, externalSvmName, ExternalSvmData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation<ExternalSvmResource> operation = new NetAppArmOperation<ExternalSvmResource>(
                     new ExternalSvmResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _externalSvmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, externalSvmName, context);
+                using HttpMessage message = _externalSvmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, externalSvmName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExternalSvmData> response = Response.FromValue(ExternalSvmData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _externalSvmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, externalSvmName, context);
+                using HttpMessage message = _externalSvmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, externalSvmName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExternalSvmData> response = Response.FromValue(ExternalSvmData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _externalSvmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, externalSvmName, context);
+                using HttpMessage message = _externalSvmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, externalSvmName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ExternalSvmData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _externalSvmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, externalSvmName, context);
+                using HttpMessage message = _externalSvmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, externalSvmName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ExternalSvmData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _externalSvmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, externalSvmName, context);
+                using HttpMessage message = _externalSvmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, externalSvmName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ExternalSvmData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _externalSvmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, externalSvmName, context);
+                using HttpMessage message = _externalSvmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, externalSvmName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ExternalSvmData> response = default;

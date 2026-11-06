@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exportsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, expand, context);
+                using HttpMessage message = _exportsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CostManagementExportData> response = Response.FromValue(CostManagementExportData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exportsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, expand, context);
+                using HttpMessage message = _exportsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CostManagementExportData> response = Response.FromValue(CostManagementExportData.FromResponse(result), result);
                 if (response.Value == null)
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exportsRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _exportsRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exportsRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _exportsRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exportsRestClient.CreateExecuteRequest(Id.Parent.ToString(), Id.Name, ExportRunContent.ToRequestContent(content), context);
+                using HttpMessage message = _exportsRestClient.CreateExecuteRequest(Id.Parent.ToString(), Id.Name, ExportRunContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exportsRestClient.CreateExecuteRequest(Id.Parent.ToString(), Id.Name, ExportRunContent.ToRequestContent(content), context);
+                using HttpMessage message = _exportsRestClient.CreateExecuteRequest(Id.Parent.ToString(), Id.Name, ExportRunContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exportsRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, CostManagementExportData.ToRequestContent(data), context);
+                using HttpMessage message = _exportsRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, CostManagementExportData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CostManagementExportData> response = Response.FromValue(CostManagementExportData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exportsRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, CostManagementExportData.ToRequestContent(data), context);
+                using HttpMessage message = _exportsRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, CostManagementExportData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CostManagementExportData> response = Response.FromValue(CostManagementExportData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

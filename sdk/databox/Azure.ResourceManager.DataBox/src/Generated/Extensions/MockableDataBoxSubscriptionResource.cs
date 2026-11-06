@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataBox.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ServiceOperationGroupRestClient.CreateGetRegionConfigurationRequest(Id.SubscriptionId, location, RegionConfigurationContent.ToRequestContent(content), context);
+                using HttpMessage message = ServiceOperationGroupRestClient.CreateGetRegionConfigurationRequest(Id.SubscriptionId, location, RegionConfigurationContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RegionConfigurationResult> response = Response.FromValue(RegionConfigurationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.DataBox.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ServiceOperationGroupRestClient.CreateGetRegionConfigurationRequest(Id.SubscriptionId, location, RegionConfigurationContent.ToRequestContent(content), context);
+                using HttpMessage message = ServiceOperationGroupRestClient.CreateGetRegionConfigurationRequest(Id.SubscriptionId, location, RegionConfigurationContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RegionConfigurationResult> response = Response.FromValue(RegionConfigurationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.DataBox.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ServiceOperationGroupRestClient.CreateValidateAddressRequest(Id.SubscriptionId, location, DataBoxValidateAddressContent.ToRequestContent(content), context);
+                using HttpMessage message = ServiceOperationGroupRestClient.CreateValidateAddressRequest(Id.SubscriptionId, location, DataBoxValidateAddressContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AddressValidationOutput> response = Response.FromValue(AddressValidationOutput.FromResponse(result), result);
                 if (response.Value == null)
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.DataBox.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ServiceOperationGroupRestClient.CreateValidateAddressRequest(Id.SubscriptionId, location, DataBoxValidateAddressContent.ToRequestContent(content), context);
+                using HttpMessage message = ServiceOperationGroupRestClient.CreateValidateAddressRequest(Id.SubscriptionId, location, DataBoxValidateAddressContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AddressValidationOutput> response = Response.FromValue(AddressValidationOutput.FromResponse(result), result);
                 if (response.Value == null)
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.DataBox.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ServiceOperationGroupRestClient.CreateValidateInputsRequest(Id.SubscriptionId, location, DataBoxValidationContent.ToRequestContent(content), context);
+                using HttpMessage message = ServiceOperationGroupRestClient.CreateValidateInputsRequest(Id.SubscriptionId, location, DataBoxValidationContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataBoxValidationResult> response = Response.FromValue(DataBoxValidationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.DataBox.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ServiceOperationGroupRestClient.CreateValidateInputsRequest(Id.SubscriptionId, location, DataBoxValidationContent.ToRequestContent(content), context);
+                using HttpMessage message = ServiceOperationGroupRestClient.CreateValidateInputsRequest(Id.SubscriptionId, location, DataBoxValidationContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataBoxValidationResult> response = Response.FromValue(DataBoxValidationResult.FromResponse(result), result);
                 if (response.Value == null)

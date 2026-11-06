@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schedulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, DevCenterScheduleData.ToRequestContent(data), top, context);
+                using HttpMessage message = _schedulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, DevCenterScheduleData.ToRequestContent(data), top, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevCenterArmOperation<DevCenterScheduleResource> operation = new DevCenterArmOperation<DevCenterScheduleResource>(
                     new DevCenterScheduleResourceOperationSource(Client),
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schedulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, DevCenterScheduleData.ToRequestContent(data), top, context);
+                using HttpMessage message = _schedulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, DevCenterScheduleData.ToRequestContent(data), top, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevCenterArmOperation<DevCenterScheduleResource> operation = new DevCenterArmOperation<DevCenterScheduleResource>(
                     new DevCenterScheduleResourceOperationSource(Client),
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, context);
+                using HttpMessage message = _schedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevCenterScheduleData> response = Response.FromValue(DevCenterScheduleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, context);
+                using HttpMessage message = _schedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevCenterScheduleData> response = Response.FromValue(DevCenterScheduleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, context);
+                using HttpMessage message = _schedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DevCenterScheduleData> response = default;
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, context);
+                using HttpMessage message = _schedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DevCenterScheduleData> response = default;
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, context);
+                using HttpMessage message = _schedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DevCenterScheduleData> response = default;
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, context);
+                using HttpMessage message = _schedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DevCenterScheduleData> response = default;

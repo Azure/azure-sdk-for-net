@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _discoveryRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, discoveryRuleName, HealthModelDiscoveryRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _discoveryRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, discoveryRuleName, HealthModelDiscoveryRuleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CloudHealthArmOperation<HealthModelDiscoveryRuleResource> operation = new CloudHealthArmOperation<HealthModelDiscoveryRuleResource>(
                     new HealthModelDiscoveryRuleResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _discoveryRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, discoveryRuleName, HealthModelDiscoveryRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _discoveryRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, discoveryRuleName, HealthModelDiscoveryRuleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CloudHealthArmOperation<HealthModelDiscoveryRuleResource> operation = new CloudHealthArmOperation<HealthModelDiscoveryRuleResource>(
                     new HealthModelDiscoveryRuleResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _discoveryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, discoveryRuleName, context);
+                using HttpMessage message = _discoveryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, discoveryRuleName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HealthModelDiscoveryRuleData> response = Response.FromValue(HealthModelDiscoveryRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _discoveryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, discoveryRuleName, context);
+                using HttpMessage message = _discoveryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, discoveryRuleName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HealthModelDiscoveryRuleData> response = Response.FromValue(HealthModelDiscoveryRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _discoveryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, discoveryRuleName, context);
+                using HttpMessage message = _discoveryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, discoveryRuleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HealthModelDiscoveryRuleData> response = default;
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _discoveryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, discoveryRuleName, context);
+                using HttpMessage message = _discoveryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, discoveryRuleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HealthModelDiscoveryRuleData> response = default;
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _discoveryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, discoveryRuleName, context);
+                using HttpMessage message = _discoveryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, discoveryRuleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HealthModelDiscoveryRuleData> response = default;
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _discoveryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, discoveryRuleName, context);
+                using HttpMessage message = _discoveryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, discoveryRuleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HealthModelDiscoveryRuleData> response = default;

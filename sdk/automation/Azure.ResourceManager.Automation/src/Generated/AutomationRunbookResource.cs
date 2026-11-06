@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _runbookRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _runbookRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AutomationRunbookData> response = Response.FromValue(AutomationRunbookData.FromResponse(result), result);
                 if (response.Value == null)
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _runbookRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _runbookRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AutomationRunbookData> response = Response.FromValue(AutomationRunbookData.FromResponse(result), result);
                 if (response.Value == null)
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _runbookRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AutomationRunbookPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _runbookRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AutomationRunbookPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AutomationRunbookData> response = Response.FromValue(AutomationRunbookData.FromResponse(result), result);
                 if (response.Value == null)
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _runbookRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AutomationRunbookPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _runbookRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AutomationRunbookPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AutomationRunbookData> response = Response.FromValue(AutomationRunbookData.FromResponse(result), result);
                 if (response.Value == null)
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _runbookRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _runbookRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _runbookRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _runbookRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _testJobRestClient.CreateCreateTestJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RunbookTestJobCreateContent.ToRequestContent(content), context);
+                using HttpMessage message = _testJobRestClient.CreateCreateTestJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RunbookTestJobCreateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RunbookTestJob> response = Response.FromValue(RunbookTestJob.FromResponse(result), result);
                 if (response.Value == null)
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _testJobRestClient.CreateCreateTestJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RunbookTestJobCreateContent.ToRequestContent(content), context);
+                using HttpMessage message = _testJobRestClient.CreateCreateTestJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RunbookTestJobCreateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RunbookTestJob> response = Response.FromValue(RunbookTestJob.FromResponse(result), result);
                 if (response.Value == null)
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _runbookDraftRestClient.CreateGetContentRunbookDraftRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _runbookDraftRestClient.CreateGetContentRunbookDraftRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<string> response = Response.FromValue(JsonDocument.Parse(result.Content, ModelSerializationExtensions.JsonDocumentOptions).RootElement.GetString(), result);
                 if (response.Value == null)
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _runbookDraftRestClient.CreateGetContentRunbookDraftRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _runbookDraftRestClient.CreateGetContentRunbookDraftRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<string> response = Response.FromValue(JsonDocument.Parse(result.Content, ModelSerializationExtensions.JsonDocumentOptions).RootElement.GetString(), result);
                 if (response.Value == null)
@@ -725,7 +725,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _runbookRestClient.CreatePublishRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _runbookRestClient.CreatePublishRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AutomationArmOperation operation = new AutomationArmOperation(_runbookClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -774,7 +774,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _runbookRestClient.CreatePublishRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _runbookRestClient.CreatePublishRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AutomationArmOperation operation = new AutomationArmOperation(_runbookClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -828,7 +828,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _runbookDraftRestClient.CreateReplaceContentRunbookDraftRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RequestContent.Create(runbookContent), context);
+                using HttpMessage message = _runbookDraftRestClient.CreateReplaceContentRunbookDraftRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RequestContent.Create(runbookContent), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AutomationArmOperation operation = new AutomationArmOperation(_runbookDraftClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -882,7 +882,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _runbookDraftRestClient.CreateReplaceContentRunbookDraftRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RequestContent.Create(runbookContent), context);
+                using HttpMessage message = _runbookDraftRestClient.CreateReplaceContentRunbookDraftRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RequestContent.Create(runbookContent), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AutomationArmOperation operation = new AutomationArmOperation(_runbookDraftClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -930,7 +930,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _testJobRestClient.CreateResumeTestJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _testJobRestClient.CreateResumeTestJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -973,7 +973,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _testJobRestClient.CreateResumeTestJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _testJobRestClient.CreateResumeTestJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -1016,7 +1016,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _runbookDraftRestClient.CreateGetRunbookDraftRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _runbookDraftRestClient.CreateGetRunbookDraftRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AutomationRunbookDraft> response = Response.FromValue(AutomationRunbookDraft.FromResponse(result), result);
                 if (response.Value == null)
@@ -1064,7 +1064,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _runbookDraftRestClient.CreateGetRunbookDraftRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _runbookDraftRestClient.CreateGetRunbookDraftRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AutomationRunbookDraft> response = Response.FromValue(AutomationRunbookDraft.FromResponse(result), result);
                 if (response.Value == null)
@@ -1112,7 +1112,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _runbookRestClient.CreateGetContentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _runbookRestClient.CreateGetContentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<string> response = Response.FromValue(JsonDocument.Parse(result.Content, ModelSerializationExtensions.JsonDocumentOptions).RootElement.GetString(), result);
                 if (response.Value == null)
@@ -1160,7 +1160,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _runbookRestClient.CreateGetContentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _runbookRestClient.CreateGetContentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<string> response = Response.FromValue(JsonDocument.Parse(result.Content, ModelSerializationExtensions.JsonDocumentOptions).RootElement.GetString(), result);
                 if (response.Value == null)
@@ -1208,7 +1208,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _testJobRestClient.CreateStopTestJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _testJobRestClient.CreateStopTestJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -1251,7 +1251,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _testJobRestClient.CreateStopTestJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _testJobRestClient.CreateStopTestJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -1294,7 +1294,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _testJobRestClient.CreateSuspendTestJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _testJobRestClient.CreateSuspendTestJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -1337,7 +1337,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _testJobRestClient.CreateSuspendTestJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _testJobRestClient.CreateSuspendTestJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -1380,7 +1380,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _testJobRestClient.CreateGetTestJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _testJobRestClient.CreateGetTestJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RunbookTestJob> response = Response.FromValue(RunbookTestJob.FromResponse(result), result);
                 if (response.Value == null)
@@ -1428,7 +1428,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _testJobRestClient.CreateGetTestJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _testJobRestClient.CreateGetTestJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RunbookTestJob> response = Response.FromValue(RunbookTestJob.FromResponse(result), result);
                 if (response.Value == null)
@@ -1481,7 +1481,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _testJobStreamsRestClient.CreateGetTestJobStreamRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobStreamId, context);
+                using HttpMessage message = _testJobStreamsRestClient.CreateGetTestJobStreamRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobStreamId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AutomationJobStream> response = Response.FromValue(AutomationJobStream.FromResponse(result), result);
                 if (response.Value == null)
@@ -1534,7 +1534,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _testJobStreamsRestClient.CreateGetTestJobStreamRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobStreamId, context);
+                using HttpMessage message = _testJobStreamsRestClient.CreateGetTestJobStreamRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobStreamId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AutomationJobStream> response = Response.FromValue(AutomationJobStream.FromResponse(result), result);
                 if (response.Value == null)
@@ -1582,7 +1582,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _runbookDraftRestClient.CreateUndoEditRunbookDraftRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _runbookDraftRestClient.CreateUndoEditRunbookDraftRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RunbookDraftUndoEditResult> response = Response.FromValue(RunbookDraftUndoEditResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1630,7 +1630,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _runbookDraftRestClient.CreateUndoEditRunbookDraftRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _runbookDraftRestClient.CreateUndoEditRunbookDraftRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RunbookDraftUndoEditResult> response = Response.FromValue(RunbookDraftUndoEditResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1669,7 +1669,7 @@ namespace Azure.ResourceManager.Automation
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _runbookRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _runbookRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<AutomationRunbookData> response = Response.FromValue(AutomationRunbookData.FromResponse(result), result);
                     return Response.FromValue(new AutomationRunbookResource(Client, response.Value), response.GetRawResponse());
@@ -1717,7 +1717,7 @@ namespace Azure.ResourceManager.Automation
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _runbookRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _runbookRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<AutomationRunbookData> response = Response.FromValue(AutomationRunbookData.FromResponse(result), result);
                     return Response.FromValue(new AutomationRunbookResource(Client, response.Value), response.GetRawResponse());
@@ -1763,7 +1763,7 @@ namespace Azure.ResourceManager.Automation
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _runbookRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _runbookRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<AutomationRunbookData> response = Response.FromValue(AutomationRunbookData.FromResponse(result), result);
                     return Response.FromValue(new AutomationRunbookResource(Client, response.Value), response.GetRawResponse());
@@ -1805,7 +1805,7 @@ namespace Azure.ResourceManager.Automation
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _runbookRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _runbookRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<AutomationRunbookData> response = Response.FromValue(AutomationRunbookData.FromResponse(result), result);
                     return Response.FromValue(new AutomationRunbookResource(Client, response.Value), response.GetRawResponse());
@@ -1847,7 +1847,7 @@ namespace Azure.ResourceManager.Automation
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _runbookRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _runbookRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<AutomationRunbookData> response = Response.FromValue(AutomationRunbookData.FromResponse(result), result);
                     return Response.FromValue(new AutomationRunbookResource(Client, response.Value), response.GetRawResponse());
@@ -1893,7 +1893,7 @@ namespace Azure.ResourceManager.Automation
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _runbookRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _runbookRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<AutomationRunbookData> response = Response.FromValue(AutomationRunbookData.FromResponse(result), result);
                     return Response.FromValue(new AutomationRunbookResource(Client, response.Value), response.GetRawResponse());

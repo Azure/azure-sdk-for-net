@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceRunnersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DevTestLabServiceRunnerData.ToRequestContent(data), context);
+                using HttpMessage message = _serviceRunnersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DevTestLabServiceRunnerData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevTestLabServiceRunnerData> response = Response.FromValue(DevTestLabServiceRunnerData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceRunnersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DevTestLabServiceRunnerData.ToRequestContent(data), context);
+                using HttpMessage message = _serviceRunnersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DevTestLabServiceRunnerData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevTestLabServiceRunnerData> response = Response.FromValue(DevTestLabServiceRunnerData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceRunnersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _serviceRunnersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevTestLabServiceRunnerData> response = Response.FromValue(DevTestLabServiceRunnerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceRunnersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _serviceRunnersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevTestLabServiceRunnerData> response = Response.FromValue(DevTestLabServiceRunnerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceRunnersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _serviceRunnersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DevTestLabServiceRunnerData> response = default;
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceRunnersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _serviceRunnersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DevTestLabServiceRunnerData> response = default;
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceRunnersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _serviceRunnersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DevTestLabServiceRunnerData> response = default;
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceRunnersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _serviceRunnersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DevTestLabServiceRunnerData> response = default;

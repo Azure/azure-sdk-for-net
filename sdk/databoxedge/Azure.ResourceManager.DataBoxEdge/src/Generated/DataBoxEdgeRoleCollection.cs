@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rolesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DataBoxEdgeRoleData.ToRequestContent(data), context);
+                using HttpMessage message = _rolesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DataBoxEdgeRoleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataBoxEdgeArmOperation<DataBoxEdgeRoleResource> operation = new DataBoxEdgeArmOperation<DataBoxEdgeRoleResource>(
                     new DataBoxEdgeRoleResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rolesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DataBoxEdgeRoleData.ToRequestContent(data), context);
+                using HttpMessage message = _rolesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DataBoxEdgeRoleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataBoxEdgeArmOperation<DataBoxEdgeRoleResource> operation = new DataBoxEdgeArmOperation<DataBoxEdgeRoleResource>(
                     new DataBoxEdgeRoleResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rolesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _rolesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataBoxEdgeRoleData> response = Response.FromValue(DataBoxEdgeRoleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rolesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _rolesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataBoxEdgeRoleData> response = Response.FromValue(DataBoxEdgeRoleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rolesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _rolesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DataBoxEdgeRoleData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rolesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _rolesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DataBoxEdgeRoleData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rolesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _rolesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DataBoxEdgeRoleData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rolesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _rolesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DataBoxEdgeRoleData> response = default;

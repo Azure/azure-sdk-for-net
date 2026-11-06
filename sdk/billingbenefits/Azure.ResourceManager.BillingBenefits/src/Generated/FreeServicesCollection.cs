@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.BillingBenefits
     /// <summary>
     /// A class representing a collection of <see cref="FreeServicesResource"/> and their operations.
     /// Each <see cref="FreeServicesResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="FreeServicesCollection"/> instance call the GetFreeServices method from an instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="FreeServicesCollection"/> instance call the GetAllFreeServices method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class FreeServicesCollection : ArmCollection, IEnumerable<FreeServicesResource>, IAsyncEnumerable<FreeServicesResource>
     {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _freeServicesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, freeServiceName, FreeServicesData.ToRequestContent(data), context);
+                using HttpMessage message = _freeServicesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, freeServiceName, FreeServicesData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingBenefitsArmOperation<FreeServicesResource> operation = new BillingBenefitsArmOperation<FreeServicesResource>(
                     new FreeServicesResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _freeServicesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, freeServiceName, FreeServicesData.ToRequestContent(data), context);
+                using HttpMessage message = _freeServicesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, freeServiceName, FreeServicesData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingBenefitsArmOperation<FreeServicesResource> operation = new BillingBenefitsArmOperation<FreeServicesResource>(
                     new FreeServicesResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _freeServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, freeServiceName, context);
+                using HttpMessage message = _freeServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, freeServiceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FreeServicesData> response = Response.FromValue(FreeServicesData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _freeServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, freeServiceName, context);
+                using HttpMessage message = _freeServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, freeServiceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FreeServicesData> response = Response.FromValue(FreeServicesData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _freeServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, freeServiceName, context);
+                using HttpMessage message = _freeServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, freeServiceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<FreeServicesData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _freeServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, freeServiceName, context);
+                using HttpMessage message = _freeServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, freeServiceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<FreeServicesData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _freeServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, freeServiceName, context);
+                using HttpMessage message = _freeServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, freeServiceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<FreeServicesData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _freeServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, freeServiceName, context);
+                using HttpMessage message = _freeServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, freeServiceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<FreeServicesData> response = default;

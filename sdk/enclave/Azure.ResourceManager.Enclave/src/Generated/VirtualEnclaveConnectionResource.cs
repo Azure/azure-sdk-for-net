@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Enclave
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _enclaveConnectionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _enclaveConnectionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<VirtualEnclaveConnectionData> response = Response.FromValue(VirtualEnclaveConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Enclave
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _enclaveConnectionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _enclaveConnectionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<VirtualEnclaveConnectionData> response = Response.FromValue(VirtualEnclaveConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Enclave
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _enclaveConnectionRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VirtualEnclaveConnectionPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _enclaveConnectionRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VirtualEnclaveConnectionPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 EnclaveArmOperation<VirtualEnclaveConnectionResource> operation = new EnclaveArmOperation<VirtualEnclaveConnectionResource>(
                     new VirtualEnclaveConnectionResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Enclave
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _enclaveConnectionRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VirtualEnclaveConnectionPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _enclaveConnectionRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VirtualEnclaveConnectionPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 EnclaveArmOperation<VirtualEnclaveConnectionResource> operation = new EnclaveArmOperation<VirtualEnclaveConnectionResource>(
                     new VirtualEnclaveConnectionResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Enclave
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _enclaveConnectionRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _enclaveConnectionRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 EnclaveArmOperation operation = new EnclaveArmOperation(_enclaveConnectionClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Enclave
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _enclaveConnectionRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _enclaveConnectionRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 EnclaveArmOperation operation = new EnclaveArmOperation(_enclaveConnectionClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.Enclave
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _enclaveConnectionRestClient.CreateHandleApprovalCreationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ApprovalCallbackContent.ToRequestContent(content), context);
+                using HttpMessage message = _enclaveConnectionRestClient.CreateHandleApprovalCreationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ApprovalCallbackContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 EnclaveArmOperation<ApprovalActionResult> operation = new EnclaveArmOperation<ApprovalActionResult>(
                     new ApprovalActionResultOperationSource(),
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.Enclave
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _enclaveConnectionRestClient.CreateHandleApprovalCreationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ApprovalCallbackContent.ToRequestContent(content), context);
+                using HttpMessage message = _enclaveConnectionRestClient.CreateHandleApprovalCreationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ApprovalCallbackContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 EnclaveArmOperation<ApprovalActionResult> operation = new EnclaveArmOperation<ApprovalActionResult>(
                     new ApprovalActionResultOperationSource(),
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.Enclave
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _enclaveConnectionRestClient.CreateHandleApprovalDeletionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ApprovalDeletionCallbackContent.ToRequestContent(content), context);
+                using HttpMessage message = _enclaveConnectionRestClient.CreateHandleApprovalDeletionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ApprovalDeletionCallbackContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 EnclaveArmOperation<ApprovalActionResult> operation = new EnclaveArmOperation<ApprovalActionResult>(
                     new ApprovalActionResultOperationSource(),
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.Enclave
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _enclaveConnectionRestClient.CreateHandleApprovalDeletionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ApprovalDeletionCallbackContent.ToRequestContent(content), context);
+                using HttpMessage message = _enclaveConnectionRestClient.CreateHandleApprovalDeletionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ApprovalDeletionCallbackContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 EnclaveArmOperation<ApprovalActionResult> operation = new EnclaveArmOperation<ApprovalActionResult>(
                     new ApprovalActionResultOperationSource(),
@@ -664,7 +664,7 @@ namespace Azure.ResourceManager.Enclave
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _enclaveConnectionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _enclaveConnectionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<VirtualEnclaveConnectionData> response = Response.FromValue(VirtualEnclaveConnectionData.FromResponse(result), result);
                     return Response.FromValue(new VirtualEnclaveConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -712,7 +712,7 @@ namespace Azure.ResourceManager.Enclave
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _enclaveConnectionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _enclaveConnectionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<VirtualEnclaveConnectionData> response = Response.FromValue(VirtualEnclaveConnectionData.FromResponse(result), result);
                     return Response.FromValue(new VirtualEnclaveConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -758,7 +758,7 @@ namespace Azure.ResourceManager.Enclave
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _enclaveConnectionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _enclaveConnectionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<VirtualEnclaveConnectionData> response = Response.FromValue(VirtualEnclaveConnectionData.FromResponse(result), result);
                     return Response.FromValue(new VirtualEnclaveConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -800,7 +800,7 @@ namespace Azure.ResourceManager.Enclave
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _enclaveConnectionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _enclaveConnectionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<VirtualEnclaveConnectionData> response = Response.FromValue(VirtualEnclaveConnectionData.FromResponse(result), result);
                     return Response.FromValue(new VirtualEnclaveConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -842,7 +842,7 @@ namespace Azure.ResourceManager.Enclave
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _enclaveConnectionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _enclaveConnectionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<VirtualEnclaveConnectionData> response = Response.FromValue(VirtualEnclaveConnectionData.FromResponse(result), result);
                     return Response.FromValue(new VirtualEnclaveConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -888,7 +888,7 @@ namespace Azure.ResourceManager.Enclave
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _enclaveConnectionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _enclaveConnectionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<VirtualEnclaveConnectionData> response = Response.FromValue(VirtualEnclaveConnectionData.FromResponse(result), result);
                     return Response.FromValue(new VirtualEnclaveConnectionResource(Client, response.Value), response.GetRawResponse());

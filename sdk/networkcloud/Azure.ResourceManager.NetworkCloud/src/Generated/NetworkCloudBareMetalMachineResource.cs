@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bareMetalMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _bareMetalMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkCloudBareMetalMachineData> response = Response.FromValue(NetworkCloudBareMetalMachineData.FromResponse(result), result);
                 if (response.Value == null)
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bareMetalMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _bareMetalMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkCloudBareMetalMachineData> response = Response.FromValue(NetworkCloudBareMetalMachineData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bareMetalMachinesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkCloudBareMetalMachinePatch.ToRequestContent(patch), matchConditions, context);
+                using HttpMessage message = _bareMetalMachinesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkCloudBareMetalMachinePatch.ToRequestContent(patch), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkCloudArmOperation<NetworkCloudBareMetalMachineResource> operation = new NetworkCloudArmOperation<NetworkCloudBareMetalMachineResource>(
                     new NetworkCloudBareMetalMachineResourceOperationSource(Client),
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bareMetalMachinesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkCloudBareMetalMachinePatch.ToRequestContent(patch), matchConditions, context);
+                using HttpMessage message = _bareMetalMachinesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkCloudBareMetalMachinePatch.ToRequestContent(patch), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkCloudArmOperation<NetworkCloudBareMetalMachineResource> operation = new NetworkCloudArmOperation<NetworkCloudBareMetalMachineResource>(
                     new NetworkCloudBareMetalMachineResourceOperationSource(Client),
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bareMetalMachinesRestClient.CreateCordonRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachineCordonContent.ToRequestContent(content), context);
+                using HttpMessage message = _bareMetalMachinesRestClient.CreateCordonRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachineCordonContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
                     new NetworkCloudOperationStatusResultOperationSource(),
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bareMetalMachinesRestClient.CreateCordonRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachineCordonContent.ToRequestContent(content), context);
+                using HttpMessage message = _bareMetalMachinesRestClient.CreateCordonRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachineCordonContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
                     new NetworkCloudOperationStatusResultOperationSource(),
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bareMetalMachinesRestClient.CreatePowerOffRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachinePowerOffContent.ToRequestContent(content), context);
+                using HttpMessage message = _bareMetalMachinesRestClient.CreatePowerOffRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachinePowerOffContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
                     new NetworkCloudOperationStatusResultOperationSource(),
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bareMetalMachinesRestClient.CreatePowerOffRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachinePowerOffContent.ToRequestContent(content), context);
+                using HttpMessage message = _bareMetalMachinesRestClient.CreatePowerOffRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachinePowerOffContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
                     new NetworkCloudOperationStatusResultOperationSource(),
@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bareMetalMachinesRestClient.CreateReimageRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachineReimageContent.ToRequestContent(content), context);
+                using HttpMessage message = _bareMetalMachinesRestClient.CreateReimageRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachineReimageContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
                     new NetworkCloudOperationStatusResultOperationSource(),
@@ -618,7 +618,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bareMetalMachinesRestClient.CreateReimageRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachineReimageContent.ToRequestContent(content), context);
+                using HttpMessage message = _bareMetalMachinesRestClient.CreateReimageRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachineReimageContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
                     new NetworkCloudOperationStatusResultOperationSource(),
@@ -674,7 +674,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bareMetalMachinesRestClient.CreateReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachineReplaceContent.ToRequestContent(content), context);
+                using HttpMessage message = _bareMetalMachinesRestClient.CreateReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachineReplaceContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
                     new NetworkCloudOperationStatusResultOperationSource(),
@@ -730,7 +730,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bareMetalMachinesRestClient.CreateReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachineReplaceContent.ToRequestContent(content), context);
+                using HttpMessage message = _bareMetalMachinesRestClient.CreateReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachineReplaceContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
                     new NetworkCloudOperationStatusResultOperationSource(),
@@ -785,7 +785,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bareMetalMachinesRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _bareMetalMachinesRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
                     new NetworkCloudOperationStatusResultOperationSource(),
@@ -840,7 +840,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bareMetalMachinesRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _bareMetalMachinesRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
                     new NetworkCloudOperationStatusResultOperationSource(),
@@ -899,7 +899,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bareMetalMachinesRestClient.CreateRunCommandRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachineRunCommandContent.ToRequestContent(content), context);
+                using HttpMessage message = _bareMetalMachinesRestClient.CreateRunCommandRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachineRunCommandContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
                     new NetworkCloudOperationStatusResultOperationSource(),
@@ -958,7 +958,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bareMetalMachinesRestClient.CreateRunCommandRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachineRunCommandContent.ToRequestContent(content), context);
+                using HttpMessage message = _bareMetalMachinesRestClient.CreateRunCommandRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachineRunCommandContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
                     new NetworkCloudOperationStatusResultOperationSource(),
@@ -1017,7 +1017,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bareMetalMachinesRestClient.CreateRunDataExtractsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachineRunDataExtractsContent.ToRequestContent(content), context);
+                using HttpMessage message = _bareMetalMachinesRestClient.CreateRunDataExtractsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachineRunDataExtractsContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
                     new NetworkCloudOperationStatusResultOperationSource(),
@@ -1076,7 +1076,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bareMetalMachinesRestClient.CreateRunDataExtractsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachineRunDataExtractsContent.ToRequestContent(content), context);
+                using HttpMessage message = _bareMetalMachinesRestClient.CreateRunDataExtractsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachineRunDataExtractsContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
                     new NetworkCloudOperationStatusResultOperationSource(),
@@ -1135,7 +1135,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bareMetalMachinesRestClient.CreateRunDataExtractsRestrictedRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachineRunDataExtractsContent.ToRequestContent(content), context);
+                using HttpMessage message = _bareMetalMachinesRestClient.CreateRunDataExtractsRestrictedRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachineRunDataExtractsContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
                     new NetworkCloudOperationStatusResultOperationSource(),
@@ -1194,7 +1194,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bareMetalMachinesRestClient.CreateRunDataExtractsRestrictedRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachineRunDataExtractsContent.ToRequestContent(content), context);
+                using HttpMessage message = _bareMetalMachinesRestClient.CreateRunDataExtractsRestrictedRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachineRunDataExtractsContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
                     new NetworkCloudOperationStatusResultOperationSource(),
@@ -1253,7 +1253,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bareMetalMachinesRestClient.CreateRunReadCommandsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachineRunReadCommandsContent.ToRequestContent(content), context);
+                using HttpMessage message = _bareMetalMachinesRestClient.CreateRunReadCommandsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachineRunReadCommandsContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
                     new NetworkCloudOperationStatusResultOperationSource(),
@@ -1312,7 +1312,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bareMetalMachinesRestClient.CreateRunReadCommandsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachineRunReadCommandsContent.ToRequestContent(content), context);
+                using HttpMessage message = _bareMetalMachinesRestClient.CreateRunReadCommandsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachineRunReadCommandsContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
                     new NetworkCloudOperationStatusResultOperationSource(),
@@ -1367,7 +1367,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bareMetalMachinesRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _bareMetalMachinesRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
                     new NetworkCloudOperationStatusResultOperationSource(),
@@ -1422,7 +1422,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bareMetalMachinesRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _bareMetalMachinesRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
                     new NetworkCloudOperationStatusResultOperationSource(),
@@ -1477,7 +1477,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bareMetalMachinesRestClient.CreateUncordonRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _bareMetalMachinesRestClient.CreateUncordonRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
                     new NetworkCloudOperationStatusResultOperationSource(),
@@ -1532,7 +1532,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bareMetalMachinesRestClient.CreateUncordonRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _bareMetalMachinesRestClient.CreateUncordonRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
                     new NetworkCloudOperationStatusResultOperationSource(),
@@ -1577,7 +1577,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _bareMetalMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _bareMetalMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NetworkCloudBareMetalMachineData> response = Response.FromValue(NetworkCloudBareMetalMachineData.FromResponse(result), result);
                     return Response.FromValue(new NetworkCloudBareMetalMachineResource(Client, response.Value), response.GetRawResponse());
@@ -1625,7 +1625,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _bareMetalMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _bareMetalMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NetworkCloudBareMetalMachineData> response = Response.FromValue(NetworkCloudBareMetalMachineData.FromResponse(result), result);
                     return Response.FromValue(new NetworkCloudBareMetalMachineResource(Client, response.Value), response.GetRawResponse());
@@ -1671,7 +1671,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _bareMetalMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _bareMetalMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NetworkCloudBareMetalMachineData> response = Response.FromValue(NetworkCloudBareMetalMachineData.FromResponse(result), result);
                     return Response.FromValue(new NetworkCloudBareMetalMachineResource(Client, response.Value), response.GetRawResponse());
@@ -1713,7 +1713,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _bareMetalMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _bareMetalMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NetworkCloudBareMetalMachineData> response = Response.FromValue(NetworkCloudBareMetalMachineData.FromResponse(result), result);
                     return Response.FromValue(new NetworkCloudBareMetalMachineResource(Client, response.Value), response.GetRawResponse());
@@ -1755,7 +1755,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _bareMetalMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _bareMetalMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NetworkCloudBareMetalMachineData> response = Response.FromValue(NetworkCloudBareMetalMachineData.FromResponse(result), result);
                     return Response.FromValue(new NetworkCloudBareMetalMachineResource(Client, response.Value), response.GetRawResponse());
@@ -1801,7 +1801,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _bareMetalMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _bareMetalMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NetworkCloudBareMetalMachineData> response = Response.FromValue(NetworkCloudBareMetalMachineData.FromResponse(result), result);
                     return Response.FromValue(new NetworkCloudBareMetalMachineResource(Client, response.Value), response.GetRawResponse());

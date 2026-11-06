@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Purview.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AccountsRestClient.CreateCheckPurviewAccountNameAvailabilityRequest(Id.SubscriptionId, PurviewAccountNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = AccountsRestClient.CreateCheckPurviewAccountNameAvailabilityRequest(Id.SubscriptionId, PurviewAccountNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PurviewAccountNameAvailabilityResult> response = Response.FromValue(PurviewAccountNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Purview.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AccountsRestClient.CreateCheckPurviewAccountNameAvailabilityRequest(Id.SubscriptionId, PurviewAccountNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = AccountsRestClient.CreateCheckPurviewAccountNameAvailabilityRequest(Id.SubscriptionId, PurviewAccountNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PurviewAccountNameAvailabilityResult> response = Response.FromValue(PurviewAccountNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Purview.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = FeaturesRestClient.CreateSubscriptionGetFeatureRequest(Id.SubscriptionId, locations, PurviewBatchFeatureContent.ToRequestContent(content), context);
+                using HttpMessage message = FeaturesRestClient.CreateSubscriptionGetFeatureRequest(Id.SubscriptionId, locations, PurviewBatchFeatureContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PurviewBatchFeatureStatus> response = Response.FromValue(PurviewBatchFeatureStatus.FromResponse(result), result);
                 if (response.Value == null)
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Purview.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = FeaturesRestClient.CreateSubscriptionGetFeatureRequest(Id.SubscriptionId, locations, PurviewBatchFeatureContent.ToRequestContent(content), context);
+                using HttpMessage message = FeaturesRestClient.CreateSubscriptionGetFeatureRequest(Id.SubscriptionId, locations, PurviewBatchFeatureContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PurviewBatchFeatureStatus> response = Response.FromValue(PurviewBatchFeatureStatus.FromResponse(result), result);
                 if (response.Value == null)

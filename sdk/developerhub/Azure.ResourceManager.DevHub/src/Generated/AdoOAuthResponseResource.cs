@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _adooAuthRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, context);
+                using HttpMessage message = _adooAuthRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AdoOAuthResultData> response = Response.FromValue(AdoOAuthResultData.FromResponse(result), result);
                 if (response.Value == null)
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _adooAuthRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, context);
+                using HttpMessage message = _adooAuthRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AdoOAuthResultData> response = Response.FromValue(AdoOAuthResultData.FromResponse(result), result);
                 if (response.Value == null)
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devHubClientRestClient.CreateGetAdoOAuthInfoRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, DeveloperHubAdoOAuthCallContent.ToRequestContent(content), context);
+                using HttpMessage message = _devHubClientRestClient.CreateGetAdoOAuthInfoRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, DeveloperHubAdoOAuthCallContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DeveloperHubAdoOAuthInfoResult> response = Response.FromValue(DeveloperHubAdoOAuthInfoResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devHubClientRestClient.CreateGetAdoOAuthInfoRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, DeveloperHubAdoOAuthCallContent.ToRequestContent(content), context);
+                using HttpMessage message = _devHubClientRestClient.CreateGetAdoOAuthInfoRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, DeveloperHubAdoOAuthCallContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DeveloperHubAdoOAuthInfoResult> response = Response.FromValue(DeveloperHubAdoOAuthInfoResult.FromResponse(result), result);
                 if (response.Value == null)

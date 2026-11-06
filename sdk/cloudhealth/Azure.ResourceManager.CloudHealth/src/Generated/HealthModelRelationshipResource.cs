@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _relationshipsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _relationshipsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HealthModelRelationshipData> response = Response.FromValue(HealthModelRelationshipData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _relationshipsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _relationshipsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HealthModelRelationshipData> response = Response.FromValue(HealthModelRelationshipData.FromResponse(result), result);
                 if (response.Value == null)
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _relationshipsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _relationshipsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CloudHealthArmOperation operation = new CloudHealthArmOperation(_relationshipsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _relationshipsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _relationshipsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CloudHealthArmOperation operation = new CloudHealthArmOperation(_relationshipsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _relationshipsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, HealthModelRelationshipData.ToRequestContent(data), context);
+                using HttpMessage message = _relationshipsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, HealthModelRelationshipData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CloudHealthArmOperation<HealthModelRelationshipResource> operation = new CloudHealthArmOperation<HealthModelRelationshipResource>(
                     new HealthModelRelationshipResourceOperationSource(Client),
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _relationshipsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, HealthModelRelationshipData.ToRequestContent(data), context);
+                using HttpMessage message = _relationshipsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, HealthModelRelationshipData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CloudHealthArmOperation<HealthModelRelationshipResource> operation = new CloudHealthArmOperation<HealthModelRelationshipResource>(
                     new HealthModelRelationshipResourceOperationSource(Client),

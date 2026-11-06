@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingProfilesRestClient.CreateCreateOrUpdateRequest(Id.Name, billingProfileName, BillingProfileData.ToRequestContent(data), context);
+                using HttpMessage message = _billingProfilesRestClient.CreateCreateOrUpdateRequest(Id.Name, billingProfileName, BillingProfileData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingProfileResource> operation = new BillingArmOperation<BillingProfileResource>(
                     new BillingProfileResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingProfilesRestClient.CreateCreateOrUpdateRequest(Id.Name, billingProfileName, BillingProfileData.ToRequestContent(data), context);
+                using HttpMessage message = _billingProfilesRestClient.CreateCreateOrUpdateRequest(Id.Name, billingProfileName, BillingProfileData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingProfileResource> operation = new BillingArmOperation<BillingProfileResource>(
                     new BillingProfileResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingProfilesRestClient.CreateGetRequest(Id.Name, billingProfileName, context);
+                using HttpMessage message = _billingProfilesRestClient.CreateGetRequest(Id.Name, billingProfileName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingProfileData> response = Response.FromValue(BillingProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingProfilesRestClient.CreateGetRequest(Id.Name, billingProfileName, context);
+                using HttpMessage message = _billingProfilesRestClient.CreateGetRequest(Id.Name, billingProfileName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingProfileData> response = Response.FromValue(BillingProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingProfilesRestClient.CreateGetRequest(Id.Name, billingProfileName, context);
+                using HttpMessage message = _billingProfilesRestClient.CreateGetRequest(Id.Name, billingProfileName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BillingProfileData> response = default;
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingProfilesRestClient.CreateGetRequest(Id.Name, billingProfileName, context);
+                using HttpMessage message = _billingProfilesRestClient.CreateGetRequest(Id.Name, billingProfileName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BillingProfileData> response = default;
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingProfilesRestClient.CreateGetRequest(Id.Name, billingProfileName, context);
+                using HttpMessage message = _billingProfilesRestClient.CreateGetRequest(Id.Name, billingProfileName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BillingProfileData> response = default;
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingProfilesRestClient.CreateGetRequest(Id.Name, billingProfileName, context);
+                using HttpMessage message = _billingProfilesRestClient.CreateGetRequest(Id.Name, billingProfileName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BillingProfileData> response = default;

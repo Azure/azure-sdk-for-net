@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _licensesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _licensesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AvsLicenseData> response = Response.FromValue(AvsLicenseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _licensesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _licensesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AvsLicenseData> response = Response.FromValue(AvsLicenseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _licensesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _licensesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation operation = new AvsArmOperation(_licensesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _licensesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _licensesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation operation = new AvsArmOperation(_licensesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _licensesRestClient.CreateGetPropertiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _licensesRestClient.CreateGetPropertiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AvsLicenseProperties> response = Response.FromValue(AvsLicenseProperties.FromResponse(result), result);
                 if (response.Value == null)
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _licensesRestClient.CreateGetPropertiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _licensesRestClient.CreateGetPropertiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AvsLicenseProperties> response = Response.FromValue(AvsLicenseProperties.FromResponse(result), result);
                 if (response.Value == null)
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _licensesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AvsLicenseData.ToRequestContent(data), context);
+                using HttpMessage message = _licensesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AvsLicenseData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation<AvsLicenseResource> operation = new AvsArmOperation<AvsLicenseResource>(
                     new AvsLicenseResourceOperationSource(Client),
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _licensesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AvsLicenseData.ToRequestContent(data), context);
+                using HttpMessage message = _licensesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AvsLicenseData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation<AvsLicenseResource> operation = new AvsArmOperation<AvsLicenseResource>(
                     new AvsLicenseResourceOperationSource(Client),

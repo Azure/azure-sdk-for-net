@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dnsPrivateZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _dnsPrivateZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OracleDnsPrivateZoneData> response = Response.FromValue(OracleDnsPrivateZoneData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dnsPrivateZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _dnsPrivateZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OracleDnsPrivateZoneData> response = Response.FromValue(OracleDnsPrivateZoneData.FromResponse(result), result);
                 if (response.Value == null)

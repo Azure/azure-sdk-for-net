@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.BotService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _botsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, BotData.ToRequestContent(data), context);
+                using HttpMessage message = _botsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, BotData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BotData> response = Response.FromValue(BotData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.BotService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _botsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, BotData.ToRequestContent(data), context);
+                using HttpMessage message = _botsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, BotData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BotData> response = Response.FromValue(BotData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.BotService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _botsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, context);
+                using HttpMessage message = _botsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BotData> response = Response.FromValue(BotData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.BotService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _botsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, context);
+                using HttpMessage message = _botsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BotData> response = Response.FromValue(BotData.FromResponse(result), result);
                 if (response.Value == null)
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.BotService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _botsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, context);
+                using HttpMessage message = _botsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BotData> response = default;
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.BotService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _botsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, context);
+                using HttpMessage message = _botsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BotData> response = default;
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.BotService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _botsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, context);
+                using HttpMessage message = _botsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BotData> response = default;
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.BotService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _botsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, context);
+                using HttpMessage message = _botsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BotData> response = default;

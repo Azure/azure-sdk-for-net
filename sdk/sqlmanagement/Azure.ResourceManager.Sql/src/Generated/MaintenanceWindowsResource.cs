@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceWindowsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowName, MaintenanceWindowsData.ToRequestContent(data), context);
+                using HttpMessage message = _maintenanceWindowsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowName, MaintenanceWindowsData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceWindowsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowName, MaintenanceWindowsData.ToRequestContent(data), context);
+                using HttpMessage message = _maintenanceWindowsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowName, MaintenanceWindowsData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceWindowsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowName, context);
+                using HttpMessage message = _maintenanceWindowsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MaintenanceWindowsData> response = Response.FromValue(MaintenanceWindowsData.FromResponse(result), result);
                 if (response.Value == null)
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceWindowsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowName, context);
+                using HttpMessage message = _maintenanceWindowsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MaintenanceWindowsData> response = Response.FromValue(MaintenanceWindowsData.FromResponse(result), result);
                 if (response.Value == null)

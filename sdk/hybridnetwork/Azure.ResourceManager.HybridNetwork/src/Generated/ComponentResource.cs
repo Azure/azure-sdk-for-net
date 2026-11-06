@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _componentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _componentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ComponentData> response = Response.FromValue(ComponentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _componentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _componentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ComponentData> response = Response.FromValue(ComponentData.FromResponse(result), result);
                 if (response.Value == null)

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _identityBindingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, identityBindingName, ManagedClusterIdentityBindingData.ToRequestContent(data), context);
+                using HttpMessage message = _identityBindingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, identityBindingName, ManagedClusterIdentityBindingData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceArmOperation<ManagedClusterIdentityBindingResource> operation = new ContainerServiceArmOperation<ManagedClusterIdentityBindingResource>(
                     new ManagedClusterIdentityBindingResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _identityBindingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, identityBindingName, ManagedClusterIdentityBindingData.ToRequestContent(data), context);
+                using HttpMessage message = _identityBindingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, identityBindingName, ManagedClusterIdentityBindingData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceArmOperation<ManagedClusterIdentityBindingResource> operation = new ContainerServiceArmOperation<ManagedClusterIdentityBindingResource>(
                     new ManagedClusterIdentityBindingResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _identityBindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, identityBindingName, context);
+                using HttpMessage message = _identityBindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, identityBindingName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ManagedClusterIdentityBindingData> response = Response.FromValue(ManagedClusterIdentityBindingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _identityBindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, identityBindingName, context);
+                using HttpMessage message = _identityBindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, identityBindingName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ManagedClusterIdentityBindingData> response = Response.FromValue(ManagedClusterIdentityBindingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _identityBindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, identityBindingName, context);
+                using HttpMessage message = _identityBindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, identityBindingName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ManagedClusterIdentityBindingData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _identityBindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, identityBindingName, context);
+                using HttpMessage message = _identityBindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, identityBindingName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ManagedClusterIdentityBindingData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _identityBindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, identityBindingName, context);
+                using HttpMessage message = _identityBindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, identityBindingName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ManagedClusterIdentityBindingData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _identityBindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, identityBindingName, context);
+                using HttpMessage message = _identityBindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, identityBindingName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ManagedClusterIdentityBindingData> response = default;

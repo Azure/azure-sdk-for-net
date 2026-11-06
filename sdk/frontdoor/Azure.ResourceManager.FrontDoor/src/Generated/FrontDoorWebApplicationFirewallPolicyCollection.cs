@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.FrontDoor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policiesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, policyName, FrontDoorWebApplicationFirewallPolicyData.ToRequestContent(data), context);
+                using HttpMessage message = _policiesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, policyName, FrontDoorWebApplicationFirewallPolicyData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FrontDoorArmOperation<FrontDoorWebApplicationFirewallPolicyResource> operation = new FrontDoorArmOperation<FrontDoorWebApplicationFirewallPolicyResource>(
                     new FrontDoorWebApplicationFirewallPolicyResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.FrontDoor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policiesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, policyName, FrontDoorWebApplicationFirewallPolicyData.ToRequestContent(data), context);
+                using HttpMessage message = _policiesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, policyName, FrontDoorWebApplicationFirewallPolicyData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FrontDoorArmOperation<FrontDoorWebApplicationFirewallPolicyResource> operation = new FrontDoorArmOperation<FrontDoorWebApplicationFirewallPolicyResource>(
                     new FrontDoorWebApplicationFirewallPolicyResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.FrontDoor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, policyName, context);
+                using HttpMessage message = _policiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, policyName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FrontDoorWebApplicationFirewallPolicyData> response = Response.FromValue(FrontDoorWebApplicationFirewallPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.FrontDoor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, policyName, context);
+                using HttpMessage message = _policiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, policyName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FrontDoorWebApplicationFirewallPolicyData> response = Response.FromValue(FrontDoorWebApplicationFirewallPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.FrontDoor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, policyName, context);
+                using HttpMessage message = _policiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, policyName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<FrontDoorWebApplicationFirewallPolicyData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.FrontDoor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, policyName, context);
+                using HttpMessage message = _policiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, policyName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<FrontDoorWebApplicationFirewallPolicyData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.FrontDoor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, policyName, context);
+                using HttpMessage message = _policiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, policyName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<FrontDoorWebApplicationFirewallPolicyData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.FrontDoor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, policyName, context);
+                using HttpMessage message = _policiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, policyName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<FrontDoorWebApplicationFirewallPolicyData> response = default;

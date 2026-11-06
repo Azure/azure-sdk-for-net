@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DurableTask
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schedulersRestClient.CreateGetPrivateLinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
+                using HttpMessage message = _schedulersRestClient.CreateGetPrivateLinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DurableTaskSchedulerPrivateLinkResourceData> response = Response.FromValue(DurableTaskSchedulerPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DurableTask
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schedulersRestClient.CreateGetPrivateLinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
+                using HttpMessage message = _schedulersRestClient.CreateGetPrivateLinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DurableTaskSchedulerPrivateLinkResourceData> response = Response.FromValue(DurableTaskSchedulerPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DurableTask
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schedulersRestClient.CreateGetPrivateLinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
+                using HttpMessage message = _schedulersRestClient.CreateGetPrivateLinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DurableTaskSchedulerPrivateLinkResourceData> response = default;
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.DurableTask
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schedulersRestClient.CreateGetPrivateLinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
+                using HttpMessage message = _schedulersRestClient.CreateGetPrivateLinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DurableTaskSchedulerPrivateLinkResourceData> response = default;
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.DurableTask
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schedulersRestClient.CreateGetPrivateLinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
+                using HttpMessage message = _schedulersRestClient.CreateGetPrivateLinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DurableTaskSchedulerPrivateLinkResourceData> response = default;
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.DurableTask
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schedulersRestClient.CreateGetPrivateLinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
+                using HttpMessage message = _schedulersRestClient.CreateGetPrivateLinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DurableTaskSchedulerPrivateLinkResourceData> response = default;

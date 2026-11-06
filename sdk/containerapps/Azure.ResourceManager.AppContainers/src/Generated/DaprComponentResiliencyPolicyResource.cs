@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _daprComponentResiliencyPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _daprComponentResiliencyPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DaprComponentResiliencyPolicyData> response = Response.FromValue(DaprComponentResiliencyPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _daprComponentResiliencyPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _daprComponentResiliencyPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DaprComponentResiliencyPolicyData> response = Response.FromValue(DaprComponentResiliencyPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _daprComponentResiliencyPoliciesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _daprComponentResiliencyPoliciesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _daprComponentResiliencyPoliciesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _daprComponentResiliencyPoliciesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _daprComponentResiliencyPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, DaprComponentResiliencyPolicyData.ToRequestContent(data), context);
+                using HttpMessage message = _daprComponentResiliencyPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, DaprComponentResiliencyPolicyData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DaprComponentResiliencyPolicyData> response = Response.FromValue(DaprComponentResiliencyPolicyData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _daprComponentResiliencyPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, DaprComponentResiliencyPolicyData.ToRequestContent(data), context);
+                using HttpMessage message = _daprComponentResiliencyPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, DaprComponentResiliencyPolicyData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DaprComponentResiliencyPolicyData> response = Response.FromValue(DaprComponentResiliencyPolicyData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

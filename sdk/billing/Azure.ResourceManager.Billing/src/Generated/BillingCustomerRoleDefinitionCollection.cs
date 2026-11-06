@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRoleDefinitionRestClient.CreateGetByCustomerRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, roleDefinitionName, context);
+                using HttpMessage message = _billingRoleDefinitionRestClient.CreateGetByCustomerRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, roleDefinitionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingRoleDefinitionData> response = Response.FromValue(BillingRoleDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRoleDefinitionRestClient.CreateGetByCustomerRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, roleDefinitionName, context);
+                using HttpMessage message = _billingRoleDefinitionRestClient.CreateGetByCustomerRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, roleDefinitionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingRoleDefinitionData> response = Response.FromValue(BillingRoleDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRoleDefinitionRestClient.CreateGetByCustomerRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, roleDefinitionName, context);
+                using HttpMessage message = _billingRoleDefinitionRestClient.CreateGetByCustomerRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, roleDefinitionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BillingRoleDefinitionData> response = default;
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRoleDefinitionRestClient.CreateGetByCustomerRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, roleDefinitionName, context);
+                using HttpMessage message = _billingRoleDefinitionRestClient.CreateGetByCustomerRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, roleDefinitionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BillingRoleDefinitionData> response = default;
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRoleDefinitionRestClient.CreateGetByCustomerRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, roleDefinitionName, context);
+                using HttpMessage message = _billingRoleDefinitionRestClient.CreateGetByCustomerRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, roleDefinitionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BillingRoleDefinitionData> response = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRoleDefinitionRestClient.CreateGetByCustomerRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, roleDefinitionName, context);
+                using HttpMessage message = _billingRoleDefinitionRestClient.CreateGetByCustomerRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, roleDefinitionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BillingRoleDefinitionData> response = default;

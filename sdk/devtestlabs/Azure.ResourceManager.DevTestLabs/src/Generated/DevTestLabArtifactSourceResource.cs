@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _artifactSourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, context);
+                using HttpMessage message = _artifactSourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevTestLabArtifactSourceData> response = Response.FromValue(DevTestLabArtifactSourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _artifactSourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, context);
+                using HttpMessage message = _artifactSourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevTestLabArtifactSourceData> response = Response.FromValue(DevTestLabArtifactSourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _artifactSourcesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabArtifactSourcePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _artifactSourcesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabArtifactSourcePatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevTestLabArtifactSourceData> response = Response.FromValue(DevTestLabArtifactSourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _artifactSourcesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabArtifactSourcePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _artifactSourcesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabArtifactSourcePatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevTestLabArtifactSourceData> response = Response.FromValue(DevTestLabArtifactSourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _artifactSourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _artifactSourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _artifactSourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _artifactSourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _artifactSourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
+                    using HttpMessage message = _artifactSourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DevTestLabArtifactSourceData> response = Response.FromValue(DevTestLabArtifactSourceData.FromResponse(result), result);
                     return Response.FromValue(new DevTestLabArtifactSourceResource(Client, response.Value), response.GetRawResponse());
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _artifactSourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
+                    using HttpMessage message = _artifactSourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DevTestLabArtifactSourceData> response = Response.FromValue(DevTestLabArtifactSourceData.FromResponse(result), result);
                     return Response.FromValue(new DevTestLabArtifactSourceResource(Client, response.Value), response.GetRawResponse());
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _artifactSourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
+                    using HttpMessage message = _artifactSourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DevTestLabArtifactSourceData> response = Response.FromValue(DevTestLabArtifactSourceData.FromResponse(result), result);
                     return Response.FromValue(new DevTestLabArtifactSourceResource(Client, response.Value), response.GetRawResponse());
@@ -558,7 +558,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _artifactSourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
+                    using HttpMessage message = _artifactSourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DevTestLabArtifactSourceData> response = Response.FromValue(DevTestLabArtifactSourceData.FromResponse(result), result);
                     return Response.FromValue(new DevTestLabArtifactSourceResource(Client, response.Value), response.GetRawResponse());
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _artifactSourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
+                    using HttpMessage message = _artifactSourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DevTestLabArtifactSourceData> response = Response.FromValue(DevTestLabArtifactSourceData.FromResponse(result), result);
                     return Response.FromValue(new DevTestLabArtifactSourceResource(Client, response.Value), response.GetRawResponse());
@@ -646,7 +646,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _artifactSourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
+                    using HttpMessage message = _artifactSourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DevTestLabArtifactSourceData> response = Response.FromValue(DevTestLabArtifactSourceData.FromResponse(result), result);
                     return Response.FromValue(new DevTestLabArtifactSourceResource(Client, response.Value), response.GetRawResponse());

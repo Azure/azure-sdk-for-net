@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceEnvironmentData> response = Response.FromValue(AppServiceEnvironmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceEnvironmentData> response = Response.FromValue(AppServiceEnvironmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AppServiceEnvironmentPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AppServiceEnvironmentPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceEnvironmentData> response = Response.FromValue(AppServiceEnvironmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AppServiceEnvironmentPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AppServiceEnvironmentPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceEnvironmentData> response = Response.FromValue(AppServiceEnvironmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, forceDelete, context);
+                using HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, forceDelete, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppServiceArmOperation operation = new AppServiceArmOperation(_appServiceEnvironmentResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, forceDelete, context);
+                using HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, forceDelete, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppServiceArmOperation operation = new AppServiceArmOperation(_appServiceEnvironmentResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceEnvironmentRecommendationsRestClient.CreateDisableAllForHostingEnvironmentRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentName, context);
+                using HttpMessage message = _appServiceEnvironmentRecommendationsRestClient.CreateDisableAllForHostingEnvironmentRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceEnvironmentRecommendationsRestClient.CreateDisableAllForHostingEnvironmentRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentName, context);
+                using HttpMessage message = _appServiceEnvironmentRecommendationsRestClient.CreateDisableAllForHostingEnvironmentRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -697,7 +697,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceEnvironmentRecommendationsRestClient.CreateResetAllFiltersForHostingEnvironmentRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentName, context);
+                using HttpMessage message = _appServiceEnvironmentRecommendationsRestClient.CreateResetAllFiltersForHostingEnvironmentRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -745,7 +745,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceEnvironmentRecommendationsRestClient.CreateResetAllFiltersForHostingEnvironmentRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentName, context);
+                using HttpMessage message = _appServiceEnvironmentRecommendationsRestClient.CreateResetAllFiltersForHostingEnvironmentRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -790,7 +790,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateChangeVnetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AppServiceVirtualNetworkProfile.ToRequestContent(vnetInfo), context);
+                using HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateChangeVnetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AppServiceVirtualNetworkProfile.ToRequestContent(vnetInfo), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppServiceArmOperation<WebAppListResult> operation = new AppServiceArmOperation<WebAppListResult>(
                     new WebAppListResultOperationSource(),
@@ -846,7 +846,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateChangeVnetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AppServiceVirtualNetworkProfile.ToRequestContent(vnetInfo), context);
+                using HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateChangeVnetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AppServiceVirtualNetworkProfile.ToRequestContent(vnetInfo), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppServiceArmOperation<WebAppListResult> operation = new AppServiceArmOperation<WebAppListResult>(
                     new WebAppListResultOperationSource(),
@@ -905,7 +905,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateGetDiagnosticsItemRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diagnosticsName, context);
+                using HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateGetDiagnosticsItemRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diagnosticsName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HostingEnvironmentDiagnostics> response = Response.FromValue(HostingEnvironmentDiagnostics.FromResponse(result), result);
                 if (response.Value == null)
@@ -958,7 +958,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateGetDiagnosticsItemRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diagnosticsName, context);
+                using HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateGetDiagnosticsItemRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diagnosticsName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HostingEnvironmentDiagnostics> response = Response.FromValue(HostingEnvironmentDiagnostics.FromResponse(result), result);
                 if (response.Value == null)
@@ -1542,7 +1542,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateRebootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateRebootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -1585,7 +1585,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateRebootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateRebootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -1629,7 +1629,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateResumeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateResumeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppServiceArmOperation<WebAppListResult> operation = new AppServiceArmOperation<WebAppListResult>(
                     new WebAppListResultOperationSource(),
@@ -1684,7 +1684,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateResumeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateResumeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppServiceArmOperation<WebAppListResult> operation = new AppServiceArmOperation<WebAppListResult>(
                     new WebAppListResultOperationSource(),
@@ -1739,7 +1739,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateSuspendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateSuspendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppServiceArmOperation<WebAppListResult> operation = new AppServiceArmOperation<WebAppListResult>(
                     new WebAppListResultOperationSource(),
@@ -1794,7 +1794,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateSuspendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateSuspendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppServiceArmOperation<WebAppListResult> operation = new AppServiceArmOperation<WebAppListResult>(
                     new WebAppListResultOperationSource(),
@@ -1848,7 +1848,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateTestUpgradeAvailableNotificationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateTestUpgradeAvailableNotificationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -1891,7 +1891,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateTestUpgradeAvailableNotificationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateTestUpgradeAvailableNotificationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -1935,7 +1935,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateUpgradeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateUpgradeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppServiceArmOperation operation = new AppServiceArmOperation(_appServiceEnvironmentResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1984,7 +1984,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateUpgradeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _appServiceEnvironmentResourcesRestClient.CreateUpgradeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppServiceArmOperation operation = new AppServiceArmOperation(_appServiceEnvironmentResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

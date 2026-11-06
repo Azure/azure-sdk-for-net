@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ApiCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apisRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiName, ApiCenterApiData.ToRequestContent(data), context);
+                using HttpMessage message = _apisRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiName, ApiCenterApiData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiCenterApiData> response = Response.FromValue(ApiCenterApiData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ApiCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apisRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiName, ApiCenterApiData.ToRequestContent(data), context);
+                using HttpMessage message = _apisRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiName, ApiCenterApiData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiCenterApiData> response = Response.FromValue(ApiCenterApiData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ApiCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apisRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiName, context);
+                using HttpMessage message = _apisRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiCenterApiData> response = Response.FromValue(ApiCenterApiData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ApiCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apisRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiName, context);
+                using HttpMessage message = _apisRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiCenterApiData> response = Response.FromValue(ApiCenterApiData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.ApiCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apisRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiName, context);
+                using HttpMessage message = _apisRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiCenterApiData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.ApiCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apisRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiName, context);
+                using HttpMessage message = _apisRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiCenterApiData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.ApiCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apisRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiName, context);
+                using HttpMessage message = _apisRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiCenterApiData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.ApiCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apisRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiName, context);
+                using HttpMessage message = _apisRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiCenterApiData> response = default;

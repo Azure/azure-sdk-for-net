@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacePrivateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _workspacePrivateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WorkspacePrivateEndpointConnectionData> response = Response.FromValue(WorkspacePrivateEndpointConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacePrivateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _workspacePrivateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WorkspacePrivateEndpointConnectionData> response = Response.FromValue(WorkspacePrivateEndpointConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacePrivateEndpointConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _workspacePrivateEndpointConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DiscoveryArmOperation operation = new DiscoveryArmOperation(_workspacePrivateEndpointConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacePrivateEndpointConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _workspacePrivateEndpointConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DiscoveryArmOperation operation = new DiscoveryArmOperation(_workspacePrivateEndpointConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacePrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, WorkspacePrivateEndpointConnectionData.ToRequestContent(data), context);
+                using HttpMessage message = _workspacePrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, WorkspacePrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DiscoveryArmOperation<WorkspacePrivateEndpointConnectionResource> operation = new DiscoveryArmOperation<WorkspacePrivateEndpointConnectionResource>(
                     new WorkspacePrivateEndpointConnectionResourceOperationSource(Client),
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacePrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, WorkspacePrivateEndpointConnectionData.ToRequestContent(data), context);
+                using HttpMessage message = _workspacePrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, WorkspacePrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DiscoveryArmOperation<WorkspacePrivateEndpointConnectionResource> operation = new DiscoveryArmOperation<WorkspacePrivateEndpointConnectionResource>(
                     new WorkspacePrivateEndpointConnectionResourceOperationSource(Client),

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Batch
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _batchAccountRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, BatchAccountCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _batchAccountRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, BatchAccountCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BatchArmOperation<BatchAccountResource> operation = new BatchArmOperation<BatchAccountResource>(
                     new BatchAccountResourceOperationSource(Client),
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Batch
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _batchAccountRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, BatchAccountCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _batchAccountRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, BatchAccountCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BatchArmOperation<BatchAccountResource> operation = new BatchArmOperation<BatchAccountResource>(
                     new BatchAccountResourceOperationSource(Client),
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Batch
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _batchAccountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
+                using HttpMessage message = _batchAccountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BatchAccountData> response = Response.FromValue(BatchAccountData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Batch
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _batchAccountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
+                using HttpMessage message = _batchAccountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BatchAccountData> response = Response.FromValue(BatchAccountData.FromResponse(result), result);
                 if (response.Value == null)
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Batch
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _batchAccountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
+                using HttpMessage message = _batchAccountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BatchAccountData> response = default;
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.Batch
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _batchAccountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
+                using HttpMessage message = _batchAccountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BatchAccountData> response = default;
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.Batch
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _batchAccountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
+                using HttpMessage message = _batchAccountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BatchAccountData> response = default;
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.Batch
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _batchAccountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
+                using HttpMessage message = _batchAccountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BatchAccountData> response = default;

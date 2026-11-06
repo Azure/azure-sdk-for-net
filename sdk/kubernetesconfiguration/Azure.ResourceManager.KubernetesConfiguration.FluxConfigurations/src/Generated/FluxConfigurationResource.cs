@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FluxConfigurationData> response = Response.FromValue(FluxConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FluxConfigurationData> response = Response.FromValue(FluxConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, FluxConfigurationPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, FluxConfigurationPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FluxConfigurationsArmOperation<FluxConfigurationResource> operation = new FluxConfigurationsArmOperation<FluxConfigurationResource>(
                     new FluxConfigurationResourceOperationSource(Client),
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, FluxConfigurationPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, FluxConfigurationPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FluxConfigurationsArmOperation<FluxConfigurationResource> operation = new FluxConfigurationsArmOperation<FluxConfigurationResource>(
                     new FluxConfigurationResourceOperationSource(Client),
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, forceDelete, context);
+                using HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, forceDelete, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FluxConfigurationsArmOperation operation = new FluxConfigurationsArmOperation(_fluxConfigurationInterfaceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, forceDelete, context);
+                using HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, forceDelete, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FluxConfigurationsArmOperation operation = new FluxConfigurationsArmOperation(_fluxConfigurationInterfaceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)

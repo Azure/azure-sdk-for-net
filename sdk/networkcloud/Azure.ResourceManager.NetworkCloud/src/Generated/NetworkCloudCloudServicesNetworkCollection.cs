@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudServicesNetworksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudServicesNetworkName, NetworkCloudCloudServicesNetworkData.ToRequestContent(data), matchConditions, context);
+                using HttpMessage message = _cloudServicesNetworksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudServicesNetworkName, NetworkCloudCloudServicesNetworkData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkCloudArmOperation<NetworkCloudCloudServicesNetworkResource> operation = new NetworkCloudArmOperation<NetworkCloudCloudServicesNetworkResource>(
                     new NetworkCloudCloudServicesNetworkResourceOperationSource(Client),
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudServicesNetworksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudServicesNetworkName, NetworkCloudCloudServicesNetworkData.ToRequestContent(data), matchConditions, context);
+                using HttpMessage message = _cloudServicesNetworksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudServicesNetworkName, NetworkCloudCloudServicesNetworkData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkCloudArmOperation<NetworkCloudCloudServicesNetworkResource> operation = new NetworkCloudArmOperation<NetworkCloudCloudServicesNetworkResource>(
                     new NetworkCloudCloudServicesNetworkResourceOperationSource(Client),
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudServicesNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudServicesNetworkName, context);
+                using HttpMessage message = _cloudServicesNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudServicesNetworkName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkCloudCloudServicesNetworkData> response = Response.FromValue(NetworkCloudCloudServicesNetworkData.FromResponse(result), result);
                 if (response.Value == null)
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudServicesNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudServicesNetworkName, context);
+                using HttpMessage message = _cloudServicesNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudServicesNetworkName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkCloudCloudServicesNetworkData> response = Response.FromValue(NetworkCloudCloudServicesNetworkData.FromResponse(result), result);
                 if (response.Value == null)
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudServicesNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudServicesNetworkName, context);
+                using HttpMessage message = _cloudServicesNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudServicesNetworkName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkCloudCloudServicesNetworkData> response = default;
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudServicesNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudServicesNetworkName, context);
+                using HttpMessage message = _cloudServicesNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudServicesNetworkName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkCloudCloudServicesNetworkData> response = default;
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudServicesNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudServicesNetworkName, context);
+                using HttpMessage message = _cloudServicesNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudServicesNetworkName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkCloudCloudServicesNetworkData> response = default;
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudServicesNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudServicesNetworkName, context);
+                using HttpMessage message = _cloudServicesNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudServicesNetworkName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkCloudCloudServicesNetworkData> response = default;

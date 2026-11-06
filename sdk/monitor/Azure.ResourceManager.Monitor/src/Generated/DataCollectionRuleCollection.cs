@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataCollectionRulesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dataCollectionRuleName, DataCollectionRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _dataCollectionRulesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dataCollectionRuleName, DataCollectionRuleData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataCollectionRuleData> response = Response.FromValue(DataCollectionRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataCollectionRulesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dataCollectionRuleName, DataCollectionRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _dataCollectionRulesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dataCollectionRuleName, DataCollectionRuleData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataCollectionRuleData> response = Response.FromValue(DataCollectionRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataCollectionRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dataCollectionRuleName, context);
+                using HttpMessage message = _dataCollectionRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dataCollectionRuleName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataCollectionRuleData> response = Response.FromValue(DataCollectionRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataCollectionRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dataCollectionRuleName, context);
+                using HttpMessage message = _dataCollectionRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dataCollectionRuleName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataCollectionRuleData> response = Response.FromValue(DataCollectionRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataCollectionRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dataCollectionRuleName, context);
+                using HttpMessage message = _dataCollectionRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dataCollectionRuleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DataCollectionRuleData> response = default;
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataCollectionRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dataCollectionRuleName, context);
+                using HttpMessage message = _dataCollectionRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dataCollectionRuleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DataCollectionRuleData> response = default;
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataCollectionRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dataCollectionRuleName, context);
+                using HttpMessage message = _dataCollectionRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dataCollectionRuleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DataCollectionRuleData> response = default;
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataCollectionRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dataCollectionRuleName, context);
+                using HttpMessage message = _dataCollectionRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dataCollectionRuleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DataCollectionRuleData> response = default;

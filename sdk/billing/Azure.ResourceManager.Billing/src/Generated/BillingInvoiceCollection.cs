@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _invoicesRestClient.CreateGetByBillingAccountRequest(Id.Name, invoiceName, context);
+                using HttpMessage message = _invoicesRestClient.CreateGetByBillingAccountRequest(Id.Name, invoiceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingInvoiceData> response = Response.FromValue(BillingInvoiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _invoicesRestClient.CreateGetByBillingAccountRequest(Id.Name, invoiceName, context);
+                using HttpMessage message = _invoicesRestClient.CreateGetByBillingAccountRequest(Id.Name, invoiceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingInvoiceData> response = Response.FromValue(BillingInvoiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _invoicesRestClient.CreateGetByBillingAccountRequest(Id.Name, invoiceName, context);
+                using HttpMessage message = _invoicesRestClient.CreateGetByBillingAccountRequest(Id.Name, invoiceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BillingInvoiceData> response = default;
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _invoicesRestClient.CreateGetByBillingAccountRequest(Id.Name, invoiceName, context);
+                using HttpMessage message = _invoicesRestClient.CreateGetByBillingAccountRequest(Id.Name, invoiceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BillingInvoiceData> response = default;
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _invoicesRestClient.CreateGetByBillingAccountRequest(Id.Name, invoiceName, context);
+                using HttpMessage message = _invoicesRestClient.CreateGetByBillingAccountRequest(Id.Name, invoiceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BillingInvoiceData> response = default;
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _invoicesRestClient.CreateGetByBillingAccountRequest(Id.Name, invoiceName, context);
+                using HttpMessage message = _invoicesRestClient.CreateGetByBillingAccountRequest(Id.Name, invoiceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BillingInvoiceData> response = default;

@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sid, ApiManagementSubscriptionCreateOrUpdateContent.ToRequestContent(content), notify, ifMatch, appType?.ToString(), context);
+                using HttpMessage message = _subscriptionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sid, ApiManagementSubscriptionCreateOrUpdateContent.ToRequestContent(content), notify, ifMatch, appType?.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SubscriptionContractData> response = Response.FromValue(SubscriptionContractData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sid, ApiManagementSubscriptionCreateOrUpdateContent.ToRequestContent(content), notify, ifMatch, appType?.ToString(), context);
+                using HttpMessage message = _subscriptionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sid, ApiManagementSubscriptionCreateOrUpdateContent.ToRequestContent(content), notify, ifMatch, appType?.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SubscriptionContractData> response = Response.FromValue(SubscriptionContractData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sid, context);
+                using HttpMessage message = _subscriptionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sid, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SubscriptionContractData> response = Response.FromValue(SubscriptionContractData.FromResponse(result), result);
                 if (response.Value == null)
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sid, context);
+                using HttpMessage message = _subscriptionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sid, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SubscriptionContractData> response = Response.FromValue(SubscriptionContractData.FromResponse(result), result);
                 if (response.Value == null)
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sid, context);
+                using HttpMessage message = _subscriptionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sid, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SubscriptionContractData> response = default;
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sid, context);
+                using HttpMessage message = _subscriptionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sid, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SubscriptionContractData> response = default;
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sid, context);
+                using HttpMessage message = _subscriptionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sid, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SubscriptionContractData> response = default;
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sid, context);
+                using HttpMessage message = _subscriptionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sid, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SubscriptionContractData> response = default;

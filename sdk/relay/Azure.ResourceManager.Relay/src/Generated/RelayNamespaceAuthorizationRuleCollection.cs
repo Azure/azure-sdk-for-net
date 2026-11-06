@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, RelayAuthorizationRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _namespacesRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, RelayAuthorizationRuleData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RelayAuthorizationRuleData> response = Response.FromValue(RelayAuthorizationRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, RelayAuthorizationRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _namespacesRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, RelayAuthorizationRuleData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RelayAuthorizationRuleData> response = Response.FromValue(RelayAuthorizationRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, context);
+                using HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RelayAuthorizationRuleData> response = Response.FromValue(RelayAuthorizationRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, context);
+                using HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RelayAuthorizationRuleData> response = Response.FromValue(RelayAuthorizationRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, context);
+                using HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RelayAuthorizationRuleData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, context);
+                using HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RelayAuthorizationRuleData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, context);
+                using HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RelayAuthorizationRuleData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, context);
+                using HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationRuleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RelayAuthorizationRuleData> response = default;

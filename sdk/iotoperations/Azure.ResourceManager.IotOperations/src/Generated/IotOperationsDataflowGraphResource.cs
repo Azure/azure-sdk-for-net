@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.IotOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataflowGraphRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _dataflowGraphRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<IotOperationsDataflowGraphData> response = Response.FromValue(IotOperationsDataflowGraphData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.IotOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataflowGraphRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _dataflowGraphRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<IotOperationsDataflowGraphData> response = Response.FromValue(IotOperationsDataflowGraphData.FromResponse(result), result);
                 if (response.Value == null)
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.IotOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataflowGraphRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _dataflowGraphRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 IotOperationsArmOperation operation = new IotOperationsArmOperation(_dataflowGraphClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.IotOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataflowGraphRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _dataflowGraphRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 IotOperationsArmOperation operation = new IotOperationsArmOperation(_dataflowGraphClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.IotOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataflowGraphRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, IotOperationsDataflowGraphData.ToRequestContent(data), context);
+                using HttpMessage message = _dataflowGraphRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, IotOperationsDataflowGraphData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 IotOperationsArmOperation<IotOperationsDataflowGraphResource> operation = new IotOperationsArmOperation<IotOperationsDataflowGraphResource>(
                     new IotOperationsDataflowGraphResourceOperationSource(Client),
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.IotOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataflowGraphRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, IotOperationsDataflowGraphData.ToRequestContent(data), context);
+                using HttpMessage message = _dataflowGraphRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, IotOperationsDataflowGraphData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 IotOperationsArmOperation<IotOperationsDataflowGraphResource> operation = new IotOperationsArmOperation<IotOperationsDataflowGraphResource>(
                     new IotOperationsDataflowGraphResourceOperationSource(Client),

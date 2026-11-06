@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _orderItemResourcesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderItemName, EdgeOrderItemData.ToRequestContent(data), context);
+                using HttpMessage message = _orderItemResourcesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderItemName, EdgeOrderItemData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 EdgeOrderArmOperation<EdgeOrderItemResource> operation = new EdgeOrderArmOperation<EdgeOrderItemResource>(
                     new EdgeOrderItemResourceOperationSource(Client),
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _orderItemResourcesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderItemName, EdgeOrderItemData.ToRequestContent(data), context);
+                using HttpMessage message = _orderItemResourcesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderItemName, EdgeOrderItemData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 EdgeOrderArmOperation<EdgeOrderItemResource> operation = new EdgeOrderArmOperation<EdgeOrderItemResource>(
                     new EdgeOrderItemResourceOperationSource(Client),
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _orderItemResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderItemName, expand, context);
+                using HttpMessage message = _orderItemResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderItemName, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EdgeOrderItemData> response = Response.FromValue(EdgeOrderItemData.FromResponse(result), result);
                 if (response.Value == null)
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _orderItemResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderItemName, expand, context);
+                using HttpMessage message = _orderItemResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderItemName, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EdgeOrderItemData> response = Response.FromValue(EdgeOrderItemData.FromResponse(result), result);
                 if (response.Value == null)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _orderItemResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderItemName, expand, context);
+                using HttpMessage message = _orderItemResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderItemName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EdgeOrderItemData> response = default;
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _orderItemResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderItemName, expand, context);
+                using HttpMessage message = _orderItemResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderItemName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EdgeOrderItemData> response = default;
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _orderItemResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderItemName, expand, context);
+                using HttpMessage message = _orderItemResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderItemName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EdgeOrderItemData> response = default;
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _orderItemResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderItemName, expand, context);
+                using HttpMessage message = _orderItemResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderItemName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EdgeOrderItemData> response = default;

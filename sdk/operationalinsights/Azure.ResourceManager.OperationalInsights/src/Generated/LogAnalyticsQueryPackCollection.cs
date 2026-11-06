@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _queryPacksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, queryPackName, LogAnalyticsQueryPackData.ToRequestContent(data), context);
+                using HttpMessage message = _queryPacksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, queryPackName, LogAnalyticsQueryPackData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LogAnalyticsQueryPackData> response = Response.FromValue(LogAnalyticsQueryPackData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _queryPacksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, queryPackName, LogAnalyticsQueryPackData.ToRequestContent(data), context);
+                using HttpMessage message = _queryPacksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, queryPackName, LogAnalyticsQueryPackData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LogAnalyticsQueryPackData> response = Response.FromValue(LogAnalyticsQueryPackData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _queryPacksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, queryPackName, context);
+                using HttpMessage message = _queryPacksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, queryPackName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LogAnalyticsQueryPackData> response = Response.FromValue(LogAnalyticsQueryPackData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _queryPacksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, queryPackName, context);
+                using HttpMessage message = _queryPacksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, queryPackName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LogAnalyticsQueryPackData> response = Response.FromValue(LogAnalyticsQueryPackData.FromResponse(result), result);
                 if (response.Value == null)
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _queryPacksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, queryPackName, context);
+                using HttpMessage message = _queryPacksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, queryPackName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<LogAnalyticsQueryPackData> response = default;
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _queryPacksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, queryPackName, context);
+                using HttpMessage message = _queryPacksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, queryPackName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<LogAnalyticsQueryPackData> response = default;
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _queryPacksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, queryPackName, context);
+                using HttpMessage message = _queryPacksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, queryPackName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<LogAnalyticsQueryPackData> response = default;
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _queryPacksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, queryPackName, context);
+                using HttpMessage message = _queryPacksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, queryPackName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<LogAnalyticsQueryPackData> response = default;

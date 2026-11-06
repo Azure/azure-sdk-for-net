@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policiesRestClient.CreateGetByCustomerRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyName.ToString(), context);
+                using HttpMessage message = _policiesRestClient.CreateGetByCustomerRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyName.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingCustomerPolicyData> response = Response.FromValue(BillingCustomerPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policiesRestClient.CreateGetByCustomerRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyName.ToString(), context);
+                using HttpMessage message = _policiesRestClient.CreateGetByCustomerRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyName.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingCustomerPolicyData> response = Response.FromValue(BillingCustomerPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policiesRestClient.CreateGetByCustomerRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyName.ToString(), context);
+                using HttpMessage message = _policiesRestClient.CreateGetByCustomerRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyName.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BillingCustomerPolicyData> response = default;
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policiesRestClient.CreateGetByCustomerRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyName.ToString(), context);
+                using HttpMessage message = _policiesRestClient.CreateGetByCustomerRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyName.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BillingCustomerPolicyData> response = default;
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policiesRestClient.CreateGetByCustomerRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyName.ToString(), context);
+                using HttpMessage message = _policiesRestClient.CreateGetByCustomerRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyName.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BillingCustomerPolicyData> response = default;
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policiesRestClient.CreateGetByCustomerRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyName.ToString(), context);
+                using HttpMessage message = _policiesRestClient.CreateGetByCustomerRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyName.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BillingCustomerPolicyData> response = default;

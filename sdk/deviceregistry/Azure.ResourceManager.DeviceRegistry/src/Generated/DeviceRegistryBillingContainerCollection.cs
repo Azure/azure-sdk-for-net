@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), billingContainerName, context);
+                using HttpMessage message = _billingContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), billingContainerName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DeviceRegistryBillingContainerData> response = Response.FromValue(DeviceRegistryBillingContainerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), billingContainerName, context);
+                using HttpMessage message = _billingContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), billingContainerName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DeviceRegistryBillingContainerData> response = Response.FromValue(DeviceRegistryBillingContainerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), billingContainerName, context);
+                using HttpMessage message = _billingContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), billingContainerName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DeviceRegistryBillingContainerData> response = default;
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), billingContainerName, context);
+                using HttpMessage message = _billingContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), billingContainerName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DeviceRegistryBillingContainerData> response = default;
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), billingContainerName, context);
+                using HttpMessage message = _billingContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), billingContainerName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DeviceRegistryBillingContainerData> response = default;
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), billingContainerName, context);
+                using HttpMessage message = _billingContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), billingContainerName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DeviceRegistryBillingContainerData> response = default;

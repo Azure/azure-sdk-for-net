@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _secretSyncsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, secretSyncName, SecretSyncData.ToRequestContent(data), context);
+                using HttpMessage message = _secretSyncsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, secretSyncName, SecretSyncData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SecretsStoreExtensionArmOperation<SecretSyncResource> operation = new SecretsStoreExtensionArmOperation<SecretSyncResource>(
                     new SecretSyncResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _secretSyncsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, secretSyncName, SecretSyncData.ToRequestContent(data), context);
+                using HttpMessage message = _secretSyncsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, secretSyncName, SecretSyncData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SecretsStoreExtensionArmOperation<SecretSyncResource> operation = new SecretsStoreExtensionArmOperation<SecretSyncResource>(
                     new SecretSyncResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _secretSyncsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, secretSyncName, context);
+                using HttpMessage message = _secretSyncsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, secretSyncName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecretSyncData> response = Response.FromValue(SecretSyncData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _secretSyncsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, secretSyncName, context);
+                using HttpMessage message = _secretSyncsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, secretSyncName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecretSyncData> response = Response.FromValue(SecretSyncData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _secretSyncsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, secretSyncName, context);
+                using HttpMessage message = _secretSyncsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, secretSyncName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SecretSyncData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _secretSyncsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, secretSyncName, context);
+                using HttpMessage message = _secretSyncsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, secretSyncName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SecretSyncData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _secretSyncsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, secretSyncName, context);
+                using HttpMessage message = _secretSyncsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, secretSyncName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SecretSyncData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _secretSyncsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, secretSyncName, context);
+                using HttpMessage message = _secretSyncsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, secretSyncName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SecretSyncData> response = default;

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _meshMembershipsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, meshMembershipName, ManagedClusterMeshMembershipData.ToRequestContent(data), context);
+                using HttpMessage message = _meshMembershipsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, meshMembershipName, ManagedClusterMeshMembershipData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceArmOperation<ManagedClusterMeshMembershipResource> operation = new ContainerServiceArmOperation<ManagedClusterMeshMembershipResource>(
                     new ManagedClusterMeshMembershipResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _meshMembershipsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, meshMembershipName, ManagedClusterMeshMembershipData.ToRequestContent(data), context);
+                using HttpMessage message = _meshMembershipsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, meshMembershipName, ManagedClusterMeshMembershipData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceArmOperation<ManagedClusterMeshMembershipResource> operation = new ContainerServiceArmOperation<ManagedClusterMeshMembershipResource>(
                     new ManagedClusterMeshMembershipResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _meshMembershipsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, meshMembershipName, context);
+                using HttpMessage message = _meshMembershipsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, meshMembershipName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ManagedClusterMeshMembershipData> response = Response.FromValue(ManagedClusterMeshMembershipData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _meshMembershipsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, meshMembershipName, context);
+                using HttpMessage message = _meshMembershipsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, meshMembershipName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ManagedClusterMeshMembershipData> response = Response.FromValue(ManagedClusterMeshMembershipData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _meshMembershipsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, meshMembershipName, context);
+                using HttpMessage message = _meshMembershipsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, meshMembershipName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ManagedClusterMeshMembershipData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _meshMembershipsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, meshMembershipName, context);
+                using HttpMessage message = _meshMembershipsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, meshMembershipName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ManagedClusterMeshMembershipData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _meshMembershipsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, meshMembershipName, context);
+                using HttpMessage message = _meshMembershipsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, meshMembershipName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ManagedClusterMeshMembershipData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _meshMembershipsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, meshMembershipName, context);
+                using HttpMessage message = _meshMembershipsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, meshMembershipName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ManagedClusterMeshMembershipData> response = default;

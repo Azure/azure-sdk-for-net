@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _elasticSansRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _elasticSansRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ElasticSanData> response = Response.FromValue(ElasticSanData.FromResponse(result), result);
                 if (response.Value == null)
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _elasticSansRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _elasticSansRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ElasticSanData> response = Response.FromValue(ElasticSanData.FromResponse(result), result);
                 if (response.Value == null)
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _elasticSansRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ElasticSanPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _elasticSansRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ElasticSanPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ElasticSanArmOperation<ElasticSanResource> operation = new ElasticSanArmOperation<ElasticSanResource>(
                     new ElasticSanResourceOperationSource(Client),
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _elasticSansRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ElasticSanPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _elasticSansRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ElasticSanPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ElasticSanArmOperation<ElasticSanResource> operation = new ElasticSanArmOperation<ElasticSanResource>(
                     new ElasticSanResourceOperationSource(Client),
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _elasticSansRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _elasticSansRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ElasticSanArmOperation operation = new ElasticSanArmOperation(_elasticSansClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _elasticSansRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _elasticSansRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ElasticSanArmOperation operation = new ElasticSanArmOperation(_elasticSansClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.ElasticSan
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _elasticSansRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _elasticSansRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ElasticSanData> response = Response.FromValue(ElasticSanData.FromResponse(result), result);
                     return Response.FromValue(new ElasticSanResource(Client, response.Value), response.GetRawResponse());
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.ElasticSan
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _elasticSansRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _elasticSansRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ElasticSanData> response = Response.FromValue(ElasticSanData.FromResponse(result), result);
                     return Response.FromValue(new ElasticSanResource(Client, response.Value), response.GetRawResponse());
@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.ElasticSan
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _elasticSansRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _elasticSansRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ElasticSanData> response = Response.FromValue(ElasticSanData.FromResponse(result), result);
                     return Response.FromValue(new ElasticSanResource(Client, response.Value), response.GetRawResponse());
@@ -645,7 +645,7 @@ namespace Azure.ResourceManager.ElasticSan
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _elasticSansRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _elasticSansRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ElasticSanData> response = Response.FromValue(ElasticSanData.FromResponse(result), result);
                     return Response.FromValue(new ElasticSanResource(Client, response.Value), response.GetRawResponse());
@@ -687,7 +687,7 @@ namespace Azure.ResourceManager.ElasticSan
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _elasticSansRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _elasticSansRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ElasticSanData> response = Response.FromValue(ElasticSanData.FromResponse(result), result);
                     return Response.FromValue(new ElasticSanResource(Client, response.Value), response.GetRawResponse());
@@ -733,7 +733,7 @@ namespace Azure.ResourceManager.ElasticSan
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _elasticSansRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _elasticSansRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ElasticSanData> response = Response.FromValue(ElasticSanData.FromResponse(result), result);
                     return Response.FromValue(new ElasticSanResource(Client, response.Value), response.GetRawResponse());

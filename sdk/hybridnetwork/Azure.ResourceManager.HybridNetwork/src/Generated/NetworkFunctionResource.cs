@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFunctionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkFunctionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkFunctionData> response = Response.FromValue(NetworkFunctionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFunctionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkFunctionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkFunctionData> response = Response.FromValue(NetworkFunctionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFunctionsRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, TagsObject.ToRequestContent(tagsObject), context);
+                using HttpMessage message = _networkFunctionsRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, TagsObject.ToRequestContent(tagsObject), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkFunctionData> response = Response.FromValue(NetworkFunctionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFunctionsRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, TagsObject.ToRequestContent(tagsObject), context);
+                using HttpMessage message = _networkFunctionsRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, TagsObject.ToRequestContent(tagsObject), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkFunctionData> response = Response.FromValue(NetworkFunctionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFunctionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkFunctionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridNetworkArmOperation operation = new HybridNetworkArmOperation(_networkFunctionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFunctionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkFunctionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridNetworkArmOperation operation = new HybridNetworkArmOperation(_networkFunctionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFunctionsRestClient.CreateExecuteRequestRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ExecuteRequestContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkFunctionsRestClient.CreateExecuteRequestRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ExecuteRequestContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridNetworkArmOperation operation = new HybridNetworkArmOperation(_networkFunctionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFunctionsRestClient.CreateExecuteRequestRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ExecuteRequestContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkFunctionsRestClient.CreateExecuteRequestRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ExecuteRequestContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridNetworkArmOperation operation = new HybridNetworkArmOperation(_networkFunctionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.HybridNetwork
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _networkFunctionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _networkFunctionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NetworkFunctionData> response = Response.FromValue(NetworkFunctionData.FromResponse(result), result);
                     return Response.FromValue(new NetworkFunctionResource(Client, response.Value), response.GetRawResponse());
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.HybridNetwork
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _networkFunctionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _networkFunctionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NetworkFunctionData> response = Response.FromValue(NetworkFunctionData.FromResponse(result), result);
                     return Response.FromValue(new NetworkFunctionResource(Client, response.Value), response.GetRawResponse());
@@ -614,7 +614,7 @@ namespace Azure.ResourceManager.HybridNetwork
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _networkFunctionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _networkFunctionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NetworkFunctionData> response = Response.FromValue(NetworkFunctionData.FromResponse(result), result);
                     return Response.FromValue(new NetworkFunctionResource(Client, response.Value), response.GetRawResponse());
@@ -656,7 +656,7 @@ namespace Azure.ResourceManager.HybridNetwork
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _networkFunctionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _networkFunctionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NetworkFunctionData> response = Response.FromValue(NetworkFunctionData.FromResponse(result), result);
                     return Response.FromValue(new NetworkFunctionResource(Client, response.Value), response.GetRawResponse());
@@ -698,7 +698,7 @@ namespace Azure.ResourceManager.HybridNetwork
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _networkFunctionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _networkFunctionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NetworkFunctionData> response = Response.FromValue(NetworkFunctionData.FromResponse(result), result);
                     return Response.FromValue(new NetworkFunctionResource(Client, response.Value), response.GetRawResponse());
@@ -744,7 +744,7 @@ namespace Azure.ResourceManager.HybridNetwork
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _networkFunctionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _networkFunctionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NetworkFunctionData> response = Response.FromValue(NetworkFunctionData.FromResponse(result), result);
                     return Response.FromValue(new NetworkFunctionResource(Client, response.Value), response.GetRawResponse());

@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DurableTask
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _detectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorId, context);
+                using HttpMessage message = _detectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DurableTaskDetectorData> response = Response.FromValue(DurableTaskDetectorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DurableTask
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _detectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorId, context);
+                using HttpMessage message = _detectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DurableTaskDetectorData> response = Response.FromValue(DurableTaskDetectorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.DurableTask
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _detectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorId, context);
+                using HttpMessage message = _detectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DurableTaskDetectorData> response = default;
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.DurableTask
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _detectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorId, context);
+                using HttpMessage message = _detectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DurableTaskDetectorData> response = default;
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.DurableTask
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _detectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorId, context);
+                using HttpMessage message = _detectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DurableTaskDetectorData> response = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.DurableTask
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _detectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorId, context);
+                using HttpMessage message = _detectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DurableTaskDetectorData> response = default;

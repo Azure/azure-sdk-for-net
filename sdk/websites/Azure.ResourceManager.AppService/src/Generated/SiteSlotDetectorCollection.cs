@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _detectorResponseOperationGroupRestClient.CreateGetSiteDetectorResponseSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, detectorName, startTime, endTime, timeGrain, context);
+                using HttpMessage message = _detectorResponseOperationGroupRestClient.CreateGetSiteDetectorResponseSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, detectorName, startTime, endTime, timeGrain, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceDetectorData> response = Response.FromValue(AppServiceDetectorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _detectorResponseOperationGroupRestClient.CreateGetSiteDetectorResponseSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, detectorName, startTime, endTime, timeGrain, context);
+                using HttpMessage message = _detectorResponseOperationGroupRestClient.CreateGetSiteDetectorResponseSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, detectorName, startTime, endTime, timeGrain, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceDetectorData> response = Response.FromValue(AppServiceDetectorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _detectorResponseOperationGroupRestClient.CreateGetSiteDetectorResponseSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, detectorName, startTime, endTime, timeGrain, context);
+                using HttpMessage message = _detectorResponseOperationGroupRestClient.CreateGetSiteDetectorResponseSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, detectorName, startTime, endTime, timeGrain, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AppServiceDetectorData> response = default;
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _detectorResponseOperationGroupRestClient.CreateGetSiteDetectorResponseSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, detectorName, startTime, endTime, timeGrain, context);
+                using HttpMessage message = _detectorResponseOperationGroupRestClient.CreateGetSiteDetectorResponseSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, detectorName, startTime, endTime, timeGrain, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AppServiceDetectorData> response = default;
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _detectorResponseOperationGroupRestClient.CreateGetSiteDetectorResponseSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, detectorName, startTime, endTime, timeGrain, context);
+                using HttpMessage message = _detectorResponseOperationGroupRestClient.CreateGetSiteDetectorResponseSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, detectorName, startTime, endTime, timeGrain, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AppServiceDetectorData> response = default;
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _detectorResponseOperationGroupRestClient.CreateGetSiteDetectorResponseSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, detectorName, startTime, endTime, timeGrain, context);
+                using HttpMessage message = _detectorResponseOperationGroupRestClient.CreateGetSiteDetectorResponseSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, detectorName, startTime, endTime, timeGrain, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AppServiceDetectorData> response = default;

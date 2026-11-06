@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _savingsPlanOrderRestClient.CreateGetRequest(Id.Name, expand, context);
+                using HttpMessage message = _savingsPlanOrderRestClient.CreateGetRequest(Id.Name, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingBenefitsSavingsPlanOrderData> response = Response.FromValue(BillingBenefitsSavingsPlanOrderData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _savingsPlanOrderRestClient.CreateGetRequest(Id.Name, expand, context);
+                using HttpMessage message = _savingsPlanOrderRestClient.CreateGetRequest(Id.Name, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingBenefitsSavingsPlanOrderData> response = Response.FromValue(BillingBenefitsSavingsPlanOrderData.FromResponse(result), result);
                 if (response.Value == null)
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _savingsPlanOrderRestClient.CreateElevateRequest(Id.Name, context);
+                using HttpMessage message = _savingsPlanOrderRestClient.CreateElevateRequest(Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingBenefitsRoleAssignmentEntity> response = Response.FromValue(BillingBenefitsRoleAssignmentEntity.FromResponse(result), result);
                 if (response.Value == null)
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _savingsPlanOrderRestClient.CreateElevateRequest(Id.Name, context);
+                using HttpMessage message = _savingsPlanOrderRestClient.CreateElevateRequest(Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingBenefitsRoleAssignmentEntity> response = Response.FromValue(BillingBenefitsRoleAssignmentEntity.FromResponse(result), result);
                 if (response.Value == null)

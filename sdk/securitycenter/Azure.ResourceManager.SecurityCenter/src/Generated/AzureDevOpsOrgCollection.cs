@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureDevOpsOrgsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, orgName, AzureDevOpsOrgData.ToRequestContent(data), context);
+                using HttpMessage message = _azureDevOpsOrgsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, orgName, AzureDevOpsOrgData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SecurityCenterArmOperation<AzureDevOpsOrgResource> operation = new SecurityCenterArmOperation<AzureDevOpsOrgResource>(
                     new AzureDevOpsOrgResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureDevOpsOrgsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, orgName, AzureDevOpsOrgData.ToRequestContent(data), context);
+                using HttpMessage message = _azureDevOpsOrgsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, orgName, AzureDevOpsOrgData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SecurityCenterArmOperation<AzureDevOpsOrgResource> operation = new SecurityCenterArmOperation<AzureDevOpsOrgResource>(
                     new AzureDevOpsOrgResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureDevOpsOrgsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, orgName, context);
+                using HttpMessage message = _azureDevOpsOrgsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, orgName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AzureDevOpsOrgData> response = Response.FromValue(AzureDevOpsOrgData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureDevOpsOrgsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, orgName, context);
+                using HttpMessage message = _azureDevOpsOrgsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, orgName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AzureDevOpsOrgData> response = Response.FromValue(AzureDevOpsOrgData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureDevOpsOrgsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, orgName, context);
+                using HttpMessage message = _azureDevOpsOrgsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, orgName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AzureDevOpsOrgData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureDevOpsOrgsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, orgName, context);
+                using HttpMessage message = _azureDevOpsOrgsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, orgName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AzureDevOpsOrgData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureDevOpsOrgsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, orgName, context);
+                using HttpMessage message = _azureDevOpsOrgsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, orgName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AzureDevOpsOrgData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureDevOpsOrgsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, orgName, context);
+                using HttpMessage message = _azureDevOpsOrgsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, orgName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AzureDevOpsOrgData> response = default;

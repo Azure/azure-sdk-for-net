@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Reservations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationRestClient.CreateGetRequest(Guid.Parse(Id.Name), reservationId, expand, context);
+                using HttpMessage message = _reservationRestClient.CreateGetRequest(Guid.Parse(Id.Name), reservationId, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ReservationDetailData> response = Response.FromValue(ReservationDetailData.FromResponse(result), result);
                 if (response.Value == null)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Reservations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationRestClient.CreateGetRequest(Guid.Parse(Id.Name), reservationId, expand, context);
+                using HttpMessage message = _reservationRestClient.CreateGetRequest(Guid.Parse(Id.Name), reservationId, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ReservationDetailData> response = Response.FromValue(ReservationDetailData.FromResponse(result), result);
                 if (response.Value == null)
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Reservations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationRestClient.CreateGetRequest(Guid.Parse(Id.Name), reservationId, expand, context);
+                using HttpMessage message = _reservationRestClient.CreateGetRequest(Guid.Parse(Id.Name), reservationId, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ReservationDetailData> response = default;
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Reservations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationRestClient.CreateGetRequest(Guid.Parse(Id.Name), reservationId, expand, context);
+                using HttpMessage message = _reservationRestClient.CreateGetRequest(Guid.Parse(Id.Name), reservationId, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ReservationDetailData> response = default;
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Reservations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationRestClient.CreateGetRequest(Guid.Parse(Id.Name), reservationId, expand, context);
+                using HttpMessage message = _reservationRestClient.CreateGetRequest(Guid.Parse(Id.Name), reservationId, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ReservationDetailData> response = default;
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Reservations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationRestClient.CreateGetRequest(Guid.Parse(Id.Name), reservationId, expand, context);
+                using HttpMessage message = _reservationRestClient.CreateGetRequest(Guid.Parse(Id.Name), reservationId, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ReservationDetailData> response = default;

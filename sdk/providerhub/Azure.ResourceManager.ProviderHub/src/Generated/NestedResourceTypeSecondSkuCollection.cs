@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nestedResourceTypeSecondSkuRestClient.CreateCreateOrUpdateNestedResourceTypeSecondRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, sku, ResourceTypeSkuData.ToRequestContent(data), context);
+                using HttpMessage message = _nestedResourceTypeSecondSkuRestClient.CreateCreateOrUpdateNestedResourceTypeSecondRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, sku, ResourceTypeSkuData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceTypeSkuData> response = Response.FromValue(ResourceTypeSkuData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nestedResourceTypeSecondSkuRestClient.CreateCreateOrUpdateNestedResourceTypeSecondRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, sku, ResourceTypeSkuData.ToRequestContent(data), context);
+                using HttpMessage message = _nestedResourceTypeSecondSkuRestClient.CreateCreateOrUpdateNestedResourceTypeSecondRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, sku, ResourceTypeSkuData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceTypeSkuData> response = Response.FromValue(ResourceTypeSkuData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nestedResourceTypeSecondSkuRestClient.CreateGetNestedResourceTypeSecondRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, sku, context);
+                using HttpMessage message = _nestedResourceTypeSecondSkuRestClient.CreateGetNestedResourceTypeSecondRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, sku, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceTypeSkuData> response = Response.FromValue(ResourceTypeSkuData.FromResponse(result), result);
                 if (response.Value == null)
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nestedResourceTypeSecondSkuRestClient.CreateGetNestedResourceTypeSecondRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, sku, context);
+                using HttpMessage message = _nestedResourceTypeSecondSkuRestClient.CreateGetNestedResourceTypeSecondRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, sku, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceTypeSkuData> response = Response.FromValue(ResourceTypeSkuData.FromResponse(result), result);
                 if (response.Value == null)
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nestedResourceTypeSecondSkuRestClient.CreateGetNestedResourceTypeSecondRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, sku, context);
+                using HttpMessage message = _nestedResourceTypeSecondSkuRestClient.CreateGetNestedResourceTypeSecondRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, sku, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ResourceTypeSkuData> response = default;
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nestedResourceTypeSecondSkuRestClient.CreateGetNestedResourceTypeSecondRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, sku, context);
+                using HttpMessage message = _nestedResourceTypeSecondSkuRestClient.CreateGetNestedResourceTypeSecondRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, sku, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ResourceTypeSkuData> response = default;
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nestedResourceTypeSecondSkuRestClient.CreateGetNestedResourceTypeSecondRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, sku, context);
+                using HttpMessage message = _nestedResourceTypeSecondSkuRestClient.CreateGetNestedResourceTypeSecondRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, sku, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ResourceTypeSkuData> response = default;
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nestedResourceTypeSecondSkuRestClient.CreateGetNestedResourceTypeSecondRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, sku, context);
+                using HttpMessage message = _nestedResourceTypeSecondSkuRestClient.CreateGetNestedResourceTypeSecondRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, sku, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ResourceTypeSkuData> response = default;

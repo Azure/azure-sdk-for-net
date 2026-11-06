@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectorResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, connectorName, ConfluentConnectorData.ToRequestContent(data), context);
+                using HttpMessage message = _connectorResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, connectorName, ConfluentConnectorData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConfluentConnectorData> response = Response.FromValue(ConfluentConnectorData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectorResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, connectorName, ConfluentConnectorData.ToRequestContent(data), context);
+                using HttpMessage message = _connectorResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, connectorName, ConfluentConnectorData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConfluentConnectorData> response = Response.FromValue(ConfluentConnectorData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectorResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, connectorName, context);
+                using HttpMessage message = _connectorResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, connectorName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConfluentConnectorData> response = Response.FromValue(ConfluentConnectorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectorResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, connectorName, context);
+                using HttpMessage message = _connectorResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, connectorName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConfluentConnectorData> response = Response.FromValue(ConfluentConnectorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectorResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, connectorName, context);
+                using HttpMessage message = _connectorResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, connectorName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ConfluentConnectorData> response = default;
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectorResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, connectorName, context);
+                using HttpMessage message = _connectorResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, connectorName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ConfluentConnectorData> response = default;
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectorResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, connectorName, context);
+                using HttpMessage message = _connectorResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, connectorName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ConfluentConnectorData> response = default;
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectorResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, connectorName, context);
+                using HttpMessage message = _connectorResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, connectorName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ConfluentConnectorData> response = default;

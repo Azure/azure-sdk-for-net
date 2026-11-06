@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Kubernetes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectedClusterRestClient.CreateCreateOrReplaceRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, ConnectedClusterData.ToRequestContent(data), context);
+                using HttpMessage message = _connectedClusterRestClient.CreateCreateOrReplaceRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, ConnectedClusterData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 KubernetesArmOperation<ConnectedClusterResource> operation = new KubernetesArmOperation<ConnectedClusterResource>(
                     new ConnectedClusterResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Kubernetes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectedClusterRestClient.CreateCreateOrReplaceRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, ConnectedClusterData.ToRequestContent(data), context);
+                using HttpMessage message = _connectedClusterRestClient.CreateCreateOrReplaceRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, ConnectedClusterData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 KubernetesArmOperation<ConnectedClusterResource> operation = new KubernetesArmOperation<ConnectedClusterResource>(
                     new ConnectedClusterResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Kubernetes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectedClusterRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, context);
+                using HttpMessage message = _connectedClusterRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConnectedClusterData> response = Response.FromValue(ConnectedClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Kubernetes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectedClusterRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, context);
+                using HttpMessage message = _connectedClusterRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConnectedClusterData> response = Response.FromValue(ConnectedClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Kubernetes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectedClusterRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, context);
+                using HttpMessage message = _connectedClusterRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ConnectedClusterData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Kubernetes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectedClusterRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, context);
+                using HttpMessage message = _connectedClusterRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ConnectedClusterData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Kubernetes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectedClusterRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, context);
+                using HttpMessage message = _connectedClusterRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ConnectedClusterData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Kubernetes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectedClusterRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, context);
+                using HttpMessage message = _connectedClusterRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ConnectedClusterData> response = default;

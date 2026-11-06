@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PolicyAssignmentsRestClient.CreateGetByIdRequest(policyAssignmentId, context);
+                using HttpMessage message = PolicyAssignmentsRestClient.CreateGetByIdRequest(policyAssignmentId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PolicyAssignmentData> response = Response.FromValue(PolicyAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PolicyAssignmentsRestClient.CreateGetByIdRequest(policyAssignmentId, context);
+                using HttpMessage message = PolicyAssignmentsRestClient.CreateGetByIdRequest(policyAssignmentId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PolicyAssignmentData> response = Response.FromValue(PolicyAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PolicyAssignmentsRestClient.CreateCreateByIdRequest(policyAssignmentId, PolicyAssignmentData.ToRequestContent(data), context);
+                using HttpMessage message = PolicyAssignmentsRestClient.CreateCreateByIdRequest(policyAssignmentId, PolicyAssignmentData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PolicyAssignmentData> response = Response.FromValue(PolicyAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PolicyAssignmentsRestClient.CreateCreateByIdRequest(policyAssignmentId, PolicyAssignmentData.ToRequestContent(data), context);
+                using HttpMessage message = PolicyAssignmentsRestClient.CreateCreateByIdRequest(policyAssignmentId, PolicyAssignmentData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PolicyAssignmentData> response = Response.FromValue(PolicyAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PolicyAssignmentsRestClient.CreateUpdateByIdRequest(policyAssignmentId, PolicyAssignmentPatch.ToRequestContent(patch), context);
+                using HttpMessage message = PolicyAssignmentsRestClient.CreateUpdateByIdRequest(policyAssignmentId, PolicyAssignmentPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PolicyAssignmentData> response = Response.FromValue(PolicyAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PolicyAssignmentsRestClient.CreateUpdateByIdRequest(policyAssignmentId, PolicyAssignmentPatch.ToRequestContent(patch), context);
+                using HttpMessage message = PolicyAssignmentsRestClient.CreateUpdateByIdRequest(policyAssignmentId, PolicyAssignmentPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PolicyAssignmentData> response = Response.FromValue(PolicyAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PolicyAssignmentsRestClient.CreateDeleteByIdRequest(policyAssignmentId, context);
+                using HttpMessage message = PolicyAssignmentsRestClient.CreateDeleteByIdRequest(policyAssignmentId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PolicyAssignmentData> response = Response.FromValue(PolicyAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PolicyAssignmentsRestClient.CreateDeleteByIdRequest(policyAssignmentId, context);
+                using HttpMessage message = PolicyAssignmentsRestClient.CreateDeleteByIdRequest(policyAssignmentId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PolicyAssignmentData> response = Response.FromValue(PolicyAssignmentData.FromResponse(result), result);
                 if (response.Value == null)

@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _healthReportsRestClient.CreateGetRequest(Id.ToString(), healthReportName, context);
+                using HttpMessage message = _healthReportsRestClient.CreateGetRequest(Id.ToString(), healthReportName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HealthReportData> response = Response.FromValue(HealthReportData.FromResponse(result), result);
                 if (response.Value == null)
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _healthReportsRestClient.CreateGetRequest(Id.ToString(), healthReportName, context);
+                using HttpMessage message = _healthReportsRestClient.CreateGetRequest(Id.ToString(), healthReportName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HealthReportData> response = Response.FromValue(HealthReportData.FromResponse(result), result);
                 if (response.Value == null)
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _healthReportsRestClient.CreateGetRequest(Id.ToString(), healthReportName, context);
+                using HttpMessage message = _healthReportsRestClient.CreateGetRequest(Id.ToString(), healthReportName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HealthReportData> response = default;
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _healthReportsRestClient.CreateGetRequest(Id.ToString(), healthReportName, context);
+                using HttpMessage message = _healthReportsRestClient.CreateGetRequest(Id.ToString(), healthReportName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HealthReportData> response = default;
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _healthReportsRestClient.CreateGetRequest(Id.ToString(), healthReportName, context);
+                using HttpMessage message = _healthReportsRestClient.CreateGetRequest(Id.ToString(), healthReportName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HealthReportData> response = default;
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _healthReportsRestClient.CreateGetRequest(Id.ToString(), healthReportName, context);
+                using HttpMessage message = _healthReportsRestClient.CreateGetRequest(Id.ToString(), healthReportName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HealthReportData> response = default;

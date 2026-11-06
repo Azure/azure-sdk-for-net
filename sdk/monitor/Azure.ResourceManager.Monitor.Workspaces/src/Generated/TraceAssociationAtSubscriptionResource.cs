@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _traceAssociationAtSubscriptionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), TraceAssociationData.ToRequestContent(data), context);
+                using HttpMessage message = _traceAssociationAtSubscriptionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), TraceAssociationData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TraceAssociationData> response = Response.FromValue(TraceAssociationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _traceAssociationAtSubscriptionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), TraceAssociationData.ToRequestContent(data), context);
+                using HttpMessage message = _traceAssociationAtSubscriptionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), TraceAssociationData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TraceAssociationData> response = Response.FromValue(TraceAssociationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _traceAssociationAtSubscriptionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = _traceAssociationAtSubscriptionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TraceAssociationData> response = Response.FromValue(TraceAssociationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _traceAssociationAtSubscriptionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = _traceAssociationAtSubscriptionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TraceAssociationData> response = Response.FromValue(TraceAssociationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _traceAssociationAtSubscriptionRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = _traceAssociationAtSubscriptionRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _traceAssociationAtSubscriptionRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = _traceAssociationAtSubscriptionRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());

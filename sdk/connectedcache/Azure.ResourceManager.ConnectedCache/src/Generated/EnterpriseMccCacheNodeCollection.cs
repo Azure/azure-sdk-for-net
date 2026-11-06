@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ConnectedCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _enterpriseMccCacheNodesOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cacheNodeResourceName, EnterpriseMccCacheNodeData.ToRequestContent(data), context);
+                using HttpMessage message = _enterpriseMccCacheNodesOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cacheNodeResourceName, EnterpriseMccCacheNodeData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ConnectedCacheArmOperation<EnterpriseMccCacheNodeResource> operation = new ConnectedCacheArmOperation<EnterpriseMccCacheNodeResource>(
                     new EnterpriseMccCacheNodeResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ConnectedCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _enterpriseMccCacheNodesOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cacheNodeResourceName, EnterpriseMccCacheNodeData.ToRequestContent(data), context);
+                using HttpMessage message = _enterpriseMccCacheNodesOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cacheNodeResourceName, EnterpriseMccCacheNodeData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ConnectedCacheArmOperation<EnterpriseMccCacheNodeResource> operation = new ConnectedCacheArmOperation<EnterpriseMccCacheNodeResource>(
                     new EnterpriseMccCacheNodeResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ConnectedCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _enterpriseMccCacheNodesOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cacheNodeResourceName, context);
+                using HttpMessage message = _enterpriseMccCacheNodesOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cacheNodeResourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EnterpriseMccCacheNodeData> response = Response.FromValue(EnterpriseMccCacheNodeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ConnectedCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _enterpriseMccCacheNodesOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cacheNodeResourceName, context);
+                using HttpMessage message = _enterpriseMccCacheNodesOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cacheNodeResourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EnterpriseMccCacheNodeData> response = Response.FromValue(EnterpriseMccCacheNodeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.ConnectedCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _enterpriseMccCacheNodesOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cacheNodeResourceName, context);
+                using HttpMessage message = _enterpriseMccCacheNodesOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cacheNodeResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EnterpriseMccCacheNodeData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.ConnectedCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _enterpriseMccCacheNodesOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cacheNodeResourceName, context);
+                using HttpMessage message = _enterpriseMccCacheNodesOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cacheNodeResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EnterpriseMccCacheNodeData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.ConnectedCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _enterpriseMccCacheNodesOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cacheNodeResourceName, context);
+                using HttpMessage message = _enterpriseMccCacheNodesOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cacheNodeResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EnterpriseMccCacheNodeData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.ConnectedCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _enterpriseMccCacheNodesOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cacheNodeResourceName, context);
+                using HttpMessage message = _enterpriseMccCacheNodesOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cacheNodeResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EnterpriseMccCacheNodeData> response = default;

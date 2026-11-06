@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBAdministratorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _horizonDBAdministratorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HorizonDBAdministratorData> response = Response.FromValue(HorizonDBAdministratorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBAdministratorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _horizonDBAdministratorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HorizonDBAdministratorData> response = Response.FromValue(HorizonDBAdministratorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBAdministratorsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _horizonDBAdministratorsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HorizonDBArmOperation operation = new HorizonDBArmOperation(_horizonDBAdministratorsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBAdministratorsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _horizonDBAdministratorsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HorizonDBArmOperation operation = new HorizonDBArmOperation(_horizonDBAdministratorsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBAdministratorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, HorizonDBAdministratorContent.ToRequestContent(content), context);
+                using HttpMessage message = _horizonDBAdministratorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, HorizonDBAdministratorContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HorizonDBArmOperation<HorizonDBAdministratorResource> operation = new HorizonDBArmOperation<HorizonDBAdministratorResource>(
                     new HorizonDBAdministratorResourceOperationSource(Client),
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBAdministratorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, HorizonDBAdministratorContent.ToRequestContent(content), context);
+                using HttpMessage message = _horizonDBAdministratorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, HorizonDBAdministratorContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HorizonDBArmOperation<HorizonDBAdministratorResource> operation = new HorizonDBArmOperation<HorizonDBAdministratorResource>(
                     new HorizonDBAdministratorResourceOperationSource(Client),

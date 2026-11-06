@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewaysRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, gatewayName, ProgrammableConnectivityGatewayData.ToRequestContent(data), context);
+                using HttpMessage message = _gatewaysRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, gatewayName, ProgrammableConnectivityGatewayData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ProgrammableConnectivityArmOperation<ProgrammableConnectivityGatewayResource> operation = new ProgrammableConnectivityArmOperation<ProgrammableConnectivityGatewayResource>(
                     new ProgrammableConnectivityGatewayResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewaysRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, gatewayName, ProgrammableConnectivityGatewayData.ToRequestContent(data), context);
+                using HttpMessage message = _gatewaysRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, gatewayName, ProgrammableConnectivityGatewayData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ProgrammableConnectivityArmOperation<ProgrammableConnectivityGatewayResource> operation = new ProgrammableConnectivityArmOperation<ProgrammableConnectivityGatewayResource>(
                     new ProgrammableConnectivityGatewayResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, gatewayName, context);
+                using HttpMessage message = _gatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, gatewayName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ProgrammableConnectivityGatewayData> response = Response.FromValue(ProgrammableConnectivityGatewayData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, gatewayName, context);
+                using HttpMessage message = _gatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, gatewayName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ProgrammableConnectivityGatewayData> response = Response.FromValue(ProgrammableConnectivityGatewayData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, gatewayName, context);
+                using HttpMessage message = _gatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, gatewayName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ProgrammableConnectivityGatewayData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, gatewayName, context);
+                using HttpMessage message = _gatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, gatewayName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ProgrammableConnectivityGatewayData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, gatewayName, context);
+                using HttpMessage message = _gatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, gatewayName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ProgrammableConnectivityGatewayData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, gatewayName, context);
+                using HttpMessage message = _gatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, gatewayName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ProgrammableConnectivityGatewayData> response = default;

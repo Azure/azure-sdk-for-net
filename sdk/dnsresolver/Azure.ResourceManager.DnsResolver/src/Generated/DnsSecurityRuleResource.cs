@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dnsSecurityRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _dnsSecurityRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DnsSecurityRuleData> response = Response.FromValue(DnsSecurityRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dnsSecurityRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _dnsSecurityRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DnsSecurityRuleData> response = Response.FromValue(DnsSecurityRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dnsSecurityRulesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DnsSecurityRulePatch.ToRequestContent(patch), ifMatch, context);
+                using HttpMessage message = _dnsSecurityRulesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DnsSecurityRulePatch.ToRequestContent(patch), ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DnsResolverArmOperation<DnsSecurityRuleResource> operation = new DnsResolverArmOperation<DnsSecurityRuleResource>(
                     new DnsSecurityRuleResourceOperationSource(Client),
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dnsSecurityRulesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DnsSecurityRulePatch.ToRequestContent(patch), ifMatch, context);
+                using HttpMessage message = _dnsSecurityRulesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DnsSecurityRulePatch.ToRequestContent(patch), ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DnsResolverArmOperation<DnsSecurityRuleResource> operation = new DnsResolverArmOperation<DnsSecurityRuleResource>(
                     new DnsSecurityRuleResourceOperationSource(Client),
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dnsSecurityRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
+                using HttpMessage message = _dnsSecurityRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DnsResolverArmOperation operation = new DnsResolverArmOperation(_dnsSecurityRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dnsSecurityRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
+                using HttpMessage message = _dnsSecurityRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DnsResolverArmOperation operation = new DnsResolverArmOperation(_dnsSecurityRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.DnsResolver
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _dnsSecurityRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _dnsSecurityRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DnsSecurityRuleData> response = Response.FromValue(DnsSecurityRuleData.FromResponse(result), result);
                     return Response.FromValue(new DnsSecurityRuleResource(Client, response.Value), response.GetRawResponse());
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.DnsResolver
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _dnsSecurityRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _dnsSecurityRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DnsSecurityRuleData> response = Response.FromValue(DnsSecurityRuleData.FromResponse(result), result);
                     return Response.FromValue(new DnsSecurityRuleResource(Client, response.Value), response.GetRawResponse());
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.DnsResolver
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _dnsSecurityRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _dnsSecurityRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DnsSecurityRuleData> response = Response.FromValue(DnsSecurityRuleData.FromResponse(result), result);
                     return Response.FromValue(new DnsSecurityRuleResource(Client, response.Value), response.GetRawResponse());
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.DnsResolver
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _dnsSecurityRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _dnsSecurityRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DnsSecurityRuleData> response = Response.FromValue(DnsSecurityRuleData.FromResponse(result), result);
                     return Response.FromValue(new DnsSecurityRuleResource(Client, response.Value), response.GetRawResponse());
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.DnsResolver
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _dnsSecurityRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _dnsSecurityRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DnsSecurityRuleData> response = Response.FromValue(DnsSecurityRuleData.FromResponse(result), result);
                     return Response.FromValue(new DnsSecurityRuleResource(Client, response.Value), response.GetRawResponse());
@@ -659,7 +659,7 @@ namespace Azure.ResourceManager.DnsResolver
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _dnsSecurityRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _dnsSecurityRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DnsSecurityRuleData> response = Response.FromValue(DnsSecurityRuleData.FromResponse(result), result);
                     return Response.FromValue(new DnsSecurityRuleResource(Client, response.Value), response.GetRawResponse());

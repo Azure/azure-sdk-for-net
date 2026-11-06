@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DomainRegistration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainOwnershipIdentifiersRestClient.CreateCreateOrUpdateOwnershipIdentifierRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DomainOwnershipIdentifierData.ToRequestContent(data), context);
+                using HttpMessage message = _domainOwnershipIdentifiersRestClient.CreateCreateOrUpdateOwnershipIdentifierRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DomainOwnershipIdentifierData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DomainOwnershipIdentifierData> response = Response.FromValue(DomainOwnershipIdentifierData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DomainRegistration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainOwnershipIdentifiersRestClient.CreateCreateOrUpdateOwnershipIdentifierRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DomainOwnershipIdentifierData.ToRequestContent(data), context);
+                using HttpMessage message = _domainOwnershipIdentifiersRestClient.CreateCreateOrUpdateOwnershipIdentifierRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DomainOwnershipIdentifierData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DomainOwnershipIdentifierData> response = Response.FromValue(DomainOwnershipIdentifierData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.DomainRegistration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainOwnershipIdentifiersRestClient.CreateGetOwnershipIdentifierRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _domainOwnershipIdentifiersRestClient.CreateGetOwnershipIdentifierRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DomainOwnershipIdentifierData> response = Response.FromValue(DomainOwnershipIdentifierData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.DomainRegistration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainOwnershipIdentifiersRestClient.CreateGetOwnershipIdentifierRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _domainOwnershipIdentifiersRestClient.CreateGetOwnershipIdentifierRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DomainOwnershipIdentifierData> response = Response.FromValue(DomainOwnershipIdentifierData.FromResponse(result), result);
                 if (response.Value == null)
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.DomainRegistration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainOwnershipIdentifiersRestClient.CreateGetOwnershipIdentifierRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _domainOwnershipIdentifiersRestClient.CreateGetOwnershipIdentifierRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DomainOwnershipIdentifierData> response = default;
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.DomainRegistration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainOwnershipIdentifiersRestClient.CreateGetOwnershipIdentifierRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _domainOwnershipIdentifiersRestClient.CreateGetOwnershipIdentifierRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DomainOwnershipIdentifierData> response = default;
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.DomainRegistration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainOwnershipIdentifiersRestClient.CreateGetOwnershipIdentifierRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _domainOwnershipIdentifiersRestClient.CreateGetOwnershipIdentifierRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DomainOwnershipIdentifierData> response = default;
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.DomainRegistration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainOwnershipIdentifiersRestClient.CreateGetOwnershipIdentifierRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _domainOwnershipIdentifiersRestClient.CreateGetOwnershipIdentifierRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DomainOwnershipIdentifierData> response = default;

@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PaloAltoNetworksCloudngfwOperationsRestClient.CreateCreateProductSerialNumberRequest(Id.SubscriptionId, context);
+                using HttpMessage message = PaloAltoNetworksCloudngfwOperationsRestClient.CreateCreateProductSerialNumberRequest(Id.SubscriptionId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ProductSerialNumberRequestStatus> response = Response.FromValue(ProductSerialNumberRequestStatus.FromResponse(result), result);
                 if (response.Value == null)
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PaloAltoNetworksCloudngfwOperationsRestClient.CreateCreateProductSerialNumberRequest(Id.SubscriptionId, context);
+                using HttpMessage message = PaloAltoNetworksCloudngfwOperationsRestClient.CreateCreateProductSerialNumberRequest(Id.SubscriptionId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ProductSerialNumberRequestStatus> response = Response.FromValue(ProductSerialNumberRequestStatus.FromResponse(result), result);
                 if (response.Value == null)
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PaloAltoNetworksCloudngfwOperationsRestClient.CreateGetCloudManagerTenantsRequest(Id.SubscriptionId, context);
+                using HttpMessage message = PaloAltoNetworksCloudngfwOperationsRestClient.CreateGetCloudManagerTenantsRequest(Id.SubscriptionId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CloudManagerTenantList> response = Response.FromValue(CloudManagerTenantList.FromResponse(result), result);
                 if (response.Value == null)
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PaloAltoNetworksCloudngfwOperationsRestClient.CreateGetCloudManagerTenantsRequest(Id.SubscriptionId, context);
+                using HttpMessage message = PaloAltoNetworksCloudngfwOperationsRestClient.CreateGetCloudManagerTenantsRequest(Id.SubscriptionId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CloudManagerTenantList> response = Response.FromValue(CloudManagerTenantList.FromResponse(result), result);
                 if (response.Value == null)
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PaloAltoNetworksCloudngfwOperationsRestClient.CreateGetProductSerialNumberStatusRequest(Id.SubscriptionId, context);
+                using HttpMessage message = PaloAltoNetworksCloudngfwOperationsRestClient.CreateGetProductSerialNumberStatusRequest(Id.SubscriptionId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ProductSerialNumberStatus> response = Response.FromValue(ProductSerialNumberStatus.FromResponse(result), result);
                 if (response.Value == null)
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PaloAltoNetworksCloudngfwOperationsRestClient.CreateGetProductSerialNumberStatusRequest(Id.SubscriptionId, context);
+                using HttpMessage message = PaloAltoNetworksCloudngfwOperationsRestClient.CreateGetProductSerialNumberStatusRequest(Id.SubscriptionId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ProductSerialNumberStatus> response = Response.FromValue(ProductSerialNumberStatus.FromResponse(result), result);
                 if (response.Value == null)
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PaloAltoNetworksCloudngfwOperationsRestClient.CreateGetSupportInfoRequest(Id.SubscriptionId, context);
+                using HttpMessage message = PaloAltoNetworksCloudngfwOperationsRestClient.CreateGetSupportInfoRequest(Id.SubscriptionId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SupportInfoModel> response = Response.FromValue(SupportInfoModel.FromResponse(result), result);
                 if (response.Value == null)
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PaloAltoNetworksCloudngfwOperationsRestClient.CreateGetSupportInfoRequest(Id.SubscriptionId, context);
+                using HttpMessage message = PaloAltoNetworksCloudngfwOperationsRestClient.CreateGetSupportInfoRequest(Id.SubscriptionId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SupportInfoModel> response = Response.FromValue(SupportInfoModel.FromResponse(result), result);
                 if (response.Value == null)

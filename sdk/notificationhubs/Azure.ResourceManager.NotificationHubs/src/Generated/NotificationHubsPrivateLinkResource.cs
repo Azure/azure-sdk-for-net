@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetGroupIdRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetGroupIdRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NotificationHubsPrivateLinkResourceData> response = Response.FromValue(NotificationHubsPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetGroupIdRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetGroupIdRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NotificationHubsPrivateLinkResourceData> response = Response.FromValue(NotificationHubsPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)

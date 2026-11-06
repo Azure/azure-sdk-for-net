@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exascaleDBStorageVaultsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exascaleDbStorageVaultName, ExascaleDBStorageVaultData.ToRequestContent(data), context);
+                using HttpMessage message = _exascaleDBStorageVaultsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exascaleDbStorageVaultName, ExascaleDBStorageVaultData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<ExascaleDBStorageVaultResource> operation = new OracleDatabaseArmOperation<ExascaleDBStorageVaultResource>(
                     new ExascaleDBStorageVaultResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exascaleDBStorageVaultsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exascaleDbStorageVaultName, ExascaleDBStorageVaultData.ToRequestContent(data), context);
+                using HttpMessage message = _exascaleDBStorageVaultsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exascaleDbStorageVaultName, ExascaleDBStorageVaultData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<ExascaleDBStorageVaultResource> operation = new OracleDatabaseArmOperation<ExascaleDBStorageVaultResource>(
                     new ExascaleDBStorageVaultResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exascaleDBStorageVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exascaleDbStorageVaultName, context);
+                using HttpMessage message = _exascaleDBStorageVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exascaleDbStorageVaultName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExascaleDBStorageVaultData> response = Response.FromValue(ExascaleDBStorageVaultData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exascaleDBStorageVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exascaleDbStorageVaultName, context);
+                using HttpMessage message = _exascaleDBStorageVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exascaleDbStorageVaultName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExascaleDBStorageVaultData> response = Response.FromValue(ExascaleDBStorageVaultData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exascaleDBStorageVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exascaleDbStorageVaultName, context);
+                using HttpMessage message = _exascaleDBStorageVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exascaleDbStorageVaultName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ExascaleDBStorageVaultData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exascaleDBStorageVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exascaleDbStorageVaultName, context);
+                using HttpMessage message = _exascaleDBStorageVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exascaleDbStorageVaultName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ExascaleDBStorageVaultData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exascaleDBStorageVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exascaleDbStorageVaultName, context);
+                using HttpMessage message = _exascaleDBStorageVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exascaleDbStorageVaultName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ExascaleDBStorageVaultData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exascaleDBStorageVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exascaleDbStorageVaultName, context);
+                using HttpMessage message = _exascaleDBStorageVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exascaleDbStorageVaultName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ExascaleDBStorageVaultData> response = default;

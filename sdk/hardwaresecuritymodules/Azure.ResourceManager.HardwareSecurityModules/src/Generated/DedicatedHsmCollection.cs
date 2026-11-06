@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dedicatedHsmsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, DedicatedHsmData.ToRequestContent(data), context);
+                using HttpMessage message = _dedicatedHsmsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, DedicatedHsmData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HardwareSecurityModulesArmOperation<DedicatedHsmResource> operation = new HardwareSecurityModulesArmOperation<DedicatedHsmResource>(
                     new DedicatedHsmResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dedicatedHsmsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, DedicatedHsmData.ToRequestContent(data), context);
+                using HttpMessage message = _dedicatedHsmsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, DedicatedHsmData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HardwareSecurityModulesArmOperation<DedicatedHsmResource> operation = new HardwareSecurityModulesArmOperation<DedicatedHsmResource>(
                     new DedicatedHsmResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dedicatedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
+                using HttpMessage message = _dedicatedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DedicatedHsmData> response = Response.FromValue(DedicatedHsmData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dedicatedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
+                using HttpMessage message = _dedicatedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DedicatedHsmData> response = Response.FromValue(DedicatedHsmData.FromResponse(result), result);
                 if (response.Value == null)
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dedicatedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
+                using HttpMessage message = _dedicatedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DedicatedHsmData> response = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dedicatedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
+                using HttpMessage message = _dedicatedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DedicatedHsmData> response = default;
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dedicatedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
+                using HttpMessage message = _dedicatedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DedicatedHsmData> response = default;
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dedicatedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
+                using HttpMessage message = _dedicatedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DedicatedHsmData> response = default;

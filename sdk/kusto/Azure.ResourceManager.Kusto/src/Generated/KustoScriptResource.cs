@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scriptsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _scriptsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<KustoScriptData> response = Response.FromValue(KustoScriptData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scriptsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _scriptsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<KustoScriptData> response = Response.FromValue(KustoScriptData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scriptsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, KustoScriptData.ToRequestContent(data), context);
+                using HttpMessage message = _scriptsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, KustoScriptData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 KustoArmOperation<KustoScriptResource> operation = new KustoArmOperation<KustoScriptResource>(
                     new KustoScriptResourceOperationSource(Client),
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scriptsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, KustoScriptData.ToRequestContent(data), context);
+                using HttpMessage message = _scriptsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, KustoScriptData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 KustoArmOperation<KustoScriptResource> operation = new KustoArmOperation<KustoScriptResource>(
                     new KustoScriptResourceOperationSource(Client),
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scriptsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _scriptsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 KustoArmOperation operation = new KustoArmOperation(_scriptsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scriptsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _scriptsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 KustoArmOperation operation = new KustoArmOperation(_scriptsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

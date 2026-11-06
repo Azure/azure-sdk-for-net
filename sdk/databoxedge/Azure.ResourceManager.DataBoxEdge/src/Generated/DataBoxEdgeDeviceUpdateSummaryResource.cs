@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devicesRestClient.CreateGetUpdateSummaryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _devicesRestClient.CreateGetUpdateSummaryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataBoxEdgeDeviceUpdateSummaryData> response = Response.FromValue(DataBoxEdgeDeviceUpdateSummaryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devicesRestClient.CreateGetUpdateSummaryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _devicesRestClient.CreateGetUpdateSummaryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataBoxEdgeDeviceUpdateSummaryData> response = Response.FromValue(DataBoxEdgeDeviceUpdateSummaryData.FromResponse(result), result);
                 if (response.Value == null)

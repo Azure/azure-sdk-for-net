@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationname, ArizeAIObservabilityEvalOrganizationData.ToRequestContent(data), context);
+                using HttpMessage message = _organizationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationname, ArizeAIObservabilityEvalOrganizationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ArizeAIObservabilityEvalArmOperation<ArizeAIObservabilityEvalOrganizationResource> operation = new ArizeAIObservabilityEvalArmOperation<ArizeAIObservabilityEvalOrganizationResource>(
                     new ArizeAIObservabilityEvalOrganizationResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationname, ArizeAIObservabilityEvalOrganizationData.ToRequestContent(data), context);
+                using HttpMessage message = _organizationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationname, ArizeAIObservabilityEvalOrganizationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ArizeAIObservabilityEvalArmOperation<ArizeAIObservabilityEvalOrganizationResource> operation = new ArizeAIObservabilityEvalArmOperation<ArizeAIObservabilityEvalOrganizationResource>(
                     new ArizeAIObservabilityEvalOrganizationResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationname, context);
+                using HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationname, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ArizeAIObservabilityEvalOrganizationData> response = Response.FromValue(ArizeAIObservabilityEvalOrganizationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationname, context);
+                using HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationname, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ArizeAIObservabilityEvalOrganizationData> response = Response.FromValue(ArizeAIObservabilityEvalOrganizationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationname, context);
+                using HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationname, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ArizeAIObservabilityEvalOrganizationData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationname, context);
+                using HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationname, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ArizeAIObservabilityEvalOrganizationData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationname, context);
+                using HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationname, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ArizeAIObservabilityEvalOrganizationData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationname, context);
+                using HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationname, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ArizeAIObservabilityEvalOrganizationData> response = default;

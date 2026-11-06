@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _providerRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _providerRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ProviderRegistrationData> response = Response.FromValue(ProviderRegistrationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _providerRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _providerRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ProviderRegistrationData> response = Response.FromValue(ProviderRegistrationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _providerRegistrationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _providerRegistrationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _providerRegistrationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _providerRegistrationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _providerHubClientRestClient.CreateCheckinManifestRequest(Guid.Parse(Id.SubscriptionId), Id.Name, CheckinManifestContent.ToRequestContent(content), context);
+                using HttpMessage message = _providerHubClientRestClient.CreateCheckinManifestRequest(Guid.Parse(Id.SubscriptionId), Id.Name, CheckinManifestContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CheckinManifestInfo> response = Response.FromValue(CheckinManifestInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _providerHubClientRestClient.CreateCheckinManifestRequest(Guid.Parse(Id.SubscriptionId), Id.Name, CheckinManifestContent.ToRequestContent(content), context);
+                using HttpMessage message = _providerHubClientRestClient.CreateCheckinManifestRequest(Guid.Parse(Id.SubscriptionId), Id.Name, CheckinManifestContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CheckinManifestInfo> response = Response.FromValue(CheckinManifestInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceActionsRestClient.CreateDeleteResourcesResourceActionRequest(Guid.Parse(Id.SubscriptionId), Id.Name, resourceActionName, ResourceManagementAction.ToRequestContent(properties), context);
+                using HttpMessage message = _resourceActionsRestClient.CreateDeleteResourcesResourceActionRequest(Guid.Parse(Id.SubscriptionId), Id.Name, resourceActionName, ResourceManagementAction.ToRequestContent(properties), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ProviderHubArmOperation operation = new ProviderHubArmOperation(_resourceActionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceActionsRestClient.CreateDeleteResourcesResourceActionRequest(Guid.Parse(Id.SubscriptionId), Id.Name, resourceActionName, ResourceManagementAction.ToRequestContent(properties), context);
+                using HttpMessage message = _resourceActionsRestClient.CreateDeleteResourcesResourceActionRequest(Guid.Parse(Id.SubscriptionId), Id.Name, resourceActionName, ResourceManagementAction.ToRequestContent(properties), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ProviderHubArmOperation operation = new ProviderHubArmOperation(_resourceActionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _providerHubClientRestClient.CreateGenerateManifestRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _providerHubClientRestClient.CreateGenerateManifestRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceProviderManifest> response = Response.FromValue(ResourceProviderManifest.FromResponse(result), result);
                 if (response.Value == null)
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _providerHubClientRestClient.CreateGenerateManifestRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _providerHubClientRestClient.CreateGenerateManifestRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceProviderManifest> response = Response.FromValue(ResourceProviderManifest.FromResponse(result), result);
                 if (response.Value == null)
@@ -710,7 +710,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _providerRegistrationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, ProviderRegistrationData.ToRequestContent(data), context);
+                using HttpMessage message = _providerRegistrationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, ProviderRegistrationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ProviderHubArmOperation<ProviderRegistrationResource> operation = new ProviderHubArmOperation<ProviderRegistrationResource>(
                     new ProviderRegistrationResourceOperationSource(Client),
@@ -769,7 +769,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _providerRegistrationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, ProviderRegistrationData.ToRequestContent(data), context);
+                using HttpMessage message = _providerRegistrationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, ProviderRegistrationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ProviderHubArmOperation<ProviderRegistrationResource> operation = new ProviderHubArmOperation<ProviderRegistrationResource>(
                     new ProviderRegistrationResourceOperationSource(Client),

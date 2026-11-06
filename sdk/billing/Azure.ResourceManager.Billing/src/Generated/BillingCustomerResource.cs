@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customersRestClient.CreateGetByBillingAccountRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _customersRestClient.CreateGetByBillingAccountRequest(Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingCustomerData> response = Response.FromValue(BillingCustomerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customersRestClient.CreateGetByBillingAccountRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _customersRestClient.CreateGetByBillingAccountRequest(Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingCustomerData> response = Response.FromValue(BillingCustomerData.FromResponse(result), result);
                 if (response.Value == null)

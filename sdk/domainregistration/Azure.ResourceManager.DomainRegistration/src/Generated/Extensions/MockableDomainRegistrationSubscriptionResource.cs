@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DomainRegistration.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = DomainsOperationGroupRestClient.CreateCheckAppServiceDomainRegistrationAvailabilityRequest(Id.SubscriptionId, AppServiceDomainNameIdentifier.ToRequestContent(identifier), context);
+                using HttpMessage message = DomainsOperationGroupRestClient.CreateCheckAppServiceDomainRegistrationAvailabilityRequest(Id.SubscriptionId, AppServiceDomainNameIdentifier.ToRequestContent(identifier), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DomainAvailabilityCheckResult> response = Response.FromValue(DomainAvailabilityCheckResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.DomainRegistration.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = DomainsOperationGroupRestClient.CreateCheckAppServiceDomainRegistrationAvailabilityRequest(Id.SubscriptionId, AppServiceDomainNameIdentifier.ToRequestContent(identifier), context);
+                using HttpMessage message = DomainsOperationGroupRestClient.CreateCheckAppServiceDomainRegistrationAvailabilityRequest(Id.SubscriptionId, AppServiceDomainNameIdentifier.ToRequestContent(identifier), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DomainAvailabilityCheckResult> response = Response.FromValue(DomainAvailabilityCheckResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.DomainRegistration.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = DomainsOperationGroupRestClient.CreateGetControlCenterSsoRequestRequest(Id.SubscriptionId, context);
+                using HttpMessage message = DomainsOperationGroupRestClient.CreateGetControlCenterSsoRequestRequest(Id.SubscriptionId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DomainControlCenterSsoRequestInfo> response = Response.FromValue(DomainControlCenterSsoRequestInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.DomainRegistration.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = DomainsOperationGroupRestClient.CreateGetControlCenterSsoRequestRequest(Id.SubscriptionId, context);
+                using HttpMessage message = DomainsOperationGroupRestClient.CreateGetControlCenterSsoRequestRequest(Id.SubscriptionId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DomainControlCenterSsoRequestInfo> response = Response.FromValue(DomainControlCenterSsoRequestInfo.FromResponse(result), result);
                 if (response.Value == null)

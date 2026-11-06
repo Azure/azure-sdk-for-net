@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sandboxGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sandboxGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerGroupSandboxData> response = Response.FromValue(ContainerGroupSandboxData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sandboxGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sandboxGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerGroupSandboxData> response = Response.FromValue(ContainerGroupSandboxData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sandboxGroupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerSandboxGroupPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _sandboxGroupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerSandboxGroupPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerInstanceArmOperation<ContainerGroupSandboxResource> operation = new ContainerInstanceArmOperation<ContainerGroupSandboxResource>(
                     new ContainerGroupSandboxResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sandboxGroupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerSandboxGroupPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _sandboxGroupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerSandboxGroupPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerInstanceArmOperation<ContainerGroupSandboxResource> operation = new ContainerInstanceArmOperation<ContainerGroupSandboxResource>(
                     new ContainerGroupSandboxResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sandboxGroupsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sandboxGroupsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerInstanceArmOperation operation = new ContainerInstanceArmOperation(_sandboxGroupsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sandboxGroupsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sandboxGroupsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerInstanceArmOperation operation = new ContainerInstanceArmOperation(_sandboxGroupsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sandboxGroupsRestClient.CreateConnectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sandboxGroupsRestClient.CreateConnectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerSandboxGroupAccessToken> response = Response.FromValue(ContainerSandboxGroupAccessToken.FromResponse(result), result);
                 if (response.Value == null)
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sandboxGroupsRestClient.CreateConnectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sandboxGroupsRestClient.CreateConnectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerSandboxGroupAccessToken> response = Response.FromValue(ContainerSandboxGroupAccessToken.FromResponse(result), result);
                 if (response.Value == null)
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.ContainerInstance
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _sandboxGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _sandboxGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ContainerGroupSandboxData> response = Response.FromValue(ContainerGroupSandboxData.FromResponse(result), result);
                     return Response.FromValue(new ContainerGroupSandboxResource(Client, response.Value), response.GetRawResponse());
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.ContainerInstance
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _sandboxGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _sandboxGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ContainerGroupSandboxData> response = Response.FromValue(ContainerGroupSandboxData.FromResponse(result), result);
                     return Response.FromValue(new ContainerGroupSandboxResource(Client, response.Value), response.GetRawResponse());
@@ -618,7 +618,7 @@ namespace Azure.ResourceManager.ContainerInstance
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _sandboxGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _sandboxGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ContainerGroupSandboxData> response = Response.FromValue(ContainerGroupSandboxData.FromResponse(result), result);
                     return Response.FromValue(new ContainerGroupSandboxResource(Client, response.Value), response.GetRawResponse());
@@ -660,7 +660,7 @@ namespace Azure.ResourceManager.ContainerInstance
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _sandboxGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _sandboxGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ContainerGroupSandboxData> response = Response.FromValue(ContainerGroupSandboxData.FromResponse(result), result);
                     return Response.FromValue(new ContainerGroupSandboxResource(Client, response.Value), response.GetRawResponse());
@@ -702,7 +702,7 @@ namespace Azure.ResourceManager.ContainerInstance
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _sandboxGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _sandboxGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ContainerGroupSandboxData> response = Response.FromValue(ContainerGroupSandboxData.FromResponse(result), result);
                     return Response.FromValue(new ContainerGroupSandboxResource(Client, response.Value), response.GetRawResponse());
@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.ContainerInstance
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _sandboxGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _sandboxGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ContainerGroupSandboxData> response = Response.FromValue(ContainerGroupSandboxData.FromResponse(result), result);
                     return Response.FromValue(new ContainerGroupSandboxResource(Client, response.Value), response.GetRawResponse());

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _proximityPlacementGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, proximityPlacementGroupName, ProximityPlacementGroupData.ToRequestContent(data), context);
+                using HttpMessage message = _proximityPlacementGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, proximityPlacementGroupName, ProximityPlacementGroupData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ProximityPlacementGroupData> response = Response.FromValue(ProximityPlacementGroupData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _proximityPlacementGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, proximityPlacementGroupName, ProximityPlacementGroupData.ToRequestContent(data), context);
+                using HttpMessage message = _proximityPlacementGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, proximityPlacementGroupName, ProximityPlacementGroupData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ProximityPlacementGroupData> response = Response.FromValue(ProximityPlacementGroupData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _proximityPlacementGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, proximityPlacementGroupName, includeColocationStatus, context);
+                using HttpMessage message = _proximityPlacementGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, proximityPlacementGroupName, includeColocationStatus, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ProximityPlacementGroupData> response = Response.FromValue(ProximityPlacementGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _proximityPlacementGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, proximityPlacementGroupName, includeColocationStatus, context);
+                using HttpMessage message = _proximityPlacementGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, proximityPlacementGroupName, includeColocationStatus, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ProximityPlacementGroupData> response = Response.FromValue(ProximityPlacementGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _proximityPlacementGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, proximityPlacementGroupName, includeColocationStatus, context);
+                using HttpMessage message = _proximityPlacementGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, proximityPlacementGroupName, includeColocationStatus, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ProximityPlacementGroupData> response = default;
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _proximityPlacementGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, proximityPlacementGroupName, includeColocationStatus, context);
+                using HttpMessage message = _proximityPlacementGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, proximityPlacementGroupName, includeColocationStatus, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ProximityPlacementGroupData> response = default;
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _proximityPlacementGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, proximityPlacementGroupName, includeColocationStatus, context);
+                using HttpMessage message = _proximityPlacementGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, proximityPlacementGroupName, includeColocationStatus, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ProximityPlacementGroupData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _proximityPlacementGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, proximityPlacementGroupName, includeColocationStatus, context);
+                using HttpMessage message = _proximityPlacementGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, proximityPlacementGroupName, includeColocationStatus, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ProximityPlacementGroupData> response = default;

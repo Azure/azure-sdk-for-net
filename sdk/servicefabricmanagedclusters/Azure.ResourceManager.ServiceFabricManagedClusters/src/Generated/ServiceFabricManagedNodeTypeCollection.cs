@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nodeTypesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nodeTypeName, ServiceFabricManagedNodeTypeData.ToRequestContent(data), context);
+                using HttpMessage message = _nodeTypesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nodeTypeName, ServiceFabricManagedNodeTypeData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceFabricManagedClustersArmOperation<ServiceFabricManagedNodeTypeResource> operation = new ServiceFabricManagedClustersArmOperation<ServiceFabricManagedNodeTypeResource>(
                     new ServiceFabricManagedNodeTypeResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nodeTypesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nodeTypeName, ServiceFabricManagedNodeTypeData.ToRequestContent(data), context);
+                using HttpMessage message = _nodeTypesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nodeTypeName, ServiceFabricManagedNodeTypeData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceFabricManagedClustersArmOperation<ServiceFabricManagedNodeTypeResource> operation = new ServiceFabricManagedClustersArmOperation<ServiceFabricManagedNodeTypeResource>(
                     new ServiceFabricManagedNodeTypeResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nodeTypesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nodeTypeName, context);
+                using HttpMessage message = _nodeTypesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nodeTypeName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceFabricManagedNodeTypeData> response = Response.FromValue(ServiceFabricManagedNodeTypeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nodeTypesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nodeTypeName, context);
+                using HttpMessage message = _nodeTypesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nodeTypeName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceFabricManagedNodeTypeData> response = Response.FromValue(ServiceFabricManagedNodeTypeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nodeTypesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nodeTypeName, context);
+                using HttpMessage message = _nodeTypesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nodeTypeName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ServiceFabricManagedNodeTypeData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nodeTypesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nodeTypeName, context);
+                using HttpMessage message = _nodeTypesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nodeTypeName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ServiceFabricManagedNodeTypeData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nodeTypesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nodeTypeName, context);
+                using HttpMessage message = _nodeTypesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nodeTypeName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ServiceFabricManagedNodeTypeData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nodeTypesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nodeTypeName, context);
+                using HttpMessage message = _nodeTypesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nodeTypeName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ServiceFabricManagedNodeTypeData> response = default;

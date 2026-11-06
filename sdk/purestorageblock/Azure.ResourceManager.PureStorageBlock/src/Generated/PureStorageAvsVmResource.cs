@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _avsVmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _avsVmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PureStorageAvsVmData> response = Response.FromValue(PureStorageAvsVmData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _avsVmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _avsVmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PureStorageAvsVmData> response = Response.FromValue(PureStorageAvsVmData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _avsVmsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, PureStorageAvsVmPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _avsVmsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, PureStorageAvsVmPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PureStorageBlockArmOperation<PureStorageAvsVmResource> operation = new PureStorageBlockArmOperation<PureStorageAvsVmResource>(
                     new PureStorageAvsVmResourceOperationSource(Client),
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _avsVmsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, PureStorageAvsVmPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _avsVmsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, PureStorageAvsVmPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PureStorageBlockArmOperation<PureStorageAvsVmResource> operation = new PureStorageBlockArmOperation<PureStorageAvsVmResource>(
                     new PureStorageAvsVmResourceOperationSource(Client),
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _avsVmsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _avsVmsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(_avsVmsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _avsVmsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _avsVmsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(_avsVmsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

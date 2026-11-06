@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _modelDeploymentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _modelDeploymentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ModelDeploymentData> response = Response.FromValue(ModelDeploymentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _modelDeploymentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _modelDeploymentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ModelDeploymentData> response = Response.FromValue(ModelDeploymentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _modelDeploymentsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, context);
+                using HttpMessage message = _modelDeploymentsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceAIManagerArmOperation operation = new ContainerServiceAIManagerArmOperation(_modelDeploymentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _modelDeploymentsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, context);
+                using HttpMessage message = _modelDeploymentsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceAIManagerArmOperation operation = new ContainerServiceAIManagerArmOperation(_modelDeploymentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _modelDeploymentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ModelDeploymentData.ToRequestContent(data), matchConditions, context);
+                using HttpMessage message = _modelDeploymentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ModelDeploymentData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceAIManagerArmOperation<ModelDeploymentResource> operation = new ContainerServiceAIManagerArmOperation<ModelDeploymentResource>(
                     new ModelDeploymentResourceOperationSource(Client),
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _modelDeploymentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ModelDeploymentData.ToRequestContent(data), matchConditions, context);
+                using HttpMessage message = _modelDeploymentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ModelDeploymentData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceAIManagerArmOperation<ModelDeploymentResource> operation = new ContainerServiceAIManagerArmOperation<ModelDeploymentResource>(
                     new ModelDeploymentResourceOperationSource(Client),

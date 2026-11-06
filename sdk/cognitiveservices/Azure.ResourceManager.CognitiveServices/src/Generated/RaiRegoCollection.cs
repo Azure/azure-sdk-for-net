@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _raiRegosRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, raiRegoName, RaiRegoData.ToRequestContent(data), matchConditions, context);
+                using HttpMessage message = _raiRegosRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, raiRegoName, RaiRegoData.ToRequestContent(data), matchConditions, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RaiRegoData> response = Response.FromValue(RaiRegoData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _raiRegosRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, raiRegoName, RaiRegoData.ToRequestContent(data), matchConditions, context);
+                using HttpMessage message = _raiRegosRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, raiRegoName, RaiRegoData.ToRequestContent(data), matchConditions, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RaiRegoData> response = Response.FromValue(RaiRegoData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _raiRegosRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, raiRegoName, context);
+                using HttpMessage message = _raiRegosRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, raiRegoName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RaiRegoData> response = Response.FromValue(RaiRegoData.FromResponse(result), result);
                 if (response.Value == null)
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _raiRegosRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, raiRegoName, context);
+                using HttpMessage message = _raiRegosRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, raiRegoName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RaiRegoData> response = Response.FromValue(RaiRegoData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _raiRegosRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, raiRegoName, context);
+                using HttpMessage message = _raiRegosRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, raiRegoName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RaiRegoData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _raiRegosRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, raiRegoName, context);
+                using HttpMessage message = _raiRegosRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, raiRegoName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RaiRegoData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _raiRegosRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, raiRegoName, context);
+                using HttpMessage message = _raiRegosRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, raiRegoName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RaiRegoData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _raiRegosRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, raiRegoName, context);
+                using HttpMessage message = _raiRegosRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, raiRegoName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RaiRegoData> response = default;

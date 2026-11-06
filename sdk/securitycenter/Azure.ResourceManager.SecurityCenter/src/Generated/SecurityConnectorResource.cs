@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _securityConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _securityConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityConnectorData> response = Response.FromValue(SecurityConnectorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _securityConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _securityConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityConnectorData> response = Response.FromValue(SecurityConnectorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _securityConnectorsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SecurityConnectorData.ToRequestContent(data), context);
+                using HttpMessage message = _securityConnectorsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SecurityConnectorData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityConnectorData> response = Response.FromValue(SecurityConnectorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _securityConnectorsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SecurityConnectorData.ToRequestContent(data), context);
+                using HttpMessage message = _securityConnectorsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SecurityConnectorData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityConnectorData> response = Response.FromValue(SecurityConnectorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _securityConnectorsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _securityConnectorsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _securityConnectorsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _securityConnectorsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _securityConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _securityConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<SecurityConnectorData> response = Response.FromValue(SecurityConnectorData.FromResponse(result), result);
                     return Response.FromValue(new SecurityConnectorResource(Client, response.Value), response.GetRawResponse());
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _securityConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _securityConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<SecurityConnectorData> response = Response.FromValue(SecurityConnectorData.FromResponse(result), result);
                     return Response.FromValue(new SecurityConnectorResource(Client, response.Value), response.GetRawResponse());
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _securityConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _securityConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<SecurityConnectorData> response = Response.FromValue(SecurityConnectorData.FromResponse(result), result);
                     return Response.FromValue(new SecurityConnectorResource(Client, response.Value), response.GetRawResponse());
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _securityConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _securityConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<SecurityConnectorData> response = Response.FromValue(SecurityConnectorData.FromResponse(result), result);
                     return Response.FromValue(new SecurityConnectorResource(Client, response.Value), response.GetRawResponse());
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _securityConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _securityConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<SecurityConnectorData> response = Response.FromValue(SecurityConnectorData.FromResponse(result), result);
                     return Response.FromValue(new SecurityConnectorResource(Client, response.Value), response.GetRawResponse());
@@ -641,7 +641,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _securityConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _securityConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<SecurityConnectorData> response = Response.FromValue(SecurityConnectorData.FromResponse(result), result);
                     return Response.FromValue(new SecurityConnectorResource(Client, response.Value), response.GetRawResponse());

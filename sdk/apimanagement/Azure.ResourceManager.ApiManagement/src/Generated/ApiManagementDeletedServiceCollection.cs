@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedServicesRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), location, serviceName, context);
+                using HttpMessage message = _deletedServicesRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), location, serviceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementDeletedServiceData> response = Response.FromValue(ApiManagementDeletedServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedServicesRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), location, serviceName, context);
+                using HttpMessage message = _deletedServicesRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), location, serviceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementDeletedServiceData> response = Response.FromValue(ApiManagementDeletedServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedServicesRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), location, serviceName, context);
+                using HttpMessage message = _deletedServicesRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), location, serviceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementDeletedServiceData> response = default;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedServicesRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), location, serviceName, context);
+                using HttpMessage message = _deletedServicesRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), location, serviceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementDeletedServiceData> response = default;
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedServicesRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), location, serviceName, context);
+                using HttpMessage message = _deletedServicesRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), location, serviceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementDeletedServiceData> response = default;
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedServicesRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), location, serviceName, context);
+                using HttpMessage message = _deletedServicesRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), location, serviceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementDeletedServiceData> response = default;

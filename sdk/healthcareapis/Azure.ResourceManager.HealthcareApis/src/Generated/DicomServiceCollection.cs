@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dicomServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dicomServiceName, DicomServiceData.ToRequestContent(data), context);
+                using HttpMessage message = _dicomServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dicomServiceName, DicomServiceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HealthcareApisArmOperation<DicomServiceResource> operation = new HealthcareApisArmOperation<DicomServiceResource>(
                     new DicomServiceResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dicomServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dicomServiceName, DicomServiceData.ToRequestContent(data), context);
+                using HttpMessage message = _dicomServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dicomServiceName, DicomServiceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HealthcareApisArmOperation<DicomServiceResource> operation = new HealthcareApisArmOperation<DicomServiceResource>(
                     new DicomServiceResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dicomServicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dicomServiceName, context);
+                using HttpMessage message = _dicomServicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dicomServiceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DicomServiceData> response = Response.FromValue(DicomServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dicomServicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dicomServiceName, context);
+                using HttpMessage message = _dicomServicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dicomServiceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DicomServiceData> response = Response.FromValue(DicomServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dicomServicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dicomServiceName, context);
+                using HttpMessage message = _dicomServicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dicomServiceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DicomServiceData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dicomServicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dicomServiceName, context);
+                using HttpMessage message = _dicomServicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dicomServiceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DicomServiceData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dicomServicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dicomServiceName, context);
+                using HttpMessage message = _dicomServicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dicomServiceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DicomServiceData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dicomServicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dicomServiceName, context);
+                using HttpMessage message = _dicomServicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dicomServiceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DicomServiceData> response = default;

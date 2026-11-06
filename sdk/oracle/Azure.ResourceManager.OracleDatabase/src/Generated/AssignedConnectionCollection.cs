@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _goldenGateDeploymentsRestClient.CreateGetAssignedConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, assignmentId, context);
+                using HttpMessage message = _goldenGateDeploymentsRestClient.CreateGetAssignedConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, assignmentId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AssignedConnectionData> response = Response.FromValue(AssignedConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _goldenGateDeploymentsRestClient.CreateGetAssignedConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, assignmentId, context);
+                using HttpMessage message = _goldenGateDeploymentsRestClient.CreateGetAssignedConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, assignmentId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AssignedConnectionData> response = Response.FromValue(AssignedConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _goldenGateDeploymentsRestClient.CreateGetAssignedConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, assignmentId, context);
+                using HttpMessage message = _goldenGateDeploymentsRestClient.CreateGetAssignedConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, assignmentId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AssignedConnectionData> response = default;
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _goldenGateDeploymentsRestClient.CreateGetAssignedConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, assignmentId, context);
+                using HttpMessage message = _goldenGateDeploymentsRestClient.CreateGetAssignedConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, assignmentId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AssignedConnectionData> response = default;
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _goldenGateDeploymentsRestClient.CreateGetAssignedConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, assignmentId, context);
+                using HttpMessage message = _goldenGateDeploymentsRestClient.CreateGetAssignedConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, assignmentId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AssignedConnectionData> response = default;
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _goldenGateDeploymentsRestClient.CreateGetAssignedConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, assignmentId, context);
+                using HttpMessage message = _goldenGateDeploymentsRestClient.CreateGetAssignedConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, assignmentId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AssignedConnectionData> response = default;

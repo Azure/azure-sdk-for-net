@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _csmPublishingCredentialsPoliciesEntitiesRestClient.CreateUpdateFtpAllowedRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, CsmPublishingCredentialsPoliciesEntityData.ToRequestContent(data), context);
+                using HttpMessage message = _csmPublishingCredentialsPoliciesEntitiesRestClient.CreateUpdateFtpAllowedRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, CsmPublishingCredentialsPoliciesEntityData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CsmPublishingCredentialsPoliciesEntityData> response = Response.FromValue(CsmPublishingCredentialsPoliciesEntityData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _csmPublishingCredentialsPoliciesEntitiesRestClient.CreateUpdateFtpAllowedRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, CsmPublishingCredentialsPoliciesEntityData.ToRequestContent(data), context);
+                using HttpMessage message = _csmPublishingCredentialsPoliciesEntitiesRestClient.CreateUpdateFtpAllowedRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, CsmPublishingCredentialsPoliciesEntityData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CsmPublishingCredentialsPoliciesEntityData> response = Response.FromValue(CsmPublishingCredentialsPoliciesEntityData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _csmPublishingCredentialsPoliciesEntitiesRestClient.CreateGetFtpAllowedRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _csmPublishingCredentialsPoliciesEntitiesRestClient.CreateGetFtpAllowedRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CsmPublishingCredentialsPoliciesEntityData> response = Response.FromValue(CsmPublishingCredentialsPoliciesEntityData.FromResponse(result), result);
                 if (response.Value == null)
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _csmPublishingCredentialsPoliciesEntitiesRestClient.CreateGetFtpAllowedRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _csmPublishingCredentialsPoliciesEntitiesRestClient.CreateGetFtpAllowedRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CsmPublishingCredentialsPoliciesEntityData> response = Response.FromValue(CsmPublishingCredentialsPoliciesEntityData.FromResponse(result), result);
                 if (response.Value == null)

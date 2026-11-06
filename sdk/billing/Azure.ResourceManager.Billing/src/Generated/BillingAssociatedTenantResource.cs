@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _associatedTenantsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _associatedTenantsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingAssociatedTenantData> response = Response.FromValue(BillingAssociatedTenantData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _associatedTenantsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _associatedTenantsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingAssociatedTenantData> response = Response.FromValue(BillingAssociatedTenantData.FromResponse(result), result);
                 if (response.Value == null)
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _associatedTenantsRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _associatedTenantsRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation operation = new BillingArmOperation(_associatedTenantsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _associatedTenantsRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _associatedTenantsRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation operation = new BillingArmOperation(_associatedTenantsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _associatedTenantsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, BillingAssociatedTenantData.ToRequestContent(data), context);
+                using HttpMessage message = _associatedTenantsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, BillingAssociatedTenantData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingAssociatedTenantResource> operation = new BillingArmOperation<BillingAssociatedTenantResource>(
                     new BillingAssociatedTenantResourceOperationSource(Client),
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _associatedTenantsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, BillingAssociatedTenantData.ToRequestContent(data), context);
+                using HttpMessage message = _associatedTenantsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, BillingAssociatedTenantData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingAssociatedTenantResource> operation = new BillingArmOperation<BillingAssociatedTenantResource>(
                     new BillingAssociatedTenantResourceOperationSource(Client),
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _associatedTenantsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _associatedTenantsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<BillingAssociatedTenantData> response = Response.FromValue(BillingAssociatedTenantData.FromResponse(result), result);
                     return Response.FromValue(new BillingAssociatedTenantResource(Client, response.Value), response.GetRawResponse());
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _associatedTenantsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _associatedTenantsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<BillingAssociatedTenantData> response = Response.FromValue(BillingAssociatedTenantData.FromResponse(result), result);
                     return Response.FromValue(new BillingAssociatedTenantResource(Client, response.Value), response.GetRawResponse());
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _associatedTenantsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _associatedTenantsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<BillingAssociatedTenantData> response = Response.FromValue(BillingAssociatedTenantData.FromResponse(result), result);
                     return Response.FromValue(new BillingAssociatedTenantResource(Client, response.Value), response.GetRawResponse());
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _associatedTenantsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _associatedTenantsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<BillingAssociatedTenantData> response = Response.FromValue(BillingAssociatedTenantData.FromResponse(result), result);
                     return Response.FromValue(new BillingAssociatedTenantResource(Client, response.Value), response.GetRawResponse());
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _associatedTenantsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _associatedTenantsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<BillingAssociatedTenantData> response = Response.FromValue(BillingAssociatedTenantData.FromResponse(result), result);
                     return Response.FromValue(new BillingAssociatedTenantResource(Client, response.Value), response.GetRawResponse());
@@ -634,7 +634,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _associatedTenantsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _associatedTenantsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<BillingAssociatedTenantData> response = Response.FromValue(BillingAssociatedTenantData.FromResponse(result), result);
                     return Response.FromValue(new BillingAssociatedTenantResource(Client, response.Value), response.GetRawResponse());

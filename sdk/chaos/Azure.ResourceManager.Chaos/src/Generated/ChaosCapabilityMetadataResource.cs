@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capabilityTypesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _capabilityTypesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ChaosCapabilityMetadataData> response = Response.FromValue(ChaosCapabilityMetadataData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capabilityTypesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _capabilityTypesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ChaosCapabilityMetadataData> response = Response.FromValue(ChaosCapabilityMetadataData.FromResponse(result), result);
                 if (response.Value == null)

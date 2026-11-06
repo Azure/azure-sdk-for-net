@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DurableTask
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schedulersRestClient.CreateCreateOrUpdatePrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, DurableTaskPrivateEndpointConnectionData.ToRequestContent(data), context);
+                using HttpMessage message = _schedulersRestClient.CreateCreateOrUpdatePrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, DurableTaskPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DurableTaskArmOperation<DurableTaskPrivateEndpointConnectionResource> operation = new DurableTaskArmOperation<DurableTaskPrivateEndpointConnectionResource>(
                     new DurableTaskPrivateEndpointConnectionResourceOperationSource(Client),
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DurableTask
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schedulersRestClient.CreateCreateOrUpdatePrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, DurableTaskPrivateEndpointConnectionData.ToRequestContent(data), context);
+                using HttpMessage message = _schedulersRestClient.CreateCreateOrUpdatePrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, DurableTaskPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DurableTaskArmOperation<DurableTaskPrivateEndpointConnectionResource> operation = new DurableTaskArmOperation<DurableTaskPrivateEndpointConnectionResource>(
                     new DurableTaskPrivateEndpointConnectionResourceOperationSource(Client),
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.DurableTask
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schedulersRestClient.CreateGetPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
+                using HttpMessage message = _schedulersRestClient.CreateGetPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DurableTaskPrivateEndpointConnectionData> response = Response.FromValue(DurableTaskPrivateEndpointConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DurableTask
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schedulersRestClient.CreateGetPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
+                using HttpMessage message = _schedulersRestClient.CreateGetPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DurableTaskPrivateEndpointConnectionData> response = Response.FromValue(DurableTaskPrivateEndpointConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.DurableTask
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schedulersRestClient.CreateGetPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
+                using HttpMessage message = _schedulersRestClient.CreateGetPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DurableTaskPrivateEndpointConnectionData> response = default;
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.DurableTask
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schedulersRestClient.CreateGetPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
+                using HttpMessage message = _schedulersRestClient.CreateGetPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DurableTaskPrivateEndpointConnectionData> response = default;
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.DurableTask
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schedulersRestClient.CreateGetPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
+                using HttpMessage message = _schedulersRestClient.CreateGetPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DurableTaskPrivateEndpointConnectionData> response = default;
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.DurableTask
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schedulersRestClient.CreateGetPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
+                using HttpMessage message = _schedulersRestClient.CreateGetPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DurableTaskPrivateEndpointConnectionData> response = default;

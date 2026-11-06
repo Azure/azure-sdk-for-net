@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _traceContainersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, TraceContainerData.ToRequestContent(data), context);
+                using HttpMessage message = _traceContainersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, TraceContainerData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkspacesArmOperation<TraceContainerResource> operation = new WorkspacesArmOperation<TraceContainerResource>(
                     new TraceContainerResourceOperationSource(Client),
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _traceContainersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, TraceContainerData.ToRequestContent(data), context);
+                using HttpMessage message = _traceContainersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, TraceContainerData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkspacesArmOperation<TraceContainerResource> operation = new WorkspacesArmOperation<TraceContainerResource>(
                     new TraceContainerResourceOperationSource(Client),
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _traceContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _traceContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TraceContainerData> response = Response.FromValue(TraceContainerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _traceContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _traceContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TraceContainerData> response = Response.FromValue(TraceContainerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _traceContainersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _traceContainersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _traceContainersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _traceContainersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());

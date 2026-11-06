@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PostgreSqlFlexibleServersPrivateLinkResourceData> response = Response.FromValue(PostgreSqlFlexibleServersPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PostgreSqlFlexibleServersPrivateLinkResourceData> response = Response.FromValue(PostgreSqlFlexibleServersPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)

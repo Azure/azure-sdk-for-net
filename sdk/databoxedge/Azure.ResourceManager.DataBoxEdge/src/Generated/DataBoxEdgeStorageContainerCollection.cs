@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, DataBoxEdgeStorageContainerData.ToRequestContent(data), context);
+                using HttpMessage message = _containersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, DataBoxEdgeStorageContainerData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataBoxEdgeArmOperation<DataBoxEdgeStorageContainerResource> operation = new DataBoxEdgeArmOperation<DataBoxEdgeStorageContainerResource>(
                     new DataBoxEdgeStorageContainerResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, DataBoxEdgeStorageContainerData.ToRequestContent(data), context);
+                using HttpMessage message = _containersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, DataBoxEdgeStorageContainerData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataBoxEdgeArmOperation<DataBoxEdgeStorageContainerResource> operation = new DataBoxEdgeArmOperation<DataBoxEdgeStorageContainerResource>(
                     new DataBoxEdgeStorageContainerResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, context);
+                using HttpMessage message = _containersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataBoxEdgeStorageContainerData> response = Response.FromValue(DataBoxEdgeStorageContainerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, context);
+                using HttpMessage message = _containersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataBoxEdgeStorageContainerData> response = Response.FromValue(DataBoxEdgeStorageContainerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, context);
+                using HttpMessage message = _containersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DataBoxEdgeStorageContainerData> response = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, context);
+                using HttpMessage message = _containersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DataBoxEdgeStorageContainerData> response = default;
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, context);
+                using HttpMessage message = _containersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DataBoxEdgeStorageContainerData> response = default;
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, context);
+                using HttpMessage message = _containersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DataBoxEdgeStorageContainerData> response = default;

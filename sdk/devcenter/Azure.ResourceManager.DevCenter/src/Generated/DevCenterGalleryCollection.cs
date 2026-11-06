@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _galleriesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, galleryName, DevCenterGalleryData.ToRequestContent(data), context);
+                using HttpMessage message = _galleriesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, galleryName, DevCenterGalleryData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevCenterArmOperation<DevCenterGalleryResource> operation = new DevCenterArmOperation<DevCenterGalleryResource>(
                     new DevCenterGalleryResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _galleriesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, galleryName, DevCenterGalleryData.ToRequestContent(data), context);
+                using HttpMessage message = _galleriesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, galleryName, DevCenterGalleryData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevCenterArmOperation<DevCenterGalleryResource> operation = new DevCenterArmOperation<DevCenterGalleryResource>(
                     new DevCenterGalleryResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _galleriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, galleryName, context);
+                using HttpMessage message = _galleriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, galleryName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevCenterGalleryData> response = Response.FromValue(DevCenterGalleryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _galleriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, galleryName, context);
+                using HttpMessage message = _galleriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, galleryName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevCenterGalleryData> response = Response.FromValue(DevCenterGalleryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _galleriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, galleryName, context);
+                using HttpMessage message = _galleriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, galleryName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DevCenterGalleryData> response = default;
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _galleriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, galleryName, context);
+                using HttpMessage message = _galleriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, galleryName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DevCenterGalleryData> response = default;
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _galleriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, galleryName, context);
+                using HttpMessage message = _galleriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, galleryName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DevCenterGalleryData> response = default;
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _galleriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, galleryName, context);
+                using HttpMessage message = _galleriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, galleryName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DevCenterGalleryData> response = default;

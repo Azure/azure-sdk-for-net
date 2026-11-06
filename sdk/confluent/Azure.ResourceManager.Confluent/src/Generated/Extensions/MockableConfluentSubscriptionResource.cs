@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SaaSOperationGroupRestClient.CreateActivateResourceRequest(Guid.Parse(Id.SubscriptionId), ActivateSaaSParameterContent.ToRequestContent(content), context);
+                using HttpMessage message = SaaSOperationGroupRestClient.CreateActivateResourceRequest(Guid.Parse(Id.SubscriptionId), ActivateSaaSParameterContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ConfluentArmOperation<SaaSResourceDetailsResult> operation = new ConfluentArmOperation<SaaSResourceDetailsResult>(
                     new SaaSResourceDetailsResultOperationSource(),
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SaaSOperationGroupRestClient.CreateActivateResourceRequest(Guid.Parse(Id.SubscriptionId), ActivateSaaSParameterContent.ToRequestContent(content), context);
+                using HttpMessage message = SaaSOperationGroupRestClient.CreateActivateResourceRequest(Guid.Parse(Id.SubscriptionId), ActivateSaaSParameterContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ConfluentArmOperation<SaaSResourceDetailsResult> operation = new ConfluentArmOperation<SaaSResourceDetailsResult>(
                     new SaaSResourceDetailsResultOperationSource(),
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = MarketplaceAgreementsOperationGroupRestClient.CreateCreateMarketplaceAgreementRequest(Guid.Parse(Id.SubscriptionId), ConfluentAgreement.ToRequestContent(body), context);
+                using HttpMessage message = MarketplaceAgreementsOperationGroupRestClient.CreateCreateMarketplaceAgreementRequest(Guid.Parse(Id.SubscriptionId), ConfluentAgreement.ToRequestContent(body), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConfluentAgreement> response = Response.FromValue(ConfluentAgreement.FromResponse(result), result);
                 if (response.Value == null)
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = MarketplaceAgreementsOperationGroupRestClient.CreateCreateMarketplaceAgreementRequest(Guid.Parse(Id.SubscriptionId), ConfluentAgreement.ToRequestContent(body), context);
+                using HttpMessage message = MarketplaceAgreementsOperationGroupRestClient.CreateCreateMarketplaceAgreementRequest(Guid.Parse(Id.SubscriptionId), ConfluentAgreement.ToRequestContent(body), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConfluentAgreement> response = Response.FromValue(ConfluentAgreement.FromResponse(result), result);
                 if (response.Value == null)

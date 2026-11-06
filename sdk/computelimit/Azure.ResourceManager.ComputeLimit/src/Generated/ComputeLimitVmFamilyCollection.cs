@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vmFamiliesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, vmFamilyName, context);
+                using HttpMessage message = _vmFamiliesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, vmFamilyName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ComputeLimitVmFamilyData> response = Response.FromValue(ComputeLimitVmFamilyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vmFamiliesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, vmFamilyName, context);
+                using HttpMessage message = _vmFamiliesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, vmFamilyName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ComputeLimitVmFamilyData> response = Response.FromValue(ComputeLimitVmFamilyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vmFamiliesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, vmFamilyName, context);
+                using HttpMessage message = _vmFamiliesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, vmFamilyName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ComputeLimitVmFamilyData> response = default;
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vmFamiliesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, vmFamilyName, context);
+                using HttpMessage message = _vmFamiliesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, vmFamilyName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ComputeLimitVmFamilyData> response = default;
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vmFamiliesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, vmFamilyName, context);
+                using HttpMessage message = _vmFamiliesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, vmFamilyName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ComputeLimitVmFamilyData> response = default;
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vmFamiliesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, vmFamilyName, context);
+                using HttpMessage message = _vmFamiliesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, vmFamilyName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ComputeLimitVmFamilyData> response = default;

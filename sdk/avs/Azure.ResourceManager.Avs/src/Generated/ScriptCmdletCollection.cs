@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scriptCmdletsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptCmdletName, context);
+                using HttpMessage message = _scriptCmdletsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptCmdletName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ScriptCmdletData> response = Response.FromValue(ScriptCmdletData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scriptCmdletsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptCmdletName, context);
+                using HttpMessage message = _scriptCmdletsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptCmdletName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ScriptCmdletData> response = Response.FromValue(ScriptCmdletData.FromResponse(result), result);
                 if (response.Value == null)
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scriptCmdletsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptCmdletName, context);
+                using HttpMessage message = _scriptCmdletsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptCmdletName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ScriptCmdletData> response = default;
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scriptCmdletsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptCmdletName, context);
+                using HttpMessage message = _scriptCmdletsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptCmdletName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ScriptCmdletData> response = default;
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scriptCmdletsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptCmdletName, context);
+                using HttpMessage message = _scriptCmdletsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptCmdletName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ScriptCmdletData> response = default;
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scriptCmdletsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptCmdletName, context);
+                using HttpMessage message = _scriptCmdletsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptCmdletName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ScriptCmdletData> response = default;

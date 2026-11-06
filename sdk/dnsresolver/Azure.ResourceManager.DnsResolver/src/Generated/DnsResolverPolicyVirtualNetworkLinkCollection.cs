@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dnsResolverPolicyVirtualNetworkLinksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dnsResolverPolicyVirtualNetworkLinkName, DnsResolverPolicyVirtualNetworkLinkData.ToRequestContent(data), matchConditions, context);
+                using HttpMessage message = _dnsResolverPolicyVirtualNetworkLinksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dnsResolverPolicyVirtualNetworkLinkName, DnsResolverPolicyVirtualNetworkLinkData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DnsResolverArmOperation<DnsResolverPolicyVirtualNetworkLinkResource> operation = new DnsResolverArmOperation<DnsResolverPolicyVirtualNetworkLinkResource>(
                     new DnsResolverPolicyVirtualNetworkLinkResourceOperationSource(Client),
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dnsResolverPolicyVirtualNetworkLinksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dnsResolverPolicyVirtualNetworkLinkName, DnsResolverPolicyVirtualNetworkLinkData.ToRequestContent(data), matchConditions, context);
+                using HttpMessage message = _dnsResolverPolicyVirtualNetworkLinksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dnsResolverPolicyVirtualNetworkLinkName, DnsResolverPolicyVirtualNetworkLinkData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DnsResolverArmOperation<DnsResolverPolicyVirtualNetworkLinkResource> operation = new DnsResolverArmOperation<DnsResolverPolicyVirtualNetworkLinkResource>(
                     new DnsResolverPolicyVirtualNetworkLinkResourceOperationSource(Client),
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dnsResolverPolicyVirtualNetworkLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dnsResolverPolicyVirtualNetworkLinkName, context);
+                using HttpMessage message = _dnsResolverPolicyVirtualNetworkLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dnsResolverPolicyVirtualNetworkLinkName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DnsResolverPolicyVirtualNetworkLinkData> response = Response.FromValue(DnsResolverPolicyVirtualNetworkLinkData.FromResponse(result), result);
                 if (response.Value == null)
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dnsResolverPolicyVirtualNetworkLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dnsResolverPolicyVirtualNetworkLinkName, context);
+                using HttpMessage message = _dnsResolverPolicyVirtualNetworkLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dnsResolverPolicyVirtualNetworkLinkName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DnsResolverPolicyVirtualNetworkLinkData> response = Response.FromValue(DnsResolverPolicyVirtualNetworkLinkData.FromResponse(result), result);
                 if (response.Value == null)
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dnsResolverPolicyVirtualNetworkLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dnsResolverPolicyVirtualNetworkLinkName, context);
+                using HttpMessage message = _dnsResolverPolicyVirtualNetworkLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dnsResolverPolicyVirtualNetworkLinkName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DnsResolverPolicyVirtualNetworkLinkData> response = default;
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dnsResolverPolicyVirtualNetworkLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dnsResolverPolicyVirtualNetworkLinkName, context);
+                using HttpMessage message = _dnsResolverPolicyVirtualNetworkLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dnsResolverPolicyVirtualNetworkLinkName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DnsResolverPolicyVirtualNetworkLinkData> response = default;
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dnsResolverPolicyVirtualNetworkLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dnsResolverPolicyVirtualNetworkLinkName, context);
+                using HttpMessage message = _dnsResolverPolicyVirtualNetworkLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dnsResolverPolicyVirtualNetworkLinkName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DnsResolverPolicyVirtualNetworkLinkData> response = default;
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dnsResolverPolicyVirtualNetworkLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dnsResolverPolicyVirtualNetworkLinkName, context);
+                using HttpMessage message = _dnsResolverPolicyVirtualNetworkLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dnsResolverPolicyVirtualNetworkLinkName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DnsResolverPolicyVirtualNetworkLinkData> response = default;

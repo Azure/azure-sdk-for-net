@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, reservationName, PureStorageReservationData.ToRequestContent(data), context);
+                using HttpMessage message = _reservationsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, reservationName, PureStorageReservationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PureStorageBlockArmOperation<PureStorageReservationResource> operation = new PureStorageBlockArmOperation<PureStorageReservationResource>(
                     new PureStorageReservationResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, reservationName, PureStorageReservationData.ToRequestContent(data), context);
+                using HttpMessage message = _reservationsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, reservationName, PureStorageReservationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PureStorageBlockArmOperation<PureStorageReservationResource> operation = new PureStorageBlockArmOperation<PureStorageReservationResource>(
                     new PureStorageReservationResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, reservationName, context);
+                using HttpMessage message = _reservationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, reservationName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PureStorageReservationData> response = Response.FromValue(PureStorageReservationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, reservationName, context);
+                using HttpMessage message = _reservationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, reservationName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PureStorageReservationData> response = Response.FromValue(PureStorageReservationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, reservationName, context);
+                using HttpMessage message = _reservationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, reservationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PureStorageReservationData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, reservationName, context);
+                using HttpMessage message = _reservationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, reservationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PureStorageReservationData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, reservationName, context);
+                using HttpMessage message = _reservationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, reservationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PureStorageReservationData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, reservationName, context);
+                using HttpMessage message = _reservationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, reservationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PureStorageReservationData> response = default;

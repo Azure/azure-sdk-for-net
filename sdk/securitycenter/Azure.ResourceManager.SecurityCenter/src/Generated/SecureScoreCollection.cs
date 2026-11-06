@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _secureScoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), secureScoreName, context);
+                using HttpMessage message = _secureScoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), secureScoreName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecureScoreData> response = Response.FromValue(SecureScoreData.FromResponse(result), result);
                 if (response.Value == null)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _secureScoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), secureScoreName, context);
+                using HttpMessage message = _secureScoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), secureScoreName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecureScoreData> response = Response.FromValue(SecureScoreData.FromResponse(result), result);
                 if (response.Value == null)
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _secureScoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), secureScoreName, context);
+                using HttpMessage message = _secureScoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), secureScoreName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SecureScoreData> response = default;
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _secureScoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), secureScoreName, context);
+                using HttpMessage message = _secureScoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), secureScoreName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SecureScoreData> response = default;
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _secureScoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), secureScoreName, context);
+                using HttpMessage message = _secureScoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), secureScoreName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SecureScoreData> response = default;
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _secureScoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), secureScoreName, context);
+                using HttpMessage message = _secureScoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), secureScoreName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SecureScoreData> response = default;

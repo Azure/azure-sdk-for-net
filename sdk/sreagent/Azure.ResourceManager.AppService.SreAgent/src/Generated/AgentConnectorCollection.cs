@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentsConnectorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectorName, AgentConnectorData.ToRequestContent(data), context);
+                using HttpMessage message = _agentsConnectorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectorName, AgentConnectorData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SreAgentArmOperation<AgentConnectorResource> operation = new SreAgentArmOperation<AgentConnectorResource>(
                     new AgentConnectorResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentsConnectorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectorName, AgentConnectorData.ToRequestContent(data), context);
+                using HttpMessage message = _agentsConnectorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectorName, AgentConnectorData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SreAgentArmOperation<AgentConnectorResource> operation = new SreAgentArmOperation<AgentConnectorResource>(
                     new AgentConnectorResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentsConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectorName, context);
+                using HttpMessage message = _agentsConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectorName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AgentConnectorData> response = Response.FromValue(AgentConnectorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentsConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectorName, context);
+                using HttpMessage message = _agentsConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectorName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AgentConnectorData> response = Response.FromValue(AgentConnectorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentsConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectorName, context);
+                using HttpMessage message = _agentsConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectorName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AgentConnectorData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentsConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectorName, context);
+                using HttpMessage message = _agentsConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectorName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AgentConnectorData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentsConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectorName, context);
+                using HttpMessage message = _agentsConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectorName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AgentConnectorData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentsConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectorName, context);
+                using HttpMessage message = _agentsConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectorName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AgentConnectorData> response = default;

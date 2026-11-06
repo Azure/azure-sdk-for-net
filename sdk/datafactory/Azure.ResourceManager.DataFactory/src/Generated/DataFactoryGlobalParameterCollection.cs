@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _globalParametersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, globalParameterName, DataFactoryGlobalParameterData.ToRequestContent(data), context);
+                using HttpMessage message = _globalParametersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, globalParameterName, DataFactoryGlobalParameterData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataFactoryGlobalParameterData> response = Response.FromValue(DataFactoryGlobalParameterData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _globalParametersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, globalParameterName, DataFactoryGlobalParameterData.ToRequestContent(data), context);
+                using HttpMessage message = _globalParametersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, globalParameterName, DataFactoryGlobalParameterData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataFactoryGlobalParameterData> response = Response.FromValue(DataFactoryGlobalParameterData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _globalParametersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, globalParameterName, context);
+                using HttpMessage message = _globalParametersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, globalParameterName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataFactoryGlobalParameterData> response = Response.FromValue(DataFactoryGlobalParameterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _globalParametersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, globalParameterName, context);
+                using HttpMessage message = _globalParametersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, globalParameterName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataFactoryGlobalParameterData> response = Response.FromValue(DataFactoryGlobalParameterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _globalParametersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, globalParameterName, context);
+                using HttpMessage message = _globalParametersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, globalParameterName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DataFactoryGlobalParameterData> response = default;
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _globalParametersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, globalParameterName, context);
+                using HttpMessage message = _globalParametersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, globalParameterName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DataFactoryGlobalParameterData> response = default;
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _globalParametersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, globalParameterName, context);
+                using HttpMessage message = _globalParametersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, globalParameterName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DataFactoryGlobalParameterData> response = default;
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _globalParametersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, globalParameterName, context);
+                using HttpMessage message = _globalParametersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, globalParameterName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DataFactoryGlobalParameterData> response = default;

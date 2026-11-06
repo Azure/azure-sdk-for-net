@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _supportTicketNoSubChatTranscriptRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _supportTicketNoSubChatTranscriptRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ChatTranscriptDetailData> response = Response.FromValue(ChatTranscriptDetailData.FromResponse(result), result);
                 if (response.Value == null)
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _supportTicketNoSubChatTranscriptRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _supportTicketNoSubChatTranscriptRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ChatTranscriptDetailData> response = Response.FromValue(ChatTranscriptDetailData.FromResponse(result), result);
                 if (response.Value == null)

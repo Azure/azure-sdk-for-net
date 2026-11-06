@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsSuppressionRulesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), alertsSuppressionRuleName, SecurityAlertsSuppressionRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _alertsSuppressionRulesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), alertsSuppressionRuleName, SecurityAlertsSuppressionRuleData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityAlertsSuppressionRuleData> response = Response.FromValue(SecurityAlertsSuppressionRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsSuppressionRulesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), alertsSuppressionRuleName, SecurityAlertsSuppressionRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _alertsSuppressionRulesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), alertsSuppressionRuleName, SecurityAlertsSuppressionRuleData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityAlertsSuppressionRuleData> response = Response.FromValue(SecurityAlertsSuppressionRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsSuppressionRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), alertsSuppressionRuleName, context);
+                using HttpMessage message = _alertsSuppressionRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), alertsSuppressionRuleName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityAlertsSuppressionRuleData> response = Response.FromValue(SecurityAlertsSuppressionRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsSuppressionRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), alertsSuppressionRuleName, context);
+                using HttpMessage message = _alertsSuppressionRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), alertsSuppressionRuleName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityAlertsSuppressionRuleData> response = Response.FromValue(SecurityAlertsSuppressionRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsSuppressionRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), alertsSuppressionRuleName, context);
+                using HttpMessage message = _alertsSuppressionRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), alertsSuppressionRuleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SecurityAlertsSuppressionRuleData> response = default;
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsSuppressionRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), alertsSuppressionRuleName, context);
+                using HttpMessage message = _alertsSuppressionRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), alertsSuppressionRuleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SecurityAlertsSuppressionRuleData> response = default;
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsSuppressionRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), alertsSuppressionRuleName, context);
+                using HttpMessage message = _alertsSuppressionRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), alertsSuppressionRuleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SecurityAlertsSuppressionRuleData> response = default;
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsSuppressionRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), alertsSuppressionRuleName, context);
+                using HttpMessage message = _alertsSuppressionRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), alertsSuppressionRuleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SecurityAlertsSuppressionRuleData> response = default;

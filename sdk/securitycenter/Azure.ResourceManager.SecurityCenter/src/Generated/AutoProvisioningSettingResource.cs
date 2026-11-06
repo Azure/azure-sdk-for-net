@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoProvisioningSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _autoProvisioningSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AutoProvisioningSettingData> response = Response.FromValue(AutoProvisioningSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoProvisioningSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _autoProvisioningSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AutoProvisioningSettingData> response = Response.FromValue(AutoProvisioningSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoProvisioningSettingsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, AutoProvisioningSettingData.ToRequestContent(data), context);
+                using HttpMessage message = _autoProvisioningSettingsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, AutoProvisioningSettingData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AutoProvisioningSettingData> response = Response.FromValue(AutoProvisioningSettingData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoProvisioningSettingsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, AutoProvisioningSettingData.ToRequestContent(data), context);
+                using HttpMessage message = _autoProvisioningSettingsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, AutoProvisioningSettingData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AutoProvisioningSettingData> response = Response.FromValue(AutoProvisioningSettingData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

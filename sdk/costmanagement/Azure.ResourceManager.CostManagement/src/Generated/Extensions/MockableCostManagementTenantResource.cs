@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ScheduledActionsRestClient.CreateCheckCostManagementNameAvailabilityByScheduledActionRequest(CostManagementNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = ScheduledActionsRestClient.CreateCheckCostManagementNameAvailabilityByScheduledActionRequest(CostManagementNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CostManagementNameAvailabilityResult> response = Response.FromValue(CostManagementNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ScheduledActionsRestClient.CreateCheckCostManagementNameAvailabilityByScheduledActionRequest(CostManagementNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = ScheduledActionsRestClient.CreateCheckCostManagementNameAvailabilityByScheduledActionRequest(CostManagementNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CostManagementNameAvailabilityResult> response = Response.FromValue(CostManagementNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ForecastRestClient.CreateExternalCloudProviderUsageForecastRequest(externalCloudProviderType.ToString(), externalCloudProviderId, ForecastDefinition.ToRequestContent(forecastDefinition), filter, context);
+                using HttpMessage message = ForecastRestClient.CreateExternalCloudProviderUsageForecastRequest(externalCloudProviderType.ToString(), externalCloudProviderId, ForecastDefinition.ToRequestContent(forecastDefinition), filter, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ForecastResult> response = Response.FromValue(ForecastResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ForecastRestClient.CreateExternalCloudProviderUsageForecastRequest(externalCloudProviderType.ToString(), externalCloudProviderId, ForecastDefinition.ToRequestContent(forecastDefinition), filter, context);
+                using HttpMessage message = ForecastRestClient.CreateExternalCloudProviderUsageForecastRequest(externalCloudProviderType.ToString(), externalCloudProviderId, ForecastDefinition.ToRequestContent(forecastDefinition), filter, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ForecastResult> response = Response.FromValue(ForecastResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = QueryRestClient.CreateUsageByExternalCloudProviderTypeQueryRequest(externalCloudProviderType.ToString(), externalCloudProviderId, QueryDefinition.ToRequestContent(queryDefinition), context);
+                using HttpMessage message = QueryRestClient.CreateUsageByExternalCloudProviderTypeQueryRequest(externalCloudProviderType.ToString(), externalCloudProviderId, QueryDefinition.ToRequestContent(queryDefinition), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<QueryResult> response = Response.FromValue(QueryResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -646,7 +646,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = QueryRestClient.CreateUsageByExternalCloudProviderTypeQueryRequest(externalCloudProviderType.ToString(), externalCloudProviderId, QueryDefinition.ToRequestContent(queryDefinition), context);
+                using HttpMessage message = QueryRestClient.CreateUsageByExternalCloudProviderTypeQueryRequest(externalCloudProviderType.ToString(), externalCloudProviderId, QueryDefinition.ToRequestContent(queryDefinition), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<QueryResult> response = Response.FromValue(QueryResult.FromResponse(result), result);
                 if (response.Value == null)

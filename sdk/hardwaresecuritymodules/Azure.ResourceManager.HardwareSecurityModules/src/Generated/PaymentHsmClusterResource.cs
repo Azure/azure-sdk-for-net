@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _paymentHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _paymentHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PaymentHsmClusterData> response = Response.FromValue(PaymentHsmClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _paymentHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _paymentHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PaymentHsmClusterData> response = Response.FromValue(PaymentHsmClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _paymentHsmClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PaymentHsmClusterPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _paymentHsmClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PaymentHsmClusterPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HardwareSecurityModulesArmOperation<PaymentHsmClusterResource> operation = new HardwareSecurityModulesArmOperation<PaymentHsmClusterResource>(
                     new PaymentHsmClusterResourceOperationSource(Client),
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _paymentHsmClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PaymentHsmClusterPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _paymentHsmClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PaymentHsmClusterPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HardwareSecurityModulesArmOperation<PaymentHsmClusterResource> operation = new HardwareSecurityModulesArmOperation<PaymentHsmClusterResource>(
                     new PaymentHsmClusterResourceOperationSource(Client),
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _paymentHsmClustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _paymentHsmClustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HardwareSecurityModulesArmOperation operation = new HardwareSecurityModulesArmOperation(_paymentHsmClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _paymentHsmClustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _paymentHsmClustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HardwareSecurityModulesArmOperation operation = new HardwareSecurityModulesArmOperation(_paymentHsmClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _paymentHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _paymentHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<PaymentHsmClusterData> response = Response.FromValue(PaymentHsmClusterData.FromResponse(result), result);
                     return Response.FromValue(new PaymentHsmClusterResource(Client, response.Value), response.GetRawResponse());
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _paymentHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _paymentHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<PaymentHsmClusterData> response = Response.FromValue(PaymentHsmClusterData.FromResponse(result), result);
                     return Response.FromValue(new PaymentHsmClusterResource(Client, response.Value), response.GetRawResponse());
@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _paymentHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _paymentHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<PaymentHsmClusterData> response = Response.FromValue(PaymentHsmClusterData.FromResponse(result), result);
                     return Response.FromValue(new PaymentHsmClusterResource(Client, response.Value), response.GetRawResponse());
@@ -645,7 +645,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _paymentHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _paymentHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<PaymentHsmClusterData> response = Response.FromValue(PaymentHsmClusterData.FromResponse(result), result);
                     return Response.FromValue(new PaymentHsmClusterResource(Client, response.Value), response.GetRawResponse());
@@ -687,7 +687,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _paymentHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _paymentHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<PaymentHsmClusterData> response = Response.FromValue(PaymentHsmClusterData.FromResponse(result), result);
                     return Response.FromValue(new PaymentHsmClusterResource(Client, response.Value), response.GetRawResponse());
@@ -733,7 +733,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _paymentHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _paymentHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<PaymentHsmClusterData> response = Response.FromValue(PaymentHsmClusterData.FromResponse(result), result);
                     return Response.FromValue(new PaymentHsmClusterResource(Client, response.Value), response.GetRawResponse());

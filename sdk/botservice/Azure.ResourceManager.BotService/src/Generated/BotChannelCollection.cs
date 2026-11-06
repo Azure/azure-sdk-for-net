@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.BotService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _botChannelsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName.ToString(), BotChannelData.ToRequestContent(data), context);
+                using HttpMessage message = _botChannelsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName.ToString(), BotChannelData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BotChannelData> response = Response.FromValue(BotChannelData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.BotService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _botChannelsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName.ToString(), BotChannelData.ToRequestContent(data), context);
+                using HttpMessage message = _botChannelsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName.ToString(), BotChannelData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BotChannelData> response = Response.FromValue(BotChannelData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

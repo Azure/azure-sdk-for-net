@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ipPrefixesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ipPrefixName, NetworkFabricIPPrefixData.ToRequestContent(data), context);
+                using HttpMessage message = _ipPrefixesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ipPrefixName, NetworkFabricIPPrefixData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<NetworkFabricIPPrefixResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricIPPrefixResource>(
                     new NetworkFabricIPPrefixResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ipPrefixesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ipPrefixName, NetworkFabricIPPrefixData.ToRequestContent(data), context);
+                using HttpMessage message = _ipPrefixesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ipPrefixName, NetworkFabricIPPrefixData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<NetworkFabricIPPrefixResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricIPPrefixResource>(
                     new NetworkFabricIPPrefixResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ipPrefixesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ipPrefixName, context);
+                using HttpMessage message = _ipPrefixesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ipPrefixName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkFabricIPPrefixData> response = Response.FromValue(NetworkFabricIPPrefixData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ipPrefixesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ipPrefixName, context);
+                using HttpMessage message = _ipPrefixesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ipPrefixName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkFabricIPPrefixData> response = Response.FromValue(NetworkFabricIPPrefixData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ipPrefixesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ipPrefixName, context);
+                using HttpMessage message = _ipPrefixesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ipPrefixName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkFabricIPPrefixData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ipPrefixesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ipPrefixName, context);
+                using HttpMessage message = _ipPrefixesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ipPrefixName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkFabricIPPrefixData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ipPrefixesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ipPrefixName, context);
+                using HttpMessage message = _ipPrefixesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ipPrefixName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkFabricIPPrefixData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ipPrefixesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ipPrefixName, context);
+                using HttpMessage message = _ipPrefixesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ipPrefixName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkFabricIPPrefixData> response = default;

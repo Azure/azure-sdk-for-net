@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nodePoolsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nodePoolName, DiscoveryNodePoolData.ToRequestContent(data), context);
+                using HttpMessage message = _nodePoolsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nodePoolName, DiscoveryNodePoolData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DiscoveryArmOperation<DiscoveryNodePoolResource> operation = new DiscoveryArmOperation<DiscoveryNodePoolResource>(
                     new DiscoveryNodePoolResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nodePoolsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nodePoolName, DiscoveryNodePoolData.ToRequestContent(data), context);
+                using HttpMessage message = _nodePoolsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nodePoolName, DiscoveryNodePoolData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DiscoveryArmOperation<DiscoveryNodePoolResource> operation = new DiscoveryArmOperation<DiscoveryNodePoolResource>(
                     new DiscoveryNodePoolResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nodePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nodePoolName, context);
+                using HttpMessage message = _nodePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nodePoolName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DiscoveryNodePoolData> response = Response.FromValue(DiscoveryNodePoolData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nodePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nodePoolName, context);
+                using HttpMessage message = _nodePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nodePoolName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DiscoveryNodePoolData> response = Response.FromValue(DiscoveryNodePoolData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nodePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nodePoolName, context);
+                using HttpMessage message = _nodePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nodePoolName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DiscoveryNodePoolData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nodePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nodePoolName, context);
+                using HttpMessage message = _nodePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nodePoolName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DiscoveryNodePoolData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nodePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nodePoolName, context);
+                using HttpMessage message = _nodePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nodePoolName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DiscoveryNodePoolData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nodePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nodePoolName, context);
+                using HttpMessage message = _nodePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nodePoolName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DiscoveryNodePoolData> response = default;

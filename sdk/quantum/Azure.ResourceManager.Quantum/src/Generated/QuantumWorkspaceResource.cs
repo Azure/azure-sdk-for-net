@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Quantum
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<QuantumWorkspaceData> response = Response.FromValue(QuantumWorkspaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Quantum
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<QuantumWorkspaceData> response = Response.FromValue(QuantumWorkspaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Quantum
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, QuantumWorkspacePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _workspacesRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, QuantumWorkspacePatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<QuantumWorkspaceData> response = Response.FromValue(QuantumWorkspaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Quantum
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, QuantumWorkspacePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _workspacesRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, QuantumWorkspacePatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<QuantumWorkspaceData> response = Response.FromValue(QuantumWorkspaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Quantum
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _workspacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 QuantumArmOperation operation = new QuantumArmOperation(_workspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Quantum
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _workspacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 QuantumArmOperation operation = new QuantumArmOperation(_workspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.Quantum
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateGetKeysWorkspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _workspacesRestClient.CreateGetKeysWorkspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WorkspaceKeyListResult> response = Response.FromValue(WorkspaceKeyListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.Quantum
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateGetKeysWorkspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _workspacesRestClient.CreateGetKeysWorkspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WorkspaceKeyListResult> response = Response.FromValue(WorkspaceKeyListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.Quantum
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateRegenerateKeysWorkspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WorkspaceApiKeys.ToRequestContent(keySpecification), context);
+                using HttpMessage message = _workspacesRestClient.CreateRegenerateKeysWorkspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WorkspaceApiKeys.ToRequestContent(keySpecification), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.Quantum
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateRegenerateKeysWorkspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WorkspaceApiKeys.ToRequestContent(keySpecification), context);
+                using HttpMessage message = _workspacesRestClient.CreateRegenerateKeysWorkspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WorkspaceApiKeys.ToRequestContent(keySpecification), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.Quantum
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<QuantumWorkspaceData> response = Response.FromValue(QuantumWorkspaceData.FromResponse(result), result);
                     return Response.FromValue(new QuantumWorkspaceResource(Client, response.Value), response.GetRawResponse());
@@ -659,7 +659,7 @@ namespace Azure.ResourceManager.Quantum
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<QuantumWorkspaceData> response = Response.FromValue(QuantumWorkspaceData.FromResponse(result), result);
                     return Response.FromValue(new QuantumWorkspaceResource(Client, response.Value), response.GetRawResponse());
@@ -705,7 +705,7 @@ namespace Azure.ResourceManager.Quantum
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<QuantumWorkspaceData> response = Response.FromValue(QuantumWorkspaceData.FromResponse(result), result);
                     return Response.FromValue(new QuantumWorkspaceResource(Client, response.Value), response.GetRawResponse());
@@ -747,7 +747,7 @@ namespace Azure.ResourceManager.Quantum
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<QuantumWorkspaceData> response = Response.FromValue(QuantumWorkspaceData.FromResponse(result), result);
                     return Response.FromValue(new QuantumWorkspaceResource(Client, response.Value), response.GetRawResponse());
@@ -789,7 +789,7 @@ namespace Azure.ResourceManager.Quantum
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<QuantumWorkspaceData> response = Response.FromValue(QuantumWorkspaceData.FromResponse(result), result);
                     return Response.FromValue(new QuantumWorkspaceResource(Client, response.Value), response.GetRawResponse());
@@ -835,7 +835,7 @@ namespace Azure.ResourceManager.Quantum
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<QuantumWorkspaceData> response = Response.FromValue(QuantumWorkspaceData.FromResponse(result), result);
                     return Response.FromValue(new QuantumWorkspaceResource(Client, response.Value), response.GetRawResponse());

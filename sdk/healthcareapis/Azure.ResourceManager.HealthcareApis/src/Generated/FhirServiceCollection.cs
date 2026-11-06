@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fhirServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fhirServiceName, FhirServiceData.ToRequestContent(data), context);
+                using HttpMessage message = _fhirServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fhirServiceName, FhirServiceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HealthcareApisArmOperation<FhirServiceResource> operation = new HealthcareApisArmOperation<FhirServiceResource>(
                     new FhirServiceResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fhirServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fhirServiceName, FhirServiceData.ToRequestContent(data), context);
+                using HttpMessage message = _fhirServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fhirServiceName, FhirServiceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HealthcareApisArmOperation<FhirServiceResource> operation = new HealthcareApisArmOperation<FhirServiceResource>(
                     new FhirServiceResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fhirServicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fhirServiceName, context);
+                using HttpMessage message = _fhirServicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fhirServiceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FhirServiceData> response = Response.FromValue(FhirServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fhirServicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fhirServiceName, context);
+                using HttpMessage message = _fhirServicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fhirServiceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FhirServiceData> response = Response.FromValue(FhirServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fhirServicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fhirServiceName, context);
+                using HttpMessage message = _fhirServicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fhirServiceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<FhirServiceData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fhirServicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fhirServiceName, context);
+                using HttpMessage message = _fhirServicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fhirServiceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<FhirServiceData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fhirServicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fhirServiceName, context);
+                using HttpMessage message = _fhirServicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fhirServiceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<FhirServiceData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fhirServicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fhirServiceName, context);
+                using HttpMessage message = _fhirServicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fhirServiceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<FhirServiceData> response = default;

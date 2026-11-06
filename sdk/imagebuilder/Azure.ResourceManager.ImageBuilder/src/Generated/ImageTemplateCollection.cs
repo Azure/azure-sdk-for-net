@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ImageBuilder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, imageTemplateName, ImageTemplateData.ToRequestContent(data), context);
+                using HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, imageTemplateName, ImageTemplateData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ImageBuilderArmOperation<ImageTemplateResource> operation = new ImageBuilderArmOperation<ImageTemplateResource>(
                     new ImageTemplateResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ImageBuilder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, imageTemplateName, ImageTemplateData.ToRequestContent(data), context);
+                using HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, imageTemplateName, ImageTemplateData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ImageBuilderArmOperation<ImageTemplateResource> operation = new ImageBuilderArmOperation<ImageTemplateResource>(
                     new ImageTemplateResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ImageBuilder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, imageTemplateName, context);
+                using HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, imageTemplateName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ImageTemplateData> response = Response.FromValue(ImageTemplateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ImageBuilder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, imageTemplateName, context);
+                using HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, imageTemplateName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ImageTemplateData> response = Response.FromValue(ImageTemplateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.ImageBuilder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, imageTemplateName, context);
+                using HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, imageTemplateName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ImageTemplateData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.ImageBuilder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, imageTemplateName, context);
+                using HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, imageTemplateName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ImageTemplateData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.ImageBuilder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, imageTemplateName, context);
+                using HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, imageTemplateName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ImageTemplateData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.ImageBuilder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, imageTemplateName, context);
+                using HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, imageTemplateName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ImageTemplateData> response = default;

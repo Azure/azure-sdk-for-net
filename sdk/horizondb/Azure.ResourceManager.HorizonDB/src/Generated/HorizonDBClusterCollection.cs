@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBClustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, HorizonDBClusterData.ToRequestContent(data), context);
+                using HttpMessage message = _horizonDBClustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, HorizonDBClusterData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HorizonDBArmOperation<HorizonDBClusterResource> operation = new HorizonDBArmOperation<HorizonDBClusterResource>(
                     new HorizonDBClusterResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBClustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, HorizonDBClusterData.ToRequestContent(data), context);
+                using HttpMessage message = _horizonDBClustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, HorizonDBClusterData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HorizonDBArmOperation<HorizonDBClusterResource> operation = new HorizonDBArmOperation<HorizonDBClusterResource>(
                     new HorizonDBClusterResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, context);
+                using HttpMessage message = _horizonDBClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HorizonDBClusterData> response = Response.FromValue(HorizonDBClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, context);
+                using HttpMessage message = _horizonDBClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HorizonDBClusterData> response = Response.FromValue(HorizonDBClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, context);
+                using HttpMessage message = _horizonDBClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HorizonDBClusterData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, context);
+                using HttpMessage message = _horizonDBClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HorizonDBClusterData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, context);
+                using HttpMessage message = _horizonDBClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HorizonDBClusterData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, context);
+                using HttpMessage message = _horizonDBClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HorizonDBClusterData> response = default;

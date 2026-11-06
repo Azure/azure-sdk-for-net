@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Grafana
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedDashboardsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, dashboardName, ManagedDashboardData.ToRequestContent(data), context);
+                using HttpMessage message = _managedDashboardsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, dashboardName, ManagedDashboardData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 GrafanaArmOperation<ManagedDashboardResource> operation = new GrafanaArmOperation<ManagedDashboardResource>(
                     new ManagedDashboardResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Grafana
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedDashboardsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, dashboardName, ManagedDashboardData.ToRequestContent(data), context);
+                using HttpMessage message = _managedDashboardsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, dashboardName, ManagedDashboardData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 GrafanaArmOperation<ManagedDashboardResource> operation = new GrafanaArmOperation<ManagedDashboardResource>(
                     new ManagedDashboardResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Grafana
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedDashboardsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, dashboardName, context);
+                using HttpMessage message = _managedDashboardsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, dashboardName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ManagedDashboardData> response = Response.FromValue(ManagedDashboardData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Grafana
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedDashboardsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, dashboardName, context);
+                using HttpMessage message = _managedDashboardsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, dashboardName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ManagedDashboardData> response = Response.FromValue(ManagedDashboardData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Grafana
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedDashboardsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, dashboardName, context);
+                using HttpMessage message = _managedDashboardsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, dashboardName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ManagedDashboardData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Grafana
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedDashboardsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, dashboardName, context);
+                using HttpMessage message = _managedDashboardsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, dashboardName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ManagedDashboardData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Grafana
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedDashboardsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, dashboardName, context);
+                using HttpMessage message = _managedDashboardsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, dashboardName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ManagedDashboardData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Grafana
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedDashboardsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, dashboardName, context);
+                using HttpMessage message = _managedDashboardsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, dashboardName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ManagedDashboardData> response = default;

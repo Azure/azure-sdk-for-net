@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _externalCachesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, externalCacheResourceName, context);
+                using HttpMessage message = _externalCachesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, externalCacheResourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExternalCacheData> response = Response.FromValue(ExternalCacheData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _externalCachesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, externalCacheResourceName, context);
+                using HttpMessage message = _externalCachesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, externalCacheResourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExternalCacheData> response = Response.FromValue(ExternalCacheData.FromResponse(result), result);
                 if (response.Value == null)
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _externalCachesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, externalCacheResourceName, context);
+                using HttpMessage message = _externalCachesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, externalCacheResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ExternalCacheData> response = default;
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _externalCachesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, externalCacheResourceName, context);
+                using HttpMessage message = _externalCachesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, externalCacheResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ExternalCacheData> response = default;
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _externalCachesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, externalCacheResourceName, context);
+                using HttpMessage message = _externalCachesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, externalCacheResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ExternalCacheData> response = default;
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _externalCachesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, externalCacheResourceName, context);
+                using HttpMessage message = _externalCachesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, externalCacheResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ExternalCacheData> response = default;

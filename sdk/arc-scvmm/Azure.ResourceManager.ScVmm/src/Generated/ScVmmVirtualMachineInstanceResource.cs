@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineInstancesRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), ScVmmVirtualMachineInstanceData.ToRequestContent(data), context);
+                using HttpMessage message = _virtualMachineInstancesRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), ScVmmVirtualMachineInstanceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ScVmmArmOperation<ScVmmVirtualMachineInstanceResource> operation = new ScVmmArmOperation<ScVmmVirtualMachineInstanceResource>(
                     new ScVmmVirtualMachineInstanceResourceOperationSource(Client),
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineInstancesRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), ScVmmVirtualMachineInstanceData.ToRequestContent(data), context);
+                using HttpMessage message = _virtualMachineInstancesRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), ScVmmVirtualMachineInstanceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ScVmmArmOperation<ScVmmVirtualMachineInstanceResource> operation = new ScVmmArmOperation<ScVmmVirtualMachineInstanceResource>(
                     new ScVmmVirtualMachineInstanceResourceOperationSource(Client),
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineInstancesRestClient.CreateGetRequest(Id.Parent.ToString(), context);
+                using HttpMessage message = _virtualMachineInstancesRestClient.CreateGetRequest(Id.Parent.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ScVmmVirtualMachineInstanceData> response = Response.FromValue(ScVmmVirtualMachineInstanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineInstancesRestClient.CreateGetRequest(Id.Parent.ToString(), context);
+                using HttpMessage message = _virtualMachineInstancesRestClient.CreateGetRequest(Id.Parent.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ScVmmVirtualMachineInstanceData> response = Response.FromValue(ScVmmVirtualMachineInstanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineInstancesRestClient.CreateUpdateRequest(Id.Parent.ToString(), ScVmmVirtualMachineInstancePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _virtualMachineInstancesRestClient.CreateUpdateRequest(Id.Parent.ToString(), ScVmmVirtualMachineInstancePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ScVmmArmOperation<ScVmmVirtualMachineInstanceResource> operation = new ScVmmArmOperation<ScVmmVirtualMachineInstanceResource>(
                     new ScVmmVirtualMachineInstanceResourceOperationSource(Client),
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineInstancesRestClient.CreateUpdateRequest(Id.Parent.ToString(), ScVmmVirtualMachineInstancePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _virtualMachineInstancesRestClient.CreateUpdateRequest(Id.Parent.ToString(), ScVmmVirtualMachineInstancePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ScVmmArmOperation<ScVmmVirtualMachineInstanceResource> operation = new ScVmmArmOperation<ScVmmVirtualMachineInstanceResource>(
                     new ScVmmVirtualMachineInstanceResourceOperationSource(Client),
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineInstancesRestClient.CreateDeleteRequest(Id.Parent.ToString(), force?.ToString(), deleteFromHost?.ToString(), context);
+                using HttpMessage message = _virtualMachineInstancesRestClient.CreateDeleteRequest(Id.Parent.ToString(), force?.ToString(), deleteFromHost?.ToString(), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ScVmmArmOperation operation = new ScVmmArmOperation(_virtualMachineInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineInstancesRestClient.CreateDeleteRequest(Id.Parent.ToString(), force?.ToString(), deleteFromHost?.ToString(), context);
+                using HttpMessage message = _virtualMachineInstancesRestClient.CreateDeleteRequest(Id.Parent.ToString(), force?.ToString(), deleteFromHost?.ToString(), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ScVmmArmOperation operation = new ScVmmArmOperation(_virtualMachineInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineInstancesRestClient.CreateCreateCheckpointRequest(Id.Parent.ToString(), VirtualMachineCreateCheckpointContent.ToRequestContent(content), context);
+                using HttpMessage message = _virtualMachineInstancesRestClient.CreateCreateCheckpointRequest(Id.Parent.ToString(), VirtualMachineCreateCheckpointContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ScVmmArmOperation operation = new ScVmmArmOperation(_virtualMachineInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineInstancesRestClient.CreateCreateCheckpointRequest(Id.Parent.ToString(), VirtualMachineCreateCheckpointContent.ToRequestContent(content), context);
+                using HttpMessage message = _virtualMachineInstancesRestClient.CreateCreateCheckpointRequest(Id.Parent.ToString(), VirtualMachineCreateCheckpointContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ScVmmArmOperation operation = new ScVmmArmOperation(_virtualMachineInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineInstancesRestClient.CreateDeleteCheckpointRequest(Id.Parent.ToString(), VirtualMachineDeleteCheckpointContent.ToRequestContent(content), context);
+                using HttpMessage message = _virtualMachineInstancesRestClient.CreateDeleteCheckpointRequest(Id.Parent.ToString(), VirtualMachineDeleteCheckpointContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ScVmmArmOperation operation = new ScVmmArmOperation(_virtualMachineInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -707,7 +707,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineInstancesRestClient.CreateDeleteCheckpointRequest(Id.Parent.ToString(), VirtualMachineDeleteCheckpointContent.ToRequestContent(content), context);
+                using HttpMessage message = _virtualMachineInstancesRestClient.CreateDeleteCheckpointRequest(Id.Parent.ToString(), VirtualMachineDeleteCheckpointContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ScVmmArmOperation operation = new ScVmmArmOperation(_virtualMachineInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -756,7 +756,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineInstancesRestClient.CreateRestartRequest(Id.Parent.ToString(), context);
+                using HttpMessage message = _virtualMachineInstancesRestClient.CreateRestartRequest(Id.Parent.ToString(), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ScVmmArmOperation operation = new ScVmmArmOperation(_virtualMachineInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -805,7 +805,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineInstancesRestClient.CreateRestartRequest(Id.Parent.ToString(), context);
+                using HttpMessage message = _virtualMachineInstancesRestClient.CreateRestartRequest(Id.Parent.ToString(), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ScVmmArmOperation operation = new ScVmmArmOperation(_virtualMachineInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -855,7 +855,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineInstancesRestClient.CreateRestoreCheckpointRequest(Id.Parent.ToString(), VirtualMachineRestoreCheckpointContent.ToRequestContent(content), context);
+                using HttpMessage message = _virtualMachineInstancesRestClient.CreateRestoreCheckpointRequest(Id.Parent.ToString(), VirtualMachineRestoreCheckpointContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ScVmmArmOperation operation = new ScVmmArmOperation(_virtualMachineInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -905,7 +905,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineInstancesRestClient.CreateRestoreCheckpointRequest(Id.Parent.ToString(), VirtualMachineRestoreCheckpointContent.ToRequestContent(content), context);
+                using HttpMessage message = _virtualMachineInstancesRestClient.CreateRestoreCheckpointRequest(Id.Parent.ToString(), VirtualMachineRestoreCheckpointContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ScVmmArmOperation operation = new ScVmmArmOperation(_virtualMachineInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -954,7 +954,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineInstancesRestClient.CreateStartRequest(Id.Parent.ToString(), context);
+                using HttpMessage message = _virtualMachineInstancesRestClient.CreateStartRequest(Id.Parent.ToString(), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ScVmmArmOperation operation = new ScVmmArmOperation(_virtualMachineInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1003,7 +1003,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineInstancesRestClient.CreateStartRequest(Id.Parent.ToString(), context);
+                using HttpMessage message = _virtualMachineInstancesRestClient.CreateStartRequest(Id.Parent.ToString(), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ScVmmArmOperation operation = new ScVmmArmOperation(_virtualMachineInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1053,7 +1053,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineInstancesRestClient.CreateStopRequest(Id.Parent.ToString(), StopVirtualMachineContent.ToRequestContent(content), context);
+                using HttpMessage message = _virtualMachineInstancesRestClient.CreateStopRequest(Id.Parent.ToString(), StopVirtualMachineContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ScVmmArmOperation operation = new ScVmmArmOperation(_virtualMachineInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1103,7 +1103,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineInstancesRestClient.CreateStopRequest(Id.Parent.ToString(), StopVirtualMachineContent.ToRequestContent(content), context);
+                using HttpMessage message = _virtualMachineInstancesRestClient.CreateStopRequest(Id.Parent.ToString(), StopVirtualMachineContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ScVmmArmOperation operation = new ScVmmArmOperation(_virtualMachineInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

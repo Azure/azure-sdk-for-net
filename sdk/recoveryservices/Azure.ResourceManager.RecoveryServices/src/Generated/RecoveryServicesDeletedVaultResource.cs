@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedVaultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _deletedVaultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RecoveryServicesDeletedVaultData> response = Response.FromValue(RecoveryServicesDeletedVaultData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedVaultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _deletedVaultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RecoveryServicesDeletedVaultData> response = Response.FromValue(RecoveryServicesDeletedVaultData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedVaultsRestClient.CreateRestoreDeletedVaultRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, DeletedVaultRestoreInput.ToRequestContent(content), context);
+                using HttpMessage message = _deletedVaultsRestClient.CreateRestoreDeletedVaultRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, DeletedVaultRestoreInput.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesArmOperation operation = new RecoveryServicesArmOperation(_deletedVaultsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedVaultsRestClient.CreateRestoreDeletedVaultRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, DeletedVaultRestoreInput.ToRequestContent(content), context);
+                using HttpMessage message = _deletedVaultsRestClient.CreateRestoreDeletedVaultRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, DeletedVaultRestoreInput.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesArmOperation operation = new RecoveryServicesArmOperation(_deletedVaultsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

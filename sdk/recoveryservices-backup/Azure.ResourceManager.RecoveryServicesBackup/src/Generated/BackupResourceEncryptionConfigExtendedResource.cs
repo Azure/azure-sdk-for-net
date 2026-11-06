@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupResourceEncryptionConfigsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, BackupResourceEncryptionConfigExtendedCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _backupResourceEncryptionConfigsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, BackupResourceEncryptionConfigExtendedCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupResourceEncryptionConfigsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, BackupResourceEncryptionConfigExtendedCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _backupResourceEncryptionConfigsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, BackupResourceEncryptionConfigExtendedCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupResourceEncryptionConfigsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _backupResourceEncryptionConfigsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BackupResourceEncryptionConfigExtendedData> response = Response.FromValue(BackupResourceEncryptionConfigExtendedData.FromResponse(result), result);
                 if (response.Value == null)
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupResourceEncryptionConfigsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _backupResourceEncryptionConfigsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BackupResourceEncryptionConfigExtendedData> response = Response.FromValue(BackupResourceEncryptionConfigExtendedData.FromResponse(result), result);
                 if (response.Value == null)

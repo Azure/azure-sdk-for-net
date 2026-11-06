@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetTiersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tierName, FleetTierData.ToRequestContent(data), context);
+                using HttpMessage message = _fleetTiersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tierName, FleetTierData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DatabaseFleetManagerArmOperation<FleetTierResource> operation = new DatabaseFleetManagerArmOperation<FleetTierResource>(
                     new FleetTierResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetTiersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tierName, FleetTierData.ToRequestContent(data), context);
+                using HttpMessage message = _fleetTiersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tierName, FleetTierData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DatabaseFleetManagerArmOperation<FleetTierResource> operation = new DatabaseFleetManagerArmOperation<FleetTierResource>(
                     new FleetTierResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetTiersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tierName, context);
+                using HttpMessage message = _fleetTiersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tierName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FleetTierData> response = Response.FromValue(FleetTierData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetTiersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tierName, context);
+                using HttpMessage message = _fleetTiersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tierName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FleetTierData> response = Response.FromValue(FleetTierData.FromResponse(result), result);
                 if (response.Value == null)
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetTiersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tierName, context);
+                using HttpMessage message = _fleetTiersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tierName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<FleetTierData> response = default;
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetTiersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tierName, context);
+                using HttpMessage message = _fleetTiersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tierName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<FleetTierData> response = default;
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetTiersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tierName, context);
+                using HttpMessage message = _fleetTiersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tierName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<FleetTierData> response = default;
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetTiersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tierName, context);
+                using HttpMessage message = _fleetTiersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tierName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<FleetTierData> response = default;

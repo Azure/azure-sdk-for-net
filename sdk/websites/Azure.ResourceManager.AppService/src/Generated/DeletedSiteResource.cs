@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _globalRestClient.CreateGetDeletedWebAppRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _globalRestClient.CreateGetDeletedWebAppRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DeletedSiteData> response = Response.FromValue(DeletedSiteData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _globalRestClient.CreateGetDeletedWebAppRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _globalRestClient.CreateGetDeletedWebAppRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DeletedSiteData> response = Response.FromValue(DeletedSiteData.FromResponse(result), result);
                 if (response.Value == null)

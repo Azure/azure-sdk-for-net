@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.StorageMover
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobDefinitionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _jobDefinitionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<JobDefinitionData> response = Response.FromValue(JobDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.StorageMover
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobDefinitionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _jobDefinitionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<JobDefinitionData> response = Response.FromValue(JobDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.StorageMover
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobDefinitionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, JobDefinitionPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _jobDefinitionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, JobDefinitionPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<JobDefinitionData> response = Response.FromValue(JobDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.StorageMover
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobDefinitionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, JobDefinitionPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _jobDefinitionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, JobDefinitionPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<JobDefinitionData> response = Response.FromValue(JobDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.StorageMover
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobDefinitionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _jobDefinitionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageMoverArmOperation operation = new StorageMoverArmOperation(_jobDefinitionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.StorageMover
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobDefinitionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _jobDefinitionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageMoverArmOperation operation = new StorageMoverArmOperation(_jobDefinitionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.StorageMover
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobDefinitionsRestClient.CreateReconcileJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _jobDefinitionsRestClient.CreateReconcileJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<JobRunResourceId> response = Response.FromValue(JobRunResourceId.FromResponse(result), result);
                 if (response.Value == null)
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.StorageMover
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobDefinitionsRestClient.CreateReconcileJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _jobDefinitionsRestClient.CreateReconcileJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<JobRunResourceId> response = Response.FromValue(JobRunResourceId.FromResponse(result), result);
                 if (response.Value == null)
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.StorageMover
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobDefinitionsRestClient.CreateStartJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _jobDefinitionsRestClient.CreateStartJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<JobRunResourceId> response = Response.FromValue(JobRunResourceId.FromResponse(result), result);
                 if (response.Value == null)
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.StorageMover
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobDefinitionsRestClient.CreateStartJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _jobDefinitionsRestClient.CreateStartJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<JobRunResourceId> response = Response.FromValue(JobRunResourceId.FromResponse(result), result);
                 if (response.Value == null)
@@ -615,7 +615,7 @@ namespace Azure.ResourceManager.StorageMover
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobDefinitionsRestClient.CreateStopJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _jobDefinitionsRestClient.CreateStopJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<JobRunResourceId> response = Response.FromValue(JobRunResourceId.FromResponse(result), result);
                 if (response.Value == null)
@@ -663,7 +663,7 @@ namespace Azure.ResourceManager.StorageMover
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobDefinitionsRestClient.CreateStopJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _jobDefinitionsRestClient.CreateStopJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<JobRunResourceId> response = Response.FromValue(JobRunResourceId.FromResponse(result), result);
                 if (response.Value == null)

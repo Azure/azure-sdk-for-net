@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _disksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, DevTestLabDiskData.ToRequestContent(data), context);
+                using HttpMessage message = _disksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, DevTestLabDiskData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevTestLabsArmOperation<DevTestLabDiskResource> operation = new DevTestLabsArmOperation<DevTestLabDiskResource>(
                     new DevTestLabDiskResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _disksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, DevTestLabDiskData.ToRequestContent(data), context);
+                using HttpMessage message = _disksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, DevTestLabDiskData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevTestLabsArmOperation<DevTestLabDiskResource> operation = new DevTestLabsArmOperation<DevTestLabDiskResource>(
                     new DevTestLabDiskResourceOperationSource(Client),
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _disksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, expand, context);
+                using HttpMessage message = _disksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevTestLabDiskData> response = Response.FromValue(DevTestLabDiskData.FromResponse(result), result);
                 if (response.Value == null)
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _disksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, expand, context);
+                using HttpMessage message = _disksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevTestLabDiskData> response = Response.FromValue(DevTestLabDiskData.FromResponse(result), result);
                 if (response.Value == null)
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _disksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, expand, context);
+                using HttpMessage message = _disksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DevTestLabDiskData> response = default;
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _disksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, expand, context);
+                using HttpMessage message = _disksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DevTestLabDiskData> response = default;
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _disksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, expand, context);
+                using HttpMessage message = _disksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DevTestLabDiskData> response = default;
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _disksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, expand, context);
+                using HttpMessage message = _disksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DevTestLabDiskData> response = default;

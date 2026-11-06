@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkSecurityGroupName, HciVmNetworkSecurityGroupData.ToRequestContent(data), context);
+                using HttpMessage message = _networkSecurityGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkSecurityGroupName, HciVmNetworkSecurityGroupData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation<HciVmNetworkSecurityGroupResource> operation = new VmArmOperation<HciVmNetworkSecurityGroupResource>(
                     new HciVmNetworkSecurityGroupResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkSecurityGroupName, HciVmNetworkSecurityGroupData.ToRequestContent(data), context);
+                using HttpMessage message = _networkSecurityGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkSecurityGroupName, HciVmNetworkSecurityGroupData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation<HciVmNetworkSecurityGroupResource> operation = new VmArmOperation<HciVmNetworkSecurityGroupResource>(
                     new HciVmNetworkSecurityGroupResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkSecurityGroupName, context);
+                using HttpMessage message = _networkSecurityGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkSecurityGroupName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HciVmNetworkSecurityGroupData> response = Response.FromValue(HciVmNetworkSecurityGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkSecurityGroupName, context);
+                using HttpMessage message = _networkSecurityGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkSecurityGroupName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HciVmNetworkSecurityGroupData> response = Response.FromValue(HciVmNetworkSecurityGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkSecurityGroupName, context);
+                using HttpMessage message = _networkSecurityGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkSecurityGroupName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HciVmNetworkSecurityGroupData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkSecurityGroupName, context);
+                using HttpMessage message = _networkSecurityGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkSecurityGroupName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HciVmNetworkSecurityGroupData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkSecurityGroupName, context);
+                using HttpMessage message = _networkSecurityGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkSecurityGroupName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HciVmNetworkSecurityGroupData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkSecurityGroupName, context);
+                using HttpMessage message = _networkSecurityGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkSecurityGroupName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HciVmNetworkSecurityGroupData> response = default;

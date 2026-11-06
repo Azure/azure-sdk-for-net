@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _virtualNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ScVmmVirtualNetworkData> response = Response.FromValue(ScVmmVirtualNetworkData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _virtualNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ScVmmVirtualNetworkData> response = Response.FromValue(ScVmmVirtualNetworkData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworksRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ScVmmResourcePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _virtualNetworksRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ScVmmResourcePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ScVmmArmOperation<ScVmmVirtualNetworkResource> operation = new ScVmmArmOperation<ScVmmVirtualNetworkResource>(
                     new ScVmmVirtualNetworkResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworksRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ScVmmResourcePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _virtualNetworksRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ScVmmResourcePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ScVmmArmOperation<ScVmmVirtualNetworkResource> operation = new ScVmmArmOperation<ScVmmVirtualNetworkResource>(
                     new ScVmmVirtualNetworkResourceOperationSource(Client),
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworksRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, force?.ToString(), context);
+                using HttpMessage message = _virtualNetworksRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, force?.ToString(), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ScVmmArmOperation operation = new ScVmmArmOperation(_virtualNetworksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworksRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, force?.ToString(), context);
+                using HttpMessage message = _virtualNetworksRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, force?.ToString(), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ScVmmArmOperation operation = new ScVmmArmOperation(_virtualNetworksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.ScVmm
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _virtualNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ScVmmVirtualNetworkData> response = Response.FromValue(ScVmmVirtualNetworkData.FromResponse(result), result);
                     return Response.FromValue(new ScVmmVirtualNetworkResource(Client, response.Value), response.GetRawResponse());
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.ScVmm
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _virtualNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ScVmmVirtualNetworkData> response = Response.FromValue(ScVmmVirtualNetworkData.FromResponse(result), result);
                     return Response.FromValue(new ScVmmVirtualNetworkResource(Client, response.Value), response.GetRawResponse());
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.ScVmm
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _virtualNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ScVmmVirtualNetworkData> response = Response.FromValue(ScVmmVirtualNetworkData.FromResponse(result), result);
                     return Response.FromValue(new ScVmmVirtualNetworkResource(Client, response.Value), response.GetRawResponse());
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.ScVmm
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _virtualNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ScVmmVirtualNetworkData> response = Response.FromValue(ScVmmVirtualNetworkData.FromResponse(result), result);
                     return Response.FromValue(new ScVmmVirtualNetworkResource(Client, response.Value), response.GetRawResponse());
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.ScVmm
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _virtualNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ScVmmVirtualNetworkData> response = Response.FromValue(ScVmmVirtualNetworkData.FromResponse(result), result);
                     return Response.FromValue(new ScVmmVirtualNetworkResource(Client, response.Value), response.GetRawResponse());
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.ScVmm
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _virtualNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ScVmmVirtualNetworkData> response = Response.FromValue(ScVmmVirtualNetworkData.FromResponse(result), result);
                     return Response.FromValue(new ScVmmVirtualNetworkResource(Client, response.Value), response.GetRawResponse());

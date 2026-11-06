@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cgProfileRestClient.CreateGetByRevisionNumberRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionNumber, context);
+                using HttpMessage message = _cgProfileRestClient.CreateGetByRevisionNumberRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionNumber, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerGroupProfileData> response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cgProfileRestClient.CreateGetByRevisionNumberRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionNumber, context);
+                using HttpMessage message = _cgProfileRestClient.CreateGetByRevisionNumberRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionNumber, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerGroupProfileData> response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cgProfileRestClient.CreateGetByRevisionNumberRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionNumber, context);
+                using HttpMessage message = _cgProfileRestClient.CreateGetByRevisionNumberRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionNumber, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ContainerGroupProfileData> response = default;
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cgProfileRestClient.CreateGetByRevisionNumberRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionNumber, context);
+                using HttpMessage message = _cgProfileRestClient.CreateGetByRevisionNumberRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionNumber, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ContainerGroupProfileData> response = default;
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cgProfileRestClient.CreateGetByRevisionNumberRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionNumber, context);
+                using HttpMessage message = _cgProfileRestClient.CreateGetByRevisionNumberRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionNumber, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ContainerGroupProfileData> response = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cgProfileRestClient.CreateGetByRevisionNumberRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionNumber, context);
+                using HttpMessage message = _cgProfileRestClient.CreateGetByRevisionNumberRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionNumber, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ContainerGroupProfileData> response = default;

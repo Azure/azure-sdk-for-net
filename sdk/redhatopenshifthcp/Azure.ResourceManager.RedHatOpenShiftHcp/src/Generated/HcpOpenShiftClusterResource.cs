@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hcpOpenShiftClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _hcpOpenShiftClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HcpOpenShiftClusterData> response = Response.FromValue(HcpOpenShiftClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hcpOpenShiftClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _hcpOpenShiftClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HcpOpenShiftClusterData> response = Response.FromValue(HcpOpenShiftClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hcpOpenShiftClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HcpOpenShiftClusterData.ToRequestContent(data), context);
+                using HttpMessage message = _hcpOpenShiftClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HcpOpenShiftClusterData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RedHatOpenShiftHcpArmOperation<HcpOpenShiftClusterResource> operation = new RedHatOpenShiftHcpArmOperation<HcpOpenShiftClusterResource>(
                     new HcpOpenShiftClusterResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hcpOpenShiftClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HcpOpenShiftClusterData.ToRequestContent(data), context);
+                using HttpMessage message = _hcpOpenShiftClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HcpOpenShiftClusterData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RedHatOpenShiftHcpArmOperation<HcpOpenShiftClusterResource> operation = new RedHatOpenShiftHcpArmOperation<HcpOpenShiftClusterResource>(
                     new HcpOpenShiftClusterResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hcpOpenShiftClustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _hcpOpenShiftClustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RedHatOpenShiftHcpArmOperation operation = new RedHatOpenShiftHcpArmOperation(_hcpOpenShiftClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hcpOpenShiftClustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _hcpOpenShiftClustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RedHatOpenShiftHcpArmOperation operation = new RedHatOpenShiftHcpArmOperation(_hcpOpenShiftClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hcpOpenShiftClustersRestClient.CreateRequestAdminCredentialRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HcpOpenShiftClusterAdminCredentialRequestContent.ToRequestContent(content), context);
+                using HttpMessage message = _hcpOpenShiftClustersRestClient.CreateRequestAdminCredentialRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HcpOpenShiftClusterAdminCredentialRequestContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RedHatOpenShiftHcpArmOperation<HcpOpenShiftClusterAdminCredential> operation = new RedHatOpenShiftHcpArmOperation<HcpOpenShiftClusterAdminCredential>(
                     new HcpOpenShiftClusterAdminCredentialOperationSource(),
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hcpOpenShiftClustersRestClient.CreateRequestAdminCredentialRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HcpOpenShiftClusterAdminCredentialRequestContent.ToRequestContent(content), context);
+                using HttpMessage message = _hcpOpenShiftClustersRestClient.CreateRequestAdminCredentialRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HcpOpenShiftClusterAdminCredentialRequestContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RedHatOpenShiftHcpArmOperation<HcpOpenShiftClusterAdminCredential> operation = new RedHatOpenShiftHcpArmOperation<HcpOpenShiftClusterAdminCredential>(
                     new HcpOpenShiftClusterAdminCredentialOperationSource(),
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hcpOpenShiftClustersRestClient.CreateRevokeCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _hcpOpenShiftClustersRestClient.CreateRevokeCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RedHatOpenShiftHcpArmOperation operation = new RedHatOpenShiftHcpArmOperation(_hcpOpenShiftClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hcpOpenShiftClustersRestClient.CreateRevokeCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _hcpOpenShiftClustersRestClient.CreateRevokeCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RedHatOpenShiftHcpArmOperation operation = new RedHatOpenShiftHcpArmOperation(_hcpOpenShiftClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _hcpOpenShiftClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _hcpOpenShiftClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<HcpOpenShiftClusterData> response = Response.FromValue(HcpOpenShiftClusterData.FromResponse(result), result);
                     return Response.FromValue(new HcpOpenShiftClusterResource(Client, response.Value), response.GetRawResponse());
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _hcpOpenShiftClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _hcpOpenShiftClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<HcpOpenShiftClusterData> response = Response.FromValue(HcpOpenShiftClusterData.FromResponse(result), result);
                     return Response.FromValue(new HcpOpenShiftClusterResource(Client, response.Value), response.GetRawResponse());
@@ -738,7 +738,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _hcpOpenShiftClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _hcpOpenShiftClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<HcpOpenShiftClusterData> response = Response.FromValue(HcpOpenShiftClusterData.FromResponse(result), result);
                     return Response.FromValue(new HcpOpenShiftClusterResource(Client, response.Value), response.GetRawResponse());
@@ -780,7 +780,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _hcpOpenShiftClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _hcpOpenShiftClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<HcpOpenShiftClusterData> response = Response.FromValue(HcpOpenShiftClusterData.FromResponse(result), result);
                     return Response.FromValue(new HcpOpenShiftClusterResource(Client, response.Value), response.GetRawResponse());
@@ -822,7 +822,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _hcpOpenShiftClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _hcpOpenShiftClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<HcpOpenShiftClusterData> response = Response.FromValue(HcpOpenShiftClusterData.FromResponse(result), result);
                     return Response.FromValue(new HcpOpenShiftClusterResource(Client, response.Value), response.GetRawResponse());
@@ -868,7 +868,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _hcpOpenShiftClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _hcpOpenShiftClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<HcpOpenShiftClusterData> response = Response.FromValue(HcpOpenShiftClusterData.FromResponse(result), result);
                     return Response.FromValue(new HcpOpenShiftClusterResource(Client, response.Value), response.GetRawResponse());

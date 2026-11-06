@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _imagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _imagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DisconnectedOperationsImageData> response = Response.FromValue(DisconnectedOperationsImageData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _imagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _imagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DisconnectedOperationsImageData> response = Response.FromValue(DisconnectedOperationsImageData.FromResponse(result), result);
                 if (response.Value == null)
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _imagesRestClient.CreateGetDownloadUriRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _imagesRestClient.CreateGetDownloadUriRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DisconnectedOperationsImageDownloadResult> response = Response.FromValue(DisconnectedOperationsImageDownloadResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _imagesRestClient.CreateGetDownloadUriRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _imagesRestClient.CreateGetDownloadUriRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DisconnectedOperationsImageDownloadResult> response = Response.FromValue(DisconnectedOperationsImageDownloadResult.FromResponse(result), result);
                 if (response.Value == null)

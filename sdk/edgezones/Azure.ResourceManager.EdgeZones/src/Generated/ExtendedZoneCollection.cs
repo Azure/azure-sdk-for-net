@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.EdgeZones
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extendedZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), extendedZoneName, context);
+                using HttpMessage message = _extendedZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), extendedZoneName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExtendedZoneData> response = Response.FromValue(ExtendedZoneData.FromResponse(result), result);
                 if (response.Value == null)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.EdgeZones
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extendedZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), extendedZoneName, context);
+                using HttpMessage message = _extendedZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), extendedZoneName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExtendedZoneData> response = Response.FromValue(ExtendedZoneData.FromResponse(result), result);
                 if (response.Value == null)
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.EdgeZones
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extendedZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), extendedZoneName, context);
+                using HttpMessage message = _extendedZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), extendedZoneName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ExtendedZoneData> response = default;
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.EdgeZones
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extendedZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), extendedZoneName, context);
+                using HttpMessage message = _extendedZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), extendedZoneName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ExtendedZoneData> response = default;
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.EdgeZones
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extendedZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), extendedZoneName, context);
+                using HttpMessage message = _extendedZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), extendedZoneName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ExtendedZoneData> response = default;
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.EdgeZones
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extendedZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), extendedZoneName, context);
+                using HttpMessage message = _extendedZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), extendedZoneName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ExtendedZoneData> response = default;

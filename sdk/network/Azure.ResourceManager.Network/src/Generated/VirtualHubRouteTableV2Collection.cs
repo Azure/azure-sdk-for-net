@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualHubRouteTableV2sRestClient.CreateCreateOrUpdateVirtualHubRouteTableV2Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, routeTableName, VirtualHubRouteTableV2Data.ToRequestContent(data), context);
+                using HttpMessage message = _virtualHubRouteTableV2sRestClient.CreateCreateOrUpdateVirtualHubRouteTableV2Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, routeTableName, VirtualHubRouteTableV2Data.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<VirtualHubRouteTableV2Resource> operation = new NetworkArmOperation<VirtualHubRouteTableV2Resource>(
                     new VirtualHubRouteTableV2ResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualHubRouteTableV2sRestClient.CreateCreateOrUpdateVirtualHubRouteTableV2Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, routeTableName, VirtualHubRouteTableV2Data.ToRequestContent(data), context);
+                using HttpMessage message = _virtualHubRouteTableV2sRestClient.CreateCreateOrUpdateVirtualHubRouteTableV2Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, routeTableName, VirtualHubRouteTableV2Data.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<VirtualHubRouteTableV2Resource> operation = new NetworkArmOperation<VirtualHubRouteTableV2Resource>(
                     new VirtualHubRouteTableV2ResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualHubRouteTableV2sRestClient.CreateGetVirtualHubRouteTableV2Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, routeTableName, context);
+                using HttpMessage message = _virtualHubRouteTableV2sRestClient.CreateGetVirtualHubRouteTableV2Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, routeTableName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<VirtualHubRouteTableV2Data> response = Response.FromValue(VirtualHubRouteTableV2Data.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualHubRouteTableV2sRestClient.CreateGetVirtualHubRouteTableV2Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, routeTableName, context);
+                using HttpMessage message = _virtualHubRouteTableV2sRestClient.CreateGetVirtualHubRouteTableV2Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, routeTableName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<VirtualHubRouteTableV2Data> response = Response.FromValue(VirtualHubRouteTableV2Data.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualHubRouteTableV2sRestClient.CreateGetVirtualHubRouteTableV2Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, routeTableName, context);
+                using HttpMessage message = _virtualHubRouteTableV2sRestClient.CreateGetVirtualHubRouteTableV2Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, routeTableName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<VirtualHubRouteTableV2Data> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualHubRouteTableV2sRestClient.CreateGetVirtualHubRouteTableV2Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, routeTableName, context);
+                using HttpMessage message = _virtualHubRouteTableV2sRestClient.CreateGetVirtualHubRouteTableV2Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, routeTableName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<VirtualHubRouteTableV2Data> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualHubRouteTableV2sRestClient.CreateGetVirtualHubRouteTableV2Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, routeTableName, context);
+                using HttpMessage message = _virtualHubRouteTableV2sRestClient.CreateGetVirtualHubRouteTableV2Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, routeTableName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<VirtualHubRouteTableV2Data> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualHubRouteTableV2sRestClient.CreateGetVirtualHubRouteTableV2Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, routeTableName, context);
+                using HttpMessage message = _virtualHubRouteTableV2sRestClient.CreateGetVirtualHubRouteTableV2Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, routeTableName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<VirtualHubRouteTableV2Data> response = default;

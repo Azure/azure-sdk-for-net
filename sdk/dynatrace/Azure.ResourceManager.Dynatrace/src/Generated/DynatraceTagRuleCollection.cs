@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Dynatrace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tagRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, DynatraceTagRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _tagRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, DynatraceTagRuleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DynatraceArmOperation<DynatraceTagRuleResource> operation = new DynatraceArmOperation<DynatraceTagRuleResource>(
                     new DynatraceTagRuleResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Dynatrace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tagRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, DynatraceTagRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _tagRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, DynatraceTagRuleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DynatraceArmOperation<DynatraceTagRuleResource> operation = new DynatraceArmOperation<DynatraceTagRuleResource>(
                     new DynatraceTagRuleResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Dynatrace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tagRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, context);
+                using HttpMessage message = _tagRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DynatraceTagRuleData> response = Response.FromValue(DynatraceTagRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Dynatrace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tagRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, context);
+                using HttpMessage message = _tagRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DynatraceTagRuleData> response = Response.FromValue(DynatraceTagRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Dynatrace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tagRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, context);
+                using HttpMessage message = _tagRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DynatraceTagRuleData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Dynatrace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tagRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, context);
+                using HttpMessage message = _tagRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DynatraceTagRuleData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Dynatrace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tagRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, context);
+                using HttpMessage message = _tagRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DynatraceTagRuleData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Dynatrace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tagRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, context);
+                using HttpMessage message = _tagRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DynatraceTagRuleData> response = default;

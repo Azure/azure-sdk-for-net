@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedSitesRestClient.CreateGetDeletedWebAppByLocationDeletedWebAppRequest(Guid.Parse(Id.SubscriptionId), _location, deletedSiteId, context);
+                using HttpMessage message = _deletedSitesRestClient.CreateGetDeletedWebAppByLocationDeletedWebAppRequest(Guid.Parse(Id.SubscriptionId), _location, deletedSiteId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DeletedSiteData> response = Response.FromValue(DeletedSiteData.FromResponse(result), result);
                 if (response.Value == null)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedSitesRestClient.CreateGetDeletedWebAppByLocationDeletedWebAppRequest(Guid.Parse(Id.SubscriptionId), _location, deletedSiteId, context);
+                using HttpMessage message = _deletedSitesRestClient.CreateGetDeletedWebAppByLocationDeletedWebAppRequest(Guid.Parse(Id.SubscriptionId), _location, deletedSiteId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DeletedSiteData> response = Response.FromValue(DeletedSiteData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedSitesRestClient.CreateGetDeletedWebAppByLocationDeletedWebAppRequest(Guid.Parse(Id.SubscriptionId), _location, deletedSiteId, context);
+                using HttpMessage message = _deletedSitesRestClient.CreateGetDeletedWebAppByLocationDeletedWebAppRequest(Guid.Parse(Id.SubscriptionId), _location, deletedSiteId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DeletedSiteData> response = default;
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedSitesRestClient.CreateGetDeletedWebAppByLocationDeletedWebAppRequest(Guid.Parse(Id.SubscriptionId), _location, deletedSiteId, context);
+                using HttpMessage message = _deletedSitesRestClient.CreateGetDeletedWebAppByLocationDeletedWebAppRequest(Guid.Parse(Id.SubscriptionId), _location, deletedSiteId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DeletedSiteData> response = default;
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedSitesRestClient.CreateGetDeletedWebAppByLocationDeletedWebAppRequest(Guid.Parse(Id.SubscriptionId), _location, deletedSiteId, context);
+                using HttpMessage message = _deletedSitesRestClient.CreateGetDeletedWebAppByLocationDeletedWebAppRequest(Guid.Parse(Id.SubscriptionId), _location, deletedSiteId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DeletedSiteData> response = default;
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedSitesRestClient.CreateGetDeletedWebAppByLocationDeletedWebAppRequest(Guid.Parse(Id.SubscriptionId), _location, deletedSiteId, context);
+                using HttpMessage message = _deletedSitesRestClient.CreateGetDeletedWebAppByLocationDeletedWebAppRequest(Guid.Parse(Id.SubscriptionId), _location, deletedSiteId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DeletedSiteData> response = default;

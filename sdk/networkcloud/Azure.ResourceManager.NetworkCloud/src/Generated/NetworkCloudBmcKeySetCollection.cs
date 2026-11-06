@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bmcKeySetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bmcKeySetName, NetworkCloudBmcKeySetData.ToRequestContent(data), matchConditions, context);
+                using HttpMessage message = _bmcKeySetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bmcKeySetName, NetworkCloudBmcKeySetData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkCloudArmOperation<NetworkCloudBmcKeySetResource> operation = new NetworkCloudArmOperation<NetworkCloudBmcKeySetResource>(
                     new NetworkCloudBmcKeySetResourceOperationSource(Client),
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bmcKeySetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bmcKeySetName, NetworkCloudBmcKeySetData.ToRequestContent(data), matchConditions, context);
+                using HttpMessage message = _bmcKeySetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bmcKeySetName, NetworkCloudBmcKeySetData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkCloudArmOperation<NetworkCloudBmcKeySetResource> operation = new NetworkCloudArmOperation<NetworkCloudBmcKeySetResource>(
                     new NetworkCloudBmcKeySetResourceOperationSource(Client),
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bmcKeySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bmcKeySetName, context);
+                using HttpMessage message = _bmcKeySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bmcKeySetName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkCloudBmcKeySetData> response = Response.FromValue(NetworkCloudBmcKeySetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bmcKeySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bmcKeySetName, context);
+                using HttpMessage message = _bmcKeySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bmcKeySetName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkCloudBmcKeySetData> response = Response.FromValue(NetworkCloudBmcKeySetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bmcKeySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bmcKeySetName, context);
+                using HttpMessage message = _bmcKeySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bmcKeySetName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkCloudBmcKeySetData> response = default;
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bmcKeySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bmcKeySetName, context);
+                using HttpMessage message = _bmcKeySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bmcKeySetName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkCloudBmcKeySetData> response = default;
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bmcKeySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bmcKeySetName, context);
+                using HttpMessage message = _bmcKeySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bmcKeySetName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkCloudBmcKeySetData> response = default;
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bmcKeySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bmcKeySetName, context);
+                using HttpMessage message = _bmcKeySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bmcKeySetName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkCloudBmcKeySetData> response = default;

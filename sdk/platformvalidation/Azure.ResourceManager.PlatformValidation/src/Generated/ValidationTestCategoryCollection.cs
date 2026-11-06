@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PlatformValidation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _validationTestCategoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), validationTestCategoryName, context);
+                using HttpMessage message = _validationTestCategoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), validationTestCategoryName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ValidationTestCategoryData> response = Response.FromValue(ValidationTestCategoryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.PlatformValidation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _validationTestCategoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), validationTestCategoryName, context);
+                using HttpMessage message = _validationTestCategoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), validationTestCategoryName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ValidationTestCategoryData> response = Response.FromValue(ValidationTestCategoryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.PlatformValidation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _validationTestCategoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), validationTestCategoryName, context);
+                using HttpMessage message = _validationTestCategoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), validationTestCategoryName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ValidationTestCategoryData> response = default;
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.PlatformValidation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _validationTestCategoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), validationTestCategoryName, context);
+                using HttpMessage message = _validationTestCategoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), validationTestCategoryName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ValidationTestCategoryData> response = default;
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.PlatformValidation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _validationTestCategoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), validationTestCategoryName, context);
+                using HttpMessage message = _validationTestCategoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), validationTestCategoryName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ValidationTestCategoryData> response = default;
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.PlatformValidation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _validationTestCategoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), validationTestCategoryName, context);
+                using HttpMessage message = _validationTestCategoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), validationTestCategoryName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ValidationTestCategoryData> response = default;

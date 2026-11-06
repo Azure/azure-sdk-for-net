@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _firewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FirewallRuleData> response = Response.FromValue(FirewallRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _firewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FirewallRuleData> response = Response.FromValue(FirewallRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firewallRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _firewallRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DatabaseFleetManagerArmOperation operation = new DatabaseFleetManagerArmOperation(_firewallRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firewallRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _firewallRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DatabaseFleetManagerArmOperation operation = new DatabaseFleetManagerArmOperation(_firewallRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firewallRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, FirewallRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _firewallRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, FirewallRuleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DatabaseFleetManagerArmOperation<FirewallRuleResource> operation = new DatabaseFleetManagerArmOperation<FirewallRuleResource>(
                     new FirewallRuleResourceOperationSource(Client),
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firewallRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, FirewallRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _firewallRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, FirewallRuleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DatabaseFleetManagerArmOperation<FirewallRuleResource> operation = new DatabaseFleetManagerArmOperation<FirewallRuleResource>(
                     new FirewallRuleResourceOperationSource(Client),

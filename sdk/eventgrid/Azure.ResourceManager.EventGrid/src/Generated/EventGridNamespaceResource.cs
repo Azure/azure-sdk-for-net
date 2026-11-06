@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EventGridNamespaceData> response = Response.FromValue(EventGridNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EventGridNamespaceData> response = Response.FromValue(EventGridNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EventGridNamespacePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _namespacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EventGridNamespacePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 EventGridArmOperation<EventGridNamespaceResource> operation = new EventGridArmOperation<EventGridNamespaceResource>(
                     new EventGridNamespaceResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EventGridNamespacePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _namespacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EventGridNamespacePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 EventGridArmOperation<EventGridNamespaceResource> operation = new EventGridArmOperation<EventGridNamespaceResource>(
                     new EventGridNamespaceResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _namespacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 EventGridArmOperation operation = new EventGridArmOperation(_namespacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _namespacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 EventGridArmOperation operation = new EventGridArmOperation(_namespacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetSharedAccessKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _namespacesRestClient.CreateGetSharedAccessKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NamespaceSharedAccessKeys> response = Response.FromValue(NamespaceSharedAccessKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetSharedAccessKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _namespacesRestClient.CreateGetSharedAccessKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NamespaceSharedAccessKeys> response = Response.FromValue(NamespaceSharedAccessKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NamespaceRegenerateKeyContent.ToRequestContent(content), context);
+                using HttpMessage message = _namespacesRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NamespaceRegenerateKeyContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 EventGridArmOperation<NamespaceSharedAccessKeys> operation = new EventGridArmOperation<NamespaceSharedAccessKeys>(
                     new NamespaceSharedAccessKeysOperationSource(),
@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NamespaceRegenerateKeyContent.ToRequestContent(content), context);
+                using HttpMessage message = _namespacesRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NamespaceRegenerateKeyContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 EventGridArmOperation<NamespaceSharedAccessKeys> operation = new EventGridArmOperation<NamespaceSharedAccessKeys>(
                     new NamespaceSharedAccessKeysOperationSource(),
@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateValidateCustomDomainOwnershipRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _namespacesRestClient.CreateValidateCustomDomainOwnershipRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 EventGridArmOperation<CustomDomainOwnershipValidationResult> operation = new EventGridArmOperation<CustomDomainOwnershipValidationResult>(
                     new CustomDomainOwnershipValidationResultOperationSource(),
@@ -707,7 +707,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateValidateCustomDomainOwnershipRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _namespacesRestClient.CreateValidateCustomDomainOwnershipRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 EventGridArmOperation<CustomDomainOwnershipValidationResult> operation = new EventGridArmOperation<CustomDomainOwnershipValidationResult>(
                     new CustomDomainOwnershipValidationResultOperationSource(),
@@ -752,7 +752,7 @@ namespace Azure.ResourceManager.EventGrid
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<EventGridNamespaceData> response = Response.FromValue(EventGridNamespaceData.FromResponse(result), result);
                     return Response.FromValue(new EventGridNamespaceResource(Client, response.Value), response.GetRawResponse());
@@ -800,7 +800,7 @@ namespace Azure.ResourceManager.EventGrid
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<EventGridNamespaceData> response = Response.FromValue(EventGridNamespaceData.FromResponse(result), result);
                     return Response.FromValue(new EventGridNamespaceResource(Client, response.Value), response.GetRawResponse());
@@ -846,7 +846,7 @@ namespace Azure.ResourceManager.EventGrid
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<EventGridNamespaceData> response = Response.FromValue(EventGridNamespaceData.FromResponse(result), result);
                     return Response.FromValue(new EventGridNamespaceResource(Client, response.Value), response.GetRawResponse());
@@ -888,7 +888,7 @@ namespace Azure.ResourceManager.EventGrid
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<EventGridNamespaceData> response = Response.FromValue(EventGridNamespaceData.FromResponse(result), result);
                     return Response.FromValue(new EventGridNamespaceResource(Client, response.Value), response.GetRawResponse());
@@ -930,7 +930,7 @@ namespace Azure.ResourceManager.EventGrid
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<EventGridNamespaceData> response = Response.FromValue(EventGridNamespaceData.FromResponse(result), result);
                     return Response.FromValue(new EventGridNamespaceResource(Client, response.Value), response.GetRawResponse());
@@ -976,7 +976,7 @@ namespace Azure.ResourceManager.EventGrid
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<EventGridNamespaceData> response = Response.FromValue(EventGridNamespaceData.FromResponse(result), result);
                     return Response.FromValue(new EventGridNamespaceResource(Client, response.Value), response.GetRawResponse());

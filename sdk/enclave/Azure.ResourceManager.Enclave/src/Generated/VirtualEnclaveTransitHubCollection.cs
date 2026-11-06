@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Enclave
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _transitHubRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, transitHubName, VirtualEnclaveTransitHubData.ToRequestContent(data), context);
+                using HttpMessage message = _transitHubRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, transitHubName, VirtualEnclaveTransitHubData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 EnclaveArmOperation<VirtualEnclaveTransitHubResource> operation = new EnclaveArmOperation<VirtualEnclaveTransitHubResource>(
                     new VirtualEnclaveTransitHubResourceOperationSource(Client),
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Enclave
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _transitHubRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, transitHubName, VirtualEnclaveTransitHubData.ToRequestContent(data), context);
+                using HttpMessage message = _transitHubRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, transitHubName, VirtualEnclaveTransitHubData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 EnclaveArmOperation<VirtualEnclaveTransitHubResource> operation = new EnclaveArmOperation<VirtualEnclaveTransitHubResource>(
                     new VirtualEnclaveTransitHubResourceOperationSource(Client),
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Enclave
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _transitHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, transitHubName, context);
+                using HttpMessage message = _transitHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, transitHubName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<VirtualEnclaveTransitHubData> response = Response.FromValue(VirtualEnclaveTransitHubData.FromResponse(result), result);
                 if (response.Value == null)
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Enclave
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _transitHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, transitHubName, context);
+                using HttpMessage message = _transitHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, transitHubName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<VirtualEnclaveTransitHubData> response = Response.FromValue(VirtualEnclaveTransitHubData.FromResponse(result), result);
                 if (response.Value == null)
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Enclave
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _transitHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, transitHubName, context);
+                using HttpMessage message = _transitHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, transitHubName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<VirtualEnclaveTransitHubData> response = default;
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Enclave
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _transitHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, transitHubName, context);
+                using HttpMessage message = _transitHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, transitHubName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<VirtualEnclaveTransitHubData> response = default;
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.Enclave
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _transitHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, transitHubName, context);
+                using HttpMessage message = _transitHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, transitHubName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<VirtualEnclaveTransitHubData> response = default;
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.Enclave
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _transitHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, transitHubName, context);
+                using HttpMessage message = _transitHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, transitHubName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<VirtualEnclaveTransitHubData> response = default;

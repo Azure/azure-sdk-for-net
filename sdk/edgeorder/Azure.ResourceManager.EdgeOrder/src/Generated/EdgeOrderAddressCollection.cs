@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _addressResourcesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, addressName, EdgeOrderAddressData.ToRequestContent(data), context);
+                using HttpMessage message = _addressResourcesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, addressName, EdgeOrderAddressData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 EdgeOrderArmOperation<EdgeOrderAddressResource> operation = new EdgeOrderArmOperation<EdgeOrderAddressResource>(
                     new EdgeOrderAddressResourceOperationSource(Client),
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _addressResourcesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, addressName, EdgeOrderAddressData.ToRequestContent(data), context);
+                using HttpMessage message = _addressResourcesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, addressName, EdgeOrderAddressData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 EdgeOrderArmOperation<EdgeOrderAddressResource> operation = new EdgeOrderArmOperation<EdgeOrderAddressResource>(
                     new EdgeOrderAddressResourceOperationSource(Client),
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _addressResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, addressName, context);
+                using HttpMessage message = _addressResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, addressName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EdgeOrderAddressData> response = Response.FromValue(EdgeOrderAddressData.FromResponse(result), result);
                 if (response.Value == null)
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _addressResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, addressName, context);
+                using HttpMessage message = _addressResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, addressName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EdgeOrderAddressData> response = Response.FromValue(EdgeOrderAddressData.FromResponse(result), result);
                 if (response.Value == null)
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _addressResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, addressName, context);
+                using HttpMessage message = _addressResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, addressName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EdgeOrderAddressData> response = default;
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _addressResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, addressName, context);
+                using HttpMessage message = _addressResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, addressName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EdgeOrderAddressData> response = default;
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _addressResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, addressName, context);
+                using HttpMessage message = _addressResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, addressName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EdgeOrderAddressData> response = default;
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _addressResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, addressName, context);
+                using HttpMessage message = _addressResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, addressName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EdgeOrderAddressData> response = default;

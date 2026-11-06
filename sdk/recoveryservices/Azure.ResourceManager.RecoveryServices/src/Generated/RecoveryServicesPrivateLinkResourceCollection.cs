@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkResourceOperationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
+                using HttpMessage message = _privateLinkResourceOperationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RecoveryServicesPrivateLinkResourceData> response = Response.FromValue(RecoveryServicesPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkResourceOperationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
+                using HttpMessage message = _privateLinkResourceOperationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RecoveryServicesPrivateLinkResourceData> response = Response.FromValue(RecoveryServicesPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkResourceOperationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
+                using HttpMessage message = _privateLinkResourceOperationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RecoveryServicesPrivateLinkResourceData> response = default;
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkResourceOperationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
+                using HttpMessage message = _privateLinkResourceOperationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RecoveryServicesPrivateLinkResourceData> response = default;
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkResourceOperationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
+                using HttpMessage message = _privateLinkResourceOperationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RecoveryServicesPrivateLinkResourceData> response = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkResourceOperationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
+                using HttpMessage message = _privateLinkResourceOperationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RecoveryServicesPrivateLinkResourceData> response = default;

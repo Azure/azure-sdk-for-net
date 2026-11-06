@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionTypeInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _extensionTypeInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<KubernetesConfigurationExtensionTypeData> response = Response.FromValue(KubernetesConfigurationExtensionTypeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionTypeInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _extensionTypeInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<KubernetesConfigurationExtensionTypeData> response = Response.FromValue(KubernetesConfigurationExtensionTypeData.FromResponse(result), result);
                 if (response.Value == null)

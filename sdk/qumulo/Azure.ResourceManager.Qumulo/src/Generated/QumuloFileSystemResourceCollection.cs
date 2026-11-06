@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Qumulo
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fileSystemsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, fileSystemName, QumuloFileSystemResourceData.ToRequestContent(data), context);
+                using HttpMessage message = _fileSystemsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, fileSystemName, QumuloFileSystemResourceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 QumuloArmOperation<QumuloFileSystemResource> operation = new QumuloArmOperation<QumuloFileSystemResource>(
                     new QumuloFileSystemResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Qumulo
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fileSystemsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, fileSystemName, QumuloFileSystemResourceData.ToRequestContent(data), context);
+                using HttpMessage message = _fileSystemsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, fileSystemName, QumuloFileSystemResourceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 QumuloArmOperation<QumuloFileSystemResource> operation = new QumuloArmOperation<QumuloFileSystemResource>(
                     new QumuloFileSystemResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Qumulo
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fileSystemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, fileSystemName, context);
+                using HttpMessage message = _fileSystemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, fileSystemName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<QumuloFileSystemResourceData> response = Response.FromValue(QumuloFileSystemResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Qumulo
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fileSystemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, fileSystemName, context);
+                using HttpMessage message = _fileSystemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, fileSystemName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<QumuloFileSystemResourceData> response = Response.FromValue(QumuloFileSystemResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Qumulo
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fileSystemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, fileSystemName, context);
+                using HttpMessage message = _fileSystemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, fileSystemName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<QumuloFileSystemResourceData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Qumulo
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fileSystemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, fileSystemName, context);
+                using HttpMessage message = _fileSystemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, fileSystemName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<QumuloFileSystemResourceData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Qumulo
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fileSystemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, fileSystemName, context);
+                using HttpMessage message = _fileSystemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, fileSystemName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<QumuloFileSystemResourceData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Qumulo
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fileSystemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, fileSystemName, context);
+                using HttpMessage message = _fileSystemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, fileSystemName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<QumuloFileSystemResourceData> response = default;

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _validatedSolutionRecipesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, validatedSolutionRecipeName, context);
+                using HttpMessage message = _validatedSolutionRecipesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, validatedSolutionRecipeName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ValidatedSolutionRecipeData> response = Response.FromValue(ValidatedSolutionRecipeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _validatedSolutionRecipesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, validatedSolutionRecipeName, context);
+                using HttpMessage message = _validatedSolutionRecipesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, validatedSolutionRecipeName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ValidatedSolutionRecipeData> response = Response.FromValue(ValidatedSolutionRecipeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _validatedSolutionRecipesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, validatedSolutionRecipeName, context);
+                using HttpMessage message = _validatedSolutionRecipesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, validatedSolutionRecipeName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ValidatedSolutionRecipeData> response = default;
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _validatedSolutionRecipesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, validatedSolutionRecipeName, context);
+                using HttpMessage message = _validatedSolutionRecipesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, validatedSolutionRecipeName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ValidatedSolutionRecipeData> response = default;
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _validatedSolutionRecipesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, validatedSolutionRecipeName, context);
+                using HttpMessage message = _validatedSolutionRecipesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, validatedSolutionRecipeName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ValidatedSolutionRecipeData> response = default;
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _validatedSolutionRecipesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, validatedSolutionRecipeName, context);
+                using HttpMessage message = _validatedSolutionRecipesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, validatedSolutionRecipeName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ValidatedSolutionRecipeData> response = default;

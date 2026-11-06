@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Relationships
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGroupDependencyOfRelationshipRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _serviceGroupDependencyOfRelationshipRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DependencyOfRelationshipData> response = Response.FromValue(DependencyOfRelationshipData.FromResponse(result), result);
                 if (response.Value == null)
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Relationships
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGroupDependencyOfRelationshipRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _serviceGroupDependencyOfRelationshipRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DependencyOfRelationshipData> response = Response.FromValue(DependencyOfRelationshipData.FromResponse(result), result);
                 if (response.Value == null)
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Relationships
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGroupDependencyOfRelationshipRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _serviceGroupDependencyOfRelationshipRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RelationshipsArmOperation operation = new RelationshipsArmOperation(_serviceGroupDependencyOfRelationshipClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Relationships
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGroupDependencyOfRelationshipRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _serviceGroupDependencyOfRelationshipRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RelationshipsArmOperation operation = new RelationshipsArmOperation(_serviceGroupDependencyOfRelationshipClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Relationships
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGroupDependencyOfRelationshipRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, DependencyOfRelationshipData.ToRequestContent(data), context);
+                using HttpMessage message = _serviceGroupDependencyOfRelationshipRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, DependencyOfRelationshipData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RelationshipsArmOperation<ServiceGroupDependencyOfRelationshipResource> operation = new RelationshipsArmOperation<ServiceGroupDependencyOfRelationshipResource>(
                     new ServiceGroupDependencyOfRelationshipResourceOperationSource(Client),
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.Relationships
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGroupDependencyOfRelationshipRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, DependencyOfRelationshipData.ToRequestContent(data), context);
+                using HttpMessage message = _serviceGroupDependencyOfRelationshipRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, DependencyOfRelationshipData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RelationshipsArmOperation<ServiceGroupDependencyOfRelationshipResource> operation = new RelationshipsArmOperation<ServiceGroupDependencyOfRelationshipResource>(
                     new ServiceGroupDependencyOfRelationshipResourceOperationSource(Client),

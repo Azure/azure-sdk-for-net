@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureBackupRecoveryPointResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, recoveryPointId, context);
+                using HttpMessage message = _azureBackupRecoveryPointResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, recoveryPointId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataProtectionBackupRecoveryPointData> response = Response.FromValue(DataProtectionBackupRecoveryPointData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureBackupRecoveryPointResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, recoveryPointId, context);
+                using HttpMessage message = _azureBackupRecoveryPointResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, recoveryPointId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataProtectionBackupRecoveryPointData> response = Response.FromValue(DataProtectionBackupRecoveryPointData.FromResponse(result), result);
                 if (response.Value == null)
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureBackupRecoveryPointResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, recoveryPointId, context);
+                using HttpMessage message = _azureBackupRecoveryPointResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, recoveryPointId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DataProtectionBackupRecoveryPointData> response = default;
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureBackupRecoveryPointResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, recoveryPointId, context);
+                using HttpMessage message = _azureBackupRecoveryPointResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, recoveryPointId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DataProtectionBackupRecoveryPointData> response = default;
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureBackupRecoveryPointResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, recoveryPointId, context);
+                using HttpMessage message = _azureBackupRecoveryPointResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, recoveryPointId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DataProtectionBackupRecoveryPointData> response = default;
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureBackupRecoveryPointResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, recoveryPointId, context);
+                using HttpMessage message = _azureBackupRecoveryPointResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, recoveryPointId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DataProtectionBackupRecoveryPointData> response = default;

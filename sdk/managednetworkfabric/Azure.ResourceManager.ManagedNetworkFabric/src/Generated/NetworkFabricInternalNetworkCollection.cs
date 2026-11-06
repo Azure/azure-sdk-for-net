@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _internalNetworksRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, internalNetworkName, NetworkFabricInternalNetworkData.ToRequestContent(data), context);
+                using HttpMessage message = _internalNetworksRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, internalNetworkName, NetworkFabricInternalNetworkData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<NetworkFabricInternalNetworkResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricInternalNetworkResource>(
                     new NetworkFabricInternalNetworkResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _internalNetworksRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, internalNetworkName, NetworkFabricInternalNetworkData.ToRequestContent(data), context);
+                using HttpMessage message = _internalNetworksRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, internalNetworkName, NetworkFabricInternalNetworkData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<NetworkFabricInternalNetworkResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricInternalNetworkResource>(
                     new NetworkFabricInternalNetworkResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _internalNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, internalNetworkName, context);
+                using HttpMessage message = _internalNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, internalNetworkName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkFabricInternalNetworkData> response = Response.FromValue(NetworkFabricInternalNetworkData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _internalNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, internalNetworkName, context);
+                using HttpMessage message = _internalNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, internalNetworkName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkFabricInternalNetworkData> response = Response.FromValue(NetworkFabricInternalNetworkData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _internalNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, internalNetworkName, context);
+                using HttpMessage message = _internalNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, internalNetworkName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkFabricInternalNetworkData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _internalNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, internalNetworkName, context);
+                using HttpMessage message = _internalNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, internalNetworkName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkFabricInternalNetworkData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _internalNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, internalNetworkName, context);
+                using HttpMessage message = _internalNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, internalNetworkName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkFabricInternalNetworkData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _internalNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, internalNetworkName, context);
+                using HttpMessage message = _internalNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, internalNetworkName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkFabricInternalNetworkData> response = default;

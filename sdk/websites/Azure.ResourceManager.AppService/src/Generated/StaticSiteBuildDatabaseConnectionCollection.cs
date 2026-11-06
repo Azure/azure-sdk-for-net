@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseConnectionsRestClient.CreateCreateOrUpdateBuildDatabaseConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseConnectionName, StaticSiteDatabaseConnectionData.ToRequestContent(data), context);
+                using HttpMessage message = _databaseConnectionsRestClient.CreateCreateOrUpdateBuildDatabaseConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseConnectionName, StaticSiteDatabaseConnectionData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<StaticSiteDatabaseConnectionData> response = Response.FromValue(StaticSiteDatabaseConnectionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseConnectionsRestClient.CreateCreateOrUpdateBuildDatabaseConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseConnectionName, StaticSiteDatabaseConnectionData.ToRequestContent(data), context);
+                using HttpMessage message = _databaseConnectionsRestClient.CreateCreateOrUpdateBuildDatabaseConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseConnectionName, StaticSiteDatabaseConnectionData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<StaticSiteDatabaseConnectionData> response = Response.FromValue(StaticSiteDatabaseConnectionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseConnectionsRestClient.CreateGetBuildDatabaseConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseConnectionName, context);
+                using HttpMessage message = _databaseConnectionsRestClient.CreateGetBuildDatabaseConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseConnectionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<StaticSiteDatabaseConnectionData> response = Response.FromValue(StaticSiteDatabaseConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseConnectionsRestClient.CreateGetBuildDatabaseConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseConnectionName, context);
+                using HttpMessage message = _databaseConnectionsRestClient.CreateGetBuildDatabaseConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseConnectionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<StaticSiteDatabaseConnectionData> response = Response.FromValue(StaticSiteDatabaseConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseConnectionsRestClient.CreateGetBuildDatabaseConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseConnectionName, context);
+                using HttpMessage message = _databaseConnectionsRestClient.CreateGetBuildDatabaseConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseConnectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<StaticSiteDatabaseConnectionData> response = default;
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseConnectionsRestClient.CreateGetBuildDatabaseConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseConnectionName, context);
+                using HttpMessage message = _databaseConnectionsRestClient.CreateGetBuildDatabaseConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseConnectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<StaticSiteDatabaseConnectionData> response = default;
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseConnectionsRestClient.CreateGetBuildDatabaseConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseConnectionName, context);
+                using HttpMessage message = _databaseConnectionsRestClient.CreateGetBuildDatabaseConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseConnectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<StaticSiteDatabaseConnectionData> response = default;
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseConnectionsRestClient.CreateGetBuildDatabaseConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseConnectionName, context);
+                using HttpMessage message = _databaseConnectionsRestClient.CreateGetBuildDatabaseConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseConnectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<StaticSiteDatabaseConnectionData> response = default;

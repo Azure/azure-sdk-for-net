@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firstPartyServiceTagsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, firstPartyServiceTagName, FirstPartyServiceTagData.ToRequestContent(data), context);
+                using HttpMessage message = _firstPartyServiceTagsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, firstPartyServiceTagName, FirstPartyServiceTagData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<FirstPartyServiceTagResource> operation = new NetworkArmOperation<FirstPartyServiceTagResource>(
                     new FirstPartyServiceTagResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firstPartyServiceTagsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, firstPartyServiceTagName, FirstPartyServiceTagData.ToRequestContent(data), context);
+                using HttpMessage message = _firstPartyServiceTagsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, firstPartyServiceTagName, FirstPartyServiceTagData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<FirstPartyServiceTagResource> operation = new NetworkArmOperation<FirstPartyServiceTagResource>(
                     new FirstPartyServiceTagResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firstPartyServiceTagsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, firstPartyServiceTagName, context);
+                using HttpMessage message = _firstPartyServiceTagsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, firstPartyServiceTagName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FirstPartyServiceTagData> response = Response.FromValue(FirstPartyServiceTagData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firstPartyServiceTagsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, firstPartyServiceTagName, context);
+                using HttpMessage message = _firstPartyServiceTagsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, firstPartyServiceTagName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FirstPartyServiceTagData> response = Response.FromValue(FirstPartyServiceTagData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firstPartyServiceTagsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, firstPartyServiceTagName, context);
+                using HttpMessage message = _firstPartyServiceTagsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, firstPartyServiceTagName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<FirstPartyServiceTagData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firstPartyServiceTagsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, firstPartyServiceTagName, context);
+                using HttpMessage message = _firstPartyServiceTagsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, firstPartyServiceTagName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<FirstPartyServiceTagData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firstPartyServiceTagsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, firstPartyServiceTagName, context);
+                using HttpMessage message = _firstPartyServiceTagsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, firstPartyServiceTagName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<FirstPartyServiceTagData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firstPartyServiceTagsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, firstPartyServiceTagName, context);
+                using HttpMessage message = _firstPartyServiceTagsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, firstPartyServiceTagName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<FirstPartyServiceTagData> response = default;

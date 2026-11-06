@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateGetRequest(serviceName, context);
+                using HttpMessage message = _servicesRestClient.CreateGetRequest(serviceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SupportAzureServiceData> response = Response.FromValue(SupportAzureServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateGetRequest(serviceName, context);
+                using HttpMessage message = _servicesRestClient.CreateGetRequest(serviceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SupportAzureServiceData> response = Response.FromValue(SupportAzureServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateGetRequest(serviceName, context);
+                using HttpMessage message = _servicesRestClient.CreateGetRequest(serviceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SupportAzureServiceData> response = default;
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateGetRequest(serviceName, context);
+                using HttpMessage message = _servicesRestClient.CreateGetRequest(serviceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SupportAzureServiceData> response = default;
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateGetRequest(serviceName, context);
+                using HttpMessage message = _servicesRestClient.CreateGetRequest(serviceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SupportAzureServiceData> response = default;
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateGetRequest(serviceName, context);
+                using HttpMessage message = _servicesRestClient.CreateGetRequest(serviceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SupportAzureServiceData> response = default;

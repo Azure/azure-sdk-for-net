@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Grafana
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedGrafanasRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, ManagedGrafanaData.ToRequestContent(data), context);
+                using HttpMessage message = _managedGrafanasRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, ManagedGrafanaData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 GrafanaArmOperation<ManagedGrafanaResource> operation = new GrafanaArmOperation<ManagedGrafanaResource>(
                     new ManagedGrafanaResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Grafana
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedGrafanasRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, ManagedGrafanaData.ToRequestContent(data), context);
+                using HttpMessage message = _managedGrafanasRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, ManagedGrafanaData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 GrafanaArmOperation<ManagedGrafanaResource> operation = new GrafanaArmOperation<ManagedGrafanaResource>(
                     new ManagedGrafanaResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Grafana
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedGrafanasRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, context);
+                using HttpMessage message = _managedGrafanasRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ManagedGrafanaData> response = Response.FromValue(ManagedGrafanaData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Grafana
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedGrafanasRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, context);
+                using HttpMessage message = _managedGrafanasRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ManagedGrafanaData> response = Response.FromValue(ManagedGrafanaData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Grafana
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedGrafanasRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, context);
+                using HttpMessage message = _managedGrafanasRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ManagedGrafanaData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Grafana
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedGrafanasRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, context);
+                using HttpMessage message = _managedGrafanasRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ManagedGrafanaData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Grafana
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedGrafanasRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, context);
+                using HttpMessage message = _managedGrafanasRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ManagedGrafanaData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Grafana
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedGrafanasRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, context);
+                using HttpMessage message = _managedGrafanasRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ManagedGrafanaData> response = default;

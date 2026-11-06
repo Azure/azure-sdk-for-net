@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectionMonitorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionMonitorName, ConnectionMonitorCreateOrUpdateContent.ToRequestContent(content), migrate, context);
+                using HttpMessage message = _connectionMonitorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionMonitorName, ConnectionMonitorCreateOrUpdateContent.ToRequestContent(content), migrate, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<ConnectionMonitorResource> operation = new NetworkArmOperation<ConnectionMonitorResource>(
                     new ConnectionMonitorResourceOperationSource(Client),
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectionMonitorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionMonitorName, ConnectionMonitorCreateOrUpdateContent.ToRequestContent(content), migrate, context);
+                using HttpMessage message = _connectionMonitorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionMonitorName, ConnectionMonitorCreateOrUpdateContent.ToRequestContent(content), migrate, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<ConnectionMonitorResource> operation = new NetworkArmOperation<ConnectionMonitorResource>(
                     new ConnectionMonitorResourceOperationSource(Client),
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectionMonitorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionMonitorName, context);
+                using HttpMessage message = _connectionMonitorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionMonitorName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConnectionMonitorData> response = Response.FromValue(ConnectionMonitorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectionMonitorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionMonitorName, context);
+                using HttpMessage message = _connectionMonitorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionMonitorName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConnectionMonitorData> response = Response.FromValue(ConnectionMonitorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectionMonitorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionMonitorName, context);
+                using HttpMessage message = _connectionMonitorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionMonitorName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ConnectionMonitorData> response = default;
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectionMonitorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionMonitorName, context);
+                using HttpMessage message = _connectionMonitorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionMonitorName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ConnectionMonitorData> response = default;
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectionMonitorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionMonitorName, context);
+                using HttpMessage message = _connectionMonitorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionMonitorName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ConnectionMonitorData> response = default;
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectionMonitorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionMonitorName, context);
+                using HttpMessage message = _connectionMonitorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionMonitorName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ConnectionMonitorData> response = default;

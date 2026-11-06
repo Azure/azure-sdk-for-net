@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkGatewayResourcesRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkGatewayId, ConfluentNetworkGatewayData.ToRequestContent(data), context);
+                using HttpMessage message = _networkGatewayResourcesRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkGatewayId, ConfluentNetworkGatewayData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ConfluentArmOperation<ConfluentNetworkGatewayResource> operation = new ConfluentArmOperation<ConfluentNetworkGatewayResource>(
                     new ConfluentNetworkGatewayResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkGatewayResourcesRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkGatewayId, ConfluentNetworkGatewayData.ToRequestContent(data), context);
+                using HttpMessage message = _networkGatewayResourcesRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkGatewayId, ConfluentNetworkGatewayData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ConfluentArmOperation<ConfluentNetworkGatewayResource> operation = new ConfluentArmOperation<ConfluentNetworkGatewayResource>(
                     new ConfluentNetworkGatewayResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkGatewayResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkGatewayId, context);
+                using HttpMessage message = _networkGatewayResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkGatewayId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConfluentNetworkGatewayData> response = Response.FromValue(ConfluentNetworkGatewayData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkGatewayResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkGatewayId, context);
+                using HttpMessage message = _networkGatewayResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkGatewayId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConfluentNetworkGatewayData> response = Response.FromValue(ConfluentNetworkGatewayData.FromResponse(result), result);
                 if (response.Value == null)
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkGatewayResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkGatewayId, context);
+                using HttpMessage message = _networkGatewayResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkGatewayId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ConfluentNetworkGatewayData> response = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkGatewayResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkGatewayId, context);
+                using HttpMessage message = _networkGatewayResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkGatewayId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ConfluentNetworkGatewayData> response = default;
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkGatewayResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkGatewayId, context);
+                using HttpMessage message = _networkGatewayResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkGatewayId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ConfluentNetworkGatewayData> response = default;
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkGatewayResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkGatewayId, context);
+                using HttpMessage message = _networkGatewayResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkGatewayId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ConfluentNetworkGatewayData> response = default;

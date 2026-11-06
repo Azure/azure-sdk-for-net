@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicasRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicaName, WebPubSubReplicaData.ToRequestContent(data), context);
+                using HttpMessage message = _replicasRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicaName, WebPubSubReplicaData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WebPubSubArmOperation<WebPubSubReplicaResource> operation = new WebPubSubArmOperation<WebPubSubReplicaResource>(
                     new WebPubSubReplicaResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicasRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicaName, WebPubSubReplicaData.ToRequestContent(data), context);
+                using HttpMessage message = _replicasRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicaName, WebPubSubReplicaData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WebPubSubArmOperation<WebPubSubReplicaResource> operation = new WebPubSubArmOperation<WebPubSubReplicaResource>(
                     new WebPubSubReplicaResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicaName, context);
+                using HttpMessage message = _replicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicaName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WebPubSubReplicaData> response = Response.FromValue(WebPubSubReplicaData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicaName, context);
+                using HttpMessage message = _replicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicaName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WebPubSubReplicaData> response = Response.FromValue(WebPubSubReplicaData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicaName, context);
+                using HttpMessage message = _replicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicaName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WebPubSubReplicaData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicaName, context);
+                using HttpMessage message = _replicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicaName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WebPubSubReplicaData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicaName, context);
+                using HttpMessage message = _replicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicaName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WebPubSubReplicaData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicaName, context);
+                using HttpMessage message = _replicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicaName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WebPubSubReplicaData> response = default;

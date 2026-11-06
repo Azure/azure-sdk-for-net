@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryPlansRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _recoveryPlansRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RecoveryPlanData> response = Response.FromValue(RecoveryPlanData.FromResponse(result), result);
                 if (response.Value == null)
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryPlansRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _recoveryPlansRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RecoveryPlanData> response = Response.FromValue(RecoveryPlanData.FromResponse(result), result);
                 if (response.Value == null)
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryPlansRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, RecoveryPlanData.ToRequestContent(data), context);
+                using HttpMessage message = _recoveryPlansRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, RecoveryPlanData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResilienceManagementArmOperation<RecoveryPlanResource> operation = new ResilienceManagementArmOperation<RecoveryPlanResource>(
                     new RecoveryPlanResourceOperationSource(Client),
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryPlansRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, RecoveryPlanData.ToRequestContent(data), context);
+                using HttpMessage message = _recoveryPlansRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, RecoveryPlanData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResilienceManagementArmOperation<RecoveryPlanResource> operation = new ResilienceManagementArmOperation<RecoveryPlanResource>(
                     new RecoveryPlanResourceOperationSource(Client),
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryPlansRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _recoveryPlansRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResilienceManagementArmOperation operation = new ResilienceManagementArmOperation(_recoveryPlansClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryPlansRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _recoveryPlansRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResilienceManagementArmOperation operation = new ResilienceManagementArmOperation(_recoveryPlansClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryPlanActionsRestClient.CreateCheckReadinessRequest(Id.Parent.Name, Id.Name, operationId, context);
+                using HttpMessage message = _recoveryPlanActionsRestClient.CreateCheckReadinessRequest(Id.Parent.Name, Id.Name, operationId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResilienceManagementArmOperation operation = new ResilienceManagementArmOperation(_recoveryPlanActionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryPlanActionsRestClient.CreateCheckReadinessRequest(Id.Parent.Name, Id.Name, operationId, context);
+                using HttpMessage message = _recoveryPlanActionsRestClient.CreateCheckReadinessRequest(Id.Parent.Name, Id.Name, operationId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResilienceManagementArmOperation operation = new ResilienceManagementArmOperation(_recoveryPlanActionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryPlanActionsRestClient.CreateFailoverRequest(Id.Parent.Name, Id.Name, operationId, ResilienceManagementFailoverContent.ToRequestContent(content), context);
+                using HttpMessage message = _recoveryPlanActionsRestClient.CreateFailoverRequest(Id.Parent.Name, Id.Name, operationId, ResilienceManagementFailoverContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResilienceManagementArmOperation<RecoveryPlanActionBaseResult> operation = new ResilienceManagementArmOperation<RecoveryPlanActionBaseResult>(
                     new RecoveryPlanActionBaseResultOperationSource(),
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryPlanActionsRestClient.CreateFailoverRequest(Id.Parent.Name, Id.Name, operationId, ResilienceManagementFailoverContent.ToRequestContent(content), context);
+                using HttpMessage message = _recoveryPlanActionsRestClient.CreateFailoverRequest(Id.Parent.Name, Id.Name, operationId, ResilienceManagementFailoverContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResilienceManagementArmOperation<RecoveryPlanActionBaseResult> operation = new ResilienceManagementArmOperation<RecoveryPlanActionBaseResult>(
                     new RecoveryPlanActionBaseResultOperationSource(),
@@ -676,7 +676,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryPlanActionsRestClient.CreateFailoverCommitRequest(Id.Parent.Name, Id.Name, operationId, context);
+                using HttpMessage message = _recoveryPlanActionsRestClient.CreateFailoverCommitRequest(Id.Parent.Name, Id.Name, operationId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResilienceManagementArmOperation<RecoveryPlanActionBaseResult> operation = new ResilienceManagementArmOperation<RecoveryPlanActionBaseResult>(
                     new RecoveryPlanActionBaseResultOperationSource(),
@@ -736,7 +736,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryPlanActionsRestClient.CreateFailoverCommitRequest(Id.Parent.Name, Id.Name, operationId, context);
+                using HttpMessage message = _recoveryPlanActionsRestClient.CreateFailoverCommitRequest(Id.Parent.Name, Id.Name, operationId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResilienceManagementArmOperation<RecoveryPlanActionBaseResult> operation = new ResilienceManagementArmOperation<RecoveryPlanActionBaseResult>(
                     new RecoveryPlanActionBaseResultOperationSource(),
@@ -796,7 +796,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryPlanActionsRestClient.CreateFinalizeRequest(Id.Parent.Name, Id.Name, operationId, context);
+                using HttpMessage message = _recoveryPlanActionsRestClient.CreateFinalizeRequest(Id.Parent.Name, Id.Name, operationId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResilienceManagementArmOperation<ArmResponseErrorResponseResult> operation = new ResilienceManagementArmOperation<ArmResponseErrorResponseResult>(
                     new ArmResponseErrorResponseResultOperationSource(),
@@ -856,7 +856,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryPlanActionsRestClient.CreateFinalizeRequest(Id.Parent.Name, Id.Name, operationId, context);
+                using HttpMessage message = _recoveryPlanActionsRestClient.CreateFinalizeRequest(Id.Parent.Name, Id.Name, operationId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResilienceManagementArmOperation<ArmResponseErrorResponseResult> operation = new ResilienceManagementArmOperation<ArmResponseErrorResponseResult>(
                     new ArmResponseErrorResponseResultOperationSource(),
@@ -917,7 +917,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryPlanActionsRestClient.CreateReprotectRequest(Id.Parent.Name, Id.Name, operationId, ReprotectContent.ToRequestContent(content), context);
+                using HttpMessage message = _recoveryPlanActionsRestClient.CreateReprotectRequest(Id.Parent.Name, Id.Name, operationId, ReprotectContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResilienceManagementArmOperation<RecoveryPlanActionBaseResult> operation = new ResilienceManagementArmOperation<RecoveryPlanActionBaseResult>(
                     new RecoveryPlanActionBaseResultOperationSource(),
@@ -978,7 +978,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryPlanActionsRestClient.CreateReprotectRequest(Id.Parent.Name, Id.Name, operationId, ReprotectContent.ToRequestContent(content), context);
+                using HttpMessage message = _recoveryPlanActionsRestClient.CreateReprotectRequest(Id.Parent.Name, Id.Name, operationId, ReprotectContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResilienceManagementArmOperation<RecoveryPlanActionBaseResult> operation = new ResilienceManagementArmOperation<RecoveryPlanActionBaseResult>(
                     new RecoveryPlanActionBaseResultOperationSource(),
@@ -1040,7 +1040,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryPlanActionsRestClient.CreateTestFailoverRequest(Id.Parent.Name, Id.Name, operationId, ResilienceManagementFailoverContent.ToRequestContent(content), context);
+                using HttpMessage message = _recoveryPlanActionsRestClient.CreateTestFailoverRequest(Id.Parent.Name, Id.Name, operationId, ResilienceManagementFailoverContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResilienceManagementArmOperation<RecoveryPlanActionBaseResult> operation = new ResilienceManagementArmOperation<RecoveryPlanActionBaseResult>(
                     new RecoveryPlanActionBaseResultOperationSource(),
@@ -1102,7 +1102,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryPlanActionsRestClient.CreateTestFailoverRequest(Id.Parent.Name, Id.Name, operationId, ResilienceManagementFailoverContent.ToRequestContent(content), context);
+                using HttpMessage message = _recoveryPlanActionsRestClient.CreateTestFailoverRequest(Id.Parent.Name, Id.Name, operationId, ResilienceManagementFailoverContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResilienceManagementArmOperation<RecoveryPlanActionBaseResult> operation = new ResilienceManagementArmOperation<RecoveryPlanActionBaseResult>(
                     new RecoveryPlanActionBaseResultOperationSource(),
@@ -1164,7 +1164,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryPlanActionsRestClient.CreateTestFailoverCleanupRequest(Id.Parent.Name, Id.Name, operationId, TestFailoverCleanupContent.ToRequestContent(content), context);
+                using HttpMessage message = _recoveryPlanActionsRestClient.CreateTestFailoverCleanupRequest(Id.Parent.Name, Id.Name, operationId, TestFailoverCleanupContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResilienceManagementArmOperation<RecoveryPlanActionBaseResult> operation = new ResilienceManagementArmOperation<RecoveryPlanActionBaseResult>(
                     new RecoveryPlanActionBaseResultOperationSource(),
@@ -1226,7 +1226,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryPlanActionsRestClient.CreateTestFailoverCleanupRequest(Id.Parent.Name, Id.Name, operationId, TestFailoverCleanupContent.ToRequestContent(content), context);
+                using HttpMessage message = _recoveryPlanActionsRestClient.CreateTestFailoverCleanupRequest(Id.Parent.Name, Id.Name, operationId, TestFailoverCleanupContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResilienceManagementArmOperation<RecoveryPlanActionBaseResult> operation = new ResilienceManagementArmOperation<RecoveryPlanActionBaseResult>(
                     new RecoveryPlanActionBaseResultOperationSource(),
@@ -1288,7 +1288,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryPlanActionsRestClient.CreateUpdateResourcesRequest(Id.Parent.Name, Id.Name, operationId, UpdateRecoveryResourcesContent.ToRequestContent(content), context);
+                using HttpMessage message = _recoveryPlanActionsRestClient.CreateUpdateResourcesRequest(Id.Parent.Name, Id.Name, operationId, UpdateRecoveryResourcesContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResilienceManagementArmOperation<UpdateRecoveryResourcesResult> operation = new ResilienceManagementArmOperation<UpdateRecoveryResourcesResult>(
                     new UpdateRecoveryResourcesResultOperationSource(),
@@ -1350,7 +1350,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryPlanActionsRestClient.CreateUpdateResourcesRequest(Id.Parent.Name, Id.Name, operationId, UpdateRecoveryResourcesContent.ToRequestContent(content), context);
+                using HttpMessage message = _recoveryPlanActionsRestClient.CreateUpdateResourcesRequest(Id.Parent.Name, Id.Name, operationId, UpdateRecoveryResourcesContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResilienceManagementArmOperation<UpdateRecoveryResourcesResult> operation = new ResilienceManagementArmOperation<UpdateRecoveryResourcesResult>(
                     new UpdateRecoveryResourcesResultOperationSource(),
@@ -1412,7 +1412,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryPlanActionsRestClient.CreateValidateForFailoverRequest(Id.Parent.Name, Id.Name, operationId, ResilienceManagementFailoverContent.ToRequestContent(content), context);
+                using HttpMessage message = _recoveryPlanActionsRestClient.CreateValidateForFailoverRequest(Id.Parent.Name, Id.Name, operationId, ResilienceManagementFailoverContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResilienceManagementArmOperation<ValidateForRecoveryOperationBaseResult> operation = new ResilienceManagementArmOperation<ValidateForRecoveryOperationBaseResult>(
                     new ValidateForRecoveryOperationBaseResultOperationSource(),
@@ -1474,7 +1474,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryPlanActionsRestClient.CreateValidateForFailoverRequest(Id.Parent.Name, Id.Name, operationId, ResilienceManagementFailoverContent.ToRequestContent(content), context);
+                using HttpMessage message = _recoveryPlanActionsRestClient.CreateValidateForFailoverRequest(Id.Parent.Name, Id.Name, operationId, ResilienceManagementFailoverContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResilienceManagementArmOperation<ValidateForRecoveryOperationBaseResult> operation = new ResilienceManagementArmOperation<ValidateForRecoveryOperationBaseResult>(
                     new ValidateForRecoveryOperationBaseResultOperationSource(),
@@ -1534,7 +1534,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryPlanActionsRestClient.CreateValidateForFailoverCommitRequest(Id.Parent.Name, Id.Name, operationId, context);
+                using HttpMessage message = _recoveryPlanActionsRestClient.CreateValidateForFailoverCommitRequest(Id.Parent.Name, Id.Name, operationId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResilienceManagementArmOperation<ValidateForRecoveryOperationBaseResult> operation = new ResilienceManagementArmOperation<ValidateForRecoveryOperationBaseResult>(
                     new ValidateForRecoveryOperationBaseResultOperationSource(),
@@ -1594,7 +1594,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryPlanActionsRestClient.CreateValidateForFailoverCommitRequest(Id.Parent.Name, Id.Name, operationId, context);
+                using HttpMessage message = _recoveryPlanActionsRestClient.CreateValidateForFailoverCommitRequest(Id.Parent.Name, Id.Name, operationId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResilienceManagementArmOperation<ValidateForRecoveryOperationBaseResult> operation = new ResilienceManagementArmOperation<ValidateForRecoveryOperationBaseResult>(
                     new ValidateForRecoveryOperationBaseResultOperationSource(),
@@ -1656,7 +1656,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryPlanActionsRestClient.CreateValidateForOperationRequest(Id.Parent.Name, Id.Name, operationId, ValidateForOperationContent.ToRequestContent(content), context);
+                using HttpMessage message = _recoveryPlanActionsRestClient.CreateValidateForOperationRequest(Id.Parent.Name, Id.Name, operationId, ValidateForOperationContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResilienceManagementArmOperation<ArmResponseErrorResponseResult> operation = new ResilienceManagementArmOperation<ArmResponseErrorResponseResult>(
                     new ArmResponseErrorResponseResultOperationSource(),
@@ -1718,7 +1718,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryPlanActionsRestClient.CreateValidateForOperationRequest(Id.Parent.Name, Id.Name, operationId, ValidateForOperationContent.ToRequestContent(content), context);
+                using HttpMessage message = _recoveryPlanActionsRestClient.CreateValidateForOperationRequest(Id.Parent.Name, Id.Name, operationId, ValidateForOperationContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResilienceManagementArmOperation<ArmResponseErrorResponseResult> operation = new ResilienceManagementArmOperation<ArmResponseErrorResponseResult>(
                     new ArmResponseErrorResponseResultOperationSource(),
@@ -1779,7 +1779,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryPlanActionsRestClient.CreateValidateForReprotectRequest(Id.Parent.Name, Id.Name, operationId, ReprotectContent.ToRequestContent(content), context);
+                using HttpMessage message = _recoveryPlanActionsRestClient.CreateValidateForReprotectRequest(Id.Parent.Name, Id.Name, operationId, ReprotectContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResilienceManagementArmOperation<ValidateForRecoveryOperationBaseResult> operation = new ResilienceManagementArmOperation<ValidateForRecoveryOperationBaseResult>(
                     new ValidateForRecoveryOperationBaseResultOperationSource(),
@@ -1840,7 +1840,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryPlanActionsRestClient.CreateValidateForReprotectRequest(Id.Parent.Name, Id.Name, operationId, ReprotectContent.ToRequestContent(content), context);
+                using HttpMessage message = _recoveryPlanActionsRestClient.CreateValidateForReprotectRequest(Id.Parent.Name, Id.Name, operationId, ReprotectContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResilienceManagementArmOperation<ValidateForRecoveryOperationBaseResult> operation = new ResilienceManagementArmOperation<ValidateForRecoveryOperationBaseResult>(
                     new ValidateForRecoveryOperationBaseResultOperationSource(),
@@ -1902,7 +1902,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryPlanActionsRestClient.CreateValidateForTestFailoverRequest(Id.Parent.Name, Id.Name, operationId, ResilienceManagementFailoverContent.ToRequestContent(content), context);
+                using HttpMessage message = _recoveryPlanActionsRestClient.CreateValidateForTestFailoverRequest(Id.Parent.Name, Id.Name, operationId, ResilienceManagementFailoverContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResilienceManagementArmOperation<ValidateForRecoveryOperationBaseResult> operation = new ResilienceManagementArmOperation<ValidateForRecoveryOperationBaseResult>(
                     new ValidateForRecoveryOperationBaseResultOperationSource(),
@@ -1964,7 +1964,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryPlanActionsRestClient.CreateValidateForTestFailoverRequest(Id.Parent.Name, Id.Name, operationId, ResilienceManagementFailoverContent.ToRequestContent(content), context);
+                using HttpMessage message = _recoveryPlanActionsRestClient.CreateValidateForTestFailoverRequest(Id.Parent.Name, Id.Name, operationId, ResilienceManagementFailoverContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResilienceManagementArmOperation<ValidateForRecoveryOperationBaseResult> operation = new ResilienceManagementArmOperation<ValidateForRecoveryOperationBaseResult>(
                     new ValidateForRecoveryOperationBaseResultOperationSource(),
@@ -2024,7 +2024,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryPlanActionsRestClient.CreateValidateForTestFailoverCleanupRequest(Id.Parent.Name, Id.Name, operationId, context);
+                using HttpMessage message = _recoveryPlanActionsRestClient.CreateValidateForTestFailoverCleanupRequest(Id.Parent.Name, Id.Name, operationId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResilienceManagementArmOperation<ValidateForRecoveryOperationBaseResult> operation = new ResilienceManagementArmOperation<ValidateForRecoveryOperationBaseResult>(
                     new ValidateForRecoveryOperationBaseResultOperationSource(),
@@ -2084,7 +2084,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryPlanActionsRestClient.CreateValidateForTestFailoverCleanupRequest(Id.Parent.Name, Id.Name, operationId, context);
+                using HttpMessage message = _recoveryPlanActionsRestClient.CreateValidateForTestFailoverCleanupRequest(Id.Parent.Name, Id.Name, operationId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResilienceManagementArmOperation<ValidateForRecoveryOperationBaseResult> operation = new ResilienceManagementArmOperation<ValidateForRecoveryOperationBaseResult>(
                     new ValidateForRecoveryOperationBaseResultOperationSource(),

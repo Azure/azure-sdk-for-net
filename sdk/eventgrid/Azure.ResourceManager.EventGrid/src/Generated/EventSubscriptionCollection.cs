@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventSubscriptionsRestClient.CreateCreateOrUpdateRequest(Id.ToString(), eventSubscriptionName, EventGridSubscriptionData.ToRequestContent(data), context);
+                using HttpMessage message = _eventSubscriptionsRestClient.CreateCreateOrUpdateRequest(Id.ToString(), eventSubscriptionName, EventGridSubscriptionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 EventGridArmOperation<EventSubscriptionResource> operation = new EventGridArmOperation<EventSubscriptionResource>(
                     new EventSubscriptionResourceOperationSource(Client),
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventSubscriptionsRestClient.CreateCreateOrUpdateRequest(Id.ToString(), eventSubscriptionName, EventGridSubscriptionData.ToRequestContent(data), context);
+                using HttpMessage message = _eventSubscriptionsRestClient.CreateCreateOrUpdateRequest(Id.ToString(), eventSubscriptionName, EventGridSubscriptionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 EventGridArmOperation<EventSubscriptionResource> operation = new EventGridArmOperation<EventSubscriptionResource>(
                     new EventSubscriptionResourceOperationSource(Client),
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventSubscriptionsRestClient.CreateGetRequest(Id.ToString(), eventSubscriptionName, context);
+                using HttpMessage message = _eventSubscriptionsRestClient.CreateGetRequest(Id.ToString(), eventSubscriptionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EventGridSubscriptionData> response = Response.FromValue(EventGridSubscriptionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventSubscriptionsRestClient.CreateGetRequest(Id.ToString(), eventSubscriptionName, context);
+                using HttpMessage message = _eventSubscriptionsRestClient.CreateGetRequest(Id.ToString(), eventSubscriptionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EventGridSubscriptionData> response = Response.FromValue(EventGridSubscriptionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventSubscriptionsRestClient.CreateGetRequest(Id.ToString(), eventSubscriptionName, context);
+                using HttpMessage message = _eventSubscriptionsRestClient.CreateGetRequest(Id.ToString(), eventSubscriptionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EventGridSubscriptionData> response = default;
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventSubscriptionsRestClient.CreateGetRequest(Id.ToString(), eventSubscriptionName, context);
+                using HttpMessage message = _eventSubscriptionsRestClient.CreateGetRequest(Id.ToString(), eventSubscriptionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EventGridSubscriptionData> response = default;
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventSubscriptionsRestClient.CreateGetRequest(Id.ToString(), eventSubscriptionName, context);
+                using HttpMessage message = _eventSubscriptionsRestClient.CreateGetRequest(Id.ToString(), eventSubscriptionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EventGridSubscriptionData> response = default;
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventSubscriptionsRestClient.CreateGetRequest(Id.ToString(), eventSubscriptionName, context);
+                using HttpMessage message = _eventSubscriptionsRestClient.CreateGetRequest(Id.ToString(), eventSubscriptionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EventGridSubscriptionData> response = default;

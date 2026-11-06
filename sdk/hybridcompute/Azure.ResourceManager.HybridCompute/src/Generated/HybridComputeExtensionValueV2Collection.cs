@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionMetadataV2RestClient.CreateGetRequest(_location, _publisher, _extensionType, version, context);
+                using HttpMessage message = _extensionMetadataV2RestClient.CreateGetRequest(_location, _publisher, _extensionType, version, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HybridComputeExtensionValueV2Data> response = Response.FromValue(HybridComputeExtensionValueV2Data.FromResponse(result), result);
                 if (response.Value == null)
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionMetadataV2RestClient.CreateGetRequest(_location, _publisher, _extensionType, version, context);
+                using HttpMessage message = _extensionMetadataV2RestClient.CreateGetRequest(_location, _publisher, _extensionType, version, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HybridComputeExtensionValueV2Data> response = Response.FromValue(HybridComputeExtensionValueV2Data.FromResponse(result), result);
                 if (response.Value == null)
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionMetadataV2RestClient.CreateGetRequest(_location, _publisher, _extensionType, version, context);
+                using HttpMessage message = _extensionMetadataV2RestClient.CreateGetRequest(_location, _publisher, _extensionType, version, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HybridComputeExtensionValueV2Data> response = default;
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionMetadataV2RestClient.CreateGetRequest(_location, _publisher, _extensionType, version, context);
+                using HttpMessage message = _extensionMetadataV2RestClient.CreateGetRequest(_location, _publisher, _extensionType, version, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HybridComputeExtensionValueV2Data> response = default;
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionMetadataV2RestClient.CreateGetRequest(_location, _publisher, _extensionType, version, context);
+                using HttpMessage message = _extensionMetadataV2RestClient.CreateGetRequest(_location, _publisher, _extensionType, version, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HybridComputeExtensionValueV2Data> response = default;
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionMetadataV2RestClient.CreateGetRequest(_location, _publisher, _extensionType, version, context);
+                using HttpMessage message = _extensionMetadataV2RestClient.CreateGetRequest(_location, _publisher, _extensionType, version, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HybridComputeExtensionValueV2Data> response = default;

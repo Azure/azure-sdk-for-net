@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ApiManagementServiceRestClient.CreateCheckApiManagementServiceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ApiManagementServiceNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = ApiManagementServiceRestClient.CreateCheckApiManagementServiceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ApiManagementServiceNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementServiceNameAvailabilityResult> response = Response.FromValue(ApiManagementServiceNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ApiManagementServiceRestClient.CreateCheckApiManagementServiceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ApiManagementServiceNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = ApiManagementServiceRestClient.CreateCheckApiManagementServiceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ApiManagementServiceNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementServiceNameAvailabilityResult> response = Response.FromValue(ApiManagementServiceNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ApiManagementServiceRestClient.CreateGetApiManagementServiceDomainOwnershipIdentifierRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = ApiManagementServiceRestClient.CreateGetApiManagementServiceDomainOwnershipIdentifierRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementServiceGetDomainOwnershipIdentifierResult> response = Response.FromValue(ApiManagementServiceGetDomainOwnershipIdentifierResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ApiManagementServiceRestClient.CreateGetApiManagementServiceDomainOwnershipIdentifierRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = ApiManagementServiceRestClient.CreateGetApiManagementServiceDomainOwnershipIdentifierRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementServiceGetDomainOwnershipIdentifierResult> response = Response.FromValue(ApiManagementServiceGetDomainOwnershipIdentifierResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -620,7 +620,7 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OperationStatusRestClient.CreateGetOperationStatusRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
+                using HttpMessage message = OperationStatusRestClient.CreateGetOperationStatusRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OperationStatusResult> response = Response.FromValue(ModelReaderWriter.Read<OperationStatusResult>(result.Content, ModelSerializationExtensions.WireOptions, AzureResourceManagerApiManagementContext.Default), result);
                 if (response.Value == null)
@@ -670,7 +670,7 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OperationStatusRestClient.CreateGetOperationStatusRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
+                using HttpMessage message = OperationStatusRestClient.CreateGetOperationStatusRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OperationStatusResult> response = Response.FromValue(ModelReaderWriter.Read<OperationStatusResult>(result.Content, ModelSerializationExtensions.WireOptions, AzureResourceManagerApiManagementContext.Default), result);
                 if (response.Value == null)
@@ -720,7 +720,7 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OperationsResultsRestClient.CreateGetOperationsResultRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
+                using HttpMessage message = OperationsResultsRestClient.CreateGetOperationsResultRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -765,7 +765,7 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OperationsResultsRestClient.CreateGetOperationsResultRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
+                using HttpMessage message = OperationsResultsRestClient.CreateGetOperationsResultRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }

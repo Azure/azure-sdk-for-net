@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkToNetworkInterconnectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _networkToNetworkInterconnectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkToNetworkInterconnectData> response = Response.FromValue(NetworkToNetworkInterconnectData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkToNetworkInterconnectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _networkToNetworkInterconnectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkToNetworkInterconnectData> response = Response.FromValue(NetworkToNetworkInterconnectData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkToNetworkInterconnectsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NetworkToNetworkInterconnectPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _networkToNetworkInterconnectsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NetworkToNetworkInterconnectPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<NetworkToNetworkInterconnectResource> operation = new ManagedNetworkFabricArmOperation<NetworkToNetworkInterconnectResource>(
                     new NetworkToNetworkInterconnectResourceOperationSource(Client),
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkToNetworkInterconnectsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NetworkToNetworkInterconnectPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _networkToNetworkInterconnectsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NetworkToNetworkInterconnectPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<NetworkToNetworkInterconnectResource> operation = new ManagedNetworkFabricArmOperation<NetworkToNetworkInterconnectResource>(
                     new NetworkToNetworkInterconnectResourceOperationSource(Client),
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkToNetworkInterconnectsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _networkToNetworkInterconnectsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation operation = new ManagedNetworkFabricArmOperation(_networkToNetworkInterconnectsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkToNetworkInterconnectsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _networkToNetworkInterconnectsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation operation = new ManagedNetworkFabricArmOperation(_networkToNetworkInterconnectsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkToNetworkInterconnectsRestClient.CreateSetAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, UpdateAdministrativeStateContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkToNetworkInterconnectsRestClient.CreateSetAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, UpdateAdministrativeStateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult> operation = new ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult>(
                     new UpdateAdministrativeStateResultOperationSource(),
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkToNetworkInterconnectsRestClient.CreateSetAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, UpdateAdministrativeStateContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkToNetworkInterconnectsRestClient.CreateSetAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, UpdateAdministrativeStateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult> operation = new ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult>(
                     new UpdateAdministrativeStateResultOperationSource(),
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkToNetworkInterconnectsRestClient.CreateUpdateBfdAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NniUpdateBfdAdministrativeStateContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkToNetworkInterconnectsRestClient.CreateUpdateBfdAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NniUpdateBfdAdministrativeStateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<NniUpdateBfdAdministrativeStateResult> operation = new ManagedNetworkFabricArmOperation<NniUpdateBfdAdministrativeStateResult>(
                     new NniUpdateBfdAdministrativeStateResultOperationSource(),
@@ -618,7 +618,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkToNetworkInterconnectsRestClient.CreateUpdateBfdAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NniUpdateBfdAdministrativeStateContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkToNetworkInterconnectsRestClient.CreateUpdateBfdAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NniUpdateBfdAdministrativeStateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<NniUpdateBfdAdministrativeStateResult> operation = new ManagedNetworkFabricArmOperation<NniUpdateBfdAdministrativeStateResult>(
                     new NniUpdateBfdAdministrativeStateResultOperationSource(),
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkToNetworkInterconnectsRestClient.CreateSetNpbStaticRouteBfdAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, UpdateAdministrativeStateContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkToNetworkInterconnectsRestClient.CreateSetNpbStaticRouteBfdAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, UpdateAdministrativeStateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult> operation = new ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult>(
                     new UpdateAdministrativeStateResultOperationSource(),
@@ -736,7 +736,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkToNetworkInterconnectsRestClient.CreateSetNpbStaticRouteBfdAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, UpdateAdministrativeStateContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkToNetworkInterconnectsRestClient.CreateSetNpbStaticRouteBfdAdministrativeStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, UpdateAdministrativeStateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult> operation = new ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult>(
                     new UpdateAdministrativeStateResultOperationSource(),

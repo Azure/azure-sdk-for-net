@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _databaseAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CosmosDBAccountData> response = Response.FromValue(CosmosDBAccountData.FromResponse(result), result);
                 if (response.Value == null)
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _databaseAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CosmosDBAccountData> response = Response.FromValue(CosmosDBAccountData.FromResponse(result), result);
                 if (response.Value == null)
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseAccountsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CosmosDBAccountPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _databaseAccountsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CosmosDBAccountPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<CosmosDBAccountResource> operation = new CosmosDBArmOperation<CosmosDBAccountResource>(
                     new CosmosDBAccountResourceOperationSource(Client),
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseAccountsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CosmosDBAccountPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _databaseAccountsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CosmosDBAccountPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<CosmosDBAccountResource> operation = new CosmosDBArmOperation<CosmosDBAccountResource>(
                     new CosmosDBAccountResourceOperationSource(Client),
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseAccountsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _databaseAccountsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation operation = new CosmosDBArmOperation(_databaseAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseAccountsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _databaseAccountsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation operation = new CosmosDBArmOperation(_databaseAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1563,7 +1563,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseAccountsRestClient.CreateFailoverPriorityChangeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CosmosDBFailoverPolicies.ToRequestContent(failoverParameters), context);
+                using HttpMessage message = _databaseAccountsRestClient.CreateFailoverPriorityChangeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CosmosDBFailoverPolicies.ToRequestContent(failoverParameters), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation operation = new CosmosDBArmOperation(_databaseAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1616,7 +1616,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseAccountsRestClient.CreateFailoverPriorityChangeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CosmosDBFailoverPolicies.ToRequestContent(failoverParameters), context);
+                using HttpMessage message = _databaseAccountsRestClient.CreateFailoverPriorityChangeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CosmosDBFailoverPolicies.ToRequestContent(failoverParameters), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation operation = new CosmosDBArmOperation(_databaseAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1664,7 +1664,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseAccountsRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _databaseAccountsRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CosmosDBAccountKeyList> response = Response.FromValue(CosmosDBAccountKeyList.FromResponse(result), result);
                 if (response.Value == null)
@@ -1712,7 +1712,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseAccountsRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _databaseAccountsRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CosmosDBAccountKeyList> response = Response.FromValue(CosmosDBAccountKeyList.FromResponse(result), result);
                 if (response.Value == null)
@@ -1924,7 +1924,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseAccountsRestClient.CreateGetReadOnlyKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _databaseAccountsRestClient.CreateGetReadOnlyKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CosmosDBAccountReadOnlyKeyList> response = Response.FromValue(CosmosDBAccountReadOnlyKeyList.FromResponse(result), result);
                 if (response.Value == null)
@@ -1972,7 +1972,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseAccountsRestClient.CreateGetReadOnlyKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _databaseAccountsRestClient.CreateGetReadOnlyKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CosmosDBAccountReadOnlyKeyList> response = Response.FromValue(CosmosDBAccountReadOnlyKeyList.FromResponse(result), result);
                 if (response.Value == null)
@@ -2105,7 +2105,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseAccountsRestClient.CreateOfflineRegionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RegionForOnlineOffline.ToRequestContent(regionParameterForOffline), context);
+                using HttpMessage message = _databaseAccountsRestClient.CreateOfflineRegionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RegionForOnlineOffline.ToRequestContent(regionParameterForOffline), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation operation = new CosmosDBArmOperation(_databaseAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2158,7 +2158,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseAccountsRestClient.CreateOfflineRegionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RegionForOnlineOffline.ToRequestContent(regionParameterForOffline), context);
+                using HttpMessage message = _databaseAccountsRestClient.CreateOfflineRegionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RegionForOnlineOffline.ToRequestContent(regionParameterForOffline), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation operation = new CosmosDBArmOperation(_databaseAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2211,7 +2211,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseAccountsRestClient.CreateOnlineRegionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RegionForOnlineOffline.ToRequestContent(regionParameterForOnline), context);
+                using HttpMessage message = _databaseAccountsRestClient.CreateOnlineRegionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RegionForOnlineOffline.ToRequestContent(regionParameterForOnline), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation operation = new CosmosDBArmOperation(_databaseAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2264,7 +2264,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseAccountsRestClient.CreateOnlineRegionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RegionForOnlineOffline.ToRequestContent(regionParameterForOnline), context);
+                using HttpMessage message = _databaseAccountsRestClient.CreateOnlineRegionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RegionForOnlineOffline.ToRequestContent(regionParameterForOnline), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation operation = new CosmosDBArmOperation(_databaseAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2817,7 +2817,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseAccountsRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CosmosDBAccountRegenerateKeyContent.ToRequestContent(content), context);
+                using HttpMessage message = _databaseAccountsRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CosmosDBAccountRegenerateKeyContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation operation = new CosmosDBArmOperation(_databaseAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2870,7 +2870,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseAccountsRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CosmosDBAccountRegenerateKeyContent.ToRequestContent(content), context);
+                using HttpMessage message = _databaseAccountsRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CosmosDBAccountRegenerateKeyContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation operation = new CosmosDBArmOperation(_databaseAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2909,7 +2909,7 @@ namespace Azure.ResourceManager.CosmosDB
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _databaseAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _databaseAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<CosmosDBAccountData> response = Response.FromValue(CosmosDBAccountData.FromResponse(result), result);
                     return Response.FromValue(new CosmosDBAccountResource(Client, response.Value), response.GetRawResponse());
@@ -2957,7 +2957,7 @@ namespace Azure.ResourceManager.CosmosDB
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _databaseAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _databaseAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<CosmosDBAccountData> response = Response.FromValue(CosmosDBAccountData.FromResponse(result), result);
                     return Response.FromValue(new CosmosDBAccountResource(Client, response.Value), response.GetRawResponse());
@@ -3003,7 +3003,7 @@ namespace Azure.ResourceManager.CosmosDB
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _databaseAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _databaseAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<CosmosDBAccountData> response = Response.FromValue(CosmosDBAccountData.FromResponse(result), result);
                     return Response.FromValue(new CosmosDBAccountResource(Client, response.Value), response.GetRawResponse());
@@ -3045,7 +3045,7 @@ namespace Azure.ResourceManager.CosmosDB
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _databaseAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _databaseAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<CosmosDBAccountData> response = Response.FromValue(CosmosDBAccountData.FromResponse(result), result);
                     return Response.FromValue(new CosmosDBAccountResource(Client, response.Value), response.GetRawResponse());
@@ -3087,7 +3087,7 @@ namespace Azure.ResourceManager.CosmosDB
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _databaseAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _databaseAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<CosmosDBAccountData> response = Response.FromValue(CosmosDBAccountData.FromResponse(result), result);
                     return Response.FromValue(new CosmosDBAccountResource(Client, response.Value), response.GetRawResponse());
@@ -3133,7 +3133,7 @@ namespace Azure.ResourceManager.CosmosDB
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _databaseAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _databaseAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<CosmosDBAccountData> response = Response.FromValue(CosmosDBAccountData.FromResponse(result), result);
                     return Response.FromValue(new CosmosDBAccountResource(Client, response.Value), response.GetRawResponse());

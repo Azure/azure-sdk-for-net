@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _getTenantPolicyResponsesRestClient.CreateAddUpdatePolicyForTenantRequest(TenantPolicyCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _getTenantPolicyResponsesRestClient.CreateAddUpdatePolicyForTenantRequest(TenantPolicyCreateOrUpdateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TenantPolicyData> response = Response.FromValue(TenantPolicyData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _getTenantPolicyResponsesRestClient.CreateAddUpdatePolicyForTenantRequest(TenantPolicyCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _getTenantPolicyResponsesRestClient.CreateAddUpdatePolicyForTenantRequest(TenantPolicyCreateOrUpdateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TenantPolicyData> response = Response.FromValue(TenantPolicyData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _getTenantPolicyResponsesRestClient.CreateGetPolicyForTenantRequest(context);
+                using HttpMessage message = _getTenantPolicyResponsesRestClient.CreateGetPolicyForTenantRequest(context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TenantPolicyData> response = Response.FromValue(TenantPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _getTenantPolicyResponsesRestClient.CreateGetPolicyForTenantRequest(context);
+                using HttpMessage message = _getTenantPolicyResponsesRestClient.CreateGetPolicyForTenantRequest(context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TenantPolicyData> response = Response.FromValue(TenantPolicyData.FromResponse(result), result);
                 if (response.Value == null)

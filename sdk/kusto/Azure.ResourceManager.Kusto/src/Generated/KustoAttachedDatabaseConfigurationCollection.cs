@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attachedDatabaseConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attachedDatabaseConfigurationName, KustoAttachedDatabaseConfigurationData.ToRequestContent(data), context);
+                using HttpMessage message = _attachedDatabaseConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attachedDatabaseConfigurationName, KustoAttachedDatabaseConfigurationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 KustoArmOperation<KustoAttachedDatabaseConfigurationResource> operation = new KustoArmOperation<KustoAttachedDatabaseConfigurationResource>(
                     new KustoAttachedDatabaseConfigurationResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attachedDatabaseConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attachedDatabaseConfigurationName, KustoAttachedDatabaseConfigurationData.ToRequestContent(data), context);
+                using HttpMessage message = _attachedDatabaseConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attachedDatabaseConfigurationName, KustoAttachedDatabaseConfigurationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 KustoArmOperation<KustoAttachedDatabaseConfigurationResource> operation = new KustoArmOperation<KustoAttachedDatabaseConfigurationResource>(
                     new KustoAttachedDatabaseConfigurationResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attachedDatabaseConfigurationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attachedDatabaseConfigurationName, context);
+                using HttpMessage message = _attachedDatabaseConfigurationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attachedDatabaseConfigurationName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<KustoAttachedDatabaseConfigurationData> response = Response.FromValue(KustoAttachedDatabaseConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attachedDatabaseConfigurationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attachedDatabaseConfigurationName, context);
+                using HttpMessage message = _attachedDatabaseConfigurationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attachedDatabaseConfigurationName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<KustoAttachedDatabaseConfigurationData> response = Response.FromValue(KustoAttachedDatabaseConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attachedDatabaseConfigurationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attachedDatabaseConfigurationName, context);
+                using HttpMessage message = _attachedDatabaseConfigurationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attachedDatabaseConfigurationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<KustoAttachedDatabaseConfigurationData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attachedDatabaseConfigurationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attachedDatabaseConfigurationName, context);
+                using HttpMessage message = _attachedDatabaseConfigurationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attachedDatabaseConfigurationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<KustoAttachedDatabaseConfigurationData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attachedDatabaseConfigurationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attachedDatabaseConfigurationName, context);
+                using HttpMessage message = _attachedDatabaseConfigurationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attachedDatabaseConfigurationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<KustoAttachedDatabaseConfigurationData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attachedDatabaseConfigurationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attachedDatabaseConfigurationName, context);
+                using HttpMessage message = _attachedDatabaseConfigurationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attachedDatabaseConfigurationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<KustoAttachedDatabaseConfigurationData> response = default;

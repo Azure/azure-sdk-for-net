@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualHardDisksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _virtualHardDisksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HciVmVirtualHardDiskData> response = Response.FromValue(HciVmVirtualHardDiskData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualHardDisksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _virtualHardDisksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HciVmVirtualHardDiskData> response = Response.FromValue(HciVmVirtualHardDiskData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualHardDisksRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HciVmVirtualHardDiskPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _virtualHardDisksRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HciVmVirtualHardDiskPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation<HciVmVirtualHardDiskResource> operation = new VmArmOperation<HciVmVirtualHardDiskResource>(
                     new HciVmVirtualHardDiskResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualHardDisksRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HciVmVirtualHardDiskPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _virtualHardDisksRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HciVmVirtualHardDiskPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation<HciVmVirtualHardDiskResource> operation = new VmArmOperation<HciVmVirtualHardDiskResource>(
                     new HciVmVirtualHardDiskResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualHardDisksRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _virtualHardDisksRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation operation = new VmArmOperation(_virtualHardDisksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualHardDisksRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _virtualHardDisksRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation operation = new VmArmOperation(_virtualHardDisksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualHardDisksRestClient.CreateUploadRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HciVmVirtualHardDiskUploadContent.ToRequestContent(content), context);
+                using HttpMessage message = _virtualHardDisksRestClient.CreateUploadRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HciVmVirtualHardDiskUploadContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation<HciVmVirtualHardDiskUploadResult> operation = new VmArmOperation<HciVmVirtualHardDiskUploadResult>(
                     new HciVmVirtualHardDiskUploadResultOperationSource(),
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualHardDisksRestClient.CreateUploadRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HciVmVirtualHardDiskUploadContent.ToRequestContent(content), context);
+                using HttpMessage message = _virtualHardDisksRestClient.CreateUploadRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HciVmVirtualHardDiskUploadContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation<HciVmVirtualHardDiskUploadResult> operation = new VmArmOperation<HciVmVirtualHardDiskUploadResult>(
                     new HciVmVirtualHardDiskUploadResultOperationSource(),
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.Hci.Vm
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualHardDisksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _virtualHardDisksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<HciVmVirtualHardDiskData> response = Response.FromValue(HciVmVirtualHardDiskData.FromResponse(result), result);
                     return Response.FromValue(new HciVmVirtualHardDiskResource(Client, response.Value), response.GetRawResponse());
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.Hci.Vm
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualHardDisksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _virtualHardDisksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<HciVmVirtualHardDiskData> response = Response.FromValue(HciVmVirtualHardDiskData.FromResponse(result), result);
                     return Response.FromValue(new HciVmVirtualHardDiskResource(Client, response.Value), response.GetRawResponse());
@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.Hci.Vm
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualHardDisksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _virtualHardDisksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<HciVmVirtualHardDiskData> response = Response.FromValue(HciVmVirtualHardDiskData.FromResponse(result), result);
                     return Response.FromValue(new HciVmVirtualHardDiskResource(Client, response.Value), response.GetRawResponse());
@@ -682,7 +682,7 @@ namespace Azure.ResourceManager.Hci.Vm
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualHardDisksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _virtualHardDisksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<HciVmVirtualHardDiskData> response = Response.FromValue(HciVmVirtualHardDiskData.FromResponse(result), result);
                     return Response.FromValue(new HciVmVirtualHardDiskResource(Client, response.Value), response.GetRawResponse());
@@ -724,7 +724,7 @@ namespace Azure.ResourceManager.Hci.Vm
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualHardDisksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _virtualHardDisksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<HciVmVirtualHardDiskData> response = Response.FromValue(HciVmVirtualHardDiskData.FromResponse(result), result);
                     return Response.FromValue(new HciVmVirtualHardDiskResource(Client, response.Value), response.GetRawResponse());
@@ -770,7 +770,7 @@ namespace Azure.ResourceManager.Hci.Vm
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualHardDisksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _virtualHardDisksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<HciVmVirtualHardDiskData> response = Response.FromValue(HciVmVirtualHardDiskData.FromResponse(result), result);
                     return Response.FromValue(new HciVmVirtualHardDiskResource(Client, response.Value), response.GetRawResponse());

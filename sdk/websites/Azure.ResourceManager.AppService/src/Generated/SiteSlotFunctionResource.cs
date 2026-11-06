@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _functionEnvelopeOperationGroupRestClient.CreateGetInstanceFunctionSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _functionEnvelopeOperationGroupRestClient.CreateGetInstanceFunctionSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FunctionEnvelopeData> response = Response.FromValue(FunctionEnvelopeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _functionEnvelopeOperationGroupRestClient.CreateGetInstanceFunctionSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _functionEnvelopeOperationGroupRestClient.CreateGetInstanceFunctionSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FunctionEnvelopeData> response = Response.FromValue(FunctionEnvelopeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _functionEnvelopeOperationGroupRestClient.CreateDeleteInstanceFunctionSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _functionEnvelopeOperationGroupRestClient.CreateDeleteInstanceFunctionSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _functionEnvelopeOperationGroupRestClient.CreateDeleteInstanceFunctionSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _functionEnvelopeOperationGroupRestClient.CreateDeleteInstanceFunctionSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _functionEnvelopeOperationGroupRestClient.CreateCreateOrUpdateFunctionSecretSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, keyName, WebAppKeyInfo.ToRequestContent(info), context);
+                using HttpMessage message = _functionEnvelopeOperationGroupRestClient.CreateCreateOrUpdateFunctionSecretSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, keyName, WebAppKeyInfo.ToRequestContent(info), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WebAppKeyInfo> response = Response.FromValue(WebAppKeyInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _functionEnvelopeOperationGroupRestClient.CreateCreateOrUpdateFunctionSecretSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, keyName, WebAppKeyInfo.ToRequestContent(info), context);
+                using HttpMessage message = _functionEnvelopeOperationGroupRestClient.CreateCreateOrUpdateFunctionSecretSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, keyName, WebAppKeyInfo.ToRequestContent(info), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WebAppKeyInfo> response = Response.FromValue(WebAppKeyInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _functionEnvelopeOperationGroupRestClient.CreateDeleteFunctionSecretSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, keyName, context);
+                using HttpMessage message = _functionEnvelopeOperationGroupRestClient.CreateDeleteFunctionSecretSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, keyName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _functionEnvelopeOperationGroupRestClient.CreateDeleteFunctionSecretSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, keyName, context);
+                using HttpMessage message = _functionEnvelopeOperationGroupRestClient.CreateDeleteFunctionSecretSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, keyName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _functionEnvelopeOperationGroupRestClient.CreateGetFunctionKeysSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _functionEnvelopeOperationGroupRestClient.CreateGetFunctionKeysSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceConfigurationDictionary> response = Response.FromValue(AppServiceConfigurationDictionary.FromResponse(result), result);
                 if (response.Value == null)
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _functionEnvelopeOperationGroupRestClient.CreateGetFunctionKeysSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _functionEnvelopeOperationGroupRestClient.CreateGetFunctionKeysSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceConfigurationDictionary> response = Response.FromValue(AppServiceConfigurationDictionary.FromResponse(result), result);
                 if (response.Value == null)
@@ -625,7 +625,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _functionEnvelopeOperationGroupRestClient.CreateGetFunctionSecretsSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _functionEnvelopeOperationGroupRestClient.CreateGetFunctionSecretsSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FunctionSecrets> response = Response.FromValue(FunctionSecrets.FromResponse(result), result);
                 if (response.Value == null)
@@ -673,7 +673,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _functionEnvelopeOperationGroupRestClient.CreateGetFunctionSecretsSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _functionEnvelopeOperationGroupRestClient.CreateGetFunctionSecretsSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FunctionSecrets> response = Response.FromValue(FunctionSecrets.FromResponse(result), result);
                 if (response.Value == null)
@@ -726,7 +726,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _functionEnvelopeOperationGroupRestClient.CreateCreateInstanceFunctionSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, FunctionEnvelopeData.ToRequestContent(data), context);
+                using HttpMessage message = _functionEnvelopeOperationGroupRestClient.CreateCreateInstanceFunctionSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, FunctionEnvelopeData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppServiceArmOperation<SiteSlotFunctionResource> operation = new AppServiceArmOperation<SiteSlotFunctionResource>(
                     new SiteSlotFunctionResourceOperationSource(Client),
@@ -785,7 +785,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _functionEnvelopeOperationGroupRestClient.CreateCreateInstanceFunctionSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, FunctionEnvelopeData.ToRequestContent(data), context);
+                using HttpMessage message = _functionEnvelopeOperationGroupRestClient.CreateCreateInstanceFunctionSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, FunctionEnvelopeData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppServiceArmOperation<SiteSlotFunctionResource> operation = new AppServiceArmOperation<SiteSlotFunctionResource>(
                     new SiteSlotFunctionResourceOperationSource(Client),

@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ArtifactSigning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _codeSigningAccountsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, ArtifactSigningAccountData.ToRequestContent(data), context);
+                using HttpMessage message = _codeSigningAccountsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, ArtifactSigningAccountData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ArtifactSigningArmOperation<ArtifactSigningAccountResource> operation = new ArtifactSigningArmOperation<ArtifactSigningAccountResource>(
                     new ArtifactSigningAccountResourceOperationSource(Client),
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ArtifactSigning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _codeSigningAccountsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, ArtifactSigningAccountData.ToRequestContent(data), context);
+                using HttpMessage message = _codeSigningAccountsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, ArtifactSigningAccountData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ArtifactSigningArmOperation<ArtifactSigningAccountResource> operation = new ArtifactSigningArmOperation<ArtifactSigningAccountResource>(
                     new ArtifactSigningAccountResourceOperationSource(Client),
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ArtifactSigning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _codeSigningAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
+                using HttpMessage message = _codeSigningAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ArtifactSigningAccountData> response = Response.FromValue(ArtifactSigningAccountData.FromResponse(result), result);
                 if (response.Value == null)
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.ArtifactSigning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _codeSigningAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
+                using HttpMessage message = _codeSigningAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ArtifactSigningAccountData> response = Response.FromValue(ArtifactSigningAccountData.FromResponse(result), result);
                 if (response.Value == null)
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.ArtifactSigning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _codeSigningAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
+                using HttpMessage message = _codeSigningAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ArtifactSigningAccountData> response = default;
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.ArtifactSigning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _codeSigningAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
+                using HttpMessage message = _codeSigningAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ArtifactSigningAccountData> response = default;
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.ArtifactSigning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _codeSigningAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
+                using HttpMessage message = _codeSigningAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ArtifactSigningAccountData> response = default;
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.ArtifactSigning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _codeSigningAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
+                using HttpMessage message = _codeSigningAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ArtifactSigningAccountData> response = default;

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedLimitsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), _location, name, ComputeLimitSharedLimitData.ToRequestContent(data), context);
+                using HttpMessage message = _sharedLimitsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), _location, name, ComputeLimitSharedLimitData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ComputeLimitSharedLimitData> response = Response.FromValue(ComputeLimitSharedLimitData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedLimitsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), _location, name, ComputeLimitSharedLimitData.ToRequestContent(data), context);
+                using HttpMessage message = _sharedLimitsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), _location, name, ComputeLimitSharedLimitData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ComputeLimitSharedLimitData> response = Response.FromValue(ComputeLimitSharedLimitData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedLimitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, name, context);
+                using HttpMessage message = _sharedLimitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ComputeLimitSharedLimitData> response = Response.FromValue(ComputeLimitSharedLimitData.FromResponse(result), result);
                 if (response.Value == null)
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedLimitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, name, context);
+                using HttpMessage message = _sharedLimitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ComputeLimitSharedLimitData> response = Response.FromValue(ComputeLimitSharedLimitData.FromResponse(result), result);
                 if (response.Value == null)
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedLimitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, name, context);
+                using HttpMessage message = _sharedLimitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ComputeLimitSharedLimitData> response = default;
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedLimitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, name, context);
+                using HttpMessage message = _sharedLimitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ComputeLimitSharedLimitData> response = default;
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedLimitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, name, context);
+                using HttpMessage message = _sharedLimitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ComputeLimitSharedLimitData> response = default;
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedLimitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, name, context);
+                using HttpMessage message = _sharedLimitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ComputeLimitSharedLimitData> response = default;

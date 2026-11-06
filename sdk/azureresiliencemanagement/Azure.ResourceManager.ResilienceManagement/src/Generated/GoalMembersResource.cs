@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _goalResourcesRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _goalResourcesRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GoalMembersData> response = Response.FromValue(GoalMembersData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _goalResourcesRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _goalResourcesRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GoalMembersData> response = Response.FromValue(GoalMembersData.FromResponse(result), result);
                 if (response.Value == null)

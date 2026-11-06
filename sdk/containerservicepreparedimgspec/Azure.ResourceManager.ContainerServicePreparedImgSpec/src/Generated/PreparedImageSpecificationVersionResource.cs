@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _preparedImageSpecificationsRestClient.CreateGetVersionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _preparedImageSpecificationsRestClient.CreateGetVersionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PreparedImageSpecificationVersionData> response = Response.FromValue(PreparedImageSpecificationVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _preparedImageSpecificationsRestClient.CreateGetVersionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _preparedImageSpecificationsRestClient.CreateGetVersionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PreparedImageSpecificationVersionData> response = Response.FromValue(PreparedImageSpecificationVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _preparedImageSpecificationsRestClient.CreateDeleteVersionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
+                using HttpMessage message = _preparedImageSpecificationsRestClient.CreateDeleteVersionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServicePreparedImgSpecArmOperation operation = new ContainerServicePreparedImgSpecArmOperation(_preparedImageSpecificationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _preparedImageSpecificationsRestClient.CreateDeleteVersionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
+                using HttpMessage message = _preparedImageSpecificationsRestClient.CreateDeleteVersionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServicePreparedImgSpecArmOperation operation = new ContainerServicePreparedImgSpecArmOperation(_preparedImageSpecificationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

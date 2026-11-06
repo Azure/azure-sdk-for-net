@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _templateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), templateName, context);
+                using HttpMessage message = _templateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), templateName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevHubTemplateData> response = Response.FromValue(DevHubTemplateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _templateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), templateName, context);
+                using HttpMessage message = _templateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), templateName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevHubTemplateData> response = Response.FromValue(DevHubTemplateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _templateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), templateName, context);
+                using HttpMessage message = _templateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), templateName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DevHubTemplateData> response = default;
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _templateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), templateName, context);
+                using HttpMessage message = _templateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), templateName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DevHubTemplateData> response = default;
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _templateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), templateName, context);
+                using HttpMessage message = _templateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), templateName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DevHubTemplateData> response = default;
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _templateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), templateName, context);
+                using HttpMessage message = _templateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), templateName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DevHubTemplateData> response = default;

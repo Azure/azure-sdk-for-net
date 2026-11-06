@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = FrontDoorNameAvailabilityWithSubscriptionRestClient.CreateCheckFrontDoorNameAvailabilityRequest(Id.SubscriptionId, FrontDoorNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = FrontDoorNameAvailabilityWithSubscriptionRestClient.CreateCheckFrontDoorNameAvailabilityRequest(Id.SubscriptionId, FrontDoorNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FrontDoorNameAvailabilityResult> response = Response.FromValue(FrontDoorNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = FrontDoorNameAvailabilityWithSubscriptionRestClient.CreateCheckFrontDoorNameAvailabilityRequest(Id.SubscriptionId, FrontDoorNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = FrontDoorNameAvailabilityWithSubscriptionRestClient.CreateCheckFrontDoorNameAvailabilityRequest(Id.SubscriptionId, FrontDoorNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FrontDoorNameAvailabilityResult> response = Response.FromValue(FrontDoorNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

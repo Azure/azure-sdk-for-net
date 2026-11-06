@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateGetDnsServiceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateGetDnsServiceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WorkloadNetworkDnsServiceData> response = Response.FromValue(WorkloadNetworkDnsServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateGetDnsServiceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateGetDnsServiceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WorkloadNetworkDnsServiceData> response = Response.FromValue(WorkloadNetworkDnsServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateUpdateDnsServiceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, WorkloadNetworkDnsServiceData.ToRequestContent(data), context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateUpdateDnsServiceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, WorkloadNetworkDnsServiceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation<WorkloadNetworkDnsServiceResource> operation = new AvsArmOperation<WorkloadNetworkDnsServiceResource>(
                     new WorkloadNetworkDnsServiceResourceOperationSource(Client),
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateUpdateDnsServiceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, WorkloadNetworkDnsServiceData.ToRequestContent(data), context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateUpdateDnsServiceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, WorkloadNetworkDnsServiceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation<WorkloadNetworkDnsServiceResource> operation = new AvsArmOperation<WorkloadNetworkDnsServiceResource>(
                     new WorkloadNetworkDnsServiceResourceOperationSource(Client),
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateDeleteDnsServiceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, Id.Parent.Parent.Name, context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateDeleteDnsServiceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, Id.Parent.Parent.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation operation = new AvsArmOperation(_workloadNetworksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateDeleteDnsServiceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, Id.Parent.Parent.Name, context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateDeleteDnsServiceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, Id.Parent.Parent.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation operation = new AvsArmOperation(_workloadNetworksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

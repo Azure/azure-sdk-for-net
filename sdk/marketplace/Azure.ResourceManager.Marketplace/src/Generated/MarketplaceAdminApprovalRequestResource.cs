@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateGetAdminRequestApprovalRequest(Guid.Parse(Id.Parent.Name), Id.Name, publisherId, context);
+                using HttpMessage message = _privateStoreRestClient.CreateGetAdminRequestApprovalRequest(Guid.Parse(Id.Parent.Name), Id.Name, publisherId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MarketplaceAdminApprovalRequestData> response = Response.FromValue(MarketplaceAdminApprovalRequestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateGetAdminRequestApprovalRequest(Guid.Parse(Id.Parent.Name), Id.Name, publisherId, context);
+                using HttpMessage message = _privateStoreRestClient.CreateGetAdminRequestApprovalRequest(Guid.Parse(Id.Parent.Name), Id.Name, publisherId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MarketplaceAdminApprovalRequestData> response = Response.FromValue(MarketplaceAdminApprovalRequestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateUpdateAdminRequestApprovalRequest(Guid.Parse(Id.Parent.Name), Id.Name, MarketplaceAdminApprovalRequestData.ToRequestContent(data), context);
+                using HttpMessage message = _privateStoreRestClient.CreateUpdateAdminRequestApprovalRequest(Guid.Parse(Id.Parent.Name), Id.Name, MarketplaceAdminApprovalRequestData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MarketplaceAdminApprovalRequestData> response = Response.FromValue(MarketplaceAdminApprovalRequestData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateUpdateAdminRequestApprovalRequest(Guid.Parse(Id.Parent.Name), Id.Name, MarketplaceAdminApprovalRequestData.ToRequestContent(data), context);
+                using HttpMessage message = _privateStoreRestClient.CreateUpdateAdminRequestApprovalRequest(Guid.Parse(Id.Parent.Name), Id.Name, MarketplaceAdminApprovalRequestData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MarketplaceAdminApprovalRequestData> response = Response.FromValue(MarketplaceAdminApprovalRequestData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

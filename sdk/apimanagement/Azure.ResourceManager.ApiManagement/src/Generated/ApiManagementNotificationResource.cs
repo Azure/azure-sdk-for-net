@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _notificationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementNotificationData> response = Response.FromValue(ApiManagementNotificationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _notificationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementNotificationData> response = Response.FromValue(ApiManagementNotificationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationRecipientUserRestClient.CreateCheckNotificationRecipientUserEntityExistsRawRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, userId, context);
+                using HttpMessage message = _notificationRecipientUserRestClient.CreateCheckNotificationRecipientUserEntityExistsRawRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, userId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationRecipientUserRestClient.CreateCheckNotificationRecipientUserEntityExistsRawRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, userId, context);
+                using HttpMessage message = _notificationRecipientUserRestClient.CreateCheckNotificationRecipientUserEntityExistsRawRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, userId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationRecipientUserRestClient.CreateDeleteNotificationRecipientUserRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, userId, context);
+                using HttpMessage message = _notificationRecipientUserRestClient.CreateDeleteNotificationRecipientUserRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, userId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationRecipientUserRestClient.CreateDeleteNotificationRecipientUserRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, userId, context);
+                using HttpMessage message = _notificationRecipientUserRestClient.CreateDeleteNotificationRecipientUserRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, userId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationRecipientEmailRestClient.CreateCheckNotificationRecipientEmailEntityExistsRawRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, email, context);
+                using HttpMessage message = _notificationRecipientEmailRestClient.CreateCheckNotificationRecipientEmailEntityExistsRawRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, email, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationRecipientEmailRestClient.CreateCheckNotificationRecipientEmailEntityExistsRawRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, email, context);
+                using HttpMessage message = _notificationRecipientEmailRestClient.CreateCheckNotificationRecipientEmailEntityExistsRawRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, email, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationRecipientEmailRestClient.CreateCreateOrUpdateNotificationRecipientEmailRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, email, context);
+                using HttpMessage message = _notificationRecipientEmailRestClient.CreateCreateOrUpdateNotificationRecipientEmailRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, email, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RecipientEmailContract> response = Response.FromValue(RecipientEmailContract.FromResponse(result), result);
                 if (response.Value == null)
@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationRecipientEmailRestClient.CreateCreateOrUpdateNotificationRecipientEmailRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, email, context);
+                using HttpMessage message = _notificationRecipientEmailRestClient.CreateCreateOrUpdateNotificationRecipientEmailRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, email, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RecipientEmailContract> response = Response.FromValue(RecipientEmailContract.FromResponse(result), result);
                 if (response.Value == null)
@@ -705,7 +705,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationRecipientEmailRestClient.CreateDeleteNotificationRecipientEmailRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, email, context);
+                using HttpMessage message = _notificationRecipientEmailRestClient.CreateDeleteNotificationRecipientEmailRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, email, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -753,7 +753,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationRecipientEmailRestClient.CreateDeleteNotificationRecipientEmailRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, email, context);
+                using HttpMessage message = _notificationRecipientEmailRestClient.CreateDeleteNotificationRecipientEmailRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, email, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -879,7 +879,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationRecipientUserRestClient.CreateCreateOrUpdateNotificationRecipientUserRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, userId, context);
+                using HttpMessage message = _notificationRecipientUserRestClient.CreateCreateOrUpdateNotificationRecipientUserRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, userId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RecipientUserContract> response = Response.FromValue(RecipientUserContract.FromResponse(result), result);
                 if (response.Value == null)
@@ -932,7 +932,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationRecipientUserRestClient.CreateCreateOrUpdateNotificationRecipientUserRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, userId, context);
+                using HttpMessage message = _notificationRecipientUserRestClient.CreateCreateOrUpdateNotificationRecipientUserRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, userId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RecipientUserContract> response = Response.FromValue(RecipientUserContract.FromResponse(result), result);
                 if (response.Value == null)
@@ -982,7 +982,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
+                using HttpMessage message = _notificationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementNotificationData> response = Response.FromValue(ApiManagementNotificationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -1035,7 +1035,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
+                using HttpMessage message = _notificationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementNotificationData> response = Response.FromValue(ApiManagementNotificationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

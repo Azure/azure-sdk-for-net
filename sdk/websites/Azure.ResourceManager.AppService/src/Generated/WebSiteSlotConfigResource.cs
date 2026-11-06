@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteConfigSlotResourceOperationGroupRestClient.CreateCreateOrUpdateConfigurationSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, SiteConfigData.ToRequestContent(data), context);
+                using HttpMessage message = _siteConfigSlotResourceOperationGroupRestClient.CreateCreateOrUpdateConfigurationSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, SiteConfigData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SiteConfigData> response = Response.FromValue(SiteConfigData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteConfigSlotResourceOperationGroupRestClient.CreateCreateOrUpdateConfigurationSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, SiteConfigData.ToRequestContent(data), context);
+                using HttpMessage message = _siteConfigSlotResourceOperationGroupRestClient.CreateCreateOrUpdateConfigurationSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, SiteConfigData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SiteConfigData> response = Response.FromValue(SiteConfigData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteConfigSlotResourceOperationGroupRestClient.CreateGetConfigurationSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                using HttpMessage message = _siteConfigSlotResourceOperationGroupRestClient.CreateGetConfigurationSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SiteConfigData> response = Response.FromValue(SiteConfigData.FromResponse(result), result);
                 if (response.Value == null)
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteConfigSlotResourceOperationGroupRestClient.CreateGetConfigurationSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                using HttpMessage message = _siteConfigSlotResourceOperationGroupRestClient.CreateGetConfigurationSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SiteConfigData> response = Response.FromValue(SiteConfigData.FromResponse(result), result);
                 if (response.Value == null)
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteConfigSlotResourceOperationGroupRestClient.CreateUpdateConfigurationSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, SiteConfigData.ToRequestContent(data), context);
+                using HttpMessage message = _siteConfigSlotResourceOperationGroupRestClient.CreateUpdateConfigurationSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, SiteConfigData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SiteConfigData> response = Response.FromValue(SiteConfigData.FromResponse(result), result);
                 if (response.Value == null)
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteConfigSlotResourceOperationGroupRestClient.CreateUpdateConfigurationSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, SiteConfigData.ToRequestContent(data), context);
+                using HttpMessage message = _siteConfigSlotResourceOperationGroupRestClient.CreateUpdateConfigurationSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, SiteConfigData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SiteConfigData> response = Response.FromValue(SiteConfigData.FromResponse(result), result);
                 if (response.Value == null)

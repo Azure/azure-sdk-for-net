@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewayRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _gatewayRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementGatewayData> response = Response.FromValue(ApiManagementGatewayData.FromResponse(result), result);
                 if (response.Value == null)
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewayRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _gatewayRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementGatewayData> response = Response.FromValue(ApiManagementGatewayData.FromResponse(result), result);
                 if (response.Value == null)
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewayRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, ApiManagementGatewayData.ToRequestContent(data), context);
+                using HttpMessage message = _gatewayRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, ApiManagementGatewayData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementGatewayData> response = Response.FromValue(ApiManagementGatewayData.FromResponse(result), result);
                 if (response.Value == null)
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewayRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, ApiManagementGatewayData.ToRequestContent(data), context);
+                using HttpMessage message = _gatewayRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, ApiManagementGatewayData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementGatewayData> response = Response.FromValue(ApiManagementGatewayData.FromResponse(result), result);
                 if (response.Value == null)
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewayRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
+                using HttpMessage message = _gatewayRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewayRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
+                using HttpMessage message = _gatewayRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewayApiRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiId, AssociationContract.ToRequestContent(associationContract), context);
+                using HttpMessage message = _gatewayApiRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiId, AssociationContract.ToRequestContent(associationContract), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiData> response = Response.FromValue(ApiData.FromResponse(result), result);
                 if (response.Value == null)
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewayApiRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiId, AssociationContract.ToRequestContent(associationContract), context);
+                using HttpMessage message = _gatewayApiRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiId, AssociationContract.ToRequestContent(associationContract), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiData> response = Response.FromValue(ApiData.FromResponse(result), result);
                 if (response.Value == null)
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewayApiRestClient.CreateDeleteGatewayApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiId, context);
+                using HttpMessage message = _gatewayApiRestClient.CreateDeleteGatewayApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewayApiRestClient.CreateDeleteGatewayApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiId, context);
+                using HttpMessage message = _gatewayApiRestClient.CreateDeleteGatewayApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewayApiRestClient.CreateGetGatewayApiEntityTagRawRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiId, context);
+                using HttpMessage message = _gatewayApiRestClient.CreateGetGatewayApiEntityTagRawRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -705,7 +705,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewayApiRestClient.CreateGetGatewayApiEntityTagRawRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiId, context);
+                using HttpMessage message = _gatewayApiRestClient.CreateGetGatewayApiEntityTagRawRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -842,7 +842,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewayRestClient.CreateGenerateTokenRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, GatewayTokenRequestContract.ToRequestContent(gatewayTokenRequestContract), context);
+                using HttpMessage message = _gatewayRestClient.CreateGenerateTokenRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, GatewayTokenRequestContract.ToRequestContent(gatewayTokenRequestContract), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GatewayTokenContract> response = Response.FromValue(GatewayTokenContract.FromResponse(result), result);
                 if (response.Value == null)
@@ -894,7 +894,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewayRestClient.CreateGenerateTokenRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, GatewayTokenRequestContract.ToRequestContent(gatewayTokenRequestContract), context);
+                using HttpMessage message = _gatewayRestClient.CreateGenerateTokenRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, GatewayTokenRequestContract.ToRequestContent(gatewayTokenRequestContract), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GatewayTokenContract> response = Response.FromValue(GatewayTokenContract.FromResponse(result), result);
                 if (response.Value == null)
@@ -942,7 +942,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewayRestClient.CreateInvalidateDebugCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _gatewayRestClient.CreateInvalidateDebugCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -985,7 +985,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewayRestClient.CreateInvalidateDebugCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _gatewayRestClient.CreateInvalidateDebugCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -1032,7 +1032,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewayRestClient.CreateGetDebugCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, GatewayListDebugCredentialsContract.ToRequestContent(gatewayListDebugCredentialsContract), context);
+                using HttpMessage message = _gatewayRestClient.CreateGetDebugCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, GatewayListDebugCredentialsContract.ToRequestContent(gatewayListDebugCredentialsContract), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GatewayDebugCredentialsContract> response = Response.FromValue(GatewayDebugCredentialsContract.FromResponse(result), result);
                 if (response.Value == null)
@@ -1084,7 +1084,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewayRestClient.CreateGetDebugCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, GatewayListDebugCredentialsContract.ToRequestContent(gatewayListDebugCredentialsContract), context);
+                using HttpMessage message = _gatewayRestClient.CreateGetDebugCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, GatewayListDebugCredentialsContract.ToRequestContent(gatewayListDebugCredentialsContract), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GatewayDebugCredentialsContract> response = Response.FromValue(GatewayDebugCredentialsContract.FromResponse(result), result);
                 if (response.Value == null)
@@ -1132,7 +1132,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewayRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _gatewayRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GatewayKeysContract> response = Response.FromValue(GatewayKeysContract.FromResponse(result), result);
                 if (response.Value == null)
@@ -1180,7 +1180,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewayRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _gatewayRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GatewayKeysContract> response = Response.FromValue(GatewayKeysContract.FromResponse(result), result);
                 if (response.Value == null)
@@ -1232,7 +1232,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewayRestClient.CreateGetTraceRawRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, GatewayListTraceContract.ToRequestContent(gatewayListTraceContract), context);
+                using HttpMessage message = _gatewayRestClient.CreateGetTraceRawRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, GatewayListTraceContract.ToRequestContent(gatewayListTraceContract), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 using JsonDocument document = JsonDocument.Parse(result.Content, ModelSerializationExtensions.JsonDocumentOptions);
                 IDictionary<string, BinaryData> value = default;
@@ -1295,7 +1295,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewayRestClient.CreateGetTraceRawRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, GatewayListTraceContract.ToRequestContent(gatewayListTraceContract), context);
+                using HttpMessage message = _gatewayRestClient.CreateGetTraceRawRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, GatewayListTraceContract.ToRequestContent(gatewayListTraceContract), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 using JsonDocument document = JsonDocument.Parse(result.Content, ModelSerializationExtensions.JsonDocumentOptions);
                 IDictionary<string, BinaryData> value = default;
@@ -1358,7 +1358,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewayRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, GatewayKeyRegenerateContent.ToRequestContent(content), context);
+                using HttpMessage message = _gatewayRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, GatewayKeyRegenerateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -1405,7 +1405,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewayRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, GatewayKeyRegenerateContent.ToRequestContent(content), context);
+                using HttpMessage message = _gatewayRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, GatewayKeyRegenerateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }

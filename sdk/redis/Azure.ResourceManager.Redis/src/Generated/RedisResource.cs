@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _redisResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RedisData> response = Response.FromValue(RedisData.FromResponse(result), result);
                 if (response.Value == null)
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _redisResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RedisData> response = Response.FromValue(RedisData.FromResponse(result), result);
                 if (response.Value == null)
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RedisPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _redisResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RedisPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RedisArmOperation<RedisResource> operation = new RedisArmOperation<RedisResource>(
                     new RedisResourceOperationSource(Client),
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RedisPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _redisResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RedisPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RedisArmOperation<RedisResource> operation = new RedisArmOperation<RedisResource>(
                     new RedisResourceOperationSource(Client),
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _redisResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RedisArmOperation operation = new RedisArmOperation(_redisResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _redisResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RedisArmOperation operation = new RedisArmOperation(_redisResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisResourcesRestClient.CreateExportDataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ExportRdbContent.ToRequestContent(content), context);
+                using HttpMessage message = _redisResourcesRestClient.CreateExportDataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ExportRdbContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RedisArmOperation operation = new RedisArmOperation(_redisResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisResourcesRestClient.CreateExportDataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ExportRdbContent.ToRequestContent(content), context);
+                using HttpMessage message = _redisResourcesRestClient.CreateExportDataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ExportRdbContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RedisArmOperation operation = new RedisArmOperation(_redisResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisResourcesRestClient.CreateFlushCacheRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _redisResourcesRestClient.CreateFlushCacheRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RedisArmOperation<OperationStatusResult> operation = new RedisArmOperation<OperationStatusResult>(
                     new OperationStatusResultOperationSource(),
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisResourcesRestClient.CreateFlushCacheRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _redisResourcesRestClient.CreateFlushCacheRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RedisArmOperation<OperationStatusResult> operation = new RedisArmOperation<OperationStatusResult>(
                     new OperationStatusResultOperationSource(),
@@ -658,7 +658,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisResourcesRestClient.CreateForceRebootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RedisRebootContent.ToRequestContent(content), context);
+                using HttpMessage message = _redisResourcesRestClient.CreateForceRebootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RedisRebootContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RedisForceRebootResult> response = Response.FromValue(RedisForceRebootResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -710,7 +710,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisResourcesRestClient.CreateForceRebootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RedisRebootContent.ToRequestContent(content), context);
+                using HttpMessage message = _redisResourcesRestClient.CreateForceRebootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RedisRebootContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RedisForceRebootResult> response = Response.FromValue(RedisForceRebootResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -763,7 +763,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisResourcesRestClient.CreateImportDataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ImportRdbContent.ToRequestContent(content), context);
+                using HttpMessage message = _redisResourcesRestClient.CreateImportDataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ImportRdbContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RedisArmOperation operation = new RedisArmOperation(_redisResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -816,7 +816,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisResourcesRestClient.CreateImportDataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ImportRdbContent.ToRequestContent(content), context);
+                using HttpMessage message = _redisResourcesRestClient.CreateImportDataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ImportRdbContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RedisArmOperation operation = new RedisArmOperation(_redisResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -940,7 +940,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisResourcesRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _redisResourcesRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RedisAccessKeys> response = Response.FromValue(RedisAccessKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -988,7 +988,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisResourcesRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _redisResourcesRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RedisAccessKeys> response = Response.FromValue(RedisAccessKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -1120,7 +1120,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisResourcesRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RedisRegenerateKeyContent.ToRequestContent(content), context);
+                using HttpMessage message = _redisResourcesRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RedisRegenerateKeyContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RedisAccessKeys> response = Response.FromValue(RedisAccessKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -1172,7 +1172,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisResourcesRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RedisRegenerateKeyContent.ToRequestContent(content), context);
+                using HttpMessage message = _redisResourcesRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RedisRegenerateKeyContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RedisAccessKeys> response = Response.FromValue(RedisAccessKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -1211,7 +1211,7 @@ namespace Azure.ResourceManager.Redis
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _redisResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _redisResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<RedisData> response = Response.FromValue(RedisData.FromResponse(result), result);
                     return Response.FromValue(new RedisResource(Client, response.Value), response.GetRawResponse());
@@ -1259,7 +1259,7 @@ namespace Azure.ResourceManager.Redis
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _redisResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _redisResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<RedisData> response = Response.FromValue(RedisData.FromResponse(result), result);
                     return Response.FromValue(new RedisResource(Client, response.Value), response.GetRawResponse());
@@ -1305,7 +1305,7 @@ namespace Azure.ResourceManager.Redis
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _redisResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _redisResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<RedisData> response = Response.FromValue(RedisData.FromResponse(result), result);
                     return Response.FromValue(new RedisResource(Client, response.Value), response.GetRawResponse());
@@ -1347,7 +1347,7 @@ namespace Azure.ResourceManager.Redis
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _redisResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _redisResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<RedisData> response = Response.FromValue(RedisData.FromResponse(result), result);
                     return Response.FromValue(new RedisResource(Client, response.Value), response.GetRawResponse());
@@ -1389,7 +1389,7 @@ namespace Azure.ResourceManager.Redis
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _redisResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _redisResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<RedisData> response = Response.FromValue(RedisData.FromResponse(result), result);
                     return Response.FromValue(new RedisResource(Client, response.Value), response.GetRawResponse());
@@ -1435,7 +1435,7 @@ namespace Azure.ResourceManager.Redis
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _redisResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _redisResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<RedisData> response = Response.FromValue(RedisData.FromResponse(result), result);
                     return Response.FromValue(new RedisResource(Client, response.Value), response.GetRawResponse());

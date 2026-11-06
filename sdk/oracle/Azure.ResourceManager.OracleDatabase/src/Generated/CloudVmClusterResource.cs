@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudVmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _cloudVmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CloudVmClusterData> response = Response.FromValue(CloudVmClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudVmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _cloudVmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CloudVmClusterData> response = Response.FromValue(CloudVmClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudVmClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudVmClusterPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _cloudVmClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudVmClusterPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<CloudVmClusterResource> operation = new OracleDatabaseArmOperation<CloudVmClusterResource>(
                     new CloudVmClusterResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudVmClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudVmClusterPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _cloudVmClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudVmClusterPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<CloudVmClusterResource> operation = new OracleDatabaseArmOperation<CloudVmClusterResource>(
                     new CloudVmClusterResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudVmClustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _cloudVmClustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation operation = new OracleDatabaseArmOperation(_cloudVmClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudVmClustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _cloudVmClustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation operation = new OracleDatabaseArmOperation(_cloudVmClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudVmClustersRestClient.CreateAddVmsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudVmClusterDBNodeContent.ToRequestContent(content), context);
+                using HttpMessage message = _cloudVmClustersRestClient.CreateAddVmsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudVmClusterDBNodeContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<CloudVmClusterResource> operation = new OracleDatabaseArmOperation<CloudVmClusterResource>(
                     new CloudVmClusterResourceOperationSource(Client),
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudVmClustersRestClient.CreateAddVmsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudVmClusterDBNodeContent.ToRequestContent(content), context);
+                using HttpMessage message = _cloudVmClustersRestClient.CreateAddVmsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudVmClusterDBNodeContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<CloudVmClusterResource> operation = new OracleDatabaseArmOperation<CloudVmClusterResource>(
                     new CloudVmClusterResourceOperationSource(Client),
@@ -646,7 +646,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudVmClustersRestClient.CreateRemoveVmsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudVmClusterDBNodeContent.ToRequestContent(content), context);
+                using HttpMessage message = _cloudVmClustersRestClient.CreateRemoveVmsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudVmClusterDBNodeContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<CloudVmClusterResource> operation = new OracleDatabaseArmOperation<CloudVmClusterResource>(
                     new CloudVmClusterResourceOperationSource(Client),
@@ -705,7 +705,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudVmClustersRestClient.CreateRemoveVmsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudVmClusterDBNodeContent.ToRequestContent(content), context);
+                using HttpMessage message = _cloudVmClustersRestClient.CreateRemoveVmsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudVmClusterDBNodeContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<CloudVmClusterResource> operation = new OracleDatabaseArmOperation<CloudVmClusterResource>(
                     new CloudVmClusterResourceOperationSource(Client),
@@ -750,7 +750,7 @@ namespace Azure.ResourceManager.OracleDatabase
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cloudVmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _cloudVmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<CloudVmClusterData> response = Response.FromValue(CloudVmClusterData.FromResponse(result), result);
                     return Response.FromValue(new CloudVmClusterResource(Client, response.Value), response.GetRawResponse());
@@ -798,7 +798,7 @@ namespace Azure.ResourceManager.OracleDatabase
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cloudVmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _cloudVmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<CloudVmClusterData> response = Response.FromValue(CloudVmClusterData.FromResponse(result), result);
                     return Response.FromValue(new CloudVmClusterResource(Client, response.Value), response.GetRawResponse());
@@ -844,7 +844,7 @@ namespace Azure.ResourceManager.OracleDatabase
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cloudVmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _cloudVmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<CloudVmClusterData> response = Response.FromValue(CloudVmClusterData.FromResponse(result), result);
                     return Response.FromValue(new CloudVmClusterResource(Client, response.Value), response.GetRawResponse());
@@ -886,7 +886,7 @@ namespace Azure.ResourceManager.OracleDatabase
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cloudVmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _cloudVmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<CloudVmClusterData> response = Response.FromValue(CloudVmClusterData.FromResponse(result), result);
                     return Response.FromValue(new CloudVmClusterResource(Client, response.Value), response.GetRawResponse());
@@ -928,7 +928,7 @@ namespace Azure.ResourceManager.OracleDatabase
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cloudVmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _cloudVmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<CloudVmClusterData> response = Response.FromValue(CloudVmClusterData.FromResponse(result), result);
                     return Response.FromValue(new CloudVmClusterResource(Client, response.Value), response.GetRawResponse());
@@ -974,7 +974,7 @@ namespace Azure.ResourceManager.OracleDatabase
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cloudVmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _cloudVmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<CloudVmClusterData> response = Response.FromValue(CloudVmClusterData.FromResponse(result), result);
                     return Response.FromValue(new CloudVmClusterResource(Client, response.Value), response.GetRawResponse());

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Elastic
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _elasticMonitorResourcesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, ElasticMonitorData.ToRequestContent(data), context);
+                using HttpMessage message = _elasticMonitorResourcesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, ElasticMonitorData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ElasticArmOperation<ElasticMonitorResource> operation = new ElasticArmOperation<ElasticMonitorResource>(
                     new ElasticMonitorResourceOperationSource(Client),
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Elastic
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _elasticMonitorResourcesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, ElasticMonitorData.ToRequestContent(data), context);
+                using HttpMessage message = _elasticMonitorResourcesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, ElasticMonitorData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ElasticArmOperation<ElasticMonitorResource> operation = new ElasticArmOperation<ElasticMonitorResource>(
                     new ElasticMonitorResourceOperationSource(Client),
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Elastic
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _elasticMonitorResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, context);
+                using HttpMessage message = _elasticMonitorResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ElasticMonitorData> response = Response.FromValue(ElasticMonitorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Elastic
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _elasticMonitorResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, context);
+                using HttpMessage message = _elasticMonitorResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ElasticMonitorData> response = Response.FromValue(ElasticMonitorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Elastic
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _elasticMonitorResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, context);
+                using HttpMessage message = _elasticMonitorResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ElasticMonitorData> response = default;
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Elastic
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _elasticMonitorResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, context);
+                using HttpMessage message = _elasticMonitorResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ElasticMonitorData> response = default;
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Elastic
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _elasticMonitorResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, context);
+                using HttpMessage message = _elasticMonitorResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ElasticMonitorData> response = default;
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.Elastic
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _elasticMonitorResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, context);
+                using HttpMessage message = _elasticMonitorResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ElasticMonitorData> response = default;

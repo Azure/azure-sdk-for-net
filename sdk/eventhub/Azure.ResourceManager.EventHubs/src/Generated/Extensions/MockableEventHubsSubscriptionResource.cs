@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.EventHubs.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NamespacesRestClient.CreateCheckEventHubsNamespaceNameAvailabilityRequest(Id.SubscriptionId, EventHubsNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = NamespacesRestClient.CreateCheckEventHubsNamespaceNameAvailabilityRequest(Id.SubscriptionId, EventHubsNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EventHubsNameAvailabilityResult> response = Response.FromValue(EventHubsNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.EventHubs.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NamespacesRestClient.CreateCheckEventHubsNamespaceNameAvailabilityRequest(Id.SubscriptionId, EventHubsNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = NamespacesRestClient.CreateCheckEventHubsNamespaceNameAvailabilityRequest(Id.SubscriptionId, EventHubsNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EventHubsNameAvailabilityResult> response = Response.FromValue(EventHubsNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

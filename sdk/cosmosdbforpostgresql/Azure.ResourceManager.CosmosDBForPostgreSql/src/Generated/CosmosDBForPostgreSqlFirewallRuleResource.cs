@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _firewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CosmosDBForPostgreSqlFirewallRuleData> response = Response.FromValue(CosmosDBForPostgreSqlFirewallRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _firewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CosmosDBForPostgreSqlFirewallRuleData> response = Response.FromValue(CosmosDBForPostgreSqlFirewallRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firewallRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _firewallRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBForPostgreSqlArmOperation operation = new CosmosDBForPostgreSqlArmOperation(_firewallRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firewallRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _firewallRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBForPostgreSqlArmOperation operation = new CosmosDBForPostgreSqlArmOperation(_firewallRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firewallRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CosmosDBForPostgreSqlFirewallRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _firewallRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CosmosDBForPostgreSqlFirewallRuleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlFirewallRuleResource> operation = new CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlFirewallRuleResource>(
                     new CosmosDBForPostgreSqlFirewallRuleResourceOperationSource(Client),
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firewallRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CosmosDBForPostgreSqlFirewallRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _firewallRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CosmosDBForPostgreSqlFirewallRuleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlFirewallRuleResource> operation = new CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlFirewallRuleResource>(
                     new CosmosDBForPostgreSqlFirewallRuleResourceOperationSource(Client),

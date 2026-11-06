@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recommendationRulesRestClient.CreateGetRuleDetailsByHostingEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, updateSeen, recommendationId, context);
+                using HttpMessage message = _recommendationRulesRestClient.CreateGetRuleDetailsByHostingEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, updateSeen, recommendationId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RecommendationRuleData> response = Response.FromValue(RecommendationRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recommendationRulesRestClient.CreateGetRuleDetailsByHostingEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, updateSeen, recommendationId, context);
+                using HttpMessage message = _recommendationRulesRestClient.CreateGetRuleDetailsByHostingEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, updateSeen, recommendationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RecommendationRuleData> response = Response.FromValue(RecommendationRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recommendationRulesRestClient.CreateDisableRecommendationForHostingEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, environmentName, context);
+                using HttpMessage message = _recommendationRulesRestClient.CreateDisableRecommendationForHostingEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, environmentName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recommendationRulesRestClient.CreateDisableRecommendationForHostingEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, environmentName, context);
+                using HttpMessage message = _recommendationRulesRestClient.CreateDisableRecommendationForHostingEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, environmentName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }

@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serversRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _serversRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MySqlFlexibleServerData> response = Response.FromValue(MySqlFlexibleServerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serversRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _serversRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MySqlFlexibleServerData> response = Response.FromValue(MySqlFlexibleServerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serversRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MySqlFlexibleServerPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _serversRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MySqlFlexibleServerPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FlexibleServersArmOperation<MySqlFlexibleServerResource> operation = new FlexibleServersArmOperation<MySqlFlexibleServerResource>(
                     new MySqlFlexibleServerResourceOperationSource(Client),
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serversRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MySqlFlexibleServerPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _serversRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MySqlFlexibleServerPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FlexibleServersArmOperation<MySqlFlexibleServerResource> operation = new FlexibleServersArmOperation<MySqlFlexibleServerResource>(
                     new MySqlFlexibleServerResourceOperationSource(Client),
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serversRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _serversRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FlexibleServersArmOperation operation = new FlexibleServersArmOperation(_serversClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serversRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _serversRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FlexibleServersArmOperation operation = new FlexibleServersArmOperation(_serversClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupAndExportRestClient.CreateCreateBackupAndExportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MySqlFlexibleServerBackupAndExportContent.ToRequestContent(content), context);
+                using HttpMessage message = _backupAndExportRestClient.CreateCreateBackupAndExportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MySqlFlexibleServerBackupAndExportContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FlexibleServersArmOperation<MySqlFlexibleServerBackupAndExportResult> operation = new FlexibleServersArmOperation<MySqlFlexibleServerBackupAndExportResult>(
                     new MySqlFlexibleServerBackupAndExportResultOperationSource(),
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupAndExportRestClient.CreateCreateBackupAndExportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MySqlFlexibleServerBackupAndExportContent.ToRequestContent(content), context);
+                using HttpMessage message = _backupAndExportRestClient.CreateCreateBackupAndExportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MySqlFlexibleServerBackupAndExportContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FlexibleServersArmOperation<MySqlFlexibleServerBackupAndExportResult> operation = new FlexibleServersArmOperation<MySqlFlexibleServerBackupAndExportResult>(
                     new MySqlFlexibleServerBackupAndExportResultOperationSource(),
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupAndExportRestClient.CreateValidateBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _backupAndExportRestClient.CreateValidateBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MySqlFlexibleServerValidateBackupResult> response = Response.FromValue(MySqlFlexibleServerValidateBackupResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupAndExportRestClient.CreateValidateBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _backupAndExportRestClient.CreateValidateBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MySqlFlexibleServerValidateBackupResult> response = Response.FromValue(MySqlFlexibleServerValidateBackupResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationsRestClient.CreateUpdateConfigurationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MySqlFlexibleServerConfigurationListForBatchUpdate.ToRequestContent(mySqlFlexibleServerConfigurationListForBatchUpdate), context);
+                using HttpMessage message = _configurationsRestClient.CreateUpdateConfigurationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MySqlFlexibleServerConfigurationListForBatchUpdate.ToRequestContent(mySqlFlexibleServerConfigurationListForBatchUpdate), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FlexibleServersArmOperation<MySqlFlexibleServerConfigurations> operation = new FlexibleServersArmOperation<MySqlFlexibleServerConfigurations>(
                     new MySqlFlexibleServerConfigurationsOperationSource(),
@@ -736,7 +736,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationsRestClient.CreateUpdateConfigurationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MySqlFlexibleServerConfigurationListForBatchUpdate.ToRequestContent(mySqlFlexibleServerConfigurationListForBatchUpdate), context);
+                using HttpMessage message = _configurationsRestClient.CreateUpdateConfigurationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MySqlFlexibleServerConfigurationListForBatchUpdate.ToRequestContent(mySqlFlexibleServerConfigurationListForBatchUpdate), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FlexibleServersArmOperation<MySqlFlexibleServerConfigurations> operation = new FlexibleServersArmOperation<MySqlFlexibleServerConfigurations>(
                     new MySqlFlexibleServerConfigurationsOperationSource(),
@@ -947,7 +947,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serversRestClient.CreateDetachVnetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MySqlFlexibleServerDetachVnetContent.ToRequestContent(content), context);
+                using HttpMessage message = _serversRestClient.CreateDetachVnetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MySqlFlexibleServerDetachVnetContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FlexibleServersArmOperation<MySqlFlexibleServerResource> operation = new FlexibleServersArmOperation<MySqlFlexibleServerResource>(
                     new MySqlFlexibleServerResourceOperationSource(Client),
@@ -1006,7 +1006,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serversRestClient.CreateDetachVnetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MySqlFlexibleServerDetachVnetContent.ToRequestContent(content), context);
+                using HttpMessage message = _serversRestClient.CreateDetachVnetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MySqlFlexibleServerDetachVnetContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FlexibleServersArmOperation<MySqlFlexibleServerResource> operation = new FlexibleServersArmOperation<MySqlFlexibleServerResource>(
                     new MySqlFlexibleServerResourceOperationSource(Client),
@@ -1061,7 +1061,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serversRestClient.CreateFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _serversRestClient.CreateFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FlexibleServersArmOperation operation = new FlexibleServersArmOperation(_serversClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1110,7 +1110,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serversRestClient.CreateFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _serversRestClient.CreateFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FlexibleServersArmOperation operation = new FlexibleServersArmOperation(_serversClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1163,7 +1163,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serversRestClient.CreateResetGtidRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MySqlFlexibleServerGtidSetContent.ToRequestContent(content), context);
+                using HttpMessage message = _serversRestClient.CreateResetGtidRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MySqlFlexibleServerGtidSetContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FlexibleServersArmOperation operation = new FlexibleServersArmOperation(_serversClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -1216,7 +1216,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serversRestClient.CreateResetGtidRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MySqlFlexibleServerGtidSetContent.ToRequestContent(content), context);
+                using HttpMessage message = _serversRestClient.CreateResetGtidRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MySqlFlexibleServerGtidSetContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FlexibleServersArmOperation operation = new FlexibleServersArmOperation(_serversClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -1269,7 +1269,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serversRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MySqlFlexibleServerRestartParameter.ToRequestContent(mySqlFlexibleServerRestartParameter), context);
+                using HttpMessage message = _serversRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MySqlFlexibleServerRestartParameter.ToRequestContent(mySqlFlexibleServerRestartParameter), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FlexibleServersArmOperation operation = new FlexibleServersArmOperation(_serversClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1322,7 +1322,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serversRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MySqlFlexibleServerRestartParameter.ToRequestContent(mySqlFlexibleServerRestartParameter), context);
+                using HttpMessage message = _serversRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MySqlFlexibleServerRestartParameter.ToRequestContent(mySqlFlexibleServerRestartParameter), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FlexibleServersArmOperation operation = new FlexibleServersArmOperation(_serversClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1371,7 +1371,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serversRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _serversRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FlexibleServersArmOperation operation = new FlexibleServersArmOperation(_serversClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1420,7 +1420,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serversRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _serversRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FlexibleServersArmOperation operation = new FlexibleServersArmOperation(_serversClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1469,7 +1469,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serversRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _serversRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FlexibleServersArmOperation operation = new FlexibleServersArmOperation(_serversClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1518,7 +1518,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serversRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _serversRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FlexibleServersArmOperation operation = new FlexibleServersArmOperation(_serversClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1570,7 +1570,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serversRestClient.CreateValidateEstimateHighAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HighAvailabilityValidationEstimation.ToRequestContent(highAvailabilityValidationEstimation), context);
+                using HttpMessage message = _serversRestClient.CreateValidateEstimateHighAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HighAvailabilityValidationEstimation.ToRequestContent(highAvailabilityValidationEstimation), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HighAvailabilityValidationEstimation> response = Response.FromValue(HighAvailabilityValidationEstimation.FromResponse(result), result);
                 if (response.Value == null)
@@ -1622,7 +1622,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serversRestClient.CreateValidateEstimateHighAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HighAvailabilityValidationEstimation.ToRequestContent(highAvailabilityValidationEstimation), context);
+                using HttpMessage message = _serversRestClient.CreateValidateEstimateHighAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HighAvailabilityValidationEstimation.ToRequestContent(highAvailabilityValidationEstimation), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HighAvailabilityValidationEstimation> response = Response.FromValue(HighAvailabilityValidationEstimation.FromResponse(result), result);
                 if (response.Value == null)
@@ -1671,7 +1671,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serversMigrationRestClient.CreateCutoverMigrationServersMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _serversMigrationRestClient.CreateCutoverMigrationServersMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FlexibleServersArmOperation<MySqlFlexibleServerResource> operation = new FlexibleServersArmOperation<MySqlFlexibleServerResource>(
                     new MySqlFlexibleServerResourceOperationSource(Client),
@@ -1726,7 +1726,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serversMigrationRestClient.CreateCutoverMigrationServersMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _serversMigrationRestClient.CreateCutoverMigrationServersMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FlexibleServersArmOperation<MySqlFlexibleServerResource> operation = new FlexibleServersArmOperation<MySqlFlexibleServerResource>(
                     new MySqlFlexibleServerResourceOperationSource(Client),
@@ -1771,7 +1771,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _serversRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _serversRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<MySqlFlexibleServerData> response = Response.FromValue(MySqlFlexibleServerData.FromResponse(result), result);
                     return Response.FromValue(new MySqlFlexibleServerResource(Client, response.Value), response.GetRawResponse());
@@ -1819,7 +1819,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _serversRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _serversRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<MySqlFlexibleServerData> response = Response.FromValue(MySqlFlexibleServerData.FromResponse(result), result);
                     return Response.FromValue(new MySqlFlexibleServerResource(Client, response.Value), response.GetRawResponse());
@@ -1865,7 +1865,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _serversRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _serversRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<MySqlFlexibleServerData> response = Response.FromValue(MySqlFlexibleServerData.FromResponse(result), result);
                     return Response.FromValue(new MySqlFlexibleServerResource(Client, response.Value), response.GetRawResponse());
@@ -1907,7 +1907,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _serversRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _serversRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<MySqlFlexibleServerData> response = Response.FromValue(MySqlFlexibleServerData.FromResponse(result), result);
                     return Response.FromValue(new MySqlFlexibleServerResource(Client, response.Value), response.GetRawResponse());
@@ -1949,7 +1949,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _serversRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _serversRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<MySqlFlexibleServerData> response = Response.FromValue(MySqlFlexibleServerData.FromResponse(result), result);
                     return Response.FromValue(new MySqlFlexibleServerResource(Client, response.Value), response.GetRawResponse());
@@ -1995,7 +1995,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _serversRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _serversRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<MySqlFlexibleServerData> response = Response.FromValue(MySqlFlexibleServerData.FromResponse(result), result);
                     return Response.FromValue(new MySqlFlexibleServerResource(Client, response.Value), response.GetRawResponse());

@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _remotePrivateEndpointConnectionARMResourcesRestClient.CreateGetPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _remotePrivateEndpointConnectionARMResourcesRestClient.CreateGetPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RemotePrivateEndpointConnectionARMResourceData> response = Response.FromValue(RemotePrivateEndpointConnectionARMResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _remotePrivateEndpointConnectionARMResourcesRestClient.CreateGetPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _remotePrivateEndpointConnectionARMResourcesRestClient.CreateGetPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RemotePrivateEndpointConnectionARMResourceData> response = Response.FromValue(RemotePrivateEndpointConnectionARMResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _remotePrivateEndpointConnectionARMResourcesRestClient.CreateApproveOrRejectPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RemotePrivateEndpointConnectionARMResourceData.ToRequestContent(data), context);
+                using HttpMessage message = _remotePrivateEndpointConnectionARMResourcesRestClient.CreateApproveOrRejectPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RemotePrivateEndpointConnectionARMResourceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppServiceArmOperation<HostingEnvironmentPrivateEndpointConnectionResource> operation = new AppServiceArmOperation<HostingEnvironmentPrivateEndpointConnectionResource>(
                     new HostingEnvironmentPrivateEndpointConnectionResourceOperationSource(Client),
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _remotePrivateEndpointConnectionARMResourcesRestClient.CreateApproveOrRejectPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RemotePrivateEndpointConnectionARMResourceData.ToRequestContent(data), context);
+                using HttpMessage message = _remotePrivateEndpointConnectionARMResourcesRestClient.CreateApproveOrRejectPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RemotePrivateEndpointConnectionARMResourceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppServiceArmOperation<HostingEnvironmentPrivateEndpointConnectionResource> operation = new AppServiceArmOperation<HostingEnvironmentPrivateEndpointConnectionResource>(
                     new HostingEnvironmentPrivateEndpointConnectionResourceOperationSource(Client),

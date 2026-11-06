@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceWindowOptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowOptionsName, context);
+                using HttpMessage message = _maintenanceWindowOptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowOptionsName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MaintenanceWindowOptionData> response = Response.FromValue(MaintenanceWindowOptionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceWindowOptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowOptionsName, context);
+                using HttpMessage message = _maintenanceWindowOptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowOptionsName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MaintenanceWindowOptionData> response = Response.FromValue(MaintenanceWindowOptionData.FromResponse(result), result);
                 if (response.Value == null)

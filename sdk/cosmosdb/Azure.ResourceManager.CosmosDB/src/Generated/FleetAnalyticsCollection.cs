@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CosmosDB
     /// <summary>
     /// A class representing a collection of <see cref="FleetAnalyticsResource"/> and their operations.
     /// Each <see cref="FleetAnalyticsResource"/> in the collection will belong to the same instance of <see cref="CosmosDBFleetResource"/>.
-    /// To get a <see cref="FleetAnalyticsCollection"/> instance call the GetFleetAnalytics method from an instance of <see cref="CosmosDBFleetResource"/>.
+    /// To get a <see cref="FleetAnalyticsCollection"/> instance call the GetAllFleetAnalytics method from an instance of <see cref="CosmosDBFleetResource"/>.
     /// </summary>
     public partial class FleetAnalyticsCollection : ArmCollection, IEnumerable<FleetAnalyticsResource>, IAsyncEnumerable<FleetAnalyticsResource>
     {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetAnalyticsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, fleetAnalyticsName, FleetAnalyticsData.ToRequestContent(data), context);
+                using HttpMessage message = _fleetAnalyticsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, fleetAnalyticsName, FleetAnalyticsData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FleetAnalyticsData> response = Response.FromValue(FleetAnalyticsData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetAnalyticsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, fleetAnalyticsName, FleetAnalyticsData.ToRequestContent(data), context);
+                using HttpMessage message = _fleetAnalyticsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, fleetAnalyticsName, FleetAnalyticsData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FleetAnalyticsData> response = Response.FromValue(FleetAnalyticsData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetAnalyticsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, fleetAnalyticsName, context);
+                using HttpMessage message = _fleetAnalyticsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, fleetAnalyticsName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FleetAnalyticsData> response = Response.FromValue(FleetAnalyticsData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetAnalyticsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, fleetAnalyticsName, context);
+                using HttpMessage message = _fleetAnalyticsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, fleetAnalyticsName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FleetAnalyticsData> response = Response.FromValue(FleetAnalyticsData.FromResponse(result), result);
                 if (response.Value == null)
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetAnalyticsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, fleetAnalyticsName, context);
+                using HttpMessage message = _fleetAnalyticsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, fleetAnalyticsName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<FleetAnalyticsData> response = default;
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetAnalyticsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, fleetAnalyticsName, context);
+                using HttpMessage message = _fleetAnalyticsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, fleetAnalyticsName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<FleetAnalyticsData> response = default;
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetAnalyticsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, fleetAnalyticsName, context);
+                using HttpMessage message = _fleetAnalyticsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, fleetAnalyticsName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<FleetAnalyticsData> response = default;
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetAnalyticsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, fleetAnalyticsName, context);
+                using HttpMessage message = _fleetAnalyticsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, fleetAnalyticsName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<FleetAnalyticsData> response = default;

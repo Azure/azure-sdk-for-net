@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _drillResourcesRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _drillResourcesRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DrillTargetData> response = Response.FromValue(DrillTargetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _drillResourcesRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _drillResourcesRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DrillTargetData> response = Response.FromValue(DrillTargetData.FromResponse(result), result);
                 if (response.Value == null)

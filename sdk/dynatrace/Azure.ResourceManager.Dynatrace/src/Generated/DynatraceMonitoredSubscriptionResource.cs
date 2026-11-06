@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Dynatrace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _monitoredSubscriptionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, DynatraceMonitoredSubscriptionData.ToRequestContent(data), context);
+                using HttpMessage message = _monitoredSubscriptionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, DynatraceMonitoredSubscriptionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DynatraceArmOperation<DynatraceMonitoredSubscriptionResource> operation = new DynatraceArmOperation<DynatraceMonitoredSubscriptionResource>(
                     new DynatraceMonitoredSubscriptionResourceOperationSource(Client),
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Dynatrace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _monitoredSubscriptionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, DynatraceMonitoredSubscriptionData.ToRequestContent(data), context);
+                using HttpMessage message = _monitoredSubscriptionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, DynatraceMonitoredSubscriptionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DynatraceArmOperation<DynatraceMonitoredSubscriptionResource> operation = new DynatraceArmOperation<DynatraceMonitoredSubscriptionResource>(
                     new DynatraceMonitoredSubscriptionResourceOperationSource(Client),
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Dynatrace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _monitoredSubscriptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _monitoredSubscriptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DynatraceMonitoredSubscriptionData> response = Response.FromValue(DynatraceMonitoredSubscriptionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Dynatrace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _monitoredSubscriptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _monitoredSubscriptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DynatraceMonitoredSubscriptionData> response = Response.FromValue(DynatraceMonitoredSubscriptionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Dynatrace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _monitoredSubscriptionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, DynatraceMonitoredSubscriptionData.ToRequestContent(data), context);
+                using HttpMessage message = _monitoredSubscriptionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, DynatraceMonitoredSubscriptionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DynatraceArmOperation<DynatraceMonitoredSubscriptionResource> operation = new DynatraceArmOperation<DynatraceMonitoredSubscriptionResource>(
                     new DynatraceMonitoredSubscriptionResourceOperationSource(Client),
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Dynatrace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _monitoredSubscriptionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, DynatraceMonitoredSubscriptionData.ToRequestContent(data), context);
+                using HttpMessage message = _monitoredSubscriptionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, DynatraceMonitoredSubscriptionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DynatraceArmOperation<DynatraceMonitoredSubscriptionResource> operation = new DynatraceArmOperation<DynatraceMonitoredSubscriptionResource>(
                     new DynatraceMonitoredSubscriptionResourceOperationSource(Client),
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.Dynatrace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _monitoredSubscriptionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _monitoredSubscriptionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DynatraceArmOperation operation = new DynatraceArmOperation(_monitoredSubscriptionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.Dynatrace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _monitoredSubscriptionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _monitoredSubscriptionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DynatraceArmOperation operation = new DynatraceArmOperation(_monitoredSubscriptionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

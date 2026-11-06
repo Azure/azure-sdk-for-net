@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tableResourcesRestClient.CreateCreateUpdateTableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tableName, CosmosDBTableCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _tableResourcesRestClient.CreateCreateUpdateTableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tableName, CosmosDBTableCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<CosmosDBTableResource> operation = new CosmosDBArmOperation<CosmosDBTableResource>(
                     new CosmosDBTableResourceOperationSource(Client),
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tableResourcesRestClient.CreateCreateUpdateTableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tableName, CosmosDBTableCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _tableResourcesRestClient.CreateCreateUpdateTableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tableName, CosmosDBTableCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<CosmosDBTableResource> operation = new CosmosDBArmOperation<CosmosDBTableResource>(
                     new CosmosDBTableResourceOperationSource(Client),
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tableResourcesRestClient.CreateGetTableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tableName, context);
+                using HttpMessage message = _tableResourcesRestClient.CreateGetTableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tableName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CosmosDBTableData> response = Response.FromValue(CosmosDBTableData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tableResourcesRestClient.CreateGetTableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tableName, context);
+                using HttpMessage message = _tableResourcesRestClient.CreateGetTableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tableName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CosmosDBTableData> response = Response.FromValue(CosmosDBTableData.FromResponse(result), result);
                 if (response.Value == null)
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tableResourcesRestClient.CreateGetTableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tableName, context);
+                using HttpMessage message = _tableResourcesRestClient.CreateGetTableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tableName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CosmosDBTableData> response = default;
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tableResourcesRestClient.CreateGetTableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tableName, context);
+                using HttpMessage message = _tableResourcesRestClient.CreateGetTableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tableName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CosmosDBTableData> response = default;
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tableResourcesRestClient.CreateGetTableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tableName, context);
+                using HttpMessage message = _tableResourcesRestClient.CreateGetTableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tableName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CosmosDBTableData> response = default;
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tableResourcesRestClient.CreateGetTableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tableName, context);
+                using HttpMessage message = _tableResourcesRestClient.CreateGetTableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tableName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CosmosDBTableData> response = default;

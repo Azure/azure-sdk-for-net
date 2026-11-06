@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CdnClientRestClient.CreateCheckEndpointNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, EndpointNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = CdnClientRestClient.CreateCheckEndpointNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, EndpointNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EndpointNameAvailabilityResult> response = Response.FromValue(EndpointNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CdnClientRestClient.CreateCheckEndpointNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, EndpointNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = CdnClientRestClient.CreateCheckEndpointNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, EndpointNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EndpointNameAvailabilityResult> response = Response.FromValue(EndpointNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ProfilesRestClient.CreateCanMigrateProfileRequest(Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), CanMigrateContent.ToRequestContent(content), context);
+                using HttpMessage message = ProfilesRestClient.CreateCanMigrateProfileRequest(Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), CanMigrateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<CanMigrateResult> operation = new CdnArmOperation<CanMigrateResult>(
                     new CanMigrateResultOperationSource(),
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ProfilesRestClient.CreateCanMigrateProfileRequest(Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), CanMigrateContent.ToRequestContent(content), context);
+                using HttpMessage message = ProfilesRestClient.CreateCanMigrateProfileRequest(Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), CanMigrateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<CanMigrateResult> operation = new CdnArmOperation<CanMigrateResult>(
                     new CanMigrateResultOperationSource(),
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ProfilesRestClient.CreateMigrateProfileRequest(Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), MigrationContent.ToRequestContent(content), context);
+                using HttpMessage message = ProfilesRestClient.CreateMigrateProfileRequest(Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), MigrationContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<MigrateResult> operation = new CdnArmOperation<MigrateResult>(
                     new MigrateResultOperationSource(),
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ProfilesRestClient.CreateMigrateProfileRequest(Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), MigrationContent.ToRequestContent(content), context);
+                using HttpMessage message = ProfilesRestClient.CreateMigrateProfileRequest(Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), MigrationContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<MigrateResult> operation = new CdnArmOperation<MigrateResult>(
                     new MigrateResultOperationSource(),

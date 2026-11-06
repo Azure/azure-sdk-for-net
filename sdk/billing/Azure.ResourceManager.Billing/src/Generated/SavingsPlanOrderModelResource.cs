@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _savingsPlanOrdersRestClient.CreateGetByBillingAccountRequest(Id.Parent.Name, Id.Name, expand, context);
+                using HttpMessage message = _savingsPlanOrdersRestClient.CreateGetByBillingAccountRequest(Id.Parent.Name, Id.Name, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SavingsPlanOrderModelData> response = Response.FromValue(SavingsPlanOrderModelData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _savingsPlanOrdersRestClient.CreateGetByBillingAccountRequest(Id.Parent.Name, Id.Name, expand, context);
+                using HttpMessage message = _savingsPlanOrdersRestClient.CreateGetByBillingAccountRequest(Id.Parent.Name, Id.Name, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SavingsPlanOrderModelData> response = Response.FromValue(SavingsPlanOrderModelData.FromResponse(result), result);
                 if (response.Value == null)

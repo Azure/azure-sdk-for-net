@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkInterfacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkInterfaceName, HciVmNetworkInterfaceData.ToRequestContent(data), context);
+                using HttpMessage message = _networkInterfacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkInterfaceName, HciVmNetworkInterfaceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation<HciVmNetworkInterfaceResource> operation = new VmArmOperation<HciVmNetworkInterfaceResource>(
                     new HciVmNetworkInterfaceResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkInterfacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkInterfaceName, HciVmNetworkInterfaceData.ToRequestContent(data), context);
+                using HttpMessage message = _networkInterfacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkInterfaceName, HciVmNetworkInterfaceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation<HciVmNetworkInterfaceResource> operation = new VmArmOperation<HciVmNetworkInterfaceResource>(
                     new HciVmNetworkInterfaceResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkInterfacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkInterfaceName, context);
+                using HttpMessage message = _networkInterfacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkInterfaceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HciVmNetworkInterfaceData> response = Response.FromValue(HciVmNetworkInterfaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkInterfacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkInterfaceName, context);
+                using HttpMessage message = _networkInterfacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkInterfaceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HciVmNetworkInterfaceData> response = Response.FromValue(HciVmNetworkInterfaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkInterfacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkInterfaceName, context);
+                using HttpMessage message = _networkInterfacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkInterfaceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HciVmNetworkInterfaceData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkInterfacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkInterfaceName, context);
+                using HttpMessage message = _networkInterfacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkInterfaceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HciVmNetworkInterfaceData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkInterfacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkInterfaceName, context);
+                using HttpMessage message = _networkInterfacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkInterfaceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HciVmNetworkInterfaceData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkInterfacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkInterfaceName, context);
+                using HttpMessage message = _networkInterfacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkInterfaceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HciVmNetworkInterfaceData> response = default;

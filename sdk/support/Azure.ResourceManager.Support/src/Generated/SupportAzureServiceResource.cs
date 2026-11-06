@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateGetRequest(Id.Name, context);
+                using HttpMessage message = _servicesRestClient.CreateGetRequest(Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SupportAzureServiceData> response = Response.FromValue(SupportAzureServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateGetRequest(Id.Name, context);
+                using HttpMessage message = _servicesRestClient.CreateGetRequest(Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SupportAzureServiceData> response = Response.FromValue(SupportAzureServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _classifyProblemsNoSubscriptionRestClient.CreateClassifyProblemsRequest(Id.Name, ProblemClassificationsClassificationInput.ToRequestContent(content), context);
+                using HttpMessage message = _classifyProblemsNoSubscriptionRestClient.CreateClassifyProblemsRequest(Id.Name, ProblemClassificationsClassificationInput.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ProblemClassificationsClassificationOutput> response = Response.FromValue(ProblemClassificationsClassificationOutput.FromResponse(result), result);
                 if (response.Value == null)
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _classifyProblemsNoSubscriptionRestClient.CreateClassifyProblemsRequest(Id.Name, ProblemClassificationsClassificationInput.ToRequestContent(content), context);
+                using HttpMessage message = _classifyProblemsNoSubscriptionRestClient.CreateClassifyProblemsRequest(Id.Name, ProblemClassificationsClassificationInput.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ProblemClassificationsClassificationOutput> response = Response.FromValue(ProblemClassificationsClassificationOutput.FromResponse(result), result);
                 if (response.Value == null)

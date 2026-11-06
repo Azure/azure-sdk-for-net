@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoScaleVCoresRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, vcoreName, AutoScaleVCoreData.ToRequestContent(data), context);
+                using HttpMessage message = _autoScaleVCoresRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, vcoreName, AutoScaleVCoreData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AutoScaleVCoreData> response = Response.FromValue(AutoScaleVCoreData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoScaleVCoresRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, vcoreName, AutoScaleVCoreData.ToRequestContent(data), context);
+                using HttpMessage message = _autoScaleVCoresRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, vcoreName, AutoScaleVCoreData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AutoScaleVCoreData> response = Response.FromValue(AutoScaleVCoreData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoScaleVCoresRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vcoreName, context);
+                using HttpMessage message = _autoScaleVCoresRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vcoreName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AutoScaleVCoreData> response = Response.FromValue(AutoScaleVCoreData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoScaleVCoresRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vcoreName, context);
+                using HttpMessage message = _autoScaleVCoresRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vcoreName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AutoScaleVCoreData> response = Response.FromValue(AutoScaleVCoreData.FromResponse(result), result);
                 if (response.Value == null)
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoScaleVCoresRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vcoreName, context);
+                using HttpMessage message = _autoScaleVCoresRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vcoreName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AutoScaleVCoreData> response = default;
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoScaleVCoresRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vcoreName, context);
+                using HttpMessage message = _autoScaleVCoresRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vcoreName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AutoScaleVCoreData> response = default;
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoScaleVCoresRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vcoreName, context);
+                using HttpMessage message = _autoScaleVCoresRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vcoreName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AutoScaleVCoreData> response = default;
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoScaleVCoresRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vcoreName, context);
+                using HttpMessage message = _autoScaleVCoresRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vcoreName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AutoScaleVCoreData> response = default;

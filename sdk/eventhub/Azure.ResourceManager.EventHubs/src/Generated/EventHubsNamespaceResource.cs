@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _namespacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EventHubsNamespaceData> response = Response.FromValue(EventHubsNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _namespacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EventHubsNamespaceData> response = Response.FromValue(EventHubsNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, EventHubsNamespaceData.ToRequestContent(data), context);
+                using HttpMessage message = _namespacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, EventHubsNamespaceData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EventHubsNamespaceData> response = Response.FromValue(EventHubsNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, EventHubsNamespaceData.ToRequestContent(data), context);
+                using HttpMessage message = _namespacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, EventHubsNamespaceData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EventHubsNamespaceData> response = Response.FromValue(EventHubsNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _namespacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 EventHubsArmOperation operation = new EventHubsArmOperation(_namespacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _namespacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 EventHubsArmOperation operation = new EventHubsArmOperation(_namespacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventHubsDisasterRecoveryAuthorizationRuleRestClient.CreateCheckEventHubsDisasterRecoveryNameAvailabilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, EventHubsNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = _eventHubsDisasterRecoveryAuthorizationRuleRestClient.CreateCheckEventHubsDisasterRecoveryNameAvailabilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, EventHubsNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EventHubsNameAvailabilityResult> response = Response.FromValue(EventHubsNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventHubsDisasterRecoveryAuthorizationRuleRestClient.CreateCheckEventHubsDisasterRecoveryNameAvailabilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, EventHubsNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = _eventHubsDisasterRecoveryAuthorizationRuleRestClient.CreateCheckEventHubsDisasterRecoveryNameAvailabilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, EventHubsNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EventHubsNameAvailabilityResult> response = Response.FromValue(EventHubsNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateFailOverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, EventHubsNamespaceFailover.ToRequestContent(eventHubsNamespaceFailover), context);
+                using HttpMessage message = _namespacesRestClient.CreateFailOverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, EventHubsNamespaceFailover.ToRequestContent(eventHubsNamespaceFailover), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 EventHubsArmOperation<EventHubsNamespaceFailover> operation = new EventHubsArmOperation<EventHubsNamespaceFailover>(
                     new EventHubsNamespaceFailoverOperationSource(),
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateFailOverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, EventHubsNamespaceFailover.ToRequestContent(eventHubsNamespaceFailover), context);
+                using HttpMessage message = _namespacesRestClient.CreateFailOverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, EventHubsNamespaceFailover.ToRequestContent(eventHubsNamespaceFailover), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 EventHubsArmOperation<EventHubsNamespaceFailover> operation = new EventHubsArmOperation<EventHubsNamespaceFailover>(
                     new EventHubsNamespaceFailoverOperationSource(),
@@ -736,7 +736,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetNetworkRuleSetsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _namespacesRestClient.CreateGetNetworkRuleSetsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EventHubsNetworkRuleSetListResult> response = Response.FromValue(EventHubsNetworkRuleSetListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -784,7 +784,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetNetworkRuleSetsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _namespacesRestClient.CreateGetNetworkRuleSetsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EventHubsNetworkRuleSetListResult> response = Response.FromValue(EventHubsNetworkRuleSetListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -823,7 +823,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _namespacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _namespacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<EventHubsNamespaceData> response = Response.FromValue(EventHubsNamespaceData.FromResponse(result), result);
                     return Response.FromValue(new EventHubsNamespaceResource(Client, response.Value), response.GetRawResponse());
@@ -871,7 +871,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _namespacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _namespacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<EventHubsNamespaceData> response = Response.FromValue(EventHubsNamespaceData.FromResponse(result), result);
                     return Response.FromValue(new EventHubsNamespaceResource(Client, response.Value), response.GetRawResponse());
@@ -917,7 +917,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _namespacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _namespacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<EventHubsNamespaceData> response = Response.FromValue(EventHubsNamespaceData.FromResponse(result), result);
                     return Response.FromValue(new EventHubsNamespaceResource(Client, response.Value), response.GetRawResponse());
@@ -959,7 +959,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _namespacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _namespacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<EventHubsNamespaceData> response = Response.FromValue(EventHubsNamespaceData.FromResponse(result), result);
                     return Response.FromValue(new EventHubsNamespaceResource(Client, response.Value), response.GetRawResponse());
@@ -1001,7 +1001,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _namespacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _namespacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<EventHubsNamespaceData> response = Response.FromValue(EventHubsNamespaceData.FromResponse(result), result);
                     return Response.FromValue(new EventHubsNamespaceResource(Client, response.Value), response.GetRawResponse());
@@ -1047,7 +1047,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _namespacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _namespacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<EventHubsNamespaceData> response = Response.FromValue(EventHubsNamespaceData.FromResponse(result), result);
                     return Response.FromValue(new EventHubsNamespaceResource(Client, response.Value), response.GetRawResponse());

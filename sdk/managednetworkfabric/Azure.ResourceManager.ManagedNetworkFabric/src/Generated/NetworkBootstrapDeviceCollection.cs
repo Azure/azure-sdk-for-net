@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkBootstrapDevicesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkBootstrapDeviceName, NetworkBootstrapDeviceData.ToRequestContent(data), context);
+                using HttpMessage message = _networkBootstrapDevicesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkBootstrapDeviceName, NetworkBootstrapDeviceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceResource> operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceResource>(
                     new NetworkBootstrapDeviceResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkBootstrapDevicesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkBootstrapDeviceName, NetworkBootstrapDeviceData.ToRequestContent(data), context);
+                using HttpMessage message = _networkBootstrapDevicesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkBootstrapDeviceName, NetworkBootstrapDeviceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceResource> operation = new ManagedNetworkFabricArmOperation<NetworkBootstrapDeviceResource>(
                     new NetworkBootstrapDeviceResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkBootstrapDevicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkBootstrapDeviceName, context);
+                using HttpMessage message = _networkBootstrapDevicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkBootstrapDeviceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkBootstrapDeviceData> response = Response.FromValue(NetworkBootstrapDeviceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkBootstrapDevicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkBootstrapDeviceName, context);
+                using HttpMessage message = _networkBootstrapDevicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkBootstrapDeviceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkBootstrapDeviceData> response = Response.FromValue(NetworkBootstrapDeviceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkBootstrapDevicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkBootstrapDeviceName, context);
+                using HttpMessage message = _networkBootstrapDevicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkBootstrapDeviceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkBootstrapDeviceData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkBootstrapDevicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkBootstrapDeviceName, context);
+                using HttpMessage message = _networkBootstrapDevicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkBootstrapDeviceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkBootstrapDeviceData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkBootstrapDevicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkBootstrapDeviceName, context);
+                using HttpMessage message = _networkBootstrapDevicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkBootstrapDeviceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkBootstrapDeviceData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkBootstrapDevicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkBootstrapDeviceName, context);
+                using HttpMessage message = _networkBootstrapDevicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkBootstrapDeviceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkBootstrapDeviceData> response = default;

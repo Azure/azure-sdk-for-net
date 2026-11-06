@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkScopesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, scopeName, HybridComputePrivateLinkScopeData.ToRequestContent(data), context);
+                using HttpMessage message = _privateLinkScopesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, scopeName, HybridComputePrivateLinkScopeData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HybridComputePrivateLinkScopeData> response = Response.FromValue(HybridComputePrivateLinkScopeData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkScopesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, scopeName, HybridComputePrivateLinkScopeData.ToRequestContent(data), context);
+                using HttpMessage message = _privateLinkScopesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, scopeName, HybridComputePrivateLinkScopeData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HybridComputePrivateLinkScopeData> response = Response.FromValue(HybridComputePrivateLinkScopeData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkScopesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, scopeName, context);
+                using HttpMessage message = _privateLinkScopesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, scopeName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HybridComputePrivateLinkScopeData> response = Response.FromValue(HybridComputePrivateLinkScopeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkScopesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, scopeName, context);
+                using HttpMessage message = _privateLinkScopesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, scopeName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HybridComputePrivateLinkScopeData> response = Response.FromValue(HybridComputePrivateLinkScopeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkScopesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, scopeName, context);
+                using HttpMessage message = _privateLinkScopesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, scopeName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HybridComputePrivateLinkScopeData> response = default;
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkScopesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, scopeName, context);
+                using HttpMessage message = _privateLinkScopesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, scopeName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HybridComputePrivateLinkScopeData> response = default;
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkScopesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, scopeName, context);
+                using HttpMessage message = _privateLinkScopesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, scopeName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HybridComputePrivateLinkScopeData> response = default;
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkScopesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, scopeName, context);
+                using HttpMessage message = _privateLinkScopesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, scopeName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HybridComputePrivateLinkScopeData> response = default;

@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _managedClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerServiceManagedClusterData> response = Response.FromValue(ContainerServiceManagedClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _managedClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerServiceManagedClusterData> response = Response.FromValue(ContainerServiceManagedClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClustersRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerServiceTagsObject.ToRequestContent(containerServiceTagsObject), ifMatch, context);
+                using HttpMessage message = _managedClustersRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerServiceTagsObject.ToRequestContent(containerServiceTagsObject), ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceArmOperation<ContainerServiceManagedClusterResource> operation = new ContainerServiceArmOperation<ContainerServiceManagedClusterResource>(
                     new ContainerServiceManagedClusterResourceOperationSource(Client),
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClustersRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerServiceTagsObject.ToRequestContent(containerServiceTagsObject), ifMatch, context);
+                using HttpMessage message = _managedClustersRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerServiceTagsObject.ToRequestContent(containerServiceTagsObject), ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceArmOperation<ContainerServiceManagedClusterResource> operation = new ContainerServiceArmOperation<ContainerServiceManagedClusterResource>(
                     new ContainerServiceManagedClusterResourceOperationSource(Client),
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ifMatch, ignorePodDisruptionBudget, context);
+                using HttpMessage message = _managedClustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ifMatch, ignorePodDisruptionBudget, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceArmOperation operation = new ContainerServiceArmOperation(_managedClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ifMatch, ignorePodDisruptionBudget, context);
+                using HttpMessage message = _managedClustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ifMatch, ignorePodDisruptionBudget, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceArmOperation operation = new ContainerServiceArmOperation(_managedClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClustersRestClient.CreateAbortLatestOperationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _managedClustersRestClient.CreateAbortLatestOperationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceArmOperation operation = new ContainerServiceArmOperation(_managedClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClustersRestClient.CreateAbortLatestOperationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _managedClustersRestClient.CreateAbortLatestOperationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceArmOperation operation = new ContainerServiceArmOperation(_managedClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClustersRestClient.CreateGetAccessProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleName, context);
+                using HttpMessage message = _managedClustersRestClient.CreateGetAccessProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ManagedClusterAccessProfile> response = Response.FromValue(ManagedClusterAccessProfile.FromResponse(result), result);
                 if (response.Value == null)
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClustersRestClient.CreateGetAccessProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleName, context);
+                using HttpMessage message = _managedClustersRestClient.CreateGetAccessProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ManagedClusterAccessProfile> response = Response.FromValue(ManagedClusterAccessProfile.FromResponse(result), result);
                 if (response.Value == null)
@@ -653,7 +653,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClustersRestClient.CreateGetAvailableAgentPoolVersionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _managedClustersRestClient.CreateGetAvailableAgentPoolVersionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AgentPoolAvailableVersions> response = Response.FromValue(AgentPoolAvailableVersions.FromResponse(result), result);
                 if (response.Value == null)
@@ -701,7 +701,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClustersRestClient.CreateGetAvailableAgentPoolVersionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _managedClustersRestClient.CreateGetAvailableAgentPoolVersionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AgentPoolAvailableVersions> response = Response.FromValue(AgentPoolAvailableVersions.FromResponse(result), result);
                 if (response.Value == null)
@@ -754,7 +754,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClustersRestClient.CreateGetCommandResultRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, commandId, context);
+                using HttpMessage message = _managedClustersRestClient.CreateGetCommandResultRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, commandId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ManagedClusterRunCommandResult> response = Response.FromValue(ManagedClusterRunCommandResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -807,7 +807,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClustersRestClient.CreateGetCommandResultRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, commandId, context);
+                using HttpMessage message = _managedClustersRestClient.CreateGetCommandResultRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, commandId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ManagedClusterRunCommandResult> response = Response.FromValue(ManagedClusterRunCommandResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -856,7 +856,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClustersRestClient.CreateGetClusterAdminCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serverFqdn, context);
+                using HttpMessage message = _managedClustersRestClient.CreateGetClusterAdminCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serverFqdn, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ManagedClusterCredentials> response = Response.FromValue(ManagedClusterCredentials.FromResponse(result), result);
                 if (response.Value == null)
@@ -905,7 +905,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClustersRestClient.CreateGetClusterAdminCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serverFqdn, context);
+                using HttpMessage message = _managedClustersRestClient.CreateGetClusterAdminCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serverFqdn, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ManagedClusterCredentials> response = Response.FromValue(ManagedClusterCredentials.FromResponse(result), result);
                 if (response.Value == null)
@@ -954,7 +954,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClustersRestClient.CreateGetClusterMonitoringUserCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serverFqdn, context);
+                using HttpMessage message = _managedClustersRestClient.CreateGetClusterMonitoringUserCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serverFqdn, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ManagedClusterCredentials> response = Response.FromValue(ManagedClusterCredentials.FromResponse(result), result);
                 if (response.Value == null)
@@ -1003,7 +1003,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClustersRestClient.CreateGetClusterMonitoringUserCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serverFqdn, context);
+                using HttpMessage message = _managedClustersRestClient.CreateGetClusterMonitoringUserCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serverFqdn, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ManagedClusterCredentials> response = Response.FromValue(ManagedClusterCredentials.FromResponse(result), result);
                 if (response.Value == null)
@@ -1053,7 +1053,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClustersRestClient.CreateGetClusterUserCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serverFqdn, format?.ToString(), context);
+                using HttpMessage message = _managedClustersRestClient.CreateGetClusterUserCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serverFqdn, format?.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ManagedClusterCredentials> response = Response.FromValue(ManagedClusterCredentials.FromResponse(result), result);
                 if (response.Value == null)
@@ -1103,7 +1103,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClustersRestClient.CreateGetClusterUserCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serverFqdn, format?.ToString(), context);
+                using HttpMessage message = _managedClustersRestClient.CreateGetClusterUserCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serverFqdn, format?.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ManagedClusterCredentials> response = Response.FromValue(ManagedClusterCredentials.FromResponse(result), result);
                 if (response.Value == null)
@@ -1231,7 +1231,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClustersRestClient.CreateResolvePrivateLinkServiceIdRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerServicePrivateLinkResourceData.ToRequestContent(data), context);
+                using HttpMessage message = _managedClustersRestClient.CreateResolvePrivateLinkServiceIdRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerServicePrivateLinkResourceData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerServicePrivateLinkResourceData> response = Response.FromValue(ContainerServicePrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -1283,7 +1283,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClustersRestClient.CreateResolvePrivateLinkServiceIdRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerServicePrivateLinkResourceData.ToRequestContent(data), context);
+                using HttpMessage message = _managedClustersRestClient.CreateResolvePrivateLinkServiceIdRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerServicePrivateLinkResourceData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerServicePrivateLinkResourceData> response = Response.FromValue(ContainerServicePrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -1412,7 +1412,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClustersRestClient.CreateRebalanceLoadBalancersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RebalanceLoadBalancersContent.ToRequestContent(content), context);
+                using HttpMessage message = _managedClustersRestClient.CreateRebalanceLoadBalancersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RebalanceLoadBalancersContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceArmOperation operation = new ContainerServiceArmOperation(_managedClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -1465,7 +1465,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClustersRestClient.CreateRebalanceLoadBalancersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RebalanceLoadBalancersContent.ToRequestContent(content), context);
+                using HttpMessage message = _managedClustersRestClient.CreateRebalanceLoadBalancersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RebalanceLoadBalancersContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceArmOperation operation = new ContainerServiceArmOperation(_managedClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -1518,7 +1518,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClustersRestClient.CreateResetAadProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ManagedClusterAadProfile.ToRequestContent(managedClusterAadProfile), context);
+                using HttpMessage message = _managedClustersRestClient.CreateResetAadProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ManagedClusterAadProfile.ToRequestContent(managedClusterAadProfile), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceArmOperation operation = new ContainerServiceArmOperation(_managedClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1571,7 +1571,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClustersRestClient.CreateResetAadProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ManagedClusterAadProfile.ToRequestContent(managedClusterAadProfile), context);
+                using HttpMessage message = _managedClustersRestClient.CreateResetAadProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ManagedClusterAadProfile.ToRequestContent(managedClusterAadProfile), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceArmOperation operation = new ContainerServiceArmOperation(_managedClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1624,7 +1624,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClustersRestClient.CreateResetServicePrincipalProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ManagedClusterServicePrincipalProfile.ToRequestContent(managedClusterServicePrincipalProfile), context);
+                using HttpMessage message = _managedClustersRestClient.CreateResetServicePrincipalProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ManagedClusterServicePrincipalProfile.ToRequestContent(managedClusterServicePrincipalProfile), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceArmOperation operation = new ContainerServiceArmOperation(_managedClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1677,7 +1677,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClustersRestClient.CreateResetServicePrincipalProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ManagedClusterServicePrincipalProfile.ToRequestContent(managedClusterServicePrincipalProfile), context);
+                using HttpMessage message = _managedClustersRestClient.CreateResetServicePrincipalProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ManagedClusterServicePrincipalProfile.ToRequestContent(managedClusterServicePrincipalProfile), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceArmOperation operation = new ContainerServiceArmOperation(_managedClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1726,7 +1726,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClustersRestClient.CreateRotateClusterCertificatesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _managedClustersRestClient.CreateRotateClusterCertificatesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceArmOperation operation = new ContainerServiceArmOperation(_managedClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1775,7 +1775,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClustersRestClient.CreateRotateClusterCertificatesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _managedClustersRestClient.CreateRotateClusterCertificatesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceArmOperation operation = new ContainerServiceArmOperation(_managedClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1824,7 +1824,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClustersRestClient.CreateRotateServiceAccountSigningKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _managedClustersRestClient.CreateRotateServiceAccountSigningKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceArmOperation operation = new ContainerServiceArmOperation(_managedClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1873,7 +1873,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClustersRestClient.CreateRotateServiceAccountSigningKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _managedClustersRestClient.CreateRotateServiceAccountSigningKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceArmOperation operation = new ContainerServiceArmOperation(_managedClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1926,7 +1926,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClustersRestClient.CreateRunCommandRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ManagedClusterRunCommandContent.ToRequestContent(content), context);
+                using HttpMessage message = _managedClustersRestClient.CreateRunCommandRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ManagedClusterRunCommandContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceArmOperation<ManagedClusterRunCommandResult> operation = new ContainerServiceArmOperation<ManagedClusterRunCommandResult>(
                     new ManagedClusterRunCommandResultOperationSource(),
@@ -1985,7 +1985,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClustersRestClient.CreateRunCommandRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ManagedClusterRunCommandContent.ToRequestContent(content), context);
+                using HttpMessage message = _managedClustersRestClient.CreateRunCommandRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ManagedClusterRunCommandContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceArmOperation<ManagedClusterRunCommandResult> operation = new ContainerServiceArmOperation<ManagedClusterRunCommandResult>(
                     new ManagedClusterRunCommandResultOperationSource(),
@@ -2040,7 +2040,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClustersRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _managedClustersRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceArmOperation operation = new ContainerServiceArmOperation(_managedClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2089,7 +2089,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClustersRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _managedClustersRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceArmOperation operation = new ContainerServiceArmOperation(_managedClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2138,7 +2138,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClustersRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _managedClustersRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceArmOperation operation = new ContainerServiceArmOperation(_managedClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2187,7 +2187,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClustersRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _managedClustersRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceArmOperation operation = new ContainerServiceArmOperation(_managedClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2245,7 +2245,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _upgradeInsightsRestClient.CreateGenerateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, GenerateUpgradeInsightsContent.ToRequestContent(content), context);
+                using HttpMessage message = _upgradeInsightsRestClient.CreateGenerateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, GenerateUpgradeInsightsContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<UpgradeInsightData> response = Response.FromValue(UpgradeInsightData.FromResponse(result), result);
                 if (response.Value == null)
@@ -2303,7 +2303,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _upgradeInsightsRestClient.CreateGenerateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, GenerateUpgradeInsightsContent.ToRequestContent(content), context);
+                using HttpMessage message = _upgradeInsightsRestClient.CreateGenerateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, GenerateUpgradeInsightsContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<UpgradeInsightData> response = Response.FromValue(UpgradeInsightData.FromResponse(result), result);
                 if (response.Value == null)
@@ -2342,7 +2342,7 @@ namespace Azure.ResourceManager.ContainerService
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _managedClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _managedClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ContainerServiceManagedClusterData> response = Response.FromValue(ContainerServiceManagedClusterData.FromResponse(result), result);
                     return Response.FromValue(new ContainerServiceManagedClusterResource(Client, response.Value), response.GetRawResponse());
@@ -2390,7 +2390,7 @@ namespace Azure.ResourceManager.ContainerService
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _managedClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _managedClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ContainerServiceManagedClusterData> response = Response.FromValue(ContainerServiceManagedClusterData.FromResponse(result), result);
                     return Response.FromValue(new ContainerServiceManagedClusterResource(Client, response.Value), response.GetRawResponse());
@@ -2436,7 +2436,7 @@ namespace Azure.ResourceManager.ContainerService
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _managedClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _managedClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ContainerServiceManagedClusterData> response = Response.FromValue(ContainerServiceManagedClusterData.FromResponse(result), result);
                     return Response.FromValue(new ContainerServiceManagedClusterResource(Client, response.Value), response.GetRawResponse());
@@ -2478,7 +2478,7 @@ namespace Azure.ResourceManager.ContainerService
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _managedClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _managedClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ContainerServiceManagedClusterData> response = Response.FromValue(ContainerServiceManagedClusterData.FromResponse(result), result);
                     return Response.FromValue(new ContainerServiceManagedClusterResource(Client, response.Value), response.GetRawResponse());
@@ -2520,7 +2520,7 @@ namespace Azure.ResourceManager.ContainerService
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _managedClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _managedClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ContainerServiceManagedClusterData> response = Response.FromValue(ContainerServiceManagedClusterData.FromResponse(result), result);
                     return Response.FromValue(new ContainerServiceManagedClusterResource(Client, response.Value), response.GetRawResponse());
@@ -2566,7 +2566,7 @@ namespace Azure.ResourceManager.ContainerService
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _managedClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _managedClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ContainerServiceManagedClusterData> response = Response.FromValue(ContainerServiceManagedClusterData.FromResponse(result), result);
                     return Response.FromValue(new ContainerServiceManagedClusterResource(Client, response.Value), response.GetRawResponse());

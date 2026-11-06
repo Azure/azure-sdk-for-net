@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _regulatoryComplianceControlsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, regulatoryComplianceControlName, context);
+                using HttpMessage message = _regulatoryComplianceControlsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, regulatoryComplianceControlName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RegulatoryComplianceControlData> response = Response.FromValue(RegulatoryComplianceControlData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _regulatoryComplianceControlsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, regulatoryComplianceControlName, context);
+                using HttpMessage message = _regulatoryComplianceControlsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, regulatoryComplianceControlName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RegulatoryComplianceControlData> response = Response.FromValue(RegulatoryComplianceControlData.FromResponse(result), result);
                 if (response.Value == null)
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _regulatoryComplianceControlsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, regulatoryComplianceControlName, context);
+                using HttpMessage message = _regulatoryComplianceControlsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, regulatoryComplianceControlName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RegulatoryComplianceControlData> response = default;
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _regulatoryComplianceControlsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, regulatoryComplianceControlName, context);
+                using HttpMessage message = _regulatoryComplianceControlsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, regulatoryComplianceControlName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RegulatoryComplianceControlData> response = default;
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _regulatoryComplianceControlsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, regulatoryComplianceControlName, context);
+                using HttpMessage message = _regulatoryComplianceControlsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, regulatoryComplianceControlName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RegulatoryComplianceControlData> response = default;
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _regulatoryComplianceControlsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, regulatoryComplianceControlName, context);
+                using HttpMessage message = _regulatoryComplianceControlsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, regulatoryComplianceControlName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RegulatoryComplianceControlData> response = default;

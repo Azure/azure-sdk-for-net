@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sandboxCustomImagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _sandboxCustomImagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SandboxCustomImageData> response = Response.FromValue(SandboxCustomImageData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sandboxCustomImagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _sandboxCustomImagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SandboxCustomImageData> response = Response.FromValue(SandboxCustomImageData.FromResponse(result), result);
                 if (response.Value == null)
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sandboxCustomImagesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, SandboxCustomImageData.ToRequestContent(data), context);
+                using HttpMessage message = _sandboxCustomImagesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, SandboxCustomImageData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 KustoArmOperation<SandboxCustomImageResource> operation = new KustoArmOperation<SandboxCustomImageResource>(
                     new SandboxCustomImageResourceOperationSource(Client),
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sandboxCustomImagesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, SandboxCustomImageData.ToRequestContent(data), context);
+                using HttpMessage message = _sandboxCustomImagesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, SandboxCustomImageData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 KustoArmOperation<SandboxCustomImageResource> operation = new KustoArmOperation<SandboxCustomImageResource>(
                     new SandboxCustomImageResourceOperationSource(Client),
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sandboxCustomImagesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _sandboxCustomImagesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 KustoArmOperation operation = new KustoArmOperation(_sandboxCustomImagesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sandboxCustomImagesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _sandboxCustomImagesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 KustoArmOperation operation = new KustoArmOperation(_sandboxCustomImagesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

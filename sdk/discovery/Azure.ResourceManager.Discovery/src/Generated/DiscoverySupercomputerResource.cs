@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _supercomputersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _supercomputersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DiscoverySupercomputerData> response = Response.FromValue(DiscoverySupercomputerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _supercomputersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _supercomputersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DiscoverySupercomputerData> response = Response.FromValue(DiscoverySupercomputerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _supercomputersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DiscoverySupercomputerData.ToRequestContent(data), context);
+                using HttpMessage message = _supercomputersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DiscoverySupercomputerData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DiscoveryArmOperation<DiscoverySupercomputerResource> operation = new DiscoveryArmOperation<DiscoverySupercomputerResource>(
                     new DiscoverySupercomputerResourceOperationSource(Client),
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _supercomputersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DiscoverySupercomputerData.ToRequestContent(data), context);
+                using HttpMessage message = _supercomputersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DiscoverySupercomputerData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DiscoveryArmOperation<DiscoverySupercomputerResource> operation = new DiscoveryArmOperation<DiscoverySupercomputerResource>(
                     new DiscoverySupercomputerResourceOperationSource(Client),
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _supercomputersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _supercomputersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DiscoveryArmOperation operation = new DiscoveryArmOperation(_supercomputersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _supercomputersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _supercomputersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DiscoveryArmOperation operation = new DiscoveryArmOperation(_supercomputersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Discovery
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _supercomputersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _supercomputersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DiscoverySupercomputerData> response = Response.FromValue(DiscoverySupercomputerData.FromResponse(result), result);
                     return Response.FromValue(new DiscoverySupercomputerResource(Client, response.Value), response.GetRawResponse());
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.Discovery
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _supercomputersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _supercomputersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DiscoverySupercomputerData> response = Response.FromValue(DiscoverySupercomputerData.FromResponse(result), result);
                     return Response.FromValue(new DiscoverySupercomputerResource(Client, response.Value), response.GetRawResponse());
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.Discovery
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _supercomputersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _supercomputersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DiscoverySupercomputerData> response = Response.FromValue(DiscoverySupercomputerData.FromResponse(result), result);
                     return Response.FromValue(new DiscoverySupercomputerResource(Client, response.Value), response.GetRawResponse());
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.Discovery
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _supercomputersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _supercomputersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DiscoverySupercomputerData> response = Response.FromValue(DiscoverySupercomputerData.FromResponse(result), result);
                     return Response.FromValue(new DiscoverySupercomputerResource(Client, response.Value), response.GetRawResponse());
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.Discovery
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _supercomputersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _supercomputersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DiscoverySupercomputerData> response = Response.FromValue(DiscoverySupercomputerData.FromResponse(result), result);
                     return Response.FromValue(new DiscoverySupercomputerResource(Client, response.Value), response.GetRawResponse());
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.Discovery
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _supercomputersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _supercomputersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DiscoverySupercomputerData> response = Response.FromValue(DiscoverySupercomputerData.FromResponse(result), result);
                     return Response.FromValue(new DiscoverySupercomputerResource(Client, response.Value), response.GetRawResponse());

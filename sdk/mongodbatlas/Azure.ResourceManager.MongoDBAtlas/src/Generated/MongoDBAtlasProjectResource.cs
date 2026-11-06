@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _projectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _projectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MongoDBAtlasProjectData> response = Response.FromValue(MongoDBAtlasProjectData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _projectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _projectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MongoDBAtlasProjectData> response = Response.FromValue(MongoDBAtlasProjectData.FromResponse(result), result);
                 if (response.Value == null)
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _projectsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _projectsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MongoDBAtlasArmOperation operation = new MongoDBAtlasArmOperation(_projectsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _projectsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _projectsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MongoDBAtlasArmOperation operation = new MongoDBAtlasArmOperation(_projectsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _projectsRestClient.CreateGetClusterTierRegionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _projectsRestClient.CreateGetClusterTierRegionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MongoDBAtlasRegionsByTierResult> response = Response.FromValue(MongoDBAtlasRegionsByTierResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _projectsRestClient.CreateGetClusterTierRegionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _projectsRestClient.CreateGetClusterTierRegionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MongoDBAtlasRegionsByTierResult> response = Response.FromValue(MongoDBAtlasRegionsByTierResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _projectsRestClient.CreateTierLimitReachedRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _projectsRestClient.CreateTierLimitReachedRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MongoDBAtlasTierLimitReachedResult> response = Response.FromValue(MongoDBAtlasTierLimitReachedResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _projectsRestClient.CreateTierLimitReachedRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _projectsRestClient.CreateTierLimitReachedRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MongoDBAtlasTierLimitReachedResult> response = Response.FromValue(MongoDBAtlasTierLimitReachedResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _projectsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MongoDBAtlasProjectData.ToRequestContent(data), context);
+                using HttpMessage message = _projectsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MongoDBAtlasProjectData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MongoDBAtlasArmOperation<MongoDBAtlasProjectResource> operation = new MongoDBAtlasArmOperation<MongoDBAtlasProjectResource>(
                     new MongoDBAtlasProjectResourceOperationSource(Client),
@@ -574,7 +574,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _projectsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MongoDBAtlasProjectData.ToRequestContent(data), context);
+                using HttpMessage message = _projectsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MongoDBAtlasProjectData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MongoDBAtlasArmOperation<MongoDBAtlasProjectResource> operation = new MongoDBAtlasArmOperation<MongoDBAtlasProjectResource>(
                     new MongoDBAtlasProjectResourceOperationSource(Client),

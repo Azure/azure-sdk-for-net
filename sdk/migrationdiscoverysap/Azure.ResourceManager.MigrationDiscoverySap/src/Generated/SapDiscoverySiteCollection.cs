@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapDiscoverySitesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, sapDiscoverySiteName, SapDiscoverySiteData.ToRequestContent(data), context);
+                using HttpMessage message = _sapDiscoverySitesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, sapDiscoverySiteName, SapDiscoverySiteData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MigrationDiscoverySapArmOperation<SapDiscoverySiteResource> operation = new MigrationDiscoverySapArmOperation<SapDiscoverySiteResource>(
                     new SapDiscoverySiteResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapDiscoverySitesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, sapDiscoverySiteName, SapDiscoverySiteData.ToRequestContent(data), context);
+                using HttpMessage message = _sapDiscoverySitesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, sapDiscoverySiteName, SapDiscoverySiteData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MigrationDiscoverySapArmOperation<SapDiscoverySiteResource> operation = new MigrationDiscoverySapArmOperation<SapDiscoverySiteResource>(
                     new SapDiscoverySiteResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapDiscoverySitesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sapDiscoverySiteName, context);
+                using HttpMessage message = _sapDiscoverySitesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sapDiscoverySiteName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SapDiscoverySiteData> response = Response.FromValue(SapDiscoverySiteData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapDiscoverySitesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sapDiscoverySiteName, context);
+                using HttpMessage message = _sapDiscoverySitesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sapDiscoverySiteName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SapDiscoverySiteData> response = Response.FromValue(SapDiscoverySiteData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapDiscoverySitesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sapDiscoverySiteName, context);
+                using HttpMessage message = _sapDiscoverySitesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sapDiscoverySiteName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SapDiscoverySiteData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapDiscoverySitesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sapDiscoverySiteName, context);
+                using HttpMessage message = _sapDiscoverySitesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sapDiscoverySiteName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SapDiscoverySiteData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapDiscoverySitesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sapDiscoverySiteName, context);
+                using HttpMessage message = _sapDiscoverySitesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sapDiscoverySiteName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SapDiscoverySiteData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapDiscoverySitesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sapDiscoverySiteName, context);
+                using HttpMessage message = _sapDiscoverySitesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sapDiscoverySiteName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SapDiscoverySiteData> response = default;

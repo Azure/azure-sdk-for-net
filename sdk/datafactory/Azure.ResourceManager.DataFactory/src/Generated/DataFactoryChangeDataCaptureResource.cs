@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _changeDataCaptureRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifNoneMatch, context);
+                using HttpMessage message = _changeDataCaptureRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifNoneMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataFactoryChangeDataCaptureData> response = Response.FromValue(DataFactoryChangeDataCaptureData.FromResponse(result), result);
                 if (response.Value == null)
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _changeDataCaptureRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifNoneMatch, context);
+                using HttpMessage message = _changeDataCaptureRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifNoneMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataFactoryChangeDataCaptureData> response = Response.FromValue(DataFactoryChangeDataCaptureData.FromResponse(result), result);
                 if (response.Value == null)
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _changeDataCaptureRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _changeDataCaptureRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _changeDataCaptureRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _changeDataCaptureRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _changeDataCaptureRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _changeDataCaptureRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _changeDataCaptureRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _changeDataCaptureRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _changeDataCaptureRestClient.CreateStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _changeDataCaptureRestClient.CreateStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<string> response = Response.FromValue(JsonDocument.Parse(result.Content, ModelSerializationExtensions.JsonDocumentOptions).RootElement.GetString(), result);
                 if (response.Value == null)
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _changeDataCaptureRestClient.CreateStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _changeDataCaptureRestClient.CreateStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<string> response = Response.FromValue(JsonDocument.Parse(result.Content, ModelSerializationExtensions.JsonDocumentOptions).RootElement.GetString(), result);
                 if (response.Value == null)
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _changeDataCaptureRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _changeDataCaptureRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _changeDataCaptureRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _changeDataCaptureRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _changeDataCaptureRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataFactoryChangeDataCaptureData.ToRequestContent(data), ifMatch, context);
+                using HttpMessage message = _changeDataCaptureRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataFactoryChangeDataCaptureData.ToRequestContent(data), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataFactoryChangeDataCaptureData> response = Response.FromValue(DataFactoryChangeDataCaptureData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -655,7 +655,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _changeDataCaptureRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataFactoryChangeDataCaptureData.ToRequestContent(data), ifMatch, context);
+                using HttpMessage message = _changeDataCaptureRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataFactoryChangeDataCaptureData.ToRequestContent(data), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataFactoryChangeDataCaptureData> response = Response.FromValue(DataFactoryChangeDataCaptureData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

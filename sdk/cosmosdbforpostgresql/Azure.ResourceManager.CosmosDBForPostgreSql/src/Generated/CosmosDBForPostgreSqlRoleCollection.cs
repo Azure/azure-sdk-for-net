@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rolesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleName, CosmosDBForPostgreSqlRoleData.ToRequestContent(data), context);
+                using HttpMessage message = _rolesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleName, CosmosDBForPostgreSqlRoleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlRoleResource> operation = new CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlRoleResource>(
                     new CosmosDBForPostgreSqlRoleResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rolesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleName, CosmosDBForPostgreSqlRoleData.ToRequestContent(data), context);
+                using HttpMessage message = _rolesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleName, CosmosDBForPostgreSqlRoleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlRoleResource> operation = new CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlRoleResource>(
                     new CosmosDBForPostgreSqlRoleResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rolesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleName, context);
+                using HttpMessage message = _rolesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CosmosDBForPostgreSqlRoleData> response = Response.FromValue(CosmosDBForPostgreSqlRoleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rolesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleName, context);
+                using HttpMessage message = _rolesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CosmosDBForPostgreSqlRoleData> response = Response.FromValue(CosmosDBForPostgreSqlRoleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rolesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleName, context);
+                using HttpMessage message = _rolesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CosmosDBForPostgreSqlRoleData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rolesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleName, context);
+                using HttpMessage message = _rolesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CosmosDBForPostgreSqlRoleData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rolesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleName, context);
+                using HttpMessage message = _rolesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CosmosDBForPostgreSqlRoleData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rolesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleName, context);
+                using HttpMessage message = _rolesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CosmosDBForPostgreSqlRoleData> response = default;

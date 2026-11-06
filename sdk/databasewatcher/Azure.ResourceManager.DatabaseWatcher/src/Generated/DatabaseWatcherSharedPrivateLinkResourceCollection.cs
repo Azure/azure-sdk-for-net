@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, DatabaseWatcherSharedPrivateLinkResourceData.ToRequestContent(data), context);
+                using HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, DatabaseWatcherSharedPrivateLinkResourceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DatabaseWatcherArmOperation<DatabaseWatcherSharedPrivateLinkResource> operation = new DatabaseWatcherArmOperation<DatabaseWatcherSharedPrivateLinkResource>(
                     new DatabaseWatcherSharedPrivateLinkResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, DatabaseWatcherSharedPrivateLinkResourceData.ToRequestContent(data), context);
+                using HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, DatabaseWatcherSharedPrivateLinkResourceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DatabaseWatcherArmOperation<DatabaseWatcherSharedPrivateLinkResource> operation = new DatabaseWatcherArmOperation<DatabaseWatcherSharedPrivateLinkResource>(
                     new DatabaseWatcherSharedPrivateLinkResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, context);
+                using HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DatabaseWatcherSharedPrivateLinkResourceData> response = Response.FromValue(DatabaseWatcherSharedPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, context);
+                using HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DatabaseWatcherSharedPrivateLinkResourceData> response = Response.FromValue(DatabaseWatcherSharedPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, context);
+                using HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DatabaseWatcherSharedPrivateLinkResourceData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, context);
+                using HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DatabaseWatcherSharedPrivateLinkResourceData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, context);
+                using HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DatabaseWatcherSharedPrivateLinkResourceData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, context);
+                using HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DatabaseWatcherSharedPrivateLinkResourceData> response = default;

@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sshPublicKeyResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sshPublicKeyResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SshPublicKeyData> response = Response.FromValue(SshPublicKeyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sshPublicKeyResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sshPublicKeyResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SshPublicKeyData> response = Response.FromValue(SshPublicKeyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sshPublicKeyResourcesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SshPublicKeyPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _sshPublicKeyResourcesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SshPublicKeyPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SshPublicKeyData> response = Response.FromValue(SshPublicKeyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sshPublicKeyResourcesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SshPublicKeyPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _sshPublicKeyResourcesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SshPublicKeyPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SshPublicKeyData> response = Response.FromValue(SshPublicKeyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sshPublicKeyResourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sshPublicKeyResourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sshPublicKeyResourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sshPublicKeyResourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sshPublicKeyResourcesRestClient.CreateGenerateKeyPairRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SshGenerateKeyPairInputContent.ToRequestContent(content), context);
+                using HttpMessage message = _sshPublicKeyResourcesRestClient.CreateGenerateKeyPairRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SshGenerateKeyPairInputContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SshPublicKeyGenerateKeyPairResult> response = Response.FromValue(SshPublicKeyGenerateKeyPairResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sshPublicKeyResourcesRestClient.CreateGenerateKeyPairRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SshGenerateKeyPairInputContent.ToRequestContent(content), context);
+                using HttpMessage message = _sshPublicKeyResourcesRestClient.CreateGenerateKeyPairRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SshGenerateKeyPairInputContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SshPublicKeyGenerateKeyPairResult> response = Response.FromValue(SshPublicKeyGenerateKeyPairResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _sshPublicKeyResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _sshPublicKeyResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<SshPublicKeyData> response = Response.FromValue(SshPublicKeyData.FromResponse(result), result);
                     return Response.FromValue(new SshPublicKeyResource(Client, response.Value), response.GetRawResponse());
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _sshPublicKeyResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _sshPublicKeyResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<SshPublicKeyData> response = Response.FromValue(SshPublicKeyData.FromResponse(result), result);
                     return Response.FromValue(new SshPublicKeyResource(Client, response.Value), response.GetRawResponse());
@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _sshPublicKeyResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _sshPublicKeyResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<SshPublicKeyData> response = Response.FromValue(SshPublicKeyData.FromResponse(result), result);
                     return Response.FromValue(new SshPublicKeyResource(Client, response.Value), response.GetRawResponse());
@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _sshPublicKeyResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _sshPublicKeyResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<SshPublicKeyData> response = Response.FromValue(SshPublicKeyData.FromResponse(result), result);
                     return Response.FromValue(new SshPublicKeyResource(Client, response.Value), response.GetRawResponse());
@@ -694,7 +694,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _sshPublicKeyResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _sshPublicKeyResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<SshPublicKeyData> response = Response.FromValue(SshPublicKeyData.FromResponse(result), result);
                     return Response.FromValue(new SshPublicKeyResource(Client, response.Value), response.GetRawResponse());
@@ -740,7 +740,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _sshPublicKeyResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _sshPublicKeyResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<SshPublicKeyData> response = Response.FromValue(SshPublicKeyData.FromResponse(result), result);
                     return Response.FromValue(new SshPublicKeyResource(Client, response.Value), response.GetRawResponse());

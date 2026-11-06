@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceFabricApplicationData> response = Response.FromValue(ServiceFabricApplicationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceFabricApplicationData> response = Response.FromValue(ServiceFabricApplicationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ServiceFabricApplicationPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _applicationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ServiceFabricApplicationPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceFabricArmOperation<ServiceFabricApplicationResource> operation = new ServiceFabricArmOperation<ServiceFabricApplicationResource>(
                     new ServiceFabricApplicationResourceOperationSource(Client),
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ServiceFabricApplicationPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _applicationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ServiceFabricApplicationPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceFabricArmOperation<ServiceFabricApplicationResource> operation = new ServiceFabricArmOperation<ServiceFabricApplicationResource>(
                     new ServiceFabricApplicationResourceOperationSource(Client),
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _applicationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceFabricArmOperation operation = new ServiceFabricArmOperation(_applicationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _applicationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceFabricArmOperation operation = new ServiceFabricArmOperation(_applicationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.ServiceFabric
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ServiceFabricApplicationData> response = Response.FromValue(ServiceFabricApplicationData.FromResponse(result), result);
                     return Response.FromValue(new ServiceFabricApplicationResource(Client, response.Value), response.GetRawResponse());
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.ServiceFabric
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ServiceFabricApplicationData> response = Response.FromValue(ServiceFabricApplicationData.FromResponse(result), result);
                     return Response.FromValue(new ServiceFabricApplicationResource(Client, response.Value), response.GetRawResponse());
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.ServiceFabric
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ServiceFabricApplicationData> response = Response.FromValue(ServiceFabricApplicationData.FromResponse(result), result);
                     return Response.FromValue(new ServiceFabricApplicationResource(Client, response.Value), response.GetRawResponse());
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.ServiceFabric
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ServiceFabricApplicationData> response = Response.FromValue(ServiceFabricApplicationData.FromResponse(result), result);
                     return Response.FromValue(new ServiceFabricApplicationResource(Client, response.Value), response.GetRawResponse());
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.ServiceFabric
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ServiceFabricApplicationData> response = Response.FromValue(ServiceFabricApplicationData.FromResponse(result), result);
                     return Response.FromValue(new ServiceFabricApplicationResource(Client, response.Value), response.GetRawResponse());
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.ServiceFabric
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ServiceFabricApplicationData> response = Response.FromValue(ServiceFabricApplicationData.FromResponse(result), result);
                     return Response.FromValue(new ServiceFabricApplicationResource(Client, response.Value), response.GetRawResponse());

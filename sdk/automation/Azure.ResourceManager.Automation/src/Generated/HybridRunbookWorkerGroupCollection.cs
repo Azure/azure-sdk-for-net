@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hybridRunbookWorkerGroupRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hybridRunbookWorkerGroupName, HybridRunbookWorkerGroupCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _hybridRunbookWorkerGroupRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hybridRunbookWorkerGroupName, HybridRunbookWorkerGroupCreateOrUpdateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HybridRunbookWorkerGroupData> response = Response.FromValue(HybridRunbookWorkerGroupData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hybridRunbookWorkerGroupRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hybridRunbookWorkerGroupName, HybridRunbookWorkerGroupCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _hybridRunbookWorkerGroupRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hybridRunbookWorkerGroupName, HybridRunbookWorkerGroupCreateOrUpdateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HybridRunbookWorkerGroupData> response = Response.FromValue(HybridRunbookWorkerGroupData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hybridRunbookWorkerGroupRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hybridRunbookWorkerGroupName, context);
+                using HttpMessage message = _hybridRunbookWorkerGroupRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hybridRunbookWorkerGroupName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HybridRunbookWorkerGroupData> response = Response.FromValue(HybridRunbookWorkerGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hybridRunbookWorkerGroupRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hybridRunbookWorkerGroupName, context);
+                using HttpMessage message = _hybridRunbookWorkerGroupRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hybridRunbookWorkerGroupName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HybridRunbookWorkerGroupData> response = Response.FromValue(HybridRunbookWorkerGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hybridRunbookWorkerGroupRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hybridRunbookWorkerGroupName, context);
+                using HttpMessage message = _hybridRunbookWorkerGroupRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hybridRunbookWorkerGroupName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HybridRunbookWorkerGroupData> response = default;
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hybridRunbookWorkerGroupRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hybridRunbookWorkerGroupName, context);
+                using HttpMessage message = _hybridRunbookWorkerGroupRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hybridRunbookWorkerGroupName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HybridRunbookWorkerGroupData> response = default;
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hybridRunbookWorkerGroupRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hybridRunbookWorkerGroupName, context);
+                using HttpMessage message = _hybridRunbookWorkerGroupRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hybridRunbookWorkerGroupName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HybridRunbookWorkerGroupData> response = default;
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hybridRunbookWorkerGroupRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hybridRunbookWorkerGroupName, context);
+                using HttpMessage message = _hybridRunbookWorkerGroupRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hybridRunbookWorkerGroupName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HybridRunbookWorkerGroupData> response = default;

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SubscriptionOperationGroupRestClient.CreateCancelSubscriptionRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = SubscriptionOperationGroupRestClient.CreateCancelSubscriptionRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CanceledSubscriptionId> response = Response.FromValue(CanceledSubscriptionId.FromResponse(result), result);
                 if (response.Value == null)
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SubscriptionOperationGroupRestClient.CreateCancelSubscriptionRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = SubscriptionOperationGroupRestClient.CreateCancelSubscriptionRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CanceledSubscriptionId> response = Response.FromValue(CanceledSubscriptionId.FromResponse(result), result);
                 if (response.Value == null)
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SubscriptionOperationGroupRestClient.CreateRenameSubscriptionRequest(Guid.Parse(Id.SubscriptionId), SubscriptionName.ToRequestContent(body), context);
+                using HttpMessage message = SubscriptionOperationGroupRestClient.CreateRenameSubscriptionRequest(Guid.Parse(Id.SubscriptionId), SubscriptionName.ToRequestContent(body), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RenamedSubscriptionId> response = Response.FromValue(RenamedSubscriptionId.FromResponse(result), result);
                 if (response.Value == null)
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SubscriptionOperationGroupRestClient.CreateRenameSubscriptionRequest(Guid.Parse(Id.SubscriptionId), SubscriptionName.ToRequestContent(body), context);
+                using HttpMessage message = SubscriptionOperationGroupRestClient.CreateRenameSubscriptionRequest(Guid.Parse(Id.SubscriptionId), SubscriptionName.ToRequestContent(body), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RenamedSubscriptionId> response = Response.FromValue(RenamedSubscriptionId.FromResponse(result), result);
                 if (response.Value == null)
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SubscriptionOperationGroupRestClient.CreateEnableSubscriptionRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = SubscriptionOperationGroupRestClient.CreateEnableSubscriptionRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EnabledSubscriptionId> response = Response.FromValue(EnabledSubscriptionId.FromResponse(result), result);
                 if (response.Value == null)
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Subscription.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SubscriptionOperationGroupRestClient.CreateEnableSubscriptionRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = SubscriptionOperationGroupRestClient.CreateEnableSubscriptionRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EnabledSubscriptionId> response = Response.FromValue(EnabledSubscriptionId.FromResponse(result), result);
                 if (response.Value == null)

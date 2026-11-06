@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceApplyUpdateRestClient.CreateGetApplyUpdatesByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.ResourceType.Type, Id.Parent.Parent.Name, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _maintenanceApplyUpdateRestClient.CreateGetApplyUpdatesByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.ResourceType.Type, Id.Parent.Parent.Name, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceApplyUpdateRestClient.CreateGetApplyUpdatesByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.ResourceType.Type, Id.Parent.Parent.Name, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _maintenanceApplyUpdateRestClient.CreateGetApplyUpdatesByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.ResourceType.Type, Id.Parent.Parent.Name, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
                 if (response.Value == null)

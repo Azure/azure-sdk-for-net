@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualApplianceSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), skuName, context);
+                using HttpMessage message = _virtualApplianceSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), skuName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkVirtualApplianceSkuData> response = Response.FromValue(NetworkVirtualApplianceSkuData.FromResponse(result), result);
                 if (response.Value == null)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualApplianceSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), skuName, context);
+                using HttpMessage message = _virtualApplianceSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), skuName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkVirtualApplianceSkuData> response = Response.FromValue(NetworkVirtualApplianceSkuData.FromResponse(result), result);
                 if (response.Value == null)
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualApplianceSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), skuName, context);
+                using HttpMessage message = _virtualApplianceSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), skuName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkVirtualApplianceSkuData> response = default;
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualApplianceSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), skuName, context);
+                using HttpMessage message = _virtualApplianceSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), skuName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkVirtualApplianceSkuData> response = default;
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualApplianceSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), skuName, context);
+                using HttpMessage message = _virtualApplianceSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), skuName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkVirtualApplianceSkuData> response = default;
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualApplianceSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), skuName, context);
+                using HttpMessage message = _virtualApplianceSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), skuName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkVirtualApplianceSkuData> response = default;

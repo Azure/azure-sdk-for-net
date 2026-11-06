@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hcpOperatorIdentityRoleSetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _hcpOperatorIdentityRoleSetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HcpOperatorIdentityRoleSetData> response = Response.FromValue(HcpOperatorIdentityRoleSetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hcpOperatorIdentityRoleSetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _hcpOperatorIdentityRoleSetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HcpOperatorIdentityRoleSetData> response = Response.FromValue(HcpOperatorIdentityRoleSetData.FromResponse(result), result);
                 if (response.Value == null)

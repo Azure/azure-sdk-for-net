@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeMapsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _scopeMapsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ScopeMapData> response = Response.FromValue(ScopeMapData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeMapsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _scopeMapsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ScopeMapData> response = Response.FromValue(ScopeMapData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeMapsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ScopeMapPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _scopeMapsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ScopeMapPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerRegistryArmOperation<ScopeMapResource> operation = new ContainerRegistryArmOperation<ScopeMapResource>(
                     new ScopeMapResourceOperationSource(Client),
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeMapsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ScopeMapPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _scopeMapsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ScopeMapPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerRegistryArmOperation<ScopeMapResource> operation = new ContainerRegistryArmOperation<ScopeMapResource>(
                     new ScopeMapResourceOperationSource(Client),
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeMapsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _scopeMapsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerRegistryArmOperation operation = new ContainerRegistryArmOperation(_scopeMapsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeMapsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _scopeMapsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerRegistryArmOperation operation = new ContainerRegistryArmOperation(_scopeMapsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

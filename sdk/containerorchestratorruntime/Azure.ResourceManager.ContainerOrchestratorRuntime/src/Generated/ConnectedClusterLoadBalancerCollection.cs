@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadBalancersRestClient.CreateCreateOrUpdateRequest(Id.ToString(), loadBalancerName, ConnectedClusterLoadBalancerData.ToRequestContent(data), context);
+                using HttpMessage message = _loadBalancersRestClient.CreateCreateOrUpdateRequest(Id.ToString(), loadBalancerName, ConnectedClusterLoadBalancerData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerOrchestratorRuntimeArmOperation<ConnectedClusterLoadBalancerResource> operation = new ContainerOrchestratorRuntimeArmOperation<ConnectedClusterLoadBalancerResource>(
                     new ConnectedClusterLoadBalancerResourceOperationSource(Client),
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadBalancersRestClient.CreateCreateOrUpdateRequest(Id.ToString(), loadBalancerName, ConnectedClusterLoadBalancerData.ToRequestContent(data), context);
+                using HttpMessage message = _loadBalancersRestClient.CreateCreateOrUpdateRequest(Id.ToString(), loadBalancerName, ConnectedClusterLoadBalancerData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerOrchestratorRuntimeArmOperation<ConnectedClusterLoadBalancerResource> operation = new ContainerOrchestratorRuntimeArmOperation<ConnectedClusterLoadBalancerResource>(
                     new ConnectedClusterLoadBalancerResourceOperationSource(Client),
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Id.ToString(), loadBalancerName, context);
+                using HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Id.ToString(), loadBalancerName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConnectedClusterLoadBalancerData> response = Response.FromValue(ConnectedClusterLoadBalancerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Id.ToString(), loadBalancerName, context);
+                using HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Id.ToString(), loadBalancerName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConnectedClusterLoadBalancerData> response = Response.FromValue(ConnectedClusterLoadBalancerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Id.ToString(), loadBalancerName, context);
+                using HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Id.ToString(), loadBalancerName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ConnectedClusterLoadBalancerData> response = default;
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Id.ToString(), loadBalancerName, context);
+                using HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Id.ToString(), loadBalancerName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ConnectedClusterLoadBalancerData> response = default;
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Id.ToString(), loadBalancerName, context);
+                using HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Id.ToString(), loadBalancerName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ConnectedClusterLoadBalancerData> response = default;
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Id.ToString(), loadBalancerName, context);
+                using HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Id.ToString(), loadBalancerName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ConnectedClusterLoadBalancerData> response = default;

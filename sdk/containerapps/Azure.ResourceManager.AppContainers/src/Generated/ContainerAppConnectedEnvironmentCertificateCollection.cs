@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectedEnvironmentsCertificatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, ContainerAppCertificateData.ToRequestContent(data), context);
+                using HttpMessage message = _connectedEnvironmentsCertificatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, ContainerAppCertificateData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppContainersArmOperation<ContainerAppConnectedEnvironmentCertificateResource> operation = new AppContainersArmOperation<ContainerAppConnectedEnvironmentCertificateResource>(
                     new ContainerAppConnectedEnvironmentCertificateResourceOperationSource(Client),
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectedEnvironmentsCertificatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, ContainerAppCertificateData.ToRequestContent(data), context);
+                using HttpMessage message = _connectedEnvironmentsCertificatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, ContainerAppCertificateData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppContainersArmOperation<ContainerAppConnectedEnvironmentCertificateResource> operation = new AppContainersArmOperation<ContainerAppConnectedEnvironmentCertificateResource>(
                     new ContainerAppConnectedEnvironmentCertificateResourceOperationSource(Client),
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectedEnvironmentsCertificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, context);
+                using HttpMessage message = _connectedEnvironmentsCertificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerAppCertificateData> response = Response.FromValue(ContainerAppCertificateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectedEnvironmentsCertificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, context);
+                using HttpMessage message = _connectedEnvironmentsCertificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerAppCertificateData> response = Response.FromValue(ContainerAppCertificateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectedEnvironmentsCertificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, context);
+                using HttpMessage message = _connectedEnvironmentsCertificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ContainerAppCertificateData> response = default;
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectedEnvironmentsCertificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, context);
+                using HttpMessage message = _connectedEnvironmentsCertificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ContainerAppCertificateData> response = default;
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectedEnvironmentsCertificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, context);
+                using HttpMessage message = _connectedEnvironmentsCertificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ContainerAppCertificateData> response = default;
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectedEnvironmentsCertificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, context);
+                using HttpMessage message = _connectedEnvironmentsCertificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ContainerAppCertificateData> response = default;

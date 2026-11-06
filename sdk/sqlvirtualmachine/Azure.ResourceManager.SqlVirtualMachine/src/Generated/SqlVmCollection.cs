@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlVirtualMachinesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVmName, SqlVmData.ToRequestContent(data), context);
+                using HttpMessage message = _sqlVirtualMachinesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVmName, SqlVmData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlVirtualMachineArmOperation<SqlVmResource> operation = new SqlVirtualMachineArmOperation<SqlVmResource>(
                     new SqlVmResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlVirtualMachinesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVmName, SqlVmData.ToRequestContent(data), context);
+                using HttpMessage message = _sqlVirtualMachinesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVmName, SqlVmData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlVirtualMachineArmOperation<SqlVmResource> operation = new SqlVirtualMachineArmOperation<SqlVmResource>(
                     new SqlVmResourceOperationSource(Client),
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlVirtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVmName, expand, context);
+                using HttpMessage message = _sqlVirtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVmName, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SqlVmData> response = Response.FromValue(SqlVmData.FromResponse(result), result);
                 if (response.Value == null)
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlVirtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVmName, expand, context);
+                using HttpMessage message = _sqlVirtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVmName, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SqlVmData> response = Response.FromValue(SqlVmData.FromResponse(result), result);
                 if (response.Value == null)
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlVirtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVmName, expand, context);
+                using HttpMessage message = _sqlVirtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVmName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SqlVmData> response = default;
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlVirtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVmName, expand, context);
+                using HttpMessage message = _sqlVirtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVmName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SqlVmData> response = default;
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlVirtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVmName, expand, context);
+                using HttpMessage message = _sqlVirtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVmName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SqlVmData> response = default;
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlVirtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVmName, expand, context);
+                using HttpMessage message = _sqlVirtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVmName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SqlVmData> response = default;

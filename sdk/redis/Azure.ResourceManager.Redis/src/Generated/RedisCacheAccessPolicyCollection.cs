@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisCacheAccessPoliciesRestClient.CreateCreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, accessPolicyName, RedisCacheAccessPolicyData.ToRequestContent(data), context);
+                using HttpMessage message = _redisCacheAccessPoliciesRestClient.CreateCreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, accessPolicyName, RedisCacheAccessPolicyData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RedisArmOperation<RedisCacheAccessPolicyResource> operation = new RedisArmOperation<RedisCacheAccessPolicyResource>(
                     new RedisCacheAccessPolicyResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisCacheAccessPoliciesRestClient.CreateCreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, accessPolicyName, RedisCacheAccessPolicyData.ToRequestContent(data), context);
+                using HttpMessage message = _redisCacheAccessPoliciesRestClient.CreateCreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, accessPolicyName, RedisCacheAccessPolicyData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RedisArmOperation<RedisCacheAccessPolicyResource> operation = new RedisArmOperation<RedisCacheAccessPolicyResource>(
                     new RedisCacheAccessPolicyResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisCacheAccessPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, accessPolicyName, context);
+                using HttpMessage message = _redisCacheAccessPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, accessPolicyName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RedisCacheAccessPolicyData> response = Response.FromValue(RedisCacheAccessPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisCacheAccessPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, accessPolicyName, context);
+                using HttpMessage message = _redisCacheAccessPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, accessPolicyName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RedisCacheAccessPolicyData> response = Response.FromValue(RedisCacheAccessPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisCacheAccessPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, accessPolicyName, context);
+                using HttpMessage message = _redisCacheAccessPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, accessPolicyName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RedisCacheAccessPolicyData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisCacheAccessPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, accessPolicyName, context);
+                using HttpMessage message = _redisCacheAccessPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, accessPolicyName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RedisCacheAccessPolicyData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisCacheAccessPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, accessPolicyName, context);
+                using HttpMessage message = _redisCacheAccessPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, accessPolicyName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RedisCacheAccessPolicyData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisCacheAccessPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, accessPolicyName, context);
+                using HttpMessage message = _redisCacheAccessPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, accessPolicyName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RedisCacheAccessPolicyData> response = default;

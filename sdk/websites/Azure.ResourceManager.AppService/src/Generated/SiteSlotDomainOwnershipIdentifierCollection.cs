@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _identifierOperationGroupRestClient.CreateCreateOrUpdateDomainOwnershipIdentifierSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainOwnershipIdentifierName, AppServiceIdentifierData.ToRequestContent(data), context);
+                using HttpMessage message = _identifierOperationGroupRestClient.CreateCreateOrUpdateDomainOwnershipIdentifierSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainOwnershipIdentifierName, AppServiceIdentifierData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceIdentifierData> response = Response.FromValue(AppServiceIdentifierData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _identifierOperationGroupRestClient.CreateCreateOrUpdateDomainOwnershipIdentifierSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainOwnershipIdentifierName, AppServiceIdentifierData.ToRequestContent(data), context);
+                using HttpMessage message = _identifierOperationGroupRestClient.CreateCreateOrUpdateDomainOwnershipIdentifierSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainOwnershipIdentifierName, AppServiceIdentifierData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceIdentifierData> response = Response.FromValue(AppServiceIdentifierData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _identifierOperationGroupRestClient.CreateGetDomainOwnershipIdentifierSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainOwnershipIdentifierName, context);
+                using HttpMessage message = _identifierOperationGroupRestClient.CreateGetDomainOwnershipIdentifierSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainOwnershipIdentifierName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceIdentifierData> response = Response.FromValue(AppServiceIdentifierData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _identifierOperationGroupRestClient.CreateGetDomainOwnershipIdentifierSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainOwnershipIdentifierName, context);
+                using HttpMessage message = _identifierOperationGroupRestClient.CreateGetDomainOwnershipIdentifierSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainOwnershipIdentifierName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceIdentifierData> response = Response.FromValue(AppServiceIdentifierData.FromResponse(result), result);
                 if (response.Value == null)
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _identifierOperationGroupRestClient.CreateGetDomainOwnershipIdentifierSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainOwnershipIdentifierName, context);
+                using HttpMessage message = _identifierOperationGroupRestClient.CreateGetDomainOwnershipIdentifierSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainOwnershipIdentifierName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AppServiceIdentifierData> response = default;
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _identifierOperationGroupRestClient.CreateGetDomainOwnershipIdentifierSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainOwnershipIdentifierName, context);
+                using HttpMessage message = _identifierOperationGroupRestClient.CreateGetDomainOwnershipIdentifierSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainOwnershipIdentifierName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AppServiceIdentifierData> response = default;
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _identifierOperationGroupRestClient.CreateGetDomainOwnershipIdentifierSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainOwnershipIdentifierName, context);
+                using HttpMessage message = _identifierOperationGroupRestClient.CreateGetDomainOwnershipIdentifierSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainOwnershipIdentifierName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AppServiceIdentifierData> response = default;
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _identifierOperationGroupRestClient.CreateGetDomainOwnershipIdentifierSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainOwnershipIdentifierName, context);
+                using HttpMessage message = _identifierOperationGroupRestClient.CreateGetDomainOwnershipIdentifierSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainOwnershipIdentifierName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AppServiceIdentifierData> response = default;

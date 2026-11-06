@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteContainersRestClient.CreateCreateOrUpdateSiteContainerRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, SiteContainerData.ToRequestContent(data), context);
+                using HttpMessage message = _siteContainersRestClient.CreateCreateOrUpdateSiteContainerRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, SiteContainerData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SiteContainerData> response = Response.FromValue(SiteContainerData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteContainersRestClient.CreateCreateOrUpdateSiteContainerRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, SiteContainerData.ToRequestContent(data), context);
+                using HttpMessage message = _siteContainersRestClient.CreateCreateOrUpdateSiteContainerRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, SiteContainerData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SiteContainerData> response = Response.FromValue(SiteContainerData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteContainersRestClient.CreateGetSiteContainerRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, context);
+                using HttpMessage message = _siteContainersRestClient.CreateGetSiteContainerRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SiteContainerData> response = Response.FromValue(SiteContainerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteContainersRestClient.CreateGetSiteContainerRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, context);
+                using HttpMessage message = _siteContainersRestClient.CreateGetSiteContainerRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SiteContainerData> response = Response.FromValue(SiteContainerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteContainersRestClient.CreateGetSiteContainerRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, context);
+                using HttpMessage message = _siteContainersRestClient.CreateGetSiteContainerRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SiteContainerData> response = default;
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteContainersRestClient.CreateGetSiteContainerRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, context);
+                using HttpMessage message = _siteContainersRestClient.CreateGetSiteContainerRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SiteContainerData> response = default;
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteContainersRestClient.CreateGetSiteContainerRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, context);
+                using HttpMessage message = _siteContainersRestClient.CreateGetSiteContainerRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SiteContainerData> response = default;
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteContainersRestClient.CreateGetSiteContainerRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, context);
+                using HttpMessage message = _siteContainersRestClient.CreateGetSiteContainerRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SiteContainerData> response = default;

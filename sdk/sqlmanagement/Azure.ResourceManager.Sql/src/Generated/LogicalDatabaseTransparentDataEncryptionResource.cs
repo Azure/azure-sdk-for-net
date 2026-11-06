@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _transparentDataEncryptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _transparentDataEncryptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LogicalDatabaseTransparentDataEncryptionData> response = Response.FromValue(LogicalDatabaseTransparentDataEncryptionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _transparentDataEncryptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _transparentDataEncryptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LogicalDatabaseTransparentDataEncryptionData> response = Response.FromValue(LogicalDatabaseTransparentDataEncryptionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _transparentDataEncryptionsRestClient.CreateResumeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _transparentDataEncryptionsRestClient.CreateResumeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation<LogicalDatabaseTransparentDataEncryptionResource> operation = new SqlArmOperation<LogicalDatabaseTransparentDataEncryptionResource>(
                     new LogicalDatabaseTransparentDataEncryptionResourceOperationSource(Client),
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _transparentDataEncryptionsRestClient.CreateResumeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _transparentDataEncryptionsRestClient.CreateResumeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation<LogicalDatabaseTransparentDataEncryptionResource> operation = new SqlArmOperation<LogicalDatabaseTransparentDataEncryptionResource>(
                     new LogicalDatabaseTransparentDataEncryptionResourceOperationSource(Client),
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _transparentDataEncryptionsRestClient.CreateSuspendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _transparentDataEncryptionsRestClient.CreateSuspendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation<LogicalDatabaseTransparentDataEncryptionResource> operation = new SqlArmOperation<LogicalDatabaseTransparentDataEncryptionResource>(
                     new LogicalDatabaseTransparentDataEncryptionResourceOperationSource(Client),
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _transparentDataEncryptionsRestClient.CreateSuspendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _transparentDataEncryptionsRestClient.CreateSuspendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation<LogicalDatabaseTransparentDataEncryptionResource> operation = new SqlArmOperation<LogicalDatabaseTransparentDataEncryptionResource>(
                     new LogicalDatabaseTransparentDataEncryptionResourceOperationSource(Client),
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _transparentDataEncryptionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, LogicalDatabaseTransparentDataEncryptionData.ToRequestContent(data), context);
+                using HttpMessage message = _transparentDataEncryptionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, LogicalDatabaseTransparentDataEncryptionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation<LogicalDatabaseTransparentDataEncryptionResource> operation = new SqlArmOperation<LogicalDatabaseTransparentDataEncryptionResource>(
                     new LogicalDatabaseTransparentDataEncryptionResourceOperationSource(Client),
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _transparentDataEncryptionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, LogicalDatabaseTransparentDataEncryptionData.ToRequestContent(data), context);
+                using HttpMessage message = _transparentDataEncryptionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, LogicalDatabaseTransparentDataEncryptionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation<LogicalDatabaseTransparentDataEncryptionResource> operation = new SqlArmOperation<LogicalDatabaseTransparentDataEncryptionResource>(
                     new LogicalDatabaseTransparentDataEncryptionResourceOperationSource(Client),

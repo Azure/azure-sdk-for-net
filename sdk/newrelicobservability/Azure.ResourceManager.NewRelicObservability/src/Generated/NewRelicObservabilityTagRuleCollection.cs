@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tagRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, NewRelicObservabilityTagRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _tagRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, NewRelicObservabilityTagRuleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NewRelicObservabilityArmOperation<NewRelicObservabilityTagRuleResource> operation = new NewRelicObservabilityArmOperation<NewRelicObservabilityTagRuleResource>(
                     new NewRelicObservabilityTagRuleResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tagRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, NewRelicObservabilityTagRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _tagRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, NewRelicObservabilityTagRuleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NewRelicObservabilityArmOperation<NewRelicObservabilityTagRuleResource> operation = new NewRelicObservabilityArmOperation<NewRelicObservabilityTagRuleResource>(
                     new NewRelicObservabilityTagRuleResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tagRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, context);
+                using HttpMessage message = _tagRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NewRelicObservabilityTagRuleData> response = Response.FromValue(NewRelicObservabilityTagRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tagRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, context);
+                using HttpMessage message = _tagRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NewRelicObservabilityTagRuleData> response = Response.FromValue(NewRelicObservabilityTagRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tagRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, context);
+                using HttpMessage message = _tagRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NewRelicObservabilityTagRuleData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tagRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, context);
+                using HttpMessage message = _tagRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NewRelicObservabilityTagRuleData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tagRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, context);
+                using HttpMessage message = _tagRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NewRelicObservabilityTagRuleData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tagRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, context);
+                using HttpMessage message = _tagRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NewRelicObservabilityTagRuleData> response = default;

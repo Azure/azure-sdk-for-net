@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devOpsConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, DevOpsConfigurationData.ToRequestContent(data), context);
+                using HttpMessage message = _devOpsConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, DevOpsConfigurationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SecurityCenterArmOperation<DevOpsConfigurationResource> operation = new SecurityCenterArmOperation<DevOpsConfigurationResource>(
                     new DevOpsConfigurationResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devOpsConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, DevOpsConfigurationData.ToRequestContent(data), context);
+                using HttpMessage message = _devOpsConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, DevOpsConfigurationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SecurityCenterArmOperation<DevOpsConfigurationResource> operation = new SecurityCenterArmOperation<DevOpsConfigurationResource>(
                     new DevOpsConfigurationResourceOperationSource(Client),
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devOpsConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _devOpsConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevOpsConfigurationData> response = Response.FromValue(DevOpsConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devOpsConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _devOpsConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevOpsConfigurationData> response = Response.FromValue(DevOpsConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devOpsConfigurationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, DevOpsConfigurationData.ToRequestContent(data), context);
+                using HttpMessage message = _devOpsConfigurationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, DevOpsConfigurationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SecurityCenterArmOperation<DevOpsConfigurationResource> operation = new SecurityCenterArmOperation<DevOpsConfigurationResource>(
                     new DevOpsConfigurationResourceOperationSource(Client),
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devOpsConfigurationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, DevOpsConfigurationData.ToRequestContent(data), context);
+                using HttpMessage message = _devOpsConfigurationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, DevOpsConfigurationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SecurityCenterArmOperation<DevOpsConfigurationResource> operation = new SecurityCenterArmOperation<DevOpsConfigurationResource>(
                     new DevOpsConfigurationResourceOperationSource(Client),
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devOpsConfigurationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _devOpsConfigurationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SecurityCenterArmOperation operation = new SecurityCenterArmOperation(_devOpsConfigurationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devOpsConfigurationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _devOpsConfigurationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SecurityCenterArmOperation operation = new SecurityCenterArmOperation(_devOpsConfigurationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gitHubOwnersRestClient.CreateGetAvailableGitHubOwnersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _gitHubOwnersRestClient.CreateGetAvailableGitHubOwnersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GitHubOwnerListResult> response = Response.FromValue(GitHubOwnerListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gitHubOwnersRestClient.CreateGetAvailableGitHubOwnersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _gitHubOwnersRestClient.CreateGetAvailableGitHubOwnersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GitHubOwnerListResult> response = Response.FromValue(GitHubOwnerListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -665,7 +665,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gitLabGroupsRestClient.CreateGetAvailableGitLabGroupsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _gitLabGroupsRestClient.CreateGetAvailableGitLabGroupsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GitLabGroupListResult> response = Response.FromValue(GitLabGroupListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -713,7 +713,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gitLabGroupsRestClient.CreateGetAvailableGitLabGroupsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _gitLabGroupsRestClient.CreateGetAvailableGitLabGroupsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GitLabGroupListResult> response = Response.FromValue(GitLabGroupListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -761,7 +761,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureDevOpsOrgsRestClient.CreateGetAvailableAzureDevOpsOrganizationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _azureDevOpsOrgsRestClient.CreateGetAvailableAzureDevOpsOrganizationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AzureDevOpsOrgListResult> response = Response.FromValue(AzureDevOpsOrgListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -809,7 +809,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureDevOpsOrgsRestClient.CreateGetAvailableAzureDevOpsOrganizationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _azureDevOpsOrgsRestClient.CreateGetAvailableAzureDevOpsOrganizationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AzureDevOpsOrgListResult> response = Response.FromValue(AzureDevOpsOrgListResult.FromResponse(result), result);
                 if (response.Value == null)

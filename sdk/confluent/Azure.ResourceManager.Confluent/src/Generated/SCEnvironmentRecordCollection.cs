@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scEnvironmentRecordsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentId, SCEnvironmentRecordData.ToRequestContent(data), context);
+                using HttpMessage message = _scEnvironmentRecordsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentId, SCEnvironmentRecordData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SCEnvironmentRecordData> response = Response.FromValue(SCEnvironmentRecordData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scEnvironmentRecordsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentId, SCEnvironmentRecordData.ToRequestContent(data), context);
+                using HttpMessage message = _scEnvironmentRecordsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentId, SCEnvironmentRecordData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SCEnvironmentRecordData> response = Response.FromValue(SCEnvironmentRecordData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scEnvironmentRecordsRestClient.CreateGetEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentId, context);
+                using HttpMessage message = _scEnvironmentRecordsRestClient.CreateGetEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SCEnvironmentRecordData> response = Response.FromValue(SCEnvironmentRecordData.FromResponse(result), result);
                 if (response.Value == null)
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scEnvironmentRecordsRestClient.CreateGetEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentId, context);
+                using HttpMessage message = _scEnvironmentRecordsRestClient.CreateGetEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SCEnvironmentRecordData> response = Response.FromValue(SCEnvironmentRecordData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scEnvironmentRecordsRestClient.CreateGetEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentId, context);
+                using HttpMessage message = _scEnvironmentRecordsRestClient.CreateGetEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SCEnvironmentRecordData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scEnvironmentRecordsRestClient.CreateGetEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentId, context);
+                using HttpMessage message = _scEnvironmentRecordsRestClient.CreateGetEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SCEnvironmentRecordData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scEnvironmentRecordsRestClient.CreateGetEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentId, context);
+                using HttpMessage message = _scEnvironmentRecordsRestClient.CreateGetEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SCEnvironmentRecordData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scEnvironmentRecordsRestClient.CreateGetEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentId, context);
+                using HttpMessage message = _scEnvironmentRecordsRestClient.CreateGetEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SCEnvironmentRecordData> response = default;

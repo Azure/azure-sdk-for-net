@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rebalanceJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _rebalanceJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<StorageCacheRebalanceJobData> response = Response.FromValue(StorageCacheRebalanceJobData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rebalanceJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _rebalanceJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<StorageCacheRebalanceJobData> response = Response.FromValue(StorageCacheRebalanceJobData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rebalanceJobsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, StorageCacheRebalanceJobPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _rebalanceJobsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, StorageCacheRebalanceJobPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageCacheArmOperation<StorageCacheRebalanceJobResource> operation = new StorageCacheArmOperation<StorageCacheRebalanceJobResource>(
                     new StorageCacheRebalanceJobResourceOperationSource(Client),
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rebalanceJobsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, StorageCacheRebalanceJobPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _rebalanceJobsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, StorageCacheRebalanceJobPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageCacheArmOperation<StorageCacheRebalanceJobResource> operation = new StorageCacheArmOperation<StorageCacheRebalanceJobResource>(
                     new StorageCacheRebalanceJobResourceOperationSource(Client),
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rebalanceJobsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _rebalanceJobsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageCacheArmOperation operation = new StorageCacheArmOperation(_rebalanceJobsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rebalanceJobsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _rebalanceJobsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageCacheArmOperation operation = new StorageCacheArmOperation(_rebalanceJobsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

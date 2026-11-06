@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityPerimeterLinkReferencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkReferenceName, context);
+                using HttpMessage message = _networkSecurityPerimeterLinkReferencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkReferenceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkSecurityPerimeterLinkReferenceData> response = Response.FromValue(NetworkSecurityPerimeterLinkReferenceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityPerimeterLinkReferencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkReferenceName, context);
+                using HttpMessage message = _networkSecurityPerimeterLinkReferencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkReferenceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkSecurityPerimeterLinkReferenceData> response = Response.FromValue(NetworkSecurityPerimeterLinkReferenceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityPerimeterLinkReferencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkReferenceName, context);
+                using HttpMessage message = _networkSecurityPerimeterLinkReferencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkReferenceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkSecurityPerimeterLinkReferenceData> response = default;
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityPerimeterLinkReferencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkReferenceName, context);
+                using HttpMessage message = _networkSecurityPerimeterLinkReferencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkReferenceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkSecurityPerimeterLinkReferenceData> response = default;
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityPerimeterLinkReferencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkReferenceName, context);
+                using HttpMessage message = _networkSecurityPerimeterLinkReferencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkReferenceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkSecurityPerimeterLinkReferenceData> response = default;
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityPerimeterLinkReferencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkReferenceName, context);
+                using HttpMessage message = _networkSecurityPerimeterLinkReferencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkReferenceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkSecurityPerimeterLinkReferenceData> response = default;

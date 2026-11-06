@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.FrontDoor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _experimentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, experimentName, FrontDoorExperimentData.ToRequestContent(data), context);
+                using HttpMessage message = _experimentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, experimentName, FrontDoorExperimentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FrontDoorArmOperation<FrontDoorExperimentResource> operation = new FrontDoorArmOperation<FrontDoorExperimentResource>(
                     new FrontDoorExperimentResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.FrontDoor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _experimentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, experimentName, FrontDoorExperimentData.ToRequestContent(data), context);
+                using HttpMessage message = _experimentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, experimentName, FrontDoorExperimentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FrontDoorArmOperation<FrontDoorExperimentResource> operation = new FrontDoorArmOperation<FrontDoorExperimentResource>(
                     new FrontDoorExperimentResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.FrontDoor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _experimentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, experimentName, context);
+                using HttpMessage message = _experimentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, experimentName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FrontDoorExperimentData> response = Response.FromValue(FrontDoorExperimentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.FrontDoor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _experimentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, experimentName, context);
+                using HttpMessage message = _experimentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, experimentName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FrontDoorExperimentData> response = Response.FromValue(FrontDoorExperimentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.FrontDoor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _experimentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, experimentName, context);
+                using HttpMessage message = _experimentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, experimentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<FrontDoorExperimentData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.FrontDoor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _experimentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, experimentName, context);
+                using HttpMessage message = _experimentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, experimentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<FrontDoorExperimentData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.FrontDoor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _experimentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, experimentName, context);
+                using HttpMessage message = _experimentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, experimentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<FrontDoorExperimentData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.FrontDoor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _experimentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, experimentName, context);
+                using HttpMessage message = _experimentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, experimentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<FrontDoorExperimentData> response = default;

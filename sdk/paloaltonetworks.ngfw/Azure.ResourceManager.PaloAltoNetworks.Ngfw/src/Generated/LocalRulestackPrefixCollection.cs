@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _prefixListLocalRulestackRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, LocalRulestackPrefixData.ToRequestContent(data), context);
+                using HttpMessage message = _prefixListLocalRulestackRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, LocalRulestackPrefixData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NgfwArmOperation<LocalRulestackPrefixResource> operation = new NgfwArmOperation<LocalRulestackPrefixResource>(
                     new LocalRulestackPrefixResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _prefixListLocalRulestackRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, LocalRulestackPrefixData.ToRequestContent(data), context);
+                using HttpMessage message = _prefixListLocalRulestackRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, LocalRulestackPrefixData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NgfwArmOperation<LocalRulestackPrefixResource> operation = new NgfwArmOperation<LocalRulestackPrefixResource>(
                     new LocalRulestackPrefixResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _prefixListLocalRulestackRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _prefixListLocalRulestackRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LocalRulestackPrefixData> response = Response.FromValue(LocalRulestackPrefixData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _prefixListLocalRulestackRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _prefixListLocalRulestackRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LocalRulestackPrefixData> response = Response.FromValue(LocalRulestackPrefixData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _prefixListLocalRulestackRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _prefixListLocalRulestackRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<LocalRulestackPrefixData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _prefixListLocalRulestackRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _prefixListLocalRulestackRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<LocalRulestackPrefixData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _prefixListLocalRulestackRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _prefixListLocalRulestackRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<LocalRulestackPrefixData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _prefixListLocalRulestackRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _prefixListLocalRulestackRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<LocalRulestackPrefixData> response = default;

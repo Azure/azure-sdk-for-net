@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deviceName, SphereDeviceData.ToRequestContent(data), context);
+                using HttpMessage message = _devicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deviceName, SphereDeviceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SphereArmOperation<SphereDeviceResource> operation = new SphereArmOperation<SphereDeviceResource>(
                     new SphereDeviceResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deviceName, SphereDeviceData.ToRequestContent(data), context);
+                using HttpMessage message = _devicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deviceName, SphereDeviceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SphereArmOperation<SphereDeviceResource> operation = new SphereArmOperation<SphereDeviceResource>(
                     new SphereDeviceResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deviceName, context);
+                using HttpMessage message = _devicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deviceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SphereDeviceData> response = Response.FromValue(SphereDeviceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deviceName, context);
+                using HttpMessage message = _devicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deviceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SphereDeviceData> response = Response.FromValue(SphereDeviceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deviceName, context);
+                using HttpMessage message = _devicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deviceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SphereDeviceData> response = default;
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deviceName, context);
+                using HttpMessage message = _devicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deviceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SphereDeviceData> response = default;
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deviceName, context);
+                using HttpMessage message = _devicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deviceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SphereDeviceData> response = default;
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deviceName, context);
+                using HttpMessage message = _devicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deviceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SphereDeviceData> response = default;

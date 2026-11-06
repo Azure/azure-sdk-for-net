@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                using HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkSecurityPerimeterConfigurationData> response = Response.FromValue(NetworkSecurityPerimeterConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                using HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkSecurityPerimeterConfigurationData> response = Response.FromValue(NetworkSecurityPerimeterConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                using HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkSecurityPerimeterConfigurationData> response = default;
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                using HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkSecurityPerimeterConfigurationData> response = default;
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                using HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkSecurityPerimeterConfigurationData> response = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                using HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkSecurityPerimeterConfigurationData> response = default;

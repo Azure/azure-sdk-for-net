@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _topicTypesRestClient.CreateGetRequest(Id.Name, context);
+                using HttpMessage message = _topicTypesRestClient.CreateGetRequest(Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TopicTypeData> response = Response.FromValue(TopicTypeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _topicTypesRestClient.CreateGetRequest(Id.Name, context);
+                using HttpMessage message = _topicTypesRestClient.CreateGetRequest(Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TopicTypeData> response = Response.FromValue(TopicTypeData.FromResponse(result), result);
                 if (response.Value == null)

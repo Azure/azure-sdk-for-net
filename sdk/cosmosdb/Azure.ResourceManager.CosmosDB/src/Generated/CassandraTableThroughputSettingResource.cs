@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cassandraResourcesRestClient.CreateUpdateCassandraTableThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, ThroughputSettingsUpdateData.ToRequestContent(data), context);
+                using HttpMessage message = _cassandraResourcesRestClient.CreateUpdateCassandraTableThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, ThroughputSettingsUpdateData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<CassandraTableThroughputSettingResource> operation = new CosmosDBArmOperation<CassandraTableThroughputSettingResource>(
                     new CassandraTableThroughputSettingResourceOperationSource(Client),
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cassandraResourcesRestClient.CreateUpdateCassandraTableThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, ThroughputSettingsUpdateData.ToRequestContent(data), context);
+                using HttpMessage message = _cassandraResourcesRestClient.CreateUpdateCassandraTableThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, ThroughputSettingsUpdateData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<CassandraTableThroughputSettingResource> operation = new CosmosDBArmOperation<CassandraTableThroughputSettingResource>(
                     new CassandraTableThroughputSettingResourceOperationSource(Client),
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cassandraResourcesRestClient.CreateGetCassandraTableThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                using HttpMessage message = _cassandraResourcesRestClient.CreateGetCassandraTableThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ThroughputSettingData> response = Response.FromValue(ThroughputSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cassandraResourcesRestClient.CreateGetCassandraTableThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                using HttpMessage message = _cassandraResourcesRestClient.CreateGetCassandraTableThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ThroughputSettingData> response = Response.FromValue(ThroughputSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cassandraResourcesRestClient.CreateMigrateCassandraTableToAutoscaleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                using HttpMessage message = _cassandraResourcesRestClient.CreateMigrateCassandraTableToAutoscaleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<CassandraTableThroughputSettingResource> operation = new CosmosDBArmOperation<CassandraTableThroughputSettingResource>(
                     new CassandraTableThroughputSettingResourceOperationSource(Client),
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cassandraResourcesRestClient.CreateMigrateCassandraTableToAutoscaleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                using HttpMessage message = _cassandraResourcesRestClient.CreateMigrateCassandraTableToAutoscaleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<CassandraTableThroughputSettingResource> operation = new CosmosDBArmOperation<CassandraTableThroughputSettingResource>(
                     new CassandraTableThroughputSettingResourceOperationSource(Client),
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cassandraResourcesRestClient.CreateMigrateCassandraTableToManualThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                using HttpMessage message = _cassandraResourcesRestClient.CreateMigrateCassandraTableToManualThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<CassandraTableThroughputSettingResource> operation = new CosmosDBArmOperation<CassandraTableThroughputSettingResource>(
                     new CassandraTableThroughputSettingResourceOperationSource(Client),
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cassandraResourcesRestClient.CreateMigrateCassandraTableToManualThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                using HttpMessage message = _cassandraResourcesRestClient.CreateMigrateCassandraTableToManualThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<CassandraTableThroughputSettingResource> operation = new CosmosDBArmOperation<CassandraTableThroughputSettingResource>(
                     new CassandraTableThroughputSettingResourceOperationSource(Client),

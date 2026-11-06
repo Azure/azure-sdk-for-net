@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventHubAuthorizationRuleRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _eventHubAuthorizationRuleRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EventHubsAuthorizationRuleData> response = Response.FromValue(EventHubsAuthorizationRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventHubAuthorizationRuleRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _eventHubAuthorizationRuleRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EventHubsAuthorizationRuleData> response = Response.FromValue(EventHubsAuthorizationRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventHubAuthorizationRuleRestClient.CreateDeleteAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _eventHubAuthorizationRuleRestClient.CreateDeleteAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventHubAuthorizationRuleRestClient.CreateDeleteAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _eventHubAuthorizationRuleRestClient.CreateDeleteAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventHubAuthorizationRuleRestClient.CreateGetKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _eventHubAuthorizationRuleRestClient.CreateGetKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EventHubsAccessKeys> response = Response.FromValue(EventHubsAccessKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventHubAuthorizationRuleRestClient.CreateGetKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _eventHubAuthorizationRuleRestClient.CreateGetKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EventHubsAccessKeys> response = Response.FromValue(EventHubsAccessKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventHubAuthorizationRuleRestClient.CreateRegenerateKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, EventHubsRegenerateAccessKeyContent.ToRequestContent(content), context);
+                using HttpMessage message = _eventHubAuthorizationRuleRestClient.CreateRegenerateKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, EventHubsRegenerateAccessKeyContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EventHubsAccessKeys> response = Response.FromValue(EventHubsAccessKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventHubAuthorizationRuleRestClient.CreateRegenerateKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, EventHubsRegenerateAccessKeyContent.ToRequestContent(content), context);
+                using HttpMessage message = _eventHubAuthorizationRuleRestClient.CreateRegenerateKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, EventHubsRegenerateAccessKeyContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EventHubsAccessKeys> response = Response.FromValue(EventHubsAccessKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventHubAuthorizationRuleRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, EventHubsAuthorizationRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _eventHubAuthorizationRuleRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, EventHubsAuthorizationRuleData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EventHubsAuthorizationRuleData> response = Response.FromValue(EventHubsAuthorizationRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventHubAuthorizationRuleRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, EventHubsAuthorizationRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _eventHubAuthorizationRuleRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, EventHubsAuthorizationRuleData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EventHubsAuthorizationRuleData> response = Response.FromValue(EventHubsAuthorizationRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

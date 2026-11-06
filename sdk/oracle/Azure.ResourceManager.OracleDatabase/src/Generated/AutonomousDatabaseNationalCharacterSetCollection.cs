@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autonomousDatabaseNationalCharacterSetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, adbsncharsetname, context);
+                using HttpMessage message = _autonomousDatabaseNationalCharacterSetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, adbsncharsetname, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AutonomousDatabaseNationalCharacterSetData> response = Response.FromValue(AutonomousDatabaseNationalCharacterSetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autonomousDatabaseNationalCharacterSetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, adbsncharsetname, context);
+                using HttpMessage message = _autonomousDatabaseNationalCharacterSetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, adbsncharsetname, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AutonomousDatabaseNationalCharacterSetData> response = Response.FromValue(AutonomousDatabaseNationalCharacterSetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autonomousDatabaseNationalCharacterSetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, adbsncharsetname, context);
+                using HttpMessage message = _autonomousDatabaseNationalCharacterSetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, adbsncharsetname, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AutonomousDatabaseNationalCharacterSetData> response = default;
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autonomousDatabaseNationalCharacterSetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, adbsncharsetname, context);
+                using HttpMessage message = _autonomousDatabaseNationalCharacterSetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, adbsncharsetname, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AutonomousDatabaseNationalCharacterSetData> response = default;
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autonomousDatabaseNationalCharacterSetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, adbsncharsetname, context);
+                using HttpMessage message = _autonomousDatabaseNationalCharacterSetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, adbsncharsetname, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AutonomousDatabaseNationalCharacterSetData> response = default;
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autonomousDatabaseNationalCharacterSetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, adbsncharsetname, context);
+                using HttpMessage message = _autonomousDatabaseNationalCharacterSetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, adbsncharsetname, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AutonomousDatabaseNationalCharacterSetData> response = default;

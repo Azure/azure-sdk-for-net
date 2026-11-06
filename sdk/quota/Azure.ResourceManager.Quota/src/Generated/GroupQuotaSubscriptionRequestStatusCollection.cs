@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotaSubscriptionRequestStatusesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, requestId, context);
+                using HttpMessage message = _groupQuotaSubscriptionRequestStatusesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, requestId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GroupQuotaSubscriptionRequestStatusData> response = Response.FromValue(GroupQuotaSubscriptionRequestStatusData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotaSubscriptionRequestStatusesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, requestId, context);
+                using HttpMessage message = _groupQuotaSubscriptionRequestStatusesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, requestId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GroupQuotaSubscriptionRequestStatusData> response = Response.FromValue(GroupQuotaSubscriptionRequestStatusData.FromResponse(result), result);
                 if (response.Value == null)
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotaSubscriptionRequestStatusesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, requestId, context);
+                using HttpMessage message = _groupQuotaSubscriptionRequestStatusesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, requestId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<GroupQuotaSubscriptionRequestStatusData> response = default;
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotaSubscriptionRequestStatusesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, requestId, context);
+                using HttpMessage message = _groupQuotaSubscriptionRequestStatusesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, requestId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<GroupQuotaSubscriptionRequestStatusData> response = default;
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotaSubscriptionRequestStatusesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, requestId, context);
+                using HttpMessage message = _groupQuotaSubscriptionRequestStatusesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, requestId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<GroupQuotaSubscriptionRequestStatusData> response = default;
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotaSubscriptionRequestStatusesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, requestId, context);
+                using HttpMessage message = _groupQuotaSubscriptionRequestStatusesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, requestId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<GroupQuotaSubscriptionRequestStatusData> response = default;

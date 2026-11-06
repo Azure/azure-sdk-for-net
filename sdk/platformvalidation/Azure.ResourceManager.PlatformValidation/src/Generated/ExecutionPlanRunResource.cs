@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.PlatformValidation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _executionPlanRunsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _executionPlanRunsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExecutionPlanRunData> response = Response.FromValue(ExecutionPlanRunData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.PlatformValidation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _executionPlanRunsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _executionPlanRunsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExecutionPlanRunData> response = Response.FromValue(ExecutionPlanRunData.FromResponse(result), result);
                 if (response.Value == null)
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.PlatformValidation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _executionPlanRunsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _executionPlanRunsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PlatformValidationArmOperation operation = new PlatformValidationArmOperation(_executionPlanRunsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.PlatformValidation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _executionPlanRunsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _executionPlanRunsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PlatformValidationArmOperation operation = new PlatformValidationArmOperation(_executionPlanRunsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.PlatformValidation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _executionPlanRunsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ExecutionPlanRunData.ToRequestContent(data), context);
+                using HttpMessage message = _executionPlanRunsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ExecutionPlanRunData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PlatformValidationArmOperation<ExecutionPlanRunResource> operation = new PlatformValidationArmOperation<ExecutionPlanRunResource>(
                     new ExecutionPlanRunResourceOperationSource(Client),
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.PlatformValidation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _executionPlanRunsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ExecutionPlanRunData.ToRequestContent(data), context);
+                using HttpMessage message = _executionPlanRunsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ExecutionPlanRunData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PlatformValidationArmOperation<ExecutionPlanRunResource> operation = new PlatformValidationArmOperation<ExecutionPlanRunResource>(
                     new ExecutionPlanRunResourceOperationSource(Client),

@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionMetadataRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _extensionMetadataRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HybridComputeExtensionValueData> response = Response.FromValue(HybridComputeExtensionValueData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionMetadataRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _extensionMetadataRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HybridComputeExtensionValueData> response = Response.FromValue(HybridComputeExtensionValueData.FromResponse(result), result);
                 if (response.Value == null)

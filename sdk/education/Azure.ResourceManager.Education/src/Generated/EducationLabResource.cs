@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _labsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, EducationLabData.ToRequestContent(data), context);
+                using HttpMessage message = _labsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, EducationLabData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EducationLabData> response = Response.FromValue(EducationLabData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _labsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, EducationLabData.ToRequestContent(data), context);
+                using HttpMessage message = _labsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, EducationLabData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EducationLabData> response = Response.FromValue(EducationLabData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _labsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, includeBudget, context);
+                using HttpMessage message = _labsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, includeBudget, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EducationLabData> response = Response.FromValue(EducationLabData.FromResponse(result), result);
                 if (response.Value == null)
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _labsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, includeBudget, context);
+                using HttpMessage message = _labsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, includeBudget, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EducationLabData> response = Response.FromValue(EducationLabData.FromResponse(result), result);
                 if (response.Value == null)
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _labsRestClient.CreateDeleteRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                using HttpMessage message = _labsRestClient.CreateDeleteRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _labsRestClient.CreateDeleteRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                using HttpMessage message = _labsRestClient.CreateDeleteRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _labsRestClient.CreateGenerateInviteCodeRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, EducationInviteCodeGenerateContent.ToRequestContent(content), onlyUpdateStudentCountParameter, context);
+                using HttpMessage message = _labsRestClient.CreateGenerateInviteCodeRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, EducationInviteCodeGenerateContent.ToRequestContent(content), onlyUpdateStudentCountParameter, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EducationLabData> response = Response.FromValue(EducationLabData.FromResponse(result), result);
                 if (response.Value == null)
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _labsRestClient.CreateGenerateInviteCodeRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, EducationInviteCodeGenerateContent.ToRequestContent(content), onlyUpdateStudentCountParameter, context);
+                using HttpMessage message = _labsRestClient.CreateGenerateInviteCodeRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, EducationInviteCodeGenerateContent.ToRequestContent(content), onlyUpdateStudentCountParameter, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EducationLabData> response = Response.FromValue(EducationLabData.FromResponse(result), result);
                 if (response.Value == null)

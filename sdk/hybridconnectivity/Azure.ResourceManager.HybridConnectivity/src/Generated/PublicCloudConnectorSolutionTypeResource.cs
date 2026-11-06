@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionTypesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _solutionTypesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PublicCloudConnectorSolutionTypeData> response = Response.FromValue(PublicCloudConnectorSolutionTypeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionTypesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _solutionTypesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PublicCloudConnectorSolutionTypeData> response = Response.FromValue(PublicCloudConnectorSolutionTypeData.FromResponse(result), result);
                 if (response.Value == null)

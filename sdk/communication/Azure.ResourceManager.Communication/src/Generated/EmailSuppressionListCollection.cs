@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Communication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _suppressionListsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, suppressionListName, EmailSuppressionListData.ToRequestContent(data), context);
+                using HttpMessage message = _suppressionListsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, suppressionListName, EmailSuppressionListData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EmailSuppressionListData> response = Response.FromValue(EmailSuppressionListData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Communication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _suppressionListsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, suppressionListName, EmailSuppressionListData.ToRequestContent(data), context);
+                using HttpMessage message = _suppressionListsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, suppressionListName, EmailSuppressionListData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EmailSuppressionListData> response = Response.FromValue(EmailSuppressionListData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Communication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _suppressionListsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, suppressionListName, context);
+                using HttpMessage message = _suppressionListsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, suppressionListName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EmailSuppressionListData> response = Response.FromValue(EmailSuppressionListData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Communication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _suppressionListsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, suppressionListName, context);
+                using HttpMessage message = _suppressionListsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, suppressionListName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EmailSuppressionListData> response = Response.FromValue(EmailSuppressionListData.FromResponse(result), result);
                 if (response.Value == null)
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Communication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _suppressionListsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, suppressionListName, context);
+                using HttpMessage message = _suppressionListsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, suppressionListName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EmailSuppressionListData> response = default;
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.Communication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _suppressionListsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, suppressionListName, context);
+                using HttpMessage message = _suppressionListsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, suppressionListName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EmailSuppressionListData> response = default;
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Communication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _suppressionListsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, suppressionListName, context);
+                using HttpMessage message = _suppressionListsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, suppressionListName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EmailSuppressionListData> response = default;
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.Communication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _suppressionListsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, suppressionListName, context);
+                using HttpMessage message = _suppressionListsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, suppressionListName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EmailSuppressionListData> response = default;

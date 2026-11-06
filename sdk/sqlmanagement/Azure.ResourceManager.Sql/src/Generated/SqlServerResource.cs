@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serversRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expand, context);
+                using HttpMessage message = _serversRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SqlServerData> response = Response.FromValue(SqlServerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serversRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expand, context);
+                using HttpMessage message = _serversRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SqlServerData> response = Response.FromValue(SqlServerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serversRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SqlServerPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _serversRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SqlServerPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation<SqlServerResource> operation = new SqlArmOperation<SqlServerResource>(
                     new SqlServerResourceOperationSource(Client),
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serversRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SqlServerPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _serversRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SqlServerPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation<SqlServerResource> operation = new SqlArmOperation<SqlServerResource>(
                     new SqlServerResourceOperationSource(Client),
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serversRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _serversRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation operation = new SqlArmOperation(_serversClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serversRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _serversRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation operation = new SqlArmOperation(_serversClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tdeCertificatesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TdeCertificate.ToRequestContent(tdeCertificate), context);
+                using HttpMessage message = _tdeCertificatesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TdeCertificate.ToRequestContent(tdeCertificate), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation operation = new SqlArmOperation(_tdeCertificatesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tdeCertificatesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TdeCertificate.ToRequestContent(tdeCertificate), context);
+                using HttpMessage message = _tdeCertificatesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TdeCertificate.ToRequestContent(tdeCertificate), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation operation = new SqlArmOperation(_tdeCertificatesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serversRestClient.CreateImportDatabaseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DatabaseImportDefinition.ToRequestContent(databaseImportDefinition), context);
+                using HttpMessage message = _serversRestClient.CreateImportDatabaseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DatabaseImportDefinition.ToRequestContent(databaseImportDefinition), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation<ImportExportOperationResult> operation = new SqlArmOperation<ImportExportOperationResult>(
                     new ImportExportOperationResultOperationSource(),
@@ -637,7 +637,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serversRestClient.CreateImportDatabaseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DatabaseImportDefinition.ToRequestContent(databaseImportDefinition), context);
+                using HttpMessage message = _serversRestClient.CreateImportDatabaseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DatabaseImportDefinition.ToRequestContent(databaseImportDefinition), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation<ImportExportOperationResult> operation = new SqlArmOperation<ImportExportOperationResult>(
                     new ImportExportOperationResultOperationSource(),
@@ -844,7 +844,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serversRestClient.CreateRefreshStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _serversRestClient.CreateRefreshStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation<RefreshExternalGovernanceStatusOperationResult> operation = new SqlArmOperation<RefreshExternalGovernanceStatusOperationResult>(
                     new RefreshExternalGovernanceStatusOperationResultOperationSource(),
@@ -899,7 +899,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serversRestClient.CreateRefreshStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _serversRestClient.CreateRefreshStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation<RefreshExternalGovernanceStatusOperationResult> operation = new SqlArmOperation<RefreshExternalGovernanceStatusOperationResult>(
                     new RefreshExternalGovernanceStatusOperationResultOperationSource(),
@@ -1096,7 +1096,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _serversRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _serversRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<SqlServerData> response = Response.FromValue(SqlServerData.FromResponse(result), result);
                     return Response.FromValue(new SqlServerResource(Client, response.Value), response.GetRawResponse());
@@ -1144,7 +1144,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _serversRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _serversRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<SqlServerData> response = Response.FromValue(SqlServerData.FromResponse(result), result);
                     return Response.FromValue(new SqlServerResource(Client, response.Value), response.GetRawResponse());
@@ -1190,7 +1190,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _serversRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _serversRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<SqlServerData> response = Response.FromValue(SqlServerData.FromResponse(result), result);
                     return Response.FromValue(new SqlServerResource(Client, response.Value), response.GetRawResponse());
@@ -1232,7 +1232,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _serversRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _serversRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<SqlServerData> response = Response.FromValue(SqlServerData.FromResponse(result), result);
                     return Response.FromValue(new SqlServerResource(Client, response.Value), response.GetRawResponse());
@@ -1274,7 +1274,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _serversRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _serversRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<SqlServerData> response = Response.FromValue(SqlServerData.FromResponse(result), result);
                     return Response.FromValue(new SqlServerResource(Client, response.Value), response.GetRawResponse());
@@ -1320,7 +1320,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _serversRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _serversRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<SqlServerData> response = Response.FromValue(SqlServerData.FromResponse(result), result);
                     return Response.FromValue(new SqlServerResource(Client, response.Value), response.GetRawResponse());

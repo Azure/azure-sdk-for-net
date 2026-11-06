@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.FileShares.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = FileSharesInterfaceRestClient.CreateCheckFileShareNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, FileShareNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = FileSharesInterfaceRestClient.CreateCheckFileShareNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, FileShareNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FileShareNameAvailabilityResult> response = Response.FromValue(FileShareNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.FileShares.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = FileSharesInterfaceRestClient.CreateCheckFileShareNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, FileShareNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = FileSharesInterfaceRestClient.CreateCheckFileShareNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, FileShareNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FileShareNameAvailabilityResult> response = Response.FromValue(FileShareNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.FileShares.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = InformationalOperationsRestClient.CreateGetUsageDataRequest(Guid.Parse(Id.SubscriptionId), location, context);
+                using HttpMessage message = InformationalOperationsRestClient.CreateGetUsageDataRequest(Guid.Parse(Id.SubscriptionId), location, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FileShareUsageDataResult> response = Response.FromValue(FileShareUsageDataResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.FileShares.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = InformationalOperationsRestClient.CreateGetUsageDataRequest(Guid.Parse(Id.SubscriptionId), location, context);
+                using HttpMessage message = InformationalOperationsRestClient.CreateGetUsageDataRequest(Guid.Parse(Id.SubscriptionId), location, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FileShareUsageDataResult> response = Response.FromValue(FileShareUsageDataResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.FileShares.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = InformationalOperationsRestClient.CreateGetLimitsRequest(Guid.Parse(Id.SubscriptionId), location, context);
+                using HttpMessage message = InformationalOperationsRestClient.CreateGetLimitsRequest(Guid.Parse(Id.SubscriptionId), location, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FileShareLimitsResult> response = Response.FromValue(FileShareLimitsResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.FileShares.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = InformationalOperationsRestClient.CreateGetLimitsRequest(Guid.Parse(Id.SubscriptionId), location, context);
+                using HttpMessage message = InformationalOperationsRestClient.CreateGetLimitsRequest(Guid.Parse(Id.SubscriptionId), location, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FileShareLimitsResult> response = Response.FromValue(FileShareLimitsResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.FileShares.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = InformationalOperationsRestClient.CreateGetProvisioningRecommendationRequest(Guid.Parse(Id.SubscriptionId), location, FileShareProvisioningRecommendationContent.ToRequestContent(content), context);
+                using HttpMessage message = InformationalOperationsRestClient.CreateGetProvisioningRecommendationRequest(Guid.Parse(Id.SubscriptionId), location, FileShareProvisioningRecommendationContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FileShareProvisioningRecommendationResult> response = Response.FromValue(FileShareProvisioningRecommendationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.FileShares.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = InformationalOperationsRestClient.CreateGetProvisioningRecommendationRequest(Guid.Parse(Id.SubscriptionId), location, FileShareProvisioningRecommendationContent.ToRequestContent(content), context);
+                using HttpMessage message = InformationalOperationsRestClient.CreateGetProvisioningRecommendationRequest(Guid.Parse(Id.SubscriptionId), location, FileShareProvisioningRecommendationContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FileShareProvisioningRecommendationResult> response = Response.FromValue(FileShareProvisioningRecommendationResult.FromResponse(result), result);
                 if (response.Value == null)

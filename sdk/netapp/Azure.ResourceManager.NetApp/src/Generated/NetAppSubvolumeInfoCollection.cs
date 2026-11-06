@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subvolumesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, subvolumeName, NetAppSubvolumeInfoData.ToRequestContent(data), context);
+                using HttpMessage message = _subvolumesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, subvolumeName, NetAppSubvolumeInfoData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation<NetAppSubvolumeInfoResource> operation = new NetAppArmOperation<NetAppSubvolumeInfoResource>(
                     new NetAppSubvolumeInfoResourceOperationSource(Client),
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subvolumesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, subvolumeName, NetAppSubvolumeInfoData.ToRequestContent(data), context);
+                using HttpMessage message = _subvolumesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, subvolumeName, NetAppSubvolumeInfoData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation<NetAppSubvolumeInfoResource> operation = new NetAppArmOperation<NetAppSubvolumeInfoResource>(
                     new NetAppSubvolumeInfoResourceOperationSource(Client),
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subvolumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, subvolumeName, context);
+                using HttpMessage message = _subvolumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, subvolumeName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetAppSubvolumeInfoData> response = Response.FromValue(NetAppSubvolumeInfoData.FromResponse(result), result);
                 if (response.Value == null)
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subvolumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, subvolumeName, context);
+                using HttpMessage message = _subvolumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, subvolumeName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetAppSubvolumeInfoData> response = Response.FromValue(NetAppSubvolumeInfoData.FromResponse(result), result);
                 if (response.Value == null)
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subvolumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, subvolumeName, context);
+                using HttpMessage message = _subvolumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, subvolumeName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetAppSubvolumeInfoData> response = default;
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subvolumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, subvolumeName, context);
+                using HttpMessage message = _subvolumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, subvolumeName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetAppSubvolumeInfoData> response = default;
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subvolumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, subvolumeName, context);
+                using HttpMessage message = _subvolumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, subvolumeName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetAppSubvolumeInfoData> response = default;
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subvolumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, subvolumeName, context);
+                using HttpMessage message = _subvolumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, subvolumeName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetAppSubvolumeInfoData> response = default;

@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateAccessesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _privateAccessesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ChaosPrivateAccessData> response = Response.FromValue(ChaosPrivateAccessData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateAccessesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _privateAccessesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ChaosPrivateAccessData> response = Response.FromValue(ChaosPrivateAccessData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateAccessesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ChaosPrivateAccessPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _privateAccessesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ChaosPrivateAccessPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ChaosArmOperation<ChaosPrivateAccessResource> operation = new ChaosArmOperation<ChaosPrivateAccessResource>(
                     new ChaosPrivateAccessResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateAccessesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ChaosPrivateAccessPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _privateAccessesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ChaosPrivateAccessPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ChaosArmOperation<ChaosPrivateAccessResource> operation = new ChaosArmOperation<ChaosPrivateAccessResource>(
                     new ChaosPrivateAccessResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateAccessesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _privateAccessesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ChaosArmOperation operation = new ChaosArmOperation(_privateAccessesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateAccessesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _privateAccessesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ChaosArmOperation operation = new ChaosArmOperation(_privateAccessesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateAccessesRestClient.CreateGetPrivateLinkResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _privateAccessesRestClient.CreateGetPrivateLinkResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ChaosPrivateLinkResourceListResult> response = Response.FromValue(ChaosPrivateLinkResourceListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateAccessesRestClient.CreateGetPrivateLinkResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _privateAccessesRestClient.CreateGetPrivateLinkResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ChaosPrivateLinkResourceListResult> response = Response.FromValue(ChaosPrivateLinkResourceListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.Chaos
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _privateAccessesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _privateAccessesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ChaosPrivateAccessData> response = Response.FromValue(ChaosPrivateAccessData.FromResponse(result), result);
                     return Response.FromValue(new ChaosPrivateAccessResource(Client, response.Value), response.GetRawResponse());
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.Chaos
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _privateAccessesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _privateAccessesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ChaosPrivateAccessData> response = Response.FromValue(ChaosPrivateAccessData.FromResponse(result), result);
                     return Response.FromValue(new ChaosPrivateAccessResource(Client, response.Value), response.GetRawResponse());
@@ -618,7 +618,7 @@ namespace Azure.ResourceManager.Chaos
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _privateAccessesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _privateAccessesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ChaosPrivateAccessData> response = Response.FromValue(ChaosPrivateAccessData.FromResponse(result), result);
                     return Response.FromValue(new ChaosPrivateAccessResource(Client, response.Value), response.GetRawResponse());
@@ -660,7 +660,7 @@ namespace Azure.ResourceManager.Chaos
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _privateAccessesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _privateAccessesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ChaosPrivateAccessData> response = Response.FromValue(ChaosPrivateAccessData.FromResponse(result), result);
                     return Response.FromValue(new ChaosPrivateAccessResource(Client, response.Value), response.GetRawResponse());
@@ -702,7 +702,7 @@ namespace Azure.ResourceManager.Chaos
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _privateAccessesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _privateAccessesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ChaosPrivateAccessData> response = Response.FromValue(ChaosPrivateAccessData.FromResponse(result), result);
                     return Response.FromValue(new ChaosPrivateAccessResource(Client, response.Value), response.GetRawResponse());
@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.Chaos
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _privateAccessesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _privateAccessesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ChaosPrivateAccessData> response = Response.FromValue(ChaosPrivateAccessData.FromResponse(result), result);
                     return Response.FromValue(new ChaosPrivateAccessResource(Client, response.Value), response.GetRawResponse());

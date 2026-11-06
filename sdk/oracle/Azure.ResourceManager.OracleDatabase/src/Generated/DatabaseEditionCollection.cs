@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseEditionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, databaseeditionname, context);
+                using HttpMessage message = _databaseEditionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, databaseeditionname, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DatabaseEditionData> response = Response.FromValue(DatabaseEditionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseEditionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, databaseeditionname, context);
+                using HttpMessage message = _databaseEditionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, databaseeditionname, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DatabaseEditionData> response = Response.FromValue(DatabaseEditionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseEditionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, databaseeditionname, context);
+                using HttpMessage message = _databaseEditionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, databaseeditionname, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DatabaseEditionData> response = default;
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseEditionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, databaseeditionname, context);
+                using HttpMessage message = _databaseEditionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, databaseeditionname, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DatabaseEditionData> response = default;
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseEditionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, databaseeditionname, context);
+                using HttpMessage message = _databaseEditionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, databaseeditionname, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DatabaseEditionData> response = default;
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseEditionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, databaseeditionname, context);
+                using HttpMessage message = _databaseEditionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, databaseeditionname, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DatabaseEditionData> response = default;

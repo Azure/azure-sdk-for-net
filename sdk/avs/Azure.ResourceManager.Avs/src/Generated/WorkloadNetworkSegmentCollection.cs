@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateCreateSegmentsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, segmentId, WorkloadNetworkSegmentData.ToRequestContent(data), context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateCreateSegmentsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, segmentId, WorkloadNetworkSegmentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation<WorkloadNetworkSegmentResource> operation = new AvsArmOperation<WorkloadNetworkSegmentResource>(
                     new WorkloadNetworkSegmentResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateCreateSegmentsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, segmentId, WorkloadNetworkSegmentData.ToRequestContent(data), context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateCreateSegmentsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, segmentId, WorkloadNetworkSegmentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation<WorkloadNetworkSegmentResource> operation = new AvsArmOperation<WorkloadNetworkSegmentResource>(
                     new WorkloadNetworkSegmentResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, segmentId, context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, segmentId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WorkloadNetworkSegmentData> response = Response.FromValue(WorkloadNetworkSegmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, segmentId, context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, segmentId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WorkloadNetworkSegmentData> response = Response.FromValue(WorkloadNetworkSegmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, segmentId, context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, segmentId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WorkloadNetworkSegmentData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, segmentId, context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, segmentId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WorkloadNetworkSegmentData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, segmentId, context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, segmentId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WorkloadNetworkSegmentData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, segmentId, context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, segmentId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WorkloadNetworkSegmentData> response = default;

@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autonomousDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _autonomousDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AutonomousDatabaseData> response = Response.FromValue(AutonomousDatabaseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autonomousDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _autonomousDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AutonomousDatabaseData> response = Response.FromValue(AutonomousDatabaseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autonomousDatabasesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AutonomousDatabasePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _autonomousDatabasesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AutonomousDatabasePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<AutonomousDatabaseResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseResource>(
                     new AutonomousDatabaseResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autonomousDatabasesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AutonomousDatabasePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _autonomousDatabasesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AutonomousDatabasePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<AutonomousDatabaseResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseResource>(
                     new AutonomousDatabaseResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autonomousDatabasesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _autonomousDatabasesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation operation = new OracleDatabaseArmOperation(_autonomousDatabasesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autonomousDatabasesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _autonomousDatabasesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation operation = new OracleDatabaseArmOperation(_autonomousDatabasesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autonomousDatabasesRestClient.CreateActionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AutonomousDatabaseLifecycleAction.ToRequestContent(body), context);
+                using HttpMessage message = _autonomousDatabasesRestClient.CreateActionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AutonomousDatabaseLifecycleAction.ToRequestContent(body), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<AutonomousDatabaseResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseResource>(
                     new AutonomousDatabaseResourceOperationSource(Client),
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autonomousDatabasesRestClient.CreateActionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AutonomousDatabaseLifecycleAction.ToRequestContent(body), context);
+                using HttpMessage message = _autonomousDatabasesRestClient.CreateActionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AutonomousDatabaseLifecycleAction.ToRequestContent(body), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<AutonomousDatabaseResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseResource>(
                     new AutonomousDatabaseResourceOperationSource(Client),
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autonomousDatabasesRestClient.CreateChangeDisasterRecoveryConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DisasterRecoveryConfigurationDetails.ToRequestContent(details), context);
+                using HttpMessage message = _autonomousDatabasesRestClient.CreateChangeDisasterRecoveryConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DisasterRecoveryConfigurationDetails.ToRequestContent(details), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<AutonomousDatabaseResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseResource>(
                     new AutonomousDatabaseResourceOperationSource(Client),
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autonomousDatabasesRestClient.CreateChangeDisasterRecoveryConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DisasterRecoveryConfigurationDetails.ToRequestContent(details), context);
+                using HttpMessage message = _autonomousDatabasesRestClient.CreateChangeDisasterRecoveryConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DisasterRecoveryConfigurationDetails.ToRequestContent(details), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<AutonomousDatabaseResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseResource>(
                     new AutonomousDatabaseResourceOperationSource(Client),
@@ -678,7 +678,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autonomousDatabasesRestClient.CreateFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AutonomousDatabaseActionContent.ToRequestContent(content), context);
+                using HttpMessage message = _autonomousDatabasesRestClient.CreateFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AutonomousDatabaseActionContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<AutonomousDatabaseResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseResource>(
                     new AutonomousDatabaseResourceOperationSource(Client),
@@ -737,7 +737,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autonomousDatabasesRestClient.CreateFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AutonomousDatabaseActionContent.ToRequestContent(content), context);
+                using HttpMessage message = _autonomousDatabasesRestClient.CreateFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AutonomousDatabaseActionContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<AutonomousDatabaseResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseResource>(
                     new AutonomousDatabaseResourceOperationSource(Client),
@@ -795,7 +795,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autonomousDatabasesRestClient.CreateGenerateWalletRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, GenerateAutonomousDatabaseWalletDetails.ToRequestContent(details), context);
+                using HttpMessage message = _autonomousDatabasesRestClient.CreateGenerateWalletRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, GenerateAutonomousDatabaseWalletDetails.ToRequestContent(details), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AutonomousDatabaseWalletFile> response = Response.FromValue(AutonomousDatabaseWalletFile.FromResponse(result), result);
                 if (response.Value == null)
@@ -847,7 +847,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autonomousDatabasesRestClient.CreateGenerateWalletRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, GenerateAutonomousDatabaseWalletDetails.ToRequestContent(details), context);
+                using HttpMessage message = _autonomousDatabasesRestClient.CreateGenerateWalletRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, GenerateAutonomousDatabaseWalletDetails.ToRequestContent(details), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AutonomousDatabaseWalletFile> response = Response.FromValue(AutonomousDatabaseWalletFile.FromResponse(result), result);
                 if (response.Value == null)
@@ -900,7 +900,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autonomousDatabasesRestClient.CreateRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RestoreAutonomousDatabaseDetails.ToRequestContent(details), context);
+                using HttpMessage message = _autonomousDatabasesRestClient.CreateRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RestoreAutonomousDatabaseDetails.ToRequestContent(details), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<AutonomousDatabaseResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseResource>(
                     new AutonomousDatabaseResourceOperationSource(Client),
@@ -959,7 +959,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autonomousDatabasesRestClient.CreateRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RestoreAutonomousDatabaseDetails.ToRequestContent(details), context);
+                using HttpMessage message = _autonomousDatabasesRestClient.CreateRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RestoreAutonomousDatabaseDetails.ToRequestContent(details), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<AutonomousDatabaseResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseResource>(
                     new AutonomousDatabaseResourceOperationSource(Client),
@@ -1014,7 +1014,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autonomousDatabasesRestClient.CreateShrinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _autonomousDatabasesRestClient.CreateShrinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<AutonomousDatabaseResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseResource>(
                     new AutonomousDatabaseResourceOperationSource(Client),
@@ -1069,7 +1069,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autonomousDatabasesRestClient.CreateShrinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _autonomousDatabasesRestClient.CreateShrinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<AutonomousDatabaseResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseResource>(
                     new AutonomousDatabaseResourceOperationSource(Client),
@@ -1128,7 +1128,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autonomousDatabasesRestClient.CreateSwitchoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AutonomousDatabaseActionContent.ToRequestContent(content), context);
+                using HttpMessage message = _autonomousDatabasesRestClient.CreateSwitchoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AutonomousDatabaseActionContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<AutonomousDatabaseResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseResource>(
                     new AutonomousDatabaseResourceOperationSource(Client),
@@ -1187,7 +1187,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autonomousDatabasesRestClient.CreateSwitchoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AutonomousDatabaseActionContent.ToRequestContent(content), context);
+                using HttpMessage message = _autonomousDatabasesRestClient.CreateSwitchoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AutonomousDatabaseActionContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<AutonomousDatabaseResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseResource>(
                     new AutonomousDatabaseResourceOperationSource(Client),
@@ -1232,7 +1232,7 @@ namespace Azure.ResourceManager.OracleDatabase
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _autonomousDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _autonomousDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<AutonomousDatabaseData> response = Response.FromValue(AutonomousDatabaseData.FromResponse(result), result);
                     return Response.FromValue(new AutonomousDatabaseResource(Client, response.Value), response.GetRawResponse());
@@ -1280,7 +1280,7 @@ namespace Azure.ResourceManager.OracleDatabase
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _autonomousDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _autonomousDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<AutonomousDatabaseData> response = Response.FromValue(AutonomousDatabaseData.FromResponse(result), result);
                     return Response.FromValue(new AutonomousDatabaseResource(Client, response.Value), response.GetRawResponse());
@@ -1326,7 +1326,7 @@ namespace Azure.ResourceManager.OracleDatabase
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _autonomousDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _autonomousDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<AutonomousDatabaseData> response = Response.FromValue(AutonomousDatabaseData.FromResponse(result), result);
                     return Response.FromValue(new AutonomousDatabaseResource(Client, response.Value), response.GetRawResponse());
@@ -1368,7 +1368,7 @@ namespace Azure.ResourceManager.OracleDatabase
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _autonomousDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _autonomousDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<AutonomousDatabaseData> response = Response.FromValue(AutonomousDatabaseData.FromResponse(result), result);
                     return Response.FromValue(new AutonomousDatabaseResource(Client, response.Value), response.GetRawResponse());
@@ -1410,7 +1410,7 @@ namespace Azure.ResourceManager.OracleDatabase
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _autonomousDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _autonomousDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<AutonomousDatabaseData> response = Response.FromValue(AutonomousDatabaseData.FromResponse(result), result);
                     return Response.FromValue(new AutonomousDatabaseResource(Client, response.Value), response.GetRawResponse());
@@ -1456,7 +1456,7 @@ namespace Azure.ResourceManager.OracleDatabase
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _autonomousDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _autonomousDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<AutonomousDatabaseData> response = Response.FromValue(AutonomousDatabaseData.FromResponse(result), result);
                     return Response.FromValue(new AutonomousDatabaseResource(Client, response.Value), response.GetRawResponse());

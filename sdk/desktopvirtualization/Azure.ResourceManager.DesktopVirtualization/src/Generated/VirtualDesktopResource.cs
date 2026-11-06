@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _desktopsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _desktopsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<VirtualDesktopData> response = Response.FromValue(VirtualDesktopData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _desktopsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _desktopsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<VirtualDesktopData> response = Response.FromValue(VirtualDesktopData.FromResponse(result), result);
                 if (response.Value == null)
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _desktopsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, VirtualDesktopPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _desktopsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, VirtualDesktopPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<VirtualDesktopData> response = Response.FromValue(VirtualDesktopData.FromResponse(result), result);
                 if (response.Value == null)
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _desktopsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, VirtualDesktopPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _desktopsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, VirtualDesktopPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<VirtualDesktopData> response = Response.FromValue(VirtualDesktopData.FromResponse(result), result);
                 if (response.Value == null)

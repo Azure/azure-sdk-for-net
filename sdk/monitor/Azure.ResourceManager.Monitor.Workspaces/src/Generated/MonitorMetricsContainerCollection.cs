@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metricsContainersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metricsContainerName, MonitorMetricsContainerData.ToRequestContent(data), context);
+                using HttpMessage message = _metricsContainersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metricsContainerName, MonitorMetricsContainerData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MonitorMetricsContainerData> response = Response.FromValue(MonitorMetricsContainerData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metricsContainersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metricsContainerName, MonitorMetricsContainerData.ToRequestContent(data), context);
+                using HttpMessage message = _metricsContainersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metricsContainerName, MonitorMetricsContainerData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MonitorMetricsContainerData> response = Response.FromValue(MonitorMetricsContainerData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metricsContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metricsContainerName, context);
+                using HttpMessage message = _metricsContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metricsContainerName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MonitorMetricsContainerData> response = Response.FromValue(MonitorMetricsContainerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metricsContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metricsContainerName, context);
+                using HttpMessage message = _metricsContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metricsContainerName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MonitorMetricsContainerData> response = Response.FromValue(MonitorMetricsContainerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metricsContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metricsContainerName, context);
+                using HttpMessage message = _metricsContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metricsContainerName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MonitorMetricsContainerData> response = default;
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metricsContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metricsContainerName, context);
+                using HttpMessage message = _metricsContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metricsContainerName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MonitorMetricsContainerData> response = default;
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metricsContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metricsContainerName, context);
+                using HttpMessage message = _metricsContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metricsContainerName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MonitorMetricsContainerData> response = default;
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metricsContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metricsContainerName, context);
+                using HttpMessage message = _metricsContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metricsContainerName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MonitorMetricsContainerData> response = default;

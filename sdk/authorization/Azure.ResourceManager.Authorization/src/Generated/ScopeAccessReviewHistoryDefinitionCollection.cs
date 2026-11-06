@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeAccessReviewHistoryDefinitionRestClient.CreateCreateRequest(Id.ToString(), historyDefinitionId, AccessReviewHistoryDefinitionProperties.ToRequestContent(properties), context);
+                using HttpMessage message = _scopeAccessReviewHistoryDefinitionRestClient.CreateCreateRequest(Id.ToString(), historyDefinitionId, AccessReviewHistoryDefinitionProperties.ToRequestContent(properties), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AccessReviewHistoryDefinitionData> response = Response.FromValue(AccessReviewHistoryDefinitionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeAccessReviewHistoryDefinitionRestClient.CreateCreateRequest(Id.ToString(), historyDefinitionId, AccessReviewHistoryDefinitionProperties.ToRequestContent(properties), context);
+                using HttpMessage message = _scopeAccessReviewHistoryDefinitionRestClient.CreateCreateRequest(Id.ToString(), historyDefinitionId, AccessReviewHistoryDefinitionProperties.ToRequestContent(properties), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AccessReviewHistoryDefinitionData> response = Response.FromValue(AccessReviewHistoryDefinitionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeAccessReviewHistoryDefinitionsRestClient.CreateGetByIdRequest(Id.ToString(), historyDefinitionId, context);
+                using HttpMessage message = _scopeAccessReviewHistoryDefinitionsRestClient.CreateGetByIdRequest(Id.ToString(), historyDefinitionId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AccessReviewHistoryDefinitionData> response = Response.FromValue(AccessReviewHistoryDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeAccessReviewHistoryDefinitionsRestClient.CreateGetByIdRequest(Id.ToString(), historyDefinitionId, context);
+                using HttpMessage message = _scopeAccessReviewHistoryDefinitionsRestClient.CreateGetByIdRequest(Id.ToString(), historyDefinitionId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AccessReviewHistoryDefinitionData> response = Response.FromValue(AccessReviewHistoryDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeAccessReviewHistoryDefinitionsRestClient.CreateGetByIdRequest(Id.ToString(), historyDefinitionId, context);
+                using HttpMessage message = _scopeAccessReviewHistoryDefinitionsRestClient.CreateGetByIdRequest(Id.ToString(), historyDefinitionId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AccessReviewHistoryDefinitionData> response = default;
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeAccessReviewHistoryDefinitionsRestClient.CreateGetByIdRequest(Id.ToString(), historyDefinitionId, context);
+                using HttpMessage message = _scopeAccessReviewHistoryDefinitionsRestClient.CreateGetByIdRequest(Id.ToString(), historyDefinitionId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AccessReviewHistoryDefinitionData> response = default;
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeAccessReviewHistoryDefinitionsRestClient.CreateGetByIdRequest(Id.ToString(), historyDefinitionId, context);
+                using HttpMessage message = _scopeAccessReviewHistoryDefinitionsRestClient.CreateGetByIdRequest(Id.ToString(), historyDefinitionId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AccessReviewHistoryDefinitionData> response = default;
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeAccessReviewHistoryDefinitionsRestClient.CreateGetByIdRequest(Id.ToString(), historyDefinitionId, context);
+                using HttpMessage message = _scopeAccessReviewHistoryDefinitionsRestClient.CreateGetByIdRequest(Id.ToString(), historyDefinitionId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AccessReviewHistoryDefinitionData> response = default;

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cgProfileRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, containerGroupProfileName, ContainerGroupProfileData.ToRequestContent(data), context);
+                using HttpMessage message = _cgProfileRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, containerGroupProfileName, ContainerGroupProfileData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerGroupProfileData> response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cgProfileRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, containerGroupProfileName, ContainerGroupProfileData.ToRequestContent(data), context);
+                using HttpMessage message = _cgProfileRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, containerGroupProfileName, ContainerGroupProfileData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerGroupProfileData> response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cgProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, containerGroupProfileName, context);
+                using HttpMessage message = _cgProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, containerGroupProfileName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerGroupProfileData> response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cgProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, containerGroupProfileName, context);
+                using HttpMessage message = _cgProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, containerGroupProfileName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerGroupProfileData> response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cgProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, containerGroupProfileName, context);
+                using HttpMessage message = _cgProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, containerGroupProfileName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ContainerGroupProfileData> response = default;
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cgProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, containerGroupProfileName, context);
+                using HttpMessage message = _cgProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, containerGroupProfileName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ContainerGroupProfileData> response = default;
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cgProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, containerGroupProfileName, context);
+                using HttpMessage message = _cgProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, containerGroupProfileName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ContainerGroupProfileData> response = default;
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cgProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, containerGroupProfileName, context);
+                using HttpMessage message = _cgProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, containerGroupProfileName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ContainerGroupProfileData> response = default;
