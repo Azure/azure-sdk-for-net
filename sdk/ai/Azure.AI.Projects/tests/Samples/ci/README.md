@@ -61,6 +61,8 @@ capacity across parallel workers.
 - The existing matrix has three disjoint sample slices, one framework
   (`net10.0`), Debug, and one package-reference configuration. The maximum
   parallel worker count defaults to four; it does not repeat the samples.
+  The selected samples use `SyncOnly`: NUnit discovers both sync and async
+  fixtures, but only the sync fixture executes; the async variant is skipped.
 - `selectionKind`/`selection` restrict the existing slices; they do not add
   tests outside that matrix. A `test-id` selection is a .NET test-filter
   expression; semicolon-separated expressions are ORed. Semicolon-separated

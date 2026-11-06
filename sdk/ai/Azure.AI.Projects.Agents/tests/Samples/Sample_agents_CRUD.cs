@@ -115,6 +115,7 @@ public class Sample_agents_CRUD : SamplesBase
     }
 
     [Test]
+    [SyncOnly]
     public void VersionSelection()
     {
 #if SNIPPET
