@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             RecoveryPointTierType.InstantRP => "InstantRP",
             RecoveryPointTierType.HardenedRP => "HardenedRP",
             RecoveryPointTierType.ArchivedRP => "ArchivedRP",
+            RecoveryPointTierType.IASnapshotRP => "IASnapshotRP",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RecoveryPointTierType value.")
         };
 
@@ -39,6 +40,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "ArchivedRP"))
             {
                 return RecoveryPointTierType.ArchivedRP;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "IASnapshotRP"))
+            {
+                return RecoveryPointTierType.IASnapshotRP;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RecoveryPointTierType value.");
         }

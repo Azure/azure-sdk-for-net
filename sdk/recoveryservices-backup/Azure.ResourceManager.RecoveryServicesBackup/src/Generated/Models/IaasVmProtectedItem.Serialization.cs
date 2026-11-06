@@ -145,6 +145,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("extendedProperties"u8);
                 writer.WriteObjectValue(ExtendedProperties, options);
             }
+            if (Optional.IsDefined(ExistingBasicVMProtection))
+            {
+                writer.WritePropertyName("existingBasicVMProtection"u8);
+                writer.WriteStringValue(ExistingBasicVMProtection.Value.ToString());
+            }
             if (options.Format != "W" && Optional.IsDefined(PolicyType))
             {
                 writer.WritePropertyName("policyType"u8);
