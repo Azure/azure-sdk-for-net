@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management;
+using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
 using Azure.Generator.Management.Visitors;
@@ -24,6 +25,26 @@ namespace Azure.Generator.Mgmt.Tests
 {
     internal class FlattenPropertyVisitorTests
     {
+        [Test]
+        public void GeneratedModelWithIndependentInternalPropertyIsNotSafeFlattened()
+        {
+            var modelType = typeof(Azure.Generator.MgmtTypeSpec.Tests.Models.IndependentInternalPropertyModel);
+            Assert.That(modelType.IsPublic, Is.True);
+            var valueProperty = modelType.GetProperty("Value", BindingFlags.Instance | BindingFlags.Public);
+            Assert.That(valueProperty, Is.Not.Null);
+            Assert.That(valueProperty!.GetMethod!.IsPublic, Is.True);
+            var internalProperty = modelType.GetProperty("InternalState", BindingFlags.Instance | BindingFlags.NonPublic);
+            Assert.That(internalProperty, Is.Not.Null);
+            Assert.That(internalProperty!.GetMethod!.IsAssembly, Is.True);
+            Assert.That(internalProperty.SetMethod!.IsAssembly, Is.True);
+
+            var parentType = typeof(Azure.Generator.MgmtTypeSpec.Tests.MultiFlattenTestData);
+            var wrapperProperty = parentType.GetProperty("IndependentInternal", BindingFlags.Instance | BindingFlags.Public);
+            Assert.That(wrapperProperty, Is.Not.Null, "The wrapper must remain public instead of being safe-flattened.");
+            Assert.That(wrapperProperty!.PropertyType, Is.EqualTo(modelType));
+            Assert.That(parentType.GetProperty("IndependentInternalValue", BindingFlags.Instance | BindingFlags.Public), Is.Null);
+        }
+
         /// <summary>
         /// Verifies that flattening works correctly when the nested properties model
         /// has no public constructor (Output-only usage). Previously this crashed with
@@ -1411,10 +1432,21 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(parentProvider.Properties.Any(p => p.Name == "SkuTier"), Is.False);
         }
 
-        [Test]
-        public void TestSafeFlattenCountsIndependentCustomPropertyWithoutWireInfo()
+        [TestCase(MethodSignatureModifiers.Public, false)]
+        [TestCase(MethodSignatureModifiers.Internal, false)]
+        [TestCase(MethodSignatureModifiers.Private, false)]
+        [TestCase(MethodSignatureModifiers.Public, true)]
+        [TestCase(MethodSignatureModifiers.Internal, true)]
+        [TestCase(MethodSignatureModifiers.Private, true)]
+        public void TestSafeFlattenCountsIndependentCustomPropertyWithoutWireInfo(MethodSignatureModifiers modifiers, bool nested)
         {
+            var leafModel = InputFactory.Model("LeafModel", properties:
+                [InputFactory.Property("leaf", InputPrimitiveType.String, isRequired: true, serializedName: "leaf")]);
             var valueProperty = InputFactory.Property("value", InputPrimitiveType.String, isRequired: true, serializedName: "value");
+            if (nested)
+            {
+                valueProperty = InputFactory.Property("value", leafModel, isRequired: true, serializedName: "value");
+            }
             var wrapperModel = InputFactory.Model(
                 "WrapperModel",
                 properties: [valueProperty]);
@@ -1424,7 +1456,7 @@ namespace Azure.Generator.Mgmt.Tests
                 properties: [wrapperProperty]);
 
             var plugin = ManagementMockHelpers.LoadMockPlugin(
-                inputModels: () => [parentModel, wrapperModel]);
+                inputModels: () => [parentModel, wrapperModel, leafModel]);
             var wrapperProvider = plugin.Object.TypeFactory.CreateModel(wrapperModel)!;
             var customCodeView = new TestTypeView(wrapperProvider.Name)
             {
@@ -1432,7 +1464,7 @@ namespace Azure.Generator.Mgmt.Tests
                 [
                     new PropertyProvider(
                         null,
-                        MethodSignatureModifiers.Public,
+                        modifiers,
                         typeof(string),
                         "DisplayName",
                         new AutoPropertyBody(true),
@@ -1449,8 +1481,10 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(
                 resultingWrapperProperty.Modifiers.HasFlag(MethodSignatureModifiers.Public),
                 Is.True,
-                "A custom public property without wire metadata must contribute to the model's public property count.");
+                "A custom property without wire metadata must contribute to the effective property count regardless of visibility.");
             Assert.That(parentProvider.Properties.Any(p => p.Name == "WrapperValue"), Is.False);
+            Assert.That(parentProvider.Properties.OfType<FlattenedPropertyProvider>(), Is.Empty,
+                "Independent custom properties must block outer safe flatten even when the inner wrapper was already flattened.");
         }
 
         private static void RunVisitors(ModelProvider model)
