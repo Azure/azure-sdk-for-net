@@ -639,7 +639,6 @@ namespace Azure.Storage.Files.Shares.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2027_05_07)]
         public async Task ListSharesSegmentAsync_ScaleMode(bool scale)
         {
             // Arrange
