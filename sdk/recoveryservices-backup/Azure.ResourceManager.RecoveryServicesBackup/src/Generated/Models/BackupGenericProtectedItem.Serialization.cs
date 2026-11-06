@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Base class for backup items.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FileshareProtectedItem"/>, <see cref="IaasClassicComputeVmProtectedItem"/>, <see cref="IaasVmProtectedItem"/>, <see cref="IaasComputeVmProtectedItem"/>, <see cref="SqlProtectedItem"/>, <see cref="VmWorkloadProtectedItem"/>, <see cref="VmWorkloadSapAseDatabaseProtectedItem"/>, <see cref="VmWorkloadSapHanaDatabaseProtectedItem"/>, <see cref="VmWorkloadSapHanaDBInstanceProtectedItem"/>, <see cref="VmWorkloadSqlDatabaseProtectedItem"/>, <see cref="DpmProtectedItem"/>, <see cref="GenericProtectedItem"/>, and <see cref="MabFileFolderProtectedItem"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DpmProtectedItem"/>, <see cref="FileshareProtectedItem"/>, <see cref="GenericProtectedItem"/>, <see cref="IaasClassicComputeVmProtectedItem"/>, <see cref="IaasComputeVmProtectedItem"/>, <see cref="IaasVmProtectedItem"/>, <see cref="MabFileFolderProtectedItem"/>, <see cref="SqlProtectedItem"/>, <see cref="VmWorkloadProtectedItem"/>, <see cref="VmWorkloadSapAseDatabaseProtectedItem"/>, <see cref="VmWorkloadSapHanaDBInstanceProtectedItem"/>, <see cref="VmWorkloadSapHanaDatabaseProtectedItem"/>, and <see cref="VmWorkloadSqlDatabaseProtectedItem"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownProtectedItem))]
     public abstract partial class BackupGenericProtectedItem : IJsonModel<BackupGenericProtectedItem>
@@ -235,32 +235,32 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "DPMProtectedItem":
+                        return DpmProtectedItem.DeserializeDpmProtectedItem(element, options);
                     case "AzureFileShareProtectedItem":
                         return FileshareProtectedItem.DeserializeFileshareProtectedItem(element, options);
+                    case "GenericProtectedItem":
+                        return GenericProtectedItem.DeserializeGenericProtectedItem(element, options);
                     case "Microsoft.ClassicCompute/virtualMachines":
                         return IaasClassicComputeVmProtectedItem.DeserializeIaasClassicComputeVmProtectedItem(element, options);
-                    case "AzureIaaSVMProtectedItem":
-                        return IaasVmProtectedItem.DeserializeIaasVmProtectedItem(element, options);
                     case "Microsoft.Compute/virtualMachines":
                         return IaasComputeVmProtectedItem.DeserializeIaasComputeVmProtectedItem(element, options);
+                    case "AzureIaaSVMProtectedItem":
+                        return IaasVmProtectedItem.DeserializeIaasVmProtectedItem(element, options);
+                    case "MabFileFolderProtectedItem":
+                        return MabFileFolderProtectedItem.DeserializeMabFileFolderProtectedItem(element, options);
                     case "Microsoft.Sql/servers/databases":
                         return SqlProtectedItem.DeserializeSqlProtectedItem(element, options);
                     case "AzureVmWorkloadProtectedItem":
                         return VmWorkloadProtectedItem.DeserializeVmWorkloadProtectedItem(element, options);
                     case "AzureVmWorkloadSAPAseDatabase":
                         return VmWorkloadSapAseDatabaseProtectedItem.DeserializeVmWorkloadSapAseDatabaseProtectedItem(element, options);
-                    case "AzureVmWorkloadSAPHanaDatabase":
-                        return VmWorkloadSapHanaDatabaseProtectedItem.DeserializeVmWorkloadSapHanaDatabaseProtectedItem(element, options);
                     case "AzureVmWorkloadSAPHanaDBInstance":
                         return VmWorkloadSapHanaDBInstanceProtectedItem.DeserializeVmWorkloadSapHanaDBInstanceProtectedItem(element, options);
+                    case "AzureVmWorkloadSAPHanaDatabase":
+                        return VmWorkloadSapHanaDatabaseProtectedItem.DeserializeVmWorkloadSapHanaDatabaseProtectedItem(element, options);
                     case "AzureVmWorkloadSQLDatabase":
                         return VmWorkloadSqlDatabaseProtectedItem.DeserializeVmWorkloadSqlDatabaseProtectedItem(element, options);
-                    case "DPMProtectedItem":
-                        return DpmProtectedItem.DeserializeDpmProtectedItem(element, options);
-                    case "GenericProtectedItem":
-                        return GenericProtectedItem.DeserializeGenericProtectedItem(element, options);
-                    case "MabFileFolderProtectedItem":
-                        return MabFileFolderProtectedItem.DeserializeMabFileFolderProtectedItem(element, options);
                 }
             }
             return UnknownProtectedItem.DeserializeUnknownProtectedItem(element, options);

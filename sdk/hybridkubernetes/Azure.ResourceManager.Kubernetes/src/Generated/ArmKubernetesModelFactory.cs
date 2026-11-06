@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 azureHybridBenefit,
                 aadProfile,
                 arcAgentProfile,
-                isWorkloadIdentityEnabled is null ? default : new ConnectedClusterSecurityProfile(new ConnectedClusterWorkloadIdentityProfile(isWorkloadIdentityEnabled, default), default),
+                isWorkloadIdentityEnabled is null ? default : new ConnectedClusterSecurityProfile(isWorkloadIdentityEnabled is null ? default : new ConnectedClusterWorkloadIdentityProfile(isWorkloadIdentityEnabled, default), default),
                 oidcIssuerProfile,
                 isGatewayEnabled is null ? default : new Gateway(isGatewayEnabled, default),
                 (arcAgentryConfigurations ?? new ChangeTrackingList<ConnectedClusterArcAgentryConfiguration>()).ToList(),

@@ -225,9 +225,12 @@ builder.Services.ConfigureOpenTelemetryMeterProvider((sp, builder) => builder.Ad
 To modify the resource, use the following code.
 
 ```C#
-builder.Services.AddOpenTelemetry().UseAzureMonitor();
-builder.Services.ConfigureOpenTelemetryTracerProvider((sp, builder) => builder.ConfigureResource(resourceBuilder => resourceBuilder.AddService("service-name")));
+builder.Services.AddOpenTelemetry()
+    .UseAzureMonitor()
+    .ConfigureResource(resourceBuilder => resourceBuilder.AddService("service-name"));
 ```
+
+`OTEL_SERVICE_NAME` and `OTEL_RESOURCE_ATTRIBUTES` override resource attributes detected from the Azure environment. To override these attributes in code, call `ConfigureResource(...)` after `UseAzureMonitor()` as shown above.
 
 It is also possible to configure the `Resource` by using following
 environmental variables:
@@ -309,6 +312,27 @@ builder.Services.AddOpenTelemetry().UseAzureMonitor(options =>
 });
 ```
 
+#### HTTP Client Metrics
+
+On .NET 8+, only `http.client.request.duration` is collected from `System.Net.Http` by default. This retains request latency, count, and failure dimensions while reducing default telemetry volume. `http.client.active_requests`, `http.client.open_connections`, `http.client.connection.duration`, `http.client.request.time_in_queue`, and future instruments from this meter are opt-in. HTTP dependency tracing and server metrics are unchanged.
+
+To collect an additional metric, configure an OpenTelemetry view before the provider is built:
+
+```csharp
+using OpenTelemetry.Metrics;
+
+builder.Services.ConfigureOpenTelemetryMeterProvider(metrics =>
+    metrics.AddView(instrument =>
+        instrument.Meter.Name == "System.Net.Http"
+        && instrument.Name == "http.client.open_connections"
+            ? new MetricStreamConfiguration()
+            : null));
+```
+
+To restore all metrics from this meter, remove the `instrument.Name` condition. Views are additive: a matching non-drop view collects a metric even when the distro's drop view also matches, regardless of registration order. Existing broad non-drop views can therefore re-enable these metrics. Calling `AddMeter("System.Net.Http")` again does not override the drop view. Views affect all exporters on the same meter provider.
+
+To disable request duration too, use `metrics.AddView("http.client.request.duration", MetricStreamConfiguration.Drop)` without a competing non-drop view. Older-runtime HTTP instrumentation already emits request duration only and is unchanged. DNS metrics belong to the separate `System.Net.NameResolution` meter. This change does not affect `_APPRESOURCEPREVIEW_` resource-metric emission or standalone Azure Monitor exporter defaults.
+
 #### Drop a Metrics Instrument
 
 The Azure Monitor Distro enables metric collection and collects several metrics by default.
@@ -321,6 +345,33 @@ builder.Services.ConfigureOpenTelemetryMeterProvider(metrics =>
 ```
 
 Refer to [Drop an instrument](https://github.com/open-telemetry/opentelemetry-dotnet/tree/main/docs/metrics/customizing-the-sdk#drop-an-instrument) for more examples.
+
+#### Larger GenAI input and output messages (experimental)
+
+By default, the `gen_ai.input.messages` and `gen_ai.output.messages` attributes are truncated at 256 KiB (characters). Multimodal content, such as base64-encoded images or audio, can exceed that limit. To keep these two attributes up to 4 MiB, enable the experimental `Azure.Monitor.OpenTelemetry.Exporter.Experimental.gen_ai_input_output_limit_increase` `AppContext` switch. Other GenAI attributes stay at 256 KiB and all other attributes stay at 8 KiB.
+
+The switch is read once, when the first telemetry item is exported. Set it at the top of `Program.cs`, before the app is built:
+
+```C#
+AppContext.SetSwitch("Azure.Monitor.OpenTelemetry.Exporter.Experimental.gen_ai_input_output_limit_increase", true);
+
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddOpenTelemetry()
+    .UseAzureMonitor()
+    .WithTracing(tracing => tracing.AddSource("MyCompany.MyGenAIApp"));
+
+var app = builder.Build();
+```
+
+Alternatively, enable it without code changes in the project file. The setting is written to the application's `runtimeconfig.json`:
+
+```xml
+<ItemGroup>
+  <RuntimeHostConfigurationOption Include="Azure.Monitor.OpenTelemetry.Exporter.Experimental.gen_ai_input_output_limit_increase" Value="true" />
+</ItemGroup>
+```
+
+Large multimodal messages produce large telemetry items. See [Custom property truncation](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter#custom-property-truncation) in the exporter README for the limits and storage considerations.
 
 ## Key concepts
 

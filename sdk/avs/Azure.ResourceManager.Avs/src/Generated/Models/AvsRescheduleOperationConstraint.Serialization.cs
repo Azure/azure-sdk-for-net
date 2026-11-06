@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary>
     /// Defines constraints for reschedule operation on maintenance
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AvailableWindowForMaintenanceWhileRescheduleOperation"/> and <see cref="BlockedWhileRescheduleOperation"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AvailableWindowForMaintenanceWhileRescheduleOperation"/>, <see cref="BlockedWhileRescheduleOperation"/>, <see cref="ReschedulingWindowConstraint"/>, and <see cref="WeekendReschedulingConstraint"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAvsRescheduleOperationConstraint))]
     public abstract partial class AvsRescheduleOperationConstraint : IJsonModel<AvsRescheduleOperationConstraint>
@@ -132,6 +132,10 @@ namespace Azure.ResourceManager.Avs.Models
                         return AvailableWindowForMaintenanceWhileRescheduleOperation.DeserializeAvailableWindowForMaintenanceWhileRescheduleOperation(element, options);
                     case "Blocked":
                         return BlockedWhileRescheduleOperation.DeserializeBlockedWhileRescheduleOperation(element, options);
+                    case "ReschedulingWindow":
+                        return ReschedulingWindowConstraint.DeserializeReschedulingWindowConstraint(element, options);
+                    case "WeekendRescheduling":
+                        return WeekendReschedulingConstraint.DeserializeWeekendReschedulingConstraint(element, options);
                 }
             }
             return UnknownAvsRescheduleOperationConstraint.DeserializeUnknownAvsRescheduleOperationConstraint(element, options);

@@ -35,7 +35,7 @@ public partial class ResponsesTelemetryTests
             Tools = { ResponseTool.CreateMcpTool(
                 serverLabel: McpServerLabel,
                 serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-                toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval
+                toolCallApprovalPolicy: new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval
             )) }
         };
 

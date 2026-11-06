@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -325,6 +326,33 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(CostControlIds))
+            {
+                writer.WritePropertyName("costControlIds"u8);
+                writer.WriteStartArray();
+                foreach (ResourceIdentifier item in CostControlIds)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(CostControlConnections, _costControlConnectionsIsDefined))
+            {
+                if (CostControlConnections != null)
+                {
+                    writer.WritePropertyName("costControlConnections"u8);
+                    writer.WriteObjectValue(CostControlConnections, options);
+                }
+                else
+                {
+                    writer.WriteNull("costControlConnections"u8);
+                }
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -403,8 +431,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             bool? allowProjectManagement = default;
             string defaultProject = default;
             IList<string> associatedProjects = default;
-            CapabilitySettings capabilitySettings = default;
+            CognitiveServicesAgentCapabilitySettings capabilitySettings = default;
             IList<AgentHostingConfiguration> agentHostingConfigurations = default;
+            IList<ResourceIdentifier> costControlIds = default;
+            bool costControlConnectionsIsDefined = false;
+            CostControlConnections costControlConnections = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -779,7 +810,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    capabilitySettings = CapabilitySettings.DeserializeCapabilitySettings(prop.Value, options);
+                    capabilitySettings = CognitiveServicesAgentCapabilitySettings.DeserializeCognitiveServicesAgentCapabilitySettings(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("agentHostingConfigurations"u8))
@@ -796,9 +827,41 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     agentHostingConfigurations = array;
                     continue;
                 }
+                if (prop.NameEquals("costControlIds"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(new ResourceIdentifier(item.GetString()));
+                        }
+                    }
+                    costControlIds = array;
+                    continue;
+                }
+                if (prop.NameEquals("costControlConnections"u8))
+                {
+                    costControlConnectionsIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        costControlConnections = null;
+                        continue;
+                    }
+                    costControlConnections = CostControlConnections.DeserializeCostControlConnections(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CognitiveServicesAccountProperties(
@@ -840,7 +903,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 associatedProjects ?? new ChangeTrackingList<string>(),
                 capabilitySettings,
                 agentHostingConfigurations ?? new ChangeTrackingList<AgentHostingConfiguration>(),
-                additionalBinaryDataProperties);
+                costControlIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                costControlConnections,
+                additionalBinaryDataProperties)
+            {
+                _costControlConnectionsIsDefined = costControlConnectionsIsDefined
+            };
         }
     }
 }

@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MccCacheNodeIssueHistoryProperties(customerId, cacheNodeId, mccIssueHistory ?? new ChangeTrackingList<MccCacheNodeIssue>(), additionalBinaryDataProperties);

@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         {
             get
             {
-                return Properties is null ? default : Properties.ResourceType;
+                return Properties is null ? (ResourceType?)default : Properties.ResourceType;
             }
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         {
             get
             {
-                return Properties is null ? default : Properties.Location;
+                return Properties is null ? (AzureLocation?)default : Properties.Location;
             }
             set
             {

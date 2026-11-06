@@ -223,7 +223,7 @@ namespace Azure.Compute.Batch
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new BatchPublicIpAddressConfiguration(ipAddressProvisioningType, ipFamilies ?? new ChangeTrackingList<IPFamily>(), ipAddressIds ?? new ChangeTrackingList<ResourceIdentifier>(), ipTags ?? new ChangeTrackingList<IPTag>(), additionalBinaryDataProperties);

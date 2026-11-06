@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Mocking
 
         private ClientDiagnostics SAPDiscoverySitesClientDiagnostics => _sapDiscoverySitesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MigrationDiscoverySap.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SAPDiscoverySites SAPDiscoverySitesRestClient => _sapDiscoverySitesRestClient ??= new SAPDiscoverySites(SAPDiscoverySitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-10-01-preview");
+        private SAPDiscoverySites SAPDiscoverySitesRestClient => _sapDiscoverySitesRestClient ??= new SAPDiscoverySites(SAPDiscoverySitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Workloads/sapDiscoverySites", out string apiVersion) ? apiVersion : "2023-10-01-preview");
 
         /// <summary>
         /// Gets all SAP Migration discovery site resources in a Subscription.
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SapDiscoverySiteData, SapDiscoverySiteResource>(new SAPDiscoverySitesGetBySubscriptionAsyncCollectionResultOfT(SAPDiscoverySitesRestClient, Id.SubscriptionId, context, "MockableMigrationDiscoverySapSubscriptionResource.GetSapDiscoverySites"), data => new SapDiscoverySiteResource(Client, data));
+            return new AsyncPageableWrapper<SapDiscoverySiteData, SapDiscoverySiteResource>(new SapDiscoverySiteDataAsync0CollectionResultOfT(SAPDiscoverySitesRestClient, Id.SubscriptionId, context, "MockableMigrationDiscoverySapSubscriptionResource.GetSapDiscoverySites"), data => new SapDiscoverySiteResource(Client, data));
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SapDiscoverySiteData, SapDiscoverySiteResource>(new SAPDiscoverySitesGetBySubscriptionCollectionResultOfT(SAPDiscoverySitesRestClient, Id.SubscriptionId, context, "MockableMigrationDiscoverySapSubscriptionResource.GetSapDiscoverySites"), data => new SapDiscoverySiteResource(Client, data));
+            return new PageableWrapper<SapDiscoverySiteData, SapDiscoverySiteResource>(new SapDiscoverySiteData0CollectionResultOfT(SAPDiscoverySitesRestClient, Id.SubscriptionId, context, "MockableMigrationDiscoverySapSubscriptionResource.GetSapDiscoverySites"), data => new SapDiscoverySiteResource(Client, data));
         }
     }
 }

@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DesktopVirtualizationPrivateEndpointConnectionDataData, WorkspacePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByWorkspaceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DesktopVirtualizationPrivateEndpointConnectionDataData, WorkspacePrivateEndpointConnectionResource>(new DesktopVirtualizationPrivateEndpointConnectionDataDataAsync0CollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DesktopVirtualizationPrivateEndpointConnectionDataData, WorkspacePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByWorkspaceCollectionResultOfT(
+            return new PageableWrapper<DesktopVirtualizationPrivateEndpointConnectionDataData, WorkspacePrivateEndpointConnectionResource>(new DesktopVirtualizationPrivateEndpointConnectionDataData0CollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

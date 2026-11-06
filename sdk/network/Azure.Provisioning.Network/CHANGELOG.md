@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,16 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.1 (2026-10-30)
+
+### Features Added
+
+- Updated the default Network API version to `2026-03-01`, adding support for new resources and properties.
+
+### Other Changes
+
+- Migrated code generation to TypeSpec.
 
 ## 1.1.0 (2026-04-16)
 

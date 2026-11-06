@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AutomationCertificateData, AutomationCertificateResource>(new CertificateGetByAutomationAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AutomationCertificateData, AutomationCertificateResource>(new AutomationCertificateDataAsyncCollectionResultOfT(
                 _certificateRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AutomationCertificateData, AutomationCertificateResource>(new CertificateGetByAutomationAccountCollectionResultOfT(
+            return new PageableWrapper<AutomationCertificateData, AutomationCertificateResource>(new AutomationCertificateDataCollectionResultOfT(
                 _certificateRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

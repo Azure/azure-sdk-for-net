@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             {
                 CancellationToken = cancellationToken
             };
-            return new ConfigurationsGetConfigurationsAsyncCollectionResultOfT(
+            return new CosmosDBForPostgreSqlServerConfigurationDataAsyncCollectionResultOfT(
                 _configurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             {
                 CancellationToken = cancellationToken
             };
-            return new ConfigurationsGetConfigurationsCollectionResultOfT(
+            return new CosmosDBForPostgreSqlServerConfigurationDataCollectionResultOfT(
                 _configurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

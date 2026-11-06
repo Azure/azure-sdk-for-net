@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> List of label history records. </summary>
         [WirePath("properties.records")]
-        public IReadOnlyList<LabelHistoryRecordItem> LabelHistoryRecords
+        public IReadOnlyList<ContainerAppLabelHistoryRecordItem> LabelHistoryRecords
         {
             get
             {

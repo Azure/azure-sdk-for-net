@@ -221,7 +221,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
         public async Task StopAsync(CancellationToken cancellationToken)
         {
-            if (!_drainModeManager.IsDrainModeEnabled)
+            bool isDrainModeEnabled = _drainModeManager.IsDrainModeEnabled;
+            if (!isDrainModeEnabled)
             {
                 _functionExecutionCancellationTokenSource.Cancel();
             }
@@ -243,12 +244,21 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 // This will also cancel the background monitoring task through the linked cancellation token source.
                 _stoppingCancellationTokenSource.Cancel();
 
-                // CloseAsync method stop new messages from being processed while allowing in-flight messages to be processed.
+                // Stop new messages from being processed while allowing in-flight messages to finish.
                 if (_singleDispatch)
                 {
                     if (_isSessionsEnabled)
                     {
-                        await _sessionMessageProcessor.Value.Processor.StopProcessingAsync(cancellationToken).ConfigureAwait(false);
+                        if (isDrainModeEnabled)
+                        {
+                            // Drain mode is terminal for this host. Close the processor to release accepted
+                            // sessions after in-flight handlers finish instead of preserving them for restart.
+                            await _sessionMessageProcessor.Value.Processor.CloseAsync(cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            await _sessionMessageProcessor.Value.Processor.StopProcessingAsync(cancellationToken).ConfigureAwait(false);
+                        }
                     }
                     else
                     {

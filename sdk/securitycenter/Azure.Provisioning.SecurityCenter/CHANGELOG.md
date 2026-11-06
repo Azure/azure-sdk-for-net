@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Migrated the library to the TypeSpec provisioning emitter.
+
 ## 1.0.0-beta.1 (2026-03-31)
 
 ### Features Added

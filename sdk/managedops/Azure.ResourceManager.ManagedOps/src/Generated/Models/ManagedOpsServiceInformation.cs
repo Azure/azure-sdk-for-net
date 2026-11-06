@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ManagedOps.Models
         {
             get
             {
-                return AzureUpdateManager is null ? default : AzureUpdateManager.EnablementStatus;
+                return AzureUpdateManager is null ? (ManagedOpsEnablementStatus?)default : AzureUpdateManager.EnablementStatus;
             }
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ManagedOps.Models
         {
             get
             {
-                return AzurePolicyAndMachineConfiguration is null ? default : AzurePolicyAndMachineConfiguration.EnablementStatus;
+                return AzurePolicyAndMachineConfiguration is null ? (ManagedOpsEnablementStatus?)default : AzurePolicyAndMachineConfiguration.EnablementStatus;
             }
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ManagedOps.Models
         {
             get
             {
-                return DefenderForServers is null ? default : DefenderForServers.EnablementStatus;
+                return DefenderForServers is null ? (ManagedOpsEnablementStatus?)default : DefenderForServers.EnablementStatus;
             }
         }
 
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ManagedOps.Models
         {
             get
             {
-                return DefenderCspm is null ? default : DefenderCspm.EnablementStatus;
+                return DefenderCspm is null ? (ManagedOpsEnablementStatus?)default : DefenderCspm.EnablementStatus;
             }
         }
     }

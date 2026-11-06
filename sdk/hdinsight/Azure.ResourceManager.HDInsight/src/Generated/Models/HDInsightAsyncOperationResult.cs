@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="status"> The async operation state. </param>
         /// <param name="errorInfo"> The operation error information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightAsyncOperationResult(HDInsightAsyncOperationState? status, ErrorResponse errorInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HDInsightAsyncOperationResult(HDInsightAsyncOperationState? status, ErrorResult errorInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             ErrorInfo = errorInfo;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public HDInsightAsyncOperationState? Status { get; }
 
         /// <summary> The operation error information. </summary>
-        internal ErrorResponse ErrorInfo { get; }
+        internal ErrorResult ErrorInfo { get; }
 
         /// <summary> The error object. </summary>
         public ResponseError Error

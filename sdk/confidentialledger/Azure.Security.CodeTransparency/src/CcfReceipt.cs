@@ -14,69 +14,69 @@ namespace Azure.Security.CodeTransparency
     /// This class encapsulates the representation and the available operations of CBOR encoded CCF SCITT receipts.
     /// This is a reference implementation for a proposed draft IETF specification: https://datatracker.ietf.org/doc/draft-birkholz-scitt-receipts/03/ .
     /// </summary>
-    public class CcfReceipt
+    public static class CcfReceipt
     {
         /// <summary>
         /// Expected tree algorithm value in the receipt.
         /// </summary>
-        public static readonly string SupportedTreeAlgorithm = "CCF";
+        public static string SupportedTreeAlgorithm { get; } = "CCF";
         /// <summary>
         /// Key ID header key.
         /// </summary>
-        public static readonly ulong ReceiptHeaderKeyId = 4;
+        public static ulong ReceiptHeaderKeyId { get; } = 4;
         /// <summary>
         /// Issuer header key.
         /// </summary>
-        public static readonly ulong ReceiptHeaderIssuer = 391;
+        public static ulong ReceiptHeaderIssuer { get; } = 391;
         /// <summary>
         /// Header key to get access to the embedded receipts.
         /// </summary>
-        public static readonly int CoseHeaderEmbeddedReceipts = 394;
+        public static int CoseHeaderEmbeddedReceipts { get; } = 394;
         /// <summary>
         /// Service identifier header key.
         /// </summary>
-        public static readonly string ReceiptHeaderServiceId = "service_id";
+        public static string ReceiptHeaderServiceId { get; } = "service_id";
         /// <summary>
         /// Tree algorithm header id.
         /// </summary>
-        public static readonly string ReceiptHeaderTreeAlgorithm = "tree_alg";
+        public static string ReceiptHeaderTreeAlgorithm { get; } = "tree_alg";
         /// <summary>
         /// Countersign time header key.
         /// </summary>
-        public static readonly string ReceiptHeaderRegistrationTime = "registration_time";
+        public static string ReceiptHeaderRegistrationTime { get; } = "registration_time";
         /// <summary>
         /// CWT ISS Claim (RFC9597) defined in https://www.iana.org/assignments/cwt/cwt.xhtml
         /// </summary>
-        public static readonly int CoseReceiptCwtIssLabel = 1;
+        public static int CoseReceiptCwtIssLabel { get; } = 1;
         /// <summary>
         /// CWT Map Claim (RFC9597) defined in https://www.iana.org/assignments/cwt/cwt.xhtml
         /// </summary>
-        public static readonly int CoseReceiptCwtMapLabel = 15;
+        public static int CoseReceiptCwtMapLabel { get; } = 15;
         /// <summary>
         /// Protected header key for verifiable proofs.
         /// </summary>
-        public static readonly int CosePhdrVdpLabel = 396;
+        public static int CosePhdrVdpLabel { get; } = 396;
         /// <summary>
         /// Protected header key for the verifiable data structure,
         /// as per COSE Receipts (draft) RFC (https://datatracker.ietf.org/doc/draft-ietf-cose-merkle-tree-proofs/)
         /// </summary>
-        public static readonly int CosePhdrVdsLabel = 395;
+        public static int CosePhdrVdsLabel { get; } = 395;
         /// <summary>
         /// Label for the inclusion proof.
         /// </summary>
-        public static readonly int CoseReceiptInclusionProofLabel = -1;
+        public static int CoseReceiptInclusionProofLabel { get; } = -1;
         /// <summary>
         /// Label for the leaf in the inclusion proof
         /// </summary>
-        public static readonly int CcfProofLeafLabel = 1;
+        public static int CcfProofLeafLabel { get; } = 1;
         /// <summary>
         /// Label for the path in the inclusion proof
         /// </summary>
-        public static readonly int CcfProofPathLabel = 2;
+        public static int CcfProofPathLabel { get; } = 2;
         /// <summary>
         /// Protected header key for the tree algorithm
         /// </summary>
-        public static readonly int CcfTreeAlgLabel = 2;
+        public static int CcfTreeAlgLabel { get; } = 2;
 
         /// <summary>
         /// Extracts the registration transaction id (the entry id) from a raw CCF SCITT receipt.

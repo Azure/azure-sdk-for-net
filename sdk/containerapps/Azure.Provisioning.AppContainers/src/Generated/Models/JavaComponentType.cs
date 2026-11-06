@@ -15,10 +15,6 @@ namespace Azure.Provisioning.AppContainers
         /// <summary> SpringCloudEureka. </summary>
         SpringCloudEureka = 1,
         /// <summary> SpringCloudConfig. </summary>
-        SpringCloudConfig = 2,
-        /// <summary> SpringCloudGateway. </summary>
-        SpringCloudGateway = 3,
-        /// <summary> Nacos. </summary>
-        Nacos = 4
+        SpringCloudConfig = 2
     }
 }

@@ -99,14 +99,14 @@ namespace Azure.ResourceManager.SignalR.Models
                     version,
                     (privateEndpointConnections ?? new ChangeTrackingList<SignalRPrivateEndpointConnectionData>()).ToList(),
                     (sharedPrivateLinkResources ?? new ChangeTrackingList<SignalRSharedPrivateLinkResourceData>()).ToList(),
-                    new SignalRTlsSettings(isClientCertEnabled, default),
+                    isClientCertEnabled is null ? default : new SignalRTlsSettings(isClientCertEnabled, default),
                     hostNamePrefix,
                     (features ?? new ChangeTrackingList<SignalRFeature>()).ToList(),
                     liveTraceConfiguration,
-                    new SignalRResourceLogConfiguration((resourceLogCategories ?? new ChangeTrackingList<SignalRResourceLogCategory>()).ToList(), default),
-                    new SignalRCorsSettings((corsAllowedOrigins ?? new ChangeTrackingList<string>()).ToList(), default),
+                    resourceLogCategories is null ? default : new SignalRResourceLogConfiguration((resourceLogCategories ?? new ChangeTrackingList<SignalRResourceLogCategory>()).ToList(), default),
+                    corsAllowedOrigins is null ? default : new SignalRCorsSettings((corsAllowedOrigins ?? new ChangeTrackingList<string>()).ToList(), default),
                     serverless,
-                    new ServerlessUpstreamSettings((upstreamTemplates ?? new ChangeTrackingList<SignalRUpstreamTemplate>()).ToList(), default),
+                    upstreamTemplates is null ? default : new ServerlessUpstreamSettings((upstreamTemplates ?? new ChangeTrackingList<SignalRUpstreamTemplate>()).ToList(), default),
                     networkACLs,
                     applicationFirewall,
                     publicNetworkAccess,
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && privateEndpointId is null && groupIds is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(provisioningState, new PrivateEndpoint(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), connectionState, default),
+                provisioningState is null && privateEndpointId is null && groupIds is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(provisioningState, privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), connectionState, default),
                 default);
         }
 
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <returns> A new <see cref="Models.SignalRClientConnectionCountRule"/> instance for mocking. </returns>
         public static SignalRClientConnectionCountRule SignalRClientConnectionCountRule(string @type = default)
         {
-            return new UnknownSignalRClientConnectionCountRule(default, default);
+            return new UnknownSignalRClientConnectionCountRule(@type is null ? default : new ClientConnectionCountRuleDiscriminator(@type), default);
         }
 
         /// <summary> Throttle the client connection by a custom JWT claim. </summary>
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <returns> A new <see cref="Models.SignalRThrottleByJwtCustomClaimRule"/> instance for mocking. </returns>
         public static SignalRThrottleByJwtCustomClaimRule SignalRThrottleByJwtCustomClaimRule(string claimName = default, int? maxCount = default)
         {
-            return new SignalRThrottleByJwtCustomClaimRule(default, default, claimName, maxCount);
+            return new SignalRThrottleByJwtCustomClaimRule(ClientConnectionCountRuleDiscriminator.ThrottleByJwtCustomClaimRule, default, claimName, maxCount);
         }
 
         /// <summary> Throttle the client connection by the JWT signature. </summary>
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <returns> A new <see cref="Models.SignalRThrottleByJwtSignatureRule"/> instance for mocking. </returns>
         public static SignalRThrottleByJwtSignatureRule SignalRThrottleByJwtSignatureRule(int? maxCount = default)
         {
-            return new SignalRThrottleByJwtSignatureRule(default, default, maxCount);
+            return new SignalRThrottleByJwtSignatureRule(ClientConnectionCountRuleDiscriminator.ThrottleByJwtSignatureRule, default, maxCount);
         }
 
         /// <summary> Throttle the client connection by the user ID. </summary>
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <returns> A new <see cref="Models.SignalRThrottleByUserIdRule"/> instance for mocking. </returns>
         public static SignalRThrottleByUserIdRule SignalRThrottleByUserIdRule(int? maxCount = default)
         {
-            return new SignalRThrottleByUserIdRule(default, default, maxCount);
+            return new SignalRThrottleByUserIdRule(ClientConnectionCountRuleDiscriminator.ThrottleByUserIdRule, default, maxCount);
         }
 
         /// <summary>
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <returns> A new <see cref="Models.SignalRClientTrafficControlRule"/> instance for mocking. </returns>
         public static SignalRClientTrafficControlRule SignalRClientTrafficControlRule(string @type = default)
         {
-            return new UnknownSignalRClientTrafficControlRule(default, default);
+            return new UnknownSignalRClientTrafficControlRule(@type is null ? default : new ClientTrafficControlRuleDiscriminator(@type), default);
         }
 
         /// <summary> Throttle the client traffic by a custom JWT claim. </summary>
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <returns> A new <see cref="Models.SignalRTrafficThrottleByJwtCustomClaimRule"/> instance for mocking. </returns>
         public static SignalRTrafficThrottleByJwtCustomClaimRule SignalRTrafficThrottleByJwtCustomClaimRule(string claimName = default, long? maxInboundMessageBytes = default, int? aggregationWindowInSeconds = default)
         {
-            return new SignalRTrafficThrottleByJwtCustomClaimRule(default, default, claimName, maxInboundMessageBytes, aggregationWindowInSeconds);
+            return new SignalRTrafficThrottleByJwtCustomClaimRule(ClientTrafficControlRuleDiscriminator.TrafficThrottleByJwtCustomClaimRule, default, claimName, maxInboundMessageBytes, aggregationWindowInSeconds);
         }
 
         /// <summary> Throttle the client traffic by the JWT signature. </summary>
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <returns> A new <see cref="Models.SignalRTrafficThrottleByJwtSignatureRule"/> instance for mocking. </returns>
         public static SignalRTrafficThrottleByJwtSignatureRule SignalRTrafficThrottleByJwtSignatureRule(long? maxInboundMessageBytes = default, int? aggregationWindowInSeconds = default)
         {
-            return new SignalRTrafficThrottleByJwtSignatureRule(default, default, maxInboundMessageBytes, aggregationWindowInSeconds);
+            return new SignalRTrafficThrottleByJwtSignatureRule(ClientTrafficControlRuleDiscriminator.TrafficThrottleByJwtSignatureRule, default, maxInboundMessageBytes, aggregationWindowInSeconds);
         }
 
         /// <summary> Throttle the client traffic by the user ID. </summary>
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <returns> A new <see cref="Models.SignalRTrafficThrottleByUserIdRule"/> instance for mocking. </returns>
         public static SignalRTrafficThrottleByUserIdRule SignalRTrafficThrottleByUserIdRule(long? maxInboundMessageBytes = default, int? aggregationWindowInSeconds = default)
         {
-            return new SignalRTrafficThrottleByUserIdRule(default, default, maxInboundMessageBytes, aggregationWindowInSeconds);
+            return new SignalRTrafficThrottleByUserIdRule(ClientTrafficControlRuleDiscriminator.TrafficThrottleByUserIdRule, default, maxInboundMessageBytes, aggregationWindowInSeconds);
         }
 
         /// <summary> Route settings for the resource. </summary>
@@ -621,7 +621,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                provisioningState is null && keyVaultBaseUri is null && keyVaultSecretName is null && keyVaultSecretVersion is null ? default : new CustomCertificateProperties(provisioningState, keyVaultBaseUri, keyVaultSecretName, keyVaultSecretVersion, default),
                 default);
         }
 
@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 name,
                 resourceType,
                 systemData,
-                domainName is null && customCertificateId is null ? default : new CustomDomainProperties(default, domainName, new ResourceReference(customCertificateId, default), default),
+                provisioningState is null && domainName is null && customCertificateId is null ? default : new CustomDomainProperties(provisioningState, domainName, new ResourceReference(customCertificateId, default), default),
                 default);
         }
 
@@ -773,7 +773,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// </param>
         /// <returns> A new <see cref="SignalR.SignalRData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SignalRData SignalRData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SignalRResourceSku sku = default, SignalRServiceKind? kind = default, ManagedServiceIdentity identity = default, SignalRProvisioningState? provisioningState = default, string externalIP = default, string hostName = default, int? publicPort = default, int? serverPort = default, string version = default, IEnumerable<SignalRPrivateEndpointConnectionData> privateEndpointConnections = default, IEnumerable<SignalRSharedPrivateLinkResourceData> sharedPrivateLinkResources = default, bool? isClientCertEnabled = default, string hostNamePrefix = default, IEnumerable<SignalRFeature> features = default, SignalRLiveTraceConfiguration liveTraceConfiguration = default, IEnumerable<SignalRResourceLogCategory> resourceLogCategories = default, IEnumerable<string> corsAllowedOrigins = default, IEnumerable<SignalRUpstreamTemplate> upstreamTemplates = default, SignalRNetworkAcls networkACLs = default, string publicNetworkAccess = default, bool? disableLocalAuth = default, bool? disableAadAuth = default)
+        public static SignalRData SignalRData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SignalRResourceSku sku, SignalRServiceKind? kind, ManagedServiceIdentity identity, SignalRProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IEnumerable<SignalRPrivateEndpointConnectionData> privateEndpointConnections, IEnumerable<SignalRSharedPrivateLinkResourceData> sharedPrivateLinkResources, bool? isClientCertEnabled, string hostNamePrefix, IEnumerable<SignalRFeature> features, SignalRLiveTraceConfiguration liveTraceConfiguration, IEnumerable<SignalRResourceLogCategory> resourceLogCategories, IEnumerable<string> corsAllowedOrigins, IEnumerable<SignalRUpstreamTemplate> upstreamTemplates, SignalRNetworkAcls networkACLs, string publicNetworkAccess, bool? disableLocalAuth, bool? disableAadAuth)
         {
             return new SignalRData(
                 id,
@@ -791,14 +791,14 @@ namespace Azure.ResourceManager.SignalR.Models
                     version,
                     (privateEndpointConnections ?? new ChangeTrackingList<SignalRPrivateEndpointConnectionData>()).ToList(),
                     (sharedPrivateLinkResources ?? new ChangeTrackingList<SignalRSharedPrivateLinkResourceData>()).ToList(),
-                    new SignalRTlsSettings(isClientCertEnabled, default),
+                    isClientCertEnabled is null ? default : new SignalRTlsSettings(isClientCertEnabled, default),
                     hostNamePrefix,
                     (features ?? new ChangeTrackingList<SignalRFeature>()).ToList(),
                     liveTraceConfiguration,
-                    new SignalRResourceLogConfiguration((resourceLogCategories ?? new ChangeTrackingList<SignalRResourceLogCategory>()).ToList(), default),
-                    new SignalRCorsSettings((corsAllowedOrigins ?? new ChangeTrackingList<string>()).ToList(), default),
+                    resourceLogCategories is null ? default : new SignalRResourceLogConfiguration((resourceLogCategories ?? new ChangeTrackingList<SignalRResourceLogCategory>()).ToList(), default),
+                    corsAllowedOrigins is null ? default : new SignalRCorsSettings((corsAllowedOrigins ?? new ChangeTrackingList<string>()).ToList(), default),
                     default,
-                    new ServerlessUpstreamSettings((upstreamTemplates ?? new ChangeTrackingList<SignalRUpstreamTemplate>()).ToList(), default),
+                    upstreamTemplates is null ? default : new ServerlessUpstreamSettings((upstreamTemplates ?? new ChangeTrackingList<SignalRUpstreamTemplate>()).ToList(), default),
                     networkACLs,
                     default,
                     publicNetworkAccess,
@@ -825,14 +825,14 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="connectionState"> Connection state of the private endpoint connection. </param>
         /// <returns> A new <see cref="SignalR.SignalRPrivateEndpointConnectionData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SignalRPrivateEndpointConnectionData SignalRPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SignalRProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default, IEnumerable<string> groupIds = default, SignalRPrivateLinkServiceConnectionState connectionState = default)
+        public static SignalRPrivateEndpointConnectionData SignalRPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SignalRProvisioningState? provisioningState, ResourceIdentifier privateEndpointId, IEnumerable<string> groupIds, SignalRPrivateLinkServiceConnectionState connectionState)
         {
             return new SignalRPrivateEndpointConnectionData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && privateEndpointId is null && groupIds is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(provisioningState, new PrivateEndpoint(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), connectionState, default),
+                provisioningState is null && privateEndpointId is null && groupIds is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(provisioningState, privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), connectionState, default),
                 default);
         }
 
@@ -848,7 +848,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="status"> Status of the shared private link resource. </param>
         /// <returns> A new <see cref="SignalR.SignalRSharedPrivateLinkResourceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SignalRSharedPrivateLinkResourceData SignalRSharedPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string groupId = default, ResourceIdentifier privateLinkResourceId = default, SignalRProvisioningState? provisioningState = default, string requestMessage = default, SignalRSharedPrivateLinkResourceStatus? status = default)
+        public static SignalRSharedPrivateLinkResourceData SignalRSharedPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, ResourceIdentifier privateLinkResourceId, SignalRProvisioningState? provisioningState, string requestMessage, SignalRSharedPrivateLinkResourceStatus? status)
         {
             return new SignalRSharedPrivateLinkResourceData(
                 id,

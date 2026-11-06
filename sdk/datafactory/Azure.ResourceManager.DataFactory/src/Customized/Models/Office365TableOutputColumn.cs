@@ -22,11 +22,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     [JsonConverter(typeof(Office365TableOutputColumn.Office365TableOutputColumnConverter))]
     public partial class Office365TableOutputColumn
     {
-        /// <summary> Initializes a new instance of <see cref="Office365TableOutputColumn"/>. </summary>
-        public Office365TableOutputColumn()
-        {
-        }
-
         /// <summary> Name of the table column. Type: string. </summary>
         [CodeGenMember("Name")]
         public string Name { get; set; }

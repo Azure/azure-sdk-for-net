@@ -12,7 +12,7 @@ namespace Azure.AI.ContentUnderstanding
 {
     /// <summary>
     /// Media content base class.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DocumentContent"/> and <see cref="AudioVisualContent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AudioVisualContent"/> and <see cref="DocumentContent"/>.
     /// </summary>
     public abstract partial class AnalysisContent
     {

@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 administrationMembers is null && mode is null && tenantId is null && friendlyName is null && state is null && provisioningState is null ? default : new DedicatedCapacityProperties(
-                    new DedicatedCapacityAdministrators((administrationMembers ?? new ChangeTrackingList<string>()).ToList(), default),
+                    administrationMembers is null ? default : new DedicatedCapacityAdministrators((administrationMembers ?? new ChangeTrackingList<string>()).ToList(), default),
                     mode,
                     tenantId,
                     friendlyName,
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DedicatedCapacityPatch(sku, tags ?? new ChangeTrackingDictionary<string, string>(), administrationMembers is null && mode is null && tenantId is null && friendlyName is null ? default : new DedicatedCapacityMutableProperties(new DedicatedCapacityAdministrators((administrationMembers ?? new ChangeTrackingList<string>()).ToList(), default), mode, tenantId, friendlyName, default), default);
+            return new DedicatedCapacityPatch(sku, tags ?? new ChangeTrackingDictionary<string, string>(), administrationMembers is null && mode is null && tenantId is null && friendlyName is null ? default : new DedicatedCapacityMutableProperties(administrationMembers is null ? default : new DedicatedCapacityAdministrators((administrationMembers ?? new ChangeTrackingList<string>()).ToList(), default), mode, tenantId, friendlyName, default), default);
         }
 
         /// <summary> The request has succeeded. </summary>

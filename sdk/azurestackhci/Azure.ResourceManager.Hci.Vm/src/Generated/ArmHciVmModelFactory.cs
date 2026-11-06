@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <returns> A new <see cref="Models.HciVmGalleryImageVersion"/> instance for mocking. </returns>
         public static HciVmGalleryImageVersion HciVmGalleryImageVersion(string name = default, long? storageOSDiskImageSizeInMB = default)
         {
-            return new HciVmGalleryImageVersion(name, storageOSDiskImageSizeInMB is null ? default : new HciVmGalleryImageVersionProperties(new HciVmGalleryImageVersionStorageProfile(new HciVmGalleryOSDiskImage(storageOSDiskImageSizeInMB, default), default), default), default);
+            return new HciVmGalleryImageVersion(name, storageOSDiskImageSizeInMB is null ? default : new HciVmGalleryImageVersionProperties(new HciVmGalleryImageVersionStorageProfile(storageOSDiskImageSizeInMB is null ? default : new HciVmGalleryOSDiskImage(storageOSDiskImageSizeInMB, default), default), default), default);
         }
 
         /// <param name="errorCode"> GalleryImage provisioning error code. </param>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 (addressPrefixes ?? new ChangeTrackingList<string>()).ToList(),
                 ipAllocationMethod,
                 (ipConfigurationReferences ?? new ChangeTrackingList<HciVmSubnetIPConfigurationReference>()).ToList(),
-                new NetworkSecurityGroupArmReference(networkSecurityGroupId, default),
+                networkSecurityGroupId is null ? default : new NetworkSecurityGroupArmReference(networkSecurityGroupId, default),
                 routeTable,
                 (ipPools ?? new ChangeTrackingList<HciVmNetworkingIPPool>()).ToList(),
                 vlan,

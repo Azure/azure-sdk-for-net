@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Fabric.Tests
             FabricCapacityPatch patchWithTags = ArmFabricModelFactory.FabricCapacityPatch(sku, tags);
             FabricCapacityPatch patchWithNullMembers = ArmFabricModelFactory.FabricCapacityPatch(sku, tags, null);
             FabricCapacityPatch patchWithMembers = ArmFabricModelFactory.FabricCapacityPatch(sku, tags, new[] { "admin@contoso.com" });
-            FabricCapacityUpdateProperties properties = ArmFabricModelFactory.FabricCapacityUpdateProperties();
+            FabricCapacityUpdateProperties properties = ArmFabricModelFactory.FabricCapacityUpdateProperties(default, default);
             FabricCapacityPatch patchWithProperties = ArmFabricModelFactory.FabricCapacityPatchWithProperties(sku, tags, properties);
 
             Assert.IsNotNull(defaultPatch);

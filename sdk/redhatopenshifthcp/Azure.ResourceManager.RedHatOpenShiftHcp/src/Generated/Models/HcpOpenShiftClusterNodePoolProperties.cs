@@ -38,12 +38,20 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// Validation:
         /// <list type="bullet"><item><description>Minimum: 0</description></item><item><description>Maximum: 200 (only when availabilityZone is not specified)</description></item><item><description>No maximum when availabilityZone is specified</description></item></list>
         /// </param>
-        /// <param name="canAutoRepair"> Auto-repair. </param>
+        /// <param name="canAutoRepair">
+        /// autoRepair specifies whether health checks should be enabled for machines
+        /// in the NodePool. Enabling this feature will cause the controller to
+        /// automatically delete unhealthy machines. The unhealthy criteria are
+        /// determined by checking the Node Ready condition and a timeout that might
+        /// vary depending on the platform provider. autoRepair will not take action
+        /// when more than 2 Nodes are unhealthy at the same time, giving time for
+        /// the cluster to stabilize or for the user to manually intervene.
+        /// </param>
         /// <param name="autoScaling"> Representation of a autoscaling in a node pool. </param>
         /// <param name="labels">
-        /// Kubernetes labels to propagate to the NodePool Nodes
+        /// Kubernetes labels to propagate to the NodePool Nodes.
         /// Note that when the labels are updated this is only applied to newly
-        /// create nodes in the Nodepool, existing node labels remain unchanged.
+        /// created nodes in the NodePool, existing node labels remain unchanged.
         /// </param>
         /// <param name="taints"> Taints for the nodes. </param>
         /// <param name="nodeDrainTimeoutMinutes">
@@ -57,7 +65,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// </param>
         /// <param name="status"> Status of the node pool resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HcpOpenShiftClusterNodePoolProperties(ProvisioningState? provisioningState, HcpOpenShiftClusterNodePoolVersionProfile version, HcpOpenShiftClusterNodePoolPlatformProfile platform, int? replicas, bool? canAutoRepair, HcpOpenShiftClusterNodePoolAutoScaling autoScaling, IList<HcpOpenShiftClusterNodePoolLabel> labels, IList<HcpOpenShiftClusterNodePoolTaint> taints, int? nodeDrainTimeoutMinutes, HcpOpenShiftClusterResourceStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HcpOpenShiftClusterNodePoolProperties(ProvisioningState? provisioningState, HcpOpenShiftClusterNodePoolVersionProfile version, HcpOpenShiftClusterNodePoolPlatformProfile platform, int? replicas, bool? canAutoRepair, HcpOpenShiftClusterNodePoolAutoScaling autoScaling, IList<HcpOpenShiftClusterNodePoolLabel> labels, IList<HcpOpenShiftClusterNodePoolTaint> taints, int? nodeDrainTimeoutMinutes, HcpOpenShiftClusterNodePoolResourceStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Version = version;
@@ -88,16 +96,24 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// </summary>
         public int? Replicas { get; set; }
 
-        /// <summary> Auto-repair. </summary>
+        /// <summary>
+        /// autoRepair specifies whether health checks should be enabled for machines
+        /// in the NodePool. Enabling this feature will cause the controller to
+        /// automatically delete unhealthy machines. The unhealthy criteria are
+        /// determined by checking the Node Ready condition and a timeout that might
+        /// vary depending on the platform provider. autoRepair will not take action
+        /// when more than 2 Nodes are unhealthy at the same time, giving time for
+        /// the cluster to stabilize or for the user to manually intervene.
+        /// </summary>
         public bool? CanAutoRepair { get; set; }
 
         /// <summary> Representation of a autoscaling in a node pool. </summary>
         public HcpOpenShiftClusterNodePoolAutoScaling AutoScaling { get; set; }
 
         /// <summary>
-        /// Kubernetes labels to propagate to the NodePool Nodes
+        /// Kubernetes labels to propagate to the NodePool Nodes.
         /// Note that when the labels are updated this is only applied to newly
-        /// create nodes in the Nodepool, existing node labels remain unchanged.
+        /// created nodes in the NodePool, existing node labels remain unchanged.
         /// </summary>
         public IList<HcpOpenShiftClusterNodePoolLabel> Labels { get; }
 
@@ -116,15 +132,6 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         public int? NodeDrainTimeoutMinutes { get; set; }
 
         /// <summary> Status of the node pool resource. </summary>
-        internal HcpOpenShiftClusterResourceStatus Status { get; }
-
-        /// <summary> The conditions on the resource. </summary>
-        public IReadOnlyList<HcpOpenShiftClusterCondition> StatusConditions
-        {
-            get
-            {
-                return Status is null ? default : Status.Conditions;
-            }
-        }
+        public HcpOpenShiftClusterNodePoolResourceStatus Status { get; }
     }
 }

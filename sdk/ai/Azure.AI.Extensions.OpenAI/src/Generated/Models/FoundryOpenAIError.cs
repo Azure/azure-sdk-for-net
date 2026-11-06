@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI.Internal;
 
 namespace Azure.AI.Extensions.OpenAI
 {
@@ -12,6 +13,8 @@ namespace Azure.AI.Extensions.OpenAI
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _param;
+        private bool _paramIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="FoundryOpenAIError"/>. </summary>
         /// <param name="code"></param>
@@ -30,16 +33,18 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="message"></param>
         /// <param name="param"></param>
         /// <param name="type"></param>
-        /// <param name="details"></param>
-        /// <param name="additionalInfo"></param>
-        /// <param name="debugInfo"></param>
+        /// <param name="misalignment"></param>
+        /// <param name="details"> Additional errors that contributed to this failure. </param>
+        /// <param name="additionalInfo"> Additional structured information about the failure. </param>
+        /// <param name="debugInfo"> Diagnostic information supplied by the service for troubleshooting. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FoundryOpenAIError(string code, string message, string @param, string @type, IList<FoundryOpenAIError> details, IDictionary<string, BinaryData> additionalInfo, IDictionary<string, BinaryData> debugInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FoundryOpenAIError(string code, string message, string @param, string @type, MisalignmentErrorDetailsResource misalignment, IList<FoundryOpenAIError> details, IDictionary<string, BinaryData> additionalInfo, IDictionary<string, BinaryData> debugInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;
-            Param = @param;
+            _param = @param;
             Type = @type;
+            Misalignment = misalignment;
             Details = details;
             AdditionalInfo = additionalInfo;
             DebugInfo = debugInfo;
@@ -53,16 +58,25 @@ namespace Azure.AI.Extensions.OpenAI
         public string Message { get; }
 
         /// <summary> Gets the Param. </summary>
-        public string Param { get; }
+        public string Param
+        {
+            get
+            {
+                return _param;
+            }
+        }
 
         /// <summary> Gets the Type. </summary>
         public string Type { get; }
 
-        /// <summary> Gets the Details. </summary>
+        /// <summary> Gets the Misalignment. </summary>
+        public MisalignmentErrorDetailsResource Misalignment { get; }
+
+        /// <summary> Additional errors that contributed to this failure. </summary>
         public IList<FoundryOpenAIError> Details { get; }
 
         /// <summary>
-        /// Gets the AdditionalInfo.
+        /// Additional structured information about the failure.
         /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
@@ -90,7 +104,7 @@ namespace Azure.AI.Extensions.OpenAI
         public IDictionary<string, BinaryData> AdditionalInfo { get; }
 
         /// <summary>
-        /// Gets the DebugInfo.
+        /// Diagnostic information supplied by the service for troubleshooting.
         /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>

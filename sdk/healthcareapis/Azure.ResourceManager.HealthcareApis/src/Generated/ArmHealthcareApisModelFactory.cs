@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
+                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
                 default);
         }
 
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     (privateEndpointConnections ?? new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>()).ToList(),
                     publicNetworkAccess,
                     eventState,
-                    new Encryption(new EncryptionCustomerManagedKeyEncryption(keyEncryptionKeyUri, default), default),
+                    keyEncryptionKeyUri is null ? default : new Encryption(keyEncryptionKeyUri is null ? default : new EncryptionCustomerManagedKeyEncryption(keyEncryptionKeyUri, default), default),
                     storageConfiguration,
                     isDataPartitionsEnabled,
                     default),
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                provisioningState is null && ingestionEndpointConfiguration is null && deviceMappingContent is null ? default : new HealthcareApisIotConnectorProperties(provisioningState, ingestionEndpointConfiguration, new HealthcareApisIotMappingProperties(deviceMappingContent, default), default),
+                provisioningState is null && ingestionEndpointConfiguration is null && deviceMappingContent is null ? default : new HealthcareApisIotConnectorProperties(provisioningState, ingestionEndpointConfiguration, deviceMappingContent is null ? default : new HealthcareApisIotMappingProperties(deviceMappingContent, default), default),
                 eTag,
                 identity,
                 default);
@@ -416,14 +416,14 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     acrConfiguration,
                     authenticationConfiguration,
                     corsConfiguration,
-                    new FhirServiceExportConfiguration(exportStorageAccountName, default),
+                    exportStorageAccountName is null ? default : new FhirServiceExportConfiguration(exportStorageAccountName, default),
                     (privateEndpointConnections ?? new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>()).ToList(),
                     publicNetworkAccess,
                     eventState,
                     resourceVersionPolicyConfiguration,
                     importConfiguration,
-                    new ImplementationGuidesConfiguration(isUsCoreMissingDataEnabled, default),
-                    new Encryption(new EncryptionCustomerManagedKeyEncryption(keyEncryptionKeyUri, default), default),
+                    isUsCoreMissingDataEnabled is null ? default : new ImplementationGuidesConfiguration(isUsCoreMissingDataEnabled, default),
+                    keyEncryptionKeyUri is null ? default : new Encryption(keyEncryptionKeyUri is null ? default : new EncryptionCustomerManagedKeyEncryption(keyEncryptionKeyUri, default), default),
                     default),
                 eTag,
                 identity,
@@ -732,7 +732,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 name,
                 resourceType,
                 systemData,
-                fhirServiceResourceId is null && fhirMappingContent is null ? default : new HealthcareApisIotFhirDestinationProperties(default, default, default, fhirServiceResourceId, new HealthcareApisIotMappingProperties(fhirMappingContent, default)),
+                new HealthcareApisIotFhirDestinationProperties(provisioningState, default, resourceIdentityResolutionType, fhirServiceResourceId, new HealthcareApisIotMappingProperties(fhirMappingContent, default)),
                 eTag,
                 location,
                 default);
@@ -795,7 +795,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     acrConfiguration,
                     authenticationConfiguration,
                     corsConfiguration,
-                    new FhirServiceExportConfiguration(exportStorageAccountName, default),
+                    exportStorageAccountName is null ? default : new FhirServiceExportConfiguration(exportStorageAccountName, default),
                     (privateEndpointConnections ?? new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>()).ToList(),
                     publicNetworkAccess,
                     eventState,
@@ -820,14 +820,14 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <returns> A new <see cref="HealthcareApis.HealthcareApisPrivateEndpointConnectionData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HealthcareApisPrivateEndpointConnectionData HealthcareApisPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier privateEndpointId = default, HealthcareApisPrivateLinkServiceConnectionState connectionState = default, HealthcareApisPrivateEndpointConnectionProvisioningState? provisioningState = default)
+        public static HealthcareApisPrivateEndpointConnectionData HealthcareApisPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier privateEndpointId, HealthcareApisPrivateLinkServiceConnectionState connectionState, HealthcareApisPrivateEndpointConnectionProvisioningState? provisioningState)
         {
             return new HealthcareApisPrivateEndpointConnectionData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
+                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
                 default);
         }
 
@@ -852,7 +852,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <param name="etag"> An etag associated with the resource, used for optimistic concurrency when editing it. </param>
         /// <returns> A new <see cref="HealthcareApis.DicomServiceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DicomServiceData DicomServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HealthcareApisProvisioningState? provisioningState = default, DicomServiceAuthenticationConfiguration authenticationConfiguration = default, DicomServiceCorsConfiguration corsConfiguration = default, Uri serviceUri = default, IEnumerable<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections = default, HealthcareApisPublicNetworkAccess? publicNetworkAccess = default, FhirServiceEventState? eventState = default, Uri keyEncryptionKeyUri = default, HealthcareApisServiceStorageConfiguration storageConfiguration = default, bool? isDataPartitionsEnabled = default, ManagedServiceIdentity identity = default, ETag? etag = default)
+        public static DicomServiceData DicomServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HealthcareApisProvisioningState? provisioningState, DicomServiceAuthenticationConfiguration authenticationConfiguration, DicomServiceCorsConfiguration corsConfiguration, Uri serviceUri, IEnumerable<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections, HealthcareApisPublicNetworkAccess? publicNetworkAccess, FhirServiceEventState? eventState, Uri keyEncryptionKeyUri, HealthcareApisServiceStorageConfiguration storageConfiguration, bool? isDataPartitionsEnabled, ManagedServiceIdentity identity, ETag? etag)
         {
             return new DicomServiceData(
                 id,
@@ -869,7 +869,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     (privateEndpointConnections ?? new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>()).ToList(),
                     publicNetworkAccess,
                     eventState,
-                    new Encryption(new EncryptionCustomerManagedKeyEncryption(keyEncryptionKeyUri, default), default),
+                    keyEncryptionKeyUri is null ? default : new Encryption(keyEncryptionKeyUri is null ? default : new EncryptionCustomerManagedKeyEncryption(keyEncryptionKeyUri, default), default),
                     storageConfiguration,
                     isDataPartitionsEnabled,
                     default),
@@ -892,7 +892,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <param name="etag"> An etag associated with the resource, used for optimistic concurrency when editing it. </param>
         /// <returns> A new <see cref="HealthcareApis.HealthcareApisIotConnectorData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HealthcareApisIotConnectorData HealthcareApisIotConnectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HealthcareApisProvisioningState? provisioningState = default, HealthcareApisIotConnectorEventHubIngestionConfiguration ingestionEndpointConfiguration = default, BinaryData deviceMappingContent = default, ManagedServiceIdentity identity = default, ETag? etag = default)
+        public static HealthcareApisIotConnectorData HealthcareApisIotConnectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HealthcareApisProvisioningState? provisioningState, HealthcareApisIotConnectorEventHubIngestionConfiguration ingestionEndpointConfiguration, BinaryData deviceMappingContent, ManagedServiceIdentity identity, ETag? etag)
         {
             return new HealthcareApisIotConnectorData(
                 id,
@@ -901,7 +901,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                provisioningState is null && ingestionEndpointConfiguration is null && deviceMappingContent is null ? default : new HealthcareApisIotConnectorProperties(provisioningState, ingestionEndpointConfiguration, new HealthcareApisIotMappingProperties(deviceMappingContent, default), default),
+                provisioningState is null && ingestionEndpointConfiguration is null && deviceMappingContent is null ? default : new HealthcareApisIotConnectorProperties(provisioningState, ingestionEndpointConfiguration, deviceMappingContent is null ? default : new HealthcareApisIotMappingProperties(deviceMappingContent, default), default),
                 etag,
                 identity,
                 default);
@@ -920,14 +920,14 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <param name="etag"> An etag associated with the resource, used for optimistic concurrency when editing it. </param>
         /// <returns> A new <see cref="HealthcareApis.HealthcareApisIotFhirDestinationData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HealthcareApisIotFhirDestinationData HealthcareApisIotFhirDestinationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HealthcareApisProvisioningState? provisioningState = default, HealthcareApisIotIdentityResolutionType resourceIdentityResolutionType = default, ResourceIdentifier fhirServiceResourceId = default, BinaryData fhirMappingContent = default, AzureLocation? location = default, ETag? etag = default)
+        public static HealthcareApisIotFhirDestinationData HealthcareApisIotFhirDestinationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HealthcareApisProvisioningState? provisioningState, HealthcareApisIotIdentityResolutionType resourceIdentityResolutionType, ResourceIdentifier fhirServiceResourceId, BinaryData fhirMappingContent, AzureLocation? location, ETag? etag)
         {
             return new HealthcareApisIotFhirDestinationData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && fhirServiceResourceId is null && fhirMappingContent is null ? default : new HealthcareApisIotFhirDestinationProperties(provisioningState, default, resourceIdentityResolutionType, fhirServiceResourceId, new HealthcareApisIotMappingProperties(fhirMappingContent, default)),
+                new HealthcareApisIotFhirDestinationProperties(provisioningState, default, resourceIdentityResolutionType, fhirServiceResourceId, new HealthcareApisIotMappingProperties(fhirMappingContent, default)),
                 etag,
                 location,
                 default);
@@ -957,7 +957,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <param name="etag"> An etag associated with the resource, used for optimistic concurrency when editing it. </param>
         /// <returns> A new <see cref="HealthcareApis.FhirServiceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static FhirServiceData FhirServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, FhirServiceKind? kind = default, HealthcareApisProvisioningState? provisioningState = default, FhirServiceAcrConfiguration acrConfiguration = default, FhirServiceAuthenticationConfiguration authenticationConfiguration = default, FhirServiceCorsConfiguration corsConfiguration = default, string exportStorageAccountName = default, IEnumerable<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections = default, HealthcareApisPublicNetworkAccess? publicNetworkAccess = default, FhirServiceEventState? eventState = default, FhirServiceResourceVersionPolicyConfiguration resourceVersionPolicyConfiguration = default, FhirServiceImportConfiguration importConfiguration = default, bool? isUsCoreMissingDataEnabled = default, Uri keyEncryptionKeyUri = default, ManagedServiceIdentity identity = default, ETag? etag = default)
+        public static FhirServiceData FhirServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, FhirServiceKind? kind, HealthcareApisProvisioningState? provisioningState, FhirServiceAcrConfiguration acrConfiguration, FhirServiceAuthenticationConfiguration authenticationConfiguration, FhirServiceCorsConfiguration corsConfiguration, string exportStorageAccountName, IEnumerable<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections, HealthcareApisPublicNetworkAccess? publicNetworkAccess, FhirServiceEventState? eventState, FhirServiceResourceVersionPolicyConfiguration resourceVersionPolicyConfiguration, FhirServiceImportConfiguration importConfiguration, bool? isUsCoreMissingDataEnabled, Uri keyEncryptionKeyUri, ManagedServiceIdentity identity, ETag? etag)
         {
             return new FhirServiceData(
                 id,
@@ -971,14 +971,14 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     acrConfiguration,
                     authenticationConfiguration,
                     corsConfiguration,
-                    new FhirServiceExportConfiguration(exportStorageAccountName, default),
+                    exportStorageAccountName is null ? default : new FhirServiceExportConfiguration(exportStorageAccountName, default),
                     (privateEndpointConnections ?? new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>()).ToList(),
                     publicNetworkAccess,
                     eventState,
                     resourceVersionPolicyConfiguration,
                     importConfiguration,
-                    new ImplementationGuidesConfiguration(isUsCoreMissingDataEnabled, default),
-                    new Encryption(new EncryptionCustomerManagedKeyEncryption(keyEncryptionKeyUri, default), default),
+                    isUsCoreMissingDataEnabled is null ? default : new ImplementationGuidesConfiguration(isUsCoreMissingDataEnabled, default),
+                    keyEncryptionKeyUri is null ? default : new Encryption(keyEncryptionKeyUri is null ? default : new EncryptionCustomerManagedKeyEncryption(keyEncryptionKeyUri, default), default),
                     default),
                 etag,
                 identity,
@@ -1065,7 +1065,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     (privateEndpointConnections ?? new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>()).ToList(),
                     publicNetworkAccess,
                     eventState,
-                    new Encryption(new EncryptionCustomerManagedKeyEncryption(keyEncryptionKeyUri, default), default),
+                    keyEncryptionKeyUri is null ? default : new Encryption(keyEncryptionKeyUri is null ? default : new EncryptionCustomerManagedKeyEncryption(keyEncryptionKeyUri, default), default),
                     default,
                     default,
                     default),

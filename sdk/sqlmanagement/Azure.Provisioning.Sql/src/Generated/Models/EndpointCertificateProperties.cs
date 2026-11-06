@@ -14,6 +14,7 @@ namespace Azure.Provisioning.Sql
     internal partial class EndpointCertificateProperties : ProvisionableConstruct
     {
         private BicepValue<string> _publicBlob;
+        private BicepList<EndpointTrustedRootCertificateInfo> _trustedRootCertificates;
 
         /// <summary> Creates a new EndpointCertificateProperties. </summary>
         public EndpointCertificateProperties()
@@ -30,11 +31,22 @@ namespace Azure.Provisioning.Sql
             }
         }
 
+        /// <summary> Gets the TrustedRootCertificates. </summary>
+        public BicepList<EndpointTrustedRootCertificateInfo> TrustedRootCertificates
+        {
+            get
+            {
+                Initialize();
+                return _trustedRootCertificates;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for EndpointCertificateProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _publicBlob = DefineProperty<string>(nameof(PublicBlob), new string[] { "publicBlob" });
+            _trustedRootCertificates = DefineListProperty<EndpointTrustedRootCertificateInfo>(nameof(TrustedRootCertificates), new string[] { "trustedRootCertificates" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

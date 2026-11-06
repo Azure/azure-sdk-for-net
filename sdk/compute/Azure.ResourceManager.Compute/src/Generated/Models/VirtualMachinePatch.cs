@@ -314,6 +314,23 @@ namespace Azure.ResourceManager.Compute.Models
             }
         }
 
+        /// <summary> Specifies information about the capacity reservation that is used to allocate virtual machine. Minimum api-version: 2021-04-01. </summary>
+        public CapacityReservationProfile CapacityReservation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CapacityReservation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineProperties();
+                }
+                Properties.CapacityReservation = value;
+            }
+        }
+
         /// <summary> Specifies the time at which the Virtual Machine resource was created. Minimum api-version: 2021-11-01. </summary>
         public DateTimeOffset? TimeCreated
         {
@@ -341,7 +358,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Resource Id. </summary>
-        public ResourceIdentifier AvailabilitySetId
+        public virtual ResourceIdentifier AvailabilitySetId
         {
             get
             {
@@ -358,7 +375,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Resource Id. </summary>
-        public ResourceIdentifier VirtualMachineScaleSetId
+        public virtual ResourceIdentifier VirtualMachineScaleSetId
         {
             get
             {
@@ -375,7 +392,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Resource Id. </summary>
-        public ResourceIdentifier ProximityPlacementGroupId
+        public virtual ResourceIdentifier ProximityPlacementGroupId
         {
             get
             {
@@ -409,7 +426,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Resource Id. </summary>
-        public ResourceIdentifier HostId
+        public virtual ResourceIdentifier HostId
         {
             get
             {
@@ -426,7 +443,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Resource Id. </summary>
-        public ResourceIdentifier HostGroupId
+        public virtual ResourceIdentifier HostGroupId
         {
             get
             {
@@ -439,23 +456,6 @@ namespace Azure.ResourceManager.Compute.Models
                     Properties = new VirtualMachineProperties();
                 }
                 Properties.HostGroupId = value;
-            }
-        }
-
-        /// <summary> Resource Id. </summary>
-        public ResourceIdentifier CapacityReservationGroupId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.CapacityReservationGroupId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualMachineProperties();
-                }
-                Properties.CapacityReservationGroupId = value;
             }
         }
 

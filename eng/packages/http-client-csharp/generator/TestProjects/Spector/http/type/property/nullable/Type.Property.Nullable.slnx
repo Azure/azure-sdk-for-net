@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="src/Type.Property.Nullable.csproj" />
+  <Project Path="tests/Type.Property.Nullable.Tests.csproj" />
 </Solution>

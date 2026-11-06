@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppServiceWorkerPoolData, HostingEnvironmentWorkerPoolResource>(new AppServiceEnvironmentsGetWorkerPoolsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AppServiceWorkerPoolData, HostingEnvironmentWorkerPoolResource>(new AppServiceWorkerPoolDataAsyncCollectionResultOfT(
                 _appServiceEnvironmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppServiceWorkerPoolData, HostingEnvironmentWorkerPoolResource>(new AppServiceEnvironmentsGetWorkerPoolsCollectionResultOfT(
+            return new PageableWrapper<AppServiceWorkerPoolData, HostingEnvironmentWorkerPoolResource>(new AppServiceWorkerPoolDataCollectionResultOfT(
                 _appServiceEnvironmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

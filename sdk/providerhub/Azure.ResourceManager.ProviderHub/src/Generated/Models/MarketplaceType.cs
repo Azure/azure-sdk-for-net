@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Bypass. </summary>
         Bypass,
         /// <summary> Store. </summary>
-        Store
+        Store,
+        /// <summary> ProviderHub. </summary>
+        ProviderHub
     }
 }

@@ -169,10 +169,10 @@ namespace Azure.AI.Vision.ImageAnalysis
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DetectedTextLine(text, boundingPolygon, words, additionalBinaryDataProperties);
+            return new DetectedTextLine(text, boundingPolygon ?? new ChangeTrackingList<ImagePoint>(), words ?? new ChangeTrackingList<DetectedTextWord>(), additionalBinaryDataProperties);
         }
     }
 }

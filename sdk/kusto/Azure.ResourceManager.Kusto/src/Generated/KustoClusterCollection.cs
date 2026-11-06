@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.Kusto
         {
             TryGetApiVersion(KustoClusterResource.ResourceType, out string kustoClusterApiVersion);
             _clustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", KustoClusterResource.ResourceType.Namespace, Diagnostics);
-            _clustersRestClient = new Clusters(_clustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, kustoClusterApiVersion ?? "2025-02-14");
+            _clustersRestClient = new Clusters(
+                _clustersClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                kustoClusterApiVersion ?? "2025-02-14",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -296,7 +302,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<KustoClusterData, KustoClusterResource>(new ClustersGetByResourceGroupAsyncCollectionResultOfT(_clustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "KustoClusterCollection.GetAll"), data => new KustoClusterResource(Client, data));
+            return new AsyncPageableWrapper<KustoClusterData, KustoClusterResource>(new KustoClusterDataAsyncCollectionResultOfT(_clustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "KustoClusterCollection.GetAll"), data => new KustoClusterResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +330,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<KustoClusterData, KustoClusterResource>(new ClustersGetByResourceGroupCollectionResultOfT(_clustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "KustoClusterCollection.GetAll"), data => new KustoClusterResource(Client, data));
+            return new PageableWrapper<KustoClusterData, KustoClusterResource>(new KustoClusterDataCollectionResultOfT(_clustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "KustoClusterCollection.GetAll"), data => new KustoClusterResource(Client, data));
         }
 
         /// <summary>

@@ -104,10 +104,14 @@ namespace Azure.Storage.Internal.Avro
             if (dataStream.CanSeek)
             {
                 _dataStream = dataStream;
+                // Seekable blob streams report an absolute position that already includes the resume offset.
+                _initialBlockOffset = 0;
             }
             else
             {
                 _dataStream = new StreamWithPosition(dataStream);
+                // Wrapped non-seekable streams count from zero, so translate their position to an absolute offset.
+                _initialBlockOffset = currentBlockOffset;
             }
 
             if (headerStream.CanSeek)
@@ -121,7 +125,6 @@ namespace Azure.Storage.Internal.Avro
 
             _metadata = new Dictionary<string, string>();
             _initalized = false;
-            _initialBlockOffset = currentBlockOffset;
             BlockOffset = currentBlockOffset;
             ObjectIndex = indexWithinCurrentBlock;
             _initalized = false;

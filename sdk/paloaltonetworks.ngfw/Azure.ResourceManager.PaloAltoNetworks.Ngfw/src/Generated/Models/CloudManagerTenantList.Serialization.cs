@@ -164,10 +164,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CloudManagerTenantList(value, additionalBinaryDataProperties);
+            return new CloudManagerTenantList(value ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

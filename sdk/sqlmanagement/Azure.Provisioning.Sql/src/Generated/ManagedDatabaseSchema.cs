@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -18,12 +19,12 @@ namespace Azure.Provisioning.Sql
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SystemData _systemData;
-        private ResourceReference<ManagedDatabase> _parent;
+        private ProvisioningResourceReference<ManagedDatabase> _parent;
 
         /// <summary> Creates a new ManagedDatabaseSchema. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        internal ManagedDatabaseSchema(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Sql/managedInstances/databases/schemas", resourceVersion ?? "2025-01-01")
+        internal ManagedDatabaseSchema(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Sql/managedInstances/databases/schemas", resourceVersion ?? "2025-08-01-preview")
         {
         }
 
@@ -84,7 +85,7 @@ namespace Azure.Provisioning.Sql
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
-            _parent = DefineResource<ManagedDatabase>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = new ProvisioningResourceReference<ManagedDatabase>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 
@@ -104,6 +105,12 @@ namespace Azure.Provisioning.Sql
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2025-08-01-preview". </summary>
+            [Experimental("AZPROVISION001")]
+            public static readonly string V2025_08_01_PREVIEW = "2025-08-01-preview";
+            /// <summary> API version "2025-02-01-preview". </summary>
+            [Experimental("AZPROVISION001")]
+            public static readonly string V2025_02_01_PREVIEW = "2025-02-01-preview";
             /// <summary> API version "2025-01-01". </summary>
             public static readonly string V2025_01_01 = "2025-01-01";
         }

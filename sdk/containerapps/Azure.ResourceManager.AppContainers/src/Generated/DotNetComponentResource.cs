@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(ResourceType, out string dotNetComponentApiVersion);
             _dotNetComponentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _dotNetComponentsRestClient = new DotNetComponents(_dotNetComponentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dotNetComponentApiVersion ?? "2025-10-02-preview");
+            _dotNetComponentsRestClient = new DotNetComponents(_dotNetComponentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dotNetComponentApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -103,6 +103,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <description> DotNetComponents_Get. </description>
         /// </item>
         /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-07-01. </description>
+        /// </item>
+        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="DotNetComponentResource"/>. </description>
         /// </item>
@@ -147,6 +151,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <description> DotNetComponents_Get. </description>
         /// </item>
         /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-07-01. </description>
+        /// </item>
+        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="DotNetComponentResource"/>. </description>
         /// </item>
@@ -189,6 +197,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> DotNetComponents_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -246,6 +258,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <description> DotNetComponents_Update. </description>
         /// </item>
         /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-07-01. </description>
+        /// </item>
+        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="DotNetComponentResource"/>. </description>
         /// </item>
@@ -301,6 +317,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <description> DotNetComponents_Delete. </description>
         /// </item>
         /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-07-01. </description>
+        /// </item>
+        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="DotNetComponentResource"/>. </description>
         /// </item>
@@ -344,6 +364,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> DotNetComponents_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

@@ -82,7 +82,8 @@ namespace Azure.Storage.Blobs.Tests
             {
                 BufferSize = bufferSize,
                 Position = position,
-                Conditions = conditions
+                Conditions = conditions,
+                LayoutAwareRouting = LayoutAwareRouting.Disabled
             });
 
         protected override async Task<Stream> OpenReadAsyncOverload(TBlobClient client, int? bufferSize = null, long position = 0, bool allowModifications = false)

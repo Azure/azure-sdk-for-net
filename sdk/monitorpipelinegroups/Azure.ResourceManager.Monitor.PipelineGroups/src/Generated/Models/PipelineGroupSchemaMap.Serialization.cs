@@ -194,10 +194,10 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PipelineGroupSchemaMap(recordMap, resourceMap ?? new ChangeTrackingList<PipelineGroupResourceMap>(), scopeMap ?? new ChangeTrackingList<PipelineGroupScopeMap>(), additionalBinaryDataProperties);
+            return new PipelineGroupSchemaMap(recordMap ?? new ChangeTrackingList<PipelineGroupRecordMap>(), resourceMap ?? new ChangeTrackingList<PipelineGroupResourceMap>(), scopeMap ?? new ChangeTrackingList<PipelineGroupScopeMap>(), additionalBinaryDataProperties);
         }
     }
 }

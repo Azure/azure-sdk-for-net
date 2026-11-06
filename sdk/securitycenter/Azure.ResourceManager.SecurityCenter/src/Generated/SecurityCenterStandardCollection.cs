@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SecurityCenterStandardCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(SecurityCenterStandardResource.ResourceType, out string securityCenterStandardApiVersion);
             _standardsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityCenterStandardResource.ResourceType.Namespace, Diagnostics);
-            _standardsRestClient = new Standards(_standardsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityCenterStandardApiVersion ?? "2021-08-01-preview");
+            _standardsRestClient = new Standards(_standardsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -288,7 +287,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityCenterStandardData, SecurityCenterStandardResource>(new StandardsGetAllAsyncCollectionResultOfT(_standardsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SecurityCenterStandardCollection.GetAll"), data => new SecurityCenterStandardResource(Client, data));
+            return new AsyncPageableWrapper<SecurityCenterStandardData, SecurityCenterStandardResource>(new SecurityCenterStandardDataAsyncCollectionResultOfT(_standardsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SecurityCenterStandardCollection.GetAll"), data => new SecurityCenterStandardResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +315,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityCenterStandardData, SecurityCenterStandardResource>(new StandardsGetAllCollectionResultOfT(_standardsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SecurityCenterStandardCollection.GetAll"), data => new SecurityCenterStandardResource(Client, data));
+            return new PageableWrapper<SecurityCenterStandardData, SecurityCenterStandardResource>(new SecurityCenterStandardDataCollectionResultOfT(_standardsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SecurityCenterStandardCollection.GetAll"), data => new SecurityCenterStandardResource(Client, data));
         }
 
         /// <summary>

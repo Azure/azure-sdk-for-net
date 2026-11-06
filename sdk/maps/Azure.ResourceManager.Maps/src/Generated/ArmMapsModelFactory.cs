@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Maps.Models
                 name,
                 resourceType,
                 systemData,
-                groupIds is null && privateEndpointId is null && privateLinkServiceConnectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default),
+                groupIds is null && privateEndpointId is null && privateLinkServiceConnectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default),
                 default);
         }
 
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Maps.Models
                     disableLocalAuth,
                     provisioningState,
                     (linkedResources ?? new ChangeTrackingList<MapsLinkedResource>()).ToList(),
-                    new MapsCorsRules((corsRules ?? new ChangeTrackingList<MapsCorsRule>()).ToList(), default),
+                    corsRules is null ? default : new MapsCorsRules((corsRules ?? new ChangeTrackingList<MapsCorsRule>()).ToList(), default),
                     encryption,
                     (locations ?? new ChangeTrackingList<MapsLocationItem>()).ToList(),
                     (privateEndpointConnections ?? new ChangeTrackingList<MapsPrivateEndpointConnectionData>()).ToList(),
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Maps.Models
         /// <param name="properties"> The map account properties. </param>
         /// <returns> A new <see cref="Maps.MapsAccountData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MapsAccountData MapsAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MapsSku sku = default, MapsAccountKind? kind = default, ManagedServiceIdentity identity = default, MapsAccountProperties properties = default)
+        public static MapsAccountData MapsAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MapsSku sku, MapsAccountKind? kind, ManagedServiceIdentity identity, MapsAccountProperties properties)
         {
             return new MapsAccountData(
                 id,
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Maps.Models
         /// <param name="encryption"> All encryption configuration for a resource. </param>
         /// <returns> A new <see cref="Models.MapsAccountProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MapsAccountProperties MapsAccountProperties(Guid? uniqueId = default, bool? disableLocalAuth = default, string provisioningState = default, IEnumerable<MapsLinkedResource> linkedResources = default, IEnumerable<MapsCorsRule> corsRulesValue = default, MapsEncryption encryption = default)
+        public static MapsAccountProperties MapsAccountProperties(Guid? uniqueId, bool? disableLocalAuth, string provisioningState, IEnumerable<MapsLinkedResource> linkedResources, IEnumerable<MapsCorsRule> corsRulesValue, MapsEncryption encryption)
         {
             return new MapsAccountProperties(
                 uniqueId,
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.Maps.Models
         /// <param name="encryption"> All encryption configuration for a resource. </param>
         /// <returns> A new <see cref="Models.MapsAccountPatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MapsAccountPatch MapsAccountPatch(IDictionary<string, string> tags = default, MapsAccountKind? kind = default, MapsSku sku = default, ManagedServiceIdentity identity = default, Guid? uniqueId = default, bool? disableLocalAuth = default, string provisioningState = default, IEnumerable<MapsLinkedResource> linkedResources = default, IEnumerable<MapsCorsRule> corsRulesValue = default, MapsEncryption encryption = default)
+        public static MapsAccountPatch MapsAccountPatch(IDictionary<string, string> tags, MapsAccountKind? kind, MapsSku sku, ManagedServiceIdentity identity, Guid? uniqueId, bool? disableLocalAuth, string provisioningState, IEnumerable<MapsLinkedResource> linkedResources, IEnumerable<MapsCorsRule> corsRulesValue, MapsEncryption encryption)
         {
             return new MapsAccountPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.Maps.Models
         /// <param name="storageUnits"> The storage units to be allocated. Integer values from 1 to 100, inclusive. </param>
         /// <returns> A new <see cref="Models.MapsCreatorProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MapsCreatorProperties MapsCreatorProperties(string provisioningState = default, int storageUnits = 0)
+        public static MapsCreatorProperties MapsCreatorProperties(string provisioningState, int storageUnits)
         {
             return new MapsCreatorProperties(provisioningState, storageUnits, default, default, default);
         }
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Maps.Models
         /// <param name="storageUnits"> The storage units to be allocated. Integer values from 1 to 100, inclusive. </param>
         /// <returns> A new <see cref="Models.MapsCreatorPatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MapsCreatorPatch MapsCreatorPatch(IDictionary<string, string> tags = default, string provisioningState = default, int? storageUnits = default)
+        public static MapsCreatorPatch MapsCreatorPatch(IDictionary<string, string> tags, string provisioningState, int? storageUnits)
         {
             return new MapsCreatorPatch(tags ?? new ChangeTrackingDictionary<string, string>(), provisioningState is null && storageUnits is null ? default : new MapsCreatorProperties(provisioningState, storageUnits.GetValueOrDefault(), default, default, default), default);
         }

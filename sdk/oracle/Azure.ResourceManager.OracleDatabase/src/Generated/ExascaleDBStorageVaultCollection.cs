@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.OracleDatabase
     /// </summary>
     public partial class ExascaleDBStorageVaultCollection : ArmCollection, IEnumerable<ExascaleDBStorageVaultResource>, IAsyncEnumerable<ExascaleDBStorageVaultResource>
     {
-        private readonly ClientDiagnostics _exascaleDbStorageVaultsClientDiagnostics;
-        private readonly ExascaleDbStorageVaults _exascaleDbStorageVaultsRestClient;
+        private readonly ClientDiagnostics _exascaleDBStorageVaultsClientDiagnostics;
+        private readonly ExascaleDBStorageVaults _exascaleDBStorageVaultsRestClient;
 
         /// <summary> Initializes a new instance of ExascaleDBStorageVaultCollection for mocking. </summary>
         protected ExascaleDBStorageVaultCollection()
@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ExascaleDBStorageVaultCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ExascaleDBStorageVaultResource.ResourceType, out string exascaleDBStorageVaultApiVersion);
-            _exascaleDbStorageVaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ExascaleDBStorageVaultResource.ResourceType.Namespace, Diagnostics);
-            _exascaleDbStorageVaultsRestClient = new ExascaleDbStorageVaults(_exascaleDbStorageVaultsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, exascaleDBStorageVaultApiVersion ?? "2025-09-01");
+            _exascaleDBStorageVaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ExascaleDBStorageVaultResource.ResourceType.Namespace, Diagnostics);
+            _exascaleDBStorageVaultsRestClient = new ExascaleDBStorageVaults(_exascaleDBStorageVaultsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Oracle.Database/exascaleDbStorageVaults", out string exascaleDBStorageVaultsApiVersionOverride) ? exascaleDBStorageVaultsApiVersionOverride : "2026-06-01");
             ValidateResourceId(id);
         }
 
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.OracleDatabase
             Argument.AssertNotNullOrEmpty(exascaleDbStorageVaultName, nameof(exascaleDbStorageVaultName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _exascaleDbStorageVaultsClientDiagnostics.CreateScope("ExascaleDBStorageVaultCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _exascaleDBStorageVaultsClientDiagnostics.CreateScope("ExascaleDBStorageVaultCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -91,11 +90,11 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exascaleDbStorageVaultsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exascaleDbStorageVaultName, ExascaleDBStorageVaultData.ToRequestContent(data), context);
+                HttpMessage message = _exascaleDBStorageVaultsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exascaleDbStorageVaultName, ExascaleDBStorageVaultData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<ExascaleDBStorageVaultResource> operation = new OracleDatabaseArmOperation<ExascaleDBStorageVaultResource>(
                     new ExascaleDBStorageVaultResourceOperationSource(Client),
-                    _exascaleDbStorageVaultsClientDiagnostics,
+                    _exascaleDBStorageVaultsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -141,7 +140,7 @@ namespace Azure.ResourceManager.OracleDatabase
             Argument.AssertNotNullOrEmpty(exascaleDbStorageVaultName, nameof(exascaleDbStorageVaultName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _exascaleDbStorageVaultsClientDiagnostics.CreateScope("ExascaleDBStorageVaultCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _exascaleDBStorageVaultsClientDiagnostics.CreateScope("ExascaleDBStorageVaultCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -149,11 +148,11 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exascaleDbStorageVaultsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exascaleDbStorageVaultName, ExascaleDBStorageVaultData.ToRequestContent(data), context);
+                HttpMessage message = _exascaleDBStorageVaultsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exascaleDbStorageVaultName, ExascaleDBStorageVaultData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<ExascaleDBStorageVaultResource> operation = new OracleDatabaseArmOperation<ExascaleDBStorageVaultResource>(
                     new ExascaleDBStorageVaultResourceOperationSource(Client),
-                    _exascaleDbStorageVaultsClientDiagnostics,
+                    _exascaleDBStorageVaultsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -184,7 +183,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,7 +195,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             Argument.AssertNotNullOrEmpty(exascaleDbStorageVaultName, nameof(exascaleDbStorageVaultName));
 
-            using DiagnosticScope scope = _exascaleDbStorageVaultsClientDiagnostics.CreateScope("ExascaleDBStorageVaultCollection.Get");
+            using DiagnosticScope scope = _exascaleDBStorageVaultsClientDiagnostics.CreateScope("ExascaleDBStorageVaultCollection.Get");
             scope.Start();
             try
             {
@@ -204,7 +203,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exascaleDbStorageVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exascaleDbStorageVaultName, context);
+                HttpMessage message = _exascaleDBStorageVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exascaleDbStorageVaultName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExascaleDBStorageVaultData> response = Response.FromValue(ExascaleDBStorageVaultData.FromResponse(result), result);
                 if (response.Value == null)
@@ -233,7 +232,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -245,7 +244,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             Argument.AssertNotNullOrEmpty(exascaleDbStorageVaultName, nameof(exascaleDbStorageVaultName));
 
-            using DiagnosticScope scope = _exascaleDbStorageVaultsClientDiagnostics.CreateScope("ExascaleDBStorageVaultCollection.Get");
+            using DiagnosticScope scope = _exascaleDBStorageVaultsClientDiagnostics.CreateScope("ExascaleDBStorageVaultCollection.Get");
             scope.Start();
             try
             {
@@ -253,7 +252,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exascaleDbStorageVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exascaleDbStorageVaultName, context);
+                HttpMessage message = _exascaleDBStorageVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exascaleDbStorageVaultName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExascaleDBStorageVaultData> response = Response.FromValue(ExascaleDBStorageVaultData.FromResponse(result), result);
                 if (response.Value == null)
@@ -282,7 +281,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ExascaleDBStorageVaultData, ExascaleDBStorageVaultResource>(new ExascaleDbStorageVaultsGetByResourceGroupAsyncCollectionResultOfT(_exascaleDbStorageVaultsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExascaleDBStorageVaultCollection.GetAll"), data => new ExascaleDBStorageVaultResource(Client, data));
+            return new AsyncPageableWrapper<ExascaleDBStorageVaultData, ExascaleDBStorageVaultResource>(new ExascaleDBStorageVaultDataAsyncCollectionResultOfT(_exascaleDBStorageVaultsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExascaleDBStorageVaultCollection.GetAll"), data => new ExascaleDBStorageVaultResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +309,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ExascaleDBStorageVaultData, ExascaleDBStorageVaultResource>(new ExascaleDbStorageVaultsGetByResourceGroupCollectionResultOfT(_exascaleDbStorageVaultsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExascaleDBStorageVaultCollection.GetAll"), data => new ExascaleDBStorageVaultResource(Client, data));
+            return new PageableWrapper<ExascaleDBStorageVaultData, ExascaleDBStorageVaultResource>(new ExascaleDBStorageVaultDataCollectionResultOfT(_exascaleDBStorageVaultsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ExascaleDBStorageVaultCollection.GetAll"), data => new ExascaleDBStorageVaultResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +337,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -350,7 +349,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             Argument.AssertNotNullOrEmpty(exascaleDbStorageVaultName, nameof(exascaleDbStorageVaultName));
 
-            using DiagnosticScope scope = _exascaleDbStorageVaultsClientDiagnostics.CreateScope("ExascaleDBStorageVaultCollection.Exists");
+            using DiagnosticScope scope = _exascaleDBStorageVaultsClientDiagnostics.CreateScope("ExascaleDBStorageVaultCollection.Exists");
             scope.Start();
             try
             {
@@ -358,7 +357,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exascaleDbStorageVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exascaleDbStorageVaultName, context);
+                HttpMessage message = _exascaleDBStorageVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exascaleDbStorageVaultName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ExascaleDBStorageVaultData> response = default;
@@ -395,7 +394,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -407,7 +406,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             Argument.AssertNotNullOrEmpty(exascaleDbStorageVaultName, nameof(exascaleDbStorageVaultName));
 
-            using DiagnosticScope scope = _exascaleDbStorageVaultsClientDiagnostics.CreateScope("ExascaleDBStorageVaultCollection.Exists");
+            using DiagnosticScope scope = _exascaleDBStorageVaultsClientDiagnostics.CreateScope("ExascaleDBStorageVaultCollection.Exists");
             scope.Start();
             try
             {
@@ -415,7 +414,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exascaleDbStorageVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exascaleDbStorageVaultName, context);
+                HttpMessage message = _exascaleDBStorageVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exascaleDbStorageVaultName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ExascaleDBStorageVaultData> response = default;
@@ -452,7 +451,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -464,7 +463,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             Argument.AssertNotNullOrEmpty(exascaleDbStorageVaultName, nameof(exascaleDbStorageVaultName));
 
-            using DiagnosticScope scope = _exascaleDbStorageVaultsClientDiagnostics.CreateScope("ExascaleDBStorageVaultCollection.GetIfExists");
+            using DiagnosticScope scope = _exascaleDBStorageVaultsClientDiagnostics.CreateScope("ExascaleDBStorageVaultCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -472,7 +471,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exascaleDbStorageVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exascaleDbStorageVaultName, context);
+                HttpMessage message = _exascaleDBStorageVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exascaleDbStorageVaultName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ExascaleDBStorageVaultData> response = default;
@@ -513,7 +512,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -525,7 +524,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             Argument.AssertNotNullOrEmpty(exascaleDbStorageVaultName, nameof(exascaleDbStorageVaultName));
 
-            using DiagnosticScope scope = _exascaleDbStorageVaultsClientDiagnostics.CreateScope("ExascaleDBStorageVaultCollection.GetIfExists");
+            using DiagnosticScope scope = _exascaleDBStorageVaultsClientDiagnostics.CreateScope("ExascaleDBStorageVaultCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -533,7 +532,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exascaleDbStorageVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exascaleDbStorageVaultName, context);
+                HttpMessage message = _exascaleDBStorageVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exascaleDbStorageVaultName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ExascaleDBStorageVaultData> response = default;

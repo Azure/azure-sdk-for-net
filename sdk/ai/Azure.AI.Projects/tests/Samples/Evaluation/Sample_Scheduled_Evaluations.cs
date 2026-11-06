@@ -9,6 +9,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.Extensions.OpenAI;
 using Azure.AI.Projects.Agents;
 using Azure.AI.Projects.Evaluation;
 using Azure.Identity;
@@ -19,6 +20,7 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Tests.Samples.Evaluation;
 #pragma warning disable AAIP001
+#pragma warning disable AAIP002
 
 public class Sample_ScheduledEvaluations : EvaluationSampleBase
 {
@@ -314,15 +316,14 @@ public class Sample_ScheduledEvaluations : EvaluationSampleBase
             foreach (ResponseTool agentTool in agentDefinition.Tools)
             {
                 ToolDescription tool = new();
-                ProjectsAgentTool projectTool = agentTool.AsAgentTool();
-                if (projectTool is OpenAPITool openAPITool)
+                if (agentTool is OpenApiTool openAPITool)
                 {
                     tool.Name = openAPITool.FunctionDefinition.Name;
                     tool.Description = string.IsNullOrEmpty(openAPITool.FunctionDefinition.Description) ? "No description provided" : openAPITool.FunctionDefinition.Description;
                 }
                 else
                 {
-                    tool.Name = $"Tool of type {projectTool.GetType()}";
+                    tool.Name = $"Tool of type {agentTool.GetType()}";
                     tool.Description = "No description provided";
                 }
                 target.ToolDescriptions.Add(tool);

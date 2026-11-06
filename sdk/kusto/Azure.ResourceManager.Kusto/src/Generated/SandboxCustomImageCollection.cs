@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SandboxCustomImageData, SandboxCustomImageResource>(new SandboxCustomImagesGetByClusterAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SandboxCustomImageData, SandboxCustomImageResource>(new SandboxCustomImageDataAsyncCollectionResultOfT(
                 _sandboxCustomImagesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SandboxCustomImageData, SandboxCustomImageResource>(new SandboxCustomImagesGetByClusterCollectionResultOfT(
+            return new PageableWrapper<SandboxCustomImageData, SandboxCustomImageResource>(new SandboxCustomImageDataCollectionResultOfT(
                 _sandboxCustomImagesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Location of the SKU. </summary>
+        [WirePath("location")]
+        public AzureLocation? Location { get; }
+
         /// <summary> List of availability zones where the SKU is supported. </summary>
         [WirePath("zones")]
         public IReadOnlyList<string> Zones { get; }

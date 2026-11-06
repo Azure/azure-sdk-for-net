@@ -46,8 +46,8 @@ OperationalInsightsWorkspace logAnalytics =
     };
 infra.Add(logAnalytics);
 
-ContainerAppManagedEnvironment env =
-    new(nameof(env), ContainerAppManagedEnvironment.ResourceVersions.V2024_03_01)
+ContainerAppManagedEnvironment env1 =
+    new(nameof(env1), ContainerAppManagedEnvironment.ResourceVersions.V2024_03_01)
     {
         AppLogsConfiguration =
             new ContainerAppLogsConfiguration
@@ -60,12 +60,12 @@ ContainerAppManagedEnvironment env =
                 }
             },
     };
-infra.Add(env);
+infra.Add(env1);
 
 ContainerApp app =
     new(nameof(app), ContainerApp.ResourceVersions.V2024_03_01)
     {
-        ManagedEnvironmentId = env.Id,
+        ManagedEnvironmentId = env1.Id,
         Configuration =
             new ContainerAppConfiguration
             {

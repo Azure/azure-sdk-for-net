@@ -10,10 +10,10 @@ namespace ClientModel.Tests.Collections;
 
 public static class SseStreamedValueResult
 {
-    public static AsyncStreamingClientResult<SseItem<StreamedValue>> Create(
+    public static AsyncStreamingResult<SseItem<StreamedValue>> Create(
         PipelineResponse response,
         CancellationToken cancellationToken = default)
-        => AsyncStreamingClientResult.CreateSse(
+        => AsyncStreamingResult.CreateSse(
             response,
             static (_, data) => StreamedValue.FromJson(data.ToArray()),
             static item => item.Data.ToString() == "[DONE]",

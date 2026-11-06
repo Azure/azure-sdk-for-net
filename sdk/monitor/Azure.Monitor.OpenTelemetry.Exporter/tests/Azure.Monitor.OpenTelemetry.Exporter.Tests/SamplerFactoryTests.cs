@@ -10,23 +10,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
     public class SamplerFactoryTests
     {
         [Fact]
-        public void RateLimitedSamplingIsUsedWhenConfiguredAndMultiTenantIsOff()
+        public void RateLimitedSamplingIsUsedWhenConfiguredAndMultiEndpointIsOff()
         {
             var options = new AzureMonitorExporterOptions { TracesPerSecond = 5.0 };
 
-            Assert.IsType<RateLimitedSampler>(SamplerFactory.Create(options, multiTenantEnabled: false));
+            Assert.IsType<RateLimitedSampler>(SamplerFactory.Create(options, multiEndpointEnabled: false));
         }
 
         /// <summary>
         /// The rate limit counts traces per process, so one limit would be shared across every
-        /// tenant the process carries and split between them by arrival order alone.
+        /// destination the process carries and split between them by arrival order alone.
         /// </summary>
         [Fact]
-        public void RateLimitedSamplingIsReplacedByFixedRateWhenMultiTenantIsOn()
+        public void RateLimitedSamplingIsReplacedByFixedRateWhenMultiEndpointIsOn()
         {
             var options = new AzureMonitorExporterOptions { TracesPerSecond = 5.0 };
 
-            Assert.IsType<ApplicationInsightsSampler>(SamplerFactory.Create(options, multiTenantEnabled: true));
+            Assert.IsType<ApplicationInsightsSampler>(SamplerFactory.Create(options, multiEndpointEnabled: true));
         }
 
         /// <summary>
@@ -34,9 +34,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         /// defaults to 1.0.
         /// </summary>
         [Fact]
-        public void MultiTenantDefaultsToFullFixedRateSampling()
+        public void MultiEndpointDefaultsToFullFixedRateSampling()
         {
-            var sampler = SamplerFactory.Create(new AzureMonitorExporterOptions(), multiTenantEnabled: true);
+            var sampler = SamplerFactory.Create(new AzureMonitorExporterOptions(), multiEndpointEnabled: true);
 
             Assert.Equal("ApplicationInsightsSampler{1}", sampler.Description);
         }
@@ -45,11 +45,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         /// An explicit ratio is still honoured; only the rate limit is overridden.
         /// </summary>
         [Fact]
-        public void MultiTenantHonoursAnExplicitSamplingRatio()
+        public void MultiEndpointHonoursAnExplicitSamplingRatio()
         {
             var options = new AzureMonitorExporterOptions { SamplingRatio = 0.5F };
 
-            var sampler = SamplerFactory.Create(options, multiTenantEnabled: true);
+            var sampler = SamplerFactory.Create(options, multiEndpointEnabled: true);
 
             Assert.Equal("ApplicationInsightsSampler{0.5}", sampler.Description);
         }
@@ -59,7 +59,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             var options = new AzureMonitorExporterOptions { TracesPerSecond = null };
 
-            Assert.IsType<ApplicationInsightsSampler>(SamplerFactory.Create(options, multiTenantEnabled: false));
+            Assert.IsType<ApplicationInsightsSampler>(SamplerFactory.Create(options, multiEndpointEnabled: false));
         }
     }
 }

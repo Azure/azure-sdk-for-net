@@ -12,14 +12,14 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> This is the request to get operation status using operationids. </summary>
+    /// <summary> The operation for which current status should be returned. </summary>
     public partial class GetBulkOperationStatusContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GetBulkOperationStatusContent"/>. </summary>
-        /// <param name="operationIds"> The list of operation ids to get the status of. </param>
+        /// <param name="operationIds"> The Bulk Action Operation Ids that identify the operations for which current status should be returned. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationIds"/> is null. </exception>
         public GetBulkOperationStatusContent(IEnumerable<string> operationIds)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GetBulkOperationStatusContent"/>. </summary>
-        /// <param name="operationIds"> The list of operation ids to get the status of. </param>
+        /// <param name="operationIds"> The Bulk Action Operation Ids that identify the operations for which current status should be returned. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal GetBulkOperationStatusContent(IList<string> operationIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The list of operation ids to get the status of. </summary>
+        /// <summary> The Bulk Action Operation Ids that identify the operations for which current status should be returned. </summary>
         public IList<string> OperationIds { get; }
     }
 }

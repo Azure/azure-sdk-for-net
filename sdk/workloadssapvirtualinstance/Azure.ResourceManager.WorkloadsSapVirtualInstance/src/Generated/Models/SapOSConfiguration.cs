@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
     /// <summary>
     /// Defines the OS configuration.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SapWindowsConfiguration"/> and <see cref="SapLinuxConfiguration"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SapLinuxConfiguration"/> and <see cref="SapWindowsConfiguration"/>.
     /// </summary>
     public abstract partial class SapOSConfiguration
     {

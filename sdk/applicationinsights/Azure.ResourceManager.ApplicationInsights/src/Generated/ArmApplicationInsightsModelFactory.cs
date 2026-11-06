@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     webTestKind.GetValueOrDefault(),
                     isRetryEnabled,
                     (locations ?? new ChangeTrackingList<WebTestGeolocation>()).ToList(),
-                    new WebTestPropertiesConfiguration(webTest, default),
+                    webTest is null ? default : new WebTestPropertiesConfiguration(webTest, default),
                     provisioningState,
                     request,
                     validationRules,
@@ -967,7 +967,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="validationRules"> The collection of validation rule properties. </param>
         /// <returns> A new <see cref="ApplicationInsights.ApplicationInsightsWebTestData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ApplicationInsightsWebTestData ApplicationInsightsWebTestData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, WebTestKind? kind = default, string syntheticMonitorId = default, string webTestName = default, string description = default, bool? isEnabled = default, int? frequencyInSeconds = default, int? timeoutInSeconds = default, WebTestKind? webTestKind = default, bool? isRetryEnabled = default, IEnumerable<WebTestGeolocation> locations = default, string webTest = default, string provisioningState = default, WebTestRequest request = default, WebTestValidationRules validationRules = default)
+        public static ApplicationInsightsWebTestData ApplicationInsightsWebTestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WebTestKind? kind, string syntheticMonitorId, string webTestName, string description, bool? isEnabled, int? frequencyInSeconds, int? timeoutInSeconds, WebTestKind? webTestKind, bool? isRetryEnabled, IEnumerable<WebTestGeolocation> locations, string webTest, string provisioningState, WebTestRequest request, WebTestValidationRules validationRules)
         {
             return new ApplicationInsightsWebTestData(
                 id,
@@ -987,7 +987,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     webTestKind.GetValueOrDefault(),
                     isRetryEnabled,
                     (locations ?? new ChangeTrackingList<WebTestGeolocation>()).ToList(),
-                    new WebTestPropertiesConfiguration(webTest, default),
+                    webTest is null ? default : new WebTestPropertiesConfiguration(webTest, default),
                     provisioningState,
                     request,
                     validationRules,
@@ -1017,7 +1017,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="etag"> Resource etag. </param>
         /// <returns> A new <see cref="ApplicationInsights.ApplicationInsightsWorkbookData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ApplicationInsightsWorkbookData ApplicationInsightsWorkbookData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string displayName = default, string serializedData = default, string version = default, DateTimeOffset? modifiedOn = default, string category = default, string userId = default, ResourceIdentifier sourceId = default, Uri storageUri = default, string description = default, string revision = default, ManagedServiceIdentity identity = default, WorkbookSharedTypeKind? kind = default, ETag? etag = default)
+        public static ApplicationInsightsWorkbookData ApplicationInsightsWorkbookData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string displayName, string serializedData, string version, DateTimeOffset? modifiedOn, string category, string userId, ResourceIdentifier sourceId, Uri storageUri, string description, string revision, ManagedServiceIdentity identity, WorkbookSharedTypeKind? kind, ETag? etag)
         {
             return new ApplicationInsightsWorkbookData(
                 id,

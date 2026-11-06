@@ -12,7 +12,7 @@ namespace _Type.Union
 {
     public static partial class TypeUnionModelFactory
     {
-        public static GetResponse GetResponse(GetResponseProp prop = default) => throw null;
+        public static GetResult GetResult(GetResponseProp prop = default) => throw null;
 
         public static GetResponse1 GetResponse1(GetResponseProp1 prop = default) => throw null;
 

@@ -77,6 +77,23 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             }
         }
 
+        /// <summary> Firewall SKU type, Default will be STANDARD. </summary>
+        public string FirewallSku
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FirewallSku;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirewallDeploymentProperties();
+                }
+                Properties.FirewallSku = value;
+            }
+        }
+
         /// <summary> Network settings. </summary>
         public FirewallNetworkProfile NetworkProfile
         {

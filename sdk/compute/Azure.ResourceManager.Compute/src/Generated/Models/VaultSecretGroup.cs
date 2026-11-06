@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
         public IList<VaultCertificate> VaultCertificates { get; }
 
         /// <summary> Resource Id. </summary>
-        public ResourceIdentifier SourceVaultId
+        public virtual ResourceIdentifier SourceVaultId
         {
             get
             {

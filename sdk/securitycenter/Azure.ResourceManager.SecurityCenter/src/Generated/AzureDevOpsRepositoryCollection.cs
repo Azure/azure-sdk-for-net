@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AzureDevOpsRepositoryData, AzureDevOpsRepositoryResource>(new AzureDevOpsReposGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AzureDevOpsRepositoryData, AzureDevOpsRepositoryResource>(new AzureDevOpsRepositoryDataAsyncCollectionResultOfT(
                 _azureDevOpsReposRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AzureDevOpsRepositoryData, AzureDevOpsRepositoryResource>(new AzureDevOpsReposGetAllCollectionResultOfT(
+            return new PageableWrapper<AzureDevOpsRepositoryData, AzureDevOpsRepositoryResource>(new AzureDevOpsRepositoryDataCollectionResultOfT(
                 _azureDevOpsReposRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

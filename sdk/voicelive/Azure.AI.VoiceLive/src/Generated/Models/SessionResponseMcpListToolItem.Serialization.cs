@@ -155,7 +155,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SessionResponseMcpListToolItem(
@@ -163,7 +163,7 @@ namespace Azure.AI.VoiceLive
                 id,
                 @object,
                 additionalBinaryDataProperties,
-                tools,
+                tools ?? new ChangeTrackingList<VoiceLiveMcpTool>(),
                 serverLabel);
         }
     }

@@ -11,13 +11,13 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The priority type for VM allocation. </summary>
+    /// <summary> The priority type for virtual machine allocation. </summary>
     public readonly partial struct PriorityType : IEquatable<PriorityType>
     {
         private readonly string _value;
-        /// <summary> Regular priority VMs. </summary>
+        /// <summary> Regular, non-Spot virtual machines. </summary>
         private const string RegularValue = "Regular";
-        /// <summary> Spot priority VMs. </summary>
+        /// <summary> Azure Spot Virtual Machines. </summary>
         private const string SpotValue = "Spot";
 
         /// <summary> Initializes a new instance of <see cref="PriorityType"/>. </summary>
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _value = value;
         }
 
-        /// <summary> Regular priority VMs. </summary>
+        /// <summary> Regular, non-Spot virtual machines. </summary>
         public static PriorityType Regular { get; } = new PriorityType(RegularValue);
 
-        /// <summary> Spot priority VMs. </summary>
+        /// <summary> Azure Spot Virtual Machines. </summary>
         public static PriorityType Spot { get; } = new PriorityType(SpotValue);
 
         /// <summary> Determines if two <see cref="PriorityType"/> values are the same. </summary>

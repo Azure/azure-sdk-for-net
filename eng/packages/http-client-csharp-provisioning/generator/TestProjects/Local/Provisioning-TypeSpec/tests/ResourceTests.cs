@@ -19,7 +19,7 @@ public class ResourceTests
             {
                 Infrastructure infra = new();
                 ConfigurationStore store = new(nameof(store));
-                KeyValue keyValue = new(nameof(keyValue), KeyValue.ResourceVersions.V2024_04_01)
+                KeyValue keyValue = new(nameof(keyValue), KeyValue.ResourceVersions.V2024_01_01)
                 {
                     Parent = store,
                     Properties = new KeyValueProperties
@@ -70,7 +70,7 @@ public class ResourceTests
               location: location
             }
 
-            resource keyValue 'ProvisioningTypeSpec/configurationStores/keyValues@2024-04-01' = {
+            resource keyValue 'ProvisioningTypeSpec/configurationStores/keyValues@2024-01-01' = {
               name: take('keyValue-${uniqueString(resourceGroup().id)}', 24)
               parent: store
               properties: {
@@ -111,11 +111,11 @@ public class ResourceTests
 
             resource specialized 'ProvisioningTypeSpec/configurationStores/discriminatedResourceProfiles@2024-05-01' = {
               name: take('specialized-${uniqueString(resourceGroup().id)}', 24)
+              parent: store
+              kind: 'Specialized'
               properties: {
                 description: 'specialized profile'
               }
-              kind: 'Specialized'
-              parent: store
             }
             """);
     }

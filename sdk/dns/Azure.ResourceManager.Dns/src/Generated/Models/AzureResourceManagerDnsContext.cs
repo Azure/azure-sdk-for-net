@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.Dns
     [ModelReaderWriterBuildable(typeof(DnsARecordResource))]
     [ModelReaderWriterBuildable(typeof(DnsCaaRecordInfo))]
     [ModelReaderWriterBuildable(typeof(DnsCaaRecordResource))]
-    [ModelReaderWriterBuildable(typeof(DnsCnameRecordInfo))]
     [ModelReaderWriterBuildable(typeof(DnsCnameRecordResource))]
     [ModelReaderWriterBuildable(typeof(DnsDSRecordInfo))]
     [ModelReaderWriterBuildable(typeof(DnsDSRecordResource))]
@@ -39,12 +38,9 @@ namespace Azure.ResourceManager.Dns
     [ModelReaderWriterBuildable(typeof(DnsRecordSetProperties))]
     [ModelReaderWriterBuildable(typeof(Models.DnsResourceReference))]
     [ModelReaderWriterBuildable(typeof(DnsResourceReferenceContent))]
-    [ModelReaderWriterBuildable(typeof(DnsResourceReferenceRequestProperties))]
     [ModelReaderWriterBuildable(typeof(DnsResourceReferenceResult))]
-    [ModelReaderWriterBuildable(typeof(DnsResourceReferenceResultProperties))]
     [ModelReaderWriterBuildable(typeof(DnssecConfigData))]
     [ModelReaderWriterBuildable(typeof(DnssecConfigResource))]
-    [ModelReaderWriterBuildable(typeof(DnssecProperties))]
     [ModelReaderWriterBuildable(typeof(DnsSigningKey))]
     [ModelReaderWriterBuildable(typeof(DnsSoaRecordInfo))]
     [ModelReaderWriterBuildable(typeof(DnsSoaRecordResource))]
@@ -59,11 +55,8 @@ namespace Azure.ResourceManager.Dns
     [ModelReaderWriterBuildable(typeof(DnsZonePatch))]
     [ModelReaderWriterBuildable(typeof(DnsZoneResource))]
     [ModelReaderWriterBuildable(typeof(DSRecordDigest))]
-    [ModelReaderWriterBuildable(typeof(RecordSetListResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(WritableSubResource))]
-    [ModelReaderWriterBuildable(typeof(ZoneListResult))]
-    [ModelReaderWriterBuildable(typeof(ZoneProperties))]
     public partial class AzureResourceManagerDnsContext : ModelReaderWriterContext
     {
     }

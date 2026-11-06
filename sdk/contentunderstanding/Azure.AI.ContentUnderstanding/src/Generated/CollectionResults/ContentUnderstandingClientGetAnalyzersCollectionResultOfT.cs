@@ -36,7 +36,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <returns> The pages of ContentUnderstandingClientGetAnalyzersCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<ContentAnalyzer>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);

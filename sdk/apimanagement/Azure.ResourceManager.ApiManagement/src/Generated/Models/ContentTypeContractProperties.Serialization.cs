@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    schema = BinaryData.FromString(prop.Value.GetRawText());
+                    schema = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("version"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ContentTypeContractProperties(

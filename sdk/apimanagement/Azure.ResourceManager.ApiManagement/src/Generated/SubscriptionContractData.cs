@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             get
             {
-                return Properties is null ? default : Properties.State;
+                return Properties is null ? (SubscriptionState?)default : Properties.State;
             }
             set
             {

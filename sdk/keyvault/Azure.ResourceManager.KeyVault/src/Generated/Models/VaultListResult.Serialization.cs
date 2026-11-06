@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VaultListResult(value, nextLink, additionalBinaryDataProperties);
+            return new VaultListResult(value ?? new ChangeTrackingList<KeyVaultData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

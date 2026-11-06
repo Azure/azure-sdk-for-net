@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new DeviceRegistryDataset(name, datasetConfiguration, topic, dataPoints ?? new ChangeTrackingList<DeviceRegistryDataPoint>(), additionalBinaryDataProperties);

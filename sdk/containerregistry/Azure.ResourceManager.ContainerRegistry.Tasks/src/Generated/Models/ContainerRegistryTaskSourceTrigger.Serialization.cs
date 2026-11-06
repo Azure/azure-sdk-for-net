@@ -175,10 +175,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ContainerRegistryTaskSourceTrigger(sourceRepository, sourceTriggerEvents, status, name, additionalBinaryDataProperties);
+            return new ContainerRegistryTaskSourceTrigger(sourceRepository, sourceTriggerEvents ?? new ChangeTrackingList<ContainerRegistryTaskSourceTriggerEvent>(), status, name, additionalBinaryDataProperties);
         }
     }
 }

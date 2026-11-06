@@ -168,7 +168,6 @@
             "$id": "13",
             "name": "listItems",
             "isExactName": false,
-            "resourceName": "NextLinkVerb",
             "accessibility": "public",
             "parameters": [
               {
@@ -261,6 +260,7 @@
               "items"
             ],
             "nextLink": {
+              "verb": "POST",
               "responseSegments": [
                 "nextLink"
               ],

@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ServiceSpecification(logSpecifications ?? new ChangeTrackingList<LogSpecification>(), metricSpecifications ?? new ChangeTrackingList<MetricSpecification>(), additionalBinaryDataProperties);

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary>
     /// DataflowGraph Destination Header Action.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataflowGraphDestinationAddIfNotPresentHeaderAction"/>, <see cref="DataflowGraphDestinationRemoveHeaderAction"/>, and <see cref="DataflowGraphDestinationAddOrReplaceHeaderAction"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataflowGraphDestinationAddIfNotPresentHeaderAction"/>, <see cref="DataflowGraphDestinationAddOrReplaceHeaderAction"/>, and <see cref="DataflowGraphDestinationRemoveHeaderAction"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownDataflowGraphDestinationHeaderAction))]
     public abstract partial class DataflowGraphDestinationHeaderAction : IJsonModel<DataflowGraphDestinationHeaderAction>
@@ -132,10 +132,10 @@ namespace Azure.ResourceManager.IotOperations.Models
                 {
                     case "AddIfNotPresent":
                         return DataflowGraphDestinationAddIfNotPresentHeaderAction.DeserializeDataflowGraphDestinationAddIfNotPresentHeaderAction(element, options);
-                    case "Remove":
-                        return DataflowGraphDestinationRemoveHeaderAction.DeserializeDataflowGraphDestinationRemoveHeaderAction(element, options);
                     case "AddOrReplace":
                         return DataflowGraphDestinationAddOrReplaceHeaderAction.DeserializeDataflowGraphDestinationAddOrReplaceHeaderAction(element, options);
+                    case "Remove":
+                        return DataflowGraphDestinationRemoveHeaderAction.DeserializeDataflowGraphDestinationRemoveHeaderAction(element, options);
                 }
             }
             return UnknownDataflowGraphDestinationHeaderAction.DeserializeUnknownDataflowGraphDestinationHeaderAction(element, options);

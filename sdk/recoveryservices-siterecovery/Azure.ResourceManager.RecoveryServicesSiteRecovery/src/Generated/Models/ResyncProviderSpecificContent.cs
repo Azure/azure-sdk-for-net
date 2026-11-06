@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ResyncProviderSpecificContent"/>. </summary>
+        protected ResyncProviderSpecificContent() : this(default)
+        {
+        }
+
         /// <summary> The class type. </summary>
         internal string InstanceType { get; set; }
     }

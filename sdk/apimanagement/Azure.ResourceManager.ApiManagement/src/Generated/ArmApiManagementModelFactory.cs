@@ -979,13 +979,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     title,
                     description,
                     resourceUri,
-                    new BackendProperties(backendServiceFabricCluster, default),
+                    backendServiceFabricCluster is null ? default : new BackendProperties(backendServiceFabricCluster, default),
                     credentials,
                     proxy,
                     tls,
-                    new BackendCircuitBreaker((circuitBreakerRules ?? new ChangeTrackingList<CircuitBreakerRule>()).ToList(), default),
+                    circuitBreakerRules is null ? default : new BackendCircuitBreaker((circuitBreakerRules ?? new ChangeTrackingList<CircuitBreakerRule>()).ToList(), default),
                     azureRegion,
-                    new BackendBaseParametersPool((poolServices ?? new ChangeTrackingList<BackendPoolItem>()).ToList(), new BackendFailureResponse(failureResponseStatusCode, default), new BackendSessionAffinity(sessionId, default), default),
+                    poolServices is null && failureResponseStatusCode is null && sessionId is null ? default : new BackendBaseParametersPool((poolServices ?? new ChangeTrackingList<BackendPoolItem>()).ToList(), failureResponseStatusCode is null ? default : new BackendFailureResult(failureResponseStatusCode, default), sessionId is null ? default : new BackendSessionAffinity(sessionId, default), default),
                     typePropertiesType,
                     default,
                     uri,
@@ -1095,7 +1095,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 failureCondition,
                 tripDuration,
                 acceptRetryAfter,
-                failureResponseStatusCode is null ? default : new BackendFailureResponse(failureResponseStatusCode, default),
+                failureResponseStatusCode is null ? default : new BackendFailureResult(failureResponseStatusCode, default),
                 default);
         }
 
@@ -1171,13 +1171,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 title,
                 description,
                 resourceUri,
-                new BackendProperties(backendServiceFabricCluster, default),
+                backendServiceFabricCluster is null ? default : new BackendProperties(backendServiceFabricCluster, default),
                 credentials,
                 proxy,
                 tls,
-                new BackendCircuitBreaker((circuitBreakerRules ?? new ChangeTrackingList<CircuitBreakerRule>()).ToList(), default),
+                circuitBreakerRules is null ? default : new BackendCircuitBreaker((circuitBreakerRules ?? new ChangeTrackingList<CircuitBreakerRule>()).ToList(), default),
                 azureRegion,
-                new BackendBaseParametersPool((poolServices ?? new ChangeTrackingList<BackendPoolItem>()).ToList(), new BackendFailureResponse(failureResponseStatusCode, default), new BackendSessionAffinity(sessionId, default), default),
+                poolServices is null && failureResponseStatusCode is null && sessionId is null ? default : new BackendBaseParametersPool((poolServices ?? new ChangeTrackingList<BackendPoolItem>()).ToList(), failureResponseStatusCode is null ? default : new BackendFailureResult(failureResponseStatusCode, default), sessionId is null ? default : new BackendSessionAffinity(sessionId, default), default),
                 typePropertiesType,
                 default,
                 uri,
@@ -1551,7 +1551,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 name,
                 resourceType,
                 systemData,
-                uri is null && validationKey is null && isSubscriptionDelegationEnabled is null && isUserRegistrationDelegationEnabled is null ? default : new PortalDelegationSettingsProperties(uri, validationKey, new SubscriptionDelegationSettingProperties(isSubscriptionDelegationEnabled, default), new RegistrationDelegationSettingProperties(isUserRegistrationDelegationEnabled, default), default),
+                uri is null && validationKey is null && isSubscriptionDelegationEnabled is null && isUserRegistrationDelegationEnabled is null ? default : new PortalDelegationSettingsProperties(uri, validationKey, isSubscriptionDelegationEnabled is null ? default : new SubscriptionDelegationSettingProperties(isSubscriptionDelegationEnabled, default), isUserRegistrationDelegationEnabled is null ? default : new RegistrationDelegationSettingProperties(isUserRegistrationDelegationEnabled, default), default),
                 default);
         }
 
@@ -1591,7 +1591,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     isApprovalRequired,
                     subscriptionsLimit,
                     (authenticationType ?? new ChangeTrackingList<ProductAuthType>()).ToList(),
-                    new ProductEntityBaseParametersApplication(applicationEntra, default),
+                    applicationEntra is null ? default : new ProductEntityBaseParametersApplication(applicationEntra, default),
                     state,
                     default,
                     displayName),
@@ -1651,7 +1651,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 isApprovalRequired,
                 subscriptionsLimit,
                 (authenticationType ?? new ChangeTrackingList<ProductAuthType>()).ToList(),
-                new ProductEntityBaseParametersApplication(applicationEntra, default),
+                applicationEntra is null ? default : new ProductEntityBaseParametersApplication(applicationEntra, default),
                 state,
                 default,
                 displayName), default);
@@ -1894,14 +1894,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                frontendDefaultHostname is null && backendSubnetId is null && configurationApiHostname is null ? default : new ApiManagementGatewayProperties(
-                    default,
-                    default,
-                    default,
-                    new FrontendConfiguration(frontendDefaultHostname, default),
-                    new BackendConfiguration(new BackendSubnetConfiguration(backendSubnetId, default), default),
-                    new GatewayConfigurationApi(configurationApiHostname, default),
-                    default,
+                provisioningState is null && targetProvisioningState is null && createdAtUtc is null && frontendDefaultHostname is null && backendSubnetId is null && configurationApiHostname is null && virtualNetworkType is null ? default : new ApiManagementGatewayProperties(
+                    provisioningState,
+                    targetProvisioningState,
+                    createdAtUtc,
+                    frontendDefaultHostname is null ? default : new FrontendConfiguration(frontendDefaultHostname, default),
+                    backendSubnetId is null ? default : new BackendConfiguration(backendSubnetId is null ? default : new BackendSubnetConfiguration(backendSubnetId, default), default),
+                    configurationApiHostname is null ? default : new GatewayConfigurationApi(configurationApiHostname, default),
+                    virtualNetworkType,
                     default),
                 sku,
                 eTag,
@@ -1945,9 +1945,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     provisioningState,
                     targetProvisioningState,
                     createdAtUtc,
-                    new FrontendConfiguration(frontendDefaultHostname, default),
-                    new BackendConfiguration(new BackendSubnetConfiguration(backendSubnetId, default), default),
-                    new GatewayConfigurationApi(configurationApiHostname, default),
+                    frontendDefaultHostname is null ? default : new FrontendConfiguration(frontendDefaultHostname, default),
+                    backendSubnetId is null ? default : new BackendConfiguration(backendSubnetId is null ? default : new BackendSubnetConfiguration(backendSubnetId, default), default),
+                    configurationApiHostname is null ? default : new GatewayConfigurationApi(configurationApiHostname, default),
                     virtualNetworkType,
                     default),
                 sku,
@@ -2192,43 +2192,43 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                managementApiUri is null && legacyApi is null && enableClientCertificate is null && disableGateway is null && minApiVersion is null && restore is null && isZoneRedundant is null ? default : new ApiManagementServiceProperties(
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                notificationSenderEmail is null && provisioningState is null && targetProvisioningState is null && createdAtUtc is null && gatewayUri is null && gatewayRegionalUri is null && portalUri is null && managementApiUri is null && scmUri is null && developerPortalUri is null && hostnameConfigurations is null && publicIPAddresses is null && privateIPAddresses is null && publicIPAddressId is null && publicNetworkAccess is null && legacyApi is null && virtualNetworkConfiguration is null && additionalLocations is null && customProperties is null && certificates is null && enableClientCertificate is null && natGatewayState is null && outboundPublicIPAddresses is null && disableGateway is null && virtualNetworkType is null && minApiVersion is null && restore is null && privateEndpointConnections is null && platformVersion is null && legacyPortalStatus is null && developerPortalStatus is null && releaseChannel is null && isZoneRedundant is null && publisherEmail is null && publisherName is null ? default : new ApiManagementServiceProperties(
+                    notificationSenderEmail,
+                    provisioningState,
+                    targetProvisioningState,
+                    createdAtUtc,
+                    gatewayUri,
+                    gatewayRegionalUri,
+                    portalUri,
                     managementApiUri,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    new ConfigurationApi(legacyApi, default),
-                    default,
-                    default,
-                    default,
-                    default,
+                    scmUri,
+                    developerPortalUri,
+                    (hostnameConfigurations ?? new ChangeTrackingList<HostnameConfiguration>()).ToList(),
+                    (publicIPAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(),
+                    (privateIPAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(),
+                    publicIPAddressId,
+                    publicNetworkAccess,
+                    legacyApi is null ? default : new ConfigurationApi(legacyApi, default),
+                    virtualNetworkConfiguration,
+                    (additionalLocations ?? new ChangeTrackingList<AdditionalLocation>()).ToList(),
+                    customProperties ?? new ChangeTrackingDictionary<string, string>(),
+                    (certificates ?? new ChangeTrackingList<CertificateConfiguration>()).ToList(),
                     enableClientCertificate,
-                    default,
-                    default,
+                    natGatewayState,
+                    (outboundPublicIPAddresses ?? new ChangeTrackingList<string>()).ToList(),
                     disableGateway,
-                    default,
-                    new ApiVersionConstraint(minApiVersion, default),
+                    virtualNetworkType,
+                    minApiVersion is null ? default : new ApiVersionConstraint(minApiVersion, default),
                     restore,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                    (privateEndpointConnections ?? new ChangeTrackingList<RemotePrivateEndpointConnectionWrapper>()).ToList(),
+                    platformVersion,
+                    legacyPortalStatus,
+                    developerPortalStatus,
+                    releaseChannel,
                     isZoneRedundant,
                     default,
-                    default,
-                    default),
+                    publisherEmail,
+                    publisherName),
                 sku,
                 identity,
                 eTag,
@@ -2353,7 +2353,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="Models.RemotePrivateEndpointConnectionWrapper"/> instance for mocking. </returns>
         public static RemotePrivateEndpointConnectionWrapper RemotePrivateEndpointConnectionWrapper(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, ApiManagementPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, string provisioningState = default, IEnumerable<string> groupIds = default, ResourceIdentifier privateEndpointId = default)
         {
-            return new RemotePrivateEndpointConnectionWrapper(id, name, resourceType, privateEndpointId is null && privateLinkServiceConnectionState is null && provisioningState is null && groupIds is null ? default : new PrivateEndpointConnectionWrapperProperties(new ArmIdWrapper(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, (groupIds ?? new ChangeTrackingList<string>()).ToList(), default), default);
+            return new RemotePrivateEndpointConnectionWrapper(id, name, resourceType, privateEndpointId is null && privateLinkServiceConnectionState is null && provisioningState is null && groupIds is null ? default : new PrivateEndpointConnectionWrapperProperties(privateEndpointId is null ? default : new ArmIdWrapper(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, (groupIds ?? new ChangeTrackingList<string>()).ToList(), default), default);
         }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
@@ -2437,7 +2437,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     (privateIPAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(),
                     publicIPAddressId,
                     publicNetworkAccess,
-                    new ConfigurationApi(legacyApi, default),
+                    legacyApi is null ? default : new ConfigurationApi(legacyApi, default),
                     virtualNetworkConfiguration,
                     (additionalLocations ?? new ChangeTrackingList<AdditionalLocation>()).ToList(),
                     customProperties ?? new ChangeTrackingDictionary<string, string>(),
@@ -2447,7 +2447,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     (outboundPublicIPAddresses ?? new ChangeTrackingList<string>()).ToList(),
                     disableGateway,
                     virtualNetworkType,
-                    new ApiVersionConstraint(minApiVersion, default),
+                    minApiVersion is null ? default : new ApiVersionConstraint(minApiVersion, default),
                     restore,
                     (privateEndpointConnections ?? new ChangeTrackingList<RemotePrivateEndpointConnectionWrapper>()).ToList(),
                     platformVersion,
@@ -2750,8 +2750,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 uri is null && validationKey is null && isSubscriptionDelegationEnabled is null && isUserRegistrationDelegationEnabled is null && isRedirectEnabled is null && termsOfService is null ? default : new PortalSettingsContractProperties(
                     uri,
                     validationKey,
-                    new SubscriptionDelegationSettingProperties(isSubscriptionDelegationEnabled, default),
-                    new RegistrationDelegationSettingProperties(isUserRegistrationDelegationEnabled, default),
+                    isSubscriptionDelegationEnabled is null ? default : new SubscriptionDelegationSettingProperties(isSubscriptionDelegationEnabled, default),
+                    isUserRegistrationDelegationEnabled is null ? default : new RegistrationDelegationSettingProperties(isUserRegistrationDelegationEnabled, default),
                     isRedirectEnabled,
                     termsOfService,
                     default),
@@ -3547,7 +3547,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                provisioningState is null && sourceId is null && defaultHostname is null && hostnames is null ? default : new GatewayConfigConnectionBaseProperties(provisioningState, sourceId, defaultHostname, (hostnames ?? new ChangeTrackingList<string>()).ToList(), default),
                 eTag,
                 default);
         }
@@ -3569,7 +3569,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 name,
                 resourceType,
                 systemData,
-                hostname is null ? default : new GatewayHostnameBindingBaseProperties(default, hostname, default, default, default),
+                provisioningState is null && hostname is null && keyVault is null && certificate is null ? default : new GatewayHostnameBindingBaseProperties(provisioningState, hostname, keyVault, certificate, default),
                 eTag,
                 default);
         }
@@ -4057,10 +4057,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 systemData,
                 enableBasicAuth is null && require is null && signupTermsOfService is null && delegation is null && corsAllowedOrigins is null && csp is null ? default : new PortalConfigProperties(
                     enableBasicAuth,
-                    new PortalConfigPropertiesSignin(require, default),
-                    new PortalConfigPropertiesSignup(signupTermsOfService, default),
+                    require is null ? default : new PortalConfigPropertiesSignin(require, default),
+                    signupTermsOfService is null ? default : new PortalConfigPropertiesSignup(signupTermsOfService, default),
                     delegation,
-                    new PortalConfigCorsProperties((corsAllowedOrigins ?? new ChangeTrackingList<string>()).ToList(), default),
+                    corsAllowedOrigins is null ? default : new PortalConfigCorsProperties((corsAllowedOrigins ?? new ChangeTrackingList<string>()).ToList(), default),
                     csp,
                     default),
                 default);
@@ -4209,7 +4209,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 name,
                 resourceType,
                 systemData,
-                groupIds is null && privateEndpointId is null && privateLinkServiceConnectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default),
+                groupIds is null && privateEndpointId is null && privateLinkServiceConnectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default),
                 default);
         }
 
@@ -4445,7 +4445,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                workspaceId is null && gateways is null ? default : new ApiManagementWorkspaceLinksProperties(workspaceId, (gateways ?? new ChangeTrackingList<WritableSubResource>()).ToList(), default),
                 eTag,
                 default);
         }
@@ -4626,7 +4626,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="apiVersionSet"> Version set details. </param>
         /// <returns> A new <see cref="ApiManagement.ApiData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ApiData ApiData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, Uri termsOfServiceUri, ApiContactInformation contact, ApiLicenseInformation license, ResourceIdentifier sourceApiId, string displayName, Uri serviceUri, string path = default, IEnumerable<ApiOperationInvokableProtocol> protocols = default, ApiVersionSetContractDetails apiVersionSet = default)
+        public static ApiData ApiData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, Uri termsOfServiceUri, ApiContactInformation contact, ApiLicenseInformation license, ResourceIdentifier sourceApiId, string displayName, Uri serviceUri, string path, IEnumerable<ApiOperationInvokableProtocol> protocols, ApiVersionSetContractDetails apiVersionSet)
         {
             return new ApiData(
                 id,
@@ -4683,7 +4683,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="protocols"> Describes on which protocols the operations in this API can be invoked. </param>
         /// <returns> A new <see cref="Models.ApiPatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ApiPatch ApiPatch(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, Uri termsOfServiceUri, ApiContactInformation contact, ApiLicenseInformation license, string displayName, Uri serviceUri, string path = default, IEnumerable<ApiOperationInvokableProtocol> protocols = default)
+        public static ApiPatch ApiPatch(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, Uri termsOfServiceUri, ApiContactInformation contact, ApiLicenseInformation license, string displayName, Uri serviceUri, string path, IEnumerable<ApiOperationInvokableProtocol> protocols)
         {
             return new ApiPatch(description is null && authenticationSettings is null && subscriptionKeyParameterNames is null && apiType is null && apiRevision is null && apiVersion is null && isCurrent is null && isOnline is null && apiRevisionDescription is null && apiVersionDescription is null && apiVersionSetId is null && isSubscriptionRequired is null && contact is null && license is null && displayName is null && path is null && protocols is null ? default : new ApiContractUpdateProperties(
                 description,
@@ -4727,7 +4727,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="license"> License information for the API. </param>
         /// <returns> A new <see cref="Models.ApiEntityBaseContract"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ApiEntityBaseContract ApiEntityBaseContract(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, Uri termsOfServiceUri, ApiContactInformation contact = default, ApiLicenseInformation license = default)
+        public static ApiEntityBaseContract ApiEntityBaseContract(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, Uri termsOfServiceUri, ApiContactInformation contact, ApiLicenseInformation license)
         {
             return new ApiEntityBaseContract(
                 description,
@@ -4784,7 +4784,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// </param>
         /// <returns> A new <see cref="Models.ApiCreateOrUpdateContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ApiCreateOrUpdateContent ApiCreateOrUpdateContent(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, Uri termsOfServiceUri, ApiContactInformation contact, ApiLicenseInformation license, ResourceIdentifier sourceApiId, string displayName, Uri serviceUri, string path = default, IEnumerable<ApiOperationInvokableProtocol> protocols = default, ApiVersionSetContractDetails apiVersionSet = default, string value = default, ContentFormat? format = default, ApiCreateOrUpdatePropertiesWsdlSelector wsdlSelector = default, SoapApiType? soapApiType = default)
+        public static ApiCreateOrUpdateContent ApiCreateOrUpdateContent(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, Uri termsOfServiceUri, ApiContactInformation contact, ApiLicenseInformation license, ResourceIdentifier sourceApiId, string displayName, Uri serviceUri, string path, IEnumerable<ApiOperationInvokableProtocol> protocols, ApiVersionSetContractDetails apiVersionSet, string value, ContentFormat? format, ApiCreateOrUpdatePropertiesWsdlSelector wsdlSelector, SoapApiType? soapApiType)
         {
             return new ApiCreateOrUpdateContent(description is null && authenticationSettings is null && subscriptionKeyParameterNames is null && apiType is null && apiRevision is null && apiVersion is null && isCurrent is null && isOnline is null && apiRevisionDescription is null && apiVersionDescription is null && apiVersionSetId is null && isSubscriptionRequired is null && contact is null && license is null && sourceApiId is null && displayName is null && path is null && protocols is null && apiVersionSet is null && value is null && format is null && wsdlSelector is null && soapApiType is null ? default : new ApiCreateOrUpdateProperties(
                 description,
@@ -4841,7 +4841,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="protocols"> Describes on which protocols the operations in this API can be invoked. </param>
         /// <returns> A new <see cref="Models.AssociatedApiProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AssociatedApiProperties AssociatedApiProperties(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, Uri termsOfServiceUri, ApiContactInformation contact, ApiLicenseInformation license, string id, string name, Uri serviceUri, string path = default, IEnumerable<ApiOperationInvokableProtocol> protocols = default)
+        public static AssociatedApiProperties AssociatedApiProperties(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, Uri termsOfServiceUri, ApiContactInformation contact, ApiLicenseInformation license, string id, string name, Uri serviceUri, string path, IEnumerable<ApiOperationInvokableProtocol> protocols)
         {
             return new AssociatedApiProperties(
                 description,
@@ -4886,7 +4886,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="virtualNetworkType"> The type of VPN in which API Management gateway needs to be configured in. </param>
         /// <returns> A new <see cref="ApiManagement.ApiGatewayData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ApiGatewayData ApiGatewayData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ApiManagementGatewaySkuProperties sku = default, ETag? etag = default, string provisioningState = default, string targetProvisioningState = default, DateTimeOffset? createdAtUtc = default, string frontendDefaultHostname = default, ResourceIdentifier subnetId = default, string configurationApiHostname = default, VirtualNetworkType? virtualNetworkType = default)
+        public static ApiGatewayData ApiGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ApiManagementGatewaySkuProperties sku, ETag? etag, string provisioningState, string targetProvisioningState, DateTimeOffset? createdAtUtc, string frontendDefaultHostname, ResourceIdentifier subnetId, string configurationApiHostname, VirtualNetworkType? virtualNetworkType)
         {
             return new ApiGatewayData(
                 id,
@@ -4899,9 +4899,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     provisioningState,
                     targetProvisioningState,
                     createdAtUtc,
-                    new FrontendConfiguration(frontendDefaultHostname, default),
-                    new BackendConfiguration(new BackendSubnetConfiguration(subnetId, default), default),
-                    new GatewayConfigurationApi(configurationApiHostname, default),
+                    frontendDefaultHostname is null ? default : new FrontendConfiguration(frontendDefaultHostname, default),
+                    subnetId is null ? default : new BackendConfiguration(subnetId is null ? default : new BackendSubnetConfiguration(subnetId, default), default),
+                    configurationApiHostname is null ? default : new GatewayConfigurationApi(configurationApiHostname, default),
                     virtualNetworkType,
                     default),
                 sku,
@@ -4930,7 +4930,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.ApiGatewayPatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ApiGatewayPatch ApiGatewayPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ApiManagementGatewaySkuPropertiesForPatch sku = default, ETag? etag = default, string provisioningState = default, string targetProvisioningState = default, DateTimeOffset? createdAtUtc = default, string frontendDefaultHostname = default, ResourceIdentifier subnetId = default, string configurationApiHostname = default, VirtualNetworkType? virtualNetworkType = default, IDictionary<string, string> tags = default)
+        public static ApiGatewayPatch ApiGatewayPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApiManagementGatewaySkuPropertiesForPatch sku, ETag? etag, string provisioningState, string targetProvisioningState, DateTimeOffset? createdAtUtc, string frontendDefaultHostname, ResourceIdentifier subnetId, string configurationApiHostname, VirtualNetworkType? virtualNetworkType, IDictionary<string, string> tags)
         {
             return new ApiGatewayPatch(
                 id,
@@ -4941,9 +4941,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     provisioningState,
                     targetProvisioningState,
                     createdAtUtc,
-                    new FrontendConfiguration(frontendDefaultHostname, default),
-                    new BackendConfiguration(new BackendSubnetConfiguration(subnetId, default), default),
-                    new GatewayConfigurationApi(configurationApiHostname, default),
+                    frontendDefaultHostname is null ? default : new FrontendConfiguration(frontendDefaultHostname, default),
+                    subnetId is null ? default : new BackendConfiguration(subnetId is null ? default : new BackendSubnetConfiguration(subnetId, default), default),
+                    configurationApiHostname is null ? default : new GatewayConfigurationApi(configurationApiHostname, default),
                     virtualNetworkType,
                     default),
                 sku,
@@ -4981,7 +4981,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <returns> A new <see cref="ApiManagement.ApiData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ApiData ApiData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, AuthenticationSettingsContract authenticationSettings = default, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default, ApiType? apiType = default, string apiRevision = default, string apiVersion = default, bool? isCurrent = default, bool? isOnline = default, string apiRevisionDescription = default, string apiVersionDescription = default, ResourceIdentifier apiVersionSetId = default, bool? isSubscriptionRequired = default, string termsOfServiceLink = default, ApiContactInformation contact = default, ApiLicenseInformation license = default, ResourceIdentifier sourceApiId = default, string displayName = default, string serviceLink = default, string path = default, IEnumerable<ApiOperationInvokableProtocol> protocols = default, ApiVersionSetContractDetails apiVersionSet = default, string provisioningState = default)
+        public static ApiData ApiData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, string termsOfServiceLink, ApiContactInformation contact, ApiLicenseInformation license, ResourceIdentifier sourceApiId, string displayName, string serviceLink, string path, IEnumerable<ApiOperationInvokableProtocol> protocols, ApiVersionSetContractDetails apiVersionSet, string provisioningState)
         {
             return new ApiData(
                 id,
@@ -5034,7 +5034,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="license"> License information for the API. </param>
         /// <returns> A new <see cref="Models.ApiEntityBaseContract"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ApiEntityBaseContract ApiEntityBaseContract(string description = default, AuthenticationSettingsContract authenticationSettings = default, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default, ApiType? apiType = default, string apiRevision = default, string apiVersion = default, bool? isCurrent = default, bool? isOnline = default, string apiRevisionDescription = default, string apiVersionDescription = default, ResourceIdentifier apiVersionSetId = default, bool? isSubscriptionRequired = default, string termsOfServiceLink = default, ApiContactInformation contact = default, ApiLicenseInformation license = default)
+        public static ApiEntityBaseContract ApiEntityBaseContract(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, string termsOfServiceLink, ApiContactInformation contact, ApiLicenseInformation license)
         {
             return new ApiEntityBaseContract(
                 description,
@@ -5093,7 +5093,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="translateRequiredQueryParametersConduct"> Strategy of translating required query parameters to template ones. By default has value 'template'. Possible values: 'template', 'query'. </param>
         /// <returns> A new <see cref="Models.ApiCreateOrUpdateContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ApiCreateOrUpdateContent ApiCreateOrUpdateContent(string description = default, AuthenticationSettingsContract authenticationSettings = default, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default, ApiType? apiType = default, string apiRevision = default, string apiVersion = default, bool? isCurrent = default, bool? isOnline = default, string apiRevisionDescription = default, string apiVersionDescription = default, ResourceIdentifier apiVersionSetId = default, bool? isSubscriptionRequired = default, string termsOfServiceLink = default, ApiContactInformation contact = default, ApiLicenseInformation license = default, ResourceIdentifier sourceApiId = default, string displayName = default, string serviceLink = default, string path = default, IEnumerable<ApiOperationInvokableProtocol> protocols = default, ApiVersionSetContractDetails apiVersionSet = default, string provisioningState = default, string value = default, ContentFormat? format = default, ApiCreateOrUpdatePropertiesWsdlSelector wsdlSelector = default, SoapApiType? soapApiType = default, TranslateRequiredQueryParametersConduct? translateRequiredQueryParametersConduct = default)
+        public static ApiCreateOrUpdateContent ApiCreateOrUpdateContent(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, string termsOfServiceLink, ApiContactInformation contact, ApiLicenseInformation license, ResourceIdentifier sourceApiId, string displayName, string serviceLink, string path, IEnumerable<ApiOperationInvokableProtocol> protocols, ApiVersionSetContractDetails apiVersionSet, string provisioningState, string value, ContentFormat? format, ApiCreateOrUpdatePropertiesWsdlSelector wsdlSelector, SoapApiType? soapApiType, TranslateRequiredQueryParametersConduct? translateRequiredQueryParametersConduct)
         {
             return new ApiCreateOrUpdateContent(description is null && authenticationSettings is null && subscriptionKeyParameterNames is null && apiType is null && apiRevision is null && apiVersion is null && isCurrent is null && isOnline is null && apiRevisionDescription is null && apiVersionDescription is null && apiVersionSetId is null && isSubscriptionRequired is null && termsOfServiceLink is null && contact is null && license is null && sourceApiId is null && displayName is null && serviceLink is null && path is null && protocols is null && apiVersionSet is null && provisioningState is null && value is null && format is null && wsdlSelector is null && soapApiType is null && translateRequiredQueryParametersConduct is null ? default : new ApiCreateOrUpdateProperties(
                 description,
@@ -5149,7 +5149,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="protocols"> Describes on which protocols the operations in this API can be invoked. </param>
         /// <returns> A new <see cref="Models.ApiPatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ApiPatch ApiPatch(string description = default, AuthenticationSettingsContract authenticationSettings = default, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default, ApiType? apiType = default, string apiRevision = default, string apiVersion = default, bool? isCurrent = default, bool? isOnline = default, string apiRevisionDescription = default, string apiVersionDescription = default, ResourceIdentifier apiVersionSetId = default, bool? isSubscriptionRequired = default, string termsOfServiceLink = default, ApiContactInformation contact = default, ApiLicenseInformation license = default, string displayName = default, string serviceLink = default, string path = default, IEnumerable<ApiOperationInvokableProtocol> protocols = default)
+        public static ApiPatch ApiPatch(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, string termsOfServiceLink, ApiContactInformation contact, ApiLicenseInformation license, string displayName, string serviceLink, string path, IEnumerable<ApiOperationInvokableProtocol> protocols)
         {
             return new ApiPatch(description is null && authenticationSettings is null && subscriptionKeyParameterNames is null && apiType is null && apiRevision is null && apiVersion is null && isCurrent is null && isOnline is null && apiRevisionDescription is null && apiVersionDescription is null && apiVersionSetId is null && isSubscriptionRequired is null && termsOfServiceLink is null && contact is null && license is null && displayName is null && serviceLink is null && path is null && protocols is null ? default : new ApiContractUpdateProperties(
                 description,
@@ -5189,7 +5189,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="displayName"> Product name. </param>
         /// <returns> A new <see cref="ApiManagement.ApiManagementProductData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ApiManagementProductData ApiManagementProductData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, string terms = default, bool? isSubscriptionRequired = default, bool? isApprovalRequired = default, int? subscriptionsLimit = default, ApiManagementProductState? state = default, string displayName = default)
+        public static ApiManagementProductData ApiManagementProductData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string terms, bool? isSubscriptionRequired, bool? isApprovalRequired, int? subscriptionsLimit, ApiManagementProductState? state, string displayName)
         {
             return new ApiManagementProductData(
                 id,
@@ -5219,7 +5219,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="state"> whether product is published or not. Published products are discoverable by users of developer portal. Non published products are visible only to administrators. Default state of Product is notPublished. </param>
         /// <returns> A new <see cref="Models.ProductEntityBaseProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ProductEntityBaseProperties ProductEntityBaseProperties(string description = default, string terms = default, bool? isSubscriptionRequired = default, bool? isApprovalRequired = default, int? subscriptionsLimit = default, ApiManagementProductState? state = default)
+        public static ProductEntityBaseProperties ProductEntityBaseProperties(string description, string terms, bool? isSubscriptionRequired, bool? isApprovalRequired, int? subscriptionsLimit, ApiManagementProductState? state)
         {
             return new ProductEntityBaseProperties(
                 description,
@@ -5250,7 +5250,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="metrics"> Emit custom metrics via emit-metric policy. Applicable only to Application Insights diagnostic settings. </param>
         /// <returns> A new <see cref="ApiManagement.DiagnosticContractData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DiagnosticContractData DiagnosticContractData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AlwaysLog? alwaysLog = default, string loggerId = default, SamplingSettings sampling = default, PipelineDiagnosticSettings frontend = default, PipelineDiagnosticSettings backend = default, bool? isLogClientIPEnabled = default, HttpCorrelationProtocol? httpCorrelationProtocol = default, TraceVerbosityLevel? verbosity = default, OperationNameFormat? operationNameFormat = default, bool? metrics = default)
+        public static DiagnosticContractData DiagnosticContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlwaysLog? alwaysLog, string loggerId, SamplingSettings sampling, PipelineDiagnosticSettings frontend, PipelineDiagnosticSettings backend, bool? isLogClientIPEnabled, HttpCorrelationProtocol? httpCorrelationProtocol, TraceVerbosityLevel? verbosity, OperationNameFormat? operationNameFormat, bool? metrics)
         {
             return new DiagnosticContractData(
                 id,
@@ -5296,7 +5296,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="protocols"> Describes on which protocols the operations in this API can be invoked. </param>
         /// <returns> A new <see cref="Models.AssociatedApiProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AssociatedApiProperties AssociatedApiProperties(string description = default, AuthenticationSettingsContract authenticationSettings = default, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default, ApiType? apiType = default, string apiRevision = default, string apiVersion = default, bool? isCurrent = default, bool? isOnline = default, string apiRevisionDescription = default, string apiVersionDescription = default, ResourceIdentifier apiVersionSetId = default, bool? isSubscriptionRequired = default, string termsOfServiceLink = default, ApiContactInformation contact = default, ApiLicenseInformation license = default, string id = default, string name = default, Uri serviceUri = default, string path = default, IEnumerable<ApiOperationInvokableProtocol> protocols = default)
+        public static AssociatedApiProperties AssociatedApiProperties(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, string termsOfServiceLink, ApiContactInformation contact, ApiLicenseInformation license, string id, string name, Uri serviceUri, string path, IEnumerable<ApiOperationInvokableProtocol> protocols)
         {
             return new AssociatedApiProperties(
                 description,
@@ -5334,7 +5334,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="name"> Product name. </param>
         /// <returns> A new <see cref="Models.AssociatedProductProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AssociatedProductProperties AssociatedProductProperties(string description = default, string terms = default, bool? isSubscriptionRequired = default, bool? isApprovalRequired = default, int? subscriptionsLimit = default, ApiManagementProductState? state = default, string id = default, string name = default)
+        public static AssociatedProductProperties AssociatedProductProperties(string description, string terms, bool? isSubscriptionRequired, bool? isApprovalRequired, int? subscriptionsLimit, ApiManagementProductState? state, string id, string name)
         {
             return new AssociatedProductProperties(
                 description,
@@ -5369,7 +5369,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="protocol"> Backend communication protocol. Required when backend type is 'Single'. </param>
         /// <returns> A new <see cref="ApiManagement.ApiManagementBackendData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ApiManagementBackendData ApiManagementBackendData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string title = default, string description = default, Uri resourceUri = default, BackendServiceFabricClusterProperties backendServiceFabricCluster = default, BackendCredentialsContract credentials = default, BackendProxyContract proxy = default, BackendTlsProperties tls = default, IEnumerable<CircuitBreakerRule> circuitBreakerRules = default, IEnumerable<BackendPoolItem> poolServices = default, BackendType? typePropertiesType = default, Uri uri = default, BackendProtocol? protocol = default)
+        public static ApiManagementBackendData ApiManagementBackendData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string title, string description, Uri resourceUri, BackendServiceFabricClusterProperties backendServiceFabricCluster, BackendCredentialsContract credentials, BackendProxyContract proxy, BackendTlsProperties tls, IEnumerable<CircuitBreakerRule> circuitBreakerRules, IEnumerable<BackendPoolItem> poolServices, BackendType? typePropertiesType, Uri uri, BackendProtocol? protocol)
         {
             return new ApiManagementBackendData(
                 id,
@@ -5380,13 +5380,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     title,
                     description,
                     resourceUri,
-                    new BackendProperties(backendServiceFabricCluster, default),
+                    backendServiceFabricCluster is null ? default : new BackendProperties(backendServiceFabricCluster, default),
                     credentials,
                     proxy,
                     tls,
-                    new BackendCircuitBreaker((circuitBreakerRules ?? new ChangeTrackingList<CircuitBreakerRule>()).ToList(), default),
+                    circuitBreakerRules is null ? default : new BackendCircuitBreaker((circuitBreakerRules ?? new ChangeTrackingList<CircuitBreakerRule>()).ToList(), default),
                     default,
-                    new BackendBaseParametersPool((poolServices ?? new ChangeTrackingList<BackendPoolItem>()).ToList(), default, default, default),
+                    poolServices is null ? default : new BackendBaseParametersPool((poolServices ?? new ChangeTrackingList<BackendPoolItem>()).ToList(), default, default, default),
                     typePropertiesType,
                     default,
                     uri,
@@ -5405,7 +5405,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="deletedOn"> UTC Timestamp when the service was soft-deleted. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>
         /// <returns> A new <see cref="ApiManagement.ApiManagementDeletedServiceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ApiManagementDeletedServiceData ApiManagementDeletedServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, ResourceIdentifier serviceId = default, DateTimeOffset? scheduledPurgeOn = default, DateTimeOffset? deletedOn = default)
+        public static ApiManagementDeletedServiceData ApiManagementDeletedServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ResourceIdentifier serviceId, DateTimeOffset? scheduledPurgeOn, DateTimeOffset? deletedOn)
         {
             return new ApiManagementDeletedServiceData(
                 id,
@@ -5463,7 +5463,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="publisherName"> Publisher name. </param>
         /// <returns> A new <see cref="ApiManagement.ApiManagementServiceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ApiManagementServiceData ApiManagementServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ApiManagementServiceSkuProperties sku = default, ManagedServiceIdentity identity = default, ETag? etag = default, IEnumerable<string> zones = default, string notificationSenderEmail = default, string provisioningState = default, string targetProvisioningState = default, DateTimeOffset? createdAtUtc = default, Uri gatewayUri = default, Uri gatewayRegionalUri = default, Uri portalUri = default, Uri managementApiUri = default, Uri scmUri = default, Uri developerPortalUri = default, IEnumerable<HostnameConfiguration> hostnameConfigurations = default, IEnumerable<IPAddress> publicIPAddresses = default, IEnumerable<IPAddress> privateIPAddresses = default, ResourceIdentifier publicIPAddressId = default, PublicNetworkAccess? publicNetworkAccess = default, LegacyApiState? legacyApi = default, VirtualNetworkConfiguration virtualNetworkConfiguration = default, IEnumerable<AdditionalLocation> additionalLocations = default, IDictionary<string, string> customProperties = default, IEnumerable<CertificateConfiguration> certificates = default, bool? enableClientCertificate = default, ApiManagementNatGatewayState? natGatewayState = default, IEnumerable<string> outboundPublicIPAddresses = default, bool? disableGateway = default, VirtualNetworkType? virtualNetworkType = default, string minApiVersion = default, bool? restore = default, IEnumerable<RemotePrivateEndpointConnectionWrapper> privateEndpointConnections = default, PlatformVersion? platformVersion = default, LegacyPortalStatus? legacyPortalStatus = default, DeveloperPortalStatus? developerPortalStatus = default, string publisherEmail = default, string publisherName = default)
+        public static ApiManagementServiceData ApiManagementServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ApiManagementServiceSkuProperties sku, ManagedServiceIdentity identity, ETag? etag, IEnumerable<string> zones, string notificationSenderEmail, string provisioningState, string targetProvisioningState, DateTimeOffset? createdAtUtc, Uri gatewayUri, Uri gatewayRegionalUri, Uri portalUri, Uri managementApiUri, Uri scmUri, Uri developerPortalUri, IEnumerable<HostnameConfiguration> hostnameConfigurations, IEnumerable<IPAddress> publicIPAddresses, IEnumerable<IPAddress> privateIPAddresses, ResourceIdentifier publicIPAddressId, PublicNetworkAccess? publicNetworkAccess, LegacyApiState? legacyApi, VirtualNetworkConfiguration virtualNetworkConfiguration, IEnumerable<AdditionalLocation> additionalLocations, IDictionary<string, string> customProperties, IEnumerable<CertificateConfiguration> certificates, bool? enableClientCertificate, ApiManagementNatGatewayState? natGatewayState, IEnumerable<string> outboundPublicIPAddresses, bool? disableGateway, VirtualNetworkType? virtualNetworkType, string minApiVersion, bool? restore, IEnumerable<RemotePrivateEndpointConnectionWrapper> privateEndpointConnections, PlatformVersion? platformVersion, LegacyPortalStatus? legacyPortalStatus, DeveloperPortalStatus? developerPortalStatus, string publisherEmail, string publisherName)
         {
             return new ApiManagementServiceData(
                 id,
@@ -5488,7 +5488,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     (privateIPAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(),
                     publicIPAddressId,
                     publicNetworkAccess,
-                    new ConfigurationApi(legacyApi, default),
+                    legacyApi is null ? default : new ConfigurationApi(legacyApi, default),
                     virtualNetworkConfiguration,
                     (additionalLocations ?? new ChangeTrackingList<AdditionalLocation>()).ToList(),
                     customProperties ?? new ChangeTrackingDictionary<string, string>(),
@@ -5498,7 +5498,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     (outboundPublicIPAddresses ?? new ChangeTrackingList<string>()).ToList(),
                     disableGateway,
                     virtualNetworkType,
-                    new ApiVersionConstraint(minApiVersion, default),
+                    minApiVersion is null ? default : new ApiVersionConstraint(minApiVersion, default),
                     restore,
                     (privateEndpointConnections ?? new ChangeTrackingList<RemotePrivateEndpointConnectionWrapper>()).ToList(),
                     platformVersion,
@@ -5526,9 +5526,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="groupIds"> All the Group ids. </param>
         /// <returns> A new <see cref="Models.RemotePrivateEndpointConnectionWrapper"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RemotePrivateEndpointConnectionWrapper RemotePrivateEndpointConnectionWrapper(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, ResourceIdentifier privateEndpointId = default, ApiManagementPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, string provisioningState = default, IEnumerable<string> groupIds = default)
+        public static RemotePrivateEndpointConnectionWrapper RemotePrivateEndpointConnectionWrapper(ResourceIdentifier id, string name, ResourceType? resourceType, ResourceIdentifier privateEndpointId, ApiManagementPrivateLinkServiceConnectionState privateLinkServiceConnectionState, string provisioningState, IEnumerable<string> groupIds)
         {
-            return new RemotePrivateEndpointConnectionWrapper(id, name, resourceType, privateEndpointId is null && privateLinkServiceConnectionState is null && provisioningState is null && groupIds is null ? default : new PrivateEndpointConnectionWrapperProperties(new ArmIdWrapper(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, (groupIds ?? new ChangeTrackingList<string>()).ToList(), default), default);
+            return new RemotePrivateEndpointConnectionWrapper(id, name, resourceType, privateEndpointId is null && privateLinkServiceConnectionState is null && provisioningState is null && groupIds is null ? default : new PrivateEndpointConnectionWrapperProperties(privateEndpointId is null ? default : new ArmIdWrapper(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, (groupIds ?? new ChangeTrackingList<string>()).ToList(), default), default);
         }
 
         /// <summary>
@@ -5580,7 +5580,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.ApiManagementServicePatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ApiManagementServicePatch ApiManagementServicePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ApiManagementServiceSkuProperties sku = default, ManagedServiceIdentity identity = default, ETag? etag = default, IEnumerable<string> zones = default, string notificationSenderEmail = default, string provisioningState = default, string targetProvisioningState = default, DateTimeOffset? createdAtUtc = default, Uri gatewayUri = default, Uri gatewayRegionalUri = default, Uri portalUri = default, Uri managementApiUri = default, Uri scmUri = default, Uri developerPortalUri = default, IEnumerable<HostnameConfiguration> hostnameConfigurations = default, IEnumerable<IPAddress> publicIPAddresses = default, IEnumerable<IPAddress> privateIPAddresses = default, ResourceIdentifier publicIPAddressId = default, PublicNetworkAccess? publicNetworkAccess = default, LegacyApiState? legacyApi = default, VirtualNetworkConfiguration virtualNetworkConfiguration = default, IEnumerable<AdditionalLocation> additionalLocations = default, IDictionary<string, string> customProperties = default, IEnumerable<CertificateConfiguration> certificates = default, bool? enableClientCertificate = default, ApiManagementNatGatewayState? natGatewayState = default, IEnumerable<string> outboundPublicIPAddresses = default, bool? disableGateway = default, VirtualNetworkType? virtualNetworkType = default, string minApiVersion = default, bool? restore = default, IEnumerable<RemotePrivateEndpointConnectionWrapper> privateEndpointConnections = default, PlatformVersion? platformVersion = default, LegacyPortalStatus? legacyPortalStatus = default, DeveloperPortalStatus? developerPortalStatus = default, string publisherEmail = default, string publisherName = default, IDictionary<string, string> tags = default)
+        public static ApiManagementServicePatch ApiManagementServicePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApiManagementServiceSkuProperties sku, ManagedServiceIdentity identity, ETag? etag, IEnumerable<string> zones, string notificationSenderEmail, string provisioningState, string targetProvisioningState, DateTimeOffset? createdAtUtc, Uri gatewayUri, Uri gatewayRegionalUri, Uri portalUri, Uri managementApiUri, Uri scmUri, Uri developerPortalUri, IEnumerable<HostnameConfiguration> hostnameConfigurations, IEnumerable<IPAddress> publicIPAddresses, IEnumerable<IPAddress> privateIPAddresses, ResourceIdentifier publicIPAddressId, PublicNetworkAccess? publicNetworkAccess, LegacyApiState? legacyApi, VirtualNetworkConfiguration virtualNetworkConfiguration, IEnumerable<AdditionalLocation> additionalLocations, IDictionary<string, string> customProperties, IEnumerable<CertificateConfiguration> certificates, bool? enableClientCertificate, ApiManagementNatGatewayState? natGatewayState, IEnumerable<string> outboundPublicIPAddresses, bool? disableGateway, VirtualNetworkType? virtualNetworkType, string minApiVersion, bool? restore, IEnumerable<RemotePrivateEndpointConnectionWrapper> privateEndpointConnections, PlatformVersion? platformVersion, LegacyPortalStatus? legacyPortalStatus, DeveloperPortalStatus? developerPortalStatus, string publisherEmail, string publisherName, IDictionary<string, string> tags)
         {
             return new ApiManagementServicePatch(
                 id,
@@ -5603,7 +5603,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     (privateIPAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(),
                     publicIPAddressId,
                     publicNetworkAccess,
-                    new ConfigurationApi(legacyApi, default),
+                    legacyApi is null ? default : new ConfigurationApi(legacyApi, default),
                     virtualNetworkConfiguration,
                     (additionalLocations ?? new ChangeTrackingList<AdditionalLocation>()).ToList(),
                     customProperties ?? new ChangeTrackingDictionary<string, string>(),
@@ -5613,7 +5613,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     (outboundPublicIPAddresses ?? new ChangeTrackingList<string>()).ToList(),
                     disableGateway,
                     virtualNetworkType,
-                    new ApiVersionConstraint(minApiVersion, default),
+                    minApiVersion is null ? default : new ApiVersionConstraint(minApiVersion, default),
                     restore,
                     (privateEndpointConnections ?? new ChangeTrackingList<RemotePrivateEndpointConnectionWrapper>()).ToList(),
                     platformVersion,
@@ -5644,7 +5644,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="hostnames"> The hostnames of the data-plane gateway to which requests can be sent. </param>
         /// <returns> A new <see cref="ApiManagement.ApiGatewayConfigConnectionData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ApiGatewayConfigConnectionData ApiGatewayConfigConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, string provisioningState = default, ResourceIdentifier sourceId = default, string defaultHostname = default, IEnumerable<string> hostnames = default)
+        public static ApiGatewayConfigConnectionData ApiGatewayConfigConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string provisioningState, ResourceIdentifier sourceId, string defaultHostname, IEnumerable<string> hostnames)
         {
             return new ApiGatewayConfigConnectionData(
                 id,
@@ -5665,7 +5665,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="description"> Gateway description. </param>
         /// <returns> A new <see cref="ApiManagement.ApiManagementGatewayData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ApiManagementGatewayData ApiManagementGatewayData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceLocationDataContract locationData = default, string description = default)
+        public static ApiManagementGatewayData ApiManagementGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceLocationDataContract locationData, string description)
         {
             return new ApiManagementGatewayData(
                 id,
@@ -5695,7 +5695,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="clientSecret"> Client secret of the Application in external Identity Provider, used to authenticate login request. For example, it is App Secret for Facebook login, API Key for Google login, Public Key for Microsoft. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
         /// <returns> A new <see cref="ApiManagement.ApiManagementIdentityProviderData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ApiManagementIdentityProviderData ApiManagementIdentityProviderData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IdentityProviderType? identityProviderType = default, string signInTenant = default, IEnumerable<string> allowedTenants = default, string authority = default, string signUpPolicyName = default, string signInPolicyName = default, string profileEditingPolicyName = default, string passwordResetPolicyName = default, string clientLibrary = default, string clientId = default, string clientSecret = default)
+        public static ApiManagementIdentityProviderData ApiManagementIdentityProviderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IdentityProviderType? identityProviderType, string signInTenant, IEnumerable<string> allowedTenants, string authority, string signUpPolicyName, string signInPolicyName, string profileEditingPolicyName, string passwordResetPolicyName, string clientLibrary, string clientId, string clientSecret)
         {
             return new ApiManagementIdentityProviderData(
                 id,
@@ -5737,7 +5737,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="clientSecret"> Client secret of the Application in external Identity Provider, used to authenticate login request. For example, it is App Secret for Facebook login, API Key for Google login, Public Key for Microsoft. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
         /// <returns> A new <see cref="Models.ApiManagementIdentityProviderCreateOrUpdateContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ApiManagementIdentityProviderCreateOrUpdateContent ApiManagementIdentityProviderCreateOrUpdateContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IdentityProviderType? identityProviderType = default, string signInTenant = default, IEnumerable<string> allowedTenants = default, string authority = default, string signUpPolicyName = default, string signInPolicyName = default, string profileEditingPolicyName = default, string passwordResetPolicyName = default, string clientLibrary = default, string clientId = default, string clientSecret = default)
+        public static ApiManagementIdentityProviderCreateOrUpdateContent ApiManagementIdentityProviderCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IdentityProviderType? identityProviderType, string signInTenant, IEnumerable<string> allowedTenants, string authority, string signUpPolicyName, string signInPolicyName, string profileEditingPolicyName, string passwordResetPolicyName, string clientLibrary, string clientId, string clientSecret)
         {
             return new ApiManagementIdentityProviderCreateOrUpdateContent(
                 id,
@@ -5775,7 +5775,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="useInApiDocumentation"> If true, the Open ID Connect provider will be used in the API documentation in the developer portal. False by default if no value is provided. </param>
         /// <returns> A new <see cref="ApiManagement.ApiManagementOpenIdConnectProviderData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ApiManagementOpenIdConnectProviderData ApiManagementOpenIdConnectProviderData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, string description = default, string metadataEndpoint = default, string clientId = default, string clientSecret = default, bool? useInTestConsole = default, bool? useInApiDocumentation = default)
+        public static ApiManagementOpenIdConnectProviderData ApiManagementOpenIdConnectProviderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, string metadataEndpoint, string clientId, string clientSecret, bool? useInTestConsole, bool? useInApiDocumentation)
         {
             return new ApiManagementOpenIdConnectProviderData(
                 id,
@@ -5808,7 +5808,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="csp"> The developer portal Content Security Policy (CSP) settings. </param>
         /// <returns> A new <see cref="ApiManagement.PortalConfigContractData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PortalConfigContractData PortalConfigContractData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? enableBasicAuth = default, bool? require = default, PortalConfigTermsOfServiceProperties signupTermsOfService = default, PortalConfigDelegationProperties delegation = default, IEnumerable<string> corsAllowedOrigins = default, PortalConfigCspProperties csp = default)
+        public static PortalConfigContractData PortalConfigContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? enableBasicAuth, bool? require, PortalConfigTermsOfServiceProperties signupTermsOfService, PortalConfigDelegationProperties delegation, IEnumerable<string> corsAllowedOrigins, PortalConfigCspProperties csp)
         {
             return new PortalConfigContractData(
                 id,
@@ -5817,10 +5817,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 systemData,
                 enableBasicAuth is null && require is null && signupTermsOfService is null && delegation is null && corsAllowedOrigins is null && csp is null ? default : new PortalConfigProperties(
                     enableBasicAuth,
-                    new PortalConfigPropertiesSignin(require, default),
-                    new PortalConfigPropertiesSignup(signupTermsOfService, default),
+                    require is null ? default : new PortalConfigPropertiesSignin(require, default),
+                    signupTermsOfService is null ? default : new PortalConfigPropertiesSignup(signupTermsOfService, default),
                     delegation,
-                    new PortalConfigCorsProperties((corsAllowedOrigins ?? new ChangeTrackingList<string>()).ToList(), default),
+                    corsAllowedOrigins is null ? default : new PortalConfigCorsProperties((corsAllowedOrigins ?? new ChangeTrackingList<string>()).ToList(), default),
                     csp,
                     default),
                 default);
@@ -5839,7 +5839,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="termsOfService"> Terms of service contract properties. </param>
         /// <returns> A new <see cref="Models.PortalSettingsContractData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PortalSettingsContractData PortalSettingsContractData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Uri uri = default, string validationKey = default, bool? isSubscriptionDelegationEnabled = default, bool? isUserRegistrationDelegationEnabled = default, bool? isRedirectEnabled = default, TermsOfServiceProperties termsOfService = default)
+        public static PortalSettingsContractData PortalSettingsContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri uri, string validationKey, bool? isSubscriptionDelegationEnabled, bool? isUserRegistrationDelegationEnabled, bool? isRedirectEnabled, TermsOfServiceProperties termsOfService)
         {
             return new PortalSettingsContractData(
                 id,
@@ -5849,8 +5849,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 uri is null && validationKey is null && isSubscriptionDelegationEnabled is null && isUserRegistrationDelegationEnabled is null && isRedirectEnabled is null && termsOfService is null ? default : new PortalSettingsContractProperties(
                     uri,
                     validationKey,
-                    new SubscriptionDelegationSettingProperties(isSubscriptionDelegationEnabled, default),
-                    new RegistrationDelegationSettingProperties(isUserRegistrationDelegationEnabled, default),
+                    isSubscriptionDelegationEnabled is null ? default : new SubscriptionDelegationSettingProperties(isSubscriptionDelegationEnabled, default),
+                    isUserRegistrationDelegationEnabled is null ? default : new RegistrationDelegationSettingProperties(isUserRegistrationDelegationEnabled, default),
                     isRedirectEnabled,
                     termsOfService,
                     default),
@@ -5867,14 +5867,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <returns> A new <see cref="ApiManagement.ApiManagementPrivateEndpointConnectionData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ApiManagementPrivateEndpointConnectionData ApiManagementPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier privateEndpointId = default, ApiManagementPrivateLinkServiceConnectionState connectionState = default, ApiManagementPrivateEndpointConnectionProvisioningState? provisioningState = default)
+        public static ApiManagementPrivateEndpointConnectionData ApiManagementPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier privateEndpointId, ApiManagementPrivateLinkServiceConnectionState connectionState, ApiManagementPrivateEndpointConnectionProvisioningState? provisioningState)
         {
             return new ApiManagementPrivateEndpointConnectionData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(default, new PrivateEndpoint(privateEndpointId, default), default, provisioningState, default),
+                privateEndpointId is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(default, privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), default, provisioningState, default),
                 default);
         }
 
@@ -5888,7 +5888,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="gateways"> The array of linked gateways. </param>
         /// <returns> A new <see cref="ApiManagement.ApiManagementWorkspaceLinksData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ApiManagementWorkspaceLinksData ApiManagementWorkspaceLinksData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, ResourceIdentifier workspaceId = default, IEnumerable<WritableSubResource> gateways = default)
+        public static ApiManagementWorkspaceLinksData ApiManagementWorkspaceLinksData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, ResourceIdentifier workspaceId, IEnumerable<WritableSubResource> gateways)
         {
             return new ApiManagementWorkspaceLinksData(
                 id,
@@ -6102,7 +6102,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     title,
                     description,
                     resourceUri,
-                    new BackendProperties(backendServiceFabricCluster, default),
+                    backendServiceFabricCluster is null ? default : new BackendProperties(backendServiceFabricCluster, default),
                     credentials,
                     proxy,
                     tls,
@@ -6194,7 +6194,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     (outboundPublicIPAddresses ?? new ChangeTrackingList<string>()).ToList(),
                     disableGateway,
                     virtualNetworkType,
-                    new ApiVersionConstraint(minApiVersion, default),
+                    minApiVersion is null ? default : new ApiVersionConstraint(minApiVersion, default),
                     restore,
                     (privateEndpointConnections ?? new ChangeTrackingList<RemotePrivateEndpointConnectionWrapper>()).ToList(),
                     platformVersion,
@@ -6291,7 +6291,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     (outboundPublicIPAddresses ?? new ChangeTrackingList<string>()).ToList(),
                     disableGateway,
                     virtualNetworkType,
-                    new ApiVersionConstraint(minApiVersion, default),
+                    minApiVersion is null ? default : new ApiVersionConstraint(minApiVersion, default),
                     restore,
                     (privateEndpointConnections ?? new ChangeTrackingList<RemotePrivateEndpointConnectionWrapper>()).ToList(),
                     platformVersion,
@@ -6603,7 +6603,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     default,
                     disableGateway,
                     virtualNetworkType,
-                    new ApiVersionConstraint(minApiVersion, default),
+                    minApiVersion is null ? default : new ApiVersionConstraint(minApiVersion, default),
                     restore,
                     (privateEndpointConnections ?? new ChangeTrackingList<RemotePrivateEndpointConnectionWrapper>()).ToList(),
                     platformVersion,
@@ -6729,7 +6729,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     default,
                     disableGateway,
                     virtualNetworkType,
-                    new ApiVersionConstraint(minApiVersion, default),
+                    minApiVersion is null ? default : new ApiVersionConstraint(minApiVersion, default),
                     restore,
                     (privateEndpointConnections ?? new ChangeTrackingList<RemotePrivateEndpointConnectionWrapper>()).ToList(),
                     platformVersion,

@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AttachedNetworkConnectionData, AttachedNetworkConnectionResource>(new AttachedNetworksGetByDevCenterAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AttachedNetworkConnectionData, AttachedNetworkConnectionResource>(new AttachedNetworkConnectionDataAsyncCollectionResultOfT(
                 _attachedNetworksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AttachedNetworkConnectionData, AttachedNetworkConnectionResource>(new AttachedNetworksGetByDevCenterCollectionResultOfT(
+            return new PageableWrapper<AttachedNetworkConnectionData, AttachedNetworkConnectionResource>(new AttachedNetworkConnectionDataCollectionResultOfT(
                 _attachedNetworksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

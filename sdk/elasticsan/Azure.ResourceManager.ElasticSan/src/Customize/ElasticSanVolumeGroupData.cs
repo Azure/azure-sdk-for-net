@@ -13,6 +13,17 @@ namespace Azure.ResourceManager.ElasticSan
     {
         /// <summary> The retention policy for the soft deleted volume group and its associated resources. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public ElasticSanDeleteRetentionPolicy DeleteRetentionPolicy { get; set; }
+        public ElasticSanDeleteRetentionPolicy DeleteRetentionPolicy
+        {
+            get => Properties is null ? default : Properties.DeleteRetentionPolicy;
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VolumeGroupProperties();
+                }
+                Properties.DeleteRetentionPolicy = value;
+            }
+        }
     }
 }

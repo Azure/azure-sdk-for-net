@@ -188,10 +188,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AcsIncomingCallCustomContext(sipHeaders, voipHeaders, additionalBinaryDataProperties);
+            return new AcsIncomingCallCustomContext(sipHeaders ?? new ChangeTrackingDictionary<string, string>(), voipHeaders ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
         }
     }
 }

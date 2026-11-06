@@ -475,7 +475,6 @@
             "$id": "35",
             "name": "v2",
             "isExactName": false,
-            "resourceName": "Removed",
             "accessibility": "public",
             "parameters": [
               {
@@ -670,7 +669,6 @@
             "$id": "43",
             "name": "modelV3",
             "isExactName": false,
-            "resourceName": "Removed",
             "doc": "This operation will pass different paths and different request bodies based on different versions.",
             "accessibility": "public",
             "parameters": [

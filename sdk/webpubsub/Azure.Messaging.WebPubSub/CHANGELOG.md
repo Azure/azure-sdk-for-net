@@ -1,12 +1,20 @@
 # Release History
 
-## 1.7.0-beta.1 (Unreleased)
+## 1.8.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
+
+### Other Changes
+
+## 1.7.0 (2026-09-27)
+
+### Bugs Fixed
+
+- Fixed synchronous client access URI generation with Microsoft Entra ID authentication to include the requested initial groups.
 
 ### Other Changes
 

@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.DevCenter.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 customerManagedKeyEncryption is null && displayName is null && catalogItemSyncEnableStatus is null && microsoftHostedNetworkEnableStatus is null && devBoxProvisioningInstallAzureMonitorAgentEnableStatus is null && provisioningState is null && devCenterUri is null ? default : new DevCenterProperties(
-                    new Encryption(customerManagedKeyEncryption, default),
+                    customerManagedKeyEncryption is null ? default : new Encryption(customerManagedKeyEncryption, default),
                     displayName,
-                    new DevCenterProjectCatalogSettings(catalogItemSyncEnableStatus, default),
-                    new DevCenterNetworkSettings(microsoftHostedNetworkEnableStatus, default),
-                    new DevBoxProvisioningSettings(devBoxProvisioningInstallAzureMonitorAgentEnableStatus, default),
+                    catalogItemSyncEnableStatus is null ? default : new DevCenterProjectCatalogSettings(catalogItemSyncEnableStatus, default),
+                    microsoftHostedNetworkEnableStatus is null ? default : new DevCenterNetworkSettings(microsoftHostedNetworkEnableStatus, default),
+                    devBoxProvisioningInstallAzureMonitorAgentEnableStatus is null ? default : new DevBoxProvisioningSettings(devBoxProvisioningInstallAzureMonitorAgentEnableStatus, default),
                     default,
                     provisioningState,
                     devCenterUri),
@@ -142,11 +142,11 @@ namespace Azure.ResourceManager.DevCenter.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new DevCenterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), location, default, identity, customerManagedKeyEncryption is null && displayName is null && catalogItemSyncEnableStatus is null && microsoftHostedNetworkEnableStatus is null && devBoxProvisioningInstallAzureMonitorAgentEnableStatus is null ? default : new DevCenterUpdateProperties(
-                new Encryption(customerManagedKeyEncryption, default),
+                customerManagedKeyEncryption is null ? default : new Encryption(customerManagedKeyEncryption, default),
                 displayName,
-                new DevCenterProjectCatalogSettings(catalogItemSyncEnableStatus, default),
-                new DevCenterNetworkSettings(microsoftHostedNetworkEnableStatus, default),
-                new DevBoxProvisioningSettings(devBoxProvisioningInstallAzureMonitorAgentEnableStatus, default),
+                catalogItemSyncEnableStatus is null ? default : new DevCenterProjectCatalogSettings(catalogItemSyncEnableStatus, default),
+                microsoftHostedNetworkEnableStatus is null ? default : new DevCenterNetworkSettings(microsoftHostedNetworkEnableStatus, default),
+                devBoxProvisioningInstallAzureMonitorAgentEnableStatus is null ? default : new DevBoxProvisioningSettings(devBoxProvisioningInstallAzureMonitorAgentEnableStatus, default),
                 default));
         }
 
@@ -286,12 +286,12 @@ namespace Azure.ResourceManager.DevCenter.Models
                     description,
                     maxDevBoxesPerUser,
                     displayName,
-                    new ProjectCatalogSettings((catalogItemSyncTypes ?? new ChangeTrackingList<DevCenterCatalogItemType>()).ToList(), default),
+                    catalogItemSyncTypes is null ? default : new ProjectCatalogSettings((catalogItemSyncTypes ?? new ChangeTrackingList<DevCenterCatalogItemType>()).ToList(), default),
                     customizationSettings,
                     devBoxScheduleDeleteSettings,
-                    new AzureAiServicesSettings(azureAiServicesMode, default),
+                    azureAiServicesMode is null ? default : new AzureAiServicesSettings(azureAiServicesMode, default),
                     serverlessGpuSessionsSettings,
-                    new WorkspaceStorageSettings(workspaceStorageMode, default),
+                    workspaceStorageMode is null ? default : new WorkspaceStorageSettings(workspaceStorageMode, default),
                     (assignedGroups ?? new ChangeTrackingList<DevCenterAssignedGroup>()).ToList(),
                     default,
                     provisioningState,
@@ -373,12 +373,12 @@ namespace Azure.ResourceManager.DevCenter.Models
                 description,
                 maxDevBoxesPerUser,
                 displayName,
-                new ProjectCatalogSettings((catalogItemSyncTypes ?? new ChangeTrackingList<DevCenterCatalogItemType>()).ToList(), default),
+                catalogItemSyncTypes is null ? default : new ProjectCatalogSettings((catalogItemSyncTypes ?? new ChangeTrackingList<DevCenterCatalogItemType>()).ToList(), default),
                 customizationSettings,
                 devBoxScheduleDeleteSettings,
-                new AzureAiServicesSettings(azureAiServicesMode, default),
+                azureAiServicesMode is null ? default : new AzureAiServicesSettings(azureAiServicesMode, default),
                 serverlessGpuSessionsSettings,
-                new WorkspaceStorageSettings(workspaceStorageMode, default),
+                workspaceStorageMode is null ? default : new WorkspaceStorageSettings(workspaceStorageMode, default),
                 (assignedGroups ?? new ChangeTrackingList<DevCenterAssignedGroup>()).ToList(),
                 default), identity);
         }
@@ -747,7 +747,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     deploymentTargetId,
                     displayName,
                     status,
-                    new ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(roles ?? new ChangeTrackingDictionary<string, DevCenterEnvironmentRole>(), default),
+                    roles is null ? default : new ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(roles ?? new ChangeTrackingDictionary<string, DevCenterEnvironmentRole>(), default),
                     userRoleAssignments ?? new ChangeTrackingDictionary<string, DevCenterUserRoleAssignments>(),
                     default,
                     provisioningState,
@@ -791,7 +791,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 deploymentTargetId,
                 displayName,
                 status,
-                new ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(roles ?? new ChangeTrackingDictionary<string, DevCenterEnvironmentRole>(), default),
+                roles is null ? default : new ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(roles ?? new ChangeTrackingDictionary<string, DevCenterEnvironmentRole>(), default),
                 userRoleAssignments ?? new ChangeTrackingDictionary<string, DevCenterUserRoleAssignments>(),
                 default), tags ?? new ChangeTrackingDictionary<string, string>(), identity, default);
         }
@@ -1582,7 +1582,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> The current status of an async operation. </summary>
         /// <param name="properties"> Custom operation properties, populated only for a successful operation. </param>
         /// <returns> A new <see cref="Models.DevCenterOperationStatus"/> instance for mocking. </returns>
-        public static DevCenterOperationStatus DevCenterOperationStatus(BinaryData properties = default)
+        public static DevCenterOperationStatus DevCenterOperationStatus(BinaryData properties)
         {
             return new DevCenterOperationStatus(properties, default);
         }
@@ -1655,7 +1655,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="devCenterUri"> The URI of the Dev Center. </param>
         /// <returns> A new <see cref="DevCenter.DevCenterData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DevCenterData DevCenterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, DevCenterProvisioningState? provisioningState = default, Uri devCenterUri = default)
+        public static DevCenterData DevCenterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, DevCenterProvisioningState? provisioningState, Uri devCenterUri)
         {
             return new DevCenterData(
                 id,
@@ -1691,7 +1691,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="devCenterUri"> The URI of the Dev Center resource this project is associated with. </param>
         /// <returns> A new <see cref="DevCenter.DevCenterProjectData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DevCenterProjectData DevCenterProjectData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ResourceIdentifier devCenterId = default, string description = default, int? maxDevBoxesPerUser = default, DevCenterProvisioningState? provisioningState = default, Uri devCenterUri = default)
+        public static DevCenterProjectData DevCenterProjectData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier devCenterId, string description, int? maxDevBoxesPerUser, DevCenterProvisioningState? provisioningState, Uri devCenterUri)
         {
             return new DevCenterProjectData(
                 id,
@@ -1733,7 +1733,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="hibernateSupport"> Indicates whether this image has hibernate enabled. Not all images are capable of supporting hibernation. To find out more see https://aka.ms/devbox/hibernate. </param>
         /// <returns> A new <see cref="DevCenter.DevCenterImageData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DevCenterImageData DevCenterImageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, string publisher = default, string offer = default, string sku = default, RecommendedMachineConfiguration recommendedMachineConfiguration = default, DevCenterProvisioningState? provisioningState = default, DevCenterHibernateSupport? hibernateSupport = default)
+        public static DevCenterImageData DevCenterImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string publisher, string offer, string sku, RecommendedMachineConfiguration recommendedMachineConfiguration, DevCenterProvisioningState? provisioningState, DevCenterHibernateSupport? hibernateSupport)
         {
             return new DevCenterImageData(
                 id,
@@ -1765,7 +1765,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="lastSyncOn"> When the catalog was last synced. </param>
         /// <returns> A new <see cref="DevCenter.DevCenterCatalogData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DevCenterCatalogData DevCenterCatalogData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DevCenterGitCatalog gitHub = default, DevCenterGitCatalog adoGit = default, DevCenterProvisioningState? provisioningState = default, DevCenterCatalogSyncState? syncState = default, DateTimeOffset? lastSyncOn = default)
+        public static DevCenterCatalogData DevCenterCatalogData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DevCenterGitCatalog gitHub, DevCenterGitCatalog adoGit, DevCenterProvisioningState? provisioningState, DevCenterCatalogSyncState? syncState, DateTimeOffset? lastSyncOn)
         {
             return new DevCenterCatalogData(
                 id,
@@ -1797,7 +1797,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <returns> A new <see cref="DevCenter.DevCenterEnvironmentTypeData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DevCenterEnvironmentTypeData DevCenterEnvironmentTypeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, DevCenterProvisioningState? provisioningState = default)
+        public static DevCenterEnvironmentTypeData DevCenterEnvironmentTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, DevCenterProvisioningState? provisioningState)
         {
             return new DevCenterEnvironmentTypeData(
                 id,
@@ -1817,7 +1817,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <returns> A new <see cref="DevCenter.AllowedEnvironmentTypeData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AllowedEnvironmentTypeData AllowedEnvironmentTypeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DevCenterProvisioningState? provisioningState = default)
+        public static AllowedEnvironmentTypeData AllowedEnvironmentTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DevCenterProvisioningState? provisioningState)
         {
             return new AllowedEnvironmentTypeData(
                 id,
@@ -1843,7 +1843,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <returns> A new <see cref="DevCenter.DevCenterProjectEnvironmentData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DevCenterProjectEnvironmentData DevCenterProjectEnvironmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, ResourceIdentifier deploymentTargetId = default, EnvironmentTypeEnableStatus? status = default, IDictionary<string, DevCenterEnvironmentRole> roles = default, IDictionary<string, DevCenterUserRoleAssignments> userRoleAssignments = default, DevCenterProvisioningState? provisioningState = default)
+        public static DevCenterProjectEnvironmentData DevCenterProjectEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ResourceIdentifier deploymentTargetId, EnvironmentTypeEnableStatus? status, IDictionary<string, DevCenterEnvironmentRole> roles, IDictionary<string, DevCenterUserRoleAssignments> userRoleAssignments, DevCenterProvisioningState? provisioningState)
         {
             return new DevCenterProjectEnvironmentData(
                 id,
@@ -1856,7 +1856,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     deploymentTargetId,
                     default,
                     status,
-                    new ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(roles ?? new ChangeTrackingDictionary<string, DevCenterEnvironmentRole>(), default),
+                    roles is null ? default : new ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(roles ?? new ChangeTrackingDictionary<string, DevCenterEnvironmentRole>(), default),
                     userRoleAssignments ?? new ChangeTrackingDictionary<string, DevCenterUserRoleAssignments>(),
                     default,
                     provisioningState,
@@ -1882,7 +1882,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="activeImageReference"> Image reference information for the currently active image (only populated during updates). </param>
         /// <returns> A new <see cref="DevCenter.DevBoxDefinitionData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DevBoxDefinitionData DevBoxDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DevCenterImageReference imageReference = default, DevCenterSku sku = default, string osStorageType = default, DevCenterHibernateSupport? hibernateSupport = default, DevCenterProvisioningState? provisioningState = default, ImageValidationStatus? imageValidationStatus = default, ImageValidationErrorDetails imageValidationErrorDetails = default, DevCenterImageReference activeImageReference = default)
+        public static DevBoxDefinitionData DevBoxDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevCenterImageReference imageReference, DevCenterSku sku, string osStorageType, DevCenterHibernateSupport? hibernateSupport, DevCenterProvisioningState? provisioningState, ImageValidationStatus? imageValidationStatus, ImageValidationErrorDetails imageValidationErrorDetails, DevCenterImageReference activeImageReference)
         {
             return new DevBoxDefinitionData(
                 id,
@@ -1912,7 +1912,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="name"> The name. </param>
         /// <returns> A new <see cref="Models.DevCenterUsage"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DevCenterUsage DevCenterUsage(long? currentValue = default, long? limit = default, DevCenterUsageUnit? unit = default, DevCenterUsageName name = default)
+        public static DevCenterUsage DevCenterUsage(long? currentValue, long? limit, DevCenterUsageUnit? unit, DevCenterUsageName name)
         {
             return new DevCenterUsage(
                 currentValue,
@@ -1940,7 +1940,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <returns> A new <see cref="DevCenter.DevCenterPoolData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DevCenterPoolData DevCenterPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string devBoxDefinitionName = default, string networkConnectionName = default, DevCenterLicenseType? licenseType = default, LocalAdminStatus? localAdministrator = default, StopOnDisconnectConfiguration stopOnDisconnect = default, DevCenterHealthStatus? healthStatus = default, IEnumerable<DevCenterHealthStatusDetail> healthStatusDetails = default, DevCenterProvisioningState? provisioningState = default)
+        public static DevCenterPoolData DevCenterPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string devBoxDefinitionName, string networkConnectionName, DevCenterLicenseType? licenseType, LocalAdminStatus? localAdministrator, StopOnDisconnectConfiguration stopOnDisconnect, DevCenterHealthStatus? healthStatus, IEnumerable<DevCenterHealthStatusDetail> healthStatusDetails, DevCenterProvisioningState? provisioningState)
         {
             return new DevCenterPoolData(
                 id,
@@ -1985,7 +1985,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <returns> A new <see cref="DevCenter.DevCenterScheduleData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DevCenterScheduleData DevCenterScheduleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DevCenterScheduledType? scheduledType = default, DevCenterScheduledFrequency? frequency = default, string time = default, string timeZone = default, DevCenterScheduleEnableStatus? state = default, DevCenterProvisioningState? provisioningState = default)
+        public static DevCenterScheduleData DevCenterScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DevCenterScheduledType? scheduledType, DevCenterScheduledFrequency? frequency, string time, string timeZone, DevCenterScheduleEnableStatus? state, DevCenterProvisioningState? provisioningState)
         {
             return new DevCenterScheduleData(
                 id,

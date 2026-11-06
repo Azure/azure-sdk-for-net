@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataBoxEdgeRoleAddonData, DataBoxEdgeRoleAddonResource>(new AddonsGetByRoleAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataBoxEdgeRoleAddonData, DataBoxEdgeRoleAddonResource>(new DataBoxEdgeRoleAddonDataAsyncCollectionResultOfT(
                 _addonsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataBoxEdgeRoleAddonData, DataBoxEdgeRoleAddonResource>(new AddonsGetByRoleCollectionResultOfT(
+            return new PageableWrapper<DataBoxEdgeRoleAddonData, DataBoxEdgeRoleAddonResource>(new DataBoxEdgeRoleAddonDataCollectionResultOfT(
                 _addonsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

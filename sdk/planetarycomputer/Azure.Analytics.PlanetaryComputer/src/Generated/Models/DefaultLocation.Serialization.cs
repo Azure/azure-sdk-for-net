@@ -151,10 +151,10 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DefaultLocation(zoom, coordinates, additionalBinaryDataProperties);
+            return new DefaultLocation(zoom, coordinates ?? new ChangeTrackingList<float>(), additionalBinaryDataProperties);
         }
     }
 }

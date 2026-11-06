@@ -7,6 +7,8 @@ updates:
       interval: "daily"
     labels:
       - "dependencies"
+    # Do not allow pull requests, but keep this enabled for CVE/alert notifications.
+    open-pull-requests-limit: 0
     cooldown:
       default-days: 7
       exclude:
@@ -42,6 +44,8 @@ updates:
       interval: "daily"
     labels:
       - "dependencies"
+    # Do not allow pull requests, but keep this enabled for CVE/alert notifications.
+    open-pull-requests-limit: 0
     cooldown:
       default-days: 7
       exclude:
@@ -77,6 +81,8 @@ updates:
       interval: "daily"
     labels:
       - "dependencies"
+    # Do not allow pull requests, but keep this enabled for CVE/alert notifications.
+    open-pull-requests-limit: 0
     cooldown:
       default-days: 7
       exclude:
@@ -112,6 +118,8 @@ updates:
       interval: "daily"
     labels:
       - "dependencies"
+    # Do not allow pull requests, but keep this enabled for CVE/alert notifications.
+    open-pull-requests-limit: 0
     cooldown:
       default-days: 7
       exclude:

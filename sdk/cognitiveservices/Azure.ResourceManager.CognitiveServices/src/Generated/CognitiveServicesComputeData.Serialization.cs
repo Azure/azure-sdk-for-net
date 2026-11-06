@@ -111,22 +111,6 @@ namespace Azure.ResourceManager.CognitiveServices
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
@@ -185,7 +169,6 @@ namespace Azure.ResourceManager.CognitiveServices
             SystemData systemData = default;
             CognitiveServicesComputeProperties properties = default;
             ETag? eTag = default;
-            IDictionary<string, string> tags = default;
             string kind = default;
             ManagedServiceIdentity identity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -237,27 +220,6 @@ namespace Azure.ResourceManager.CognitiveServices
                     eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("tags"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(prop0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(prop0.Name, prop0.Value.GetString());
-                        }
-                    }
-                    tags = dictionary;
-                    continue;
-                }
                 if (prop.NameEquals("kind"u8))
                 {
                     kind = prop.Value.GetString();
@@ -274,7 +236,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CognitiveServicesComputeData(
@@ -284,7 +246,6 @@ namespace Azure.ResourceManager.CognitiveServices
                 systemData,
                 properties,
                 eTag,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 kind,
                 identity,
                 additionalBinaryDataProperties);

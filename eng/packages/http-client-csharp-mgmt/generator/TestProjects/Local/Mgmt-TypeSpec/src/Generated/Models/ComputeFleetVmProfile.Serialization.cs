@@ -151,6 +151,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
             if (local.StartsWith("capacityReservation"u8))
             {
+                if (CapacityReservation == null)
+                {
+                    return false;
+                }
                 return CapacityReservation.Patch.TryGetEncodedValue([.. "$"u8, .. local.Slice("capacityReservation"u8.Length)], out value);
             }
             return false;
@@ -168,6 +172,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
             if (local.StartsWith("capacityReservation"u8))
             {
+                if (CapacityReservation == null)
+                {
+                    return false;
+                }
                 CapacityReservation.Patch.Set([.. "$"u8, .. local.Slice("capacityReservation"u8.Length)], value);
                 return true;
             }

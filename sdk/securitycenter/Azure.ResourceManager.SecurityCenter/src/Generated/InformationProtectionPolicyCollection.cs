@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<InformationProtectionPolicyData, InformationProtectionPolicyResource>(new InformationProtectionPoliciesGetAllAsyncCollectionResultOfT(_informationProtectionPoliciesRestClient, Id.ToString(), context, "InformationProtectionPolicyCollection.GetAll"), data => new InformationProtectionPolicyResource(Client, data));
+            return new AsyncPageableWrapper<InformationProtectionPolicyData, InformationProtectionPolicyResource>(new InformationProtectionPolicyDataAsyncCollectionResultOfT(_informationProtectionPoliciesRestClient, Id.ToString(), context, "InformationProtectionPolicyCollection.GetAll"), data => new InformationProtectionPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<InformationProtectionPolicyData, InformationProtectionPolicyResource>(new InformationProtectionPoliciesGetAllCollectionResultOfT(_informationProtectionPoliciesRestClient, Id.ToString(), context, "InformationProtectionPolicyCollection.GetAll"), data => new InformationProtectionPolicyResource(Client, data));
+            return new PageableWrapper<InformationProtectionPolicyData, InformationProtectionPolicyResource>(new InformationProtectionPolicyDataCollectionResultOfT(_informationProtectionPoliciesRestClient, Id.ToString(), context, "InformationProtectionPolicyCollection.GetAll"), data => new InformationProtectionPolicyResource(Client, data));
         }
 
         /// <summary>

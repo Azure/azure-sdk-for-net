@@ -13,7 +13,7 @@ namespace Azure.Provisioning.AppContainers
     /// <summary> Container App Label History resource specific properties. </summary>
     internal partial class LabelHistoryProperties : ProvisionableConstruct
     {
-        private BicepList<LabelHistoryRecordItem> _records;
+        private BicepList<ContainerAppLabelHistoryRecordItem> _records;
 
         /// <summary> Creates a new LabelHistoryProperties. </summary>
         public LabelHistoryProperties()
@@ -21,7 +21,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Records. </summary>
-        public BicepList<LabelHistoryRecordItem> Records
+        public BicepList<ContainerAppLabelHistoryRecordItem> Records
         {
             get
             {
@@ -34,7 +34,7 @@ namespace Azure.Provisioning.AppContainers
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _records = DefineListProperty<LabelHistoryRecordItem>(nameof(Records), new string[] { "records" }, isOutput: true);
+            _records = DefineListProperty<ContainerAppLabelHistoryRecordItem>(nameof(Records), new string[] { "records" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

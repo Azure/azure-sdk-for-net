@@ -11,15 +11,13 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The type of deadline the scheduled action follows for its schedule. </summary>
+    /// <summary> How the scheduled time is interpreted for the resource operation. </summary>
     public readonly partial struct ScheduledActionsDeadlineType : IEquatable<ScheduledActionsDeadlineType>
     {
         private readonly string _value;
-        /// <summary> Default value of Unknown. </summary>
-        private const string UnknownValue = "Unknown";
-        /// <summary> Initiate the operation at the given deadline. </summary>
+        /// <summary> Starts the operation at the scheduled time. </summary>
         private const string InitiateAtValue = "InitiateAt";
-        /// <summary> Complete the operation by the given deadline. </summary>
+        /// <summary> Completes the operation by the scheduled time. </summary>
         private const string CompleteByValue = "CompleteBy";
 
         /// <summary> Initializes a new instance of <see cref="ScheduledActionsDeadlineType"/>. </summary>
@@ -32,13 +30,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _value = value;
         }
 
-        /// <summary> Default value of Unknown. </summary>
-        public static ScheduledActionsDeadlineType Unknown { get; } = new ScheduledActionsDeadlineType(UnknownValue);
-
-        /// <summary> Initiate the operation at the given deadline. </summary>
+        /// <summary> Starts the operation at the scheduled time. </summary>
         public static ScheduledActionsDeadlineType InitiateAt { get; } = new ScheduledActionsDeadlineType(InitiateAtValue);
 
-        /// <summary> Complete the operation by the given deadline. </summary>
+        /// <summary> Completes the operation by the scheduled time. </summary>
         public static ScheduledActionsDeadlineType CompleteBy { get; } = new ScheduledActionsDeadlineType(CompleteByValue);
 
         /// <summary> Determines if two <see cref="ScheduledActionsDeadlineType"/> values are the same. </summary>

@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new SourceControlSyncJobStreamsGetSourceControlSyncJobStreamsAsyncCollectionResultOfT(
+            return new SourceControlSyncJobStreamAsyncCollectionResultOfT(
                 _sourceControlSyncJobStreamsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new SourceControlSyncJobStreamsGetSourceControlSyncJobStreamsCollectionResultOfT(
+            return new SourceControlSyncJobStreamCollectionResultOfT(
                 _sourceControlSyncJobStreamsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -722,7 +722,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new SourceControlSyncJobOperationsGetSourceControlSyncJobsAsyncCollectionResultOfT(
+            return new SourceControlSyncJobAsyncCollectionResultOfT(
                 _sourceControlSyncJobOperationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -763,7 +763,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new SourceControlSyncJobOperationsGetSourceControlSyncJobsCollectionResultOfT(
+            return new SourceControlSyncJobCollectionResultOfT(
                 _sourceControlSyncJobOperationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

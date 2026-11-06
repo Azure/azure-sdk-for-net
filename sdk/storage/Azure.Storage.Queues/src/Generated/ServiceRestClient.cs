@@ -540,10 +540,10 @@ namespace Azure.Storage.Queues
         /// <param name="include"> Specify to include additional, optional information. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ListQueuesResponse> GetQueuesSegment(string prefix = default, string marker = default, int? maxresults = default, int? timeout = default, IEnumerable<string> include = default, CancellationToken cancellationToken = default)
+        public virtual Response<ListQueuesResult> GetQueuesSegment(string prefix = default, string marker = default, int? maxresults = default, int? timeout = default, IEnumerable<string> include = default, CancellationToken cancellationToken = default)
         {
             Response result = GetQueuesSegment(prefix, marker, maxresults, timeout, include, cancellationToken.ToRequestContext());
-            return Response.FromValue((ListQueuesResponse)result, result);
+            return Response.FromValue((ListQueuesResult)result, result);
         }
 
         /// <summary> Returns a list of queues. </summary>
@@ -565,10 +565,10 @@ namespace Azure.Storage.Queues
         /// <param name="include"> Specify to include additional, optional information. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ListQueuesResponse>> GetQueuesSegmentAsync(string prefix = default, string marker = default, int? maxresults = default, int? timeout = default, IEnumerable<string> include = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ListQueuesResult>> GetQueuesSegmentAsync(string prefix = default, string marker = default, int? maxresults = default, int? timeout = default, IEnumerable<string> include = default, CancellationToken cancellationToken = default)
         {
             Response result = await GetQueuesSegmentAsync(prefix, marker, maxresults, timeout, include, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ListQueuesResponse)result, result);
+            return Response.FromValue((ListQueuesResult)result, result);
         }
     }
 }

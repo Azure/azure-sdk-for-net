@@ -162,10 +162,10 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ServerTrustGroupProperties(groupMembers, trustScopes, additionalBinaryDataProperties);
+            return new ServerTrustGroupProperties(groupMembers ?? new ChangeTrackingList<ServerTrustGroupServerInfo>(), trustScopes ?? new ChangeTrackingList<ServerTrustGroupPropertiesTrustScopesItem>(), additionalBinaryDataProperties);
         }
     }
 }

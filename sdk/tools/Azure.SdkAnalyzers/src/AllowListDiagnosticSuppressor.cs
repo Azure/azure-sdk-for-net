@@ -40,6 +40,7 @@ namespace Azure.SdkAnalyzers
             "AAIP001",
             "AAIP002",
             "OPENAI001",
+            "OPENAI002",
             "OPENAICUA001"
         };
 

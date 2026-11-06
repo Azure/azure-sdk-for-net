@@ -167,7 +167,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("input_schema"u8))
                 {
-                    inputSchema = BinaryData.FromString(prop.Value.GetRawText());
+                    inputSchema = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("annotations"u8))
@@ -176,12 +176,12 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    annotations = BinaryData.FromString(prop.Value.GetRawText());
+                    annotations = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new VoiceLiveMcpTool(name, description, inputSchema, annotations, additionalBinaryDataProperties);

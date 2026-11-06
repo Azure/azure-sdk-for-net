@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ApplicationInsightsWebTestCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ApplicationInsightsWebTestResource.ResourceType, out string applicationInsightsWebTestApiVersion);
             _webTestsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights", ApplicationInsightsWebTestResource.ResourceType.Namespace, Diagnostics);
-            _webTestsRestClient = new WebTests(_webTestsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, applicationInsightsWebTestApiVersion ?? "2022-06-15");
+            _webTestsRestClient = new WebTests(_webTestsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -288,7 +287,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApplicationInsightsWebTestData, ApplicationInsightsWebTestResource>(new WebTestsGetByResourceGroupAsyncCollectionResultOfT(_webTestsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ApplicationInsightsWebTestCollection.GetAll"), data => new ApplicationInsightsWebTestResource(Client, data));
+            return new AsyncPageableWrapper<ApplicationInsightsWebTestData, ApplicationInsightsWebTestResource>(new ApplicationInsightsWebTestDataAsyncCollectionResultOfT(_webTestsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ApplicationInsightsWebTestCollection.GetAll"), data => new ApplicationInsightsWebTestResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +315,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApplicationInsightsWebTestData, ApplicationInsightsWebTestResource>(new WebTestsGetByResourceGroupCollectionResultOfT(_webTestsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ApplicationInsightsWebTestCollection.GetAll"), data => new ApplicationInsightsWebTestResource(Client, data));
+            return new PageableWrapper<ApplicationInsightsWebTestData, ApplicationInsightsWebTestResource>(new ApplicationInsightsWebTestDataCollectionResultOfT(_webTestsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ApplicationInsightsWebTestCollection.GetAll"), data => new ApplicationInsightsWebTestResource(Client, data));
         }
 
         /// <summary>

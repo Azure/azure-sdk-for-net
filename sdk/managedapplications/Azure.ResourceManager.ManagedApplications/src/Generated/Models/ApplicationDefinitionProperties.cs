@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         {
             get
             {
-                return DeploymentPolicy is null ? default : DeploymentPolicy.DeploymentMode;
+                return DeploymentPolicy is null ? (DeploymentMode?)default : DeploymentPolicy.DeploymentMode;
             }
             set
             {

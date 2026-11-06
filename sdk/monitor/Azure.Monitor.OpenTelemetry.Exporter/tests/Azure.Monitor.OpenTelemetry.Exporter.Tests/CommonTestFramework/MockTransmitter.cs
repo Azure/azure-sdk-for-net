@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -9,22 +9,24 @@ using System.Threading.Tasks;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 using OpenTelemetry;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
 {
-    internal class MockTransmitter : ITransmitter, IMultiTenantTransmitter
+    internal partial class MockTransmitter : ITransmitter
     {
         public readonly IList<TelemetryItem> TelemetryItems;
 
-        public string InstrumentationKey => "00000000-0000-0000-0000-000000000000";
+        public string InstrumentationKey { get; }
+        public ExportResult Result { get; set; } = ExportResult.Success;
+        public int DisposeCallCount { get; private set; }
 
-        public MockTransmitter(IList<TelemetryItem> telemetryItems)
+        public MockTransmitter(IList<TelemetryItem> telemetryItems, string instrumentationKey = "00000000-0000-0000-0000-000000000000")
         {
             this.TelemetryItems = telemetryItems;
+            InstrumentationKey = instrumentationKey;
         }
 
         public ValueTask<ExportResult> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, TelemetrySchemaTypeCounter telemetrySchemaTypeCounter, TelemetryItemOrigin origin, bool async, CancellationToken cancellationToken)
@@ -39,31 +41,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
                 }
             }
 
-            return new ValueTask<ExportResult>(Task.FromResult(ExportResult.Success));
+            return new ValueTask<ExportResult>(Task.FromResult(Result));
         }
 
         public int TrackAsyncCallCount { get; private set; }
-
-        /// <summary>
-        /// Per multi-tenant send: the destination endpoint and the items delivered to it.
-        /// </summary>
-        public readonly List<(string IngestionEndpoint, TelemetryItem[] TelemetryItems)> Sends = new();
-
-        public ExportResult MultiTenantResult { get; set; } = ExportResult.Success;
-
-        public ExportResult Track(EndpointRouteBatch routeBatch, TelemetryItemOrigin origin, CancellationToken cancellationToken)
-        {
-            lock (this.Sends)
-            {
-                for (int i = 0; i < routeBatch.Count; i++)
-                {
-                    var group = routeBatch[i];
-                    Sends.Add((group.IngestionEndpoint, group.TelemetryItems.ToArray()));
-                }
-            }
-
-            return MultiTenantResult;
-        }
 
         public ValueTask TransmitFromStorage(long maxFileToTransmit, bool async, CancellationToken cancellationToken)
         {
@@ -84,6 +65,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
 
         public void Dispose()
         {
+            DisposeCallCount++;
         }
 
         private sealed class NoopScope : IDisposable

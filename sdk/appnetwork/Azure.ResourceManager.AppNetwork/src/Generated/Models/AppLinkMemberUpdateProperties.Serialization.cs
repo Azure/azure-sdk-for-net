@@ -79,11 +79,6 @@ namespace Azure.ResourceManager.AppNetwork.Models
                 writer.WritePropertyName("upgradeProfile"u8);
                 writer.WriteObjectValue(UpgradeProfile, options);
             }
-            if (Optional.IsDefined(ObservabilityProfile))
-            {
-                writer.WritePropertyName("observabilityProfile"u8);
-                writer.WriteObjectValue(ObservabilityProfile, options);
-            }
             if (Optional.IsDefined(ConnectivityProfile))
             {
                 writer.WritePropertyName("connectivityProfile"u8);
@@ -131,9 +126,8 @@ namespace Azure.ResourceManager.AppNetwork.Models
             {
                 return null;
             }
-            AppLinkUpgradeProfile upgradeProfile = default;
-            ObservabilityProfile observabilityProfile = default;
-            AppLinkConnectivityProfile connectivityProfile = default;
+            AppLinkMemberUpgradeProfilePatch upgradeProfile = default;
+            AppLinkConnectivityProfilePatch connectivityProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -143,16 +137,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
                     {
                         continue;
                     }
-                    upgradeProfile = AppLinkUpgradeProfile.DeserializeAppLinkUpgradeProfile(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("observabilityProfile"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    observabilityProfile = ObservabilityProfile.DeserializeObservabilityProfile(prop.Value, options);
+                    upgradeProfile = AppLinkMemberUpgradeProfilePatch.DeserializeAppLinkMemberUpgradeProfilePatch(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("connectivityProfile"u8))
@@ -161,15 +146,15 @@ namespace Azure.ResourceManager.AppNetwork.Models
                     {
                         continue;
                     }
-                    connectivityProfile = AppLinkConnectivityProfile.DeserializeAppLinkConnectivityProfile(prop.Value, options);
+                    connectivityProfile = AppLinkConnectivityProfilePatch.DeserializeAppLinkConnectivityProfilePatch(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AppLinkMemberUpdateProperties(upgradeProfile, observabilityProfile, connectivityProfile, additionalBinaryDataProperties);
+            return new AppLinkMemberUpdateProperties(upgradeProfile, connectivityProfile, additionalBinaryDataProperties);
         }
     }
 }

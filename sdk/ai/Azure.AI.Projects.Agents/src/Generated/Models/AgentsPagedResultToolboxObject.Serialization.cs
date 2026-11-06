@@ -179,10 +179,10 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AgentsPagedResultToolboxObject(data, firstId, lastId, hasMore, additionalBinaryDataProperties);
+            return new AgentsPagedResultToolboxObject(data ?? new ChangeTrackingList<ToolboxRecord>(), firstId, lastId, hasMore, additionalBinaryDataProperties);
         }
     }
 }

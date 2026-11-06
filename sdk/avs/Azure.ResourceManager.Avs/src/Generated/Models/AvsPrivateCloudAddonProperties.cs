@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary>
     /// The properties of an addon
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AddonSrmProperties"/>, <see cref="AddonVrProperties"/>, <see cref="AddonHcxProperties"/>, and <see cref="AddonArcProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AddonArcProperties"/>, <see cref="AddonHcxProperties"/>, <see cref="AddonSrmProperties"/>, and <see cref="AddonVrProperties"/>.
     /// </summary>
     public abstract partial class AvsPrivateCloudAddonProperties
     {
@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.Avs.Models
             AddonType = addonType;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudAddonProperties"/>. </summary>
+        protected AvsPrivateCloudAddonProperties() : this(default)
+        {
         }
 
         /// <summary> Addon type. </summary>

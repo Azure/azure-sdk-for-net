@@ -12,6 +12,22 @@ namespace Azure.Security.ConfidentialLedger.Tests
         public Uri ConfidentialLedgerIdentityUrl => new(GetRecordedVariable("CONFIDENTIALLEDGER_IDENTITY_URL"));
 
         /// <summary>
+        /// Whether a TPAL-enabled ledger and its Identity Service endpoint have been configured for
+        /// application-claims live testing.
+        /// </summary>
+        public bool IsApplicationClaimsLedgerConfigured =>
+            !string.IsNullOrEmpty(GetRecordedOptionalVariable("CONFIDENTIALLEDGER_APPLICATION_CLAIMS_URL")) &&
+            !string.IsNullOrEmpty(GetRecordedOptionalVariable("CONFIDENTIALLEDGER_APPLICATION_CLAIMS_IDENTITY_URL"));
+
+        /// <summary> The TPAL-enabled ledger endpoint used by the application-claims live test. </summary>
+        public Uri ConfidentialLedgerApplicationClaimsUrl =>
+            new(GetRecordedVariable("CONFIDENTIALLEDGER_APPLICATION_CLAIMS_URL"));
+
+        /// <summary> The Identity Service endpoint for the TPAL-enabled application-claims ledger. </summary>
+        public Uri ConfidentialLedgerApplicationClaimsIdentityUrl =>
+            new(GetRecordedVariable("CONFIDENTIALLEDGER_APPLICATION_CLAIMS_IDENTITY_URL"));
+
+        /// <summary>
         /// Whether a pruning-enabled ledger and a known pruned collection have been configured for
         /// archived-fallback recording.
         /// </summary>

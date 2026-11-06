@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
 {
     /// <summary>
     /// The properties of storage class of the StorageClass
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="NativeStorageClassTypeProperties"/>, <see cref="RwxStorageClassTypeProperties"/>, <see cref="BlobStorageClassTypeProperties"/>, <see cref="NfsStorageClassTypeProperties"/>, and <see cref="SmbStorageClassTypeProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BlobStorageClassTypeProperties"/>, <see cref="NativeStorageClassTypeProperties"/>, <see cref="NfsStorageClassTypeProperties"/>, <see cref="RwxStorageClassTypeProperties"/>, and <see cref="SmbStorageClassTypeProperties"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownStorageClassTypeProperties))]
     public abstract partial class StorageClassTypeProperties : IJsonModel<StorageClassTypeProperties>
@@ -130,14 +130,14 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Native":
-                        return NativeStorageClassTypeProperties.DeserializeNativeStorageClassTypeProperties(element, options);
-                    case "RWX":
-                        return RwxStorageClassTypeProperties.DeserializeRwxStorageClassTypeProperties(element, options);
                     case "Blob":
                         return BlobStorageClassTypeProperties.DeserializeBlobStorageClassTypeProperties(element, options);
+                    case "Native":
+                        return NativeStorageClassTypeProperties.DeserializeNativeStorageClassTypeProperties(element, options);
                     case "NFS":
                         return NfsStorageClassTypeProperties.DeserializeNfsStorageClassTypeProperties(element, options);
+                    case "RWX":
+                        return RwxStorageClassTypeProperties.DeserializeRwxStorageClassTypeProperties(element, options);
                     case "SMB":
                         return SmbStorageClassTypeProperties.DeserializeSmbStorageClassTypeProperties(element, options);
                 }

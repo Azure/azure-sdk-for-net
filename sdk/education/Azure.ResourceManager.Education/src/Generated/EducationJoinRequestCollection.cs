@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Education
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EducationJoinRequestData, EducationJoinRequestResource>(new JoinRequestsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EducationJoinRequestData, EducationJoinRequestResource>(new EducationJoinRequestDataAsyncCollectionResultOfT(
                 _joinRequestsRestClient,
                 Id.Parent.Parent.Parent.Name,
                 Id.Parent.Parent.Name,
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Education
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EducationJoinRequestData, EducationJoinRequestResource>(new JoinRequestsGetAllCollectionResultOfT(
+            return new PageableWrapper<EducationJoinRequestData, EducationJoinRequestResource>(new EducationJoinRequestDataCollectionResultOfT(
                 _joinRequestsRestClient,
                 Id.Parent.Parent.Parent.Name,
                 Id.Parent.Parent.Name,

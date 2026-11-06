@@ -159,7 +159,7 @@ namespace Azure.AI.Agents.Persistent
                     continue;
                 }
             }
-            return new RunStepDeltaCustomBingGroundingToolCall(index, id, @type, additionalBinaryDataProperties, bingCustomSearch);
+            return new RunStepDeltaCustomBingGroundingToolCall(index, id, @type, additionalBinaryDataProperties, bingCustomSearch ?? new ChangeTrackingDictionary<string, string>());
         }
     }
 }

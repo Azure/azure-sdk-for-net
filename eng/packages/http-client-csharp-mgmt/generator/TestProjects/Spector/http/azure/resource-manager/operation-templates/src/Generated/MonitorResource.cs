@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.OperationTemplates
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _pagingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _pagingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MonitorData> response = Response.FromValue(MonitorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.OperationTemplates
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _pagingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _pagingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MonitorData> response = Response.FromValue(MonitorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.OperationTemplates
             {
                 CancellationToken = cancellationToken
             };
-            return new PagingMarkAsPageableAsyncCollectionResultOfT(
+            return new CollectionAsyncCollectionResultOfT(
                 _pagingRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.OperationTemplates
             {
                 CancellationToken = cancellationToken
             };
-            return new PagingMarkAsPageableCollectionResultOfT(
+            return new CollectionCollectionResultOfT(
                 _pagingRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.OperationTemplates
             {
                 CancellationToken = cancellationToken
             };
-            return new PagingPostActionPagingAsyncCollectionResultOfT(
+            return new MonitoredResourceAsyncCollectionResultOfT(
                 _pagingRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.OperationTemplates
             {
                 CancellationToken = cancellationToken
             };
-            return new PagingPostActionPagingCollectionResultOfT(
+            return new MonitoredResourceCollectionResultOfT(
                 _pagingRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

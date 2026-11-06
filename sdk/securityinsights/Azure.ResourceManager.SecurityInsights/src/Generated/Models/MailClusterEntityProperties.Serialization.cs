@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
                         }
                     }
                     additionalData = dictionary;
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    countByDeliveryStatus = BinaryData.FromString(prop.Value.GetRawText());
+                    countByDeliveryStatus = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("countByThreatType"u8))
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    countByThreatType = BinaryData.FromString(prop.Value.GetRawText());
+                    countByThreatType = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("countByProtectionStatus"u8))
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    countByProtectionStatus = BinaryData.FromString(prop.Value.GetRawText());
+                    countByProtectionStatus = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("threats"u8))
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MailClusterEntityProperties(

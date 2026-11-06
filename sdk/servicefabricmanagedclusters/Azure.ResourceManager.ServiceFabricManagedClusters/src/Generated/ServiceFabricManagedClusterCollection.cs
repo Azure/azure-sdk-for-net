@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ServiceFabricManagedClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ServiceFabricManagedClusterResource.ResourceType, out string serviceFabricManagedClusterApiVersion);
             _managedClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ServiceFabricManagedClusterResource.ResourceType.Namespace, Diagnostics);
-            _managedClustersRestClient = new ManagedClusters(_managedClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceFabricManagedClusterApiVersion ?? "2026-05-01-preview");
+            _managedClustersRestClient = new ManagedClusters(_managedClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ServiceFabric/managedClusters", out string managedClustersApiVersionOverride) ? managedClustersApiVersionOverride : "2026-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceFabricManagedClusterData, ServiceFabricManagedClusterResource>(new ManagedClustersGetByResourceGroupAsyncCollectionResultOfT(_managedClustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ServiceFabricManagedClusterCollection.GetAll"), data => new ServiceFabricManagedClusterResource(Client, data));
+            return new AsyncPageableWrapper<ServiceFabricManagedClusterData, ServiceFabricManagedClusterResource>(new ServiceFabricManagedClusterDataAsyncCollectionResultOfT(_managedClustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ServiceFabricManagedClusterCollection.GetAll"), data => new ServiceFabricManagedClusterResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceFabricManagedClusterData, ServiceFabricManagedClusterResource>(new ManagedClustersGetByResourceGroupCollectionResultOfT(_managedClustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ServiceFabricManagedClusterCollection.GetAll"), data => new ServiceFabricManagedClusterResource(Client, data));
+            return new PageableWrapper<ServiceFabricManagedClusterData, ServiceFabricManagedClusterResource>(new ServiceFabricManagedClusterDataCollectionResultOfT(_managedClustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ServiceFabricManagedClusterCollection.GetAll"), data => new ServiceFabricManagedClusterResource(Client, data));
         }
 
         /// <summary>

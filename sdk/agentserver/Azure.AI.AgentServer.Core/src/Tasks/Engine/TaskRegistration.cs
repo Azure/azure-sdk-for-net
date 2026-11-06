@@ -1,34 +1,44 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#pragma warning disable AAAS003 // Internal activation check for protocol-scoped tasks.
+
 using System;
 using Azure.AI.AgentServer.Core.Tasks;
 
 namespace Azure.AI.AgentServer.Core.Tasks.Engine;
 
 /// <summary>
-/// An immutable descriptor of a registered task: its name, input/output types,
-/// the handler delegate, whether it is multi-turn/steerable, and its per-task
-/// options. The wire <c>source.name</c> routes back to the registration by name.
+/// A descriptor of a registered task: its name, input/output types, handler,
+/// multi-turn behavior, steerability resolver, and per-task options. The wire
+/// <c>source.name</c> routes back to the registration by name.
 /// </summary>
 internal sealed class TaskRegistration
 {
+    private readonly Func<bool> _isSteerable;
+    private readonly Func<bool> _defaultEnabled;
+
     public TaskRegistration(
         string name,
         Type inputType,
         Type outputType,
         Delegate handler,
+        bool requiresServiceScope,
         bool multiTurn,
-        bool steerable,
+        Func<bool> isSteerable,
         TaskRegistrationOptions? options,
-        System.Text.Json.Serialization.Metadata.JsonTypeInfo? inputTypeInfo = null)
+        System.Text.Json.Serialization.Metadata.JsonTypeInfo? inputTypeInfo = null,
+        Func<bool>? defaultEnabled = null)
     {
         Name = name;
         InputType = inputType;
         OutputType = outputType;
         Handler = handler;
+        RequiresServiceScope = requiresServiceScope;
         MultiTurn = multiTurn;
-        Steerable = steerable;
+        _isSteerable = isSteerable
+            ?? throw new ArgumentNullException(nameof(isSteerable));
+        _defaultEnabled = defaultEnabled ?? (() => true);
         Options = options;
         InputTypeInfo = inputTypeInfo;
     }
@@ -42,17 +52,25 @@ internal sealed class TaskRegistration
     /// <summary>The handler output type.</summary>
     public Type OutputType { get; }
 
-    /// <summary>The handler delegate (<c>Func&lt;TaskContext&lt;TInput&gt;, CancellationToken, Task&lt;TOutput&gt;&gt;</c>).</summary>
+    /// <summary>
+    /// The direct handler delegate, or a scoped handler delegate whose first argument is the
+    /// attempt's service provider.
+    /// </summary>
     public Delegate Handler { get; }
+
+    /// <summary>Whether each handler attempt requires a fresh dependency-injection scope.</summary>
+    public bool RequiresServiceScope { get; }
 
     /// <summary>Whether the task is multi-turn.</summary>
     public bool MultiTurn { get; }
 
     /// <summary>Whether the multi-turn task accepts steering input.</summary>
-    public bool Steerable { get; }
+    public bool Steerable => _isSteerable();
 
     /// <summary>The per-task registration options, if any.</summary>
     public TaskRegistrationOptions? Options { get; }
+
+    public bool IsEnabled => Options?.IsEnabled?.Invoke() ?? _defaultEnabled();
 
     /// <summary>
     /// Optional source-generated <see cref="System.Text.Json.Serialization.Metadata.JsonTypeInfo"/>

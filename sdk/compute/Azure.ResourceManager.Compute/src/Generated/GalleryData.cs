@@ -91,6 +91,23 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        /// <summary> Contains information about the soft deletion policy of the gallery. </summary>
+        public SoftDeletePolicy SoftDeletePolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SoftDeletePolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryProperties();
+                }
+                Properties.SoftDeletePolicy = value;
+            }
+        }
+
         /// <summary> Sharing status of current gallery. </summary>
         public SharingStatus SharingStatus
         {
@@ -106,23 +123,6 @@ namespace Azure.ResourceManager.Compute
             get
             {
                 return Properties is null ? default : Properties.IdentifierUniqueName;
-            }
-        }
-
-        /// <summary> Enables soft-deletion for resources in this gallery, allowing them to be recovered within retention time. </summary>
-        public bool? IsSoftDeleteEnabled
-        {
-            get
-            {
-                return Properties is null ? default : Properties.IsSoftDeleteEnabled;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new GalleryProperties();
-                }
-                Properties.IsSoftDeleteEnabled = value;
             }
         }
     }

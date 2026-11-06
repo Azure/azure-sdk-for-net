@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
             get
             {
-                return Properties is null ? default : Properties.Status;
+                return Properties is null ? (PostgreSqlExecutionStatus?)default : Properties.Status;
             }
         }
 
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
             get
             {
-                return Properties is null ? default : Properties.StartsOn;
+                return Properties is null ? (DateTimeOffset?)default : Properties.StartsOn;
             }
         }
 

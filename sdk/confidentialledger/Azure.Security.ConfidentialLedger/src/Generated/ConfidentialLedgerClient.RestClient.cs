@@ -241,7 +241,7 @@ namespace Azure.Security.ConfidentialLedger
             return message;
         }
 
-        internal HttpMessage CreateCreateLedgerEntryRequest(RequestContent content, string collectionId, string tags, RequestContext context)
+        internal HttpMessage CreateCreateLedgerEntryRequest(RequestContent content, string collectionId, string tags, bool? waitForCommit, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -257,6 +257,10 @@ namespace Azure.Security.ConfidentialLedger
             if (tags != null)
             {
                 uri.AppendQuery("tags", tags, true);
+            }
+            if (waitForCommit != null)
+            {
+                uri.AppendQuery("waitForCommit", TypeFormatters.ConvertToString(waitForCommit), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;

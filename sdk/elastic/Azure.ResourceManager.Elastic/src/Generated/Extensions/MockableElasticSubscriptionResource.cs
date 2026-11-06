@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
 
         private ClientDiagnostics ElasticMonitorResourcesClientDiagnostics => _elasticMonitorResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Elastic.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ElasticMonitorResources ElasticMonitorResourcesRestClient => _elasticMonitorResourcesRestClient ??= new ElasticMonitorResources(ElasticMonitorResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-06-01");
+        private ElasticMonitorResources ElasticMonitorResourcesRestClient => _elasticMonitorResourcesRestClient ??= new ElasticMonitorResources(ElasticMonitorResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Elastic/monitors", out string apiVersion) ? apiVersion : "2025-06-01");
 
         private ClientDiagnostics ElasticVersionsOperationGroupClientDiagnostics => _elasticVersionsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Elastic.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ElasticMonitorData, ElasticMonitorResource>(new ElasticMonitorResourcesGetAllAsyncCollectionResultOfT(ElasticMonitorResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableElasticSubscriptionResource.GetElasticMonitors"), data => new ElasticMonitorResource(Client, data));
+            return new AsyncPageableWrapper<ElasticMonitorData, ElasticMonitorResource>(new ElasticMonitorDataAsync0CollectionResultOfT(ElasticMonitorResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableElasticSubscriptionResource.GetElasticMonitors"), data => new ElasticMonitorResource(Client, data));
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ElasticMonitorData, ElasticMonitorResource>(new ElasticMonitorResourcesGetAllCollectionResultOfT(ElasticMonitorResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableElasticSubscriptionResource.GetElasticMonitors"), data => new ElasticMonitorResource(Client, data));
+            return new PageableWrapper<ElasticMonitorData, ElasticMonitorResource>(new ElasticMonitorData0CollectionResultOfT(ElasticMonitorResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableElasticSubscriptionResource.GetElasticMonitors"), data => new ElasticMonitorResource(Client, data));
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ElasticVersionsOperationGroupGetElasticVersionsAsyncCollectionResultOfT(ElasticVersionsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), region, context, "MockableElasticSubscriptionResource.GetElasticVersions");
+            return new ElasticVersionAsyncCollectionResultOfT(ElasticVersionsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), region, context, "MockableElasticSubscriptionResource.GetElasticVersions");
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ElasticVersionsOperationGroupGetElasticVersionsCollectionResultOfT(ElasticVersionsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), region, context, "MockableElasticSubscriptionResource.GetElasticVersions");
+            return new ElasticVersionCollectionResultOfT(ElasticVersionsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), region, context, "MockableElasticSubscriptionResource.GetElasticVersions");
         }
 
         /// <summary>

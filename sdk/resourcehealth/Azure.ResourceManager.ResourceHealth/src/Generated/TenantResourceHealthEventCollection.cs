@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ResourceHealth
             _eventClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", TenantResourceHealthEventResource.ResourceType.Namespace, Diagnostics);
             _eventRestClient = new Event(_eventClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, tenantResourceHealthEventApiVersion ?? "2025-05-01");
             _eventsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", TenantResourceHealthEventResource.ResourceType.Namespace, Diagnostics);
-            _eventsRestClient = new Events(_eventsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, tenantResourceHealthEventApiVersion ?? "2025-05-01");
+            _eventsRestClient = new Events(_eventsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ResourceHealth/events", out string eventsApiVersionOverride) ? eventsApiVersionOverride : "2025-05-01");
             ValidateResourceId(id);
         }
 
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ResourceHealthEventData, TenantResourceHealthEventResource>(new EventsGetByTenantIdAsyncCollectionResultOfT(_eventsRestClient, filter, queryStartTime, context, "TenantResourceHealthEventCollection.GetAll"), data => new TenantResourceHealthEventResource(Client, data));
+            return new AsyncPageableWrapper<ResourceHealthEventData, TenantResourceHealthEventResource>(new ResourceHealthEventDataAsync0CollectionResultOfT(_eventsRestClient, filter, queryStartTime, context, "TenantResourceHealthEventCollection.GetAll"), data => new TenantResourceHealthEventResource(Client, data));
         }
 
         /// <summary>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ResourceHealthEventData, TenantResourceHealthEventResource>(new EventsGetByTenantIdCollectionResultOfT(_eventsRestClient, filter, queryStartTime, context, "TenantResourceHealthEventCollection.GetAll"), data => new TenantResourceHealthEventResource(Client, data));
+            return new PageableWrapper<ResourceHealthEventData, TenantResourceHealthEventResource>(new ResourceHealthEventData0CollectionResultOfT(_eventsRestClient, filter, queryStartTime, context, "TenantResourceHealthEventCollection.GetAll"), data => new TenantResourceHealthEventResource(Client, data));
         }
 
         /// <summary>

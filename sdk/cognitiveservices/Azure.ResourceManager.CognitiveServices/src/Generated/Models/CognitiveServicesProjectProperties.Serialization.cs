@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             string description = default;
             IReadOnlyDictionary<string, string> endpoints = default;
             bool? isDefault = default;
-            CapabilitySettings capabilitySettings = default;
+            CognitiveServicesAgentCapabilitySettings capabilitySettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -221,12 +221,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    capabilitySettings = CapabilitySettings.DeserializeCapabilitySettings(prop.Value, options);
+                    capabilitySettings = CognitiveServicesAgentCapabilitySettings.DeserializeCognitiveServicesAgentCapabilitySettings(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CognitiveServicesProjectProperties(

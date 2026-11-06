@@ -14,7 +14,6 @@ namespace Azure.Provisioning.AppContainers
     public partial class SessionPoolManagedIdentitySetting : ProvisionableConstruct
     {
         private BicepValue<string> _identity;
-        private BicepValue<ContainerAppIdentitySettingsLifeCycle> _lifecycle;
 
         /// <summary> Creates a new SessionPoolManagedIdentitySetting. </summary>
         public SessionPoolManagedIdentitySetting()
@@ -36,27 +35,11 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
-        /// <summary> Gets or sets the Lifecycle. </summary>
-        public BicepValue<ContainerAppIdentitySettingsLifeCycle> Lifecycle
-        {
-            get
-            {
-                Initialize();
-                return _lifecycle;
-            }
-            set
-            {
-                Initialize();
-                _lifecycle.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for SessionPoolManagedIdentitySetting. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _identity = DefineProperty<string>(nameof(Identity), new string[] { "identity" }, isRequired: true);
-            _lifecycle = DefineProperty<ContainerAppIdentitySettingsLifeCycle>(nameof(Lifecycle), new string[] { "lifecycle" });
             DefineAdditionalProperties();
         }
 

@@ -166,7 +166,7 @@ namespace Azure.Storage.Blobs.Models
                     continue;
                 }
             }
-            return new BlobTags(blobTagSet);
+            return new BlobTags(blobTagSet ?? new ChangeTrackingList<BlobTag>());
         }
 
         /// <param name="writer"> The XML writer. </param>

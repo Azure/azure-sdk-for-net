@@ -79,8 +79,16 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             {
                 throw new FormatException($"The model {nameof(PublicCloudConnectorProperties)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("awsCloudProfile"u8);
-            writer.WriteObjectValue(AwsCloudProfile, options);
+            if (Optional.IsDefined(AwsCloudProfile))
+            {
+                writer.WritePropertyName("awsCloudProfile"u8);
+                writer.WriteObjectValue(AwsCloudProfile, options);
+            }
+            if (Optional.IsDefined(GcpCloudProfile))
+            {
+                writer.WritePropertyName("gcpCloudProfile"u8);
+                writer.WriteObjectValue(GcpCloudProfile, options);
+            }
             writer.WritePropertyName("hostType"u8);
             writer.WriteStringValue(HostType.ToString());
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
@@ -136,6 +144,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 return null;
             }
             AwsCloudProfile awsCloudProfile = default;
+            GcpCloudProfile gcpCloudProfile = default;
             PublicCloudHostType hostType = default;
             PublicCloudResourceProvisioningState? provisioningState = default;
             string connectorPrimaryIdentifier = default;
@@ -144,7 +153,20 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             {
                 if (prop.NameEquals("awsCloudProfile"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     awsCloudProfile = AwsCloudProfile.DeserializeAwsCloudProfile(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("gcpCloudProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    gcpCloudProfile = GcpCloudProfile.DeserializeGcpCloudProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("hostType"u8))
@@ -168,10 +190,16 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PublicCloudConnectorProperties(awsCloudProfile, hostType, provisioningState, connectorPrimaryIdentifier, additionalBinaryDataProperties);
+            return new PublicCloudConnectorProperties(
+                awsCloudProfile,
+                gcpCloudProfile,
+                hostType,
+                provisioningState,
+                connectorPrimaryIdentifier,
+                additionalBinaryDataProperties);
         }
     }
 }

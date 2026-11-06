@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> The Resource ID of a User-Assigned Managed Identity. Should not be used along with clientId. </summary>
         [WirePath("azureBlobStorage.managedIdentityResourceId")]
-        public string ManagedIdentityResourceId
+        public ResourceIdentifier ManagedIdentityResourceId
         {
             get
             {

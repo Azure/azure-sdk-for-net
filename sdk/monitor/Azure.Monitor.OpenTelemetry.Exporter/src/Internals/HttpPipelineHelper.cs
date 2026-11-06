@@ -53,7 +53,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 : default;
         }
 
-        internal static bool TryGetTrackResponse(HttpMessage message, [NotNullWhen(true)] out TrackResponse? trackResponse)
+        internal static bool TryGetTrackResponse(HttpMessage message, [NotNullWhen(true)] out TrackResult? trackResponse)
         {
             if (message.Response.ContentStream == null)
             {
@@ -63,7 +63,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             using (JsonDocument document = JsonDocument.Parse(message.Response.ContentStream, default))
             {
-                var value = TrackResponse.DeserializeTrackResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+                var value = TrackResult.DeserializeTrackResult(document.RootElement, ModelSerializationExtensions.WireOptions);
                 trackResponse = Response.FromValue(value, message.Response);
                 return true;
             }
@@ -137,11 +137,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// <summary>
         /// Parse a PartialSuccess response from ingestion.
         /// </summary>
-        /// <param name="trackResponse"><see cref="TrackResponse"/> is the parsed response from ingestion.</param>
+        /// <param name="trackResponse"><see cref="TrackResult"/> is the parsed response from ingestion.</param>
         /// <param name="content"><see cref="RequestContent"/> that was sent to ingestion.</param>
         /// <param name="successCounter">Counter of successfully sent telemetry.</param>
         /// <returns>Telemetry that will be tried.</returns>
-        private static (byte[]? PartialContent, TelemetrySchemaTypeCounter? SuccessCounter, TelemetrySchemaTypeCounter? RetryCounter, TelemetrySchemaTypeCounter? DroppedCounter) ProcessPartialSuccessWithCounting(TrackResponse trackResponse, RequestContent? content, TelemetrySchemaTypeCounter? successCounter)
+        private static (byte[]? PartialContent, TelemetrySchemaTypeCounter? SuccessCounter, TelemetrySchemaTypeCounter? RetryCounter, TelemetrySchemaTypeCounter? DroppedCounter) ProcessPartialSuccessWithCounting(TrackResult trackResponse, RequestContent? content, TelemetrySchemaTypeCounter? successCounter)
         {
             if (content == null || !TryGetRequestContent(content, out var requestContent))
             {
@@ -373,7 +373,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private static void HandlePartialSuccess(HttpMessage httpMessage, PersistentBlobProvider? blobProvider, PersistentBlob? blob, TelemetryItemOrigin origin, ref TransmissionResult result, TelemetrySchemaTypeCounter? telemetrySchemaTypeCounter, NetworkSdkStatsManager? networkSdkStatsManager)
         {
-            if (!TryGetTrackResponse(httpMessage, out TrackResponse? trackResponse))
+            if (!TryGetTrackResponse(httpMessage, out TrackResult? trackResponse))
             {
                 return;
             }

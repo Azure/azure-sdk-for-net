@@ -32,6 +32,11 @@ namespace Azure.ResourceManager.Search.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="SearchPrivateLinkResource"/>. </summary>
+        public SearchPrivateLinkResource()
+        {
+        }
+
         /// <summary> Describes the properties of a supported private link resource for the Azure AI Search service. </summary>
         [WirePath("properties")]
         public SearchPrivateLinkResourceProperties Properties { get; }

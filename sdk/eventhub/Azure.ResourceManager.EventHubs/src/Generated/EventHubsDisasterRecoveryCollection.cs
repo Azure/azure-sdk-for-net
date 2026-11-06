@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.EventHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EventHubsDisasterRecoveryData, EventHubsDisasterRecoveryResource>(new EventHubsDisasterRecoveryAuthorizationRuleGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EventHubsDisasterRecoveryData, EventHubsDisasterRecoveryResource>(new EventHubsDisasterRecoveryDataAsyncCollectionResultOfT(
                 _eventHubsDisasterRecoveryAuthorizationRuleRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.EventHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EventHubsDisasterRecoveryData, EventHubsDisasterRecoveryResource>(new EventHubsDisasterRecoveryAuthorizationRuleGetAllCollectionResultOfT(
+            return new PageableWrapper<EventHubsDisasterRecoveryData, EventHubsDisasterRecoveryResource>(new EventHubsDisasterRecoveryDataCollectionResultOfT(
                 _eventHubsDisasterRecoveryAuthorizationRuleRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

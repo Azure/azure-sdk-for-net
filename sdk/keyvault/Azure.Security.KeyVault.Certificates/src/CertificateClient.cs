@@ -28,13 +28,13 @@ namespace Azure.Security.KeyVault.Certificates
     /// by <c>CertificateMapper</c> and the handwritten model types, so the
     /// wire payload shapes and public model surfaces are unchanged. Public
     /// method signatures, return types, exception contracts and recorded HTTP
-    /// traffic match every previously shipped 4.x version of this package, so
-    /// adopting this build is a no-op for existing consumers. The legacy
+    /// traffic match every previously shipped 4.x version of this package.
+    /// Reuse clients and call <see cref="Dispose"/> when their lifetime ends. The legacy
     /// hand-written transport layer (KeyVaultPipeline.SendRequest&lt;T&gt;)
     /// is retained only for DownloadCertificate because that API hits the
     /// Secrets endpoint, not the Certificates endpoint.
     /// </remarks>
-    public class CertificateClient
+    public class CertificateClient : IDisposable
     {
         internal const string CertificatesPath = "/certificates/";
         private const string CallerShouldAuditReason = "https://aka.ms/azsdk/callershouldaudit/security-keyvault-certificates";
@@ -46,6 +46,7 @@ namespace Azure.Security.KeyVault.Certificates
         private readonly KeyVaultCertificatesClient _generated;
         private readonly ClientDiagnostics _diagnostics;
         private readonly Uri _vaultUri;
+        private DisposableHttpPipeline _ownedPipeline;
 
         // The hand-written pipeline is preserved purely for DownloadCertificate,
         // which fetches the managed secret behind the certificate from the Secrets
@@ -105,20 +106,38 @@ namespace Azure.Security.KeyVault.Certificates
             // flow through automatically. No field-by-field copy is needed - future
             // additions to ClientOptions are picked up for free.
             var authPolicy = new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification);
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, authPolicy);
+            _ownedPipeline = HttpPipelineBuilder.Build(
+                options,
+                perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
+                perRetryPolicies: [authPolicy],
+                transportOptions: new HttpPipelineTransportOptions(),
+                responseClassifier: null);
 
-            _generated = new KeyVaultCertificatesClient(vaultUri, MapApiVersion(options.Version), pipeline, _diagnostics);
+            _generated = new KeyVaultCertificatesClient(vaultUri, MapApiVersion(options.Version), _ownedPipeline, _diagnostics);
 
             // Reuse the same HttpPipeline (and api-version) for the legacy KeyVaultPipeline
             // wrapper that DownloadCertificate still depends on - so DownloadCertificate's
             // wire shape is byte-identical to prior releases.
-            _pipeline = new KeyVaultPipeline(vaultUri, options.GetVersionString(), pipeline, _diagnostics);
+            _pipeline = new KeyVaultPipeline(vaultUri, options.GetVersionString(), _ownedPipeline, _diagnostics);
         }
 
         /// <summary>
         /// Gets the <see cref="Uri"/> of the vault used to create this instance of the <see cref="CertificateClient"/>.
         /// </summary>
         public virtual Uri VaultUri => _vaultUri;
+
+        /// <summary>
+        /// Releases the HTTP pipeline resources owned by this client.
+        /// </summary>
+        /// <remarks>
+        /// Reuse the client for its intended lifetime and dispose it after its operations, including long-running
+        /// operations and pageable enumeration, have completed. Caller-provided transports and credentials are not disposed.
+        /// </remarks>
+        public virtual void Dispose()
+        {
+            Interlocked.Exchange(ref _ownedPipeline, null)?.Dispose();
+            GC.SuppressFinalize(this);
+        }
 
         #region StartCreateCertificate
 
@@ -875,7 +894,8 @@ namespace Azure.Security.KeyVault.Certificates
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(PurgeDeletedCertificate)}");
             scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
-            try { return _generated.PurgeDeletedCertificate(certificateName, new RequestContext { CancellationToken = cancellationToken }); }
+            try
+            { return _generated.PurgeDeletedCertificate(certificateName, new RequestContext { CancellationToken = cancellationToken }); }
             catch (Exception e) { scope.Failed(e); throw; }
         }
 
@@ -896,7 +916,8 @@ namespace Azure.Security.KeyVault.Certificates
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(PurgeDeletedCertificate)}");
             scope.AddAttribute(OTelCertificateNameKey, certificateName);
             scope.Start();
-            try { return await _generated.PurgeDeletedCertificateAsync(certificateName, new RequestContext { CancellationToken = cancellationToken }).ConfigureAwait(false); }
+            try
+            { return await _generated.PurgeDeletedCertificateAsync(certificateName, new RequestContext { CancellationToken = cancellationToken }).ConfigureAwait(false); }
             catch (Exception e) { scope.Failed(e); throw; }
         }
 
@@ -1756,8 +1777,8 @@ namespace Azure.Security.KeyVault.Certificates
                 return response.Status switch
                 {
                     200 or 403 => Response.FromValue(CertificateMapper.Deserialize(response, () => new CertificateOperationProperties()), response),
-                    404        => Response.FromValue<CertificateOperationProperties>(null, response),
-                    _          => throw new RequestFailedException(response),
+                    404 => Response.FromValue<CertificateOperationProperties>(null, response),
+                    _ => throw new RequestFailedException(response),
                 };
             }
             catch (Exception e) { scope.Failed(e); throw; }
@@ -1777,8 +1798,8 @@ namespace Azure.Security.KeyVault.Certificates
                 return response.Status switch
                 {
                     200 or 403 => Response.FromValue(CertificateMapper.Deserialize(response, () => new CertificateOperationProperties()), response),
-                    404        => Response.FromValue<CertificateOperationProperties>(null, response),
-                    _          => throw new RequestFailedException(response),
+                    404 => Response.FromValue<CertificateOperationProperties>(null, response),
+                    _ => throw new RequestFailedException(response),
                 };
             }
             catch (Exception e) { scope.Failed(e); throw; }
@@ -1861,15 +1882,16 @@ namespace Azure.Security.KeyVault.Certificates
         // throwing - that's the contract the customer relied on.
         private static string MapApiVersion(CertificateClientOptions.ServiceVersion version) => version switch
         {
-            CertificateClientOptions.ServiceVersion.V7_0                => "7.0",
-            CertificateClientOptions.ServiceVersion.V7_1                => "7.1",
-            CertificateClientOptions.ServiceVersion.V7_2                => "7.2",
-            CertificateClientOptions.ServiceVersion.V7_3                => "7.3",
-            CertificateClientOptions.ServiceVersion.V7_4                => "7.4",
-            CertificateClientOptions.ServiceVersion.V7_5                => "7.5",
-            CertificateClientOptions.ServiceVersion.V7_6                => "7.6",
-            CertificateClientOptions.ServiceVersion.V2025_07_01         => "2025-07-01",
+            CertificateClientOptions.ServiceVersion.V7_0 => "7.0",
+            CertificateClientOptions.ServiceVersion.V7_1 => "7.1",
+            CertificateClientOptions.ServiceVersion.V7_2 => "7.2",
+            CertificateClientOptions.ServiceVersion.V7_3 => "7.3",
+            CertificateClientOptions.ServiceVersion.V7_4 => "7.4",
+            CertificateClientOptions.ServiceVersion.V7_5 => "7.5",
+            CertificateClientOptions.ServiceVersion.V7_6 => "7.6",
+            CertificateClientOptions.ServiceVersion.V2025_07_01 => "2025-07-01",
             CertificateClientOptions.ServiceVersion.V2026_03_01_Preview => "2026-03-01-preview",
+            CertificateClientOptions.ServiceVersion.V2026_04_01 => "2026-04-01",
             _ => throw new ArgumentOutOfRangeException(
                 nameof(version),
                 version,
@@ -1907,11 +1929,13 @@ namespace Azure.Security.KeyVault.Certificates
                     scope.Start();
                     try
                     {
-                        if (!e.MoveNext()) { scope.Dispose(); yield break; }
+                        if (!e.MoveNext())
+                        { scope.Dispose(); yield break; }
                         page = e.Current;
                         values = new List<TOut>(page.Values.Count);
                         // Map page items inside the scope so deserialization failures are recorded as Failed.
-                        foreach (TIn v in page.Values) values.Add(_map(v));
+                        foreach (TIn v in page.Values)
+                            values.Add(_map(v));
                     }
                     catch (Exception ex) { scope.Failed(ex); scope.Dispose(); throw; }
                     scope.Dispose();
@@ -1941,10 +1965,12 @@ namespace Azure.Security.KeyVault.Certificates
                         scope.Start();
                         try
                         {
-                            if (!await e.MoveNextAsync().ConfigureAwait(false)) { scope.Dispose(); yield break; }
+                            if (!await e.MoveNextAsync().ConfigureAwait(false))
+                            { scope.Dispose(); yield break; }
                             page = e.Current;
                             values = new List<TOut>(page.Values.Count);
-                            foreach (TIn v in page.Values) values.Add(_map(v));
+                            foreach (TIn v in page.Values)
+                                values.Add(_map(v));
                         }
                         catch (Exception ex) { scope.Failed(ex); scope.Dispose(); throw; }
                         scope.Dispose();

@@ -39,8 +39,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="enableKerberos"> Enable/Disable Kerberos feature of the Bastion Host resource. </param>
         /// <param name="enableSessionRecording"> Enable/Disable Session Recording feature of the Bastion Host resource. </param>
         /// <param name="enablePrivateOnlyBastion"> Enable/Disable Private Only feature of the Bastion Host resource. </param>
+        /// <param name="sessionRecordingConfiguration"> The storage account and identity to use for session recording. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BastionHostPropertiesFormat(IList<BastionHostIPConfiguration> ipConfigurations, string dnsName, NetworkSubResource virtualNetwork, BastionHostPropertiesFormatNetworkAcls networkAcls, NetworkProvisioningState? provisioningState, int? scaleUnits, bool? disableCopyPaste, bool? enableFileCopy, bool? enableIPConnect, bool? enableShareableLink, bool? enableTunneling, bool? enableKerberos, bool? enableSessionRecording, bool? enablePrivateOnlyBastion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BastionHostPropertiesFormat(IList<BastionHostIPConfiguration> ipConfigurations, string dnsName, NetworkSubResource virtualNetwork, BastionHostPropertiesFormatNetworkAcls networkAcls, NetworkProvisioningState? provisioningState, int? scaleUnits, bool? disableCopyPaste, bool? enableFileCopy, bool? enableIPConnect, bool? enableShareableLink, bool? enableTunneling, bool? enableKerberos, bool? enableSessionRecording, bool? enablePrivateOnlyBastion, BastionSessionRecordingConfiguration sessionRecordingConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IPConfigurations = ipConfigurations;
             DnsName = dnsName;
@@ -56,6 +57,7 @@ namespace Azure.ResourceManager.Network.Models
             EnableKerberos = enableKerberos;
             EnableSessionRecording = enableSessionRecording;
             EnablePrivateOnlyBastion = enablePrivateOnlyBastion;
+            SessionRecordingConfiguration = sessionRecordingConfiguration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -114,6 +116,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Enable/Disable Private Only feature of the Bastion Host resource. </summary>
         [WirePath("enablePrivateOnlyBastion")]
         public bool? EnablePrivateOnlyBastion { get; set; }
+
+        /// <summary> The storage account and identity to use for session recording. </summary>
+        [WirePath("sessionRecordingConfiguration")]
+        public BastionSessionRecordingConfiguration SessionRecordingConfiguration { get; set; }
 
         /// <summary> Resource ID. </summary>
         [WirePath("virtualNetwork.id")]

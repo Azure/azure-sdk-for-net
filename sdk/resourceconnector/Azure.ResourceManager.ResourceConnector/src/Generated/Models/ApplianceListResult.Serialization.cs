@@ -165,10 +165,10 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ApplianceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ApplianceListResult(value ?? new ChangeTrackingList<ResourceConnectorApplianceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

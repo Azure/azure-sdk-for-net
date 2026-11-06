@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Mocking
 
         private ClientDiagnostics CloudAccountsClientDiagnostics => _cloudAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CommvaultContentStore.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CloudAccounts CloudAccountsRestClient => _cloudAccountsRestClient ??= new CloudAccounts(CloudAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-03-preview");
+        private CloudAccounts CloudAccountsRestClient => _cloudAccountsRestClient ??= new CloudAccounts(CloudAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Commvault.ContentStore/cloudAccounts", out string apiVersion) ? apiVersion : "2026-07-03-preview");
 
         private ClientDiagnostics SaaSOperationGroupClientDiagnostics => _saaSOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CommvaultContentStore.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CloudAccountData, CloudAccountResource>(new CloudAccountsGetBySubscriptionAsyncCollectionResultOfT(CloudAccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCommvaultContentStoreSubscriptionResource.GetCloudAccounts"), data => new CloudAccountResource(Client, data));
+            return new AsyncPageableWrapper<CloudAccountData, CloudAccountResource>(new CloudAccountDataAsync0CollectionResultOfT(CloudAccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCommvaultContentStoreSubscriptionResource.GetCloudAccounts"), data => new CloudAccountResource(Client, data));
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CloudAccountData, CloudAccountResource>(new CloudAccountsGetBySubscriptionCollectionResultOfT(CloudAccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCommvaultContentStoreSubscriptionResource.GetCloudAccounts"), data => new CloudAccountResource(Client, data));
+            return new PageableWrapper<CloudAccountData, CloudAccountResource>(new CloudAccountData0CollectionResultOfT(CloudAccountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCommvaultContentStoreSubscriptionResource.GetCloudAccounts"), data => new CloudAccountResource(Client, data));
         }
 
         /// <summary>

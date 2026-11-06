@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
     /// Data connector
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="SecurityInsightsAadDataConnector"/>, <see cref="MstiDataConnector"/>, <see cref="PremiumMicrosoftDefenderForThreatIntelligence"/>, <see cref="MtpDataConnector"/>, <see cref="SecurityInsightsAatpDataConnector"/>, <see cref="SecurityInsightsAscDataConnector"/>, <see cref="SecurityInsightsAwsCloudTrailDataConnector"/>, <see cref="AwsS3DataConnector"/>, <see cref="RestApiPollerDataConnector"/>, <see cref="GcpDataConnector"/>, <see cref="McasDataConnector"/>, <see cref="Dynamics365DataConnector"/>, <see cref="OfficeAtpDataConnector"/>, <see cref="MicrosoftPurviewInformationProtectionDataConnector"/>, <see cref="Office365ProjectDataConnector"/>, <see cref="OfficePowerBIDataConnector"/>, <see cref="PurviewAuditDataConnector"/>, <see cref="OfficeIrmDataConnector"/>, <see cref="MdatpDataConnector"/>, <see cref="SecurityInsightsOfficeDataConnector"/>, <see cref="SecurityInsightsTIDataConnector"/>, <see cref="ThreatIntelligenceTaxiiDataConnector"/>, <see cref="IoTDataConnector"/>, <see cref="CodelessUiDataConnector"/>, and <see cref="CodelessApiPollingDataConnector"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AwsS3DataConnector"/>, <see cref="CodelessApiPollingDataConnector"/>, <see cref="CodelessUiDataConnector"/>, <see cref="Dynamics365DataConnector"/>, <see cref="GcpDataConnector"/>, <see cref="IoTDataConnector"/>, <see cref="McasDataConnector"/>, <see cref="MdatpDataConnector"/>, <see cref="MicrosoftPurviewInformationProtectionDataConnector"/>, <see cref="MstiDataConnector"/>, <see cref="MtpDataConnector"/>, <see cref="Office365ProjectDataConnector"/>, <see cref="OfficeAtpDataConnector"/>, <see cref="OfficeIrmDataConnector"/>, <see cref="OfficePowerBIDataConnector"/>, <see cref="PremiumMicrosoftDefenderForThreatIntelligence"/>, <see cref="PurviewAuditDataConnector"/>, <see cref="RestApiPollerDataConnector"/>, <see cref="SecurityInsightsAadDataConnector"/>, <see cref="SecurityInsightsAatpDataConnector"/>, <see cref="SecurityInsightsAscDataConnector"/>, <see cref="SecurityInsightsAwsCloudTrailDataConnector"/>, <see cref="SecurityInsightsOfficeDataConnector"/>, <see cref="SecurityInsightsTIDataConnector"/>, and <see cref="ThreatIntelligenceTaxiiDataConnector"/>.
     /// </summary>
     public partial class SecurityInsightsDataConnectorData : ResourceData, IJsonModel<SecurityInsightsDataConnectorData>
     {
@@ -150,56 +150,56 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureActiveDirectory":
-                        return SecurityInsightsAadDataConnector.DeserializeSecurityInsightsAadDataConnector(element, options);
+                    case "AmazonWebServicesS3":
+                        return AwsS3DataConnector.DeserializeAwsS3DataConnector(element, options);
+                    case "APIPolling":
+                        return CodelessApiPollingDataConnector.DeserializeCodelessApiPollingDataConnector(element, options);
+                    case "GenericUI":
+                        return CodelessUiDataConnector.DeserializeCodelessUiDataConnector(element, options);
+                    case "Dynamics365":
+                        return Dynamics365DataConnector.DeserializeDynamics365DataConnector(element, options);
+                    case "GCP":
+                        return GcpDataConnector.DeserializeGcpDataConnector(element, options);
+                    case "IOT":
+                        return IoTDataConnector.DeserializeIoTDataConnector(element, options);
+                    case "MicrosoftCloudAppSecurity":
+                        return McasDataConnector.DeserializeMcasDataConnector(element, options);
+                    case "MicrosoftDefenderAdvancedThreatProtection":
+                        return MdatpDataConnector.DeserializeMdatpDataConnector(element, options);
+                    case "MicrosoftPurviewInformationProtection":
+                        return MicrosoftPurviewInformationProtectionDataConnector.DeserializeMicrosoftPurviewInformationProtectionDataConnector(element, options);
                     case "MicrosoftThreatIntelligence":
                         return MstiDataConnector.DeserializeMstiDataConnector(element, options);
-                    case "PremiumMicrosoftDefenderForThreatIntelligence":
-                        return PremiumMicrosoftDefenderForThreatIntelligence.DeserializePremiumMicrosoftDefenderForThreatIntelligence(element, options);
                     case "MicrosoftThreatProtection":
                         return MtpDataConnector.DeserializeMtpDataConnector(element, options);
+                    case "Office365Project":
+                        return Office365ProjectDataConnector.DeserializeOffice365ProjectDataConnector(element, options);
+                    case "OfficeATP":
+                        return OfficeAtpDataConnector.DeserializeOfficeAtpDataConnector(element, options);
+                    case "OfficeIRM":
+                        return OfficeIrmDataConnector.DeserializeOfficeIrmDataConnector(element, options);
+                    case "OfficePowerBI":
+                        return OfficePowerBIDataConnector.DeserializeOfficePowerBIDataConnector(element, options);
+                    case "PremiumMicrosoftDefenderForThreatIntelligence":
+                        return PremiumMicrosoftDefenderForThreatIntelligence.DeserializePremiumMicrosoftDefenderForThreatIntelligence(element, options);
+                    case "PurviewAudit":
+                        return PurviewAuditDataConnector.DeserializePurviewAuditDataConnector(element, options);
+                    case "RestApiPoller":
+                        return RestApiPollerDataConnector.DeserializeRestApiPollerDataConnector(element, options);
+                    case "AzureActiveDirectory":
+                        return SecurityInsightsAadDataConnector.DeserializeSecurityInsightsAadDataConnector(element, options);
                     case "AzureAdvancedThreatProtection":
                         return SecurityInsightsAatpDataConnector.DeserializeSecurityInsightsAatpDataConnector(element, options);
                     case "AzureSecurityCenter":
                         return SecurityInsightsAscDataConnector.DeserializeSecurityInsightsAscDataConnector(element, options);
                     case "AmazonWebServicesCloudTrail":
                         return SecurityInsightsAwsCloudTrailDataConnector.DeserializeSecurityInsightsAwsCloudTrailDataConnector(element, options);
-                    case "AmazonWebServicesS3":
-                        return AwsS3DataConnector.DeserializeAwsS3DataConnector(element, options);
-                    case "RestApiPoller":
-                        return RestApiPollerDataConnector.DeserializeRestApiPollerDataConnector(element, options);
-                    case "GCP":
-                        return GcpDataConnector.DeserializeGcpDataConnector(element, options);
-                    case "MicrosoftCloudAppSecurity":
-                        return McasDataConnector.DeserializeMcasDataConnector(element, options);
-                    case "Dynamics365":
-                        return Dynamics365DataConnector.DeserializeDynamics365DataConnector(element, options);
-                    case "OfficeATP":
-                        return OfficeAtpDataConnector.DeserializeOfficeAtpDataConnector(element, options);
-                    case "MicrosoftPurviewInformationProtection":
-                        return MicrosoftPurviewInformationProtectionDataConnector.DeserializeMicrosoftPurviewInformationProtectionDataConnector(element, options);
-                    case "Office365Project":
-                        return Office365ProjectDataConnector.DeserializeOffice365ProjectDataConnector(element, options);
-                    case "OfficePowerBI":
-                        return OfficePowerBIDataConnector.DeserializeOfficePowerBIDataConnector(element, options);
-                    case "PurviewAudit":
-                        return PurviewAuditDataConnector.DeserializePurviewAuditDataConnector(element, options);
-                    case "OfficeIRM":
-                        return OfficeIrmDataConnector.DeserializeOfficeIrmDataConnector(element, options);
-                    case "MicrosoftDefenderAdvancedThreatProtection":
-                        return MdatpDataConnector.DeserializeMdatpDataConnector(element, options);
                     case "Office365":
                         return SecurityInsightsOfficeDataConnector.DeserializeSecurityInsightsOfficeDataConnector(element, options);
                     case "ThreatIntelligence":
                         return SecurityInsightsTIDataConnector.DeserializeSecurityInsightsTIDataConnector(element, options);
                     case "ThreatIntelligenceTaxii":
                         return ThreatIntelligenceTaxiiDataConnector.DeserializeThreatIntelligenceTaxiiDataConnector(element, options);
-                    case "IOT":
-                        return IoTDataConnector.DeserializeIoTDataConnector(element, options);
-                    case "GenericUI":
-                        return CodelessUiDataConnector.DeserializeCodelessUiDataConnector(element, options);
-                    case "APIPolling":
-                        return CodelessApiPollingDataConnector.DeserializeCodelessApiPollingDataConnector(element, options);
                 }
             }
             return UnknownSecurityInsightsDataConnector.DeserializeUnknownSecurityInsightsDataConnector(element, options);

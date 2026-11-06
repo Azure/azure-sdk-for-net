@@ -189,6 +189,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             #region Snippet:GetTopic
             TopicProperties topic = await client.GetTopicAsync(topicName);
             #endregion
+            #region Snippet:GetTopicFilterCounts
+            TopicRuntimeProperties runtimeProperties = await client.GetTopicRuntimePropertiesAsync(topicName);
+            Console.WriteLine($"SQL filters: {runtimeProperties.SqlFilterCount}");
+            Console.WriteLine($"Correlation filters: {runtimeProperties.CorrelationFilterCount}");
+            #endregion
             #region Snippet:GetSubscription
             SubscriptionProperties subscription = await client.GetSubscriptionAsync(topicName, subscriptionName);
             #endregion

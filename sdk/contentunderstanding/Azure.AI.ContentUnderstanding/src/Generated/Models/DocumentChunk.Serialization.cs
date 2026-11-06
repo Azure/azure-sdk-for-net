@@ -154,10 +154,10 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DocumentChunk(spans, source, additionalBinaryDataProperties);
+            return new DocumentChunk(spans ?? new ChangeTrackingList<ContentSpan>(), source, additionalBinaryDataProperties);
         }
     }
 }

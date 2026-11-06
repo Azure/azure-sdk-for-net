@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ComponentModel;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -19,7 +20,7 @@ namespace Azure.Provisioning.Cdn
         private BicepValue<string> _name;
         private SystemData _systemData;
         private CdnRouteProperties _properties;
-        private ResourceReference<FrontDoorEndpoint> _parent;
+        private ProvisioningResourceReference<FrontDoorEndpoint> _parent;
 
         /// <summary> Creates a new FrontDoorRoute. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -327,7 +328,7 @@ namespace Azure.Provisioning.Cdn
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<CdnRouteProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<FrontDoorEndpoint>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = new ProvisioningResourceReference<FrontDoorEndpoint>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 
@@ -343,6 +344,11 @@ namespace Azure.Provisioning.Cdn
 
         /// <summary> Define additional provisionable properties for FrontDoorRoute that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
+
+        /// <summary> Get the requirements for naming this resource. </summary>
+        /// <returns> Naming requirements. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(1, 90, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen);
 
         /// <summary></summary>
         public static partial class ResourceVersions

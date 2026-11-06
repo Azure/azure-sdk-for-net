@@ -23,12 +23,8 @@ namespace Streaming.Sse._Unnamed
 
         public virtual HttpPipeline Pipeline => throw null;
 
-#pragma warning disable SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-        public virtual Task<AsyncStreamingClientResult<SseItem<BinaryData>>> ReceiveAsync(RequestContext context) => throw null;
-#pragma warning restore SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+        public virtual Task<AsyncStreamingResult<SseItem<BinaryData>>> ReceiveAsync(RequestContext context) => throw null;
 
-#pragma warning disable SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-        public virtual Task<AsyncStreamingClientResult<SseItem<Info>>> ReceiveAsync(CancellationToken cancellationToken = default) => throw null;
-#pragma warning restore SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+        public virtual Task<AsyncStreamingResult<SseItem<Info>>> ReceiveAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

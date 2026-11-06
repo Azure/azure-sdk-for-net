@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         {
             get
             {
-                return Properties is null ? default : Properties.MaccEntityType;
+                return Properties is null ? (MaccEntityType?)default : Properties.MaccEntityType;
             }
         }
 

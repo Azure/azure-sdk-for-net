@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary>
     /// The action that should be triggered.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SecurityAutomationActionLogicApp"/>, <see cref="SecurityAutomationActionEventHub"/>, and <see cref="SecurityAutomationActionWorkspace"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SecurityAutomationActionEventHub"/>, <see cref="SecurityAutomationActionLogicApp"/>, and <see cref="SecurityAutomationActionWorkspace"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownSecurityAutomationAction))]
     public abstract partial class SecurityAutomationAction : IJsonModel<SecurityAutomationAction>
@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "LogicApp":
-                        return SecurityAutomationActionLogicApp.DeserializeSecurityAutomationActionLogicApp(element, options);
                     case "EventHub":
                         return SecurityAutomationActionEventHub.DeserializeSecurityAutomationActionEventHub(element, options);
+                    case "LogicApp":
+                        return SecurityAutomationActionLogicApp.DeserializeSecurityAutomationActionLogicApp(element, options);
                     case "Workspace":
                         return SecurityAutomationActionWorkspace.DeserializeSecurityAutomationActionWorkspace(element, options);
                 }

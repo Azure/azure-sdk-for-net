@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NetworkInterfaceIPConfigurationListResult(value, nextLink, additionalBinaryDataProperties);
+            return new NetworkInterfaceIPConfigurationListResult(value ?? new ChangeTrackingList<NetworkInterfaceIPConfigurationData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

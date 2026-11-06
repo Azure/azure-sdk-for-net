@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
 {
     /// <summary>
     /// The basic response for different query report, all query report result will have these information
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CarbonEmissionOverallSummary"/>, <see cref="CarbonEmissionMonthlySummary"/>, <see cref="CarbonEmissionTopItemsSummary"/>, <see cref="ResourceCarbonEmissionTopItemsSummary"/>, <see cref="ResourceGroupCarbonEmissionTopItemsSummary"/>, <see cref="CarbonEmissionTopItemMonthlySummary"/>, <see cref="ResourceCarbonEmissionTopItemMonthlySummary"/>, <see cref="ResourceGroupCarbonEmissionTopItemMonthlySummary"/>, <see cref="CarbonEmissionItemDetail"/>, <see cref="ResourceCarbonEmissionItemDetail"/>, and <see cref="ResourceGroupCarbonEmissionItemDetail"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CarbonEmissionItemDetail"/>, <see cref="CarbonEmissionMonthlySummary"/>, <see cref="CarbonEmissionOverallSummary"/>, <see cref="CarbonEmissionTopItemMonthlySummary"/>, <see cref="CarbonEmissionTopItemsSummary"/>, <see cref="ResourceCarbonEmissionItemDetail"/>, <see cref="ResourceCarbonEmissionTopItemMonthlySummary"/>, <see cref="ResourceCarbonEmissionTopItemsSummary"/>, <see cref="ResourceGroupCarbonEmissionItemDetail"/>, <see cref="ResourceGroupCarbonEmissionTopItemMonthlySummary"/>, and <see cref="ResourceGroupCarbonEmissionTopItemsSummary"/>.
     /// </summary>
     public abstract partial class CarbonEmission
     {

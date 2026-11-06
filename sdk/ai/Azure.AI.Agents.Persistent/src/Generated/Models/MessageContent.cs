@@ -12,7 +12,7 @@ namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
     /// An abstract representation of a single item of thread message content.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MessageTextContent"/> and <see cref="MessageImageFileContent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MessageImageFileContent"/> and <see cref="MessageTextContent"/>.
     /// </summary>
     public abstract partial class MessageContent
     {

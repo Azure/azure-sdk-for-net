@@ -32,7 +32,7 @@ public class AddResponsesServerTests
         var provider = services.BuildServiceProvider();
         var options = provider.GetRequiredService<IOptions<ResponsesServerOptions>>().Value;
 
-        Assert.That(options.DefaultFetchHistoryCount, Is.EqualTo(100));
+        Assert.That(options.DefaultFetchHistoryCount, Is.EqualTo(-1));
     }
 
     [Test]

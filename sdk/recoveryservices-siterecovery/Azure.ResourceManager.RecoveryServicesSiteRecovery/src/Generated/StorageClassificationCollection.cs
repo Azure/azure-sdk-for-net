@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StorageClassificationData, StorageClassificationResource>(new ReplicationStorageClassificationsGetByReplicationFabricsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<StorageClassificationData, StorageClassificationResource>(new StorageClassificationDataAsyncCollectionResultOfT(
                 _replicationStorageClassificationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StorageClassificationData, StorageClassificationResource>(new ReplicationStorageClassificationsGetByReplicationFabricsCollectionResultOfT(
+            return new PageableWrapper<StorageClassificationData, StorageClassificationResource>(new StorageClassificationDataCollectionResultOfT(
                 _replicationStorageClassificationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

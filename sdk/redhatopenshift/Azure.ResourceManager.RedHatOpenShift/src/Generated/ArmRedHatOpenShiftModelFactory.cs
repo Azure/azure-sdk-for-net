@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
                 provisioningState is null && clusterProfile is null && consoleUri is null && servicePrincipalProfile is null && platformWorkloadIdentityProfile is null && networkProfile is null && masterProfile is null && workerProfiles is null && workerProfilesStatus is null && apiServerProfile is null && ingressProfiles is null ? default : new OpenShiftClusterProperties(
                     provisioningState,
                     clusterProfile,
-                    new OpenShiftConsoleProfile(consoleUri, default),
+                    consoleUri is null ? default : new OpenShiftConsoleProfile(consoleUri, default),
                     servicePrincipalProfile,
                     platformWorkloadIdentityProfile,
                     networkProfile,
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
             return new OpenShiftClusterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), provisioningState is null && clusterProfile is null && consoleUri is null && servicePrincipalProfile is null && platformWorkloadIdentityProfile is null && networkProfile is null && masterProfile is null && workerProfiles is null && workerProfilesStatus is null && apiServerProfile is null && ingressProfiles is null ? default : new OpenShiftClusterProperties(
                 provisioningState,
                 clusterProfile,
-                new OpenShiftConsoleProfile(consoleUri, default),
+                consoleUri is null ? default : new OpenShiftConsoleProfile(consoleUri, default),
                 servicePrincipalProfile,
                 platformWorkloadIdentityProfile,
                 networkProfile,

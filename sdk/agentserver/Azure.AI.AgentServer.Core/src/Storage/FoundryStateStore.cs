@@ -31,8 +31,6 @@ namespace Azure.AI.AgentServer.Core.Storage
 
         private const string DelegatedUserIdHeader = "x-ms-user-id";
 
-        private static readonly ModelReaderWriterOptions WireOptions = new("W");
-
         private readonly FoundryStorageClient? _client;
         private readonly LocalStateStoreBackend? _localBackend;
         private readonly string _name = null!;
@@ -233,7 +231,7 @@ namespace Azure.AI.AgentServer.Core.Storage
             BinaryData body = BuildUpdateBody(update);
             Request request = BuildRequest(RequestMethod.Patch, StorePath(), content: body);
             Response response = await Client.SendAsync(request, cancellationToken).ConfigureAwait(false);
-            return Deserialize<StateStore>(response);
+            return Deserialize(response, StateStore.FromResponse);
         }
 
         /// <summary>Deletes the bound store, cascading to every item under it.</summary>
@@ -248,7 +246,7 @@ namespace Azure.AI.AgentServer.Core.Storage
 
             Request request = BuildRequest(RequestMethod.Delete, StorePath());
             Response response = await Client.SendAsync(request, cancellationToken).ConfigureAwait(false);
-            return Deserialize<DeletedStateStore>(response);
+            return Deserialize(response, DeletedStateStore.FromResponse);
         }
 
         /// <summary>Creates a new item, failing on a duplicate key.</summary>
@@ -287,7 +285,7 @@ namespace Azure.AI.AgentServer.Core.Storage
 
             var payload = new CreateItemRequest(key, value);
             CopyTags(tags, payload.Tags);
-            BinaryData body = ModelReaderWriter.Write(payload, WireOptions, AzureAIAgentServerCoreStorageContext.Default);
+            BinaryData body = ((IPersistableModel<CreateItemRequest>)payload).Write(ModelSerializationExtensions.WireOptions);
             Request request = BuildRequest(
                 RequestMethod.Post,
                 $"{StorePath()}/items",
@@ -295,7 +293,7 @@ namespace Azure.AI.AgentServer.Core.Storage
                 includeUserId: true,
                 callId: callId);
             Response response = await Client.SendAsync(request, cancellationToken).ConfigureAwait(false);
-            return Deserialize<StateStoreItemRef>(response);
+            return Deserialize(response, StateStoreItemRef.FromResponse);
         }
 
         /// <summary>Creates or replaces one item by key.</summary>
@@ -310,7 +308,7 @@ namespace Azure.AI.AgentServer.Core.Storage
             string key,
             IDictionary<string, BinaryData> value,
             IReadOnlyDictionary<string, string>? tags = null,
-            string? ifMatch = null,
+            ETag ifMatch = default,
             bool requireExists = false,
             CancellationToken cancellationToken = default)
             => SetItemAsync(key, value, tags, ifMatch, requireExists, callId: null, cancellationToken);
@@ -328,19 +326,23 @@ namespace Azure.AI.AgentServer.Core.Storage
             string key,
             IDictionary<string, BinaryData> value,
             IReadOnlyDictionary<string, string>? tags,
-            string? ifMatch,
+            ETag ifMatch,
             bool requireExists,
             string? callId,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
-            if (ifMatch is not null && requireExists)
+            if (ifMatch != default && requireExists)
             {
                 throw new ArgumentException($"{nameof(ifMatch)} and {nameof(requireExists)} are mutually exclusive.");
             }
 
-            string? header = requireExists ? "*" : ifMatch;
+            string? header = requireExists
+                ? ETag.All.ToString("H")
+                : ifMatch == default
+                    ? null
+                    : ifMatch.ToString("H");
             if (_localBackend is not null)
             {
                 return await _localBackend.SetItemAsync(key, value, tags, header, cancellationToken).ConfigureAwait(false);
@@ -348,7 +350,7 @@ namespace Azure.AI.AgentServer.Core.Storage
 
             var payload = new PutItemRequest(value);
             CopyTags(tags, payload.Tags);
-            BinaryData body = ModelReaderWriter.Write(payload, WireOptions, AzureAIAgentServerCoreStorageContext.Default);
+            BinaryData body = ((IPersistableModel<PutItemRequest>)payload).Write(ModelSerializationExtensions.WireOptions);
             Request request = BuildRequest(
                 RequestMethod.Put,
                 ItemPath(key),
@@ -357,7 +359,7 @@ namespace Azure.AI.AgentServer.Core.Storage
                 ifMatch: header,
                 callId: callId);
             Response response = await Client.SendAsync(request, cancellationToken).ConfigureAwait(false);
-            return Deserialize<StateStoreItemRef>(response);
+            return Deserialize(response, StateStoreItemRef.FromResponse);
         }
 
         /// <summary>Fetches one item by key.</summary>
@@ -393,7 +395,7 @@ namespace Azure.AI.AgentServer.Core.Storage
                     includeUserId: true,
                     callId: callId);
                 Response response = await Client.SendAsync(request, cancellationToken).ConfigureAwait(false);
-                return Deserialize<StateStoreItem>(response);
+                return Deserialize(response, StateStoreItem.FromResponse);
             }
             catch (FoundryStorageNotFoundException)
             {
@@ -408,7 +410,7 @@ namespace Azure.AI.AgentServer.Core.Storage
         /// <returns>The deleted-item marker.</returns>
         public virtual Task<DeletedStateStoreItem> DeleteItemAsync(
             string key,
-            string? ifMatch = null,
+            ETag ifMatch = default,
             CancellationToken cancellationToken = default)
             => DeleteItemAsync(key, ifMatch, callId: null, cancellationToken);
 
@@ -420,24 +422,25 @@ namespace Azure.AI.AgentServer.Core.Storage
         /// <returns>The deleted-item marker.</returns>
         public virtual async Task<DeletedStateStoreItem> DeleteItemAsync(
             string key,
-            string? ifMatch,
+            ETag ifMatch,
             string? callId,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
+            string? header = ifMatch == default ? null : ifMatch.ToString("H");
             if (_localBackend is not null)
             {
-                return await _localBackend.DeleteItemAsync(key, ifMatch, cancellationToken).ConfigureAwait(false);
+                return await _localBackend.DeleteItemAsync(key, header, cancellationToken).ConfigureAwait(false);
             }
 
             Request request = BuildRequest(
                 RequestMethod.Delete,
                 ItemPath(key),
                 includeUserId: true,
-                ifMatch: ifMatch,
+                ifMatch: header,
                 callId: callId);
             Response response = await Client.SendAsync(request, cancellationToken).ConfigureAwait(false);
-            return Deserialize<DeletedStateStoreItem>(response);
+            return Deserialize(response, DeletedStateStoreItem.FromResponse);
         }
 
         /// <summary>Lists keys within the bound store.</summary>
@@ -524,14 +527,14 @@ namespace Azure.AI.AgentServer.Core.Storage
                 callId: callId,
                 query: query);
             Response response = await Client.SendAsync(request, cancellationToken).ConfigureAwait(false);
-            return new StateStoreItemKeyPage(Deserialize<ListResponseStateStoreItemKey>(response));
+            return new StateStoreItemKeyPage(Deserialize(response, ListResponseStateStoreItemKey.FromResponse));
         }
 
         private async Task<StateStore> FetchPropertiesAsync(CancellationToken cancellationToken)
         {
             Request request = BuildRequest(RequestMethod.Get, StorePath());
             Response response = await Client.SendAsync(request, cancellationToken).ConfigureAwait(false);
-            return Deserialize<StateStore>(response);
+            return Deserialize(response, StateStore.FromResponse);
         }
 
         private async Task<StateStore> CreatePropertiesAsync(CancellationToken cancellationToken)
@@ -543,10 +546,10 @@ namespace Azure.AI.AgentServer.Core.Storage
                 Description = _description,
             };
             CopyTags(_tags, payload.Tags);
-            BinaryData body = ModelReaderWriter.Write(payload, WireOptions, AzureAIAgentServerCoreStorageContext.Default);
+            BinaryData body = ((IPersistableModel<CreateStateStoreRequest>)payload).Write(ModelSerializationExtensions.WireOptions);
             Request request = BuildRequest(RequestMethod.Post, "state_stores", content: body);
             Response response = await Client.SendAsync(request, cancellationToken).ConfigureAwait(false);
-            return Deserialize<StateStore>(response);
+            return Deserialize(response, StateStore.FromResponse);
         }
 
         private Request BuildRequest(
@@ -587,9 +590,9 @@ namespace Azure.AI.AgentServer.Core.Storage
             return request;
         }
 
-        private static T Deserialize<T>(Response response) where T : class, IPersistableModel<T>
+        private static T Deserialize<T>(Response response, Func<Response, T> deserialize) where T : class
         {
-            T? model = ModelReaderWriter.Read<T>(response.Content, WireOptions, AzureAIAgentServerCoreStorageContext.Default);
+            T? model = deserialize(response);
             if (model is null)
             {
                 throw new FoundryStorageApiException(response.Status, "The storage service returned an empty or unparseable response body.");

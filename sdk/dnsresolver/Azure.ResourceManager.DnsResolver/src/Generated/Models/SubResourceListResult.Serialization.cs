@@ -181,10 +181,10 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SubResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new SubResourceListResult(value ?? new ChangeTrackingList<WritableSubResource>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

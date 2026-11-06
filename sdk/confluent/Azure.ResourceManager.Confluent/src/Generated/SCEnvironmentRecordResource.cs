@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Confluent
             {
                 CancellationToken = cancellationToken
             };
-            return new SCEnvironmentRecordsGetSchemaRegistryClustersAsyncCollectionResultOfT(
+            return new SchemaRegistryClusterRecordAsyncCollectionResultOfT(
                 _scEnvironmentRecordsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Confluent
             {
                 CancellationToken = cancellationToken
             };
-            return new SCEnvironmentRecordsGetSchemaRegistryClustersCollectionResultOfT(
+            return new SchemaRegistryClusterRecordCollectionResultOfT(
                 _scEnvironmentRecordsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

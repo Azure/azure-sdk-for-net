@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    settings = BinaryData.FromString(prop.Value.GetRawText());
+                    settings = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("protectedSettings"u8))
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    protectedSettings = BinaryData.FromString(prop.Value.GetRawText());
+                    protectedSettings = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new VirtualMachineScaleSetExtensionProperties(

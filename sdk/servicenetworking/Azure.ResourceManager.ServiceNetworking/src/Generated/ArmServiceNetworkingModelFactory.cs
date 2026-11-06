@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new TrafficControllerAssociationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), associationType is null && subnetId is null ? default : new AssociationUpdateProperties(associationType, new AssociationSubnetUpdate(subnetId, default), default), default);
+            return new TrafficControllerAssociationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), associationType is null && subnetId is null ? default : new AssociationUpdateProperties(associationType, subnetId is null ? default : new AssociationSubnetUpdate(subnetId, default), default), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 fqdn is null && publicNetworkAccess is null && associationId is null && securityPolicyConfigurations is null && provisioningState is null ? default : new FrontendProperties(
                     fqdn,
                     publicNetworkAccess,
-                    new FrontendAssociation(associationId, default),
+                    associationId is null ? default : new FrontendAssociation(associationId, default),
                     securityPolicyConfigurations,
                     provisioningState,
                     default),
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                policyType is null && wafPolicyId is null && rules is null && provisioningState is null ? default : new SecurityPolicyProperties(policyType, new WafPolicy(wafPolicyId, default), new ServiceNetworkingIPAccessRulesPolicy((rules ?? new ChangeTrackingList<ServiceNetworkingIPAccessRule>()).ToList(), default), provisioningState, default),
+                policyType is null && wafPolicyId is null && rules is null && provisioningState is null ? default : new SecurityPolicyProperties(policyType, wafPolicyId is null ? default : new WafPolicy(wafPolicyId, default), rules is null ? default : new ServiceNetworkingIPAccessRulesPolicy((rules ?? new ChangeTrackingList<ServiceNetworkingIPAccessRule>()).ToList(), default), provisioningState, default),
                 default);
         }
 
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && privateLinkServiceConnectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpointReference(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default),
+                privateEndpointId is null && privateLinkServiceConnectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpointReference(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default),
                 default);
         }
 

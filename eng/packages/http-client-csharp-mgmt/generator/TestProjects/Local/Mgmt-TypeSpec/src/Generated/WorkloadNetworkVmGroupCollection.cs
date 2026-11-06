@@ -95,7 +95,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkVmGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vmGroupId, WorkloadNetworkVmGroupData.ToRequestContent(data), context);
+                using HttpMessage message = _workloadNetworkVmGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vmGroupId, WorkloadNetworkVmGroupData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<WorkloadNetworkVmGroupResource> operation = new TestsArmOperation<WorkloadNetworkVmGroupResource>(
                     new WorkloadNetworkVmGroupResourceOperationSource(Client),
@@ -154,7 +154,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkVmGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vmGroupId, WorkloadNetworkVmGroupData.ToRequestContent(data), context);
+                using HttpMessage message = _workloadNetworkVmGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vmGroupId, WorkloadNetworkVmGroupData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<WorkloadNetworkVmGroupResource> operation = new TestsArmOperation<WorkloadNetworkVmGroupResource>(
                     new WorkloadNetworkVmGroupResourceOperationSource(Client),
@@ -211,7 +211,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateGetVmGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vmGroupId, context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateGetVmGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vmGroupId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WorkloadNetworkVmGroupData> response = Response.FromValue(WorkloadNetworkVmGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -261,7 +261,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateGetVmGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vmGroupId, context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateGetVmGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vmGroupId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WorkloadNetworkVmGroupData> response = Response.FromValue(WorkloadNetworkVmGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -302,7 +302,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkloadNetworkVmGroupData, WorkloadNetworkVmGroupResource>(new WorkloadNetworkVmGroupsGetAllAsyncCollectionResultOfT(_workloadNetworkVmGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "WorkloadNetworkVmGroupCollection.GetAll"), data => new WorkloadNetworkVmGroupResource(Client, data));
+            return new AsyncPageableWrapper<WorkloadNetworkVmGroupData, WorkloadNetworkVmGroupResource>(new WorkloadNetworkVmGroupDataAsyncCollectionResultOfT(_workloadNetworkVmGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "WorkloadNetworkVmGroupCollection.GetAll"), data => new WorkloadNetworkVmGroupResource(Client, data));
         }
 
         /// <summary>
@@ -330,7 +330,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkloadNetworkVmGroupData, WorkloadNetworkVmGroupResource>(new WorkloadNetworkVmGroupsGetAllCollectionResultOfT(_workloadNetworkVmGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "WorkloadNetworkVmGroupCollection.GetAll"), data => new WorkloadNetworkVmGroupResource(Client, data));
+            return new PageableWrapper<WorkloadNetworkVmGroupData, WorkloadNetworkVmGroupResource>(new WorkloadNetworkVmGroupDataCollectionResultOfT(_workloadNetworkVmGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "WorkloadNetworkVmGroupCollection.GetAll"), data => new WorkloadNetworkVmGroupResource(Client, data));
         }
 
         /// <summary>
@@ -366,7 +366,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateGetVmGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vmGroupId, context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateGetVmGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vmGroupId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WorkloadNetworkVmGroupData> response = default;
@@ -423,7 +423,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateGetVmGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vmGroupId, context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateGetVmGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vmGroupId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WorkloadNetworkVmGroupData> response = default;
@@ -480,7 +480,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateGetVmGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vmGroupId, context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateGetVmGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vmGroupId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WorkloadNetworkVmGroupData> response = default;
@@ -541,7 +541,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateGetVmGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vmGroupId, context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateGetVmGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vmGroupId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WorkloadNetworkVmGroupData> response = default;

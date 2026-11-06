@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         {
             get
             {
-                return BmpConfiguration is null ? default : BmpConfiguration.ConfigurationState;
+                return BmpConfiguration is null ? (BmpConfigurationState?)default : BmpConfiguration.ConfigurationState;
             }
             set
             {

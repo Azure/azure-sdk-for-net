@@ -147,7 +147,7 @@ namespace Azure.AI.Language.Text
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new UnknownBaseRedactionPolicy(policyKind, entityTypes ?? new ChangeTrackingList<PiiCategoriesExclude>(), policyName, isDefaultPolicy, additionalBinaryDataProperties);

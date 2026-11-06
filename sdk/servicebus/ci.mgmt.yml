@@ -1,6 +1,15 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
-trigger: none
+trigger:
+  branches:
+    include:
+    - main
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/servicebus/Azure.ResourceManager.ServiceBus
+    - sdk/servicebus/Azure.Provisioning.ServiceBus
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

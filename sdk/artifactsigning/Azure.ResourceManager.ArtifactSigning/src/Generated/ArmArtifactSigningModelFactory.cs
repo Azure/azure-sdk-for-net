@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                accountUri is null && skuName is null && provisioningState is null ? default : new CodeSigningAccountProperties(accountUri, new ArtifactSigningAccountSku(skuName.GetValueOrDefault(), default), provisioningState, default),
+                accountUri is null && skuName is null && provisioningState is null ? default : new CodeSigningAccountProperties(accountUri, skuName is null ? default : new ArtifactSigningAccountSku(skuName.GetValueOrDefault(), default), provisioningState, default),
                 default);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ArtifactSigningAccountPatch(tags ?? new ChangeTrackingDictionary<string, string>(), skuName is null ? default : new CodeSigningAccountPatchProperties(new AccountSkuPatch(skuName, default), default), default);
+            return new ArtifactSigningAccountPatch(tags ?? new ChangeTrackingDictionary<string, string>(), skuName is null ? default : new CodeSigningAccountPatchProperties(skuName is null ? default : new AccountSkuPatch(skuName, default), default), default);
         }
 
         /// <summary> The parameters used to check the availability of the artifact signing account name. </summary>

@@ -12,7 +12,7 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary>
     /// Output parsing configuration for an MCP server tool.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="McpServerAutoOutputParsing"/>, <see cref="McpServerJsonOutputParsing"/>, <see cref="McpServerSplitOutputParsing"/>, and <see cref="McpServerNoneOutputParsing"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="McpServerAutoOutputParsing"/>, <see cref="McpServerJsonOutputParsing"/>, <see cref="McpServerNoneOutputParsing"/>, and <see cref="McpServerSplitOutputParsing"/>.
     /// </summary>
     public abstract partial class McpServerOutputParsing
     {

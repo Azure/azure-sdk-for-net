@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
 {
     /// <summary>
     /// Describes a virtual machine image source for building, customizing and distributing
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ImageTemplatePlatformImageSource"/>, <see cref="ImageTemplateManagedImageSource"/>, and <see cref="ImageTemplateSharedImageVersionSource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ImageTemplateManagedImageSource"/>, <see cref="ImageTemplatePlatformImageSource"/>, and <see cref="ImageTemplateSharedImageVersionSource"/>.
     /// </summary>
     public abstract partial class ImageTemplateSource
     {

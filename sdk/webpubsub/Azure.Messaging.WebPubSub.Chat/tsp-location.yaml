@@ -1,0 +1,6 @@
+directory: specification/webpubsub/data-plane/WebPubSubChat
+commit: de2452e17054b1466f7444079364ec1bf97dfb1a
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json

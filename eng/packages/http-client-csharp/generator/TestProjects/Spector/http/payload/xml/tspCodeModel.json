@@ -4114,7 +4114,6 @@
                 "$id": "337",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "SimpleModelValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4219,7 +4218,6 @@
                 "$id": "341",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "SimpleModelValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4404,7 +4402,6 @@
                 "$id": "351",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "ModelWithRenamedPropertyValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4509,7 +4506,6 @@
                 "$id": "355",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "ModelWithRenamedPropertyValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4694,7 +4690,6 @@
                 "$id": "365",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "ModelWithRenamedFieldsValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4799,7 +4794,6 @@
                 "$id": "369",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "ModelWithRenamedFieldsValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4984,7 +4978,6 @@
                 "$id": "379",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "ModelWithNestedModelValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -5089,7 +5082,6 @@
                 "$id": "383",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "ModelWithNestedModelValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -5274,7 +5266,6 @@
                 "$id": "393",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "ModelWithRenamedNestedModelValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -5379,7 +5370,6 @@
                 "$id": "397",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "ModelWithRenamedNestedModelValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -5564,7 +5554,6 @@
                 "$id": "407",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "ModelWithSimpleArraysValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -5669,7 +5658,6 @@
                 "$id": "411",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "ModelWithSimpleArraysValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -5854,7 +5842,6 @@
                 "$id": "421",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "ModelWithUnwrappedArrayValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -5959,7 +5946,6 @@
                 "$id": "425",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "ModelWithUnwrappedArrayValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -6144,7 +6130,6 @@
                 "$id": "435",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "ModelWithRenamedArraysValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -6249,7 +6234,6 @@
                 "$id": "439",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "ModelWithRenamedArraysValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -6434,7 +6418,6 @@
                 "$id": "449",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "ModelWithWrappedPrimitiveCustomItemNamesValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -6539,7 +6522,6 @@
                 "$id": "453",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "ModelWithWrappedPrimitiveCustomItemNamesValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -6724,7 +6706,6 @@
                 "$id": "463",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "ModelWithArrayOfModelValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -6829,7 +6810,6 @@
                 "$id": "467",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "ModelWithArrayOfModelValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -7014,7 +6994,6 @@
                 "$id": "477",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "ModelWithUnwrappedModelArrayValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -7119,7 +7098,6 @@
                 "$id": "481",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "ModelWithUnwrappedModelArrayValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -7304,7 +7282,6 @@
                 "$id": "491",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "ModelWithRenamedWrappedModelArrayValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -7409,7 +7386,6 @@
                 "$id": "495",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "ModelWithRenamedWrappedModelArrayValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -7594,7 +7570,6 @@
                 "$id": "505",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "ModelWithRenamedUnwrappedModelArrayValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -7699,7 +7674,6 @@
                 "$id": "509",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "ModelWithRenamedUnwrappedModelArrayValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -7884,7 +7858,6 @@
                 "$id": "519",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "ModelWithRenamedWrappedAndItemModelArrayValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -7989,7 +7962,6 @@
                 "$id": "523",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "ModelWithRenamedWrappedAndItemModelArrayValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -8174,7 +8146,6 @@
                 "$id": "533",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "ModelWithAttributesValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -8279,7 +8250,6 @@
                 "$id": "537",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "ModelWithAttributesValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -8464,7 +8434,6 @@
                 "$id": "547",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "ModelWithRenamedAttributeValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -8569,7 +8538,6 @@
                 "$id": "551",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "ModelWithRenamedAttributeValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -8754,7 +8722,6 @@
                 "$id": "561",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "ModelWithNamespaceValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -8859,7 +8826,6 @@
                 "$id": "565",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "ModelWithNamespaceValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -9044,7 +9010,6 @@
                 "$id": "575",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "ModelWithNamespaceOnPropertiesValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -9149,7 +9114,6 @@
                 "$id": "579",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "ModelWithNamespaceOnPropertiesValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -9334,7 +9298,6 @@
                 "$id": "589",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "ModelWithTextValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -9439,7 +9402,6 @@
                 "$id": "593",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "ModelWithTextValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -9624,7 +9586,6 @@
                 "$id": "603",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "ModelWithOptionalFieldValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -9729,7 +9690,6 @@
                 "$id": "607",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "ModelWithOptionalFieldValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -9914,7 +9874,6 @@
                 "$id": "617",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "ModelWithEmptyArrayValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -10019,7 +9978,6 @@
                 "$id": "621",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "ModelWithEmptyArrayValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -10204,7 +10162,6 @@
                 "$id": "631",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "ModelWithDictionaryValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -10309,7 +10266,6 @@
                 "$id": "635",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "ModelWithDictionaryValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -10494,7 +10450,6 @@
                 "$id": "645",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "ModelWithEncodedNamesValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -10599,7 +10554,6 @@
                 "$id": "649",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "ModelWithEncodedNamesValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -10784,7 +10738,6 @@
                 "$id": "659",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "ModelWithEnumValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -10889,7 +10842,6 @@
                 "$id": "663",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "ModelWithEnumValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -11074,7 +11026,6 @@
                 "$id": "673",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "ModelWithDatetimeValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -11179,7 +11130,6 @@
                 "$id": "677",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "ModelWithDatetimeValue",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -11364,7 +11314,6 @@
                 "$id": "687",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "XmlErrorValue",
                 "accessibility": "public",
                 "parameters": [
                   {

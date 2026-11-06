@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.CognitiveServices
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesComputeData"/>. </summary>
@@ -41,15 +40,13 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Polymorphic properties of the compute resource. Use computeType to select Cluster or ContainerInstance. </param>
         /// <param name="eTag"> Resource Etag. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="kind"> The kind (type) of compute resource. </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesComputeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CognitiveServicesComputeProperties properties, ETag? eTag, IDictionary<string, string> tags, string kind, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal CognitiveServicesComputeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CognitiveServicesComputeProperties properties, ETag? eTag, string kind, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = eTag;
-            Tags = tags;
             Kind = kind;
             Identity = identity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -62,10 +59,6 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <summary> Resource Etag. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
-
-        /// <summary> Resource tags. </summary>
-        [WirePath("tags")]
-        public IDictionary<string, string> Tags { get; }
 
         /// <summary> The kind (type) of compute resource. </summary>
         [WirePath("kind")]

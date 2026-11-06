@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Commerce.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsageAggregatesGetUsageAggregatesAsyncCollectionResultOfT(
+            return new CommerceUsageAggregationAsyncCollectionResultOfT(
                 UsageAggregatesRestClient,
                 Id.SubscriptionId,
                 reportedStartsOn,
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Commerce.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsageAggregatesGetUsageAggregatesCollectionResultOfT(
+            return new CommerceUsageAggregationCollectionResultOfT(
                 UsageAggregatesRestClient,
                 Id.SubscriptionId,
                 reportedStartsOn,

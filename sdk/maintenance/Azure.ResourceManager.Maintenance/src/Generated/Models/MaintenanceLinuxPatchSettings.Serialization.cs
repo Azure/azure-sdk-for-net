@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MaintenanceLinuxPatchSettings(packageNameMasksToExclude ?? new ChangeTrackingList<string>(), packageNameMasksToInclude ?? new ChangeTrackingList<string>(), classificationsToInclude ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);

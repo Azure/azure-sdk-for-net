@@ -13,7 +13,7 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// Top-level union for turn detection configuration.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ServerVadTurnDetection"/>, <see cref="AzureSemanticVadTurnDetection"/>, <see cref="AzureSemanticVadTurnDetectionEn"/>, and <see cref="AzureSemanticVadTurnDetectionMultilingual"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureSemanticVadTurnDetection"/>, <see cref="AzureSemanticVadTurnDetectionEn"/>, <see cref="AzureSemanticVadTurnDetectionMultilingual"/>, and <see cref="ServerVadTurnDetection"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownTurnDetection))]
     public abstract partial class TurnDetection : IJsonModel<TurnDetection>
@@ -129,14 +129,14 @@ namespace Azure.AI.VoiceLive
             {
                 switch (discriminator.GetString())
                 {
-                    case "server_vad":
-                        return ServerVadTurnDetection.DeserializeServerVadTurnDetection(element, options);
                     case "azure_semantic_vad":
                         return AzureSemanticVadTurnDetection.DeserializeAzureSemanticVadTurnDetection(element, options);
                     case "azure_semantic_vad_en":
                         return AzureSemanticVadTurnDetectionEn.DeserializeAzureSemanticVadTurnDetectionEn(element, options);
                     case "azure_semantic_vad_multilingual":
                         return AzureSemanticVadTurnDetectionMultilingual.DeserializeAzureSemanticVadTurnDetectionMultilingual(element, options);
+                    case "server_vad":
+                        return ServerVadTurnDetection.DeserializeServerVadTurnDetection(element, options);
                 }
             }
             return UnknownTurnDetection.DeserializeUnknownTurnDetection(element, options);

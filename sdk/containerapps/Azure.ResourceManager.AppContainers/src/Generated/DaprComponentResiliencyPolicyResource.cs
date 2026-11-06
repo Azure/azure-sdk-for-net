@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(ResourceType, out string daprComponentResiliencyPolicyApiVersion);
             _daprComponentResiliencyPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _daprComponentResiliencyPoliciesRestClient = new DaprComponentResiliencyPolicies(_daprComponentResiliencyPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, daprComponentResiliencyPolicyApiVersion ?? "2025-10-02-preview");
+            _daprComponentResiliencyPoliciesRestClient = new DaprComponentResiliencyPolicies(_daprComponentResiliencyPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, daprComponentResiliencyPolicyApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -104,6 +104,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <description> DaprComponentResiliencyPolicies_Get. </description>
         /// </item>
         /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-07-01. </description>
+        /// </item>
+        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="DaprComponentResiliencyPolicyResource"/>. </description>
         /// </item>
@@ -148,6 +152,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <description> DaprComponentResiliencyPolicies_Get. </description>
         /// </item>
         /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-07-01. </description>
+        /// </item>
+        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="DaprComponentResiliencyPolicyResource"/>. </description>
         /// </item>
@@ -190,6 +198,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> DaprComponentResiliencyPolicies_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -239,6 +251,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <description> DaprComponentResiliencyPolicies_Delete. </description>
         /// </item>
         /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-07-01. </description>
+        /// </item>
+        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="DaprComponentResiliencyPolicyResource"/>. </description>
         /// </item>
@@ -284,6 +300,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> DaprComponentResiliencyPolicies_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -336,6 +356,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> DaprComponentResiliencyPolicies_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

@@ -119,19 +119,6 @@ namespace Azure.Security.CodeTransparency.Tests
 
         [RecordedTest]
         [LiveOnly]
-        public async Task GetOperationForEntry()
-        {
-            string id = await CreateEntryAndGetEntryIdAsync();
-
-            // GetOperation accepts an operationId; for 303 the id is the entryId
-            Response operationResponse = await Client.GetOperationAsync(id, new RequestContext());
-
-            Assert.That(operationResponse.Status, Is.EqualTo(200).Or.EqualTo(202));
-            Assert.IsNotNull(operationResponse.Content);
-        }
-
-        [RecordedTest]
-        [LiveOnly]
         public async Task GetEntryForCommittedEntry()
         {
             string entryId = await CreateEntryAndGetEntryIdAsync();

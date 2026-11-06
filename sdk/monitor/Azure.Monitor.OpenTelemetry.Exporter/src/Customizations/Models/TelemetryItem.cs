@@ -1,14 +1,12 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
-using System.Linq;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.CompilerServices;
-
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
-
 using OpenTelemetry.Logs;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
@@ -62,7 +60,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
                     if (locationIp != null)
                     {
-                        Tags[ContextTagKeys.AiLocationIp.ToString()] = locationIp;
+                        Tags[ContextTagKeys.AiLocationIP.ToString()] = locationIp;
                     }
                 }
             }
@@ -75,7 +73,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
                 if (microsoftClientIp != null)
                 {
-                    Tags[ContextTagKeys.AiLocationIp.ToString()] = microsoftClientIp;
+                    Tags[ContextTagKeys.AiLocationIP.ToString()] = microsoftClientIp;
                 }
             }
 
@@ -101,6 +99,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             {
                 SampleRate = sampleRate;
             }
+        }
+
+        internal void SetCloudRole(string cloudRole)
+        {
+            Tags[ContextTagKeys.AiCloudRole.ToString()] = cloudRole.Truncate(SchemaConstants.Tags_AiCloudRole_MaxLength);
         }
 
         public TelemetryItem(string name, TelemetryItem telemetryItem, ActivitySpanId activitySpanId, ActivityKind kind, DateTimeOffset activityEventTimeStamp) :
@@ -136,7 +139,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
         }
 
-        public TelemetryItem (string name, LogRecord logRecord, AzureMonitorResource? resource, string instrumentationKey, LogContextInfo logContext) :
+        public TelemetryItem(string name, LogRecord logRecord, AzureMonitorResource? resource, string instrumentationKey, LogContextInfo logContext) :
             this(name, FormatUtcTimestamp(logRecord.Timestamp), logRecord, resource, instrumentationKey, logContext)
         {
         }
@@ -158,7 +161,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             {
                 if (logContext.MicrosoftClientIp != null)
                 {
-                    Tags[ContextTagKeys.AiLocationIp.ToString()] = logContext.MicrosoftClientIp;
+                    Tags[ContextTagKeys.AiLocationIP.ToString()] = logContext.MicrosoftClientIp;
                 }
 
                 if (logContext.EndUserPseudoId != null)

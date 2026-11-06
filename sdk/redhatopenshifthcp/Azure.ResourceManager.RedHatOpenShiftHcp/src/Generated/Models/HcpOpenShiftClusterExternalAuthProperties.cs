@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// This configures how claims are validated and applied.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HcpOpenShiftClusterExternalAuthProperties(ExternalAuthProvisioningState? provisioningState, HcpOpenShiftClusterResourceStatus status, HcpOpenShiftClusterExternalAuthTokenIssuerProfile issuer, IList<HcpOpenShiftClusterExternalAuthClientProfile> clients, HcpOpenShiftClusterExternalAuthClaimProfile claim, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HcpOpenShiftClusterExternalAuthProperties(ExternalAuthProvisioningState? provisioningState, ExternalAuthResourceStatus status, HcpOpenShiftClusterExternalAuthTokenIssuerProfile issuer, IList<HcpOpenShiftClusterExternalAuthClientProfile> clients, HcpOpenShiftClusterExternalAuthClaimProfile claim, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Status = status;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         public ExternalAuthProvisioningState? ProvisioningState { get; }
 
         /// <summary> Status of the external auth resource. </summary>
-        internal HcpOpenShiftClusterResourceStatus Status { get; }
+        internal ExternalAuthResourceStatus Status { get; }
 
         /// <summary> Token Issuer profile. </summary>
         public HcpOpenShiftClusterExternalAuthTokenIssuerProfile Issuer { get; set; }

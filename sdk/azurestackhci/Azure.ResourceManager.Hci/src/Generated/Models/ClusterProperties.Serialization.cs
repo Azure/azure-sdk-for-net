@@ -209,6 +209,11 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("clusterPattern"u8);
                 writer.WriteStringValue(ClusterPattern.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(SdnProperties))
+            {
+                writer.WritePropertyName("sdnProperties"u8);
+                writer.WriteObjectValue(SdnProperties, options);
+            }
             if (Optional.IsCollectionDefined(LocalAvailabilityZones))
             {
                 writer.WritePropertyName("localAvailabilityZones"u8);
@@ -297,6 +302,7 @@ namespace Azure.ResourceManager.Hci.Models
             string resourceProviderObjectId = default;
             IList<SecretsLocationDetails> secretsLocations = default;
             ClusterPattern? clusterPattern = default;
+            ClusterSdnProperties sdnProperties = default;
             IList<LocalAvailabilityZones> localAvailabilityZones = default;
             HciIdentityProvider? identityProvider = default;
             HciStorageType? storageType = default;
@@ -526,6 +532,15 @@ namespace Azure.ResourceManager.Hci.Models
                     clusterPattern = new ClusterPattern(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("sdnProperties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sdnProperties = ClusterSdnProperties.DeserializeClusterSdnProperties(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("localAvailabilityZones"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -560,7 +575,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ClusterProperties(
@@ -590,6 +605,7 @@ namespace Azure.ResourceManager.Hci.Models
                 resourceProviderObjectId,
                 secretsLocations ?? new ChangeTrackingList<SecretsLocationDetails>(),
                 clusterPattern,
+                sdnProperties,
                 localAvailabilityZones ?? new ChangeTrackingList<LocalAvailabilityZones>(),
                 identityProvider,
                 storageType,

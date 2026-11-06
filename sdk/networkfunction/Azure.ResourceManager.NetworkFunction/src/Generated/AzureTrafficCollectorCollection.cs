@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.NetworkFunction
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AzureTrafficCollectorData, AzureTrafficCollectorResource>(new AzureTrafficCollectorsByResourceGroupGetAllAsyncCollectionResultOfT(_azureTrafficCollectorsByResourceGroupRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AzureTrafficCollectorCollection.GetAll"), data => new AzureTrafficCollectorResource(Client, data));
+            return new AsyncPageableWrapper<AzureTrafficCollectorData, AzureTrafficCollectorResource>(new AzureTrafficCollectorDataAsyncCollectionResultOfT(_azureTrafficCollectorsByResourceGroupRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AzureTrafficCollectorCollection.GetAll"), data => new AzureTrafficCollectorResource(Client, data));
         }
 
         /// <summary>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.NetworkFunction
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AzureTrafficCollectorData, AzureTrafficCollectorResource>(new AzureTrafficCollectorsByResourceGroupGetAllCollectionResultOfT(_azureTrafficCollectorsByResourceGroupRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AzureTrafficCollectorCollection.GetAll"), data => new AzureTrafficCollectorResource(Client, data));
+            return new PageableWrapper<AzureTrafficCollectorData, AzureTrafficCollectorResource>(new AzureTrafficCollectorDataCollectionResultOfT(_azureTrafficCollectorsByResourceGroupRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AzureTrafficCollectorCollection.GetAll"), data => new AzureTrafficCollectorResource(Client, data));
         }
 
         /// <summary>

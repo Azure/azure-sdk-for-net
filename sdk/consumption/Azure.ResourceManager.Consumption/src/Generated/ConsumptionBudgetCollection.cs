@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Consumption
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConsumptionBudgetData, ConsumptionBudgetResource>(new BudgetsGetAllAsyncCollectionResultOfT(_budgetsRestClient, Id.ToString(), context, "ConsumptionBudgetCollection.GetAll"), data => new ConsumptionBudgetResource(Client, data));
+            return new AsyncPageableWrapper<ConsumptionBudgetData, ConsumptionBudgetResource>(new ConsumptionBudgetDataAsyncCollectionResultOfT(_budgetsRestClient, Id.ToString(), context, "ConsumptionBudgetCollection.GetAll"), data => new ConsumptionBudgetResource(Client, data));
         }
 
         /// <summary>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Consumption
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConsumptionBudgetData, ConsumptionBudgetResource>(new BudgetsGetAllCollectionResultOfT(_budgetsRestClient, Id.ToString(), context, "ConsumptionBudgetCollection.GetAll"), data => new ConsumptionBudgetResource(Client, data));
+            return new PageableWrapper<ConsumptionBudgetData, ConsumptionBudgetResource>(new ConsumptionBudgetDataCollectionResultOfT(_budgetsRestClient, Id.ToString(), context, "ConsumptionBudgetCollection.GetAll"), data => new ConsumptionBudgetResource(Client, data));
         }
 
         /// <summary>

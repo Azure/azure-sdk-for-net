@@ -10,9 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.Security.Attestation
 {
-    /// <summary> The JsonWebKey. </summary>
     internal partial class JsonWebKey
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="JsonWebKey"/>. </summary>
         /// <param name="kty">
         /// The "kty" (key type) parameter identifies the cryptographic algorithm
@@ -21,13 +23,10 @@ namespace Azure.Security.Attestation
         /// established by [JWA] or be a value that contains a Collision-
         /// Resistant Name.  The "kty" value is a case-sensitive string.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="kty"/> is null. </exception>
-        public JsonWebKey(string kty)
+        internal JsonWebKey(string kty)
         {
-            Argument.AssertNotNull(kty, nameof(kty));
-
             Kty = kty;
-            X5C = new ChangeTrackingList<string>();
+            X5c = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="JsonWebKey"/>. </summary>
@@ -73,7 +72,7 @@ namespace Azure.Security.Attestation
         /// on data. Values are commonly "sig" (signature) or "enc" (encryption).
         /// </param>
         /// <param name="x"> X coordinate for the Elliptic Curve point. </param>
-        /// <param name="x5C">
+        /// <param name="x5c">
         /// The "x5c" (X.509 certificate chain) parameter contains a chain of one
         /// or more PKIX certificates [RFC5280].  The certificate chain is
         /// represented as a JSON array of certificate value strings.  Each
@@ -83,7 +82,8 @@ namespace Azure.Security.Attestation
         /// certificate.
         /// </param>
         /// <param name="y"> Y coordinate for the Elliptic Curve point. </param>
-        internal JsonWebKey(string alg, string crv, string d, string dp, string dq, string e, string k, string kid, string kty, string n, string p, string q, string qi, string use, string x, IList<string> x5C, string y)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal JsonWebKey(string alg, string crv, string d, string dp, string dq, string e, string k, string kid, string kty, string n, string p, string q, string qi, string use, string x, IList<string> x5c, string y, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Alg = alg;
             Crv = crv;
@@ -100,8 +100,9 @@ namespace Azure.Security.Attestation
             Qi = qi;
             Use = use;
             X = x;
-            X5C = x5C;
+            X5c = x5c;
             Y = y;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
@@ -111,19 +112,26 @@ namespace Azure.Security.Attestation
         /// established by [JWA] or be a value that contains a Collision-
         /// Resistant Name.
         /// </summary>
-        public string Alg { get; set; }
+        public string Alg { get; }
+
         /// <summary> The "crv" (curve) parameter identifies the curve type. </summary>
-        public string Crv { get; set; }
+        public string Crv { get; }
+
         /// <summary> RSA private exponent or ECC private key. </summary>
-        public string D { get; set; }
+        public string D { get; }
+
         /// <summary> RSA Private Key Parameter. </summary>
-        public string Dp { get; set; }
+        public string Dp { get; }
+
         /// <summary> RSA Private Key Parameter. </summary>
-        public string Dq { get; set; }
+        public string Dq { get; }
+
         /// <summary> RSA public exponent, in Base64. </summary>
-        public string E { get; set; }
+        public string E { get; }
+
         /// <summary> Symmetric key. </summary>
-        public string K { get; set; }
+        public string K { get; }
+
         /// <summary>
         /// The "kid" (key ID) parameter is used to match a specific key.  This
         /// is used, for instance, to choose among a set of keys within a JWK Set
@@ -135,7 +143,8 @@ namespace Azure.Security.Attestation
         /// equivalent alternatives by the application using them.)  The "kid"
         /// value is a case-sensitive string.
         /// </summary>
-        public string Kid { get; set; }
+        public string Kid { get; }
+
         /// <summary>
         /// The "kty" (key type) parameter identifies the cryptographic algorithm
         /// family used with the key, such as "RSA" or "EC". "kty" values should
@@ -143,24 +152,31 @@ namespace Azure.Security.Attestation
         /// established by [JWA] or be a value that contains a Collision-
         /// Resistant Name.  The "kty" value is a case-sensitive string.
         /// </summary>
-        public string Kty { get; set; }
+        public string Kty { get; }
+
         /// <summary> RSA modulus, in Base64. </summary>
-        public string N { get; set; }
+        public string N { get; }
+
         /// <summary> RSA secret prime. </summary>
-        public string P { get; set; }
+        public string P { get; }
+
         /// <summary> RSA secret prime, with p &lt; q. </summary>
-        public string Q { get; set; }
+        public string Q { get; }
+
         /// <summary> RSA Private Key Parameter. </summary>
-        public string Qi { get; set; }
+        public string Qi { get; }
+
         /// <summary>
         /// Use ("public key use") identifies the intended use of
         /// the public key. The "use" parameter is employed to indicate whether
         /// a public key is used for encrypting data or verifying the signature
         /// on data. Values are commonly "sig" (signature) or "enc" (encryption).
         /// </summary>
-        public string Use { get; set; }
+        public string Use { get; }
+
         /// <summary> X coordinate for the Elliptic Curve point. </summary>
-        public string X { get; set; }
+        public string X { get; }
+
         /// <summary>
         /// The "x5c" (X.509 certificate chain) parameter contains a chain of one
         /// or more PKIX certificates [RFC5280].  The certificate chain is
@@ -170,8 +186,9 @@ namespace Azure.Security.Attestation
         /// The PKIX certificate containing the key value MUST be the first
         /// certificate.
         /// </summary>
-        public IList<string> X5C { get; }
+        public IList<string> X5c { get; }
+
         /// <summary> Y coordinate for the Elliptic Curve point. </summary>
-        public string Y { get; set; }
+        public string Y { get; }
     }
 }

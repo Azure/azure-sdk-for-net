@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="nodeResourceGroupProfile"> Profile of the node resource group configuration. </param>
         /// <param name="isRbacEnabled"> Whether to enable Kubernetes Role-Based Access Control. </param>
         /// <param name="supportPlan"> The support plan for the Managed Cluster. If unspecified, the default is 'KubernetesOfficial'. </param>
-        /// <param name="isFipsEnabled"> Whether to enable FIPS mode at the cluster level. When enabled, this setting enforces FIPS compliance for all AKS-managed components, such as the node operating system, addons, and [managed containerized components](https://aka.ms/aks/components/docs). See [Enable cluster-wide FIPS](https://aka.ms/aks/fips) for more details. When this property is enabled, all node pools in the cluster must also be FIPS-enabled. </param>
+        /// <param name="isFipsEnabled"> Whether to enable FIPS mode at the cluster level. When enabled, this setting enforces FIPS compliance for all AKS-managed components, such as the node operating system, addons, and [managed containerized components](https://aka.ms/aks/components/docs). See [Enable cluster-wide FIPS](https://aka.ms/aks/fips) for more details. When this property is enabled, all node pools in the cluster must also be FIPS-enabled. Although this property is available in a stable API version, cluster-wide FIPS remains a preview feature. Write requests whose resulting cluster state has this property set to true require the `Microsoft.ContainerService/EnableFIPSPreview` subscription feature registration. </param>
         /// <param name="enableNodeHardening"> Whether to enable node hardening at the cluster level. When enabled, AKS applies hardened defaults for soft eviction thresholds, kube-reserved, and system-reserved on all Linux node pools in the cluster. Per-node-pool kubeletConfig settings take precedence over hardening defaults. On agent pools running Kubernetes 1.37 or later, node hardening is enabled by default and cannot be disabled; setting this field to false has no effect on those pools. </param>
         /// <param name="isNamespaceResourcesEnabled"> Enable namespace as Azure resource. The default value is false. It can be enabled/disabled on creation and updating of the managed cluster. See [https://aka.ms/NamespaceARMResource](https://aka.ms/NamespaceARMResource) for more details on Namespace as a ARM Resource. </param>
         /// <param name="networkProfile"> The network configuration profile. </param>
@@ -77,6 +77,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="nodeProvisioningProfile"> Node provisioning settings that apply to the whole cluster. </param>
         /// <param name="bootstrapProfile"> Profile of the cluster bootstrap configuration. </param>
         /// <param name="aiToolchainOperatorProfile"> AI toolchain operator settings that apply to the whole cluster. </param>
+        /// <param name="agentSandboxProfile"> Agent Sandbox settings that apply to the whole cluster. </param>
+        /// <param name="podSnapshotProfile"> The Pod Snapshot Restore profile for the managed cluster. </param>
         /// <param name="schedulerProfile"> Profile with scheduler-related settings, like the configuration mode for each scheduler managed by AKS. See https://aka.ms/aks/scheduler-profile. </param>
         /// <param name="hostedSystemProfile"> Settings for hosted system addons. For more information, see https://aka.ms/aks/automatic/systemcomponents. </param>
         /// <param name="healthMonitorProfile"> Health monitor profile for the managed cluster. </param>
@@ -84,7 +86,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="nodeDisruptionProfile"> Node disruption profile for a managed cluster. </param>
         /// <param name="status"> Contains read-only information about the Managed Cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterProperties(string provisioningState, ContainerServicePowerState powerState, ContainerServiceCreationData creationData, int? maxAgentPools, string kubernetesVersion, string currentKubernetesVersion, string dnsPrefix, string fqdnSubdomain, string fqdn, string privateFqdn, string azurePortalFqdn, IList<ManagedClusterAgentPoolProfile> agentPoolProfiles, ContainerServiceLinuxProfile linuxProfile, ManagedClusterWindowsProfile windowsProfile, ManagedClusterServicePrincipalProfile servicePrincipalProfile, IDictionary<string, ManagedClusterAddonProfile> addonProfiles, ManagedClusterPodIdentityProfile podIdentityProfile, ManagedClusterOidcIssuerProfile oidcIssuerProfile, string nodeResourceGroup, ManagedClusterNodeResourceGroupProfile nodeResourceGroupProfile, bool? isRbacEnabled, KubernetesSupportPlan? supportPlan, bool? isFipsEnabled, bool? enableNodeHardening, bool? isNamespaceResourcesEnabled, ContainerServiceNetworkProfile networkProfile, ManagedClusterAadProfile aadProfile, ManagedClusterAutoUpgradeProfile autoUpgradeProfile, ClusterUpgradeSettings upgradeSettings, ManagedClusterAutoScalerProfile autoScalerProfile, ManagedClusterApiServerAccessProfile apiServerAccessProfile, ResourceIdentifier diskEncryptionSetId, IDictionary<string, ContainerServiceUserAssignedIdentity> identityProfile, IList<ContainerServicePrivateLinkResourceData> privateLinkResources, bool? isLocalAccountsDisabled, ManagedClusterHttpProxyConfig httpProxyConfig, ManagedClusterSecurityProfile securityProfile, ManagedClusterStorageProfile storageProfile, ManagedClusterIngressProfile ingressProfile, ContainerServicePublicNetworkAccess? publicNetworkAccess, ManagedClusterWorkloadAutoScalerProfile workloadAutoScalerProfile, ManagedClusterAzureMonitorProfile azureMonitorProfile, ServiceMeshProfile serviceMeshProfile, ResourceIdentifier resourceId, ManagedClusterMetricsProfile metricsProfile, ManagedClusterNodeProvisioningProfile nodeProvisioningProfile, ManagedClusterBootstrapProfile bootstrapProfile, ManagedClusterAIToolchainOperatorProfile aiToolchainOperatorProfile, SchedulerProfile schedulerProfile, ManagedClusterHostedSystemProfile hostedSystemProfile, ManagedClusterHealthMonitorProfile healthMonitorProfile, ManagedClusterControlPlaneScalingProfile controlPlaneScalingProfile, NodeDisruptionProfile nodeDisruptionProfile, ManagedClusterStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterProperties(string provisioningState, ContainerServicePowerState powerState, ContainerServiceCreationData creationData, int? maxAgentPools, string kubernetesVersion, string currentKubernetesVersion, string dnsPrefix, string fqdnSubdomain, string fqdn, string privateFqdn, string azurePortalFqdn, IList<ManagedClusterAgentPoolProfile> agentPoolProfiles, ContainerServiceLinuxProfile linuxProfile, ManagedClusterWindowsProfile windowsProfile, ManagedClusterServicePrincipalProfile servicePrincipalProfile, IDictionary<string, ManagedClusterAddonProfile> addonProfiles, ManagedClusterPodIdentityProfile podIdentityProfile, ManagedClusterOidcIssuerProfile oidcIssuerProfile, string nodeResourceGroup, ManagedClusterNodeResourceGroupProfile nodeResourceGroupProfile, bool? isRbacEnabled, KubernetesSupportPlan? supportPlan, bool? isFipsEnabled, bool? enableNodeHardening, bool? isNamespaceResourcesEnabled, ContainerServiceNetworkProfile networkProfile, ManagedClusterAadProfile aadProfile, ManagedClusterAutoUpgradeProfile autoUpgradeProfile, ClusterUpgradeSettings upgradeSettings, ManagedClusterAutoScalerProfile autoScalerProfile, ManagedClusterApiServerAccessProfile apiServerAccessProfile, ResourceIdentifier diskEncryptionSetId, IDictionary<string, ContainerServiceUserAssignedIdentity> identityProfile, IList<ContainerServicePrivateLinkResourceData> privateLinkResources, bool? isLocalAccountsDisabled, ManagedClusterHttpProxyConfig httpProxyConfig, ManagedClusterSecurityProfile securityProfile, ManagedClusterStorageProfile storageProfile, ManagedClusterIngressProfile ingressProfile, ContainerServicePublicNetworkAccess? publicNetworkAccess, ManagedClusterWorkloadAutoScalerProfile workloadAutoScalerProfile, ManagedClusterAzureMonitorProfile azureMonitorProfile, ServiceMeshProfile serviceMeshProfile, ResourceIdentifier resourceId, ManagedClusterMetricsProfile metricsProfile, ManagedClusterNodeProvisioningProfile nodeProvisioningProfile, ManagedClusterBootstrapProfile bootstrapProfile, ManagedClusterAIToolchainOperatorProfile aiToolchainOperatorProfile, ManagedClusterAgentSandboxProfile agentSandboxProfile, ManagedClusterPodSnapshotProfile podSnapshotProfile, SchedulerProfile schedulerProfile, ManagedClusterHostedSystemProfile hostedSystemProfile, ManagedClusterHealthMonitorProfile healthMonitorProfile, ManagedClusterControlPlaneScalingProfile controlPlaneScalingProfile, NodeDisruptionProfile nodeDisruptionProfile, ManagedClusterStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             PowerState = powerState;
@@ -134,6 +136,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             NodeProvisioningProfile = nodeProvisioningProfile;
             BootstrapProfile = bootstrapProfile;
             AiToolchainOperatorProfile = aiToolchainOperatorProfile;
+            AgentSandboxProfile = agentSandboxProfile;
+            PodSnapshotProfile = podSnapshotProfile;
             SchedulerProfile = schedulerProfile;
             HostedSystemProfile = hostedSystemProfile;
             HealthMonitorProfile = healthMonitorProfile;
@@ -231,7 +235,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         [WirePath("supportPlan")]
         public KubernetesSupportPlan? SupportPlan { get; set; }
 
-        /// <summary> Whether to enable FIPS mode at the cluster level. When enabled, this setting enforces FIPS compliance for all AKS-managed components, such as the node operating system, addons, and [managed containerized components](https://aka.ms/aks/components/docs). See [Enable cluster-wide FIPS](https://aka.ms/aks/fips) for more details. When this property is enabled, all node pools in the cluster must also be FIPS-enabled. </summary>
+        /// <summary> Whether to enable FIPS mode at the cluster level. When enabled, this setting enforces FIPS compliance for all AKS-managed components, such as the node operating system, addons, and [managed containerized components](https://aka.ms/aks/components/docs). See [Enable cluster-wide FIPS](https://aka.ms/aks/fips) for more details. When this property is enabled, all node pools in the cluster must also be FIPS-enabled. Although this property is available in a stable API version, cluster-wide FIPS remains a preview feature. Write requests whose resulting cluster state has this property set to true require the `Microsoft.ContainerService/EnableFIPSPreview` subscription feature registration. </summary>
         [WirePath("enableFIPS")]
         public bool? IsFipsEnabled { get; set; }
 
@@ -257,7 +261,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Settings for upgrading a cluster. </summary>
         [WirePath("upgradeSettings")]
-        internal ClusterUpgradeSettings UpgradeSettings { get; set; }
+        public ClusterUpgradeSettings UpgradeSettings { get; set; }
 
         /// <summary> Parameters to be applied to the cluster-autoscaler when enabled. </summary>
         [WirePath("autoScalerProfile")]
@@ -335,6 +339,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         [WirePath("aiToolchainOperatorProfile")]
         internal ManagedClusterAIToolchainOperatorProfile AiToolchainOperatorProfile { get; set; }
 
+        /// <summary> Agent Sandbox settings that apply to the whole cluster. </summary>
+        [WirePath("agentSandboxProfile")]
+        internal ManagedClusterAgentSandboxProfile AgentSandboxProfile { get; set; }
+
+        /// <summary> The Pod Snapshot Restore profile for the managed cluster. </summary>
+        [WirePath("podSnapshotProfile")]
+        internal ManagedClusterPodSnapshotProfile PodSnapshotProfile { get; set; }
+
         /// <summary> Profile with scheduler-related settings, like the configuration mode for each scheduler managed by AKS. See https://aka.ms/aks/scheduler-profile. </summary>
         [WirePath("schedulerProfile")]
         internal SchedulerProfile SchedulerProfile { get; set; }
@@ -405,24 +417,6 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
         }
 
-        /// <summary> Settings for overrides. </summary>
-        [WirePath("upgradeSettings.overrideSettings")]
-        public UpgradeOverrideSettings UpgradeOverrideSettings
-        {
-            get
-            {
-                return UpgradeSettings is null ? default : UpgradeSettings.OverrideSettings;
-            }
-            set
-            {
-                if (UpgradeSettings is null)
-                {
-                    UpgradeSettings = new ClusterUpgradeSettings();
-                }
-                UpgradeSettings.OverrideSettings = value;
-            }
-        }
-
         /// <summary> Whether to enable cost analysis. The Managed Cluster sku.tier must be set to 'Standard' or 'Premium' to enable this feature. Enabling this will add Kubernetes Namespace and Deployment details to the Cost Analysis views in the Azure portal. If not specified, the default is false. For more information see aka.ms/aks/docs/cost-analysis. </summary>
         [WirePath("metricsProfile.costAnalysis.enabled")]
         public bool? IsCostAnalysisEnabled
@@ -459,6 +453,42 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
         }
 
+        /// <summary> Whether the Agent Sandbox core extension is enabled for the cluster. On cluster creation, the default is false. </summary>
+        [WirePath("agentSandboxProfile.enabled")]
+        public bool? IsAgentSandboxProfileEnabled
+        {
+            get
+            {
+                return AgentSandboxProfile is null ? default : AgentSandboxProfile.IsAgentSandboxProfileEnabled;
+            }
+            set
+            {
+                if (AgentSandboxProfile is null)
+                {
+                    AgentSandboxProfile = new ManagedClusterAgentSandboxProfile();
+                }
+                AgentSandboxProfile.IsAgentSandboxProfileEnabled = value;
+            }
+        }
+
+        /// <summary> Whether the Pod Snapshot Restore core extension is enabled for the managed cluster. </summary>
+        [WirePath("podSnapshotProfile.enabled")]
+        public bool? IsPodSnapshotProfileEnabled
+        {
+            get
+            {
+                return PodSnapshotProfile is null ? default : PodSnapshotProfile.IsPodSnapshotProfileEnabled;
+            }
+            set
+            {
+                if (PodSnapshotProfile is null)
+                {
+                    PodSnapshotProfile = new ManagedClusterPodSnapshotProfile();
+                }
+                PodSnapshotProfile.IsPodSnapshotProfileEnabled = value;
+            }
+        }
+
         /// <summary> The configuration mode to be used by the AKS-managed scheduler. </summary>
         [WirePath("schedulerProfile.upstream.schedulerConfigMode")]
         public SchedulerConfigMode? UpstreamSchedulerConfigMode
@@ -483,7 +513,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
             get
             {
-                return ControlPlaneScalingProfile is null ? default : ControlPlaneScalingProfile.ScalingSize;
+                return ControlPlaneScalingProfile is null ? (ManagedClusterControlPlaneScalingSize?)default : ControlPlaneScalingProfile.ScalingSize;
             }
             set
             {
@@ -493,7 +523,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The policy configuration for when to allow certain operations which require node re-image and trigger redeployment. For example, some operations, such as updating the .properties.ManagedClusterSecurityProfile.customCATrustCertificates field on an existing managed cluster, trigger rolling updates of the nodes. This setting allows control over when such updates are accepted. The default is 'Allow'. For a full list of covered operations see aka.ms/aks/nodedisruptionpolicy". </summary>
         [WirePath("nodeDisruptionProfile.nodeDisruptionPolicy")]
-        public NodeDisruptionPolicy? NodeDisruptionPolicy
+        public AgentPoolNodeDisruptionPolicy? NodeDisruptionPolicy
         {
             get
             {

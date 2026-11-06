@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                collectorPolicies is null && virtualHubId is null && provisioningState is null ? default : new AzureTrafficCollectorPropertiesFormat((collectorPolicies ?? new ChangeTrackingList<SubResource>()).ToList(), new ResourceReference(virtualHubId, default), provisioningState, default),
+                collectorPolicies is null && virtualHubId is null && provisioningState is null ? default : new AzureTrafficCollectorPropertiesFormat((collectorPolicies ?? new ChangeTrackingList<SubResource>()).ToList(), virtualHubId is null ? default : new ResourceReference(virtualHubId, default), provisioningState, default),
                 eTag,
                 default);
         }
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="NetworkFunction.AzureTrafficCollectorData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AzureTrafficCollectorData AzureTrafficCollectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, IEnumerable<SubResource> collectorPolicies = default, CollectorProvisioningState? provisioningState = default, ResourceIdentifier virtualHubId = default, IDictionary<string, string> tags = default, ETag? etag = default)
+        public static AzureTrafficCollectorData AzureTrafficCollectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation location, IEnumerable<SubResource> collectorPolicies, CollectorProvisioningState? provisioningState, ResourceIdentifier virtualHubId, IDictionary<string, string> tags, ETag? etag)
         {
             return new AzureTrafficCollectorData(
                 id,
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                collectorPolicies is null && virtualHubId is null && provisioningState is null ? default : new AzureTrafficCollectorPropertiesFormat((collectorPolicies ?? new ChangeTrackingList<SubResource>()).ToList(), new ResourceReference(virtualHubId, default), provisioningState, default),
+                collectorPolicies is null && virtualHubId is null && provisioningState is null ? default : new AzureTrafficCollectorPropertiesFormat((collectorPolicies ?? new ChangeTrackingList<SubResource>()).ToList(), virtualHubId is null ? default : new ResourceReference(virtualHubId, default), provisioningState, default),
                 etag,
                 default);
         }
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="NetworkFunction.CollectorPolicyData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CollectorPolicyData CollectorPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, IngestionPolicyPropertiesFormat ingestionPolicy = default, IEnumerable<EmissionPoliciesPropertiesFormat> emissionPolicies = default, CollectorProvisioningState? provisioningState = default, IDictionary<string, string> tags = default, ETag? etag = default)
+        public static CollectorPolicyData CollectorPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation location, IngestionPolicyPropertiesFormat ingestionPolicy, IEnumerable<EmissionPoliciesPropertiesFormat> emissionPolicies, CollectorProvisioningState? provisioningState, IDictionary<string, string> tags, ETag? etag)
         {
             return new CollectorPolicyData(
                 id,

@@ -40,11 +40,17 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
 
         private ClientDiagnostics CapacitiesClientDiagnostics => _capacitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PowerBIDedicated.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Capacities CapacitiesRestClient => _capacitiesRestClient ??= new Capacities(CapacitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2021-01-01");
+        private Capacities CapacitiesRestClient => _capacitiesRestClient ??= new Capacities(
+            CapacitiesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2021-01-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics AutoScaleVCoresClientDiagnostics => _autoScaleVCoresClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PowerBIDedicated.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AutoScaleVCores AutoScaleVCoresRestClient => _autoScaleVCoresRestClient ??= new AutoScaleVCores(AutoScaleVCoresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2021-01-01");
+        private AutoScaleVCores AutoScaleVCoresRestClient => _autoScaleVCoresRestClient ??= new AutoScaleVCores(AutoScaleVCoresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.PowerBIDedicated/autoScaleVCores", out string apiVersion0) ? apiVersion0 : "2021-01-01");
 
         /// <summary>
         /// Lists all the Dedicated capacities for the given subscription.
@@ -71,7 +77,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DedicatedCapacityData, DedicatedCapacityResource>(new CapacitiesGetAllAsyncCollectionResultOfT(CapacitiesRestClient, Id.SubscriptionId, context, "MockablePowerBIDedicatedSubscriptionResource.GetDedicatedCapacities"), data => new DedicatedCapacityResource(Client, data));
+            return new AsyncPageableWrapper<DedicatedCapacityData, DedicatedCapacityResource>(new DedicatedCapacityDataAsync0CollectionResultOfT(CapacitiesRestClient, Id.SubscriptionId, context, "MockablePowerBIDedicatedSubscriptionResource.GetDedicatedCapacities"), data => new DedicatedCapacityResource(Client, data));
         }
 
         /// <summary>
@@ -99,7 +105,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DedicatedCapacityData, DedicatedCapacityResource>(new CapacitiesGetAllCollectionResultOfT(CapacitiesRestClient, Id.SubscriptionId, context, "MockablePowerBIDedicatedSubscriptionResource.GetDedicatedCapacities"), data => new DedicatedCapacityResource(Client, data));
+            return new PageableWrapper<DedicatedCapacityData, DedicatedCapacityResource>(new DedicatedCapacityData0CollectionResultOfT(CapacitiesRestClient, Id.SubscriptionId, context, "MockablePowerBIDedicatedSubscriptionResource.GetDedicatedCapacities"), data => new DedicatedCapacityResource(Client, data));
         }
 
         /// <summary>
@@ -127,7 +133,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AutoScaleVCoreData, AutoScaleVCoreResource>(new AutoScaleVCoresGetBySubscriptionAsyncCollectionResultOfT(AutoScaleVCoresRestClient, Id.SubscriptionId, context, "MockablePowerBIDedicatedSubscriptionResource.GetAutoScaleVCores"), data => new AutoScaleVCoreResource(Client, data));
+            return new AsyncPageableWrapper<AutoScaleVCoreData, AutoScaleVCoreResource>(new AutoScaleVCoreDataAsync0CollectionResultOfT(AutoScaleVCoresRestClient, Id.SubscriptionId, context, "MockablePowerBIDedicatedSubscriptionResource.GetAutoScaleVCores"), data => new AutoScaleVCoreResource(Client, data));
         }
 
         /// <summary>
@@ -155,7 +161,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AutoScaleVCoreData, AutoScaleVCoreResource>(new AutoScaleVCoresGetBySubscriptionCollectionResultOfT(AutoScaleVCoresRestClient, Id.SubscriptionId, context, "MockablePowerBIDedicatedSubscriptionResource.GetAutoScaleVCores"), data => new AutoScaleVCoreResource(Client, data));
+            return new PageableWrapper<AutoScaleVCoreData, AutoScaleVCoreResource>(new AutoScaleVCoreData0CollectionResultOfT(AutoScaleVCoresRestClient, Id.SubscriptionId, context, "MockablePowerBIDedicatedSubscriptionResource.GetAutoScaleVCores"), data => new AutoScaleVCoreResource(Client, data));
         }
 
         /// <summary>
@@ -183,7 +189,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new CapacitiesGetSkusCapacitiesAsyncCollectionResultOfT(CapacitiesRestClient, Id.SubscriptionId, context, "MockablePowerBIDedicatedSubscriptionResource.GetSkusCapacities");
+            return new CapacitySkuAsyncCollectionResultOfT(CapacitiesRestClient, Id.SubscriptionId, context, "MockablePowerBIDedicatedSubscriptionResource.GetSkusCapacities");
         }
 
         /// <summary>
@@ -211,7 +217,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new CapacitiesGetSkusCapacitiesCollectionResultOfT(CapacitiesRestClient, Id.SubscriptionId, context, "MockablePowerBIDedicatedSubscriptionResource.GetSkusCapacities");
+            return new CapacitySkuCollectionResultOfT(CapacitiesRestClient, Id.SubscriptionId, context, "MockablePowerBIDedicatedSubscriptionResource.GetSkusCapacities");
         }
 
         /// <summary>

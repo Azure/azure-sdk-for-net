@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityMLAnalyticsSettingData, SecurityMLAnalyticsSettingResource>(new SecurityMLAnalyticsSettingsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SecurityMLAnalyticsSettingData, SecurityMLAnalyticsSettingResource>(new SecurityMLAnalyticsSettingDataAsyncCollectionResultOfT(
                 _securityMLAnalyticsSettingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityMLAnalyticsSettingData, SecurityMLAnalyticsSettingResource>(new SecurityMLAnalyticsSettingsGetAllCollectionResultOfT(
+            return new PageableWrapper<SecurityMLAnalyticsSettingData, SecurityMLAnalyticsSettingResource>(new SecurityMLAnalyticsSettingDataCollectionResultOfT(
                 _securityMLAnalyticsSettingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Purview.Models
                 location,
                 accountStatus is null && cloudConnectorsAwsExternalId is null && createdOn is null && createdBy is null && createdByObjectId is null && defaultDomain is null && endpoints is null && friendlyName is null && ingestionStorage is null && managedEventHubState is null && managedResourceGroupName is null && managedResources is null && managedResourcesPublicNetworkAccess is null && mergeInfo is null && privateEndpointConnections is null && provisioningState is null && publicNetworkAccess is null && tenantEndpointState is null ? default : new PurviewAccountProperties(
                     accountStatus,
-                    new CloudConnectors(cloudConnectorsAwsExternalId, default),
+                    cloudConnectorsAwsExternalId is null ? default : new CloudConnectors(cloudConnectorsAwsExternalId, default),
                     createdOn,
                     createdBy,
                     createdByObjectId,
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Purview.Models
         /// <returns> A new <see cref="Models.PurviewAccountStatus"/> instance for mocking. </returns>
         public static PurviewAccountStatus PurviewAccountStatus(PurviewAccountProvisioningState? accountProvisioningState = default, ResponseError errorDetails = default)
         {
-            return new PurviewAccountStatus(accountProvisioningState, errorDetails is null ? default : new ErrorResponse(errorDetails, default), default);
+            return new PurviewAccountStatus(accountProvisioningState, errorDetails is null ? default : new ErrorResult(errorDetails, default), default);
         }
 
         /// <summary> The account endpoints. </summary>
@@ -204,14 +204,14 @@ namespace Azure.ResourceManager.Purview.Models
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="privateEndpointId"> The private endpoint identifier. </param>
         /// <returns> A new <see cref="Purview.PurviewPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static PurviewPrivateEndpointConnectionData PurviewPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PurviewPrivateLinkServiceConnectionState connectionState = default, string provisioningState = default, ResourceIdentifier privateEndpointId = default)
+        public static PurviewPrivateEndpointConnectionData PurviewPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PurviewPrivateLinkServiceConnectionState connectionState, string provisioningState, ResourceIdentifier privateEndpointId)
         {
             return new PurviewPrivateEndpointConnectionData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
+                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
                 default);
         }
 
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.Purview.Models
         /// <param name="identity"> The Managed Identity of the resource. </param>
         /// <returns> A new <see cref="Purview.PurviewAccountData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PurviewAccountData PurviewAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, PurviewAccountSku sku = default, string cloudConnectorsAwsExternalId = default, DateTimeOffset? createdOn = default, string createdBy = default, string createdByObjectId = default, PurviewAccountEndpoint endpoints = default, string friendlyName = default, string managedResourceGroupName = default, PurviewManagedResource managedResources = default, IEnumerable<PurviewPrivateEndpointConnectionData> privateEndpointConnections = default, PurviewProvisioningState? provisioningState = default, PurviewPublicNetworkAccess? publicNetworkAccess = default, ManagedServiceIdentity identity = default)
+        public static PurviewAccountData PurviewAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PurviewAccountSku sku, string cloudConnectorsAwsExternalId, DateTimeOffset? createdOn, string createdBy, string createdByObjectId, PurviewAccountEndpoint endpoints, string friendlyName, string managedResourceGroupName, PurviewManagedResource managedResources, IEnumerable<PurviewPrivateEndpointConnectionData> privateEndpointConnections, PurviewProvisioningState? provisioningState, PurviewPublicNetworkAccess? publicNetworkAccess, ManagedServiceIdentity identity)
         {
             return new PurviewAccountData(
                 id,
@@ -471,14 +471,14 @@ namespace Azure.ResourceManager.Purview.Models
                 location,
                 cloudConnectorsAwsExternalId is null && createdOn is null && createdBy is null && createdByObjectId is null && endpoints is null && friendlyName is null && publicNetworkAccess is null && managedResourceGroupName is null && managedResources is null && privateEndpointConnections is null && provisioningState is null && publicNetworkAccess is null ? default : new PurviewAccountProperties(
                     default,
-                    new CloudConnectors(cloudConnectorsAwsExternalId, default),
+                    cloudConnectorsAwsExternalId is null ? default : new CloudConnectors(cloudConnectorsAwsExternalId, default),
                     createdOn,
                     createdBy,
                     createdByObjectId,
                     default,
                     endpoints,
                     friendlyName,
-                    new PurviewIngestionStorage(default, default, publicNetworkAccess, default),
+                    publicNetworkAccess is null ? default : new PurviewIngestionStorage(default, default, publicNetworkAccess, default),
                     default,
                     managedResourceGroupName,
                     managedResources,
@@ -494,17 +494,6 @@ namespace Azure.ResourceManager.Purview.Models
                 default);
         }
 
-        /// <summary> The account endpoints. </summary>
-        /// <param name="catalog"> Gets the catalog endpoint. </param>
-        /// <param name="guardian"></param>
-        /// <param name="scan"> Gets the scan endpoint. </param>
-        /// <returns> A new <see cref="Models.PurviewAccountEndpoint"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PurviewAccountEndpoint PurviewAccountEndpoint(string catalog = default, string guardian = default, string scan = default)
-        {
-            return new PurviewAccountEndpoint(catalog, scan, default);
-        }
-
         /// <summary> A privately linkable resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -513,7 +502,7 @@ namespace Azure.ResourceManager.Purview.Models
         /// <param name="properties"> The private link resource properties. </param>
         /// <returns> A new <see cref="Purview.PurviewPrivateLinkResourceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PurviewPrivateLinkResourceData PurviewPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PurviewPrivateLinkResourceProperties properties = default)
+        public static PurviewPrivateLinkResourceData PurviewPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PurviewPrivateLinkResourceProperties properties)
         {
             return new PurviewPrivateLinkResourceData(
                 id,

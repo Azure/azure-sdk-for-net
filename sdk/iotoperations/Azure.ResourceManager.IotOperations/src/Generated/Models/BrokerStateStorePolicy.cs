@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.IotOperations.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="BrokerStateStorePolicy"/>. </summary>
+        protected BrokerStateStorePolicy() : this(default)
+        {
+        }
+
         /// <summary> 'All' to persist all keys, 'None' to not persist any, 'Custom' to persist only the specified keys. </summary>
         internal BrokerPersistencePolicyMode Mode { get; set; }
     }

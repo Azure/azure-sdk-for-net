@@ -14,7 +14,7 @@ namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary>
     /// This is the parameter set of either the Orchestration project itself or one of the target services.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LuisConfig"/>, <see cref="QuestionAnsweringConfig"/>, and <see cref="ConversationConfig"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ConversationConfig"/>, <see cref="LuisConfig"/>, and <see cref="QuestionAnsweringConfig"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAnalysisConfig))]
     public abstract partial class AnalysisConfig : IJsonModel<AnalysisConfig>
@@ -135,12 +135,12 @@ namespace Azure.AI.Language.Conversations.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "Conversation":
+                        return ConversationConfig.DeserializeConversationConfig(element, options);
                     case "Luis":
                         return LuisConfig.DeserializeLuisConfig(element, options);
                     case "QuestionAnswering":
                         return QuestionAnsweringConfig.DeserializeQuestionAnsweringConfig(element, options);
-                    case "Conversation":
-                        return ConversationConfig.DeserializeConversationConfig(element, options);
                 }
             }
             return UnknownAnalysisConfig.DeserializeUnknownAnalysisConfig(element, options);

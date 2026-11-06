@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    definitions = BinaryData.FromString(prop.Value.GetRawText());
+                    definitions = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("components"u8))
@@ -171,12 +171,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    components = BinaryData.FromString(prop.Value.GetRawText());
+                    components = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SchemaDocumentProperties(value, definitions, components, additionalBinaryDataProperties);

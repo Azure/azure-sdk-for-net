@@ -90,7 +90,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bestPracticeVersionsRestClient.CreateCreateOrUpdateRequest(Id.Name, versionName, BestPracticeData.ToRequestContent(data), context);
+                using HttpMessage message = _bestPracticeVersionsRestClient.CreateCreateOrUpdateRequest(Id.Name, versionName, BestPracticeData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BestPracticeData> response = Response.FromValue(BestPracticeData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bestPracticeVersionsRestClient.CreateCreateOrUpdateRequest(Id.Name, versionName, BestPracticeData.ToRequestContent(data), context);
+                using HttpMessage message = _bestPracticeVersionsRestClient.CreateCreateOrUpdateRequest(Id.Name, versionName, BestPracticeData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BestPracticeData> response = Response.FromValue(BestPracticeData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bestPracticeVersionsRestClient.CreateGetRequest(Id.Name, versionName, context);
+                using HttpMessage message = _bestPracticeVersionsRestClient.CreateGetRequest(Id.Name, versionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BestPracticeData> response = Response.FromValue(BestPracticeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bestPracticeVersionsRestClient.CreateGetRequest(Id.Name, versionName, context);
+                using HttpMessage message = _bestPracticeVersionsRestClient.CreateGetRequest(Id.Name, versionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BestPracticeData> response = Response.FromValue(BestPracticeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -287,7 +287,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BestPracticeData, BestPracticeVersionResource>(new BestPracticeVersionsGetAllAsyncCollectionResultOfT(_bestPracticeVersionsRestClient, Id.Name, context, "BestPracticeVersionCollection.GetAll"), data => new BestPracticeVersionResource(Client, data));
+            return new AsyncPageableWrapper<BestPracticeData, BestPracticeVersionResource>(new BestPracticeDataAsync0CollectionResultOfT(_bestPracticeVersionsRestClient, Id.Name, context, "BestPracticeVersionCollection.GetAll"), data => new BestPracticeVersionResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BestPracticeData, BestPracticeVersionResource>(new BestPracticeVersionsGetAllCollectionResultOfT(_bestPracticeVersionsRestClient, Id.Name, context, "BestPracticeVersionCollection.GetAll"), data => new BestPracticeVersionResource(Client, data));
+            return new PageableWrapper<BestPracticeData, BestPracticeVersionResource>(new BestPracticeData0CollectionResultOfT(_bestPracticeVersionsRestClient, Id.Name, context, "BestPracticeVersionCollection.GetAll"), data => new BestPracticeVersionResource(Client, data));
         }
 
         /// <summary>
@@ -351,7 +351,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bestPracticeVersionsRestClient.CreateGetRequest(Id.Name, versionName, context);
+                using HttpMessage message = _bestPracticeVersionsRestClient.CreateGetRequest(Id.Name, versionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BestPracticeData> response = default;
@@ -408,7 +408,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bestPracticeVersionsRestClient.CreateGetRequest(Id.Name, versionName, context);
+                using HttpMessage message = _bestPracticeVersionsRestClient.CreateGetRequest(Id.Name, versionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BestPracticeData> response = default;
@@ -465,7 +465,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bestPracticeVersionsRestClient.CreateGetRequest(Id.Name, versionName, context);
+                using HttpMessage message = _bestPracticeVersionsRestClient.CreateGetRequest(Id.Name, versionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BestPracticeData> response = default;
@@ -526,7 +526,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bestPracticeVersionsRestClient.CreateGetRequest(Id.Name, versionName, context);
+                using HttpMessage message = _bestPracticeVersionsRestClient.CreateGetRequest(Id.Name, versionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BestPracticeData> response = default;

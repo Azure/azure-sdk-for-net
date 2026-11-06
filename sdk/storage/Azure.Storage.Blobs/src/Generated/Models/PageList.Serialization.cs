@@ -114,7 +114,7 @@ namespace Azure.Storage.Blobs.Models
                 throw new FormatException($"The model {nameof(PageList)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsCollectionDefined(PageRange))
+            if (PageRange != null && Optional.IsCollectionDefined(PageRange))
             {
                 foreach (PageRange item in PageRange)
                 {
@@ -123,7 +123,7 @@ namespace Azure.Storage.Blobs.Models
                     writer.WriteEndElement();
                 }
             }
-            if (Optional.IsCollectionDefined(ClearRange))
+            if (ClearRange != null && Optional.IsCollectionDefined(ClearRange))
             {
                 foreach (ClearRange item in ClearRange)
                 {

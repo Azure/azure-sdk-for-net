@@ -48,7 +48,7 @@ namespace BasicTypeSpec
                 {
                     yield break;
                 }
-                ListWithContinuationTokenResponse result = (ListWithContinuationTokenResponse)response;
+                ListWithContinuationTokenResult result = (ListWithContinuationTokenResult)response;
                 nextPage = result.NextToken;
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in result.Things)

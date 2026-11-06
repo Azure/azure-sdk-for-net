@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.ScVmm.Models
 
         /// <summary>
         /// Defines the resource properties.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CloudInventoryItem"/>, <see cref="Models.VirtualNetworkInventoryItem"/>, <see cref="Models.VirtualMachineTemplateInventoryItem"/>, and <see cref="Models.VirtualMachineInventoryItem"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CloudInventoryItem"/>, <see cref="Models.VirtualMachineInventoryItem"/>, <see cref="Models.VirtualMachineTemplateInventoryItem"/>, and <see cref="Models.VirtualNetworkInventoryItem"/>.
         /// </summary>
         /// <param name="inventoryType"> They inventory type. </param>
         /// <param name="managedResourceId"> Gets the tracked resource id corresponding to the inventory resource. </param>
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.ScVmm.Models
         public static ScVmmInventoryItemProperties ScVmmInventoryItemProperties(string inventoryType = default, string managedResourceId = default, string uuid = default, string inventoryItemName = default, ScVmmProvisioningState? provisioningState = default)
         {
             return new UnknownInventoryItemProperties(
-                default,
+                inventoryType is null ? default : new ScVmmInventoryType(inventoryType),
                 managedResourceId,
                 uuid,
                 inventoryItemName,
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.ScVmm.Models
         public static CloudInventoryItem CloudInventoryItem(string managedResourceId = default, string uuid = default, string inventoryItemName = default, ScVmmProvisioningState? provisioningState = default)
         {
             return new CloudInventoryItem(
-                default,
+                ScVmmInventoryType.Cloud,
                 managedResourceId,
                 uuid,
                 inventoryItemName,
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.ScVmm.Models
         public static VirtualNetworkInventoryItem VirtualNetworkInventoryItem(string managedResourceId = default, string uuid = default, string inventoryItemName = default, ScVmmProvisioningState? provisioningState = default)
         {
             return new VirtualNetworkInventoryItem(
-                default,
+                ScVmmInventoryType.VirtualNetwork,
                 managedResourceId,
                 uuid,
                 inventoryItemName,
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.ScVmm.Models
         public static VirtualMachineTemplateInventoryItem VirtualMachineTemplateInventoryItem(string managedResourceId = default, string uuid = default, string inventoryItemName = default, ScVmmProvisioningState? provisioningState = default, int? cpuCount = default, int? memoryMB = default, ScVmmOSType? osType = default, string osName = default)
         {
             return new VirtualMachineTemplateInventoryItem(
-                default,
+                ScVmmInventoryType.VirtualMachineTemplate,
                 managedResourceId,
                 uuid,
                 inventoryItemName,
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.ScVmm.Models
             ipAddresses ??= new ChangeTrackingList<string>();
 
             return new VirtualMachineInventoryItem(
-                default,
+                ScVmmInventoryType.VirtualMachine,
                 managedResourceId,
                 uuid,
                 inventoryItemName,
@@ -522,8 +522,8 @@ namespace Azure.ResourceManager.ScVmm.Models
                     (availabilitySets ?? new ChangeTrackingList<ScVmmAvailabilitySetItem>()).ToList(),
                     osProfile,
                     hardwareProfile,
-                    new ScVmmNetworkProfile((networkInterfaces ?? new ChangeTrackingList<ScVmmNetworkInterface>()).ToList(), default),
-                    new ScVmmStorageProfile((storageDisks ?? new ChangeTrackingList<ScVmmVirtualDisk>()).ToList(), default),
+                    networkInterfaces is null ? default : new ScVmmNetworkProfile((networkInterfaces ?? new ChangeTrackingList<ScVmmNetworkInterface>()).ToList(), default),
+                    storageDisks is null ? default : new ScVmmStorageProfile((storageDisks ?? new ChangeTrackingList<ScVmmVirtualDisk>()).ToList(), default),
                     infrastructureProfile,
                     powerState,
                     provisioningState,
@@ -651,9 +651,9 @@ namespace Azure.ResourceManager.ScVmm.Models
             return new ScVmmVirtualMachineInstancePatch(availabilitySets is null && hardwareProfile is null && networkInterfaces is null && storageDisks is null && infrastructureCheckpointType is null ? default : new VirtualMachineInstanceUpdateProperties(
                 (availabilitySets ?? new ChangeTrackingList<ScVmmAvailabilitySetItem>()).ToList(),
                 hardwareProfile,
-                new ScVmmNetworkProfileUpdate((networkInterfaces ?? new ChangeTrackingList<ScVmmNetworkInterfaceUpdate>()).ToList(), default),
-                new ScVmmStorageProfileUpdate((storageDisks ?? new ChangeTrackingList<ScVmmVirtualDiskUpdate>()).ToList(), default),
-                new ScVmmInfrastructureProfileUpdate(infrastructureCheckpointType, default),
+                networkInterfaces is null ? default : new ScVmmNetworkProfileUpdate((networkInterfaces ?? new ChangeTrackingList<ScVmmNetworkInterfaceUpdate>()).ToList(), default),
+                storageDisks is null ? default : new ScVmmStorageProfileUpdate((storageDisks ?? new ChangeTrackingList<ScVmmVirtualDiskUpdate>()).ToList(), default),
+                infrastructureCheckpointType is null ? default : new ScVmmInfrastructureProfileUpdate(infrastructureCheckpointType, default),
                 default), default);
         }
 
@@ -798,7 +798,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                 uuid is null && credentials is null && httpsProxy is null && provisioningAction is null && status is null && customResourceName is null && provisioningState is null && privateLinkScopeResourceId is null ? default : new GuestAgentProperties(
                     uuid,
                     credentials,
-                    new ScVmmHttpProxyConfiguration(httpsProxy, default),
+                    httpsProxy is null ? default : new ScVmmHttpProxyConfiguration(httpsProxy, default),
                     provisioningAction,
                     status,
                     customResourceName,
@@ -835,7 +835,7 @@ namespace Azure.ResourceManager.ScVmm.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="ScVmm.ScVmmServerData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ScVmmServerData ScVmmServerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExtendedLocation extendedLocation = default, VmmCredential credentials = default, string fqdn = default, int? port = default, string connectionStatus = default, string errorMessage = default, string uuid = default, string version = default, ScVmmProvisioningState? provisioningState = default)
+        public static ScVmmServerData ScVmmServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, VmmCredential credentials, string fqdn, int? port, string connectionStatus, string errorMessage, string uuid, string version, ScVmmProvisioningState? provisioningState)
         {
             return new ScVmmServerData(
                 id,
@@ -875,7 +875,7 @@ namespace Azure.ResourceManager.ScVmm.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="ScVmm.ScVmmCloudData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ScVmmCloudData ScVmmCloudData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExtendedLocation extendedLocation = default, string inventoryItemId = default, string uuid = default, ResourceIdentifier vmmServerId = default, string cloudName = default, ScVmmCloudCapacity cloudCapacity = default, IEnumerable<ScVmmStorageQosPolicy> storageQosPolicies = default, ScVmmProvisioningState? provisioningState = default)
+        public static ScVmmCloudData ScVmmCloudData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string inventoryItemId, string uuid, ResourceIdentifier vmmServerId, string cloudName, ScVmmCloudCapacity cloudCapacity, IEnumerable<ScVmmStorageQosPolicy> storageQosPolicies, ScVmmProvisioningState? provisioningState)
         {
             return new ScVmmCloudData(
                 id,
@@ -903,7 +903,7 @@ namespace Azure.ResourceManager.ScVmm.Models
         /// <param name="vmCount"> VMCount gives the max number of VMs that can be deployed in the cloud. </param>
         /// <returns> A new <see cref="Models.ScVmmCloudCapacity"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ScVmmCloudCapacity ScVmmCloudCapacity(long? cpuCount = default, long? memoryMB = default, long? vmCount = default)
+        public static ScVmmCloudCapacity ScVmmCloudCapacity(long? cpuCount, long? memoryMB, long? vmCount)
         {
             return new ScVmmCloudCapacity(cpuCount, memoryMB, vmCount, default, default);
         }
@@ -923,7 +923,7 @@ namespace Azure.ResourceManager.ScVmm.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="ScVmm.ScVmmVirtualNetworkData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ScVmmVirtualNetworkData ScVmmVirtualNetworkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExtendedLocation extendedLocation = default, string inventoryItemId = default, string uuid = default, ResourceIdentifier vmmServerId = default, string networkName = default, ScVmmProvisioningState? provisioningState = default)
+        public static ScVmmVirtualNetworkData ScVmmVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string inventoryItemId, string uuid, ResourceIdentifier vmmServerId, string networkName, ScVmmProvisioningState? provisioningState)
         {
             return new ScVmmVirtualNetworkData(
                 id,
@@ -971,7 +971,7 @@ namespace Azure.ResourceManager.ScVmm.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="ScVmm.ScVmmVirtualMachineTemplateData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ScVmmVirtualMachineTemplateData ScVmmVirtualMachineTemplateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExtendedLocation extendedLocation = default, string inventoryItemId = default, string uuid = default, ResourceIdentifier vmmServerId = default, ScVmmOSType? osType = default, string osName = default, string computerName = default, int? memoryMB = default, int? cpuCount = default, LimitCpuForMigration? limitCpuForMigration = default, DynamicMemoryEnabled? dynamicMemoryEnabled = default, IsCustomizable? isCustomizable = default, int? dynamicMemoryMaxMB = default, int? dynamicMemoryMinMB = default, IsHighlyAvailable? isHighlyAvailable = default, int? generation = default, IEnumerable<ScVmmNetworkInterface> networkInterfaces = default, IEnumerable<ScVmmVirtualDisk> disks = default, ScVmmProvisioningState? provisioningState = default)
+        public static ScVmmVirtualMachineTemplateData ScVmmVirtualMachineTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string inventoryItemId, string uuid, ResourceIdentifier vmmServerId, ScVmmOSType? osType, string osName, string computerName, int? memoryMB, int? cpuCount, LimitCpuForMigration? limitCpuForMigration, DynamicMemoryEnabled? dynamicMemoryEnabled, IsCustomizable? isCustomizable, int? dynamicMemoryMaxMB, int? dynamicMemoryMinMB, IsHighlyAvailable? isHighlyAvailable, int? generation, IEnumerable<ScVmmNetworkInterface> networkInterfaces, IEnumerable<ScVmmVirtualDisk> disks, ScVmmProvisioningState? provisioningState)
         {
             return new ScVmmVirtualMachineTemplateData(
                 id,
@@ -1017,7 +1017,7 @@ namespace Azure.ResourceManager.ScVmm.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="ScVmm.ScVmmAvailabilitySetData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ScVmmAvailabilitySetData ScVmmAvailabilitySetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExtendedLocation extendedLocation = default, string availabilitySetName = default, ResourceIdentifier vmmServerId = default, ScVmmProvisioningState? provisioningState = default)
+        public static ScVmmAvailabilitySetData ScVmmAvailabilitySetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string availabilitySetName, ResourceIdentifier vmmServerId, ScVmmProvisioningState? provisioningState)
         {
             return new ScVmmAvailabilitySetData(
                 id,
@@ -1047,7 +1047,7 @@ namespace Azure.ResourceManager.ScVmm.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="ScVmm.ScVmmVirtualMachineInstanceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ScVmmVirtualMachineInstanceData ScVmmVirtualMachineInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ExtendedLocation extendedLocation = default, IEnumerable<ScVmmAvailabilitySetItem> availabilitySets = default, OSProfileForVmInstance osProfile = default, ScVmmHardwareProfile hardwareProfile = default, IEnumerable<ScVmmNetworkInterface> networkInterfaces = default, IEnumerable<ScVmmVirtualDisk> storageDisks = default, ScVmmInfrastructureProfile infrastructureProfile = default, string powerState = default, ScVmmProvisioningState? provisioningState = default)
+        public static ScVmmVirtualMachineInstanceData ScVmmVirtualMachineInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExtendedLocation extendedLocation, IEnumerable<ScVmmAvailabilitySetItem> availabilitySets, OSProfileForVmInstance osProfile, ScVmmHardwareProfile hardwareProfile, IEnumerable<ScVmmNetworkInterface> networkInterfaces, IEnumerable<ScVmmVirtualDisk> storageDisks, ScVmmInfrastructureProfile infrastructureProfile, string powerState, ScVmmProvisioningState? provisioningState)
         {
             return new ScVmmVirtualMachineInstanceData(
                 id,
@@ -1058,8 +1058,8 @@ namespace Azure.ResourceManager.ScVmm.Models
                     (availabilitySets ?? new ChangeTrackingList<ScVmmAvailabilitySetItem>()).ToList(),
                     osProfile,
                     hardwareProfile,
-                    new ScVmmNetworkProfile((networkInterfaces ?? new ChangeTrackingList<ScVmmNetworkInterface>()).ToList(), default),
-                    new ScVmmStorageProfile((storageDisks ?? new ChangeTrackingList<ScVmmVirtualDisk>()).ToList(), default),
+                    networkInterfaces is null ? default : new ScVmmNetworkProfile((networkInterfaces ?? new ChangeTrackingList<ScVmmNetworkInterface>()).ToList(), default),
+                    storageDisks is null ? default : new ScVmmStorageProfile((storageDisks ?? new ChangeTrackingList<ScVmmVirtualDisk>()).ToList(), default),
                     infrastructureProfile,
                     powerState,
                     provisioningState,
@@ -1076,7 +1076,7 @@ namespace Azure.ResourceManager.ScVmm.Models
         /// <param name="osVersion"> Gets os version. </param>
         /// <returns> A new <see cref="Models.OSProfileForVmInstance"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static OSProfileForVmInstance OSProfileForVmInstance(string adminPassword = default, string computerName = default, ScVmmOSType? osType = default, string osSku = default, string osVersion = default)
+        public static OSProfileForVmInstance OSProfileForVmInstance(string adminPassword, string computerName, ScVmmOSType? osType, string osSku, string osVersion)
         {
             return new OSProfileForVmInstance(
                 default,
@@ -1109,7 +1109,7 @@ namespace Azure.ResourceManager.ScVmm.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="ScVmm.ScVmmGuestAgentData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ScVmmGuestAgentData ScVmmGuestAgentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string uuid = default, ScVmmGuestCredential credentials = default, string httpsProxy = default, ScVmmProvisioningAction? provisioningAction = default, string status = default, string customResourceName = default, ScVmmProvisioningState? provisioningState = default)
+        public static ScVmmGuestAgentData ScVmmGuestAgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string uuid, ScVmmGuestCredential credentials, string httpsProxy, ScVmmProvisioningAction? provisioningAction, string status, string customResourceName, ScVmmProvisioningState? provisioningState)
         {
             return new ScVmmGuestAgentData(
                 id,
@@ -1119,7 +1119,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                 uuid is null && credentials is null && httpsProxy is null && provisioningAction is null && status is null && customResourceName is null && provisioningState is null ? default : new GuestAgentProperties(
                     uuid,
                     credentials,
-                    new ScVmmHttpProxyConfiguration(httpsProxy, default),
+                    httpsProxy is null ? default : new ScVmmHttpProxyConfiguration(httpsProxy, default),
                     provisioningAction,
                     status,
                     customResourceName,
@@ -1144,10 +1144,10 @@ namespace Azure.ResourceManager.ScVmm.Models
         /// <param name="managedMachineResourceId"> Gets the tracked resource id corresponding to the inventory resource. </param>
         /// <returns> A new <see cref="Models.VirtualMachineInventoryItem"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static VirtualMachineInventoryItem VirtualMachineInventoryItem(string managedResourceId = default, string uuid = default, string inventoryItemName = default, ScVmmProvisioningState? provisioningState = default, ScVmmOSType? osType = default, string osName = default, string osVersion = default, string powerState = default, IEnumerable<string> ipAddresses = default, ScVmmInventoryItemDetails cloud = default, string biosGuid = default, ResourceIdentifier managedMachineResourceId = default)
+        public static VirtualMachineInventoryItem VirtualMachineInventoryItem(string managedResourceId, string uuid, string inventoryItemName, ScVmmProvisioningState? provisioningState, ScVmmOSType? osType, string osName, string osVersion, string powerState, IEnumerable<string> ipAddresses, ScVmmInventoryItemDetails cloud, string biosGuid, ResourceIdentifier managedMachineResourceId)
         {
             return new VirtualMachineInventoryItem(
-                default,
+                ScVmmInventoryType.VirtualMachine,
                 managedResourceId,
                 uuid,
                 inventoryItemName,

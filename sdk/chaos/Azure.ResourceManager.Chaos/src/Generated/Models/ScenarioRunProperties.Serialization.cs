@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ScenarioRunProperties(
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 managedIdentityPrincipalId,
                 resourceSnapshotId,
                 status,
-                resources,
+                resources ?? new ChangeTrackingList<ScenarioRunResource>(),
                 excludedResources ?? new ChangeTrackingList<ScenarioRunResource>(),
                 errors ?? new ChangeTrackingList<ChaosOperationError>(),
                 executionErrors,

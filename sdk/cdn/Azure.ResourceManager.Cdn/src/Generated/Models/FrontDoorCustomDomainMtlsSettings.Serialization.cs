@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Contains the properties to configure mutual TLS for a custom domain with FQDN. Mutual TLS cannot be configured for custom domains with wildcard host names.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ClientCertificateRequiredAndValidatedAdvancedSettings"/>, <see cref="ClientCertificateRequiredAndOriginValidatesAdvancedSettings"/>, <see cref="ClientCertificateValidatedIfPresentedAdvancedSettings"/>, and <see cref="CompleteMtlsPassthroughToOriginAdvancedSettings"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ClientCertificateRequiredAndOriginValidatesAdvancedSettings"/>, <see cref="ClientCertificateRequiredAndValidatedAdvancedSettings"/>, <see cref="ClientCertificateValidatedIfPresentedAdvancedSettings"/>, and <see cref="CompleteMtlsPassthroughToOriginAdvancedSettings"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownFrontDoorCustomDomainMtlsSettings))]
     public abstract partial class FrontDoorCustomDomainMtlsSettings : IJsonModel<FrontDoorCustomDomainMtlsSettings>
@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ClientCertificateRequiredAndValidated":
-                        return ClientCertificateRequiredAndValidatedAdvancedSettings.DeserializeClientCertificateRequiredAndValidatedAdvancedSettings(element, options);
                     case "ClientCertificateRequiredAndOriginValidates":
                         return ClientCertificateRequiredAndOriginValidatesAdvancedSettings.DeserializeClientCertificateRequiredAndOriginValidatesAdvancedSettings(element, options);
+                    case "ClientCertificateRequiredAndValidated":
+                        return ClientCertificateRequiredAndValidatedAdvancedSettings.DeserializeClientCertificateRequiredAndValidatedAdvancedSettings(element, options);
                     case "ClientCertificateValidatedIfPresented":
                         return ClientCertificateValidatedIfPresentedAdvancedSettings.DeserializeClientCertificateValidatedIfPresentedAdvancedSettings(element, options);
                     case "CompleteMtlsPassthroughToOrigin":

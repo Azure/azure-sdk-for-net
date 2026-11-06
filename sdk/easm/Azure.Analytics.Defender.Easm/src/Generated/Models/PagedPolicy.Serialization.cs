@@ -181,10 +181,10 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PagedPolicy(value, nextLink, totalElements, additionalBinaryDataProperties);
+            return new PagedPolicy(value ?? new ChangeTrackingList<EasmPolicy>(), nextLink, totalElements, additionalBinaryDataProperties);
         }
     }
 }

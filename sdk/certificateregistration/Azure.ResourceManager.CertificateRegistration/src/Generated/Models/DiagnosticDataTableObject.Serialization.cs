@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new DiagnosticDataTableObject(tableName, columns ?? new ChangeTrackingList<DiagnosticDataTableColumn>(), rows ?? new ChangeTrackingList<IList<string>>(), additionalBinaryDataProperties);

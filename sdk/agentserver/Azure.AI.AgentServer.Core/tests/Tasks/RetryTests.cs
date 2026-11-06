@@ -4,9 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.AI.AgentServer.Core.Tasks;
 using Azure.AI.AgentServer.Core.Tasks.Engine;
+using Azure.Core;
 using NUnit.Framework;
 
 namespace Azure.AI.AgentServer.Core.Tests.Tasks;

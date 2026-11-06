@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -21,14 +20,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="UserDefinedResourcesProperties"/>. </summary>
         /// <param name="query"> Azure Resource Graph query which represents the security solution's user defined resources. Required to start with "where type != "Microsoft.Devices/IotHubs"". </param>
         /// <param name="querySubscriptions"> List of Azure subscription ids on which the user defined resources query should be executed. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="query"/> or <paramref name="querySubscriptions"/> is null. </exception>
         public UserDefinedResourcesProperties(string query, IEnumerable<string> querySubscriptions)
         {
-            Argument.AssertNotNull(query, nameof(query));
-            Argument.AssertNotNull(querySubscriptions, nameof(querySubscriptions));
-
             Query = query;
-            QuerySubscriptions = querySubscriptions.ToList();
+            QuerySubscriptions = querySubscriptions?.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="UserDefinedResourcesProperties"/>. </summary>

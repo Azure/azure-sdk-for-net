@@ -40,7 +40,13 @@ namespace Azure.ResourceManager.DataFactory.Mocking
 
         private ClientDiagnostics FactoriesClientDiagnostics => _factoriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataFactory.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Factories FactoriesRestClient => _factoriesRestClient ??= new Factories(FactoriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2018-06-01");
+        private Factories FactoriesRestClient => _factoriesRestClient ??= new Factories(
+            FactoriesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2018-06-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics ExposureControlClientDiagnostics => _exposureControlClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataFactory.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -71,7 +77,7 @@ namespace Azure.ResourceManager.DataFactory.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataFactoryData, DataFactoryResource>(new FactoriesGetAllAsyncCollectionResultOfT(FactoriesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataFactorySubscriptionResource.GetDataFactories"), data => new DataFactoryResource(Client, data));
+            return new AsyncPageableWrapper<DataFactoryData, DataFactoryResource>(new DataFactoryDataAsync0CollectionResultOfT(FactoriesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataFactorySubscriptionResource.GetDataFactories"), data => new DataFactoryResource(Client, data));
         }
 
         /// <summary>
@@ -99,7 +105,7 @@ namespace Azure.ResourceManager.DataFactory.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataFactoryData, DataFactoryResource>(new FactoriesGetAllCollectionResultOfT(FactoriesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataFactorySubscriptionResource.GetDataFactories"), data => new DataFactoryResource(Client, data));
+            return new PageableWrapper<DataFactoryData, DataFactoryResource>(new DataFactoryData0CollectionResultOfT(FactoriesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataFactorySubscriptionResource.GetDataFactories"), data => new DataFactoryResource(Client, data));
         }
 
         /// <summary>

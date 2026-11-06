@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> SqlVm. </summary>
         private const string SqlVmValue = "SqlVm";
         /// <summary> SqlDb. </summary>
-        private const string SqlDbValue = "SqlDb";
+        private const string SqlDBValue = "SqlDb";
         /// <summary> MongoToCosmosDbMongo. </summary>
-        private const string MongoToCosmosDbMongoValue = "MongoToCosmosDbMongo";
+        private const string MongoToCosmosDBMongoValue = "MongoToCosmosDbMongo";
         /// <summary> DatabaseMigrationProperties. </summary>
         private const string DatabaseMigrationPropertiesValue = "DatabaseMigrationProperties";
 
@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static ResourceType SqlVm { get; } = new ResourceType(SqlVmValue);
 
         /// <summary> SqlDb. </summary>
-        public static ResourceType SqlDb { get; } = new ResourceType(SqlDbValue);
+        public static ResourceType SqlDB { get; } = new ResourceType(SqlDBValue);
 
         /// <summary> MongoToCosmosDbMongo. </summary>
-        public static ResourceType MongoToCosmosDbMongo { get; } = new ResourceType(MongoToCosmosDbMongoValue);
+        public static ResourceType MongoToCosmosDBMongo { get; } = new ResourceType(MongoToCosmosDBMongoValue);
 
         /// <summary> DatabaseMigrationProperties. </summary>
         public static ResourceType DatabaseMigrationProperties { get; } = new ResourceType(DatabaseMigrationPropertiesValue);

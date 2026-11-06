@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
         {
             get
             {
-                return Properties is null ? default : Properties.OperationMode;
+                return Properties is null ? (DatabaseExtensionOperationMode?)default : Properties.OperationMode;
             }
             set
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Sql.Models
         {
             get
             {
-                return Properties is null ? default : Properties.StorageKeyType;
+                return Properties is null ? (StorageKeyType?)default : Properties.StorageKeyType;
             }
             set
             {

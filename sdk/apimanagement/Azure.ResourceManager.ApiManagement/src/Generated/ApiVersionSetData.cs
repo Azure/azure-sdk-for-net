@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             get
             {
-                return Properties is null ? default : Properties.VersioningScheme;
+                return Properties is null ? (VersioningScheme?)default : Properties.VersioningScheme;
             }
             set
             {

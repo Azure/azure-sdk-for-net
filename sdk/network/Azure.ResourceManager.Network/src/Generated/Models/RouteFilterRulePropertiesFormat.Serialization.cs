@@ -187,10 +187,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RouteFilterRulePropertiesFormat(access, routeFilterRuleType, communities, provisioningState, additionalBinaryDataProperties);
+            return new RouteFilterRulePropertiesFormat(access, routeFilterRuleType, communities ?? new ChangeTrackingList<string>(), provisioningState, additionalBinaryDataProperties);
         }
     }
 }

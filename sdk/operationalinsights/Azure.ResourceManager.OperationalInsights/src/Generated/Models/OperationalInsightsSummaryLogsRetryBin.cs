@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         {
             get
             {
-                return Properties is null ? default : Properties.RetryBinStartsOn;
+                return Properties is null ? (DateTimeOffset?)default : Properties.RetryBinStartsOn;
             }
             set
             {

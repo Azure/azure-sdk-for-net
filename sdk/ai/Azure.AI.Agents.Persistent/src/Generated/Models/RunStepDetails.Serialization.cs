@@ -13,7 +13,7 @@ namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
     /// An abstract representation of the details for a run step.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RunStepMessageCreationDetails"/>, <see cref="RunStepToolCallDetails"/>, and <see cref="RunStepActivityDetails"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RunStepActivityDetails"/>, <see cref="RunStepMessageCreationDetails"/>, and <see cref="RunStepToolCallDetails"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownRunStepDetails))]
     public abstract partial class RunStepDetails : IJsonModel<RunStepDetails>
@@ -124,12 +124,12 @@ namespace Azure.AI.Agents.Persistent
             {
                 switch (discriminator.GetString())
                 {
+                    case "activities":
+                        return RunStepActivityDetails.DeserializeRunStepActivityDetails(element, options);
                     case "message_creation":
                         return RunStepMessageCreationDetails.DeserializeRunStepMessageCreationDetails(element, options);
                     case "tool_calls":
                         return RunStepToolCallDetails.DeserializeRunStepToolCallDetails(element, options);
-                    case "activities":
-                        return RunStepActivityDetails.DeserializeRunStepActivityDetails(element, options);
                 }
             }
             return UnknownRunStepDetails.DeserializeUnknownRunStepDetails(element, options);

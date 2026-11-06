@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     priority,
                     lastUpdateOn,
                     hirStage,
-                    new ResourceHealthEventAdditionalInformation(additionalInformationMessage, default),
+                    additionalInformationMessage is null ? default : new ResourceHealthEventAdditionalInformation(additionalInformationMessage, default),
                     duration,
                     impactType,
                     (eventTags ?? new ChangeTrackingList<string>()).ToList(),

@@ -105,10 +105,15 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("requestMessage"u8);
                 writer.WriteStringValue(RequestMessage);
             }
-            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
+            if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(PrivateLinkServiceConnectionState, options);
+                writer.WriteObjectValue(ConnectionState, options);
+            }
+            if (Optional.IsDefined(ApprovalReference))
+            {
+                writer.WritePropertyName("approvalReference"u8);
+                writer.WriteObjectValue(ApprovalReference, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -156,7 +161,8 @@ namespace Azure.ResourceManager.Network.Models
             ResourceIdentifier privateLinkServiceId = default;
             IList<string> groupIds = default;
             string requestMessage = default;
-            NetworkPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            NetworkPrivateLinkServiceConnectionState connectionState = default;
+            ApprovalReference approvalReference = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -210,12 +216,21 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    privateLinkServiceConnectionState = NetworkPrivateLinkServiceConnectionState.DeserializeNetworkPrivateLinkServiceConnectionState(prop.Value, options);
+                    connectionState = NetworkPrivateLinkServiceConnectionState.DeserializeNetworkPrivateLinkServiceConnectionState(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("approvalReference"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    approvalReference = ApprovalReference.DeserializeApprovalReference(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new PrivateLinkServiceConnectionProperties(
@@ -223,7 +238,8 @@ namespace Azure.ResourceManager.Network.Models
                 privateLinkServiceId,
                 groupIds ?? new ChangeTrackingList<string>(),
                 requestMessage,
-                privateLinkServiceConnectionState,
+                connectionState,
+                approvalReference,
                 additionalBinaryDataProperties);
         }
     }

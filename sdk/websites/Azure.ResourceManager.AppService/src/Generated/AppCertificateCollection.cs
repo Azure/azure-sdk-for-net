@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AppCertificateCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(AppCertificateResource.ResourceType, out string appCertificateApiVersion);
             _certificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", AppCertificateResource.ResourceType.Namespace, Diagnostics);
-            _certificatesRestClient = new Certificates(_certificatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appCertificateApiVersion ?? "2026-03-15");
+            _certificatesRestClient = new Certificates(_certificatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Web/certificates", out string certificatesApiVersionOverride) ? certificatesApiVersionOverride : "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -288,7 +287,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppCertificateData, AppCertificateResource>(new CertificatesGetByResourceGroupAsyncCollectionResultOfT(_certificatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AppCertificateCollection.GetAll"), data => new AppCertificateResource(Client, data));
+            return new AsyncPageableWrapper<AppCertificateData, AppCertificateResource>(new AppCertificateDataAsync0CollectionResultOfT(_certificatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AppCertificateCollection.GetAll"), data => new AppCertificateResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +315,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppCertificateData, AppCertificateResource>(new CertificatesGetByResourceGroupCollectionResultOfT(_certificatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AppCertificateCollection.GetAll"), data => new AppCertificateResource(Client, data));
+            return new PageableWrapper<AppCertificateData, AppCertificateResource>(new AppCertificateData0CollectionResultOfT(_certificatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AppCertificateCollection.GetAll"), data => new AppCertificateResource(Client, data));
         }
 
         /// <summary>

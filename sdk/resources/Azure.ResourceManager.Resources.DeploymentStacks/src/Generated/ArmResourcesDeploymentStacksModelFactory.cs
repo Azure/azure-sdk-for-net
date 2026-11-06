@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
                     externalInputs ?? new ChangeTrackingDictionary<string, DeploymentExternalInput>(),
                     externalInputDefinitions ?? new ChangeTrackingDictionary<string, DeploymentExternalInputDefinition>(),
                     actionOnUnmanage,
-                    new DeploymentStacksDebugSetting(debugSettingDetailLevel, default),
+                    debugSettingDetailLevel is null ? default : new DeploymentStacksDebugSetting(debugSettingDetailLevel, default),
                     deploymentScope,
                     description,
                     denySettings,
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
         /// <param name="configAdditionalProperties"></param>
         /// <returns> A new <see cref="Models.DeploymentExtension"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DeploymentExtension DeploymentExtension(string name = default, string version = default, string configId = default, IDictionary<string, BinaryData> configAdditionalProperties = default)
+        public static DeploymentExtension DeploymentExtension(string name, string version, string configId, IDictionary<string, BinaryData> configAdditionalProperties)
         {
             return new DeploymentExtension(name, version, configId, configAdditionalProperties is null ? default : new DeploymentExtensionConfig(configAdditionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>()), default);
         }
@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
         /// <param name="properties"> The validation result details. </param>
         /// <returns> A new <see cref="Models.DeploymentStackValidateResult"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DeploymentStackValidateResult DeploymentStackValidateResult(ResourceIdentifier id = default, ResourceType resourceType = default, string name = default, SystemData systemData = default, ResponseError error = default, DeploymentStackValidateProperties properties = default)
+        public static DeploymentStackValidateResult DeploymentStackValidateResult(ResourceIdentifier id, ResourceType resourceType, string name, SystemData systemData, ResponseError error, DeploymentStackValidateProperties properties)
         {
             return new DeploymentStackValidateResult(
                 id,

@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingEnrollmentAccountData, BillingDepartmentEnrollmentAccountResource>(new EnrollmentAccountsGetByDepartmentAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BillingEnrollmentAccountData, BillingDepartmentEnrollmentAccountResource>(new BillingEnrollmentAccountDataAsyncCollectionResultOfT(
                 _enrollmentAccountsRestClient,
                 Id.Parent.Name,
                 Id.Name,
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingEnrollmentAccountData, BillingDepartmentEnrollmentAccountResource>(new EnrollmentAccountsGetByDepartmentCollectionResultOfT(
+            return new PageableWrapper<BillingEnrollmentAccountData, BillingDepartmentEnrollmentAccountResource>(new BillingEnrollmentAccountDataCollectionResultOfT(
                 _enrollmentAccountsRestClient,
                 Id.Parent.Name,
                 Id.Name,
