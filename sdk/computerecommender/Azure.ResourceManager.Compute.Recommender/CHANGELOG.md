@@ -4,11 +4,20 @@
 
 ### Features Added
 
+- Upgraded API version to `2026-10-05-preview`.
+- Added regular compute placement scoring through `GetComputePlacementScores`.
+- Added `ComputeRecommenderPlacementScore.PlacementPreference`.
+
 ### Breaking Changes
 
-### Bugs Fixed
+- Renamed `ComputeRecommenderDiagnosticData` and `ComputeRecommenderDiagnosticResource` to `ComputeRecommenderPlacementScoresData` and `ComputeRecommenderPlacementScoresResource`. The corresponding model factory, extension, and mocking methods now use the `PlacementScores` names.
+- Renamed `ComputeRecommenderDiagnosticSupportedResourceTypes` to `ComputeRecommenderPlacementScoresSupportedResourceTypes`.
+- Removed `ComputeRecommenderPlacementScore.IsQuotaAvailable`.
+- Replaced the `ArmComputeRecommenderModelFactory.ComputeRecommenderPlacementScore` overload accepting `bool? isQuotaAvailable` with an overload accepting `int? placementPreference`.
 
 ### Other Changes
+
+- Upgraded Azure.Core from 1.62.0 to 1.64.0.
 
 ## 1.1.0-beta.2 (2026-09-02)
 
