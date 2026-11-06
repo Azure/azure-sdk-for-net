@@ -68,7 +68,7 @@ Renaming method should follow the rules:
 
 **It is needed if ambiguous call exists**
 
-This situation happens when your protocol method and convenience method have the same required paramater list. E.g.,
+This situation happens when your protocol method and convenience method have the same required parameter list. E.g.,
 ```C#
 // protocol method
 public virtual async Task<Response> GetMetricFeedbackAsync(string feedId, RequestContext context = null);

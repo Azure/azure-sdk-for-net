@@ -23,7 +23,7 @@ You can refer to the [tsp-location.yaml](https://github.com/Azure/azure-sdk-tool
 ### Generate Code
 
 Enter `src` sub-directory of sdk project folder, e.g. /home/azure-sdk-for-net/sdk/anomalyDetector/Azure.AI.AnomalyDetector/src
-Run `dotnet build /t:GenerateCode`, and the code will be generated under `sdk\<servie name>\<package name>\src\Generated`
+Run `dotnet build /t:GenerateCode`, and the code will be generated under `sdk\<service name>\<package name>\src\Generated`
 
 ```dotnetcli
 dotnet build /t:GenerateCode
@@ -60,5 +60,5 @@ dotnet build /t:GenerateCode /p:TypespecAdditionalOptions="debug=true;new-projec
 Now that you have generated your SDK, you can release it by following the following steps:
 
 1. Create a [release plan](https://aka.ms/azsdkdocs/release-plans). It will provide you with a workflow of tasks that you
-will need to accomplish to release an SDK. For example, all the neccessary approvals, guidance on testing, release pipeline, and more.
+will need to accomplish to release an SDK. For example, all the necessary approvals, guidance on testing, release pipeline, and more.
 2. [Enhance the SDK](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/DataPlaneCodeGeneration/Azure_SDK_Package_Ship_Requirements.md).
