@@ -144,6 +144,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
+        /// <summary> Administrative state of the resource. </summary>
+        public NetworkFabricAdministrativeState? AdministrativeState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdministrativeState;
+            }
+        }
+
         /// <summary> Details status of the last operation performed on the resource. </summary>
         public string LastOperationDetails
         {

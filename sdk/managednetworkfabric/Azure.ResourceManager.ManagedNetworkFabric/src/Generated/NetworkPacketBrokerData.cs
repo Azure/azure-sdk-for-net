@@ -122,6 +122,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
+        /// <summary> ARM resource ID of the source Network Tap Rule. </summary>
+        public ResourceIdentifier SourceNetworkTapRuleId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SourceNetworkTapRuleId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkPacketBrokerProperties();
+                }
+                Properties.SourceNetworkTapRuleId = value;
+            }
+        }
+
         /// <summary> Provisioning state of the resource. </summary>
         public NetworkFabricProvisioningState? ProvisioningState
         {

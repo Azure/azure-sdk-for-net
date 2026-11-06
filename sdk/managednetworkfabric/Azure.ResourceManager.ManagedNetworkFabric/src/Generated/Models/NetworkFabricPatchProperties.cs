@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private SecretArchivePatchSettings _secretArchiveSettings;
+        private bool _secretArchiveSettingsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricPatchProperties"/>. </summary>
         public NetworkFabricPatchProperties()
@@ -24,6 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             ControlPlaneAcls = new ChangeTrackingList<ResourceIdentifier>();
             TrustedIPPrefixes = new ChangeTrackingList<ResourceIdentifier>();
             FeatureFlags = new ChangeTrackingList<NetworkFabricFeatureFlag>();
+            UpgradeProfile = new ChangeTrackingList<UpgradeProfilePropertiesPatchProperties>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricPatchProperties"/>. </summary>
@@ -43,8 +46,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="qosConfiguration"> NetworkFabric QoS Configuration. </param>
         /// <param name="featureFlags"> NetworkFabric feature flag configuration information. </param>
         /// <param name="authorizedTransceiver"> Authorized transciever configuration for NetworkFabric. </param>
+        /// <param name="secretArchiveSettings"> The settings for a customer secret archive that may be used to hold copies of credentials for the Network Fabric. </param>
+        /// <param name="upgradeProfile"> The upgrade profile to be used by devices in the network fabric during device operations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricPatchProperties(string annotation, int? rackCount, int? serverCountPerRack, string ipv4Prefix, string ipv6Prefix, long? fabricAsn, NetworkFabricTerminalServerPatchConfiguration terminalServerSettings, ManagementNetworkConfigurationPatchableProperties managementNetworkConfiguration, StorageAccountPatchConfiguration storageAccountConfiguration, int? hardwareAlertThreshold, IList<ResourceIdentifier> controlPlaneAcls, IList<ResourceIdentifier> trustedIPPrefixes, UniqueRouteDistinguisherPatchProperties uniqueRdConfiguration, QosPatchProperties qosConfiguration, IList<NetworkFabricFeatureFlag> featureFlags, AuthorizedTransceiverPatchProperties authorizedTransceiver, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkFabricPatchProperties(string annotation, int? rackCount, int? serverCountPerRack, string ipv4Prefix, string ipv6Prefix, long? fabricAsn, NetworkFabricTerminalServerPatchConfiguration terminalServerSettings, ManagementNetworkConfigurationPatchableProperties managementNetworkConfiguration, StorageAccountPatchConfiguration storageAccountConfiguration, int? hardwareAlertThreshold, IList<ResourceIdentifier> controlPlaneAcls, IList<ResourceIdentifier> trustedIPPrefixes, UniqueRouteDistinguisherPatchProperties uniqueRdConfiguration, QosPatchProperties qosConfiguration, IList<NetworkFabricFeatureFlag> featureFlags, AuthorizedTransceiverPatchProperties authorizedTransceiver, SecretArchivePatchSettings secretArchiveSettings, IList<UpgradeProfilePropertiesPatchProperties> upgradeProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Annotation = annotation;
             RackCount = rackCount;
@@ -62,6 +67,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             QosConfiguration = qosConfiguration;
             FeatureFlags = featureFlags;
             AuthorizedTransceiver = authorizedTransceiver;
+            _secretArchiveSettings = secretArchiveSettings;
+            UpgradeProfile = upgradeProfile;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -112,6 +119,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Authorized transciever configuration for NetworkFabric. </summary>
         public AuthorizedTransceiverPatchProperties AuthorizedTransceiver { get; set; }
+
+        /// <summary> The settings for a customer secret archive that may be used to hold copies of credentials for the Network Fabric. </summary>
+        public SecretArchivePatchSettings SecretArchiveSettings
+        {
+            get
+            {
+                return _secretArchiveSettings;
+            }
+            set
+            {
+                _secretArchiveSettings = value;
+                _secretArchiveSettingsIsDefined = true;
+            }
+        }
+
+        /// <summary> The upgrade profile to be used by devices in the network fabric during device operations. </summary>
+        public IList<UpgradeProfilePropertiesPatchProperties> UpgradeProfile { get; } = new ChangeTrackingList<UpgradeProfilePropertiesPatchProperties>();
 
         /// <summary> QoS configuration state. Default is Disabled. </summary>
         public NetworkFabricQosConfigurationState? QosConfigurationState

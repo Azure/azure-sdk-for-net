@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         internal NetworkFabricInternetGatewayResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _internetGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", ResourceType.Namespace, Diagnostics);
-            _internetGatewaysRestClient = new InternetGateways(_internetGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/internetGateways", out string internetGatewaysApiVersionOverride) ? internetGatewaysApiVersionOverride : "2025-07-15");
+            _internetGatewaysRestClient = new InternetGateways(_internetGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/internetGateways", out string internetGatewaysApiVersionOverride) ? internetGatewaysApiVersionOverride : "2026-01-15-preview");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
