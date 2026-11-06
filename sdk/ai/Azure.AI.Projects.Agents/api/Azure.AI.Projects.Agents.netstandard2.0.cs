@@ -3303,6 +3303,8 @@ namespace Azure.AI.Projects.Agents
     public abstract partial class LiveDecisionInputItemParam : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.LiveDecisionInputItemParam>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveDecisionInputItemParam>
     {
         internal LiveDecisionInputItemParam() { }
+        [System.Text.Json.Serialization.JsonIgnoreAttribute]
+        public ref System.ClientModel.Primitives.JsonPatch Patch { get { throw null; } }
         protected virtual Azure.AI.Projects.Agents.LiveDecisionInputItemParam JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.AI.Projects.Agents.LiveDecisionInputItemParam PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3563,6 +3565,8 @@ namespace Azure.AI.Projects.Agents
     public abstract partial class LiveDecisionStoredInputItemParam : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.LiveDecisionStoredInputItemParam>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveDecisionStoredInputItemParam>
     {
         internal LiveDecisionStoredInputItemParam() { }
+        [System.Text.Json.Serialization.JsonIgnoreAttribute]
+        public ref System.ClientModel.Primitives.JsonPatch Patch { get { throw null; } }
         protected virtual Azure.AI.Projects.Agents.LiveDecisionStoredInputItemParam JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.AI.Projects.Agents.LiveDecisionStoredInputItemParam PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

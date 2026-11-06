@@ -4,7 +4,7 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
@@ -26,7 +26,7 @@ namespace Azure.AI.Projects.Agents
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeLiveDecisionInputItemParam(document.RootElement, options);
+                        return DeserializeLiveDecisionInputItemParam(document.RootElement, data, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(LiveDecisionInputItemParam)} does not support reading '{options.Format}' format.");
@@ -60,6 +60,14 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LiveDecisionInputItemParam>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+            if (Patch.Contains("$"u8))
+            {
+                writer.WriteRawValue(Patch.GetJson("$"u8));
+                return;
+            }
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
@@ -75,6 +83,10 @@ namespace Azure.AI.Projects.Agents
                 throw new FormatException($"The model {nameof(LiveDecisionInputItemParam)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+
+            Patch.WriteTo(writer);
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -91,7 +103,7 @@ namespace Azure.AI.Projects.Agents
                 throw new FormatException($"The model {nameof(LiveDecisionInputItemParam)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLiveDecisionInputItemParam(document.RootElement, options);
+            return DeserializeLiveDecisionInputItemParam(document.RootElement, null, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
@@ -103,7 +115,7 @@ namespace Azure.AI.Projects.Agents
                 return null;
             }
             LiveDecisionInputItemParamType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            JsonPatch patch = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -111,12 +123,9 @@ namespace Azure.AI.Projects.Agents
                     @type = new LiveDecisionInputItemParamType(prop.Value.GetString());
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
-                }
+                patch.Set([.. "$."u8, .. Encoding.UTF8.GetBytes(prop.Name)], prop.Value.GetUtf8Bytes());
             }
-            return new UnknownLiveDecisionInputItemParam(@type, additionalBinaryDataProperties);
+            return new UnknownLiveDecisionInputItemParam(@type, patch);
         }
     }
 }
