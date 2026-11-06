@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
     public static partial class ArmMongoClusterModelFactory
     {
 
-        /// <summary> Represents a mongo cluster resource. </summary>
+        /// <summary> Represents a DocumentDB cluster resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -46,28 +46,28 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 default);
         }
 
-        /// <param name="createMode"> The mode to create a mongo cluster. </param>
-        /// <param name="restoreParameters"> The parameters to create a point-in-time restore mongo cluster. </param>
-        /// <param name="replicaParameters"> The parameters to create a replica mongo cluster. </param>
-        /// <param name="administrator"> The local administrator properties for the mongo cluster. </param>
+        /// <param name="createMode"> The mode to create a DocumentDB cluster. </param>
+        /// <param name="restoreParameters"> The parameters to create a point-in-time restore DocumentDB cluster. </param>
+        /// <param name="replicaParameters"> The parameters to create a replica DocumentDB cluster. </param>
+        /// <param name="administrator"> The local administrator properties for the DocumentDB cluster. </param>
         /// <param name="serverVersion"> The Mongo DB server version. Defaults to the latest available version if not specified. </param>
         /// <param name="connectionString"> The default mongo connection string for the cluster. </param>
-        /// <param name="provisioningState"> The provisioning state of the mongo cluster. </param>
-        /// <param name="clusterStatus"> The status of the mongo cluster. </param>
-        /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this mongo cluster. </param>
+        /// <param name="provisioningState"> The provisioning state of the DocumentDB cluster. </param>
+        /// <param name="clusterStatus"> The status of the DocumentDB cluster. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this DocumentDB cluster. </param>
         /// <param name="highAvailabilityTargetMode"> The target high availability mode requested for the cluster. </param>
-        /// <param name="storage"> The storage properties of the mongo cluster. </param>
+        /// <param name="storage"> The storage properties of the DocumentDB cluster. </param>
         /// <param name="shardingShardCount"> Number of shards to provision on the cluster. </param>
         /// <param name="computeTier"> The compute tier to assign to the cluster, where each tier maps to a virtual-core and memory size. Example values: 'M30', 'M40'. </param>
         /// <param name="backupEarliestRestoreTime"> Earliest restore timestamp in UTC ISO8601 format. </param>
         /// <param name="dataApiMode"> The mode to indicate whether the Mongo Data API is enabled for a cluster. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="previewFeatures"> List of private endpoint connections. </param>
-        /// <param name="replica"> The replication properties for the mongo cluster. </param>
+        /// <param name="replica"> The replication properties for the DocumentDB cluster. </param>
         /// <param name="infrastructureVersion"> The infrastructure version the cluster is provisioned on. </param>
         /// <param name="authConfigAllowedModes"> Allowed authentication modes for data access on the cluster. </param>
         /// <param name="customerManagedKeyEncryption"> Customer managed key encryption settings. </param>
-        /// <param name="networkBypassMode"> The network bypass mode for the cluster. Setting to 'AzureCosmosDB' allows Azure Cosmos DB service to bypass network restrictions. </param>
+        /// <param name="networkBypassMode"> The network bypass mode for the cluster. Setting to 'AzureCosmosDB' allows the Azure Cosmos DB service to bypass network restrictions. </param>
         /// <returns> A new <see cref="Models.MongoClusterProperties"/> instance for mocking. </returns>
         public static MongoClusterProperties MongoClusterProperties(MongoClusterCreateMode? createMode = default, MongoClusterRestoreContent restoreParameters = default, MongoClusterReplicaContent replicaParameters = default, MongoClusterAdministratorProperties administrator = default, string serverVersion = default, string connectionString = default, MongoClusterProvisioningState? provisioningState = default, MongoClusterStatus? clusterStatus = default, MongoClusterPublicNetworkAccess? publicNetworkAccess = default, HighAvailabilityMode? highAvailabilityTargetMode = default, MongoClusterStorageProperties storage = default, int? shardingShardCount = default, string computeTier = default, string backupEarliestRestoreTime = default, MongoClusterDataApiMode? dataApiMode = default, IEnumerable<MongoClusterPrivateEndpointConnection> privateEndpointConnections = default, IEnumerable<MongoClusterPreviewFeature> previewFeatures = default, MongoClusterReplicationProperties replica = default, string infrastructureVersion = default, IEnumerable<MongoClusterAuthenticationMode> authConfigAllowedModes = default, MongoClusterCmkEncryptionProperties customerManagedKeyEncryption = default, MongoClusterNetworkBypassMode? networkBypassMode = default)
         {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         }
 
         /// <summary> Parameters used for restore operations. </summary>
-        /// <param name="pointInTimeUTC"> UTC point in time to restore a mongo cluster. </param>
+        /// <param name="pointInTimeUTC"> UTC point in time to restore a DocumentDB cluster. </param>
         /// <param name="sourceResourceId"> Resource ID to locate the source cluster to restore. </param>
         /// <returns> A new <see cref="Models.MongoClusterRestoreContent"/> instance for mocking. </returns>
         public static MongoClusterRestoreContent MongoClusterRestoreContent(DateTimeOffset? pointInTimeUTC = default, ResourceIdentifier sourceResourceId = default)
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             return new MongoClusterPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
         }
 
-        /// <summary> Replica properties of the mongo cluster. </summary>
+        /// <summary> Replica properties of the DocumentDB cluster. </summary>
         /// <param name="sourceResourceId"> The resource id the source cluster for the replica cluster. </param>
         /// <param name="role"> The replication role of the cluster. </param>
         /// <param name="replicationState"> The replication link state of the replica cluster. </param>
@@ -217,11 +217,11 @@ namespace Azure.ResourceManager.MongoCluster.Models
             return new MongoClusterPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
-        /// <param name="administrator"> The local administrator properties for the mongo cluster. </param>
+        /// <param name="administrator"> The local administrator properties for the DocumentDB cluster. </param>
         /// <param name="serverVersion"> The Mongo DB server version. Defaults to the latest available version if not specified. </param>
-        /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this mongo cluster. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this DocumentDB cluster. </param>
         /// <param name="highAvailabilityTargetMode"> The target high availability mode requested for the cluster. </param>
-        /// <param name="storage"> The storage properties of the mongo cluster. </param>
+        /// <param name="storage"> The storage properties of the DocumentDB cluster. </param>
         /// <param name="shardingShardCount"> Number of shards to provision on the cluster. </param>
         /// <param name="computeTier"> The compute tier to assign to the cluster, where each tier maps to a virtual-core and memory size. Example values: 'M30', 'M40'. </param>
         /// <param name="backupEarliestRestoreTime"> Earliest restore timestamp in UTC ISO8601 format. </param>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <param name="previewFeatures"> List of private endpoint connections. </param>
         /// <param name="authConfigAllowedModes"> Allowed authentication modes for data access on the cluster. </param>
         /// <param name="customerManagedKeyEncryption"> Customer managed key encryption settings. </param>
-        /// <param name="networkBypassMode"> The network bypass mode for the cluster. Setting to 'AzureCosmosDB' allows Azure Cosmos DB service to bypass network restrictions. </param>
+        /// <param name="networkBypassMode"> The network bypass mode for the cluster. Setting to 'AzureCosmosDB' allows the Azure Cosmos DB service to bypass network restrictions. </param>
         /// <returns> A new <see cref="Models.MongoClusterUpdateProperties"/> instance for mocking. </returns>
         public static MongoClusterUpdateProperties MongoClusterUpdateProperties(MongoClusterAdministratorProperties administrator = default, string serverVersion = default, MongoClusterPublicNetworkAccess? publicNetworkAccess = default, HighAvailabilityMode? highAvailabilityTargetMode = default, MongoClusterStorageProperties storage = default, int? shardingShardCount = default, string computeTier = default, string backupEarliestRestoreTime = default, MongoClusterDataApiMode? dataApiMode = default, IEnumerable<MongoClusterPreviewFeature> previewFeatures = default, IEnumerable<MongoClusterAuthenticationMode> authConfigAllowedModes = default, MongoClusterCmkEncryptionProperties customerManagedKeyEncryption = default, MongoClusterNetworkBypassMode? networkBypassMode = default)
         {
@@ -252,8 +252,8 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 default);
         }
 
-        /// <summary> The connection strings for the given mongo cluster. </summary>
-        /// <param name="connectionStrings"> An array that contains the connection strings for a mongo cluster. </param>
+        /// <summary> The connection strings for the given DocumentDB cluster. </summary>
+        /// <param name="connectionStrings"> An array that contains the connection strings for a DocumentDB cluster. </param>
         /// <returns> A new <see cref="Models.MongoClusterConnectionStringsResult"/> instance for mocking. </returns>
         public static MongoClusterConnectionStringsResult MongoClusterConnectionStringsResult(IEnumerable<MongoClusterConnectionString> connectionStrings = default)
         {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             return new MongoClusterConnectionStringsResult((connectionStrings ?? new ChangeTrackingList<MongoClusterConnectionString>()).ToList(), default);
         }
 
-        /// <summary> Connection string for the mongo cluster. </summary>
+        /// <summary> Connection string for the DocumentDB cluster. </summary>
         /// <param name="uri"> Value of the connection string. </param>
         /// <param name="description"> Description of the connection string. </param>
         /// <param name="name"> Name of the connection string. </param>
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             return new PromoteReplicaContent(promoteOption, mode, default);
         }
 
-        /// <summary> Represents a mongo cluster firewall rule. </summary>
+        /// <summary> Represents a DocumentDB cluster firewall rule. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -318,10 +318,10 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 default);
         }
 
-        /// <summary> The properties of a mongo cluster firewall rule. </summary>
+        /// <summary> The properties of a DocumentDB cluster firewall rule. </summary>
         /// <param name="provisioningState"> The provisioning state of the firewall rule. </param>
-        /// <param name="startIPAddress"> The start IP address of the mongo cluster firewall rule. Must be IPv4 format. </param>
-        /// <param name="endIPAddress"> The end IP address of the mongo cluster firewall rule. Must be IPv4 format. </param>
+        /// <param name="startIPAddress"> The start IP address of the DocumentDB cluster firewall rule. Must be IPv4 format. </param>
+        /// <param name="endIPAddress"> The end IP address of the DocumentDB cluster firewall rule. Must be IPv4 format. </param>
         /// <returns> A new <see cref="Models.MongoClusterFirewallRuleProperties"/> instance for mocking. </returns>
         public static MongoClusterFirewallRuleProperties MongoClusterFirewallRuleProperties(MongoClusterProvisioningState? provisioningState = default, string startIPAddress = default, string endIPAddress = default)
         {
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             return new MongoClusterPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
-        /// <summary> Represents a mongo cluster replica. </summary>
+        /// <summary> Represents a DocumentDB cluster replica. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 default);
         }
 
-        /// <summary> Represents a Mongo cluster user. </summary>
+        /// <summary> Represents a DocumentDB cluster user. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -460,25 +460,25 @@ namespace Azure.ResourceManager.MongoCluster.Models
             return new MongoClusterDatabaseRole(db, role, default);
         }
 
-        /// <summary> The properties of a mongo cluster. </summary>
-        /// <param name="createMode"> The mode to create a mongo cluster. </param>
-        /// <param name="restoreParameters"> The parameters to create a point-in-time restore mongo cluster. </param>
-        /// <param name="replicaParameters"> The parameters to create a replica mongo cluster. </param>
-        /// <param name="administrator"> The local administrator properties for the mongo cluster. </param>
+        /// <summary> The properties of a DocumentDB cluster. </summary>
+        /// <param name="createMode"> The mode to create a DocumentDB cluster. </param>
+        /// <param name="restoreParameters"> The parameters to create a point-in-time restore DocumentDB cluster. </param>
+        /// <param name="replicaParameters"> The parameters to create a replica DocumentDB cluster. </param>
+        /// <param name="administrator"> The local administrator properties for the DocumentDB cluster. </param>
         /// <param name="serverVersion"> The Mongo DB server version. Defaults to the latest available version if not specified. </param>
         /// <param name="connectionString"> The default mongo connection string for the cluster. </param>
-        /// <param name="provisioningState"> The provisioning state of the mongo cluster. </param>
-        /// <param name="clusterStatus"> The status of the mongo cluster. </param>
-        /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this mongo cluster. </param>
+        /// <param name="provisioningState"> The provisioning state of the DocumentDB cluster. </param>
+        /// <param name="clusterStatus"> The status of the DocumentDB cluster. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this DocumentDB cluster. </param>
         /// <param name="highAvailabilityTargetMode"> The target high availability mode requested for the cluster. </param>
-        /// <param name="storage"> The storage properties of the mongo cluster. </param>
+        /// <param name="storage"> The storage properties of the DocumentDB cluster. </param>
         /// <param name="shardingShardCount"> Number of shards to provision on the cluster. </param>
         /// <param name="computeTier"> The compute tier to assign to the cluster, where each tier maps to a virtual-core and memory size. Example values: 'M30', 'M40'. </param>
         /// <param name="backupEarliestRestoreTime"> Earliest restore timestamp in UTC ISO8601 format. </param>
         /// <param name="dataApiMode"> The mode to indicate whether the Mongo Data API is enabled for a cluster. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="previewFeatures"> List of private endpoint connections. </param>
-        /// <param name="replica"> The replication properties for the mongo cluster. </param>
+        /// <param name="replica"> The replication properties for the DocumentDB cluster. </param>
         /// <param name="infrastructureVersion"> The infrastructure version the cluster is provisioned on. </param>
         /// <param name="authConfigAllowedModes"> Allowed authentication modes for data access on the cluster. </param>
         /// <param name="customerManagedKeyEncryption"> Customer managed key encryption settings. </param>

@@ -11,23 +11,23 @@ using Azure.ResourceManager.MongoCluster;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> The status of the Mongo cluster resource. </summary>
+    /// <summary> The status of the DocumentDB cluster resource. </summary>
     public readonly partial struct MongoClusterStatus : IEquatable<MongoClusterStatus>
     {
         private readonly string _value;
-        /// <summary> The mongo cluster resource is ready for use. </summary>
+        /// <summary> The DocumentDB cluster resource is ready for use. </summary>
         private const string ReadyValue = "Ready";
-        /// <summary> The mongo cluster resource is being provisioned. </summary>
+        /// <summary> The DocumentDB cluster resource is being provisioned. </summary>
         private const string ProvisioningValue = "Provisioning";
-        /// <summary> The mongo cluster resource is being updated. </summary>
+        /// <summary> The DocumentDB cluster resource is being updated. </summary>
         private const string UpdatingValue = "Updating";
-        /// <summary> The mongo cluster resource is being started. </summary>
+        /// <summary> The DocumentDB cluster resource is being started. </summary>
         private const string StartingValue = "Starting";
-        /// <summary> The mongo cluster resource is being stopped. </summary>
+        /// <summary> The DocumentDB cluster resource is being stopped. </summary>
         private const string StoppingValue = "Stopping";
-        /// <summary> The mongo cluster resource is stopped. </summary>
+        /// <summary> The DocumentDB cluster resource is stopped. </summary>
         private const string StoppedValue = "Stopped";
-        /// <summary> The mongo cluster resource is being dropped. </summary>
+        /// <summary> The DocumentDB cluster resource is being dropped. </summary>
         private const string DroppingValue = "Dropping";
 
         /// <summary> Initializes a new instance of <see cref="MongoClusterStatus"/>. </summary>
@@ -40,25 +40,25 @@ namespace Azure.ResourceManager.MongoCluster.Models
             _value = value;
         }
 
-        /// <summary> The mongo cluster resource is ready for use. </summary>
+        /// <summary> The DocumentDB cluster resource is ready for use. </summary>
         public static MongoClusterStatus Ready { get; } = new MongoClusterStatus(ReadyValue);
 
-        /// <summary> The mongo cluster resource is being provisioned. </summary>
+        /// <summary> The DocumentDB cluster resource is being provisioned. </summary>
         public static MongoClusterStatus Provisioning { get; } = new MongoClusterStatus(ProvisioningValue);
 
-        /// <summary> The mongo cluster resource is being updated. </summary>
+        /// <summary> The DocumentDB cluster resource is being updated. </summary>
         public static MongoClusterStatus Updating { get; } = new MongoClusterStatus(UpdatingValue);
 
-        /// <summary> The mongo cluster resource is being started. </summary>
+        /// <summary> The DocumentDB cluster resource is being started. </summary>
         public static MongoClusterStatus Starting { get; } = new MongoClusterStatus(StartingValue);
 
-        /// <summary> The mongo cluster resource is being stopped. </summary>
+        /// <summary> The DocumentDB cluster resource is being stopped. </summary>
         public static MongoClusterStatus Stopping { get; } = new MongoClusterStatus(StoppingValue);
 
-        /// <summary> The mongo cluster resource is stopped. </summary>
+        /// <summary> The DocumentDB cluster resource is stopped. </summary>
         public static MongoClusterStatus Stopped { get; } = new MongoClusterStatus(StoppedValue);
 
-        /// <summary> The mongo cluster resource is being dropped. </summary>
+        /// <summary> The DocumentDB cluster resource is being dropped. </summary>
         public static MongoClusterStatus Dropping { get; } = new MongoClusterStatus(DroppingValue);
 
         /// <summary> Determines if two <see cref="MongoClusterStatus"/> values are the same. </summary>

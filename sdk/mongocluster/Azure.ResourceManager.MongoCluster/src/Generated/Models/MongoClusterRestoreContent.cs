@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MongoClusterRestoreContent"/>. </summary>
-        /// <param name="pointInTimeUTC"> UTC point in time to restore a mongo cluster. </param>
+        /// <param name="pointInTimeUTC"> UTC point in time to restore a DocumentDB cluster. </param>
         /// <param name="sourceResourceId"> Resource ID to locate the source cluster to restore. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MongoClusterRestoreContent(DateTimeOffset? pointInTimeUTC, ResourceIdentifier sourceResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> UTC point in time to restore a mongo cluster. </summary>
+        /// <summary> UTC point in time to restore a DocumentDB cluster. </summary>
         public DateTimeOffset? PointInTimeUTC { get; set; }
 
         /// <summary> Resource ID to locate the source cluster to restore. </summary>

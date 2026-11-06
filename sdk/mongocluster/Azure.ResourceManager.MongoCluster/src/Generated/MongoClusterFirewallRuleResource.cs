@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <summary>
-        /// Gets information about a mongo cluster firewall rule.
+        /// Gets information about a DocumentDB cluster firewall rule.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <summary>
-        /// Gets information about a mongo cluster firewall rule.
+        /// Gets information about a DocumentDB cluster firewall rule.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <summary>
-        /// Deletes a mongo cluster firewall rule.
+        /// Deletes a DocumentDB cluster firewall rule.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <summary>
-        /// Deletes a mongo cluster firewall rule.
+        /// Deletes a DocumentDB cluster firewall rule.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

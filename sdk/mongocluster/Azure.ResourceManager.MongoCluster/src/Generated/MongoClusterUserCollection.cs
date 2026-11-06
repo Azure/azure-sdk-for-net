@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <summary>
-        /// Creates a new user or updates an existing user on a mongo cluster.
+        /// Creates a new user or updates an existing user on a DocumentDB cluster.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="userName"> The name of the mongo cluster user. </param>
+        /// <param name="userName"> The name of the DocumentDB cluster user. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userName"/> or <paramref name="data"/> is null. </exception>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <summary>
-        /// Creates a new user or updates an existing user on a mongo cluster.
+        /// Creates a new user or updates an existing user on a DocumentDB cluster.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="userName"> The name of the mongo cluster user. </param>
+        /// <param name="userName"> The name of the DocumentDB cluster user. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userName"/> or <paramref name="data"/> is null. </exception>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <summary>
-        /// Gets the defintion of a Mongo cluster user.
+        /// Gets the defintion of a DocumentDB cluster user.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="userName"> The name of the mongo cluster user. </param>
+        /// <param name="userName"> The name of the DocumentDB cluster user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <summary>
-        /// Gets the defintion of a Mongo cluster user.
+        /// Gets the defintion of a DocumentDB cluster user.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="userName"> The name of the mongo cluster user. </param>
+        /// <param name="userName"> The name of the DocumentDB cluster user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <summary>
-        /// List all the users on a mongo cluster.
+        /// List all the users on a DocumentDB cluster.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.MongoCluster
         }
 
         /// <summary>
-        /// List all the users on a mongo cluster.
+        /// List all the users on a DocumentDB cluster.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="userName"> The name of the mongo cluster user. </param>
+        /// <param name="userName"> The name of the DocumentDB cluster user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="userName"> The name of the mongo cluster user. </param>
+        /// <param name="userName"> The name of the DocumentDB cluster user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="userName"> The name of the mongo cluster user. </param>
+        /// <param name="userName"> The name of the DocumentDB cluster user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="userName"> The name of the mongo cluster user. </param>
+        /// <param name="userName"> The name of the DocumentDB cluster user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>

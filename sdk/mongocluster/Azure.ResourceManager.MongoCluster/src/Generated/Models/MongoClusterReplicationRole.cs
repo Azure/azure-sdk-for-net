@@ -11,7 +11,7 @@ using Azure.ResourceManager.MongoCluster;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> Replication role of the mongo cluster. </summary>
+    /// <summary> Replication role of the DocumentDB cluster. </summary>
     public readonly partial struct MongoClusterReplicationRole : IEquatable<MongoClusterReplicationRole>
     {
         private readonly string _value;

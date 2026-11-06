@@ -11,15 +11,15 @@ using Azure.ResourceManager.MongoCluster;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> The properties of a mongo cluster firewall rule. </summary>
+    /// <summary> The properties of a DocumentDB cluster firewall rule. </summary>
     public partial class MongoClusterFirewallRuleProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MongoClusterFirewallRuleProperties"/>. </summary>
-        /// <param name="startIPAddress"> The start IP address of the mongo cluster firewall rule. Must be IPv4 format. </param>
-        /// <param name="endIPAddress"> The end IP address of the mongo cluster firewall rule. Must be IPv4 format. </param>
+        /// <param name="startIPAddress"> The start IP address of the DocumentDB cluster firewall rule. Must be IPv4 format. </param>
+        /// <param name="endIPAddress"> The end IP address of the DocumentDB cluster firewall rule. Must be IPv4 format. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="startIPAddress"/> or <paramref name="endIPAddress"/> is null. </exception>
         public MongoClusterFirewallRuleProperties(string startIPAddress, string endIPAddress)
         {
@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.MongoCluster.Models
 
         /// <summary> Initializes a new instance of <see cref="MongoClusterFirewallRuleProperties"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the firewall rule. </param>
-        /// <param name="startIPAddress"> The start IP address of the mongo cluster firewall rule. Must be IPv4 format. </param>
-        /// <param name="endIPAddress"> The end IP address of the mongo cluster firewall rule. Must be IPv4 format. </param>
+        /// <param name="startIPAddress"> The start IP address of the DocumentDB cluster firewall rule. Must be IPv4 format. </param>
+        /// <param name="endIPAddress"> The end IP address of the DocumentDB cluster firewall rule. Must be IPv4 format. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MongoClusterFirewallRuleProperties(MongoClusterProvisioningState? provisioningState, string startIPAddress, string endIPAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <summary> The provisioning state of the firewall rule. </summary>
         public MongoClusterProvisioningState? ProvisioningState { get; }
 
-        /// <summary> The start IP address of the mongo cluster firewall rule. Must be IPv4 format. </summary>
+        /// <summary> The start IP address of the DocumentDB cluster firewall rule. Must be IPv4 format. </summary>
         public string StartIPAddress { get; set; }
 
-        /// <summary> The end IP address of the mongo cluster firewall rule. Must be IPv4 format. </summary>
+        /// <summary> The end IP address of the DocumentDB cluster firewall rule. Must be IPv4 format. </summary>
         public string EndIPAddress { get; set; }
     }
 }

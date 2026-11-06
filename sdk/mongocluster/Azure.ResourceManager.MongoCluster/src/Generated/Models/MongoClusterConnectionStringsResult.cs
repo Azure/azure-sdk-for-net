@@ -11,7 +11,7 @@ using Azure.ResourceManager.MongoCluster;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> The connection strings for the given mongo cluster. </summary>
+    /// <summary> The connection strings for the given DocumentDB cluster. </summary>
     public partial class MongoClusterConnectionStringsResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MongoClusterConnectionStringsResult"/>. </summary>
-        /// <param name="connectionStrings"> An array that contains the connection strings for a mongo cluster. </param>
+        /// <param name="connectionStrings"> An array that contains the connection strings for a DocumentDB cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MongoClusterConnectionStringsResult(IReadOnlyList<MongoClusterConnectionString> connectionStrings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> An array that contains the connection strings for a mongo cluster. </summary>
+        /// <summary> An array that contains the connection strings for a DocumentDB cluster. </summary>
         public IReadOnlyList<MongoClusterConnectionString> ConnectionStrings { get; }
     }
 }
