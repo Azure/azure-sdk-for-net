@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Search.Tests
         {
             await SetCollection();
 
-            var name = Recording.GenerateAssetName("search");
+            var name = GenerateSearchServiceName();
             var data = new SearchServiceData(DefaultLocation)
             {
                 SearchSkuName = SearchServiceSkuName.Standard,
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Search.Tests
                 ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
             };
-            var result = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data, new SearchManagementRequestOptions())).Value;
+            var result = (await CreateSearchServiceAsync(SearchCollection, name, data)).Value;
             Assert.IsNotNull(result);
             Assert.AreEqual(name, result.Data.Name);
             Assert.AreEqual(DefaultLocation, result.Data.Location);
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Search.Tests
         {
             await SetCollection();
 
-            var name = Recording.GenerateAssetName("search");
+            var name = GenerateSearchServiceName();
             var data = new SearchServiceData(DefaultLocation)
             {
                 SearchSkuName = SearchServiceSkuName.Standard,
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Search.Tests
                 ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
             };
-            var result = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data, new SearchManagementRequestOptions())).Value;
+            var result = (await CreateSearchServiceAsync(SearchCollection, name, data)).Value;
 
             result = (await SearchCollection.GetAsync(name, new SearchManagementRequestOptions())).Value;
             Assert.IsNotNull(result);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Search.Tests
         {
             await SetCollection();
 
-            var name1 = Recording.GenerateAssetName("search1");
+            var name1 = GenerateSearchServiceName("search1");
             var data1 = new SearchServiceData(DefaultLocation)
             {
                 SearchSkuName = SearchServiceSkuName.Standard,
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Search.Tests
                 HostingMode = SearchServiceHostingMode.Default
             };
 
-            var name2 = Recording.GenerateAssetName("search2");
+            var name2 = GenerateSearchServiceName("search2");
             var data2 = new SearchServiceData(DefaultLocation)
             {
                 SearchSkuName = SearchServiceSkuName.Standard,
@@ -100,22 +100,25 @@ namespace Azure.ResourceManager.Search.Tests
                 ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
             };
-            await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name1, data1, new SearchManagementRequestOptions());
-            await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name2, data2, new SearchManagementRequestOptions());
+            await CreateSearchServiceAsync(SearchCollection, name1, data1);
+            await CreateSearchServiceAsync(SearchCollection, name2, data2);
 
             List<SearchServiceResource> searchServices = await SearchCollection.GetAllAsync(new SearchManagementRequestOptions()).ToEnumerableAsync();
-            Assert.AreEqual(2, searchServices.Count);
+            Assert.AreEqual(2, TestEnvironment.ExistingResourceGroup is null
+                ? searchServices.Count
+                : searchServices.Count(service => service.Data.Name == name1 || service.Data.Name == name2));
             Assert.IsTrue(searchServices.First(x => x.Data.Name == name1).Data.SearchSkuName == SearchServiceSkuName.Standard);
             Assert.IsTrue(searchServices.First(x => x.Data.Name == name1).Data.PartitionCount == 1);
             Assert.IsTrue(searchServices.First(x => x.Data.Name == name1).Data.ReplicaCount == 1);
             Assert.IsTrue(searchServices.First(x => x.Data.Name == name1).Data.HostingMode == SearchServiceHostingMode.Default);
+            Assert.IsTrue(searchServices.First(x => x.Data.Name == name2).Data.SearchSkuName == SearchServiceSkuName.Standard);
         }
         [Test]
         public async Task ExistsAsync()
         {
             await SetCollection();
 
-            var name = Recording.GenerateAssetName("search");
+            var name = GenerateSearchServiceName();
             var data = new SearchServiceData(DefaultLocation)
             {
                 SearchSkuName = SearchServiceSkuName.Standard,
@@ -123,7 +126,7 @@ namespace Azure.ResourceManager.Search.Tests
                 ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
             };
-            await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data, new SearchManagementRequestOptions());
+            await CreateSearchServiceAsync(SearchCollection, name, data);
             var result = (await SearchCollection.ExistsAsync(name, new SearchManagementRequestOptions())).Value;
             Assert.NotNull(result);
             Assert.IsTrue(result == true);
