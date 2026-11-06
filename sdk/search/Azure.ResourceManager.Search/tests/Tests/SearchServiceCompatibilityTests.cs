@@ -10,6 +10,8 @@ using Azure.Core;
 using Azure.ResourceManager.Search.Models;
 using NUnit.Framework;
 
+#pragma warning disable CS0618 // Intentionally exercise legacy properties for backward compatibility.
+
 namespace Azure.ResourceManager.Search.Tests.Tests
 {
     [TestFixture]
@@ -17,6 +19,19 @@ namespace Azure.ResourceManager.Search.Tests.Tests
     [Property("Owner", "Azure.ResourceManager.Search")]
     public class SearchServiceCompatibilityTests
     {
+        [TestCase(typeof(SearchServiceData))]
+        [TestCase(typeof(SearchServicePatch))]
+        public void Status_ShouldWarnAndPointToServiceStatus_WhenMarkedObsolete(Type modelType)
+        {
+            ObsoleteAttribute obsolete = modelType.GetProperty("Status").GetCustomAttribute<ObsoleteAttribute>();
+
+            Assert.IsNotNull(obsolete);
+            Assert.IsFalse(obsolete.IsError);
+            Assert.AreEqual("Use ServiceStatus instead. Status returns null for stopped services and other statuses that SearchServiceStatus cannot represent.", obsolete.Message);
+            Assert.IsNull(modelType.GetProperty("ServiceStatus").GetCustomAttribute<ObsoleteAttribute>());
+            Assert.IsNull(typeof(SearchServiceStatus).GetCustomAttribute<ObsoleteAttribute>());
+        }
+
         [TestCase("running", SearchServiceStatus.Running, 0)]
         [TestCase("provisioning", SearchServiceStatus.Provisioning, 1)]
         [TestCase("deleting", SearchServiceStatus.Deleting, 2)]
@@ -212,3 +227,5 @@ namespace Azure.ResourceManager.Search.Tests.Tests
         }
     }
 }
+
+#pragma warning restore CS0618

@@ -16,6 +16,10 @@ Compared with the previous GA SDK release (`1.3.0`, API version `2025-05-01`), t
 
 - Fixed the legacy `SkuName` getters on `SearchServiceData` and `SearchServicePatch` to return `null` instead of throwing for Serverless and other SKUs the legacy enum cannot represent.
 
+### Other Changes
+
+- Marked the legacy `Status` properties on `SearchServiceData` and `SearchServicePatch` obsolete. Use `ServiceStatus` instead to read all service statuses. Accessing `Status` now produces a compiler warning.
+
 ## 1.4.0-beta.3 (2026-09-04)
 
 ### Features Added

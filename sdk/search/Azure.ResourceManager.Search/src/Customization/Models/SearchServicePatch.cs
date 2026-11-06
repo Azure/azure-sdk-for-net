@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 
@@ -47,6 +48,7 @@ namespace Azure.ResourceManager.Search.Models
         /// <summary> Gets the legacy status of the search service. Returns null when the status cannot be represented by <see cref="SearchServiceStatus"/>. Use <see cref="ServiceStatus"/> to read all service statuses. </summary>
         [WirePath("properties.status")]
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("Use ServiceStatus instead. Status returns null for stopped services and other statuses that SearchServiceStatus cannot represent.")]
         public SearchServiceStatus? Status => ServiceStatus?.ToString().ToSearchServiceStatus();
 
         /// <summary> Gets the status of the search service, including stopped services and statuses added by the service in the future. </summary>
