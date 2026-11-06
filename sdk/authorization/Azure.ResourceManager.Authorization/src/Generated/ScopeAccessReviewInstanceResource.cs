@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeAccessReviewInstancesRestClient.CreateGetByIdRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _scopeAccessReviewInstancesRestClient.CreateGetByIdRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AccessReviewInstanceData> response = Response.FromValue(AccessReviewInstanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeAccessReviewInstancesRestClient.CreateGetByIdRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _scopeAccessReviewInstancesRestClient.CreateGetByIdRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AccessReviewInstanceData> response = Response.FromValue(AccessReviewInstanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeAccessReviewInstanceRestClient.CreateApplyDecisionsRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _scopeAccessReviewInstanceRestClient.CreateApplyDecisionsRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeAccessReviewInstanceRestClient.CreateApplyDecisionsRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _scopeAccessReviewInstanceRestClient.CreateApplyDecisionsRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeAccessReviewInstanceRestClient.CreateRecordAllDecisionsRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, RecordAllDecisionsProperties.ToRequestContent(properties), context);
+                using HttpMessage message = _scopeAccessReviewInstanceRestClient.CreateRecordAllDecisionsRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, RecordAllDecisionsProperties.ToRequestContent(properties), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeAccessReviewInstanceRestClient.CreateRecordAllDecisionsRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, RecordAllDecisionsProperties.ToRequestContent(properties), context);
+                using HttpMessage message = _scopeAccessReviewInstanceRestClient.CreateRecordAllDecisionsRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, RecordAllDecisionsProperties.ToRequestContent(properties), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeAccessReviewInstanceRestClient.CreateResetDecisionsRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _scopeAccessReviewInstanceRestClient.CreateResetDecisionsRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeAccessReviewInstanceRestClient.CreateResetDecisionsRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _scopeAccessReviewInstanceRestClient.CreateResetDecisionsRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -653,7 +653,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeAccessReviewInstanceRestClient.CreateSendRemindersRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _scopeAccessReviewInstanceRestClient.CreateSendRemindersRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -696,7 +696,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeAccessReviewInstanceRestClient.CreateSendRemindersRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _scopeAccessReviewInstanceRestClient.CreateSendRemindersRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -739,7 +739,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeAccessReviewInstanceRestClient.CreateStopRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _scopeAccessReviewInstanceRestClient.CreateStopRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -782,7 +782,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeAccessReviewInstanceRestClient.CreateStopRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _scopeAccessReviewInstanceRestClient.CreateStopRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -830,7 +830,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeAccessReviewInstancesRestClient.CreateCreateRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, AccessReviewInstanceProperties.ToRequestContent(properties), context);
+                using HttpMessage message = _scopeAccessReviewInstancesRestClient.CreateCreateRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, AccessReviewInstanceProperties.ToRequestContent(properties), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AccessReviewInstanceData> response = Response.FromValue(AccessReviewInstanceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -886,7 +886,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeAccessReviewInstancesRestClient.CreateCreateRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, AccessReviewInstanceProperties.ToRequestContent(properties), context);
+                using HttpMessage message = _scopeAccessReviewInstancesRestClient.CreateCreateRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, AccessReviewInstanceProperties.ToRequestContent(properties), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AccessReviewInstanceData> response = Response.FromValue(AccessReviewInstanceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

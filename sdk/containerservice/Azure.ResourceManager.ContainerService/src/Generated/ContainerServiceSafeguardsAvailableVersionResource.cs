@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _safeguardsAvailableVersionsRestClient.CreateGetSafeguardsVersionsRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _safeguardsAvailableVersionsRestClient.CreateGetSafeguardsVersionsRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerServiceSafeguardsAvailableVersionData> response = Response.FromValue(ContainerServiceSafeguardsAvailableVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _safeguardsAvailableVersionsRestClient.CreateGetSafeguardsVersionsRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _safeguardsAvailableVersionsRestClient.CreateGetSafeguardsVersionsRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerServiceSafeguardsAvailableVersionData> response = Response.FromValue(ContainerServiceSafeguardsAvailableVersionData.FromResponse(result), result);
                 if (response.Value == null)

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverAzureADOnlyAuthenticationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authenticationName.ToString(), SqlServerAzureADOnlyAuthenticationData.ToRequestContent(data), context);
+                using HttpMessage message = _serverAzureADOnlyAuthenticationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authenticationName.ToString(), SqlServerAzureADOnlyAuthenticationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation<SqlServerAzureADOnlyAuthenticationResource> operation = new SqlArmOperation<SqlServerAzureADOnlyAuthenticationResource>(
                     new SqlServerAzureADOnlyAuthenticationResourceOperationSource(Client),
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverAzureADOnlyAuthenticationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authenticationName.ToString(), SqlServerAzureADOnlyAuthenticationData.ToRequestContent(data), context);
+                using HttpMessage message = _serverAzureADOnlyAuthenticationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authenticationName.ToString(), SqlServerAzureADOnlyAuthenticationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation<SqlServerAzureADOnlyAuthenticationResource> operation = new SqlArmOperation<SqlServerAzureADOnlyAuthenticationResource>(
                     new SqlServerAzureADOnlyAuthenticationResourceOperationSource(Client),
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverAzureADOnlyAuthenticationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authenticationName.ToString(), context);
+                using HttpMessage message = _serverAzureADOnlyAuthenticationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authenticationName.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SqlServerAzureADOnlyAuthenticationData> response = Response.FromValue(SqlServerAzureADOnlyAuthenticationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverAzureADOnlyAuthenticationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authenticationName.ToString(), context);
+                using HttpMessage message = _serverAzureADOnlyAuthenticationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authenticationName.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SqlServerAzureADOnlyAuthenticationData> response = Response.FromValue(SqlServerAzureADOnlyAuthenticationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverAzureADOnlyAuthenticationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authenticationName.ToString(), context);
+                using HttpMessage message = _serverAzureADOnlyAuthenticationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authenticationName.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SqlServerAzureADOnlyAuthenticationData> response = default;
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverAzureADOnlyAuthenticationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authenticationName.ToString(), context);
+                using HttpMessage message = _serverAzureADOnlyAuthenticationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authenticationName.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SqlServerAzureADOnlyAuthenticationData> response = default;
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverAzureADOnlyAuthenticationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authenticationName.ToString(), context);
+                using HttpMessage message = _serverAzureADOnlyAuthenticationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authenticationName.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SqlServerAzureADOnlyAuthenticationData> response = default;
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverAzureADOnlyAuthenticationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authenticationName.ToString(), context);
+                using HttpMessage message = _serverAzureADOnlyAuthenticationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authenticationName.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SqlServerAzureADOnlyAuthenticationData> response = default;

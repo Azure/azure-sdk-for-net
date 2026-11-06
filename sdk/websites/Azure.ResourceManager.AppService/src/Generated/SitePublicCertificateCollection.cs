@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publicCertificatesRestClient.CreateCreateOrUpdatePublicCertificateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, publicCertificateName, PublicCertificateData.ToRequestContent(data), context);
+                using HttpMessage message = _publicCertificatesRestClient.CreateCreateOrUpdatePublicCertificateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, publicCertificateName, PublicCertificateData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PublicCertificateData> response = Response.FromValue(PublicCertificateData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publicCertificatesRestClient.CreateCreateOrUpdatePublicCertificateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, publicCertificateName, PublicCertificateData.ToRequestContent(data), context);
+                using HttpMessage message = _publicCertificatesRestClient.CreateCreateOrUpdatePublicCertificateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, publicCertificateName, PublicCertificateData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PublicCertificateData> response = Response.FromValue(PublicCertificateData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publicCertificatesRestClient.CreateGetPublicCertificateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, publicCertificateName, context);
+                using HttpMessage message = _publicCertificatesRestClient.CreateGetPublicCertificateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, publicCertificateName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PublicCertificateData> response = Response.FromValue(PublicCertificateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publicCertificatesRestClient.CreateGetPublicCertificateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, publicCertificateName, context);
+                using HttpMessage message = _publicCertificatesRestClient.CreateGetPublicCertificateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, publicCertificateName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PublicCertificateData> response = Response.FromValue(PublicCertificateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publicCertificatesRestClient.CreateGetPublicCertificateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, publicCertificateName, context);
+                using HttpMessage message = _publicCertificatesRestClient.CreateGetPublicCertificateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, publicCertificateName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PublicCertificateData> response = default;
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publicCertificatesRestClient.CreateGetPublicCertificateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, publicCertificateName, context);
+                using HttpMessage message = _publicCertificatesRestClient.CreateGetPublicCertificateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, publicCertificateName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PublicCertificateData> response = default;
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publicCertificatesRestClient.CreateGetPublicCertificateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, publicCertificateName, context);
+                using HttpMessage message = _publicCertificatesRestClient.CreateGetPublicCertificateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, publicCertificateName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PublicCertificateData> response = default;
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publicCertificatesRestClient.CreateGetPublicCertificateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, publicCertificateName, context);
+                using HttpMessage message = _publicCertificatesRestClient.CreateGetPublicCertificateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, publicCertificateName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PublicCertificateData> response = default;

@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteUserProvidedFunctionAppARMResourceOperationGroupRestClient.CreateGetUserProvidedFunctionAppForStaticSiteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _staticSiteUserProvidedFunctionAppARMResourceOperationGroupRestClient.CreateGetUserProvidedFunctionAppForStaticSiteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<StaticSiteUserProvidedFunctionAppData> response = Response.FromValue(StaticSiteUserProvidedFunctionAppData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteUserProvidedFunctionAppARMResourceOperationGroupRestClient.CreateGetUserProvidedFunctionAppForStaticSiteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _staticSiteUserProvidedFunctionAppARMResourceOperationGroupRestClient.CreateGetUserProvidedFunctionAppForStaticSiteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<StaticSiteUserProvidedFunctionAppData> response = Response.FromValue(StaticSiteUserProvidedFunctionAppData.FromResponse(result), result);
                 if (response.Value == null)
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteUserProvidedFunctionAppARMResourceOperationGroupRestClient.CreateDetachUserProvidedFunctionAppFromStaticSiteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _staticSiteUserProvidedFunctionAppARMResourceOperationGroupRestClient.CreateDetachUserProvidedFunctionAppFromStaticSiteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteUserProvidedFunctionAppARMResourceOperationGroupRestClient.CreateDetachUserProvidedFunctionAppFromStaticSiteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _staticSiteUserProvidedFunctionAppARMResourceOperationGroupRestClient.CreateDetachUserProvidedFunctionAppFromStaticSiteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteUserProvidedFunctionAppARMResourceOperationGroupRestClient.CreateRegisterUserProvidedFunctionAppWithStaticSiteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StaticSiteUserProvidedFunctionAppData.ToRequestContent(data), isForced, context);
+                using HttpMessage message = _staticSiteUserProvidedFunctionAppARMResourceOperationGroupRestClient.CreateRegisterUserProvidedFunctionAppWithStaticSiteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StaticSiteUserProvidedFunctionAppData.ToRequestContent(data), isForced, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppServiceArmOperation<StaticSiteUserProvidedFunctionAppResource> operation = new AppServiceArmOperation<StaticSiteUserProvidedFunctionAppResource>(
                     new StaticSiteUserProvidedFunctionAppResourceOperationSource(Client),
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteUserProvidedFunctionAppARMResourceOperationGroupRestClient.CreateRegisterUserProvidedFunctionAppWithStaticSiteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StaticSiteUserProvidedFunctionAppData.ToRequestContent(data), isForced, context);
+                using HttpMessage message = _staticSiteUserProvidedFunctionAppARMResourceOperationGroupRestClient.CreateRegisterUserProvidedFunctionAppWithStaticSiteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StaticSiteUserProvidedFunctionAppData.ToRequestContent(data), isForced, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppServiceArmOperation<StaticSiteUserProvidedFunctionAppResource> operation = new AppServiceArmOperation<StaticSiteUserProvidedFunctionAppResource>(
                     new StaticSiteUserProvidedFunctionAppResourceOperationSource(Client),

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteLinkedBackendARMResourcesRestClient.CreateLinkBackendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedBackendName, StaticSiteLinkedBackendData.ToRequestContent(data), context);
+                using HttpMessage message = _staticSiteLinkedBackendARMResourcesRestClient.CreateLinkBackendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedBackendName, StaticSiteLinkedBackendData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppServiceArmOperation<StaticSiteLinkedBackendResource> operation = new AppServiceArmOperation<StaticSiteLinkedBackendResource>(
                     new StaticSiteLinkedBackendResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteLinkedBackendARMResourcesRestClient.CreateLinkBackendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedBackendName, StaticSiteLinkedBackendData.ToRequestContent(data), context);
+                using HttpMessage message = _staticSiteLinkedBackendARMResourcesRestClient.CreateLinkBackendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedBackendName, StaticSiteLinkedBackendData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppServiceArmOperation<StaticSiteLinkedBackendResource> operation = new AppServiceArmOperation<StaticSiteLinkedBackendResource>(
                     new StaticSiteLinkedBackendResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteLinkedBackendARMResourcesRestClient.CreateGetLinkedBackendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedBackendName, context);
+                using HttpMessage message = _staticSiteLinkedBackendARMResourcesRestClient.CreateGetLinkedBackendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedBackendName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<StaticSiteLinkedBackendData> response = Response.FromValue(StaticSiteLinkedBackendData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteLinkedBackendARMResourcesRestClient.CreateGetLinkedBackendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedBackendName, context);
+                using HttpMessage message = _staticSiteLinkedBackendARMResourcesRestClient.CreateGetLinkedBackendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedBackendName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<StaticSiteLinkedBackendData> response = Response.FromValue(StaticSiteLinkedBackendData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteLinkedBackendARMResourcesRestClient.CreateGetLinkedBackendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedBackendName, context);
+                using HttpMessage message = _staticSiteLinkedBackendARMResourcesRestClient.CreateGetLinkedBackendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedBackendName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<StaticSiteLinkedBackendData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteLinkedBackendARMResourcesRestClient.CreateGetLinkedBackendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedBackendName, context);
+                using HttpMessage message = _staticSiteLinkedBackendARMResourcesRestClient.CreateGetLinkedBackendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedBackendName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<StaticSiteLinkedBackendData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteLinkedBackendARMResourcesRestClient.CreateGetLinkedBackendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedBackendName, context);
+                using HttpMessage message = _staticSiteLinkedBackendARMResourcesRestClient.CreateGetLinkedBackendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedBackendName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<StaticSiteLinkedBackendData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteLinkedBackendARMResourcesRestClient.CreateGetLinkedBackendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedBackendName, context);
+                using HttpMessage message = _staticSiteLinkedBackendARMResourcesRestClient.CreateGetLinkedBackendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedBackendName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<StaticSiteLinkedBackendData> response = default;

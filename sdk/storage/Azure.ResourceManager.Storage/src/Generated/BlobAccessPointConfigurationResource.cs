@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _blobAccessPointConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _blobAccessPointConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BlobAccessPointConfigurationData> response = Response.FromValue(BlobAccessPointConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _blobAccessPointConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _blobAccessPointConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BlobAccessPointConfigurationData> response = Response.FromValue(BlobAccessPointConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _blobAccessPointConfigurationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BlobAccessPointConfigurationPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _blobAccessPointConfigurationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BlobAccessPointConfigurationPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageArmOperation<BlobAccessPointConfigurationResource> operation = new StorageArmOperation<BlobAccessPointConfigurationResource>(
                     new BlobAccessPointConfigurationResourceOperationSource(Client),
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _blobAccessPointConfigurationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BlobAccessPointConfigurationPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _blobAccessPointConfigurationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BlobAccessPointConfigurationPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageArmOperation<BlobAccessPointConfigurationResource> operation = new StorageArmOperation<BlobAccessPointConfigurationResource>(
                     new BlobAccessPointConfigurationResourceOperationSource(Client),
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _blobAccessPointConfigurationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _blobAccessPointConfigurationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageArmOperation operation = new StorageArmOperation(_blobAccessPointConfigurationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _blobAccessPointConfigurationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _blobAccessPointConfigurationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageArmOperation operation = new StorageArmOperation(_blobAccessPointConfigurationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _blobAccessPointConfigurationsRestClient.CreateTestExistingConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BlobAccessPointConnectionTestContent.ToRequestContent(content), context);
+                using HttpMessage message = _blobAccessPointConfigurationsRestClient.CreateTestExistingConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BlobAccessPointConnectionTestContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageArmOperation<BlobAccessPointConnectionTestResult> operation = new StorageArmOperation<BlobAccessPointConnectionTestResult>(
                     new BlobAccessPointConnectionTestResultOperationSource(),
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _blobAccessPointConfigurationsRestClient.CreateTestExistingConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BlobAccessPointConnectionTestContent.ToRequestContent(content), context);
+                using HttpMessage message = _blobAccessPointConfigurationsRestClient.CreateTestExistingConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BlobAccessPointConnectionTestContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageArmOperation<BlobAccessPointConnectionTestResult> operation = new StorageArmOperation<BlobAccessPointConnectionTestResult>(
                     new BlobAccessPointConnectionTestResultOperationSource(),
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _blobAccessPointConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _blobAccessPointConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<BlobAccessPointConfigurationData> response = Response.FromValue(BlobAccessPointConfigurationData.FromResponse(result), result);
                     return Response.FromValue(new BlobAccessPointConfigurationResource(Client, response.Value), response.GetRawResponse());
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _blobAccessPointConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _blobAccessPointConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<BlobAccessPointConfigurationData> response = Response.FromValue(BlobAccessPointConfigurationData.FromResponse(result), result);
                     return Response.FromValue(new BlobAccessPointConfigurationResource(Client, response.Value), response.GetRawResponse());
@@ -642,7 +642,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _blobAccessPointConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _blobAccessPointConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<BlobAccessPointConfigurationData> response = Response.FromValue(BlobAccessPointConfigurationData.FromResponse(result), result);
                     return Response.FromValue(new BlobAccessPointConfigurationResource(Client, response.Value), response.GetRawResponse());
@@ -684,7 +684,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _blobAccessPointConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _blobAccessPointConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<BlobAccessPointConfigurationData> response = Response.FromValue(BlobAccessPointConfigurationData.FromResponse(result), result);
                     return Response.FromValue(new BlobAccessPointConfigurationResource(Client, response.Value), response.GetRawResponse());
@@ -726,7 +726,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _blobAccessPointConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _blobAccessPointConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<BlobAccessPointConfigurationData> response = Response.FromValue(BlobAccessPointConfigurationData.FromResponse(result), result);
                     return Response.FromValue(new BlobAccessPointConfigurationResource(Client, response.Value), response.GetRawResponse());
@@ -772,7 +772,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _blobAccessPointConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _blobAccessPointConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<BlobAccessPointConfigurationData> response = Response.FromValue(BlobAccessPointConfigurationData.FromResponse(result), result);
                     return Response.FromValue(new BlobAccessPointConfigurationResource(Client, response.Value), response.GetRawResponse());

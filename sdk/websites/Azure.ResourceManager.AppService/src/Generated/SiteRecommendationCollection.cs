@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recommendationsRestClient.CreateGetRuleDetailsByWebAppRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, context);
+                using HttpMessage message = _recommendationsRestClient.CreateGetRuleDetailsByWebAppRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RecommendationRuleData> response = Response.FromValue(RecommendationRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recommendationsRestClient.CreateGetRuleDetailsByWebAppRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, context);
+                using HttpMessage message = _recommendationsRestClient.CreateGetRuleDetailsByWebAppRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RecommendationRuleData> response = Response.FromValue(RecommendationRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recommendationsRestClient.CreateGetRuleDetailsByWebAppRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, context);
+                using HttpMessage message = _recommendationsRestClient.CreateGetRuleDetailsByWebAppRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RecommendationRuleData> response = default;
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recommendationsRestClient.CreateGetRuleDetailsByWebAppRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, context);
+                using HttpMessage message = _recommendationsRestClient.CreateGetRuleDetailsByWebAppRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RecommendationRuleData> response = default;
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recommendationsRestClient.CreateGetRuleDetailsByWebAppRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, context);
+                using HttpMessage message = _recommendationsRestClient.CreateGetRuleDetailsByWebAppRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RecommendationRuleData> response = default;
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recommendationsRestClient.CreateGetRuleDetailsByWebAppRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, context);
+                using HttpMessage message = _recommendationsRestClient.CreateGetRuleDetailsByWebAppRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RecommendationRuleData> response = default;

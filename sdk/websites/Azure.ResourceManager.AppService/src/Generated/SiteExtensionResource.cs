@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _msDeployStatusesRestClient.CreateCreateMSDeployOperationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, WebAppMSDeploy.ToRequestContent(msDeploy), context);
+                using HttpMessage message = _msDeployStatusesRestClient.CreateCreateMSDeployOperationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, WebAppMSDeploy.ToRequestContent(msDeploy), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppServiceArmOperation<SiteExtensionResource> operation = new AppServiceArmOperation<SiteExtensionResource>(
                     new SiteExtensionResourceOperationSource(Client),
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _msDeployStatusesRestClient.CreateCreateMSDeployOperationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, WebAppMSDeploy.ToRequestContent(msDeploy), context);
+                using HttpMessage message = _msDeployStatusesRestClient.CreateCreateMSDeployOperationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, WebAppMSDeploy.ToRequestContent(msDeploy), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppServiceArmOperation<SiteExtensionResource> operation = new AppServiceArmOperation<SiteExtensionResource>(
                     new SiteExtensionResourceOperationSource(Client),
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _msDeployStatusesRestClient.CreateGetMSDeployStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _msDeployStatusesRestClient.CreateGetMSDeployStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MSDeployStatusData> response = Response.FromValue(MSDeployStatusData.FromResponse(result), result);
                 if (response.Value == null)
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _msDeployStatusesRestClient.CreateGetMSDeployStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _msDeployStatusesRestClient.CreateGetMSDeployStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MSDeployStatusData> response = Response.FromValue(MSDeployStatusData.FromResponse(result), result);
                 if (response.Value == null)
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _msDeployStatusesRestClient.CreateGetMSDeployLogRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _msDeployStatusesRestClient.CreateGetMSDeployLogRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WebAppMSDeployLog> response = Response.FromValue(WebAppMSDeployLog.FromResponse(result), result);
                 if (response.Value == null)
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _msDeployStatusesRestClient.CreateGetMSDeployLogRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _msDeployStatusesRestClient.CreateGetMSDeployLogRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WebAppMSDeployLog> response = Response.FromValue(WebAppMSDeployLog.FromResponse(result), result);
                 if (response.Value == null)

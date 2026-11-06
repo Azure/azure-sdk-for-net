@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationGatewaysRestClient.CreateGetAvailableSslOptionsRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = _applicationGatewaysRestClient.CreateGetAvailableSslOptionsRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApplicationGatewayAvailableSslOptionsInfoData> response = Response.FromValue(ApplicationGatewayAvailableSslOptionsInfoData.FromResponse(result), result);
                 if (response.Value == null)
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationGatewaysRestClient.CreateGetAvailableSslOptionsRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = _applicationGatewaysRestClient.CreateGetAvailableSslOptionsRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApplicationGatewayAvailableSslOptionsInfoData> response = Response.FromValue(ApplicationGatewayAvailableSslOptionsInfoData.FromResponse(result), result);
                 if (response.Value == null)
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationGatewaysRestClient.CreateGetSslPredefinedPolicyRequest(Guid.Parse(Id.SubscriptionId), predefinedPolicyName, context);
+                using HttpMessage message = _applicationGatewaysRestClient.CreateGetSslPredefinedPolicyRequest(Guid.Parse(Id.SubscriptionId), predefinedPolicyName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApplicationGatewaySslPredefinedPolicy> response = Response.FromValue(ApplicationGatewaySslPredefinedPolicy.FromResponse(result), result);
                 if (response.Value == null)
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationGatewaysRestClient.CreateGetSslPredefinedPolicyRequest(Guid.Parse(Id.SubscriptionId), predefinedPolicyName, context);
+                using HttpMessage message = _applicationGatewaysRestClient.CreateGetSslPredefinedPolicyRequest(Guid.Parse(Id.SubscriptionId), predefinedPolicyName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApplicationGatewaySslPredefinedPolicy> response = Response.FromValue(ApplicationGatewaySslPredefinedPolicy.FromResponse(result), result);
                 if (response.Value == null)

@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WebSiteData> response = Response.FromValue(WebSiteData.FromResponse(result), result);
                 if (response.Value == null)
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WebSiteData> response = Response.FromValue(WebSiteData.FromResponse(result), result);
                 if (response.Value == null)
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SitePatchInfo.ToRequestContent(info), context);
+                using HttpMessage message = _sitesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SitePatchInfo.ToRequestContent(info), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WebSiteData> response = Response.FromValue(WebSiteData.FromResponse(result), result);
                 if (response.Value == null)
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SitePatchInfo.ToRequestContent(info), context);
+                using HttpMessage message = _sitesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SitePatchInfo.ToRequestContent(info), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WebSiteData> response = Response.FromValue(WebSiteData.FromResponse(result), result);
                 if (response.Value == null)
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deleteMetrics, deleteEmptyServerFarm, context);
+                using HttpMessage message = _sitesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deleteMetrics, deleteEmptyServerFarm, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deleteMetrics, deleteEmptyServerFarm, context);
+                using HttpMessage message = _sitesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deleteMetrics, deleteEmptyServerFarm, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteRecommendationsRestClient.CreateDisableAllForWebAppRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _siteRecommendationsRestClient.CreateDisableAllForWebAppRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteRecommendationsRestClient.CreateDisableAllForWebAppRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _siteRecommendationsRestClient.CreateDisableAllForWebAppRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -694,7 +694,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteRecommendationsRestClient.CreateResetAllFiltersForWebAppRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _siteRecommendationsRestClient.CreateResetAllFiltersForWebAppRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -737,7 +737,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteRecommendationsRestClient.CreateResetAllFiltersForWebAppRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _siteRecommendationsRestClient.CreateResetAllFiltersForWebAppRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -781,7 +781,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateAnalyzeCustomHostnameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hostName, context);
+                using HttpMessage message = _sitesRestClient.CreateAnalyzeCustomHostnameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hostName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CustomHostnameAnalysisResult> response = Response.FromValue(CustomHostnameAnalysisResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -830,7 +830,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateAnalyzeCustomHostnameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hostName, context);
+                using HttpMessage message = _sitesRestClient.CreateAnalyzeCustomHostnameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hostName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CustomHostnameAnalysisResult> response = Response.FromValue(CustomHostnameAnalysisResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -882,7 +882,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateApplySlotConfigToProductionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CsmSlotEntity.ToRequestContent(slotSwapEntity), context);
+                using HttpMessage message = _sitesRestClient.CreateApplySlotConfigToProductionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CsmSlotEntity.ToRequestContent(slotSwapEntity), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -929,7 +929,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateApplySlotConfigToProductionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CsmSlotEntity.ToRequestContent(slotSwapEntity), context);
+                using HttpMessage message = _sitesRestClient.CreateApplySlotConfigToProductionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CsmSlotEntity.ToRequestContent(slotSwapEntity), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -976,7 +976,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WebAppBackupInfo.ToRequestContent(info), context);
+                using HttpMessage message = _sitesRestClient.CreateBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WebAppBackupInfo.ToRequestContent(info), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WebAppBackupData> response = Response.FromValue(WebAppBackupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -1028,7 +1028,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WebAppBackupInfo.ToRequestContent(info), context);
+                using HttpMessage message = _sitesRestClient.CreateBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WebAppBackupInfo.ToRequestContent(info), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WebAppBackupData> response = Response.FromValue(WebAppBackupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -1076,7 +1076,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateCreateOneDeployOperationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateCreateOneDeployOperationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BinaryData> response = Response.FromValue(result.Content, result);
                 if (response.Value == null)
@@ -1124,7 +1124,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateCreateOneDeployOperationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateCreateOneDeployOperationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BinaryData> response = Response.FromValue(result.Content, result);
                 if (response.Value == null)
@@ -1181,7 +1181,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateCreateOrUpdateHostSecretRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, keyType, keyName, WebAppKeyInfo.ToRequestContent(info), context);
+                using HttpMessage message = _sitesRestClient.CreateCreateOrUpdateHostSecretRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, keyType, keyName, WebAppKeyInfo.ToRequestContent(info), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WebAppKeyInfo> response = Response.FromValue(WebAppKeyInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -1238,7 +1238,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateCreateOrUpdateHostSecretRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, keyType, keyName, WebAppKeyInfo.ToRequestContent(info), context);
+                using HttpMessage message = _sitesRestClient.CreateCreateOrUpdateHostSecretRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, keyType, keyName, WebAppKeyInfo.ToRequestContent(info), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WebAppKeyInfo> response = Response.FromValue(WebAppKeyInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -1286,7 +1286,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateDeleteBackupConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateDeleteBackupConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -1329,7 +1329,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateDeleteBackupConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateDeleteBackupConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -1379,7 +1379,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateDeleteHostSecretRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, keyType, keyName, context);
+                using HttpMessage message = _sitesRestClient.CreateDeleteHostSecretRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, keyType, keyName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -1429,7 +1429,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateDeleteHostSecretRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, keyType, keyName, context);
+                using HttpMessage message = _sitesRestClient.CreateDeleteHostSecretRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, keyType, keyName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -1473,7 +1473,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateDeployWorkflowArtifactsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WorkflowArtifacts.ToRequestContent(workflowArtifacts), context);
+                using HttpMessage message = _sitesRestClient.CreateDeployWorkflowArtifactsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WorkflowArtifacts.ToRequestContent(workflowArtifacts), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -1517,7 +1517,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateDeployWorkflowArtifactsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WorkflowArtifacts.ToRequestContent(workflowArtifacts), context);
+                using HttpMessage message = _sitesRestClient.CreateDeployWorkflowArtifactsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WorkflowArtifacts.ToRequestContent(workflowArtifacts), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -1564,7 +1564,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateDiscoverBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RestoreRequestInfo.ToRequestContent(info), context);
+                using HttpMessage message = _sitesRestClient.CreateDiscoverBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RestoreRequestInfo.ToRequestContent(info), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RestoreRequestInfo> response = Response.FromValue(RestoreRequestInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -1616,7 +1616,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateDiscoverBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RestoreRequestInfo.ToRequestContent(info), context);
+                using HttpMessage message = _sitesRestClient.CreateDiscoverBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RestoreRequestInfo.ToRequestContent(info), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RestoreRequestInfo> response = Response.FromValue(RestoreRequestInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -1664,7 +1664,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGenerateNewSitePublishingPasswordRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateGenerateNewSitePublishingPasswordRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -1707,7 +1707,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGenerateNewSitePublishingPasswordRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateGenerateNewSitePublishingPasswordRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -1750,7 +1750,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetAuthSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateGetAuthSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SiteAuthSettings> response = Response.FromValue(SiteAuthSettings.FromResponse(result), result);
                 if (response.Value == null)
@@ -1798,7 +1798,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetAuthSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateGetAuthSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SiteAuthSettings> response = Response.FromValue(SiteAuthSettings.FromResponse(result), result);
                 if (response.Value == null)
@@ -1846,7 +1846,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetBackupConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateGetBackupConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WebAppBackupInfo> response = Response.FromValue(WebAppBackupInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -1894,7 +1894,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetBackupConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateGetBackupConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WebAppBackupInfo> response = Response.FromValue(WebAppBackupInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -1942,7 +1942,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetFunctionsAdminTokenRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateGetFunctionsAdminTokenRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<string> response = Response.FromValue(JsonDocument.Parse(result.Content, ModelSerializationExtensions.JsonDocumentOptions).RootElement.GetString(), result);
                 if (response.Value == null)
@@ -1990,7 +1990,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetFunctionsAdminTokenRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateGetFunctionsAdminTokenRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<string> response = Response.FromValue(JsonDocument.Parse(result.Content, ModelSerializationExtensions.JsonDocumentOptions).RootElement.GetString(), result);
                 if (response.Value == null)
@@ -2043,7 +2043,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetNetworkSecurityPerimeterConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterReference, context);
+                using HttpMessage message = _sitesRestClient.CreateGetNetworkSecurityPerimeterConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterReference, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceNetworkSecurityPerimeterConfiguration> response = Response.FromValue(AppServiceNetworkSecurityPerimeterConfiguration.FromResponse(result), result);
                 if (response.Value == null)
@@ -2096,7 +2096,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetNetworkSecurityPerimeterConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterReference, context);
+                using HttpMessage message = _sitesRestClient.CreateGetNetworkSecurityPerimeterConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterReference, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceNetworkSecurityPerimeterConfiguration> response = Response.FromValue(AppServiceNetworkSecurityPerimeterConfiguration.FromResponse(result), result);
                 if (response.Value == null)
@@ -2496,7 +2496,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetOneDeployStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateGetOneDeployStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BinaryData> response = Response.FromValue(result.Content, result);
                 if (response.Value == null)
@@ -2544,7 +2544,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetOneDeployStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateGetOneDeployStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BinaryData> response = Response.FromValue(result.Content, result);
                 if (response.Value == null)
@@ -2592,7 +2592,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetSitePhpErrorLogFlagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateGetSitePhpErrorLogFlagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SitePhpErrorLogFlag> response = Response.FromValue(SitePhpErrorLogFlag.FromResponse(result), result);
                 if (response.Value == null)
@@ -2640,7 +2640,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetSitePhpErrorLogFlagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateGetSitePhpErrorLogFlagRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SitePhpErrorLogFlag> response = Response.FromValue(SitePhpErrorLogFlag.FromResponse(result), result);
                 if (response.Value == null)
@@ -2688,7 +2688,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateIsCloneableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateIsCloneableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SiteCloneability> response = Response.FromValue(SiteCloneability.FromResponse(result), result);
                 if (response.Value == null)
@@ -2736,7 +2736,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateIsCloneableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateIsCloneableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SiteCloneability> response = Response.FromValue(SiteCloneability.FromResponse(result), result);
                 if (response.Value == null)
@@ -2784,7 +2784,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetApplicationSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateGetApplicationSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceConfigurationDictionary> response = Response.FromValue(AppServiceConfigurationDictionary.FromResponse(result), result);
                 if (response.Value == null)
@@ -2832,7 +2832,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetApplicationSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateGetApplicationSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceConfigurationDictionary> response = Response.FromValue(AppServiceConfigurationDictionary.FromResponse(result), result);
                 if (response.Value == null)
@@ -2880,7 +2880,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetAzureStorageAccountsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateGetAzureStorageAccountsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AzureStoragePropertyDictionary> response = Response.FromValue(AzureStoragePropertyDictionary.FromResponse(result), result);
                 if (response.Value == null)
@@ -2928,7 +2928,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetAzureStorageAccountsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateGetAzureStorageAccountsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AzureStoragePropertyDictionary> response = Response.FromValue(AzureStoragePropertyDictionary.FromResponse(result), result);
                 if (response.Value == null)
@@ -2976,7 +2976,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetConnectionStringsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateGetConnectionStringsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConnectionStringDictionary> response = Response.FromValue(ConnectionStringDictionary.FromResponse(result), result);
                 if (response.Value == null)
@@ -3024,7 +3024,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetConnectionStringsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateGetConnectionStringsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConnectionStringDictionary> response = Response.FromValue(ConnectionStringDictionary.FromResponse(result), result);
                 if (response.Value == null)
@@ -3072,7 +3072,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetHostKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateGetHostKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FunctionAppHostKeys> response = Response.FromValue(FunctionAppHostKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -3120,7 +3120,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetHostKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateGetHostKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FunctionAppHostKeys> response = Response.FromValue(FunctionAppHostKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -3168,7 +3168,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetMetadataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateGetMetadataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceConfigurationDictionary> response = Response.FromValue(AppServiceConfigurationDictionary.FromResponse(result), result);
                 if (response.Value == null)
@@ -3216,7 +3216,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetMetadataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateGetMetadataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceConfigurationDictionary> response = Response.FromValue(AppServiceConfigurationDictionary.FromResponse(result), result);
                 if (response.Value == null)
@@ -3420,7 +3420,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetAllPremierAddOnDataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateGetAllPremierAddOnDataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PremierAddOnData> response = Response.FromValue(PremierAddOnData.FromResponse(result), result);
                 if (response.Value == null)
@@ -3468,7 +3468,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetAllPremierAddOnDataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateGetAllPremierAddOnDataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PremierAddOnData> response = Response.FromValue(PremierAddOnData.FromResponse(result), result);
                 if (response.Value == null)
@@ -3517,7 +3517,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetPublishingCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateGetPublishingCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppServiceArmOperation<PublishingUserResource> operation = new AppServiceArmOperation<PublishingUserResource>(
                     new PublishingUserResourceOperationSource(Client),
@@ -3572,7 +3572,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetPublishingCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateGetPublishingCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppServiceArmOperation<PublishingUserResource> operation = new AppServiceArmOperation<PublishingUserResource>(
                     new PublishingUserResourceOperationSource(Client),
@@ -3626,7 +3626,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetAllRelayServiceConnectionDataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateGetAllRelayServiceConnectionDataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RelayServiceConnectionEntityData> response = Response.FromValue(RelayServiceConnectionEntityData.FromResponse(result), result);
                 if (response.Value == null)
@@ -3674,7 +3674,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetAllRelayServiceConnectionDataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateGetAllRelayServiceConnectionDataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RelayServiceConnectionEntityData> response = Response.FromValue(RelayServiceConnectionEntityData.FromResponse(result), result);
                 if (response.Value == null)
@@ -3798,7 +3798,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetSitePushSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateGetSitePushSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WebAppPushSettings> response = Response.FromValue(WebAppPushSettings.FromResponse(result), result);
                 if (response.Value == null)
@@ -3846,7 +3846,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetSitePushSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateGetSitePushSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WebAppPushSettings> response = Response.FromValue(WebAppPushSettings.FromResponse(result), result);
                 if (response.Value == null)
@@ -4132,7 +4132,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetSyncFunctionTriggersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateGetSyncFunctionTriggersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FunctionSecrets> response = Response.FromValue(FunctionSecrets.FromResponse(result), result);
                 if (response.Value == null)
@@ -4180,7 +4180,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetSyncFunctionTriggersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateGetSyncFunctionTriggersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FunctionSecrets> response = Response.FromValue(FunctionSecrets.FromResponse(result), result);
                 if (response.Value == null)
@@ -4228,7 +4228,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetSyncStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateGetSyncStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -4271,7 +4271,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetSyncStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateGetSyncStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -4394,7 +4394,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetWorkflowsConnectionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateGetWorkflowsConnectionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WorkflowEnvelopeData> response = Response.FromValue(WorkflowEnvelopeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -4442,7 +4442,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetWorkflowsConnectionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateGetWorkflowsConnectionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WorkflowEnvelopeData> response = Response.FromValue(WorkflowEnvelopeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -4495,7 +4495,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateMigrateMySqlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateMySqlContent.ToRequestContent(content), context);
+                using HttpMessage message = _sitesRestClient.CreateMigrateMySqlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateMySqlContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppServiceArmOperation<AppServiceOperation> operation = new AppServiceArmOperation<AppServiceOperation>(
                     new AppServiceOperationOperationSource(),
@@ -4554,7 +4554,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateMigrateMySqlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateMySqlContent.ToRequestContent(content), context);
+                using HttpMessage message = _sitesRestClient.CreateMigrateMySqlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateMySqlContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppServiceArmOperation<AppServiceOperation> operation = new AppServiceArmOperation<AppServiceOperation>(
                     new AppServiceOperationOperationSource(),
@@ -4616,7 +4616,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateMigrateStorageRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, subscriptionName, StorageMigrationContent.ToRequestContent(content), context);
+                using HttpMessage message = _sitesRestClient.CreateMigrateStorageRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, subscriptionName, StorageMigrationContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppServiceArmOperation<StorageMigrationResult> operation = new AppServiceArmOperation<StorageMigrationResult>(
                     new StorageMigrationResultOperationSource(),
@@ -4678,7 +4678,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateMigrateStorageRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, subscriptionName, StorageMigrationContent.ToRequestContent(content), context);
+                using HttpMessage message = _sitesRestClient.CreateMigrateStorageRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, subscriptionName, StorageMigrationContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppServiceArmOperation<StorageMigrationResult> operation = new AppServiceArmOperation<StorageMigrationResult>(
                     new StorageMigrationResultOperationSource(),
@@ -4732,7 +4732,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateResetProductionSlotConfigRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateResetProductionSlotConfigRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -4775,7 +4775,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateResetProductionSlotConfigRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateResetProductionSlotConfigRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -4820,7 +4820,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, softRestart, synchronous, context);
+                using HttpMessage message = _sitesRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, softRestart, synchronous, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -4865,7 +4865,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, softRestart, synchronous, context);
+                using HttpMessage message = _sitesRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, softRestart, synchronous, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -4913,7 +4913,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateRestoreFromBackupBlobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RestoreRequestInfo.ToRequestContent(info), context);
+                using HttpMessage message = _sitesRestClient.CreateRestoreFromBackupBlobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RestoreRequestInfo.ToRequestContent(info), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppServiceArmOperation operation = new AppServiceArmOperation(_sitesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -4966,7 +4966,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateRestoreFromBackupBlobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RestoreRequestInfo.ToRequestContent(info), context);
+                using HttpMessage message = _sitesRestClient.CreateRestoreFromBackupBlobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RestoreRequestInfo.ToRequestContent(info), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppServiceArmOperation operation = new AppServiceArmOperation(_sitesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -5019,7 +5019,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateRestoreFromDeletedAppRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeletedAppRestoreContent.ToRequestContent(content), context);
+                using HttpMessage message = _sitesRestClient.CreateRestoreFromDeletedAppRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeletedAppRestoreContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppServiceArmOperation operation = new AppServiceArmOperation(_sitesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -5072,7 +5072,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateRestoreFromDeletedAppRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeletedAppRestoreContent.ToRequestContent(content), context);
+                using HttpMessage message = _sitesRestClient.CreateRestoreFromDeletedAppRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeletedAppRestoreContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppServiceArmOperation operation = new AppServiceArmOperation(_sitesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -5125,7 +5125,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateRestoreSnapshotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SnapshotRestoreRequest.ToRequestContent(restoreRequest), context);
+                using HttpMessage message = _sitesRestClient.CreateRestoreSnapshotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SnapshotRestoreRequest.ToRequestContent(restoreRequest), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppServiceArmOperation operation = new AppServiceArmOperation(_sitesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -5178,7 +5178,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateRestoreSnapshotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SnapshotRestoreRequest.ToRequestContent(restoreRequest), context);
+                using HttpMessage message = _sitesRestClient.CreateRestoreSnapshotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SnapshotRestoreRequest.ToRequestContent(restoreRequest), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppServiceArmOperation operation = new AppServiceArmOperation(_sitesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -5226,7 +5226,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -5269,7 +5269,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -5316,7 +5316,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateStartNetworkTraceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl, context);
+                using HttpMessage message = _sitesRestClient.CreateStartNetworkTraceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppServiceArmOperation<IList<WebAppNetworkTrace>> operation = new AppServiceArmOperation<IList<WebAppNetworkTrace>>(
                     new IListOfWebAppNetworkTraceOperationSource(),
@@ -5374,7 +5374,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateStartNetworkTraceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl, context);
+                using HttpMessage message = _sitesRestClient.CreateStartNetworkTraceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppServiceArmOperation<IList<WebAppNetworkTrace>> operation = new AppServiceArmOperation<IList<WebAppNetworkTrace>>(
                     new IListOfWebAppNetworkTraceOperationSource(),
@@ -5431,7 +5431,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateStartWebSiteNetworkTraceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl, context);
+                using HttpMessage message = _sitesRestClient.CreateStartWebSiteNetworkTraceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<string> response = Response.FromValue(JsonDocument.Parse(result.Content, ModelSerializationExtensions.JsonDocumentOptions).RootElement.GetString(), result);
                 if (response.Value == null)
@@ -5482,7 +5482,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateStartWebSiteNetworkTraceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl, context);
+                using HttpMessage message = _sitesRestClient.CreateStartWebSiteNetworkTraceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<string> response = Response.FromValue(JsonDocument.Parse(result.Content, ModelSerializationExtensions.JsonDocumentOptions).RootElement.GetString(), result);
                 if (response.Value == null)
@@ -5534,7 +5534,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateStartWebSiteNetworkTraceOperationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl, context);
+                using HttpMessage message = _sitesRestClient.CreateStartWebSiteNetworkTraceOperationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppServiceArmOperation<IList<WebAppNetworkTrace>> operation = new AppServiceArmOperation<IList<WebAppNetworkTrace>>(
                     new IListOfWebAppNetworkTraceOperationSource(),
@@ -5592,7 +5592,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateStartWebSiteNetworkTraceOperationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl, context);
+                using HttpMessage message = _sitesRestClient.CreateStartWebSiteNetworkTraceOperationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppServiceArmOperation<IList<WebAppNetworkTrace>> operation = new AppServiceArmOperation<IList<WebAppNetworkTrace>>(
                     new IListOfWebAppNetworkTraceOperationSource(),
@@ -5646,7 +5646,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -5689,7 +5689,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -5732,7 +5732,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateStopNetworkTraceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateStopNetworkTraceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -5775,7 +5775,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateStopNetworkTraceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateStopNetworkTraceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -5818,7 +5818,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateStopWebSiteNetworkTraceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateStopWebSiteNetworkTraceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -5861,7 +5861,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateStopWebSiteNetworkTraceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateStopWebSiteNetworkTraceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -5909,7 +5909,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateSwapSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CsmSlotEntity.ToRequestContent(slotSwapEntity), context);
+                using HttpMessage message = _sitesRestClient.CreateSwapSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CsmSlotEntity.ToRequestContent(slotSwapEntity), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppServiceArmOperation operation = new AppServiceArmOperation(_sitesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -5962,7 +5962,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateSwapSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CsmSlotEntity.ToRequestContent(slotSwapEntity), context);
+                using HttpMessage message = _sitesRestClient.CreateSwapSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CsmSlotEntity.ToRequestContent(slotSwapEntity), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppServiceArmOperation operation = new AppServiceArmOperation(_sitesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -6010,7 +6010,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateSyncFunctionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateSyncFunctionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -6053,7 +6053,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateSyncFunctionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateSyncFunctionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -6096,7 +6096,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateSyncFunctionTriggersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateSyncFunctionTriggersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -6139,7 +6139,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateSyncFunctionTriggersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateSyncFunctionTriggersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -6182,7 +6182,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateSyncRepositoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateSyncRepositoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -6225,7 +6225,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateSyncRepositoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateSyncRepositoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -6272,7 +6272,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateUpdateApplicationSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AppServiceConfigurationDictionary.ToRequestContent(appSettings), context);
+                using HttpMessage message = _sitesRestClient.CreateUpdateApplicationSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AppServiceConfigurationDictionary.ToRequestContent(appSettings), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceConfigurationDictionary> response = Response.FromValue(AppServiceConfigurationDictionary.FromResponse(result), result);
                 if (response.Value == null)
@@ -6324,7 +6324,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateUpdateApplicationSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AppServiceConfigurationDictionary.ToRequestContent(appSettings), context);
+                using HttpMessage message = _sitesRestClient.CreateUpdateApplicationSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AppServiceConfigurationDictionary.ToRequestContent(appSettings), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceConfigurationDictionary> response = Response.FromValue(AppServiceConfigurationDictionary.FromResponse(result), result);
                 if (response.Value == null)
@@ -6376,7 +6376,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateUpdateAuthSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SiteAuthSettings.ToRequestContent(siteAuthSettings), context);
+                using HttpMessage message = _sitesRestClient.CreateUpdateAuthSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SiteAuthSettings.ToRequestContent(siteAuthSettings), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SiteAuthSettings> response = Response.FromValue(SiteAuthSettings.FromResponse(result), result);
                 if (response.Value == null)
@@ -6428,7 +6428,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateUpdateAuthSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SiteAuthSettings.ToRequestContent(siteAuthSettings), context);
+                using HttpMessage message = _sitesRestClient.CreateUpdateAuthSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SiteAuthSettings.ToRequestContent(siteAuthSettings), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SiteAuthSettings> response = Response.FromValue(SiteAuthSettings.FromResponse(result), result);
                 if (response.Value == null)
@@ -6480,7 +6480,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateUpdateAzureStorageAccountsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AzureStoragePropertyDictionary.ToRequestContent(azureStorageAccounts), context);
+                using HttpMessage message = _sitesRestClient.CreateUpdateAzureStorageAccountsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AzureStoragePropertyDictionary.ToRequestContent(azureStorageAccounts), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AzureStoragePropertyDictionary> response = Response.FromValue(AzureStoragePropertyDictionary.FromResponse(result), result);
                 if (response.Value == null)
@@ -6532,7 +6532,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateUpdateAzureStorageAccountsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AzureStoragePropertyDictionary.ToRequestContent(azureStorageAccounts), context);
+                using HttpMessage message = _sitesRestClient.CreateUpdateAzureStorageAccountsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AzureStoragePropertyDictionary.ToRequestContent(azureStorageAccounts), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AzureStoragePropertyDictionary> response = Response.FromValue(AzureStoragePropertyDictionary.FromResponse(result), result);
                 if (response.Value == null)
@@ -6584,7 +6584,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateUpdateBackupConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WebAppBackupInfo.ToRequestContent(info), context);
+                using HttpMessage message = _sitesRestClient.CreateUpdateBackupConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WebAppBackupInfo.ToRequestContent(info), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WebAppBackupInfo> response = Response.FromValue(WebAppBackupInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -6636,7 +6636,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateUpdateBackupConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WebAppBackupInfo.ToRequestContent(info), context);
+                using HttpMessage message = _sitesRestClient.CreateUpdateBackupConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WebAppBackupInfo.ToRequestContent(info), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WebAppBackupInfo> response = Response.FromValue(WebAppBackupInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -6688,7 +6688,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateUpdateConnectionStringsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ConnectionStringDictionary.ToRequestContent(connectionStrings), context);
+                using HttpMessage message = _sitesRestClient.CreateUpdateConnectionStringsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ConnectionStringDictionary.ToRequestContent(connectionStrings), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConnectionStringDictionary> response = Response.FromValue(ConnectionStringDictionary.FromResponse(result), result);
                 if (response.Value == null)
@@ -6740,7 +6740,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateUpdateConnectionStringsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ConnectionStringDictionary.ToRequestContent(connectionStrings), context);
+                using HttpMessage message = _sitesRestClient.CreateUpdateConnectionStringsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ConnectionStringDictionary.ToRequestContent(connectionStrings), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConnectionStringDictionary> response = Response.FromValue(ConnectionStringDictionary.FromResponse(result), result);
                 if (response.Value == null)
@@ -6788,7 +6788,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateUpdateMachineKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateUpdateMachineKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BinaryData> response = Response.FromValue(result.Content, result);
                 if (response.Value == null)
@@ -6836,7 +6836,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateUpdateMachineKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sitesRestClient.CreateUpdateMachineKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BinaryData> response = Response.FromValue(result.Content, result);
                 if (response.Value == null)
@@ -6888,7 +6888,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateUpdateMetadataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AppServiceConfigurationDictionary.ToRequestContent(metadata), context);
+                using HttpMessage message = _sitesRestClient.CreateUpdateMetadataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AppServiceConfigurationDictionary.ToRequestContent(metadata), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceConfigurationDictionary> response = Response.FromValue(AppServiceConfigurationDictionary.FromResponse(result), result);
                 if (response.Value == null)
@@ -6940,7 +6940,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateUpdateMetadataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AppServiceConfigurationDictionary.ToRequestContent(metadata), context);
+                using HttpMessage message = _sitesRestClient.CreateUpdateMetadataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AppServiceConfigurationDictionary.ToRequestContent(metadata), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceConfigurationDictionary> response = Response.FromValue(AppServiceConfigurationDictionary.FromResponse(result), result);
                 if (response.Value == null)
@@ -6992,7 +6992,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateUpdateSitePushSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WebAppPushSettings.ToRequestContent(pushSettings), context);
+                using HttpMessage message = _sitesRestClient.CreateUpdateSitePushSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WebAppPushSettings.ToRequestContent(pushSettings), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WebAppPushSettings> response = Response.FromValue(WebAppPushSettings.FromResponse(result), result);
                 if (response.Value == null)
@@ -7044,7 +7044,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateUpdateSitePushSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WebAppPushSettings.ToRequestContent(pushSettings), context);
+                using HttpMessage message = _sitesRestClient.CreateUpdateSitePushSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WebAppPushSettings.ToRequestContent(pushSettings), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WebAppPushSettings> response = Response.FromValue(WebAppPushSettings.FromResponse(result), result);
                 if (response.Value == null)
@@ -7099,7 +7099,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteWorkflowsRestClient.CreateRegenerateAccessKeyWorkflowRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workflowName, WorkflowRegenerateActionContent.ToRequestContent(content), context);
+                using HttpMessage message = _siteWorkflowsRestClient.CreateRegenerateAccessKeyWorkflowRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workflowName, WorkflowRegenerateActionContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -7149,7 +7149,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteWorkflowsRestClient.CreateRegenerateAccessKeyWorkflowRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workflowName, WorkflowRegenerateActionContent.ToRequestContent(content), context);
+                using HttpMessage message = _siteWorkflowsRestClient.CreateRegenerateAccessKeyWorkflowRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workflowName, WorkflowRegenerateActionContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -7199,7 +7199,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteWorkflowsRestClient.CreateValidateWorkflowRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workflowName, WorkflowData.ToRequestContent(data), context);
+                using HttpMessage message = _siteWorkflowsRestClient.CreateValidateWorkflowRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workflowName, WorkflowData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -7249,7 +7249,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteWorkflowsRestClient.CreateValidateWorkflowRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workflowName, WorkflowData.ToRequestContent(data), context);
+                using HttpMessage message = _siteWorkflowsRestClient.CreateValidateWorkflowRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workflowName, WorkflowData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }

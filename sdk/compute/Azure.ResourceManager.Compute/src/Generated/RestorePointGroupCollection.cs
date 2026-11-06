@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _restorePointCollectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, restorePointCollectionName, RestorePointGroupData.ToRequestContent(data), context);
+                using HttpMessage message = _restorePointCollectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, restorePointCollectionName, RestorePointGroupData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RestorePointGroupData> response = Response.FromValue(RestorePointGroupData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _restorePointCollectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, restorePointCollectionName, RestorePointGroupData.ToRequestContent(data), context);
+                using HttpMessage message = _restorePointCollectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, restorePointCollectionName, RestorePointGroupData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RestorePointGroupData> response = Response.FromValue(RestorePointGroupData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _restorePointCollectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, restorePointCollectionName, expand?.ToString(), context);
+                using HttpMessage message = _restorePointCollectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, restorePointCollectionName, expand?.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RestorePointGroupData> response = Response.FromValue(RestorePointGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _restorePointCollectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, restorePointCollectionName, expand?.ToString(), context);
+                using HttpMessage message = _restorePointCollectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, restorePointCollectionName, expand?.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RestorePointGroupData> response = Response.FromValue(RestorePointGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _restorePointCollectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, restorePointCollectionName, expand?.ToString(), context);
+                using HttpMessage message = _restorePointCollectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, restorePointCollectionName, expand?.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RestorePointGroupData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _restorePointCollectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, restorePointCollectionName, expand?.ToString(), context);
+                using HttpMessage message = _restorePointCollectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, restorePointCollectionName, expand?.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RestorePointGroupData> response = default;
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _restorePointCollectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, restorePointCollectionName, expand?.ToString(), context);
+                using HttpMessage message = _restorePointCollectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, restorePointCollectionName, expand?.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RestorePointGroupData> response = default;
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _restorePointCollectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, restorePointCollectionName, expand?.ToString(), context);
+                using HttpMessage message = _restorePointCollectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, restorePointCollectionName, expand?.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RestorePointGroupData> response = default;

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _snapshotsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, SnapshotData.ToRequestContent(data), context);
+                using HttpMessage message = _snapshotsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, SnapshotData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation<SnapshotResource> operation = new ComputeArmOperation<SnapshotResource>(
                     new SnapshotResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _snapshotsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, SnapshotData.ToRequestContent(data), context);
+                using HttpMessage message = _snapshotsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, SnapshotData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation<SnapshotResource> operation = new ComputeArmOperation<SnapshotResource>(
                     new SnapshotResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _snapshotsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, context);
+                using HttpMessage message = _snapshotsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SnapshotData> response = Response.FromValue(SnapshotData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _snapshotsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, context);
+                using HttpMessage message = _snapshotsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SnapshotData> response = Response.FromValue(SnapshotData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _snapshotsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, context);
+                using HttpMessage message = _snapshotsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SnapshotData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _snapshotsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, context);
+                using HttpMessage message = _snapshotsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SnapshotData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _snapshotsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, context);
+                using HttpMessage message = _snapshotsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SnapshotData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _snapshotsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, context);
+                using HttpMessage message = _snapshotsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SnapshotData> response = default;

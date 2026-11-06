@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _heatMapRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, topLeft, botRight, context);
+                using HttpMessage message = _heatMapRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, topLeft, botRight, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TrafficManagerHeatMapData> response = Response.FromValue(TrafficManagerHeatMapData.FromResponse(result), result);
                 if (response.Value == null)
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _heatMapRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, topLeft, botRight, context);
+                using HttpMessage message = _heatMapRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, topLeft, botRight, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TrafficManagerHeatMapData> response = Response.FromValue(TrafficManagerHeatMapData.FromResponse(result), result);
                 if (response.Value == null)

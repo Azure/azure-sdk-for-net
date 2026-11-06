@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SoftDeletedDatabaseAccountsRestClient.CreateGetByResourceGroupAndLocationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, context);
+                using HttpMessage message = SoftDeletedDatabaseAccountsRestClient.CreateGetByResourceGroupAndLocationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SoftDeletedDatabaseAccountsListResult> response = Response.FromValue(SoftDeletedDatabaseAccountsListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SoftDeletedDatabaseAccountsRestClient.CreateGetByResourceGroupAndLocationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, context);
+                using HttpMessage message = SoftDeletedDatabaseAccountsRestClient.CreateGetByResourceGroupAndLocationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SoftDeletedDatabaseAccountsListResult> response = Response.FromValue(SoftDeletedDatabaseAccountsListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -558,7 +558,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SoftDeletedDatabaseAccountsRestClient.CreateRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, accountName, softDeleteActionKind?.ToString(), context);
+                using HttpMessage message = SoftDeletedDatabaseAccountsRestClient.CreateRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, accountName, softDeleteActionKind?.ToString(), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation operation = new CosmosDBArmOperation(SoftDeletedDatabaseAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SoftDeletedDatabaseAccountsRestClient.CreateRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, accountName, softDeleteActionKind?.ToString(), context);
+                using HttpMessage message = SoftDeletedDatabaseAccountsRestClient.CreateRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, accountName, softDeleteActionKind?.ToString(), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation operation = new CosmosDBArmOperation(SoftDeletedDatabaseAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -662,7 +662,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SoftDeletedDatabaseAccountsRestClient.CreatePurgeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, accountName, softDeleteActionKind?.ToString(), context);
+                using HttpMessage message = SoftDeletedDatabaseAccountsRestClient.CreatePurgeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, accountName, softDeleteActionKind?.ToString(), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation operation = new CosmosDBArmOperation(SoftDeletedDatabaseAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -714,7 +714,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SoftDeletedDatabaseAccountsRestClient.CreatePurgeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, accountName, softDeleteActionKind?.ToString(), context);
+                using HttpMessage message = SoftDeletedDatabaseAccountsRestClient.CreatePurgeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, accountName, softDeleteActionKind?.ToString(), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation operation = new CosmosDBArmOperation(SoftDeletedDatabaseAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

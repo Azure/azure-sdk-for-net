@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.OperationalInsights
     /// <summary>
     /// A class representing a collection of <see cref="OperationalInsightsSummaryLogsResource"/> and their operations.
     /// Each <see cref="OperationalInsightsSummaryLogsResource"/> in the collection will belong to the same instance of <see cref="OperationalInsightsWorkspaceResource"/>.
-    /// To get a <see cref="OperationalInsightsSummaryLogsCollection"/> instance call the GetOperationalInsightsSummaryLogs method from an instance of <see cref="OperationalInsightsWorkspaceResource"/>.
+    /// To get a <see cref="OperationalInsightsSummaryLogsCollection"/> instance call the GetAllOperationalInsightsSummaryLogs method from an instance of <see cref="OperationalInsightsWorkspaceResource"/>.
     /// </summary>
     public partial class OperationalInsightsSummaryLogsCollection : ArmCollection, IEnumerable<OperationalInsightsSummaryLogsResource>, IAsyncEnumerable<OperationalInsightsSummaryLogsResource>
     {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _summaryLogsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, summaryLogsName, OperationalInsightsSummaryLogsData.ToRequestContent(data), context);
+                using HttpMessage message = _summaryLogsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, summaryLogsName, OperationalInsightsSummaryLogsData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OperationalInsightsArmOperation<OperationalInsightsSummaryLogsResource> operation = new OperationalInsightsArmOperation<OperationalInsightsSummaryLogsResource>(
                     new OperationalInsightsSummaryLogsResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _summaryLogsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, summaryLogsName, OperationalInsightsSummaryLogsData.ToRequestContent(data), context);
+                using HttpMessage message = _summaryLogsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, summaryLogsName, OperationalInsightsSummaryLogsData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OperationalInsightsArmOperation<OperationalInsightsSummaryLogsResource> operation = new OperationalInsightsArmOperation<OperationalInsightsSummaryLogsResource>(
                     new OperationalInsightsSummaryLogsResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _summaryLogsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, summaryLogsName, context);
+                using HttpMessage message = _summaryLogsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, summaryLogsName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OperationalInsightsSummaryLogsData> response = Response.FromValue(OperationalInsightsSummaryLogsData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _summaryLogsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, summaryLogsName, context);
+                using HttpMessage message = _summaryLogsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, summaryLogsName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OperationalInsightsSummaryLogsData> response = Response.FromValue(OperationalInsightsSummaryLogsData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _summaryLogsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, summaryLogsName, context);
+                using HttpMessage message = _summaryLogsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, summaryLogsName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<OperationalInsightsSummaryLogsData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _summaryLogsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, summaryLogsName, context);
+                using HttpMessage message = _summaryLogsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, summaryLogsName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<OperationalInsightsSummaryLogsData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _summaryLogsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, summaryLogsName, context);
+                using HttpMessage message = _summaryLogsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, summaryLogsName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<OperationalInsightsSummaryLogsData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _summaryLogsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, summaryLogsName, context);
+                using HttpMessage message = _summaryLogsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, summaryLogsName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<OperationalInsightsSummaryLogsData> response = default;

@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetNetworkInterfacesRestClient.CreateGetVirtualMachineScaleSetNetworkInterfaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _virtualMachineScaleSetName, _virtualmachineIndex, networkInterfaceName, expand, context);
+                using HttpMessage message = _virtualMachineScaleSetNetworkInterfacesRestClient.CreateGetVirtualMachineScaleSetNetworkInterfaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _virtualMachineScaleSetName, _virtualmachineIndex, networkInterfaceName, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkInterfaceData> response = Response.FromValue(NetworkInterfaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetNetworkInterfacesRestClient.CreateGetVirtualMachineScaleSetNetworkInterfaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _virtualMachineScaleSetName, _virtualmachineIndex, networkInterfaceName, expand, context);
+                using HttpMessage message = _virtualMachineScaleSetNetworkInterfacesRestClient.CreateGetVirtualMachineScaleSetNetworkInterfaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _virtualMachineScaleSetName, _virtualmachineIndex, networkInterfaceName, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkInterfaceData> response = Response.FromValue(NetworkInterfaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetNetworkInterfacesRestClient.CreateGetVirtualMachineScaleSetNetworkInterfaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _virtualMachineScaleSetName, _virtualmachineIndex, networkInterfaceName, expand, context);
+                using HttpMessage message = _virtualMachineScaleSetNetworkInterfacesRestClient.CreateGetVirtualMachineScaleSetNetworkInterfaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _virtualMachineScaleSetName, _virtualmachineIndex, networkInterfaceName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkInterfaceData> response = default;
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetNetworkInterfacesRestClient.CreateGetVirtualMachineScaleSetNetworkInterfaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _virtualMachineScaleSetName, _virtualmachineIndex, networkInterfaceName, expand, context);
+                using HttpMessage message = _virtualMachineScaleSetNetworkInterfacesRestClient.CreateGetVirtualMachineScaleSetNetworkInterfaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _virtualMachineScaleSetName, _virtualmachineIndex, networkInterfaceName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkInterfaceData> response = default;
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetNetworkInterfacesRestClient.CreateGetVirtualMachineScaleSetNetworkInterfaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _virtualMachineScaleSetName, _virtualmachineIndex, networkInterfaceName, expand, context);
+                using HttpMessage message = _virtualMachineScaleSetNetworkInterfacesRestClient.CreateGetVirtualMachineScaleSetNetworkInterfaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _virtualMachineScaleSetName, _virtualmachineIndex, networkInterfaceName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkInterfaceData> response = default;
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetNetworkInterfacesRestClient.CreateGetVirtualMachineScaleSetNetworkInterfaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _virtualMachineScaleSetName, _virtualmachineIndex, networkInterfaceName, expand, context);
+                using HttpMessage message = _virtualMachineScaleSetNetworkInterfacesRestClient.CreateGetVirtualMachineScaleSetNetworkInterfaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _virtualMachineScaleSetName, _virtualmachineIndex, networkInterfaceName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkInterfaceData> response = default;

@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _locationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _locationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CosmosDBLocationData> response = Response.FromValue(CosmosDBLocationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _locationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _locationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CosmosDBLocationData> response = Response.FromValue(CosmosDBLocationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _softDeletedDatabaseAccountsRestClient.CreateGetByLocationRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _softDeletedDatabaseAccountsRestClient.CreateGetByLocationRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SoftDeletedDatabaseAccountsListResult> response = Response.FromValue(SoftDeletedDatabaseAccountsListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _softDeletedDatabaseAccountsRestClient.CreateGetByLocationRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _softDeletedDatabaseAccountsRestClient.CreateGetByLocationRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SoftDeletedDatabaseAccountsListResult> response = Response.FromValue(SoftDeletedDatabaseAccountsListResult.FromResponse(result), result);
                 if (response.Value == null)

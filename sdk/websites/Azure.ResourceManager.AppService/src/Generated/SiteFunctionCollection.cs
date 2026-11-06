@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _functionEnvelopesRestClient.CreateCreateFunctionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, functionName, FunctionEnvelopeData.ToRequestContent(data), context);
+                using HttpMessage message = _functionEnvelopesRestClient.CreateCreateFunctionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, functionName, FunctionEnvelopeData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppServiceArmOperation<SiteFunctionResource> operation = new AppServiceArmOperation<SiteFunctionResource>(
                     new SiteFunctionResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _functionEnvelopesRestClient.CreateCreateFunctionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, functionName, FunctionEnvelopeData.ToRequestContent(data), context);
+                using HttpMessage message = _functionEnvelopesRestClient.CreateCreateFunctionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, functionName, FunctionEnvelopeData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppServiceArmOperation<SiteFunctionResource> operation = new AppServiceArmOperation<SiteFunctionResource>(
                     new SiteFunctionResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _functionEnvelopesRestClient.CreateGetFunctionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, functionName, context);
+                using HttpMessage message = _functionEnvelopesRestClient.CreateGetFunctionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, functionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FunctionEnvelopeData> response = Response.FromValue(FunctionEnvelopeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _functionEnvelopesRestClient.CreateGetFunctionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, functionName, context);
+                using HttpMessage message = _functionEnvelopesRestClient.CreateGetFunctionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, functionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FunctionEnvelopeData> response = Response.FromValue(FunctionEnvelopeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _functionEnvelopesRestClient.CreateGetFunctionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, functionName, context);
+                using HttpMessage message = _functionEnvelopesRestClient.CreateGetFunctionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, functionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<FunctionEnvelopeData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _functionEnvelopesRestClient.CreateGetFunctionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, functionName, context);
+                using HttpMessage message = _functionEnvelopesRestClient.CreateGetFunctionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, functionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<FunctionEnvelopeData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _functionEnvelopesRestClient.CreateGetFunctionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, functionName, context);
+                using HttpMessage message = _functionEnvelopesRestClient.CreateGetFunctionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, functionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<FunctionEnvelopeData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _functionEnvelopesRestClient.CreateGetFunctionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, functionName, context);
+                using HttpMessage message = _functionEnvelopesRestClient.CreateGetFunctionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, functionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<FunctionEnvelopeData> response = default;

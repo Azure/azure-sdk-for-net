@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeAccessReviewHistoryDefinitionsRestClient.CreateGetByIdRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _scopeAccessReviewHistoryDefinitionsRestClient.CreateGetByIdRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AccessReviewHistoryDefinitionData> response = Response.FromValue(AccessReviewHistoryDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeAccessReviewHistoryDefinitionsRestClient.CreateGetByIdRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _scopeAccessReviewHistoryDefinitionsRestClient.CreateGetByIdRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AccessReviewHistoryDefinitionData> response = Response.FromValue(AccessReviewHistoryDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeAccessReviewHistoryDefinitionRestClient.CreateDeleteByIdRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _scopeAccessReviewHistoryDefinitionRestClient.CreateDeleteByIdRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeAccessReviewHistoryDefinitionRestClient.CreateDeleteByIdRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _scopeAccessReviewHistoryDefinitionRestClient.CreateDeleteByIdRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeAccessReviewHistoryDefinitionInstanceRestClient.CreateGenerateDownloadUriRequest(Id.Parent.ToString(), Id.Name, instanceId, context);
+                using HttpMessage message = _scopeAccessReviewHistoryDefinitionInstanceRestClient.CreateGenerateDownloadUriRequest(Id.Parent.ToString(), Id.Name, instanceId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AccessReviewHistoryInstance> response = Response.FromValue(AccessReviewHistoryInstance.FromResponse(result), result);
                 if (response.Value == null)
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeAccessReviewHistoryDefinitionInstanceRestClient.CreateGenerateDownloadUriRequest(Id.Parent.ToString(), Id.Name, instanceId, context);
+                using HttpMessage message = _scopeAccessReviewHistoryDefinitionInstanceRestClient.CreateGenerateDownloadUriRequest(Id.Parent.ToString(), Id.Name, instanceId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AccessReviewHistoryInstance> response = Response.FromValue(AccessReviewHistoryInstance.FromResponse(result), result);
                 if (response.Value == null)
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeAccessReviewHistoryDefinitionRestClient.CreateCreateRequest(Id.Parent.ToString(), Id.Name, AccessReviewHistoryDefinitionProperties.ToRequestContent(properties), context);
+                using HttpMessage message = _scopeAccessReviewHistoryDefinitionRestClient.CreateCreateRequest(Id.Parent.ToString(), Id.Name, AccessReviewHistoryDefinitionProperties.ToRequestContent(properties), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AccessReviewHistoryDefinitionData> response = Response.FromValue(AccessReviewHistoryDefinitionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeAccessReviewHistoryDefinitionRestClient.CreateCreateRequest(Id.Parent.ToString(), Id.Name, AccessReviewHistoryDefinitionProperties.ToRequestContent(properties), context);
+                using HttpMessage message = _scopeAccessReviewHistoryDefinitionRestClient.CreateCreateRequest(Id.Parent.ToString(), Id.Name, AccessReviewHistoryDefinitionProperties.ToRequestContent(properties), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AccessReviewHistoryDefinitionData> response = Response.FromValue(AccessReviewHistoryDefinitionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

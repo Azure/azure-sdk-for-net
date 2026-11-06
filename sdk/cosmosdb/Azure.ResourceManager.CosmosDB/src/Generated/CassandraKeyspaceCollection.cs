@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cassandraResourcesRestClient.CreateCreateUpdateCassandraKeyspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, keyspaceName, CassandraKeyspaceCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _cassandraResourcesRestClient.CreateCreateUpdateCassandraKeyspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, keyspaceName, CassandraKeyspaceCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<CassandraKeyspaceResource> operation = new CosmosDBArmOperation<CassandraKeyspaceResource>(
                     new CassandraKeyspaceResourceOperationSource(Client),
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cassandraResourcesRestClient.CreateCreateUpdateCassandraKeyspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, keyspaceName, CassandraKeyspaceCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _cassandraResourcesRestClient.CreateCreateUpdateCassandraKeyspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, keyspaceName, CassandraKeyspaceCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<CassandraKeyspaceResource> operation = new CosmosDBArmOperation<CassandraKeyspaceResource>(
                     new CassandraKeyspaceResourceOperationSource(Client),
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cassandraResourcesRestClient.CreateGetCassandraKeyspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, keyspaceName, context);
+                using HttpMessage message = _cassandraResourcesRestClient.CreateGetCassandraKeyspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, keyspaceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CassandraKeyspaceData> response = Response.FromValue(CassandraKeyspaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cassandraResourcesRestClient.CreateGetCassandraKeyspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, keyspaceName, context);
+                using HttpMessage message = _cassandraResourcesRestClient.CreateGetCassandraKeyspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, keyspaceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CassandraKeyspaceData> response = Response.FromValue(CassandraKeyspaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cassandraResourcesRestClient.CreateGetCassandraKeyspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, keyspaceName, context);
+                using HttpMessage message = _cassandraResourcesRestClient.CreateGetCassandraKeyspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, keyspaceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CassandraKeyspaceData> response = default;
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cassandraResourcesRestClient.CreateGetCassandraKeyspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, keyspaceName, context);
+                using HttpMessage message = _cassandraResourcesRestClient.CreateGetCassandraKeyspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, keyspaceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CassandraKeyspaceData> response = default;
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cassandraResourcesRestClient.CreateGetCassandraKeyspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, keyspaceName, context);
+                using HttpMessage message = _cassandraResourcesRestClient.CreateGetCassandraKeyspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, keyspaceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CassandraKeyspaceData> response = default;
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cassandraResourcesRestClient.CreateGetCassandraKeyspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, keyspaceName, context);
+                using HttpMessage message = _cassandraResourcesRestClient.CreateGetCassandraKeyspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, keyspaceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CassandraKeyspaceData> response = default;

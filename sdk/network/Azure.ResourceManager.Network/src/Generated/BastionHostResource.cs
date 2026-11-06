@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bastionHostsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _bastionHostsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BastionHostData> response = Response.FromValue(BastionHostData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bastionHostsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _bastionHostsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BastionHostData> response = Response.FromValue(BastionHostData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bastionHostsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BastionHostPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _bastionHostsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BastionHostPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<BastionHostResource> operation = new NetworkArmOperation<BastionHostResource>(
                     new BastionHostResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bastionHostsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BastionHostPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _bastionHostsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BastionHostPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<BastionHostResource> operation = new NetworkArmOperation<BastionHostResource>(
                     new BastionHostResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bastionHostsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _bastionHostsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation operation = new NetworkArmOperation(_bastionHostsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bastionHostsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _bastionHostsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation operation = new NetworkArmOperation(_bastionHostsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bastionHostsRestClient.CreateDeleteBastionShareableLinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BastionShareableLinkListContent.ToRequestContent(content), context);
+                using HttpMessage message = _bastionHostsRestClient.CreateDeleteBastionShareableLinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BastionShareableLinkListContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation operation = new NetworkArmOperation(_bastionHostsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bastionHostsRestClient.CreateDeleteBastionShareableLinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BastionShareableLinkListContent.ToRequestContent(content), context);
+                using HttpMessage message = _bastionHostsRestClient.CreateDeleteBastionShareableLinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BastionShareableLinkListContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation operation = new NetworkArmOperation(_bastionHostsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bastionHostsRestClient.CreateDeleteBastionShareableLinkByTokenRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BastionShareableLinkTokenListContent.ToRequestContent(content), context);
+                using HttpMessage message = _bastionHostsRestClient.CreateDeleteBastionShareableLinkByTokenRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BastionShareableLinkTokenListContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation operation = new NetworkArmOperation(_bastionHostsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bastionHostsRestClient.CreateDeleteBastionShareableLinkByTokenRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BastionShareableLinkTokenListContent.ToRequestContent(content), context);
+                using HttpMessage message = _bastionHostsRestClient.CreateDeleteBastionShareableLinkByTokenRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BastionShareableLinkTokenListContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation operation = new NetworkArmOperation(_bastionHostsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -736,7 +736,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bastionHostsRestClient.CreateGetActiveSessionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _bastionHostsRestClient.CreateGetActiveSessionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<BastionActiveSessionListResult> operation = new NetworkArmOperation<BastionActiveSessionListResult>(
                     new BastionActiveSessionListResultOperationSource(),
@@ -791,7 +791,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bastionHostsRestClient.CreateGetActiveSessionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _bastionHostsRestClient.CreateGetActiveSessionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<BastionActiveSessionListResult> operation = new NetworkArmOperation<BastionActiveSessionListResult>(
                     new BastionActiveSessionListResultOperationSource(),
@@ -933,7 +933,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bastionHostsRestClient.CreatePutBastionShareableLinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BastionShareableLinkListContent.ToRequestContent(content), context);
+                using HttpMessage message = _bastionHostsRestClient.CreatePutBastionShareableLinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BastionShareableLinkListContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<BastionShareableLinkListResult> operation = new NetworkArmOperation<BastionShareableLinkListResult>(
                     new BastionShareableLinkListResultOperationSource(),
@@ -989,7 +989,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bastionHostsRestClient.CreatePutBastionShareableLinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BastionShareableLinkListContent.ToRequestContent(content), context);
+                using HttpMessage message = _bastionHostsRestClient.CreatePutBastionShareableLinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BastionShareableLinkListContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<BastionShareableLinkListResult> operation = new NetworkArmOperation<BastionShareableLinkListResult>(
                     new BastionShareableLinkListResultOperationSource(),
@@ -1034,7 +1034,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _bastionHostsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _bastionHostsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<BastionHostData> response = Response.FromValue(BastionHostData.FromResponse(result), result);
                     return Response.FromValue(new BastionHostResource(Client, response.Value), response.GetRawResponse());
@@ -1082,7 +1082,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _bastionHostsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _bastionHostsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<BastionHostData> response = Response.FromValue(BastionHostData.FromResponse(result), result);
                     return Response.FromValue(new BastionHostResource(Client, response.Value), response.GetRawResponse());
@@ -1128,7 +1128,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _bastionHostsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _bastionHostsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<BastionHostData> response = Response.FromValue(BastionHostData.FromResponse(result), result);
                     return Response.FromValue(new BastionHostResource(Client, response.Value), response.GetRawResponse());
@@ -1170,7 +1170,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _bastionHostsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _bastionHostsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<BastionHostData> response = Response.FromValue(BastionHostData.FromResponse(result), result);
                     return Response.FromValue(new BastionHostResource(Client, response.Value), response.GetRawResponse());
@@ -1212,7 +1212,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _bastionHostsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _bastionHostsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<BastionHostData> response = Response.FromValue(BastionHostData.FromResponse(result), result);
                     return Response.FromValue(new BastionHostResource(Client, response.Value), response.GetRawResponse());
@@ -1258,7 +1258,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _bastionHostsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _bastionHostsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<BastionHostData> response = Response.FromValue(BastionHostData.FromResponse(result), result);
                     return Response.FromValue(new BastionHostResource(Client, response.Value), response.GetRawResponse());

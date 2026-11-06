@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteBuildARMResourcesRestClient.CreateGetStaticSiteBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentName, context);
+                using HttpMessage message = _staticSiteBuildARMResourcesRestClient.CreateGetStaticSiteBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<StaticSiteBuildData> response = Response.FromValue(StaticSiteBuildData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteBuildARMResourcesRestClient.CreateGetStaticSiteBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentName, context);
+                using HttpMessage message = _staticSiteBuildARMResourcesRestClient.CreateGetStaticSiteBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<StaticSiteBuildData> response = Response.FromValue(StaticSiteBuildData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteBuildARMResourcesRestClient.CreateGetStaticSiteBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentName, context);
+                using HttpMessage message = _staticSiteBuildARMResourcesRestClient.CreateGetStaticSiteBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<StaticSiteBuildData> response = default;
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteBuildARMResourcesRestClient.CreateGetStaticSiteBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentName, context);
+                using HttpMessage message = _staticSiteBuildARMResourcesRestClient.CreateGetStaticSiteBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<StaticSiteBuildData> response = default;
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteBuildARMResourcesRestClient.CreateGetStaticSiteBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentName, context);
+                using HttpMessage message = _staticSiteBuildARMResourcesRestClient.CreateGetStaticSiteBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<StaticSiteBuildData> response = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteBuildARMResourcesRestClient.CreateGetStaticSiteBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentName, context);
+                using HttpMessage message = _staticSiteBuildARMResourcesRestClient.CreateGetStaticSiteBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<StaticSiteBuildData> response = default;

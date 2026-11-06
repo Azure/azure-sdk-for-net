@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.PrivateDns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateZonesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _privateZonesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PrivateDnsZoneData> response = Response.FromValue(PrivateDnsZoneData.FromResponse(result), result);
                 if (response.Value == null)
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.PrivateDns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateZonesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _privateZonesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PrivateDnsZoneData> response = Response.FromValue(PrivateDnsZoneData.FromResponse(result), result);
                 if (response.Value == null)
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.PrivateDns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateZonesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, PrivateDnsZoneData.ToRequestContent(data), ifMatch, context);
+                using HttpMessage message = _privateZonesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, PrivateDnsZoneData.ToRequestContent(data), ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PrivateDnsArmOperation<PrivateDnsZoneResource> operation = new PrivateDnsArmOperation<PrivateDnsZoneResource>(
                     new PrivateDnsZoneResourceOperationSource(Client),
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.PrivateDns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateZonesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, PrivateDnsZoneData.ToRequestContent(data), ifMatch, context);
+                using HttpMessage message = _privateZonesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, PrivateDnsZoneData.ToRequestContent(data), ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PrivateDnsArmOperation<PrivateDnsZoneResource> operation = new PrivateDnsArmOperation<PrivateDnsZoneResource>(
                     new PrivateDnsZoneResourceOperationSource(Client),
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.PrivateDns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateZonesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch, context);
+                using HttpMessage message = _privateZonesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PrivateDnsArmOperation operation = new PrivateDnsArmOperation(_privateZonesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.PrivateDns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateZonesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch, context);
+                using HttpMessage message = _privateZonesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PrivateDnsArmOperation operation = new PrivateDnsArmOperation(_privateZonesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.PrivateDns
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _privateZonesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _privateZonesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<PrivateDnsZoneData> response = Response.FromValue(PrivateDnsZoneData.FromResponse(result), result);
                     return Response.FromValue(new PrivateDnsZoneResource(Client, response.Value), response.GetRawResponse());
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.PrivateDns
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _privateZonesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _privateZonesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<PrivateDnsZoneData> response = Response.FromValue(PrivateDnsZoneData.FromResponse(result), result);
                     return Response.FromValue(new PrivateDnsZoneResource(Client, response.Value), response.GetRawResponse());
@@ -703,7 +703,7 @@ namespace Azure.ResourceManager.PrivateDns
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _privateZonesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _privateZonesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<PrivateDnsZoneData> response = Response.FromValue(PrivateDnsZoneData.FromResponse(result), result);
                     return Response.FromValue(new PrivateDnsZoneResource(Client, response.Value), response.GetRawResponse());
@@ -745,7 +745,7 @@ namespace Azure.ResourceManager.PrivateDns
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _privateZonesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _privateZonesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<PrivateDnsZoneData> response = Response.FromValue(PrivateDnsZoneData.FromResponse(result), result);
                     return Response.FromValue(new PrivateDnsZoneResource(Client, response.Value), response.GetRawResponse());
@@ -787,7 +787,7 @@ namespace Azure.ResourceManager.PrivateDns
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _privateZonesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _privateZonesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<PrivateDnsZoneData> response = Response.FromValue(PrivateDnsZoneData.FromResponse(result), result);
                     return Response.FromValue(new PrivateDnsZoneResource(Client, response.Value), response.GetRawResponse());
@@ -833,7 +833,7 @@ namespace Azure.ResourceManager.PrivateDns
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _privateZonesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _privateZonesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<PrivateDnsZoneData> response = Response.FromValue(PrivateDnsZoneData.FromResponse(result), result);
                     return Response.FromValue(new PrivateDnsZoneResource(Client, response.Value), response.GetRawResponse());

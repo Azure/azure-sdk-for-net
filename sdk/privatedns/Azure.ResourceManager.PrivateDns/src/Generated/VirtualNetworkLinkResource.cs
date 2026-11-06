@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.PrivateDns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkLinksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _virtualNetworkLinksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<VirtualNetworkLinkData> response = Response.FromValue(VirtualNetworkLinkData.FromResponse(result), result);
                 if (response.Value == null)
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.PrivateDns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkLinksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _virtualNetworkLinksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<VirtualNetworkLinkData> response = Response.FromValue(VirtualNetworkLinkData.FromResponse(result), result);
                 if (response.Value == null)
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.PrivateDns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkLinksRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, VirtualNetworkLinkData.ToRequestContent(data), ifMatch, context);
+                using HttpMessage message = _virtualNetworkLinksRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, VirtualNetworkLinkData.ToRequestContent(data), ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PrivateDnsArmOperation<VirtualNetworkLinkResource> operation = new PrivateDnsArmOperation<VirtualNetworkLinkResource>(
                     new VirtualNetworkLinkResourceOperationSource(Client),
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.PrivateDns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkLinksRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, VirtualNetworkLinkData.ToRequestContent(data), ifMatch, context);
+                using HttpMessage message = _virtualNetworkLinksRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, VirtualNetworkLinkData.ToRequestContent(data), ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PrivateDnsArmOperation<VirtualNetworkLinkResource> operation = new PrivateDnsArmOperation<VirtualNetworkLinkResource>(
                     new VirtualNetworkLinkResourceOperationSource(Client),
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.PrivateDns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkLinksRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
+                using HttpMessage message = _virtualNetworkLinksRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PrivateDnsArmOperation operation = new PrivateDnsArmOperation(_virtualNetworkLinksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.PrivateDns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkLinksRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
+                using HttpMessage message = _virtualNetworkLinksRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PrivateDnsArmOperation operation = new PrivateDnsArmOperation(_virtualNetworkLinksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.PrivateDns
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualNetworkLinksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _virtualNetworkLinksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<VirtualNetworkLinkData> response = Response.FromValue(VirtualNetworkLinkData.FromResponse(result), result);
                     return Response.FromValue(new VirtualNetworkLinkResource(Client, response.Value), response.GetRawResponse());
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.PrivateDns
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualNetworkLinksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _virtualNetworkLinksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<VirtualNetworkLinkData> response = Response.FromValue(VirtualNetworkLinkData.FromResponse(result), result);
                     return Response.FromValue(new VirtualNetworkLinkResource(Client, response.Value), response.GetRawResponse());
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.PrivateDns
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualNetworkLinksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _virtualNetworkLinksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<VirtualNetworkLinkData> response = Response.FromValue(VirtualNetworkLinkData.FromResponse(result), result);
                     return Response.FromValue(new VirtualNetworkLinkResource(Client, response.Value), response.GetRawResponse());
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.PrivateDns
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualNetworkLinksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _virtualNetworkLinksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<VirtualNetworkLinkData> response = Response.FromValue(VirtualNetworkLinkData.FromResponse(result), result);
                     return Response.FromValue(new VirtualNetworkLinkResource(Client, response.Value), response.GetRawResponse());
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.PrivateDns
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualNetworkLinksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _virtualNetworkLinksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<VirtualNetworkLinkData> response = Response.FromValue(VirtualNetworkLinkData.FromResponse(result), result);
                     return Response.FromValue(new VirtualNetworkLinkResource(Client, response.Value), response.GetRawResponse());
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.PrivateDns
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualNetworkLinksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _virtualNetworkLinksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<VirtualNetworkLinkData> response = Response.FromValue(VirtualNetworkLinkData.FromResponse(result), result);
                     return Response.FromValue(new VirtualNetworkLinkResource(Client, response.Value), response.GetRawResponse());

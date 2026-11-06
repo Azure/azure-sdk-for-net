@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _meshRevisionProfilesRestClient.CreateGetMeshRevisionProfileRequest(Guid.Parse(Id.SubscriptionId), _location, mode, context);
+                using HttpMessage message = _meshRevisionProfilesRestClient.CreateGetMeshRevisionProfileRequest(Guid.Parse(Id.SubscriptionId), _location, mode, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MeshRevisionProfileData> response = Response.FromValue(MeshRevisionProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _meshRevisionProfilesRestClient.CreateGetMeshRevisionProfileRequest(Guid.Parse(Id.SubscriptionId), _location, mode, context);
+                using HttpMessage message = _meshRevisionProfilesRestClient.CreateGetMeshRevisionProfileRequest(Guid.Parse(Id.SubscriptionId), _location, mode, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MeshRevisionProfileData> response = Response.FromValue(MeshRevisionProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _meshRevisionProfilesRestClient.CreateGetMeshRevisionProfileRequest(Guid.Parse(Id.SubscriptionId), _location, mode, context);
+                using HttpMessage message = _meshRevisionProfilesRestClient.CreateGetMeshRevisionProfileRequest(Guid.Parse(Id.SubscriptionId), _location, mode, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MeshRevisionProfileData> response = default;
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _meshRevisionProfilesRestClient.CreateGetMeshRevisionProfileRequest(Guid.Parse(Id.SubscriptionId), _location, mode, context);
+                using HttpMessage message = _meshRevisionProfilesRestClient.CreateGetMeshRevisionProfileRequest(Guid.Parse(Id.SubscriptionId), _location, mode, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MeshRevisionProfileData> response = default;
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _meshRevisionProfilesRestClient.CreateGetMeshRevisionProfileRequest(Guid.Parse(Id.SubscriptionId), _location, mode, context);
+                using HttpMessage message = _meshRevisionProfilesRestClient.CreateGetMeshRevisionProfileRequest(Guid.Parse(Id.SubscriptionId), _location, mode, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MeshRevisionProfileData> response = default;
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _meshRevisionProfilesRestClient.CreateGetMeshRevisionProfileRequest(Guid.Parse(Id.SubscriptionId), _location, mode, context);
+                using HttpMessage message = _meshRevisionProfilesRestClient.CreateGetMeshRevisionProfileRequest(Guid.Parse(Id.SubscriptionId), _location, mode, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MeshRevisionProfileData> response = default;

@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _alertsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RoleManagementAlertData> response = Response.FromValue(RoleManagementAlertData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _alertsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RoleManagementAlertData> response = Response.FromValue(RoleManagementAlertData.FromResponse(result), result);
                 if (response.Value == null)
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, RoleManagementAlertData.ToRequestContent(data), context);
+                using HttpMessage message = _alertsRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, RoleManagementAlertData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, RoleManagementAlertData.ToRequestContent(data), context);
+                using HttpMessage message = _alertsRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, RoleManagementAlertData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateRefreshRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _alertsRestClient.CreateRefreshRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AuthorizationArmOperation<RoleManagementAlertOperationResult> operation = new AuthorizationArmOperation<RoleManagementAlertOperationResult>(
                     new RoleManagementAlertOperationResultOperationSource(),
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateRefreshRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _alertsRestClient.CreateRefreshRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AuthorizationArmOperation<RoleManagementAlertOperationResult> operation = new AuthorizationArmOperation<RoleManagementAlertOperationResult>(
                     new RoleManagementAlertOperationResultOperationSource(),

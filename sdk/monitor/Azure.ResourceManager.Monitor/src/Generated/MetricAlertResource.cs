@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metricAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _metricAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MetricAlertData> response = Response.FromValue(MetricAlertData.FromResponse(result), result);
                 if (response.Value == null)
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metricAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _metricAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MetricAlertData> response = Response.FromValue(MetricAlertData.FromResponse(result), result);
                 if (response.Value == null)
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metricAlertsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MetricAlertPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _metricAlertsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MetricAlertPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MetricAlertData> response = Response.FromValue(MetricAlertData.FromResponse(result), result);
                 if (response.Value == null)
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metricAlertsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MetricAlertPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _metricAlertsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MetricAlertPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MetricAlertData> response = Response.FromValue(MetricAlertData.FromResponse(result), result);
                 if (response.Value == null)
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metricAlertsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _metricAlertsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metricAlertsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _metricAlertsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _metricAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _metricAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<MetricAlertData> response = Response.FromValue(MetricAlertData.FromResponse(result), result);
                     return Response.FromValue(new MetricAlertResource(Client, response.Value), response.GetRawResponse());
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _metricAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _metricAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<MetricAlertData> response = Response.FromValue(MetricAlertData.FromResponse(result), result);
                     return Response.FromValue(new MetricAlertResource(Client, response.Value), response.GetRawResponse());
@@ -681,7 +681,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _metricAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _metricAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<MetricAlertData> response = Response.FromValue(MetricAlertData.FromResponse(result), result);
                     return Response.FromValue(new MetricAlertResource(Client, response.Value), response.GetRawResponse());
@@ -723,7 +723,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _metricAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _metricAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<MetricAlertData> response = Response.FromValue(MetricAlertData.FromResponse(result), result);
                     return Response.FromValue(new MetricAlertResource(Client, response.Value), response.GetRawResponse());
@@ -765,7 +765,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _metricAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _metricAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<MetricAlertData> response = Response.FromValue(MetricAlertData.FromResponse(result), result);
                     return Response.FromValue(new MetricAlertResource(Client, response.Value), response.GetRawResponse());
@@ -811,7 +811,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _metricAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _metricAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<MetricAlertData> response = Response.FromValue(MetricAlertData.FromResponse(result), result);
                     return Response.FromValue(new MetricAlertResource(Client, response.Value), response.GetRawResponse());

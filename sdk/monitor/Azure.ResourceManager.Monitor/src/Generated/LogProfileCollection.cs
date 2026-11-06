@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _logProfilesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), logProfileName, LogProfileData.ToRequestContent(data), context);
+                using HttpMessage message = _logProfilesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), logProfileName, LogProfileData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LogProfileData> response = Response.FromValue(LogProfileData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _logProfilesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), logProfileName, LogProfileData.ToRequestContent(data), context);
+                using HttpMessage message = _logProfilesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), logProfileName, LogProfileData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LogProfileData> response = Response.FromValue(LogProfileData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _logProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), logProfileName, context);
+                using HttpMessage message = _logProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), logProfileName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LogProfileData> response = Response.FromValue(LogProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _logProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), logProfileName, context);
+                using HttpMessage message = _logProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), logProfileName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LogProfileData> response = Response.FromValue(LogProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _logProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), logProfileName, context);
+                using HttpMessage message = _logProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), logProfileName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<LogProfileData> response = default;
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _logProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), logProfileName, context);
+                using HttpMessage message = _logProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), logProfileName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<LogProfileData> response = default;
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _logProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), logProfileName, context);
+                using HttpMessage message = _logProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), logProfileName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<LogProfileData> response = default;
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _logProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), logProfileName, context);
+                using HttpMessage message = _logProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), logProfileName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<LogProfileData> response = default;
