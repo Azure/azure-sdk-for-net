@@ -20,6 +20,51 @@ namespace Azure.Generator.Mgmt.Tests
 {
     internal class ModelFactoryVisitorTests
     {
+        [TestCase(false)]
+        [TestCase(true)]
+        public void ConstructorRepairPreservesFixedLiteralValues(bool repairViaWriter)
+        {
+            // Issue #64624: required literals are omitted from the public factory signature, but must
+            // still be passed to the full constructor instead of overwriting the property initializers.
+            var thresholdType = InputFactory.StringEnum(
+                "CostControlThresholdType",
+                [("Percentage", "Percentage"), ("Absolute", "Absolute")],
+                isExtensible: true);
+            var model = InputFactory.Model("CostControlAction", properties:
+            [
+                InputFactory.Property("type", InputFactory.Literal.String("Block"), isRequired: true),
+                InputFactory.Property("thresholdType", thresholdType, isRequired: true),
+                InputFactory.Property("threshold", InputPrimitiveType.Float64, isRequired: true),
+                InputFactory.Property("operator", InputFactory.Literal.String("GreaterThanOrEqualTo"), isRequired: true)
+            ]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [model], inputEnums: () => [thresholdType]);
+
+            var factory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var method = factory.Methods.Single(m => m.Signature.ReturnType!.Name == "CostControlAction");
+            Assert.That(method.Signature.Parameters.Select(p => p.Name), Is.EqualTo(new[] { "thresholdType", "threshold" }));
+            Assert.That(method.BodyStatements!.ToDisplayString(), Does.Contain("\"Block\""));
+            Assert.That(method.BodyStatements!.ToDisplayString(), Does.Contain("\"GreaterThanOrEqualTo\""));
+
+            if (repairViaWriter)
+            {
+                _ = plugin.Object.GetWriter(factory).Write();
+            }
+            else
+            {
+                var visitType = typeof(Management.Visitors.ModelFactoryVisitor).GetMethod(
+                    "VisitType", BindingFlags.NonPublic | BindingFlags.Instance)!;
+                visitType.Invoke(new Management.Visitors.ModelFactoryVisitor(), [factory]);
+            }
+
+            var body = method.BodyStatements!.ToDisplayString();
+            Assert.Multiple(() =>
+            {
+                Assert.That(body, Does.Contain("\"Block\""));
+                Assert.That(body, Does.Contain("\"GreaterThanOrEqualTo\""));
+                Assert.That(body, Does.Contain("thresholdType, threshold"));
+            });
+        }
+
         [Test]
         public void ConstructorRepairPreservesDefaultEnumDiscriminator(
             [Values(false, true)] bool isExtensible,
