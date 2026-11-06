@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AggregatedCostRestClient.CreateGetAggregatedCostRequest(Id.Name, filter, context);
+                using HttpMessage message = AggregatedCostRestClient.CreateGetAggregatedCostRequest(Id.Name, filter, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConsumptionAggregatedCostResult> response = Response.FromValue(ConsumptionAggregatedCostResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AggregatedCostRestClient.CreateGetAggregatedCostRequest(Id.Name, filter, context);
+                using HttpMessage message = AggregatedCostRestClient.CreateGetAggregatedCostRequest(Id.Name, filter, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConsumptionAggregatedCostResult> response = Response.FromValue(ConsumptionAggregatedCostResult.FromResponse(result), result);
                 if (response.Value == null)

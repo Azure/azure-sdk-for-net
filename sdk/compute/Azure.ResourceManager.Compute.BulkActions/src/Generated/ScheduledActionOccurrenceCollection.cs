@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _occurrencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, occurrenceId, context);
+                using HttpMessage message = _occurrencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, occurrenceId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ScheduledActionOccurrenceData> response = Response.FromValue(ScheduledActionOccurrenceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _occurrencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, occurrenceId, context);
+                using HttpMessage message = _occurrencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, occurrenceId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ScheduledActionOccurrenceData> response = Response.FromValue(ScheduledActionOccurrenceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _occurrencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, occurrenceId, context);
+                using HttpMessage message = _occurrencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, occurrenceId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ScheduledActionOccurrenceData> response = default;
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _occurrencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, occurrenceId, context);
+                using HttpMessage message = _occurrencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, occurrenceId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ScheduledActionOccurrenceData> response = default;
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _occurrencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, occurrenceId, context);
+                using HttpMessage message = _occurrencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, occurrenceId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ScheduledActionOccurrenceData> response = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _occurrencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, occurrenceId, context);
+                using HttpMessage message = _occurrencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, occurrenceId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ScheduledActionOccurrenceData> response = default;

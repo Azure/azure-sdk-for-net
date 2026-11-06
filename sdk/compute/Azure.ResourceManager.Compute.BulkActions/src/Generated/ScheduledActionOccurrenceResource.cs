@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _occurrencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _occurrencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ScheduledActionOccurrenceData> response = Response.FromValue(ScheduledActionOccurrenceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _occurrencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _occurrencesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ScheduledActionOccurrenceData> response = Response.FromValue(ScheduledActionOccurrenceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _occurrencesRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CancelOccurrenceRequestContent.ToRequestContent(content), context);
+                using HttpMessage message = _occurrencesRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CancelOccurrenceRequestContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BulkActionsArmOperation<ResourceOperationResponseResult> operation = new BulkActionsArmOperation<ResourceOperationResponseResult>(
                     new ResourceOperationResponseResultOperationSource(),
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _occurrencesRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CancelOccurrenceRequestContent.ToRequestContent(content), context);
+                using HttpMessage message = _occurrencesRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CancelOccurrenceRequestContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BulkActionsArmOperation<ResourceOperationResponseResult> operation = new BulkActionsArmOperation<ResourceOperationResponseResult>(
                     new ResourceOperationResponseResultOperationSource(),
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _occurrencesRestClient.CreateDelayRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DelayRequestContent.ToRequestContent(content), context);
+                using HttpMessage message = _occurrencesRestClient.CreateDelayRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DelayRequestContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BulkActionsArmOperation<ResourceOperationResponseResult> operation = new BulkActionsArmOperation<ResourceOperationResponseResult>(
                     new ResourceOperationResponseResultOperationSource(),
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _occurrencesRestClient.CreateDelayRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DelayRequestContent.ToRequestContent(content), context);
+                using HttpMessage message = _occurrencesRestClient.CreateDelayRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DelayRequestContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BulkActionsArmOperation<ResourceOperationResponseResult> operation = new BulkActionsArmOperation<ResourceOperationResponseResult>(
                     new ResourceOperationResponseResultOperationSource(),

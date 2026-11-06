@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = BulkActionsRestClient.CreateVirtualMachinesExecuteDeallocateRequest(Guid.Parse(Id.SubscriptionId), location, BulkActionExecuteDeallocateContent.ToRequestContent(content), context);
+                using HttpMessage message = BulkActionsRestClient.CreateVirtualMachinesExecuteDeallocateRequest(Guid.Parse(Id.SubscriptionId), location, BulkActionExecuteDeallocateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BulkActionDeallocateResourceOperationResult> response = Response.FromValue(BulkActionDeallocateResourceOperationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = BulkActionsRestClient.CreateVirtualMachinesExecuteDeallocateRequest(Guid.Parse(Id.SubscriptionId), location, BulkActionExecuteDeallocateContent.ToRequestContent(content), context);
+                using HttpMessage message = BulkActionsRestClient.CreateVirtualMachinesExecuteDeallocateRequest(Guid.Parse(Id.SubscriptionId), location, BulkActionExecuteDeallocateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BulkActionDeallocateResourceOperationResult> response = Response.FromValue(BulkActionDeallocateResourceOperationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = BulkActionsRestClient.CreateVirtualMachinesExecuteHibernateRequest(Guid.Parse(Id.SubscriptionId), location, BulkActionExecuteHibernateContent.ToRequestContent(content), context);
+                using HttpMessage message = BulkActionsRestClient.CreateVirtualMachinesExecuteHibernateRequest(Guid.Parse(Id.SubscriptionId), location, BulkActionExecuteHibernateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BulkActionHibernateResourceOperationResult> response = Response.FromValue(BulkActionHibernateResourceOperationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = BulkActionsRestClient.CreateVirtualMachinesExecuteHibernateRequest(Guid.Parse(Id.SubscriptionId), location, BulkActionExecuteHibernateContent.ToRequestContent(content), context);
+                using HttpMessage message = BulkActionsRestClient.CreateVirtualMachinesExecuteHibernateRequest(Guid.Parse(Id.SubscriptionId), location, BulkActionExecuteHibernateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BulkActionHibernateResourceOperationResult> response = Response.FromValue(BulkActionHibernateResourceOperationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = BulkActionsRestClient.CreateVirtualMachinesExecuteStartRequest(Guid.Parse(Id.SubscriptionId), location, BulkActionExecuteStartContent.ToRequestContent(content), context);
+                using HttpMessage message = BulkActionsRestClient.CreateVirtualMachinesExecuteStartRequest(Guid.Parse(Id.SubscriptionId), location, BulkActionExecuteStartContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BulkActionStartResourceOperationResult> response = Response.FromValue(BulkActionStartResourceOperationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = BulkActionsRestClient.CreateVirtualMachinesExecuteStartRequest(Guid.Parse(Id.SubscriptionId), location, BulkActionExecuteStartContent.ToRequestContent(content), context);
+                using HttpMessage message = BulkActionsRestClient.CreateVirtualMachinesExecuteStartRequest(Guid.Parse(Id.SubscriptionId), location, BulkActionExecuteStartContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BulkActionStartResourceOperationResult> response = Response.FromValue(BulkActionStartResourceOperationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = BulkActionsRestClient.CreateVirtualMachinesExecuteCreateRequest(Guid.Parse(Id.SubscriptionId), location, BulkActionExecuteCreateContent.ToRequestContent(content), context);
+                using HttpMessage message = BulkActionsRestClient.CreateVirtualMachinesExecuteCreateRequest(Guid.Parse(Id.SubscriptionId), location, BulkActionExecuteCreateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BulkActionCreateResourceOperationResult> response = Response.FromValue(BulkActionCreateResourceOperationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = BulkActionsRestClient.CreateVirtualMachinesExecuteCreateRequest(Guid.Parse(Id.SubscriptionId), location, BulkActionExecuteCreateContent.ToRequestContent(content), context);
+                using HttpMessage message = BulkActionsRestClient.CreateVirtualMachinesExecuteCreateRequest(Guid.Parse(Id.SubscriptionId), location, BulkActionExecuteCreateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BulkActionCreateResourceOperationResult> response = Response.FromValue(BulkActionCreateResourceOperationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = BulkActionsRestClient.CreateVirtualMachinesExecuteDeleteRequest(Guid.Parse(Id.SubscriptionId), location, BulkActionExecuteDeleteContent.ToRequestContent(content), context);
+                using HttpMessage message = BulkActionsRestClient.CreateVirtualMachinesExecuteDeleteRequest(Guid.Parse(Id.SubscriptionId), location, BulkActionExecuteDeleteContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BulkActionDeleteResourceOperationResult> response = Response.FromValue(BulkActionDeleteResourceOperationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = BulkActionsRestClient.CreateVirtualMachinesExecuteDeleteRequest(Guid.Parse(Id.SubscriptionId), location, BulkActionExecuteDeleteContent.ToRequestContent(content), context);
+                using HttpMessage message = BulkActionsRestClient.CreateVirtualMachinesExecuteDeleteRequest(Guid.Parse(Id.SubscriptionId), location, BulkActionExecuteDeleteContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BulkActionDeleteResourceOperationResult> response = Response.FromValue(BulkActionDeleteResourceOperationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -627,7 +627,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = BulkActionsRestClient.CreateVirtualMachinesGetOperationStatusRequest(Guid.Parse(Id.SubscriptionId), location, BulkActionGetOperationStatusContent.ToRequestContent(content), context);
+                using HttpMessage message = BulkActionsRestClient.CreateVirtualMachinesGetOperationStatusRequest(Guid.Parse(Id.SubscriptionId), location, BulkActionGetOperationStatusContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BulkActionGetOperationStatusResult> response = Response.FromValue(BulkActionGetOperationStatusResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -676,7 +676,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = BulkActionsRestClient.CreateVirtualMachinesGetOperationStatusRequest(Guid.Parse(Id.SubscriptionId), location, BulkActionGetOperationStatusContent.ToRequestContent(content), context);
+                using HttpMessage message = BulkActionsRestClient.CreateVirtualMachinesGetOperationStatusRequest(Guid.Parse(Id.SubscriptionId), location, BulkActionGetOperationStatusContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BulkActionGetOperationStatusResult> response = Response.FromValue(BulkActionGetOperationStatusResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -725,7 +725,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = BulkActionsRestClient.CreateVirtualMachinesCancelOperationsRequest(Guid.Parse(Id.SubscriptionId), location, BulkActionCancelOperationsContent.ToRequestContent(content), context);
+                using HttpMessage message = BulkActionsRestClient.CreateVirtualMachinesCancelOperationsRequest(Guid.Parse(Id.SubscriptionId), location, BulkActionCancelOperationsContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BulkActionCancelOperationsResult> response = Response.FromValue(BulkActionCancelOperationsResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -774,7 +774,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = BulkActionsRestClient.CreateVirtualMachinesCancelOperationsRequest(Guid.Parse(Id.SubscriptionId), location, BulkActionCancelOperationsContent.ToRequestContent(content), context);
+                using HttpMessage message = BulkActionsRestClient.CreateVirtualMachinesCancelOperationsRequest(Guid.Parse(Id.SubscriptionId), location, BulkActionCancelOperationsContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BulkActionCancelOperationsResult> response = Response.FromValue(BulkActionCancelOperationsResult.FromResponse(result), result);
                 if (response.Value == null)

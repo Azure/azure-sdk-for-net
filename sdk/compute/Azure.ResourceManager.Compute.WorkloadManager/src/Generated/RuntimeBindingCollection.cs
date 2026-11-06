@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _runtimeBindingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bindingName, RuntimeBindingData.ToRequestContent(data), context);
+                using HttpMessage message = _runtimeBindingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bindingName, RuntimeBindingData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadManagerArmOperation<RuntimeBindingResource> operation = new WorkloadManagerArmOperation<RuntimeBindingResource>(
                     new RuntimeBindingResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _runtimeBindingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bindingName, RuntimeBindingData.ToRequestContent(data), context);
+                using HttpMessage message = _runtimeBindingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bindingName, RuntimeBindingData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadManagerArmOperation<RuntimeBindingResource> operation = new WorkloadManagerArmOperation<RuntimeBindingResource>(
                     new RuntimeBindingResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _runtimeBindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bindingName, context);
+                using HttpMessage message = _runtimeBindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bindingName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RuntimeBindingData> response = Response.FromValue(RuntimeBindingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _runtimeBindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bindingName, context);
+                using HttpMessage message = _runtimeBindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bindingName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RuntimeBindingData> response = Response.FromValue(RuntimeBindingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _runtimeBindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bindingName, context);
+                using HttpMessage message = _runtimeBindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bindingName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RuntimeBindingData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _runtimeBindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bindingName, context);
+                using HttpMessage message = _runtimeBindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bindingName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RuntimeBindingData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _runtimeBindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bindingName, context);
+                using HttpMessage message = _runtimeBindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bindingName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RuntimeBindingData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _runtimeBindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bindingName, context);
+                using HttpMessage message = _runtimeBindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bindingName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RuntimeBindingData> response = default;

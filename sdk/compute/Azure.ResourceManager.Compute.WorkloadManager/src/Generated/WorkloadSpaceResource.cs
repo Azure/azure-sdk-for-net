@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadSpacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _workloadSpacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WorkloadSpaceData> response = Response.FromValue(WorkloadSpaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadSpacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _workloadSpacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WorkloadSpaceData> response = Response.FromValue(WorkloadSpaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadSpacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WorkloadSpacePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _workloadSpacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WorkloadSpacePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadManagerArmOperation<WorkloadSpaceResource> operation = new WorkloadManagerArmOperation<WorkloadSpaceResource>(
                     new WorkloadSpaceResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadSpacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WorkloadSpacePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _workloadSpacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WorkloadSpacePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadManagerArmOperation<WorkloadSpaceResource> operation = new WorkloadManagerArmOperation<WorkloadSpaceResource>(
                     new WorkloadSpaceResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadSpacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _workloadSpacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadManagerArmOperation operation = new WorkloadManagerArmOperation(_workloadSpacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadSpacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _workloadSpacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadManagerArmOperation operation = new WorkloadManagerArmOperation(_workloadSpacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _workloadSpacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _workloadSpacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<WorkloadSpaceData> response = Response.FromValue(WorkloadSpaceData.FromResponse(result), result);
                     return Response.FromValue(new WorkloadSpaceResource(Client, response.Value), response.GetRawResponse());
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _workloadSpacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _workloadSpacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<WorkloadSpaceData> response = Response.FromValue(WorkloadSpaceData.FromResponse(result), result);
                     return Response.FromValue(new WorkloadSpaceResource(Client, response.Value), response.GetRawResponse());
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _workloadSpacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _workloadSpacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<WorkloadSpaceData> response = Response.FromValue(WorkloadSpaceData.FromResponse(result), result);
                     return Response.FromValue(new WorkloadSpaceResource(Client, response.Value), response.GetRawResponse());
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _workloadSpacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _workloadSpacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<WorkloadSpaceData> response = Response.FromValue(WorkloadSpaceData.FromResponse(result), result);
                     return Response.FromValue(new WorkloadSpaceResource(Client, response.Value), response.GetRawResponse());
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _workloadSpacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _workloadSpacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<WorkloadSpaceData> response = Response.FromValue(WorkloadSpaceData.FromResponse(result), result);
                     return Response.FromValue(new WorkloadSpaceResource(Client, response.Value), response.GetRawResponse());
@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _workloadSpacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _workloadSpacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<WorkloadSpaceData> response = Response.FromValue(WorkloadSpaceData.FromResponse(result), result);
                     return Response.FromValue(new WorkloadSpaceResource(Client, response.Value), response.GetRawResponse());

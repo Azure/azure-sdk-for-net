@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppJobsRestClient.CreateProxyGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiName, context);
+                using HttpMessage message = _containerAppJobsRestClient.CreateProxyGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerAppJobData> response = Response.FromValue(ContainerAppJobData.FromResponse(result), result);
                 if (response.Value == null)
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppJobsRestClient.CreateProxyGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiName, context);
+                using HttpMessage message = _containerAppJobsRestClient.CreateProxyGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerAppJobData> response = Response.FromValue(ContainerAppJobData.FromResponse(result), result);
                 if (response.Value == null)
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppJobsRestClient.CreateProxyGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiName, context);
+                using HttpMessage message = _containerAppJobsRestClient.CreateProxyGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ContainerAppJobData> response = default;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppJobsRestClient.CreateProxyGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiName, context);
+                using HttpMessage message = _containerAppJobsRestClient.CreateProxyGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ContainerAppJobData> response = default;
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppJobsRestClient.CreateProxyGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiName, context);
+                using HttpMessage message = _containerAppJobsRestClient.CreateProxyGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ContainerAppJobData> response = default;
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppJobsRestClient.CreateProxyGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiName, context);
+                using HttpMessage message = _containerAppJobsRestClient.CreateProxyGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ContainerAppJobData> response = default;

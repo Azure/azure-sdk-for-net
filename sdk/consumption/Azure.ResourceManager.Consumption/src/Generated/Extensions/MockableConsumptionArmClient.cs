@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PriceSheetRestClient.CreateDownloadByBillingAccountPeriodRequest(scope.Parent.Name, scope.Name, context);
+                using HttpMessage message = PriceSheetRestClient.CreateDownloadByBillingAccountPeriodRequest(scope.Parent.Name, scope.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ConsumptionArmOperation<OperationStatus> operation = new ConsumptionArmOperation<OperationStatus>(
                     new OperationStatusOperationSource(),
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PriceSheetRestClient.CreateDownloadByBillingAccountPeriodRequest(scope.Parent.Name, scope.Name, context);
+                using HttpMessage message = PriceSheetRestClient.CreateDownloadByBillingAccountPeriodRequest(scope.Parent.Name, scope.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ConsumptionArmOperation<OperationStatus> operation = new ConsumptionArmOperation<OperationStatus>(
                     new OperationStatusOperationSource(),
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = TagsRestClient.CreateGetConsumptionTagsRequest(scope.ToString(), context);
+                using HttpMessage message = TagsRestClient.CreateGetConsumptionTagsRequest(scope.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConsumptionTagsResult> response = Response.FromValue(ConsumptionTagsResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = TagsRestClient.CreateGetConsumptionTagsRequest(scope.ToString(), context);
+                using HttpMessage message = TagsRestClient.CreateGetConsumptionTagsRequest(scope.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConsumptionTagsResult> response = Response.FromValue(ConsumptionTagsResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -625,7 +625,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ChargesRestClient.CreateGetAllRequest(scope.ToString(), startDate, endDate, filter, apply, context);
+                using HttpMessage message = ChargesRestClient.CreateGetAllRequest(scope.ToString(), startDate, endDate, filter, apply, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ChargesListResult> response = Response.FromValue(ChargesListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ChargesRestClient.CreateGetAllRequest(scope.ToString(), startDate, endDate, filter, apply, context);
+                using HttpMessage message = ChargesRestClient.CreateGetAllRequest(scope.ToString(), startDate, endDate, filter, apply, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ChargesListResult> response = Response.FromValue(ChargesListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -725,7 +725,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = BalancesRestClient.CreateGetBalanceRequest(scope.Name, context);
+                using HttpMessage message = BalancesRestClient.CreateGetBalanceRequest(scope.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConsumptionBalanceResult> response = Response.FromValue(ConsumptionBalanceResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -773,7 +773,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = BalancesRestClient.CreateGetBalanceRequest(scope.Name, context);
+                using HttpMessage message = BalancesRestClient.CreateGetBalanceRequest(scope.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConsumptionBalanceResult> response = Response.FromValue(ConsumptionBalanceResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -821,7 +821,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = BalancesRestClient.CreateGetForBillingPeriodByBillingAccountRequest(scope.Parent.Name, scope.Name, context);
+                using HttpMessage message = BalancesRestClient.CreateGetForBillingPeriodByBillingAccountRequest(scope.Parent.Name, scope.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConsumptionBalanceResult> response = Response.FromValue(ConsumptionBalanceResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -869,7 +869,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = BalancesRestClient.CreateGetForBillingPeriodByBillingAccountRequest(scope.Parent.Name, scope.Name, context);
+                using HttpMessage message = BalancesRestClient.CreateGetForBillingPeriodByBillingAccountRequest(scope.Parent.Name, scope.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConsumptionBalanceResult> response = Response.FromValue(ConsumptionBalanceResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1494,7 +1494,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ReservationRecommendationDetailsRestClient.CreateGetConsumptionReservationRecommendationDetailsRequest(scope.ToString(), reservationScope.ToString(), region, term.ToString(), lookBackPeriod.ToString(), product, filter, context);
+                using HttpMessage message = ReservationRecommendationDetailsRestClient.CreateGetConsumptionReservationRecommendationDetailsRequest(scope.ToString(), reservationScope.ToString(), region, term.ToString(), lookBackPeriod.ToString(), product, filter, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConsumptionReservationRecommendationDetails> response = Response.FromValue(ConsumptionReservationRecommendationDetails.FromResponse(result), result);
                 if (response.Value == null)
@@ -1551,7 +1551,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ReservationRecommendationDetailsRestClient.CreateGetConsumptionReservationRecommendationDetailsRequest(scope.ToString(), reservationScope.ToString(), region, term.ToString(), lookBackPeriod.ToString(), product, filter, context);
+                using HttpMessage message = ReservationRecommendationDetailsRestClient.CreateGetConsumptionReservationRecommendationDetailsRequest(scope.ToString(), reservationScope.ToString(), region, term.ToString(), lookBackPeriod.ToString(), product, filter, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConsumptionReservationRecommendationDetails> response = Response.FromValue(ConsumptionReservationRecommendationDetails.FromResponse(result), result);
                 if (response.Value == null)
@@ -1761,7 +1761,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AggregatedCostRestClient.CreateGetForBillingPeriodByManagementGroupRequest(scope.Parent.Name, scope.Name, context);
+                using HttpMessage message = AggregatedCostRestClient.CreateGetForBillingPeriodByManagementGroupRequest(scope.Parent.Name, scope.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConsumptionAggregatedCostResult> response = Response.FromValue(ConsumptionAggregatedCostResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1809,7 +1809,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AggregatedCostRestClient.CreateGetForBillingPeriodByManagementGroupRequest(scope.Parent.Name, scope.Name, context);
+                using HttpMessage message = AggregatedCostRestClient.CreateGetForBillingPeriodByManagementGroupRequest(scope.Parent.Name, scope.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConsumptionAggregatedCostResult> response = Response.FromValue(ConsumptionAggregatedCostResult.FromResponse(result), result);
                 if (response.Value == null)

@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Consumption
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _creditsRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, context);
+                using HttpMessage message = _creditsRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConsumptionCreditSummaryData> response = Response.FromValue(ConsumptionCreditSummaryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Consumption
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _creditsRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, context);
+                using HttpMessage message = _creditsRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConsumptionCreditSummaryData> response = Response.FromValue(ConsumptionCreditSummaryData.FromResponse(result), result);
                 if (response.Value == null)

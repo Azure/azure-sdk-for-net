@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _containerGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerGroupData> response = Response.FromValue(ContainerGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _containerGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerGroupData> response = Response.FromValue(ContainerGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerGroupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerGroupPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _containerGroupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerGroupPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerGroupData> response = Response.FromValue(ContainerGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerGroupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerGroupPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _containerGroupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerGroupPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerGroupData> response = Response.FromValue(ContainerGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containersRestClient.CreateAttachContainerRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, context);
+                using HttpMessage message = _containersRestClient.CreateAttachContainerRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerAttachResult> response = Response.FromValue(ContainerAttachResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containersRestClient.CreateAttachContainerRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, context);
+                using HttpMessage message = _containersRestClient.CreateAttachContainerRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerAttachResult> response = Response.FromValue(ContainerAttachResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containersRestClient.CreateExecuteContainerCommandRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, ContainerExecContent.ToRequestContent(content), context);
+                using HttpMessage message = _containersRestClient.CreateExecuteContainerCommandRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, ContainerExecContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerExecResult> response = Response.FromValue(ContainerExecResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containersRestClient.CreateExecuteContainerCommandRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, ContainerExecContent.ToRequestContent(content), context);
+                using HttpMessage message = _containersRestClient.CreateExecuteContainerCommandRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, ContainerExecContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerExecResult> response = Response.FromValue(ContainerExecResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -629,7 +629,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containersRestClient.CreateGetContainerLogsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, tail, timestamps, context);
+                using HttpMessage message = _containersRestClient.CreateGetContainerLogsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, tail, timestamps, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerLogs> response = Response.FromValue(ContainerLogs.FromResponse(result), result);
                 if (response.Value == null)
@@ -684,7 +684,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containersRestClient.CreateGetContainerLogsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, tail, timestamps, context);
+                using HttpMessage message = _containersRestClient.CreateGetContainerLogsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, tail, timestamps, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerLogs> response = Response.FromValue(ContainerLogs.FromResponse(result), result);
                 if (response.Value == null)
@@ -733,7 +733,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerGroupsRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _containerGroupsRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerInstanceArmOperation operation = new ContainerInstanceArmOperation(_containerGroupsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -782,7 +782,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerGroupsRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _containerGroupsRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerInstanceArmOperation operation = new ContainerInstanceArmOperation(_containerGroupsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -831,7 +831,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerGroupsRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _containerGroupsRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerInstanceArmOperation operation = new ContainerInstanceArmOperation(_containerGroupsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -880,7 +880,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerGroupsRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _containerGroupsRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerInstanceArmOperation operation = new ContainerInstanceArmOperation(_containerGroupsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -928,7 +928,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerGroupsRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _containerGroupsRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -971,7 +971,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerGroupsRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _containerGroupsRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -1005,7 +1005,7 @@ namespace Azure.ResourceManager.ContainerInstance
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _containerGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _containerGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ContainerGroupData> response = Response.FromValue(ContainerGroupData.FromResponse(result), result);
                     return Response.FromValue(new ContainerGroupResource(Client, response.Value), response.GetRawResponse());
@@ -1053,7 +1053,7 @@ namespace Azure.ResourceManager.ContainerInstance
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _containerGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _containerGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ContainerGroupData> response = Response.FromValue(ContainerGroupData.FromResponse(result), result);
                     return Response.FromValue(new ContainerGroupResource(Client, response.Value), response.GetRawResponse());
@@ -1099,7 +1099,7 @@ namespace Azure.ResourceManager.ContainerInstance
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _containerGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _containerGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ContainerGroupData> response = Response.FromValue(ContainerGroupData.FromResponse(result), result);
                     return Response.FromValue(new ContainerGroupResource(Client, response.Value), response.GetRawResponse());
@@ -1141,7 +1141,7 @@ namespace Azure.ResourceManager.ContainerInstance
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _containerGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _containerGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ContainerGroupData> response = Response.FromValue(ContainerGroupData.FromResponse(result), result);
                     return Response.FromValue(new ContainerGroupResource(Client, response.Value), response.GetRawResponse());
@@ -1183,7 +1183,7 @@ namespace Azure.ResourceManager.ContainerInstance
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _containerGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _containerGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ContainerGroupData> response = Response.FromValue(ContainerGroupData.FromResponse(result), result);
                     return Response.FromValue(new ContainerGroupResource(Client, response.Value), response.GetRawResponse());
@@ -1229,7 +1229,7 @@ namespace Azure.ResourceManager.ContainerInstance
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _containerGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _containerGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ContainerGroupData> response = Response.FromValue(ContainerGroupData.FromResponse(result), result);
                     return Response.FromValue(new ContainerGroupResource(Client, response.Value), response.GetRawResponse());

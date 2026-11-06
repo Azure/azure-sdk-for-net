@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedLimitCapsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _sharedLimitCapsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SharedLimitCapData> response = Response.FromValue(SharedLimitCapData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedLimitCapsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _sharedLimitCapsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SharedLimitCapData> response = Response.FromValue(SharedLimitCapData.FromResponse(result), result);
                 if (response.Value == null)
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedLimitCapsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _sharedLimitCapsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedLimitCapsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _sharedLimitCapsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedLimitCapsRestClient.CreateSetMemberCapOverridesRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ComputeLimitSetMemberCapOverridesContent.ToRequestContent(content), context);
+                using HttpMessage message = _sharedLimitCapsRestClient.CreateSetMemberCapOverridesRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ComputeLimitSetMemberCapOverridesContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SetMemberCapOverridesResult> response = Response.FromValue(SetMemberCapOverridesResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedLimitCapsRestClient.CreateSetMemberCapOverridesRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ComputeLimitSetMemberCapOverridesContent.ToRequestContent(content), context);
+                using HttpMessage message = _sharedLimitCapsRestClient.CreateSetMemberCapOverridesRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ComputeLimitSetMemberCapOverridesContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SetMemberCapOverridesResult> response = Response.FromValue(SetMemberCapOverridesResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedLimitCapsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, SharedLimitCapData.ToRequestContent(data), context);
+                using HttpMessage message = _sharedLimitCapsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, SharedLimitCapData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SharedLimitCapData> response = Response.FromValue(SharedLimitCapData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedLimitCapsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, SharedLimitCapData.ToRequestContent(data), context);
+                using HttpMessage message = _sharedLimitCapsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, SharedLimitCapData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SharedLimitCapData> response = Response.FromValue(SharedLimitCapData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

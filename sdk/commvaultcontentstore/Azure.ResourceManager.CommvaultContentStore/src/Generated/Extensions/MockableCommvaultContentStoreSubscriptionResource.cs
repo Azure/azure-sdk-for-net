@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SaaSOperationGroupRestClient.CreateActivateResourceRequest(Guid.Parse(Id.SubscriptionId), ActivateSaaSParameterContent.ToRequestContent(content), context);
+                using HttpMessage message = SaaSOperationGroupRestClient.CreateActivateResourceRequest(Guid.Parse(Id.SubscriptionId), ActivateSaaSParameterContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CommvaultContentStoreArmOperation<SaaSResourceDetailsData> operation = new CommvaultContentStoreArmOperation<SaaSResourceDetailsData>(
                     new SaaSResourceDetailsDataOperationSource(),
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SaaSOperationGroupRestClient.CreateActivateResourceRequest(Guid.Parse(Id.SubscriptionId), ActivateSaaSParameterContent.ToRequestContent(content), context);
+                using HttpMessage message = SaaSOperationGroupRestClient.CreateActivateResourceRequest(Guid.Parse(Id.SubscriptionId), ActivateSaaSParameterContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CommvaultContentStoreArmOperation<SaaSResourceDetailsData> operation = new CommvaultContentStoreArmOperation<SaaSResourceDetailsData>(
                     new SaaSResourceDetailsDataOperationSource(),

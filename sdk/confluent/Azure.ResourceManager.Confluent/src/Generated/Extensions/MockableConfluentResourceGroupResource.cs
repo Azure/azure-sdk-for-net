@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ValidationsOperationGroupRestClient.CreateValidateOrganizationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, ConfluentOrganizationData.ToRequestContent(data), context);
+                using HttpMessage message = ValidationsOperationGroupRestClient.CreateValidateOrganizationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, ConfluentOrganizationData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConfluentOrganizationData> response = Response.FromValue(ConfluentOrganizationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ValidationsOperationGroupRestClient.CreateValidateOrganizationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, ConfluentOrganizationData.ToRequestContent(data), context);
+                using HttpMessage message = ValidationsOperationGroupRestClient.CreateValidateOrganizationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, ConfluentOrganizationData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConfluentOrganizationData> response = Response.FromValue(ConfluentOrganizationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ValidationsOperationGroupRestClient.CreateValidateOrganizationV2Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, ConfluentOrganizationData.ToRequestContent(data), context);
+                using HttpMessage message = ValidationsOperationGroupRestClient.CreateValidateOrganizationV2Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, ConfluentOrganizationData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConfluentOrganizationValidationResult> response = Response.FromValue(ConfluentOrganizationValidationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ValidationsOperationGroupRestClient.CreateValidateOrganizationV2Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, ConfluentOrganizationData.ToRequestContent(data), context);
+                using HttpMessage message = ValidationsOperationGroupRestClient.CreateValidateOrganizationV2Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, ConfluentOrganizationData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConfluentOrganizationValidationResult> response = Response.FromValue(ConfluentOrganizationValidationResult.FromResponse(result), result);
                 if (response.Value == null)

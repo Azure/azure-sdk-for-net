@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _confluentOrganizationRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, ConfluentOrganizationData.ToRequestContent(data), context);
+                using HttpMessage message = _confluentOrganizationRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, ConfluentOrganizationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ConfluentArmOperation<ConfluentOrganizationResource> operation = new ConfluentArmOperation<ConfluentOrganizationResource>(
                     new ConfluentOrganizationResourceOperationSource(Client),
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _confluentOrganizationRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, ConfluentOrganizationData.ToRequestContent(data), context);
+                using HttpMessage message = _confluentOrganizationRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, ConfluentOrganizationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ConfluentArmOperation<ConfluentOrganizationResource> operation = new ConfluentArmOperation<ConfluentOrganizationResource>(
                     new ConfluentOrganizationResourceOperationSource(Client),
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _confluentOrganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, context);
+                using HttpMessage message = _confluentOrganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConfluentOrganizationData> response = Response.FromValue(ConfluentOrganizationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _confluentOrganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, context);
+                using HttpMessage message = _confluentOrganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConfluentOrganizationData> response = Response.FromValue(ConfluentOrganizationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _confluentOrganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, context);
+                using HttpMessage message = _confluentOrganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ConfluentOrganizationData> response = default;
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _confluentOrganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, context);
+                using HttpMessage message = _confluentOrganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ConfluentOrganizationData> response = default;
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _confluentOrganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, context);
+                using HttpMessage message = _confluentOrganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ConfluentOrganizationData> response = default;
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _confluentOrganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, context);
+                using HttpMessage message = _confluentOrganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ConfluentOrganizationData> response = default;

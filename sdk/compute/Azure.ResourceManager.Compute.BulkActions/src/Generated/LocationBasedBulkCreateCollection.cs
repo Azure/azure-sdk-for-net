@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bulkCreateRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _location, name, LocationBasedBulkCreateData.ToRequestContent(data), context);
+                using HttpMessage message = _bulkCreateRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _location, name, LocationBasedBulkCreateData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BulkActionsArmOperation<LocationBasedBulkCreateResource> operation = new BulkActionsArmOperation<LocationBasedBulkCreateResource>(
                     new LocationBasedBulkCreateResourceOperationSource(Client),
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bulkCreateRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _location, name, LocationBasedBulkCreateData.ToRequestContent(data), context);
+                using HttpMessage message = _bulkCreateRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _location, name, LocationBasedBulkCreateData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BulkActionsArmOperation<LocationBasedBulkCreateResource> operation = new BulkActionsArmOperation<LocationBasedBulkCreateResource>(
                     new LocationBasedBulkCreateResourceOperationSource(Client),
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bulkCreateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _location, name, context);
+                using HttpMessage message = _bulkCreateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _location, name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LocationBasedBulkCreateData> response = Response.FromValue(LocationBasedBulkCreateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bulkCreateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _location, name, context);
+                using HttpMessage message = _bulkCreateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _location, name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LocationBasedBulkCreateData> response = Response.FromValue(LocationBasedBulkCreateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bulkCreateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _location, name, context);
+                using HttpMessage message = _bulkCreateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _location, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<LocationBasedBulkCreateData> response = default;
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bulkCreateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _location, name, context);
+                using HttpMessage message = _bulkCreateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _location, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<LocationBasedBulkCreateData> response = default;
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bulkCreateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _location, name, context);
+                using HttpMessage message = _bulkCreateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _location, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<LocationBasedBulkCreateData> response = default;
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bulkCreateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _location, name, context);
+                using HttpMessage message = _bulkCreateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _location, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<LocationBasedBulkCreateData> response = default;

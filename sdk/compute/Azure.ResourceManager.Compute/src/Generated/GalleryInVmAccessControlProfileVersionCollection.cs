@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _galleryInVMAccessControlProfileVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, inVMAccessControlProfileVersionName, GalleryInVmAccessControlProfileVersionData.ToRequestContent(data), context);
+                using HttpMessage message = _galleryInVMAccessControlProfileVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, inVMAccessControlProfileVersionName, GalleryInVmAccessControlProfileVersionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation<GalleryInVmAccessControlProfileVersionResource> operation = new ComputeArmOperation<GalleryInVmAccessControlProfileVersionResource>(
                     new GalleryInVmAccessControlProfileVersionResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _galleryInVMAccessControlProfileVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, inVMAccessControlProfileVersionName, GalleryInVmAccessControlProfileVersionData.ToRequestContent(data), context);
+                using HttpMessage message = _galleryInVMAccessControlProfileVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, inVMAccessControlProfileVersionName, GalleryInVmAccessControlProfileVersionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation<GalleryInVmAccessControlProfileVersionResource> operation = new ComputeArmOperation<GalleryInVmAccessControlProfileVersionResource>(
                     new GalleryInVmAccessControlProfileVersionResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _galleryInVMAccessControlProfileVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, inVMAccessControlProfileVersionName, context);
+                using HttpMessage message = _galleryInVMAccessControlProfileVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, inVMAccessControlProfileVersionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GalleryInVmAccessControlProfileVersionData> response = Response.FromValue(GalleryInVmAccessControlProfileVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _galleryInVMAccessControlProfileVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, inVMAccessControlProfileVersionName, context);
+                using HttpMessage message = _galleryInVMAccessControlProfileVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, inVMAccessControlProfileVersionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GalleryInVmAccessControlProfileVersionData> response = Response.FromValue(GalleryInVmAccessControlProfileVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _galleryInVMAccessControlProfileVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, inVMAccessControlProfileVersionName, context);
+                using HttpMessage message = _galleryInVMAccessControlProfileVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, inVMAccessControlProfileVersionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<GalleryInVmAccessControlProfileVersionData> response = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _galleryInVMAccessControlProfileVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, inVMAccessControlProfileVersionName, context);
+                using HttpMessage message = _galleryInVMAccessControlProfileVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, inVMAccessControlProfileVersionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<GalleryInVmAccessControlProfileVersionData> response = default;
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _galleryInVMAccessControlProfileVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, inVMAccessControlProfileVersionName, context);
+                using HttpMessage message = _galleryInVMAccessControlProfileVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, inVMAccessControlProfileVersionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<GalleryInVmAccessControlProfileVersionData> response = default;
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _galleryInVMAccessControlProfileVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, inVMAccessControlProfileVersionName, context);
+                using HttpMessage message = _galleryInVMAccessControlProfileVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, inVMAccessControlProfileVersionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<GalleryInVmAccessControlProfileVersionData> response = default;

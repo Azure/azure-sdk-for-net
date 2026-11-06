@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rollingUpgradeStatusInfosRestClient.CreateGetLatestRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _rollingUpgradeStatusInfosRestClient.CreateGetLatestRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<VirtualMachineScaleSetRollingUpgradeData> response = Response.FromValue(VirtualMachineScaleSetRollingUpgradeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rollingUpgradeStatusInfosRestClient.CreateGetLatestRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _rollingUpgradeStatusInfosRestClient.CreateGetLatestRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<VirtualMachineScaleSetRollingUpgradeData> response = Response.FromValue(VirtualMachineScaleSetRollingUpgradeData.FromResponse(result), result);
                 if (response.Value == null)

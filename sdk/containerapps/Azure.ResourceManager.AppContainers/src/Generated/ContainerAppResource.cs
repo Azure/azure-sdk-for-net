@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _containerAppsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerAppData> response = Response.FromValue(ContainerAppData.FromResponse(result), result);
                 if (response.Value == null)
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _containerAppsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerAppData> response = Response.FromValue(ContainerAppData.FromResponse(result), result);
                 if (response.Value == null)
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerAppData.ToRequestContent(data), context);
+                using HttpMessage message = _containerAppsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerAppData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppContainersArmOperation<ContainerAppResource> operation = new AppContainersArmOperation<ContainerAppResource>(
                     new ContainerAppResourceOperationSource(Client),
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerAppData.ToRequestContent(data), context);
+                using HttpMessage message = _containerAppsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerAppData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppContainersArmOperation<ContainerAppResource> operation = new AppContainersArmOperation<ContainerAppResource>(
                     new ContainerAppResourceOperationSource(Client),
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _containerAppsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppContainersArmOperation operation = new AppContainersArmOperation(_containerAppsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _containerAppsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppContainersArmOperation operation = new AppContainersArmOperation(_containerAppsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
+                using HttpMessage message = _containerAppPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerAppPrivateLink> response = Response.FromValue(ContainerAppPrivateLink.FromResponse(result), result);
                 if (response.Value == null)
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
+                using HttpMessage message = _containerAppPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerAppPrivateLink> response = Response.FromValue(ContainerAppPrivateLink.FromResponse(result), result);
                 if (response.Value == null)
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppsRestClient.CreateGetAuthTokenRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _containerAppsRestClient.CreateGetAuthTokenRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerAppAuthToken> response = Response.FromValue(ContainerAppAuthToken.FromResponse(result), result);
                 if (response.Value == null)
@@ -672,7 +672,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppsRestClient.CreateGetAuthTokenRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _containerAppsRestClient.CreateGetAuthTokenRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerAppAuthToken> response = Response.FromValue(ContainerAppAuthToken.FromResponse(result), result);
                 if (response.Value == null)
@@ -721,7 +721,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppsRestClient.CreateGetCustomHostNameAnalysisRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, customHostname, context);
+                using HttpMessage message = _containerAppsRestClient.CreateGetCustomHostNameAnalysisRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, customHostname, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerAppCustomHostnameAnalysisResult> response = Response.FromValue(ContainerAppCustomHostnameAnalysisResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -770,7 +770,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppsRestClient.CreateGetCustomHostNameAnalysisRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, customHostname, context);
+                using HttpMessage message = _containerAppsRestClient.CreateGetCustomHostNameAnalysisRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, customHostname, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerAppCustomHostnameAnalysisResult> response = Response.FromValue(ContainerAppCustomHostnameAnalysisResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -895,7 +895,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppsRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _containerAppsRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppContainersArmOperation<ContainerAppResource> operation = new AppContainersArmOperation<ContainerAppResource>(
                     new ContainerAppResourceOperationSource(Client),
@@ -950,7 +950,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppsRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _containerAppsRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppContainersArmOperation<ContainerAppResource> operation = new AppContainersArmOperation<ContainerAppResource>(
                     new ContainerAppResourceOperationSource(Client),
@@ -1005,7 +1005,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppsRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _containerAppsRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppContainersArmOperation<ContainerAppResource> operation = new AppContainersArmOperation<ContainerAppResource>(
                     new ContainerAppResourceOperationSource(Client),
@@ -1060,7 +1060,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppsRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _containerAppsRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppContainersArmOperation<ContainerAppResource> operation = new AppContainersArmOperation<ContainerAppResource>(
                     new ContainerAppResourceOperationSource(Client),
@@ -1105,7 +1105,7 @@ namespace Azure.ResourceManager.AppContainers
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _containerAppsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _containerAppsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ContainerAppData> response = Response.FromValue(ContainerAppData.FromResponse(result), result);
                     return Response.FromValue(new ContainerAppResource(Client, response.Value), response.GetRawResponse());
@@ -1153,7 +1153,7 @@ namespace Azure.ResourceManager.AppContainers
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _containerAppsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _containerAppsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ContainerAppData> response = Response.FromValue(ContainerAppData.FromResponse(result), result);
                     return Response.FromValue(new ContainerAppResource(Client, response.Value), response.GetRawResponse());
@@ -1199,7 +1199,7 @@ namespace Azure.ResourceManager.AppContainers
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _containerAppsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _containerAppsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ContainerAppData> response = Response.FromValue(ContainerAppData.FromResponse(result), result);
                     return Response.FromValue(new ContainerAppResource(Client, response.Value), response.GetRawResponse());
@@ -1241,7 +1241,7 @@ namespace Azure.ResourceManager.AppContainers
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _containerAppsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _containerAppsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ContainerAppData> response = Response.FromValue(ContainerAppData.FromResponse(result), result);
                     return Response.FromValue(new ContainerAppResource(Client, response.Value), response.GetRawResponse());
@@ -1283,7 +1283,7 @@ namespace Azure.ResourceManager.AppContainers
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _containerAppsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _containerAppsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ContainerAppData> response = Response.FromValue(ContainerAppData.FromResponse(result), result);
                     return Response.FromValue(new ContainerAppResource(Client, response.Value), response.GetRawResponse());
@@ -1329,7 +1329,7 @@ namespace Azure.ResourceManager.AppContainers
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _containerAppsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _containerAppsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ContainerAppData> response = Response.FromValue(ContainerAppData.FromResponse(result), result);
                     return Response.FromValue(new ContainerAppResource(Client, response.Value), response.GetRawResponse());

@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = TenantLevelSharedGalleryInvitesRestClient.CreateAcceptTenantLevelGallerySharingRequest(location, sharedGallerySubscriptionId, sharedGalleryName, context);
+                using HttpMessage message = TenantLevelSharedGalleryInvitesRestClient.CreateAcceptTenantLevelGallerySharingRequest(location, sharedGallerySubscriptionId, sharedGalleryName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation operation = new ComputeArmOperation(TenantLevelSharedGalleryInvitesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = TenantLevelSharedGalleryInvitesRestClient.CreateAcceptTenantLevelGallerySharingRequest(location, sharedGallerySubscriptionId, sharedGalleryName, context);
+                using HttpMessage message = TenantLevelSharedGalleryInvitesRestClient.CreateAcceptTenantLevelGallerySharingRequest(location, sharedGallerySubscriptionId, sharedGalleryName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation operation = new ComputeArmOperation(TenantLevelSharedGalleryInvitesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = TenantLevelSharedGalleryInvitesRestClient.CreateRejectTenantLevelGallerySharingRequest(location, sharedGallerySubscriptionId, sharedGalleryName, context);
+                using HttpMessage message = TenantLevelSharedGalleryInvitesRestClient.CreateRejectTenantLevelGallerySharingRequest(location, sharedGallerySubscriptionId, sharedGalleryName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation operation = new ComputeArmOperation(TenantLevelSharedGalleryInvitesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = TenantLevelSharedGalleryInvitesRestClient.CreateRejectTenantLevelGallerySharingRequest(location, sharedGallerySubscriptionId, sharedGalleryName, context);
+                using HttpMessage message = TenantLevelSharedGalleryInvitesRestClient.CreateRejectTenantLevelGallerySharingRequest(location, sharedGallerySubscriptionId, sharedGalleryName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation operation = new ComputeArmOperation(TenantLevelSharedGalleryInvitesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

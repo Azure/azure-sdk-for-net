@@ -1705,7 +1705,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = VirtualMachineImagesEdgeZoneOperationGroupRestClient.CreateGetVirtualMachineImagesEdgeZoneRequest(location, edgeZone, publisherName, offer, skus, version, Id.SubscriptionId, context);
+                using HttpMessage message = VirtualMachineImagesEdgeZoneOperationGroupRestClient.CreateGetVirtualMachineImagesEdgeZoneRequest(location, edgeZone, publisherName, offer, skus, version, Id.SubscriptionId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<VirtualMachineImage> response = Response.FromValue(VirtualMachineImage.FromResponse(result), result);
                 if (response.Value == null)
@@ -1763,7 +1763,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = VirtualMachineImagesEdgeZoneOperationGroupRestClient.CreateGetVirtualMachineImagesEdgeZoneRequest(location, edgeZone, publisherName, offer, skus, version, Id.SubscriptionId, context);
+                using HttpMessage message = VirtualMachineImagesEdgeZoneOperationGroupRestClient.CreateGetVirtualMachineImagesEdgeZoneRequest(location, edgeZone, publisherName, offer, skus, version, Id.SubscriptionId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<VirtualMachineImage> response = Response.FromValue(VirtualMachineImage.FromResponse(result), result);
                 if (response.Value == null)
@@ -2333,7 +2333,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = VirtualMachineImagesOperationGroupRestClient.CreateGetVirtualMachineImageRequest(location, publisherName, offer, skus, version, Id.SubscriptionId, context);
+                using HttpMessage message = VirtualMachineImagesOperationGroupRestClient.CreateGetVirtualMachineImageRequest(location, publisherName, offer, skus, version, Id.SubscriptionId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<VirtualMachineImage> response = Response.FromValue(VirtualMachineImage.FromResponse(result), result);
                 if (response.Value == null)
@@ -2389,7 +2389,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = VirtualMachineImagesOperationGroupRestClient.CreateGetVirtualMachineImageRequest(location, publisherName, offer, skus, version, Id.SubscriptionId, context);
+                using HttpMessage message = VirtualMachineImagesOperationGroupRestClient.CreateGetVirtualMachineImageRequest(location, publisherName, offer, skus, version, Id.SubscriptionId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<VirtualMachineImage> response = Response.FromValue(VirtualMachineImage.FromResponse(result), result);
                 if (response.Value == null)
@@ -2439,7 +2439,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LogAnalyticsOperationGroupRestClient.CreateExportLogAnalyticsRequestRateByIntervalRequest(Id.SubscriptionId, location, RequestRateByIntervalContent.ToRequestContent(content), context);
+                using HttpMessage message = LogAnalyticsOperationGroupRestClient.CreateExportLogAnalyticsRequestRateByIntervalRequest(Id.SubscriptionId, location, RequestRateByIntervalContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation<LogAnalytics> operation = new ComputeArmOperation<LogAnalytics>(
                     new LogAnalyticsOperationSource(),
@@ -2495,7 +2495,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LogAnalyticsOperationGroupRestClient.CreateExportLogAnalyticsRequestRateByIntervalRequest(Id.SubscriptionId, location, RequestRateByIntervalContent.ToRequestContent(content), context);
+                using HttpMessage message = LogAnalyticsOperationGroupRestClient.CreateExportLogAnalyticsRequestRateByIntervalRequest(Id.SubscriptionId, location, RequestRateByIntervalContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation<LogAnalytics> operation = new ComputeArmOperation<LogAnalytics>(
                     new LogAnalyticsOperationSource(),
@@ -2551,7 +2551,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LogAnalyticsOperationGroupRestClient.CreateExportLogAnalyticsThrottledRequestsRequest(Id.SubscriptionId, location, ThrottledRequestsContent.ToRequestContent(content), context);
+                using HttpMessage message = LogAnalyticsOperationGroupRestClient.CreateExportLogAnalyticsThrottledRequestsRequest(Id.SubscriptionId, location, ThrottledRequestsContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation<LogAnalytics> operation = new ComputeArmOperation<LogAnalytics>(
                     new LogAnalyticsOperationSource(),
@@ -2607,7 +2607,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LogAnalyticsOperationGroupRestClient.CreateExportLogAnalyticsThrottledRequestsRequest(Id.SubscriptionId, location, ThrottledRequestsContent.ToRequestContent(content), context);
+                using HttpMessage message = LogAnalyticsOperationGroupRestClient.CreateExportLogAnalyticsThrottledRequestsRequest(Id.SubscriptionId, location, ThrottledRequestsContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation<LogAnalytics> operation = new ComputeArmOperation<LogAnalytics>(
                     new LogAnalyticsOperationSource(),
@@ -2721,7 +2721,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = VirtualMachineRunCommandsOperationGroupRestClient.CreateGetVirtualMachineRunCommandRequest(location, commandId, Id.SubscriptionId, context);
+                using HttpMessage message = VirtualMachineRunCommandsOperationGroupRestClient.CreateGetVirtualMachineRunCommandRequest(location, commandId, Id.SubscriptionId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RunCommandDocument> response = Response.FromValue(RunCommandDocument.FromResponse(result), result);
                 if (response.Value == null)
@@ -2771,7 +2771,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = VirtualMachineRunCommandsOperationGroupRestClient.CreateGetVirtualMachineRunCommandRequest(location, commandId, Id.SubscriptionId, context);
+                using HttpMessage message = VirtualMachineRunCommandsOperationGroupRestClient.CreateGetVirtualMachineRunCommandRequest(location, commandId, Id.SubscriptionId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RunCommandDocument> response = Response.FromValue(RunCommandDocument.FromResponse(result), result);
                 if (response.Value == null)
@@ -2821,7 +2821,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SharedGalleriesRestClient.CreateGetSharedGalleryDataRequest(Id.SubscriptionId, location, galleryUniqueName, context);
+                using HttpMessage message = SharedGalleriesRestClient.CreateGetSharedGalleryDataRequest(Id.SubscriptionId, location, galleryUniqueName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SharedGalleryData> response = Response.FromValue(SharedGalleryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -2871,7 +2871,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SharedGalleriesRestClient.CreateGetSharedGalleryDataRequest(Id.SubscriptionId, location, galleryUniqueName, context);
+                using HttpMessage message = SharedGalleriesRestClient.CreateGetSharedGalleryDataRequest(Id.SubscriptionId, location, galleryUniqueName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SharedGalleryData> response = Response.FromValue(SharedGalleryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -2995,7 +2995,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SharedGalleryImagesRestClient.CreateGetSharedGalleryImageRequest(Id.SubscriptionId, location, galleryUniqueName, galleryImageName, context);
+                using HttpMessage message = SharedGalleryImagesRestClient.CreateGetSharedGalleryImageRequest(Id.SubscriptionId, location, galleryUniqueName, galleryImageName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SharedGalleryImageData> response = Response.FromValue(SharedGalleryImageData.FromResponse(result), result);
                 if (response.Value == null)
@@ -3047,7 +3047,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SharedGalleryImagesRestClient.CreateGetSharedGalleryImageRequest(Id.SubscriptionId, location, galleryUniqueName, galleryImageName, context);
+                using HttpMessage message = SharedGalleryImagesRestClient.CreateGetSharedGalleryImageRequest(Id.SubscriptionId, location, galleryUniqueName, galleryImageName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SharedGalleryImageData> response = Response.FromValue(SharedGalleryImageData.FromResponse(result), result);
                 if (response.Value == null)
@@ -3185,7 +3185,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SharedGalleryImageVersionsRestClient.CreateGetSharedGalleryImageVersionRequest(Id.SubscriptionId, location, galleryUniqueName, galleryImageName, galleryImageVersionName, context);
+                using HttpMessage message = SharedGalleryImageVersionsRestClient.CreateGetSharedGalleryImageVersionRequest(Id.SubscriptionId, location, galleryUniqueName, galleryImageName, galleryImageVersionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SharedGalleryImageVersionData> response = Response.FromValue(SharedGalleryImageVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -3239,7 +3239,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SharedGalleryImageVersionsRestClient.CreateGetSharedGalleryImageVersionRequest(Id.SubscriptionId, location, galleryUniqueName, galleryImageName, galleryImageVersionName, context);
+                using HttpMessage message = SharedGalleryImageVersionsRestClient.CreateGetSharedGalleryImageVersionRequest(Id.SubscriptionId, location, galleryUniqueName, galleryImageName, galleryImageVersionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SharedGalleryImageVersionData> response = Response.FromValue(SharedGalleryImageVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -3379,7 +3379,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CommunityGalleriesRestClient.CreateGetCommunityGalleryDataRequest(Id.SubscriptionId, location, publicGalleryName, context);
+                using HttpMessage message = CommunityGalleriesRestClient.CreateGetCommunityGalleryDataRequest(Id.SubscriptionId, location, publicGalleryName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CommunityGalleryData> response = Response.FromValue(CommunityGalleryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -3429,7 +3429,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CommunityGalleriesRestClient.CreateGetCommunityGalleryDataRequest(Id.SubscriptionId, location, publicGalleryName, context);
+                using HttpMessage message = CommunityGalleriesRestClient.CreateGetCommunityGalleryDataRequest(Id.SubscriptionId, location, publicGalleryName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CommunityGalleryData> response = Response.FromValue(CommunityGalleryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -3481,7 +3481,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CommunityGalleryImagesRestClient.CreateGetCommunityGalleryImageRequest(Id.SubscriptionId, location, publicGalleryName, galleryImageName, context);
+                using HttpMessage message = CommunityGalleryImagesRestClient.CreateGetCommunityGalleryImageRequest(Id.SubscriptionId, location, publicGalleryName, galleryImageName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CommunityGalleryImageData> response = Response.FromValue(CommunityGalleryImageData.FromResponse(result), result);
                 if (response.Value == null)
@@ -3533,7 +3533,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CommunityGalleryImagesRestClient.CreateGetCommunityGalleryImageRequest(Id.SubscriptionId, location, publicGalleryName, galleryImageName, context);
+                using HttpMessage message = CommunityGalleryImagesRestClient.CreateGetCommunityGalleryImageRequest(Id.SubscriptionId, location, publicGalleryName, galleryImageName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CommunityGalleryImageData> response = Response.FromValue(CommunityGalleryImageData.FromResponse(result), result);
                 if (response.Value == null)
@@ -3667,7 +3667,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CommunityGalleryImageVersionsRestClient.CreateGetCommunityGalleryImageVersionRequest(Id.SubscriptionId, location, publicGalleryName, galleryImageName, galleryImageVersionName, context);
+                using HttpMessage message = CommunityGalleryImageVersionsRestClient.CreateGetCommunityGalleryImageVersionRequest(Id.SubscriptionId, location, publicGalleryName, galleryImageName, galleryImageVersionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CommunityGalleryImageVersionData> response = Response.FromValue(CommunityGalleryImageVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -3721,7 +3721,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CommunityGalleryImageVersionsRestClient.CreateGetCommunityGalleryImageVersionRequest(Id.SubscriptionId, location, publicGalleryName, galleryImageName, galleryImageVersionName, context);
+                using HttpMessage message = CommunityGalleryImageVersionsRestClient.CreateGetCommunityGalleryImageVersionRequest(Id.SubscriptionId, location, publicGalleryName, galleryImageName, galleryImageVersionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CommunityGalleryImageVersionData> response = Response.FromValue(CommunityGalleryImageVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -3860,7 +3860,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SharedGalleryInvitesRestClient.CreateAcceptGallerySharingRequest(Id.SubscriptionId, location, sharedGallerySubscriptionId, sharedGalleryName, context);
+                using HttpMessage message = SharedGalleryInvitesRestClient.CreateAcceptGallerySharingRequest(Id.SubscriptionId, location, sharedGallerySubscriptionId, sharedGalleryName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation operation = new ComputeArmOperation(SharedGalleryInvitesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -3913,7 +3913,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SharedGalleryInvitesRestClient.CreateAcceptGallerySharingRequest(Id.SubscriptionId, location, sharedGallerySubscriptionId, sharedGalleryName, context);
+                using HttpMessage message = SharedGalleryInvitesRestClient.CreateAcceptGallerySharingRequest(Id.SubscriptionId, location, sharedGallerySubscriptionId, sharedGalleryName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation operation = new ComputeArmOperation(SharedGalleryInvitesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -3966,7 +3966,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SharedGalleryInvitesRestClient.CreateRejectGallerySharingRequest(Id.SubscriptionId, location, sharedGallerySubscriptionId, sharedGalleryName, context);
+                using HttpMessage message = SharedGalleryInvitesRestClient.CreateRejectGallerySharingRequest(Id.SubscriptionId, location, sharedGallerySubscriptionId, sharedGalleryName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation operation = new ComputeArmOperation(SharedGalleryInvitesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -4019,7 +4019,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SharedGalleryInvitesRestClient.CreateRejectGallerySharingRequest(Id.SubscriptionId, location, sharedGallerySubscriptionId, sharedGalleryName, context);
+                using HttpMessage message = SharedGalleryInvitesRestClient.CreateRejectGallerySharingRequest(Id.SubscriptionId, location, sharedGallerySubscriptionId, sharedGalleryName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation operation = new ComputeArmOperation(SharedGalleryInvitesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

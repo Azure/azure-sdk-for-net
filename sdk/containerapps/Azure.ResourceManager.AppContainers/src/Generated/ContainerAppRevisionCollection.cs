@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppRevisionsRestClient.CreateGetRevisionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionName, context);
+                using HttpMessage message = _containerAppRevisionsRestClient.CreateGetRevisionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerAppRevisionData> response = Response.FromValue(ContainerAppRevisionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppRevisionsRestClient.CreateGetRevisionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionName, context);
+                using HttpMessage message = _containerAppRevisionsRestClient.CreateGetRevisionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerAppRevisionData> response = Response.FromValue(ContainerAppRevisionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppRevisionsRestClient.CreateGetRevisionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionName, context);
+                using HttpMessage message = _containerAppRevisionsRestClient.CreateGetRevisionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ContainerAppRevisionData> response = default;
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppRevisionsRestClient.CreateGetRevisionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionName, context);
+                using HttpMessage message = _containerAppRevisionsRestClient.CreateGetRevisionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ContainerAppRevisionData> response = default;
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppRevisionsRestClient.CreateGetRevisionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionName, context);
+                using HttpMessage message = _containerAppRevisionsRestClient.CreateGetRevisionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ContainerAppRevisionData> response = default;
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppRevisionsRestClient.CreateGetRevisionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionName, context);
+                using HttpMessage message = _containerAppRevisionsRestClient.CreateGetRevisionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ContainerAppRevisionData> response = default;
