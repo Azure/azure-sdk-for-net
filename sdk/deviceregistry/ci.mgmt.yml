@@ -15,5 +15,7 @@ extends:
     ServiceDirectory: deviceregistry
     LimitForPullRequest: true
     Artifacts:
+    - name: Azure.ResourceManager.DeviceRegistry.SoftwareUpdate
+      safeName: AzureResourceManagerDeviceRegistrySoftwareUpdate
     - name: Azure.ResourceManager.DeviceRegistry
       safeName: AzureResourceManagerDeviceRegistry
