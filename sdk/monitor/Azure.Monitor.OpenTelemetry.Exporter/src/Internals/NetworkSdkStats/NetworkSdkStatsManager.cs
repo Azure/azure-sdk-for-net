@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Diagnostics.Metrics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat;
@@ -17,27 +18,30 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats
     /// </summary>
     /// <remarks>
     /// One <see cref="NetworkSdkStatsManager"/> is created per <see cref="Statsbeat.AzureMonitorStatsbeat"/>
-    /// instance. The dimensions <c>rp</c>, <c>attach</c>, <c>cikey</c>, <c>runtimeVersion</c>,
-    /// <c>os</c>, <c>language</c>, <c>version</c>, and <c>endpoint</c> are captured at
-    /// initialization time; the <c>host</c> dimension is added per recorded measurement, and
+    /// instance. The dimensions <c>rp</c>, <c>cikey</c>, <c>runtimeVersion</c>,
+    /// <c>os</c>, <c>language</c>, and <c>endpoint</c> are captured at
+    /// initialization time. The version identifies the exporter package, and attach mode is read at recording time.
+    /// The <c>host</c> dimension is added per recorded measurement, and
     /// <c>statusCode</c> / <c>exceptionType</c> are added for the relevant instruments.
     /// </remarks>
-    internal sealed class NetworkSdkStatsManager
+    internal sealed class NetworkSdkStatsManager : IDisposable
     {
         private const string Language = "dotnet";
+        private static readonly string? s_exporterVersion = SdkVersionUtils.GetVersion(typeof(AzureMonitorTraceExporter), truncate: false);
 
         private readonly string _customerIkey;
+        private readonly NetworkSdkStatsMeters _meters;
         private readonly IPlatform _platform;
-        private readonly string _attach;
         private readonly string? _runtimeVersion;
         private readonly string _operatingSystem;
         private readonly string? _ingestionHost;
         private string? _resourceProvider;
 
-        internal NetworkSdkStatsManager(ConnectionVars connectionVars, IPlatform platform)
+        internal NetworkSdkStatsManager(ConnectionVars connectionVars, IPlatform platform, bool multiEndpointEnabled = false)
         {
             _platform = platform;
-            _customerIkey = string.IsNullOrEmpty(connectionVars?.InstrumentationKey) ? "N/A" : connectionVars!.InstrumentationKey;
+            _customerIkey = multiEndpointEnabled || string.IsNullOrEmpty(connectionVars?.InstrumentationKey)
+                ? "N/A" : connectionVars!.InstrumentationKey;
 
             // Configured ingestion host, used as a best-effort host dimension when an exception
             // prevents us from observing the actual (possibly redirected) request host.
@@ -49,10 +53,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats
             // These dimensions are invariant for the process lifetime, so capture them
             // once instead of recomputing on every recorded measurement (matches
             // AzureMonitorStatsbeat, which caches the OS name at construction).
-            _attach = SdkVersionUtils.SdkVersionPrefix != null ? "IntegratedAuto" : "Manual";
-            _runtimeVersion = SdkVersionUtils.GetVersion(typeof(object));
+            _runtimeVersion = SdkVersionUtils.GetVersion(typeof(object), truncate: false);
             _operatingSystem = platform.GetOSPlatformName();
+            _meters = new NetworkSdkStatsMeters();
         }
+
+        internal bool Owns(Instrument instrument) => ReferenceEquals(instrument.Meter, _meters.Meter);
+
+        public void Dispose() => _meters.Dispose();
 
         /// <summary>
         /// Record a successful HTTP 200 transmission to the ingestion endpoint.
@@ -60,9 +68,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats
         /// <param name="requestHost">Host portion of the request URI (e.g. <c>westus-0.in.applicationinsights.azure.com</c>).</param>
         public void TrackSuccess(string? requestHost)
         {
+            if (!_meters.RequestSuccessCount.Enabled)
+            {
+                return;
+            }
+
             try
             {
-                NetworkSdkStatsMeters.RequestSuccessCount.Add(1, BuildBaseTags(NetworkSdkStatsHelper.ExtractStampHost(requestHost)));
+                _meters.RequestSuccessCount.Add(1, BuildBaseTags(NetworkSdkStatsHelper.ExtractStampHost(requestHost)));
             }
             catch
             {
@@ -79,14 +92,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats
         /// </summary>
         public void TrackPartialSuccessAccepted(string? requestHost, int count)
         {
-            if (count <= 0)
+            if (count <= 0 || !_meters.RequestSuccessCount.Enabled)
             {
                 return;
             }
 
             try
             {
-                NetworkSdkStatsMeters.RequestSuccessCount.Add(count, BuildBaseTags(NetworkSdkStatsHelper.ExtractStampHost(requestHost)));
+                _meters.RequestSuccessCount.Add(count, BuildBaseTags(NetworkSdkStatsHelper.ExtractStampHost(requestHost)));
             }
             catch
             {
@@ -95,14 +108,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats
         }
 
         /// <summary>
-        /// Record the duration of a request that received a response from the ingestion
-        /// endpoint, regardless of outcome. Backs the <c>Request_Duration</c> (avg) metric.
+        /// Record the duration of an attempted request, including requests that threw
+        /// without a response. Backs the <c>Request_Duration</c> (avg) metric.
         /// </summary>
         public void TrackDuration(string? requestHost, double durationMs)
         {
+            if (!_meters.RequestDuration.Enabled)
+            {
+                return;
+            }
+
             try
             {
-                NetworkSdkStatsMeters.RequestDuration.Record(durationMs, BuildBaseTags(NetworkSdkStatsHelper.ExtractStampHost(requestHost)));
+                _meters.RequestDuration.Record(durationMs, BuildBaseTags(NetworkSdkStatsHelper.ExtractStampHost(requestHost ?? _ingestionHost)));
             }
             catch
             {
@@ -146,9 +164,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats
         /// </summary>
         public void TrackFailure(string? requestHost, int statusCode)
         {
+            if (!_meters.RequestFailureCount.Enabled)
+            {
+                return;
+            }
+
             try
             {
-                NetworkSdkStatsMeters.RequestFailureCount.Add(1, BuildStatusCodeTags(NetworkSdkStatsHelper.ExtractStampHost(requestHost), statusCode));
+                _meters.RequestFailureCount.Add(1, BuildStatusCodeTags(NetworkSdkStatsHelper.ExtractStampHost(requestHost), statusCode));
             }
             catch
             {
@@ -161,9 +184,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats
         /// </summary>
         public void TrackRetry(string? requestHost, int statusCode)
         {
+            if (!_meters.RetryCount.Enabled)
+            {
+                return;
+            }
+
             try
             {
-                NetworkSdkStatsMeters.RetryCount.Add(1, BuildStatusCodeTags(NetworkSdkStatsHelper.ExtractStampHost(requestHost), statusCode));
+                _meters.RetryCount.Add(1, BuildStatusCodeTags(NetworkSdkStatsHelper.ExtractStampHost(requestHost), statusCode));
             }
             catch
             {
@@ -176,9 +204,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats
         /// </summary>
         public void TrackThrottle(string? requestHost, int statusCode)
         {
+            if (!_meters.ThrottleCount.Enabled)
+            {
+                return;
+            }
+
             try
             {
-                NetworkSdkStatsMeters.ThrottleCount.Add(1, BuildStatusCodeTags(NetworkSdkStatsHelper.ExtractStampHost(requestHost), statusCode));
+                _meters.ThrottleCount.Add(1, BuildStatusCodeTags(NetworkSdkStatsHelper.ExtractStampHost(requestHost), statusCode));
             }
             catch
             {
@@ -193,10 +226,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats
         /// </summary>
         public void TrackException(string? requestHost, string? exceptionType)
         {
+            if (!_meters.ExceptionCount.Enabled)
+            {
+                return;
+            }
+
             try
             {
                 string host = NetworkSdkStatsHelper.ExtractStampHost(requestHost ?? _ingestionHost);
-                NetworkSdkStatsMeters.ExceptionCount.Add(1, BuildExceptionTags(host, exceptionType));
+                _meters.ExceptionCount.Add(1, BuildExceptionTags(host, exceptionType));
             }
             catch
             {
@@ -213,14 +251,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats
             return new TagList
             {
                 { "rp", _resourceProvider },
-                { "attach", _attach },
+                { "attach", SdkVersionUtils.SdkVersionPrefix != null ? "IntegratedAuto" : "Manual" },
                 { "cikey", _customerIkey },
                 { "runtimeVersion", _runtimeVersion },
                 { "os", _operatingSystem },
                 { "language", Language },
-                // Read on every recording so the exporter version reflects any late hydration
-                // performed by ResourceExtensions (similar to AzureMonitorStatsbeat).
-                { "version", SdkVersionUtils.GetVersion() },
+                { "version", s_exporterVersion },
                 { "endpoint", StatsbeatConstants.NetworkSdkStatsEndpointBreeze },
                 { "host", host },
             };

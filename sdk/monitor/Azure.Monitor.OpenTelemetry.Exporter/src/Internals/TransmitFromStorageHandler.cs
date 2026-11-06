@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
+using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
@@ -288,21 +289,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             // the top-level count and the per-envelope counts synthesized for a 206.
             var telemetrySchemaTypeCounter = _trackUri == null ? CountTelemetryTypes(payload) : null;
 
-            var stopwatch = _networkSdkStatsManager != null ? Stopwatch.StartNew() : null;
-
             using var requestBudget = new CancellationTokenSource(DrainPostBudgetMilliseconds);
-            using var httpMessage = _trackUri == null
-                ? _applicationInsightsRestClient.InternalTrackAsync(payload, requestBudget.Token).Result
-                : _applicationInsightsRestClient.InternalTrackAsync(payload, _trackUri, requestBudget.Token).Result;
-
-            stopwatch?.Stop();
+            using var httpMessage = SendBatch(payload, requestBudget.Token);
 
             var result = HttpPipelineHelper.IsSuccess(httpMessage, telemetrySchemaTypeCounter);
-
-            if (_networkSdkStatsManager != null && httpMessage.HasResponse)
-            {
-                _networkSdkStatsManager.TrackDuration(httpMessage.Request.Uri.Host, stopwatch!.Elapsed.TotalMilliseconds);
-            }
 
             if (result == ExportResult.Success)
             {
@@ -375,6 +365,28 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             // Retriable, or no response at all: leave the blobs leased so a later pass reclaims them.
             return false;
+        }
+
+        private HttpMessage SendBatch(byte[] payload, CancellationToken cancellationToken)
+        {
+            var stopwatch = _networkSdkStatsManager != null ? Stopwatch.StartNew() : null;
+            var host = _statsHost;
+            try
+            {
+                var message = _trackUri == null
+                    ? _applicationInsightsRestClient.InternalTrackAsync(payload, cancellationToken).Result
+                    : _applicationInsightsRestClient.InternalTrackAsync(payload, _trackUri, cancellationToken).Result;
+                host = message.Request.Uri.Host;
+                return message;
+            }
+            finally
+            {
+                if (stopwatch != null)
+                {
+                    stopwatch.Stop();
+                    _networkSdkStatsManager!.TrackDuration(host, stopwatch.Elapsed.TotalMilliseconds);
+                }
+            }
         }
 
         private bool TransmitIndividually(List<PendingBlob> batch)

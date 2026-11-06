@@ -481,13 +481,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             var networkSdkStats = _statsbeat?.NetworkSdkStatsManager;
             Uri? trackUri = null;
+            Stopwatch? stopwatch = null;
             var statusCode = 0;
 
             try
             {
                 trackUri = ApplicationInsightsRestClient.CreateTrackUri(group.IngestionEndpoint);
 
-                var stopwatch = networkSdkStats != null ? Stopwatch.StartNew() : null;
+                stopwatch = networkSdkStats != null ? Stopwatch.StartNew() : null;
 
                 using var httpMessage = async
                     ? await restClient.InternalTrackAsync(group.TelemetryItems, trackUri, cancellationToken).ConfigureAwait(false)
@@ -505,10 +506,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     // actually answered rather than the endpoint the telemetry was routed to.
                     var requestHost = httpMessage.Request.Uri.Host;
 
-                    if (httpMessage.HasResponse)
-                    {
-                        networkSdkStats.TrackDuration(requestHost, stopwatch!.Elapsed.TotalMilliseconds);
-                    }
+                    networkSdkStats.TrackDuration(requestHost, stopwatch!.Elapsed.TotalMilliseconds);
 
                     if (result == ExportResult.Success)
                     {
@@ -550,6 +548,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 // Null when the destination could not even be constructed. Building a Uri here would
                 // throw a second time, out of the catch, abandoning the remaining endpoint groups.
+                if (stopwatch?.IsRunning == true)
+                {
+                    stopwatch.Stop();
+                    networkSdkStats!.TrackDuration(trackUri?.Host, stopwatch.Elapsed.TotalMilliseconds);
+                }
                 networkSdkStats?.TrackException(trackUri?.Host, exceptionType: ex.GetType().FullName);
                 AzureMonitorExporterEventSource.Log.TransmitterFailed(origin, group.IsAad, _connectionVars.InstrumentationKey, ex);
 
@@ -645,12 +648,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
 
             var networkSdkStats = _statsbeat?.NetworkSdkStatsManager;
+            Stopwatch? stopwatch = null;
 
             try
             {
                 if (_transmissionStateManager.State == TransmissionState.Closed)
                 {
-                    var stopwatch = networkSdkStats != null ? System.Diagnostics.Stopwatch.StartNew() : null;
+                    stopwatch = networkSdkStats != null ? Stopwatch.StartNew() : null;
 
                     using var httpMessage = async ?
                     await _applicationInsightsRestClient.InternalTrackAsync(telemetryItems, cancellationToken).ConfigureAwait(false) :
@@ -664,12 +668,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     {
                         var requestHost = httpMessage.Request.Uri.Host;
 
-                        if (httpMessage.HasResponse)
-                        {
-                            // Request_Duration is recorded for every request that received a
-                            // response, regardless of outcome.
-                            networkSdkStats.TrackDuration(requestHost, stopwatch!.Elapsed.TotalMilliseconds);
-                        }
+                        networkSdkStats.TrackDuration(requestHost, stopwatch!.Elapsed.TotalMilliseconds);
 
                         if (result == ExportResult.Success)
                         {
@@ -725,6 +724,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
             catch (Exception ex)
             {
+                if (stopwatch?.IsRunning == true)
+                {
+                    stopwatch.Stop();
+                    networkSdkStats!.TrackDuration(requestHost: null, stopwatch.Elapsed.TotalMilliseconds);
+                }
                 networkSdkStats?.TrackException(requestHost: null, exceptionType: ex.GetType().FullName);
                 AzureMonitorExporterEventSource.Log.TransmitterFailed(origin, _isAadEnabled, _connectionVars.InstrumentationKey, ex);
                 CustomerSdkStatsHelper.TrackDropped(telemetrySchemaTypeCounter, (int)DropCode.ClientException, CustomerSdkStatsHelper.GetDropReason(ex));
