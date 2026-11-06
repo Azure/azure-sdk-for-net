@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="subscriptionId"> The scopeId. </param>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="pricingName"> The pricingName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string pricingName)
         {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _pricingsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _pricingsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityCenterPricingData> response = Response.FromValue(SecurityCenterPricingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _pricingsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _pricingsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityCenterPricingData> response = Response.FromValue(SecurityCenterPricingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _pricingsRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _pricingsRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _pricingsRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _pricingsRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _pricingsRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, SecurityCenterPricingData.ToRequestContent(data), context);
+                using HttpMessage message = _pricingsRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, SecurityCenterPricingData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityCenterPricingData> response = Response.FromValue(SecurityCenterPricingData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _pricingsRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, SecurityCenterPricingData.ToRequestContent(data), context);
+                using HttpMessage message = _pricingsRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, SecurityCenterPricingData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityCenterPricingData> response = Response.FromValue(SecurityCenterPricingData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

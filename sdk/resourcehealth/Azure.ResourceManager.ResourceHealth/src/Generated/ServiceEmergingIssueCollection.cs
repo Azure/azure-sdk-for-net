@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _emergingIssuesRestClient.CreateGetRequest(issueName.ToString(), context);
+                using HttpMessage message = _emergingIssuesRestClient.CreateGetRequest(issueName.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceEmergingIssueData> response = Response.FromValue(ServiceEmergingIssueData.FromResponse(result), result);
                 if (response.Value == null)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _emergingIssuesRestClient.CreateGetRequest(issueName.ToString(), context);
+                using HttpMessage message = _emergingIssuesRestClient.CreateGetRequest(issueName.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceEmergingIssueData> response = Response.FromValue(ServiceEmergingIssueData.FromResponse(result), result);
                 if (response.Value == null)
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _emergingIssuesRestClient.CreateGetRequest(issueName.ToString(), context);
+                using HttpMessage message = _emergingIssuesRestClient.CreateGetRequest(issueName.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ServiceEmergingIssueData> response = default;
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _emergingIssuesRestClient.CreateGetRequest(issueName.ToString(), context);
+                using HttpMessage message = _emergingIssuesRestClient.CreateGetRequest(issueName.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ServiceEmergingIssueData> response = default;
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _emergingIssuesRestClient.CreateGetRequest(issueName.ToString(), context);
+                using HttpMessage message = _emergingIssuesRestClient.CreateGetRequest(issueName.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ServiceEmergingIssueData> response = default;
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _emergingIssuesRestClient.CreateGetRequest(issueName.ToString(), context);
+                using HttpMessage message = _emergingIssuesRestClient.CreateGetRequest(issueName.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ServiceEmergingIssueData> response = default;

@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _impactedResourcesRestClient.CreateGetByTenantIdRequest(Id.Name, impactedResourceName, context);
+                using HttpMessage message = _impactedResourcesRestClient.CreateGetByTenantIdRequest(Id.Name, impactedResourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceHealthEventImpactedResourceData> response = Response.FromValue(ResourceHealthEventImpactedResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _impactedResourcesRestClient.CreateGetByTenantIdRequest(Id.Name, impactedResourceName, context);
+                using HttpMessage message = _impactedResourcesRestClient.CreateGetByTenantIdRequest(Id.Name, impactedResourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceHealthEventImpactedResourceData> response = Response.FromValue(ResourceHealthEventImpactedResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _impactedResourcesRestClient.CreateGetByTenantIdRequest(Id.Name, impactedResourceName, context);
+                using HttpMessage message = _impactedResourcesRestClient.CreateGetByTenantIdRequest(Id.Name, impactedResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ResourceHealthEventImpactedResourceData> response = default;
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _impactedResourcesRestClient.CreateGetByTenantIdRequest(Id.Name, impactedResourceName, context);
+                using HttpMessage message = _impactedResourcesRestClient.CreateGetByTenantIdRequest(Id.Name, impactedResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ResourceHealthEventImpactedResourceData> response = default;
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _impactedResourcesRestClient.CreateGetByTenantIdRequest(Id.Name, impactedResourceName, context);
+                using HttpMessage message = _impactedResourcesRestClient.CreateGetByTenantIdRequest(Id.Name, impactedResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ResourceHealthEventImpactedResourceData> response = default;
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _impactedResourcesRestClient.CreateGetByTenantIdRequest(Id.Name, impactedResourceName, context);
+                using HttpMessage message = _impactedResourcesRestClient.CreateGetByTenantIdRequest(Id.Name, impactedResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ResourceHealthEventImpactedResourceData> response = default;

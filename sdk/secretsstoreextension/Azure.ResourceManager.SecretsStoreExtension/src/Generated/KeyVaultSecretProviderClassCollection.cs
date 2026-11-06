@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureKeyVaultSecretProviderClassesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureKeyVaultSecretProviderClassName, KeyVaultSecretProviderClassData.ToRequestContent(data), context);
+                using HttpMessage message = _azureKeyVaultSecretProviderClassesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureKeyVaultSecretProviderClassName, KeyVaultSecretProviderClassData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SecretsStoreExtensionArmOperation<KeyVaultSecretProviderClassResource> operation = new SecretsStoreExtensionArmOperation<KeyVaultSecretProviderClassResource>(
                     new KeyVaultSecretProviderClassResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureKeyVaultSecretProviderClassesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureKeyVaultSecretProviderClassName, KeyVaultSecretProviderClassData.ToRequestContent(data), context);
+                using HttpMessage message = _azureKeyVaultSecretProviderClassesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureKeyVaultSecretProviderClassName, KeyVaultSecretProviderClassData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SecretsStoreExtensionArmOperation<KeyVaultSecretProviderClassResource> operation = new SecretsStoreExtensionArmOperation<KeyVaultSecretProviderClassResource>(
                     new KeyVaultSecretProviderClassResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureKeyVaultSecretProviderClassesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureKeyVaultSecretProviderClassName, context);
+                using HttpMessage message = _azureKeyVaultSecretProviderClassesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureKeyVaultSecretProviderClassName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<KeyVaultSecretProviderClassData> response = Response.FromValue(KeyVaultSecretProviderClassData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureKeyVaultSecretProviderClassesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureKeyVaultSecretProviderClassName, context);
+                using HttpMessage message = _azureKeyVaultSecretProviderClassesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureKeyVaultSecretProviderClassName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<KeyVaultSecretProviderClassData> response = Response.FromValue(KeyVaultSecretProviderClassData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureKeyVaultSecretProviderClassesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureKeyVaultSecretProviderClassName, context);
+                using HttpMessage message = _azureKeyVaultSecretProviderClassesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureKeyVaultSecretProviderClassName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<KeyVaultSecretProviderClassData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureKeyVaultSecretProviderClassesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureKeyVaultSecretProviderClassName, context);
+                using HttpMessage message = _azureKeyVaultSecretProviderClassesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureKeyVaultSecretProviderClassName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<KeyVaultSecretProviderClassData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureKeyVaultSecretProviderClassesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureKeyVaultSecretProviderClassName, context);
+                using HttpMessage message = _azureKeyVaultSecretProviderClassesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureKeyVaultSecretProviderClassName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<KeyVaultSecretProviderClassData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureKeyVaultSecretProviderClassesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureKeyVaultSecretProviderClassName, context);
+                using HttpMessage message = _azureKeyVaultSecretProviderClassesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureKeyVaultSecretProviderClassName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<KeyVaultSecretProviderClassData> response = default;

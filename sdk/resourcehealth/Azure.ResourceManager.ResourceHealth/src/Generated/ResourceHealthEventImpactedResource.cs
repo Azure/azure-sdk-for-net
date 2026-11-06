@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _impactedResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _impactedResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceHealthEventImpactedResourceData> response = Response.FromValue(ResourceHealthEventImpactedResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _impactedResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _impactedResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceHealthEventImpactedResourceData> response = Response.FromValue(ResourceHealthEventImpactedResourceData.FromResponse(result), result);
                 if (response.Value == null)

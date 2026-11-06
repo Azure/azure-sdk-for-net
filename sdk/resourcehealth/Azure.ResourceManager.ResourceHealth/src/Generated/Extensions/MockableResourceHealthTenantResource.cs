@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OperationsRestClient.CreateGetAllRequest(context);
+                using HttpMessage message = OperationsRestClient.CreateGetAllRequest(context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OperationListResult> response = Response.FromValue(OperationListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OperationsRestClient.CreateGetAllRequest(context);
+                using HttpMessage message = OperationsRestClient.CreateGetAllRequest(context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OperationListResult> response = Response.FromValue(OperationListResult.FromResponse(result), result);
                 if (response.Value == null)

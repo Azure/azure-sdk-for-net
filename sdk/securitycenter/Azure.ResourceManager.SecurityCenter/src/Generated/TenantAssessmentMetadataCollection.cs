@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary>
     /// A class representing a collection of <see cref="TenantAssessmentMetadataResource"/> and their operations.
     /// Each <see cref="TenantAssessmentMetadataResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
-    /// To get a <see cref="TenantAssessmentMetadataCollection"/> instance call the GetTenantAssessmentMetadatas method from an instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="TenantAssessmentMetadataCollection"/> instance call the GetAllTenantAssessmentMetadata method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class TenantAssessmentMetadataCollection : ArmCollection, IEnumerable<TenantAssessmentMetadataResource>, IAsyncEnumerable<TenantAssessmentMetadataResource>
     {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _assessmentsMetadataRestClient.CreateGetRequest(assessmentMetadataName, context);
+                using HttpMessage message = _assessmentsMetadataRestClient.CreateGetRequest(assessmentMetadataName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityAssessmentMetadataData> response = Response.FromValue(SecurityAssessmentMetadataData.FromResponse(result), result);
                 if (response.Value == null)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _assessmentsMetadataRestClient.CreateGetRequest(assessmentMetadataName, context);
+                using HttpMessage message = _assessmentsMetadataRestClient.CreateGetRequest(assessmentMetadataName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityAssessmentMetadataData> response = Response.FromValue(SecurityAssessmentMetadataData.FromResponse(result), result);
                 if (response.Value == null)
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _assessmentsMetadataRestClient.CreateGetRequest(assessmentMetadataName, context);
+                using HttpMessage message = _assessmentsMetadataRestClient.CreateGetRequest(assessmentMetadataName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SecurityAssessmentMetadataData> response = default;
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _assessmentsMetadataRestClient.CreateGetRequest(assessmentMetadataName, context);
+                using HttpMessage message = _assessmentsMetadataRestClient.CreateGetRequest(assessmentMetadataName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SecurityAssessmentMetadataData> response = default;
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _assessmentsMetadataRestClient.CreateGetRequest(assessmentMetadataName, context);
+                using HttpMessage message = _assessmentsMetadataRestClient.CreateGetRequest(assessmentMetadataName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SecurityAssessmentMetadataData> response = default;
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _assessmentsMetadataRestClient.CreateGetRequest(assessmentMetadataName, context);
+                using HttpMessage message = _assessmentsMetadataRestClient.CreateGetRequest(assessmentMetadataName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SecurityAssessmentMetadataData> response = default;

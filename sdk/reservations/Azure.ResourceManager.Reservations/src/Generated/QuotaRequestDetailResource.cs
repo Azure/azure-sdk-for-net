@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Reservations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Guid.Parse(Id.Name), context);
+                using HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Guid.Parse(Id.Name), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<QuotaRequestDetailData> response = Response.FromValue(QuotaRequestDetailData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Reservations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Guid.Parse(Id.Name), context);
+                using HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Guid.Parse(Id.Name), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<QuotaRequestDetailData> response = Response.FromValue(QuotaRequestDetailData.FromResponse(result), result);
                 if (response.Value == null)

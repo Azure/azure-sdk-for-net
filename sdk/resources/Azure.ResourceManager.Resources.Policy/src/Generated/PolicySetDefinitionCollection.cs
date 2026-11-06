@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policySetDefinitionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), policySetDefinitionName, PolicySetDefinitionData.ToRequestContent(data), context);
+                using HttpMessage message = _policySetDefinitionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), policySetDefinitionName, PolicySetDefinitionData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PolicySetDefinitionData> response = Response.FromValue(PolicySetDefinitionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policySetDefinitionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), policySetDefinitionName, PolicySetDefinitionData.ToRequestContent(data), context);
+                using HttpMessage message = _policySetDefinitionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), policySetDefinitionName, PolicySetDefinitionData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PolicySetDefinitionData> response = Response.FromValue(PolicySetDefinitionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policySetDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), policySetDefinitionName, expand, context);
+                using HttpMessage message = _policySetDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), policySetDefinitionName, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PolicySetDefinitionData> response = Response.FromValue(PolicySetDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policySetDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), policySetDefinitionName, expand, context);
+                using HttpMessage message = _policySetDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), policySetDefinitionName, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PolicySetDefinitionData> response = Response.FromValue(PolicySetDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policySetDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), policySetDefinitionName, expand, context);
+                using HttpMessage message = _policySetDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), policySetDefinitionName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PolicySetDefinitionData> response = default;
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policySetDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), policySetDefinitionName, expand, context);
+                using HttpMessage message = _policySetDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), policySetDefinitionName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PolicySetDefinitionData> response = default;
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policySetDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), policySetDefinitionName, expand, context);
+                using HttpMessage message = _policySetDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), policySetDefinitionName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PolicySetDefinitionData> response = default;
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policySetDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), policySetDefinitionName, expand, context);
+                using HttpMessage message = _policySetDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), policySetDefinitionName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PolicySetDefinitionData> response = default;

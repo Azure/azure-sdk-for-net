@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceSettingsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), workspaceSettingName, SecurityWorkspaceSettingData.ToRequestContent(data), context);
+                using HttpMessage message = _workspaceSettingsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), workspaceSettingName, SecurityWorkspaceSettingData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityWorkspaceSettingData> response = Response.FromValue(SecurityWorkspaceSettingData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceSettingsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), workspaceSettingName, SecurityWorkspaceSettingData.ToRequestContent(data), context);
+                using HttpMessage message = _workspaceSettingsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), workspaceSettingName, SecurityWorkspaceSettingData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityWorkspaceSettingData> response = Response.FromValue(SecurityWorkspaceSettingData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), workspaceSettingName, context);
+                using HttpMessage message = _workspaceSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), workspaceSettingName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityWorkspaceSettingData> response = Response.FromValue(SecurityWorkspaceSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), workspaceSettingName, context);
+                using HttpMessage message = _workspaceSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), workspaceSettingName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityWorkspaceSettingData> response = Response.FromValue(SecurityWorkspaceSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), workspaceSettingName, context);
+                using HttpMessage message = _workspaceSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), workspaceSettingName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SecurityWorkspaceSettingData> response = default;
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), workspaceSettingName, context);
+                using HttpMessage message = _workspaceSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), workspaceSettingName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SecurityWorkspaceSettingData> response = default;
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), workspaceSettingName, context);
+                using HttpMessage message = _workspaceSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), workspaceSettingName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SecurityWorkspaceSettingData> response = default;
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), workspaceSettingName, context);
+                using HttpMessage message = _workspaceSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), workspaceSettingName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SecurityWorkspaceSettingData> response = default;

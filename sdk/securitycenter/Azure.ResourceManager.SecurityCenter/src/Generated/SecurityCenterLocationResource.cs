@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _locationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _locationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityCenterLocationData> response = Response.FromValue(SecurityCenterLocationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _locationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _locationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityCenterLocationData> response = Response.FromValue(SecurityCenterLocationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _operationResultsRestClient.CreateGetOperationResultRequest(Guid.Parse(Id.SubscriptionId), Id.Name, operationId, context);
+                using HttpMessage message = _operationResultsRestClient.CreateGetOperationResultRequest(Guid.Parse(Id.SubscriptionId), Id.Name, operationId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _operationResultsRestClient.CreateGetOperationResultRequest(Guid.Parse(Id.SubscriptionId), Id.Name, operationId, context);
+                using HttpMessage message = _operationResultsRestClient.CreateGetOperationResultRequest(Guid.Parse(Id.SubscriptionId), Id.Name, operationId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _securitySolutionsReferenceDataOperationGroupRestClient.CreateGetByHomeRegionRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _securitySolutionsReferenceDataOperationGroupRestClient.CreateGetByHomeRegionRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecuritySolutionsReferenceInfoList> response = Response.FromValue(SecuritySolutionsReferenceInfoList.FromResponse(result), result);
                 if (response.Value == null)
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _securitySolutionsReferenceDataOperationGroupRestClient.CreateGetByHomeRegionRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _securitySolutionsReferenceDataOperationGroupRestClient.CreateGetByHomeRegionRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecuritySolutionsReferenceInfoList> response = Response.FromValue(SecuritySolutionsReferenceInfoList.FromResponse(result), result);
                 if (response.Value == null)

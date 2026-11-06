@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _defenderForStorageRestClient.CreateCreateRequest(Id.ToString(), settingName.ToString(), DefenderForStorageSettingData.ToRequestContent(data), context);
+                using HttpMessage message = _defenderForStorageRestClient.CreateCreateRequest(Id.ToString(), settingName.ToString(), DefenderForStorageSettingData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DefenderForStorageSettingData> response = Response.FromValue(DefenderForStorageSettingData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _defenderForStorageRestClient.CreateCreateRequest(Id.ToString(), settingName.ToString(), DefenderForStorageSettingData.ToRequestContent(data), context);
+                using HttpMessage message = _defenderForStorageRestClient.CreateCreateRequest(Id.ToString(), settingName.ToString(), DefenderForStorageSettingData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DefenderForStorageSettingData> response = Response.FromValue(DefenderForStorageSettingData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _defenderForStorageRestClient.CreateGetRequest(Id.ToString(), settingName.ToString(), context);
+                using HttpMessage message = _defenderForStorageRestClient.CreateGetRequest(Id.ToString(), settingName.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DefenderForStorageSettingData> response = Response.FromValue(DefenderForStorageSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _defenderForStorageRestClient.CreateGetRequest(Id.ToString(), settingName.ToString(), context);
+                using HttpMessage message = _defenderForStorageRestClient.CreateGetRequest(Id.ToString(), settingName.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DefenderForStorageSettingData> response = Response.FromValue(DefenderForStorageSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _defenderForStorageRestClient.CreateGetRequest(Id.ToString(), settingName.ToString(), context);
+                using HttpMessage message = _defenderForStorageRestClient.CreateGetRequest(Id.ToString(), settingName.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DefenderForStorageSettingData> response = default;
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _defenderForStorageRestClient.CreateGetRequest(Id.ToString(), settingName.ToString(), context);
+                using HttpMessage message = _defenderForStorageRestClient.CreateGetRequest(Id.ToString(), settingName.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DefenderForStorageSettingData> response = default;
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _defenderForStorageRestClient.CreateGetRequest(Id.ToString(), settingName.ToString(), context);
+                using HttpMessage message = _defenderForStorageRestClient.CreateGetRequest(Id.ToString(), settingName.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DefenderForStorageSettingData> response = default;
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _defenderForStorageRestClient.CreateGetRequest(Id.ToString(), settingName.ToString(), context);
+                using HttpMessage message = _defenderForStorageRestClient.CreateGetRequest(Id.ToString(), settingName.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DefenderForStorageSettingData> response = default;

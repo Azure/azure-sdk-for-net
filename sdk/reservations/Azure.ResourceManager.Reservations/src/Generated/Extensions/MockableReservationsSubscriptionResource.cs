@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Reservations.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ReservationsClientRestClient.CreateGetAppliedReservationsRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = ReservationsClientRestClient.CreateGetAppliedReservationsRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppliedReservationData> response = Response.FromValue(AppliedReservationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Reservations.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ReservationsClientRestClient.CreateGetAppliedReservationsRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = ReservationsClientRestClient.CreateGetAppliedReservationsRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppliedReservationData> response = Response.FromValue(AppliedReservationData.FromResponse(result), result);
                 if (response.Value == null)

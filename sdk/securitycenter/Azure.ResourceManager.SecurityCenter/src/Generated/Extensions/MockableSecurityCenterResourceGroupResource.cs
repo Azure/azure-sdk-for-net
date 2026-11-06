@@ -1008,7 +1008,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ExternalSecuritySolutionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ascLocation, externalSecuritySolutionsName, context);
+                using HttpMessage message = ExternalSecuritySolutionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ascLocation, externalSecuritySolutionsName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExternalSecuritySolution> response = Response.FromValue(ExternalSecuritySolution.FromResponse(result), result);
                 if (response.Value == null)
@@ -1058,7 +1058,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ExternalSecuritySolutionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ascLocation, externalSecuritySolutionsName, context);
+                using HttpMessage message = ExternalSecuritySolutionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ascLocation, externalSecuritySolutionsName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExternalSecuritySolution> response = Response.FromValue(ExternalSecuritySolution.FromResponse(result), result);
                 if (response.Value == null)

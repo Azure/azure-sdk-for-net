@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tasksRestClient.CreateGetSubscriptionLevelTaskRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _tasksRestClient.CreateGetSubscriptionLevelTaskRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityTaskData> response = Response.FromValue(SecurityTaskData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tasksRestClient.CreateGetSubscriptionLevelTaskRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _tasksRestClient.CreateGetSubscriptionLevelTaskRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityTaskData> response = Response.FromValue(SecurityTaskData.FromResponse(result), result);
                 if (response.Value == null)
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tasksRestClient.CreateUpdateSubscriptionLevelTaskStateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, taskUpdateActionType.ToString(), context);
+                using HttpMessage message = _tasksRestClient.CreateUpdateSubscriptionLevelTaskStateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, taskUpdateActionType.ToString(), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tasksRestClient.CreateUpdateSubscriptionLevelTaskStateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, taskUpdateActionType.ToString(), context);
+                using HttpMessage message = _tasksRestClient.CreateUpdateSubscriptionLevelTaskStateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, taskUpdateActionType.ToString(), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }

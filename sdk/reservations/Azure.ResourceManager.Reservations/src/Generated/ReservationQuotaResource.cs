@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Reservations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotaRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _quotaRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ReservationQuotaData> response = Response.FromValue(ReservationQuotaData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Reservations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotaRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _quotaRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ReservationQuotaData> response = Response.FromValue(ReservationQuotaData.FromResponse(result), result);
                 if (response.Value == null)
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Reservations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotaRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ReservationQuotaData.ToRequestContent(data), context);
+                using HttpMessage message = _quotaRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ReservationQuotaData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ReservationsArmOperation<ReservationQuotaResource> operation = new ReservationsArmOperation<ReservationQuotaResource>(
                     new ReservationQuotaResourceOperationSource(Client),
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Reservations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotaRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ReservationQuotaData.ToRequestContent(data), context);
+                using HttpMessage message = _quotaRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ReservationQuotaData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ReservationsArmOperation<ReservationQuotaResource> operation = new ReservationsArmOperation<ReservationQuotaResource>(
                     new ReservationQuotaResourceOperationSource(Client),
