@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.OperationTemplates
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _lroRestClient.CreateGetLroRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _lroRestClient.CreateGetLroRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OperationTemplatesArmOperation<CostReportResource> operation = new OperationTemplatesArmOperation<CostReportResource>(
                     new CostReportResourceOperationSource(Client),
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.OperationTemplates
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _lroRestClient.CreateGetLroRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _lroRestClient.CreateGetLroRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OperationTemplatesArmOperation<CostReportResource> operation = new OperationTemplatesArmOperation<CostReportResource>(
                     new CostReportResourceOperationSource(Client),

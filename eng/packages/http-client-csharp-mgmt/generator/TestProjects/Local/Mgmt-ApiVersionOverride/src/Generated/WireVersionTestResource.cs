@@ -124,7 +124,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _wireVersionOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _wireVersionOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WireVersionTestData> response = Response.FromValue(WireVersionTestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _wireVersionOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _wireVersionOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WireVersionTestData> response = Response.FromValue(WireVersionTestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -224,7 +224,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _wireVersionOperationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WireVersionTestData.ToRequestContent(data), context);
+                using HttpMessage message = _wireVersionOperationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WireVersionTestData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WireVersionTestData> response = Response.FromValue(WireVersionTestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -276,7 +276,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _wireVersionOperationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WireVersionTestData.ToRequestContent(data), context);
+                using HttpMessage message = _wireVersionOperationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WireVersionTestData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WireVersionTestData> response = Response.FromValue(WireVersionTestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -324,7 +324,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _wireVersionOperationsRestClient.CreatePingRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _wireVersionOperationsRestClient.CreatePingRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WireVersionTestData> response = Response.FromValue(WireVersionTestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -372,7 +372,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _wireVersionOperationsRestClient.CreatePingRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _wireVersionOperationsRestClient.CreatePingRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WireVersionTestData> response = Response.FromValue(WireVersionTestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -411,7 +411,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _wireVersionOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _wireVersionOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<WireVersionTestData> response = Response.FromValue(WireVersionTestData.FromResponse(result), result);
                     return Response.FromValue(new WireVersionTestResource(Client, response.Value), response.GetRawResponse());
@@ -459,7 +459,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _wireVersionOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _wireVersionOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<WireVersionTestData> response = Response.FromValue(WireVersionTestData.FromResponse(result), result);
                     return Response.FromValue(new WireVersionTestResource(Client, response.Value), response.GetRawResponse());
@@ -505,7 +505,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _wireVersionOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _wireVersionOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<WireVersionTestData> response = Response.FromValue(WireVersionTestData.FromResponse(result), result);
                     return Response.FromValue(new WireVersionTestResource(Client, response.Value), response.GetRawResponse());
@@ -547,7 +547,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _wireVersionOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _wireVersionOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<WireVersionTestData> response = Response.FromValue(WireVersionTestData.FromResponse(result), result);
                     return Response.FromValue(new WireVersionTestResource(Client, response.Value), response.GetRawResponse());
@@ -589,7 +589,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _wireVersionOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _wireVersionOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<WireVersionTestData> response = Response.FromValue(WireVersionTestData.FromResponse(result), result);
                     return Response.FromValue(new WireVersionTestResource(Client, response.Value), response.GetRawResponse());
@@ -635,7 +635,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _wireVersionOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _wireVersionOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<WireVersionTestData> response = Response.FromValue(WireVersionTestData.FromResponse(result), result);
                     return Response.FromValue(new WireVersionTestResource(Client, response.Value), response.GetRawResponse());

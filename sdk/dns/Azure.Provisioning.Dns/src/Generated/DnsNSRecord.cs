@@ -22,7 +22,7 @@ namespace Azure.Provisioning.Dns
         private SystemData _systemData;
         private DnsRecordSetProperties _properties;
         private BicepValue<ETag> _eTag;
-        private ResourceReference<DnsZone> _parent;
+        private ProvisioningResourceReference<DnsZone> _parent;
 
         /// <summary> Creates a new DnsNSRecord. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -214,7 +214,7 @@ namespace Azure.Provisioning.Dns
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<DnsRecordSetProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" });
-            _parent = DefineResource<DnsZone>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<DnsZone>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 
