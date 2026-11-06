@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SerialConsole.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SerialConsoleClientRestClient.CreateGetSerialConsoleOperationsRequest(context);
+                using HttpMessage message = SerialConsoleClientRestClient.CreateGetSerialConsoleOperationsRequest(context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SerialConsoleOperations> response = Response.FromValue(SerialConsoleOperations.FromResponse(result), result);
                 if (response.Value == null)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.SerialConsole.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SerialConsoleClientRestClient.CreateGetSerialConsoleOperationsRequest(context);
+                using HttpMessage message = SerialConsoleClientRestClient.CreateGetSerialConsoleOperationsRequest(context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SerialConsoleOperations> response = Response.FromValue(SerialConsoleOperations.FromResponse(result), result);
                 if (response.Value == null)

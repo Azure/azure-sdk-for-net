@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NamespacesRestClient.CreateCheckServiceBusNamespaceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ServiceBusNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = NamespacesRestClient.CreateCheckServiceBusNamespaceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ServiceBusNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceBusNameAvailabilityResult> response = Response.FromValue(ServiceBusNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NamespacesRestClient.CreateCheckServiceBusNamespaceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ServiceBusNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = NamespacesRestClient.CreateCheckServiceBusNamespaceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ServiceBusNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceBusNameAvailabilityResult> response = Response.FromValue(ServiceBusNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

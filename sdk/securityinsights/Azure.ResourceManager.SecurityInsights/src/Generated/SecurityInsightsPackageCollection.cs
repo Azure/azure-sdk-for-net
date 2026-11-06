@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _contentPackageRestClient.CreateInstallRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, packageId, SecurityInsightsPackageData.ToRequestContent(data), context);
+                using HttpMessage message = _contentPackageRestClient.CreateInstallRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, packageId, SecurityInsightsPackageData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityInsightsPackageData> response = Response.FromValue(SecurityInsightsPackageData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _contentPackageRestClient.CreateInstallRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, packageId, SecurityInsightsPackageData.ToRequestContent(data), context);
+                using HttpMessage message = _contentPackageRestClient.CreateInstallRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, packageId, SecurityInsightsPackageData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityInsightsPackageData> response = Response.FromValue(SecurityInsightsPackageData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _contentPackagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, packageId, context);
+                using HttpMessage message = _contentPackagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, packageId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityInsightsPackageData> response = Response.FromValue(SecurityInsightsPackageData.FromResponse(result), result);
                 if (response.Value == null)
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _contentPackagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, packageId, context);
+                using HttpMessage message = _contentPackagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, packageId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityInsightsPackageData> response = Response.FromValue(SecurityInsightsPackageData.FromResponse(result), result);
                 if (response.Value == null)
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _contentPackagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, packageId, context);
+                using HttpMessage message = _contentPackagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, packageId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SecurityInsightsPackageData> response = default;
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _contentPackagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, packageId, context);
+                using HttpMessage message = _contentPackagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, packageId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SecurityInsightsPackageData> response = default;
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _contentPackagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, packageId, context);
+                using HttpMessage message = _contentPackagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, packageId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SecurityInsightsPackageData> response = default;
@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _contentPackagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, packageId, context);
+                using HttpMessage message = _contentPackagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, packageId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SecurityInsightsPackageData> response = default;

@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkerDryrunsRestClient.CreateGetDryrunRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _linkerDryrunsRestClient.CreateGetDryrunRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LinkerDryrunData> response = Response.FromValue(LinkerDryrunData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkerDryrunsRestClient.CreateGetDryrunRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _linkerDryrunsRestClient.CreateGetDryrunRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LinkerDryrunData> response = Response.FromValue(LinkerDryrunData.FromResponse(result), result);
                 if (response.Value == null)
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkerDryrunsRestClient.CreateUpdateDryrunRequest(Id.Parent.ToString(), Id.Name, DryrunPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _linkerDryrunsRestClient.CreateUpdateDryrunRequest(Id.Parent.ToString(), Id.Name, DryrunPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceLinkerArmOperation<LinkerDryrunResource> operation = new ServiceLinkerArmOperation<LinkerDryrunResource>(
                     new LinkerDryrunResourceOperationSource(Client),
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkerDryrunsRestClient.CreateUpdateDryrunRequest(Id.Parent.ToString(), Id.Name, DryrunPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _linkerDryrunsRestClient.CreateUpdateDryrunRequest(Id.Parent.ToString(), Id.Name, DryrunPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceLinkerArmOperation<LinkerDryrunResource> operation = new ServiceLinkerArmOperation<LinkerDryrunResource>(
                     new LinkerDryrunResourceOperationSource(Client),
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkerDryrunsRestClient.CreateDeleteDryrunRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _linkerDryrunsRestClient.CreateDeleteDryrunRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkerDryrunsRestClient.CreateDeleteDryrunRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _linkerDryrunsRestClient.CreateDeleteDryrunRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());

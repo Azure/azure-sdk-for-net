@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkerDryrunsRestClient.CreateCreateDryrunRequest(Id.ToString(), dryrunName, LinkerDryrunData.ToRequestContent(data), context);
+                using HttpMessage message = _linkerDryrunsRestClient.CreateCreateDryrunRequest(Id.ToString(), dryrunName, LinkerDryrunData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceLinkerArmOperation<LinkerDryrunResource> operation = new ServiceLinkerArmOperation<LinkerDryrunResource>(
                     new LinkerDryrunResourceOperationSource(Client),
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkerDryrunsRestClient.CreateCreateDryrunRequest(Id.ToString(), dryrunName, LinkerDryrunData.ToRequestContent(data), context);
+                using HttpMessage message = _linkerDryrunsRestClient.CreateCreateDryrunRequest(Id.ToString(), dryrunName, LinkerDryrunData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceLinkerArmOperation<LinkerDryrunResource> operation = new ServiceLinkerArmOperation<LinkerDryrunResource>(
                     new LinkerDryrunResourceOperationSource(Client),
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkerDryrunsRestClient.CreateGetDryrunRequest(Id.ToString(), dryrunName, context);
+                using HttpMessage message = _linkerDryrunsRestClient.CreateGetDryrunRequest(Id.ToString(), dryrunName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LinkerDryrunData> response = Response.FromValue(LinkerDryrunData.FromResponse(result), result);
                 if (response.Value == null)
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkerDryrunsRestClient.CreateGetDryrunRequest(Id.ToString(), dryrunName, context);
+                using HttpMessage message = _linkerDryrunsRestClient.CreateGetDryrunRequest(Id.ToString(), dryrunName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LinkerDryrunData> response = Response.FromValue(LinkerDryrunData.FromResponse(result), result);
                 if (response.Value == null)
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkerDryrunsRestClient.CreateGetDryrunRequest(Id.ToString(), dryrunName, context);
+                using HttpMessage message = _linkerDryrunsRestClient.CreateGetDryrunRequest(Id.ToString(), dryrunName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<LinkerDryrunData> response = default;
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkerDryrunsRestClient.CreateGetDryrunRequest(Id.ToString(), dryrunName, context);
+                using HttpMessage message = _linkerDryrunsRestClient.CreateGetDryrunRequest(Id.ToString(), dryrunName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<LinkerDryrunData> response = default;
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkerDryrunsRestClient.CreateGetDryrunRequest(Id.ToString(), dryrunName, context);
+                using HttpMessage message = _linkerDryrunsRestClient.CreateGetDryrunRequest(Id.ToString(), dryrunName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<LinkerDryrunData> response = default;
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkerDryrunsRestClient.CreateGetDryrunRequest(Id.ToString(), dryrunName, context);
+                using HttpMessage message = _linkerDryrunsRestClient.CreateGetDryrunRequest(Id.ToString(), dryrunName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<LinkerDryrunData> response = default;

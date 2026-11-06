@@ -1957,7 +1957,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SecurityInsightsClientRestClient.CreateGetGeodataByIpRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, enrichmentType.ToString(), EnrichmentIPAddressContent.ToRequestContent(content), context);
+                using HttpMessage message = SecurityInsightsClientRestClient.CreateGetGeodataByIpRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, enrichmentType.ToString(), EnrichmentIPAddressContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EnrichmentIPGeodata> response = Response.FromValue(EnrichmentIPGeodata.FromResponse(result), result);
                 if (response.Value == null)
@@ -2008,7 +2008,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SecurityInsightsClientRestClient.CreateGetGeodataByIpRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, enrichmentType.ToString(), EnrichmentIPAddressContent.ToRequestContent(content), context);
+                using HttpMessage message = SecurityInsightsClientRestClient.CreateGetGeodataByIpRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, enrichmentType.ToString(), EnrichmentIPAddressContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EnrichmentIPGeodata> response = Response.FromValue(EnrichmentIPGeodata.FromResponse(result), result);
                 if (response.Value == null)
@@ -2059,7 +2059,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SecurityInsightsClientRestClient.CreateGetDomainWhoisInformationRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, enrichmentType.ToString(), EnrichmentDomainContent.ToRequestContent(content), context);
+                using HttpMessage message = SecurityInsightsClientRestClient.CreateGetDomainWhoisInformationRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, enrichmentType.ToString(), EnrichmentDomainContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EnrichmentDomainWhois> response = Response.FromValue(EnrichmentDomainWhois.FromResponse(result), result);
                 if (response.Value == null)
@@ -2110,7 +2110,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SecurityInsightsClientRestClient.CreateGetDomainWhoisInformationRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, enrichmentType.ToString(), EnrichmentDomainContent.ToRequestContent(content), context);
+                using HttpMessage message = SecurityInsightsClientRestClient.CreateGetDomainWhoisInformationRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, enrichmentType.ToString(), EnrichmentDomainContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EnrichmentDomainWhois> response = Response.FromValue(EnrichmentDomainWhois.FromResponse(result), result);
                 if (response.Value == null)
@@ -2160,7 +2160,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ThreatIntelligenceIndicatorRestClient.CreateCreateIndicatorRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, SecurityInsightsThreatIntelligenceIndicatorData.ToRequestContent(data), context);
+                using HttpMessage message = ThreatIntelligenceIndicatorRestClient.CreateCreateIndicatorRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, SecurityInsightsThreatIntelligenceIndicatorData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityInsightsThreatIntelligenceIndicatorBaseData> response = Response.FromValue(SecurityInsightsThreatIntelligenceIndicatorBaseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -2210,7 +2210,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ThreatIntelligenceIndicatorRestClient.CreateCreateIndicatorRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, SecurityInsightsThreatIntelligenceIndicatorData.ToRequestContent(data), context);
+                using HttpMessage message = ThreatIntelligenceIndicatorRestClient.CreateCreateIndicatorRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, SecurityInsightsThreatIntelligenceIndicatorData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityInsightsThreatIntelligenceIndicatorBaseData> response = Response.FromValue(SecurityInsightsThreatIntelligenceIndicatorBaseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -2244,14 +2244,14 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="threatIntelligenceFilteringCriteria"> The content of the action request. </param>
+        /// <param name="ThreatIntelligenceFilteringCriteria"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="threatIntelligenceFilteringCriteria"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="ThreatIntelligenceFilteringCriteria"/> is null. </exception>
         /// <returns> A collection of <see cref="SecurityInsightsThreatIntelligenceIndicatorResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SecurityInsightsThreatIntelligenceIndicatorResource> QueryThreatIntelligenceIndicatorsAsync(ResourceIdentifier scope, ThreatIntelligenceFilteringCriteria threatIntelligenceFilteringCriteria, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SecurityInsightsThreatIntelligenceIndicatorResource> QueryThreatIntelligenceIndicatorsAsync(ResourceIdentifier scope, ThreatIntelligenceFilteringCriteria ThreatIntelligenceFilteringCriteria, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNull(threatIntelligenceFilteringCriteria, nameof(threatIntelligenceFilteringCriteria));
+            Argument.AssertNotNull(ThreatIntelligenceFilteringCriteria, nameof(ThreatIntelligenceFilteringCriteria));
 
             RequestContext context = new RequestContext
             {
@@ -2262,7 +2262,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
                 Guid.Parse(scope.SubscriptionId),
                 scope.ResourceGroupName,
                 scope.Name,
-                ThreatIntelligenceFilteringCriteria.ToRequestContent(threatIntelligenceFilteringCriteria),
+                ThreatIntelligenceFilteringCriteria.ToRequestContent(ThreatIntelligenceFilteringCriteria),
                 context,
                 "MockableSecurityInsightsArmClient.QueryThreatIntelligenceIndicators"), data => new SecurityInsightsThreatIntelligenceIndicatorResource(Client, data));
         }
@@ -2285,14 +2285,14 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="threatIntelligenceFilteringCriteria"> The content of the action request. </param>
+        /// <param name="ThreatIntelligenceFilteringCriteria"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="threatIntelligenceFilteringCriteria"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="ThreatIntelligenceFilteringCriteria"/> is null. </exception>
         /// <returns> A collection of <see cref="SecurityInsightsThreatIntelligenceIndicatorResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SecurityInsightsThreatIntelligenceIndicatorResource> QueryThreatIntelligenceIndicators(ResourceIdentifier scope, ThreatIntelligenceFilteringCriteria threatIntelligenceFilteringCriteria, CancellationToken cancellationToken = default)
+        public virtual Pageable<SecurityInsightsThreatIntelligenceIndicatorResource> QueryThreatIntelligenceIndicators(ResourceIdentifier scope, ThreatIntelligenceFilteringCriteria ThreatIntelligenceFilteringCriteria, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNull(threatIntelligenceFilteringCriteria, nameof(threatIntelligenceFilteringCriteria));
+            Argument.AssertNotNull(ThreatIntelligenceFilteringCriteria, nameof(ThreatIntelligenceFilteringCriteria));
 
             RequestContext context = new RequestContext
             {
@@ -2303,7 +2303,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
                 Guid.Parse(scope.SubscriptionId),
                 scope.ResourceGroupName,
                 scope.Name,
-                ThreatIntelligenceFilteringCriteria.ToRequestContent(threatIntelligenceFilteringCriteria),
+                ThreatIntelligenceFilteringCriteria.ToRequestContent(ThreatIntelligenceFilteringCriteria),
                 context,
                 "MockableSecurityInsightsArmClient.QueryThreatIntelligenceIndicators"), data => new SecurityInsightsThreatIntelligenceIndicatorResource(Client, data));
         }
@@ -2326,13 +2326,13 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="dataConnectorsCheckRequirements"> The parameters for requirements check message. </param>
+        /// <param name="DataConnectorsCheckRequirements"> The parameters for requirements check message. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="dataConnectorsCheckRequirements"/> is null. </exception>
-        public virtual async Task<Response<DataConnectorRequirementsState>> PostAsync(ResourceIdentifier scope, Models.DataConnectorsCheckRequirements dataConnectorsCheckRequirements, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="DataConnectorsCheckRequirements"/> is null. </exception>
+        public virtual async Task<Response<DataConnectorRequirementsState>> PostAsync(ResourceIdentifier scope, Models.DataConnectorsCheckRequirements DataConnectorsCheckRequirements, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNull(dataConnectorsCheckRequirements, nameof(dataConnectorsCheckRequirements));
+            Argument.AssertNotNull(DataConnectorsCheckRequirements, nameof(DataConnectorsCheckRequirements));
 
             using DiagnosticScope scope0 = DataConnectorsCheckRequirementsClientDiagnostics.CreateScope("MockableSecurityInsightsArmClient.Post");
             scope0.Start();
@@ -2342,7 +2342,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = DataConnectorsCheckRequirementsRestClient.CreatePostRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, Models.DataConnectorsCheckRequirements.ToRequestContent(dataConnectorsCheckRequirements), context);
+                using HttpMessage message = DataConnectorsCheckRequirementsRestClient.CreatePostRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, Models.DataConnectorsCheckRequirements.ToRequestContent(DataConnectorsCheckRequirements), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataConnectorRequirementsState> response = Response.FromValue(DataConnectorRequirementsState.FromResponse(result), result);
                 if (response.Value == null)
@@ -2376,13 +2376,13 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="dataConnectorsCheckRequirements"> The parameters for requirements check message. </param>
+        /// <param name="DataConnectorsCheckRequirements"> The parameters for requirements check message. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="dataConnectorsCheckRequirements"/> is null. </exception>
-        public virtual Response<DataConnectorRequirementsState> Post(ResourceIdentifier scope, Models.DataConnectorsCheckRequirements dataConnectorsCheckRequirements, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="DataConnectorsCheckRequirements"/> is null. </exception>
+        public virtual Response<DataConnectorRequirementsState> Post(ResourceIdentifier scope, Models.DataConnectorsCheckRequirements DataConnectorsCheckRequirements, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNull(dataConnectorsCheckRequirements, nameof(dataConnectorsCheckRequirements));
+            Argument.AssertNotNull(DataConnectorsCheckRequirements, nameof(DataConnectorsCheckRequirements));
 
             using DiagnosticScope scope0 = DataConnectorsCheckRequirementsClientDiagnostics.CreateScope("MockableSecurityInsightsArmClient.Post");
             scope0.Start();
@@ -2392,7 +2392,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = DataConnectorsCheckRequirementsRestClient.CreatePostRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, Models.DataConnectorsCheckRequirements.ToRequestContent(dataConnectorsCheckRequirements), context);
+                using HttpMessage message = DataConnectorsCheckRequirementsRestClient.CreatePostRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, Models.DataConnectorsCheckRequirements.ToRequestContent(DataConnectorsCheckRequirements), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataConnectorRequirementsState> response = Response.FromValue(DataConnectorRequirementsState.FromResponse(result), result);
                 if (response.Value == null)
@@ -2522,7 +2522,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ThreatIntelligenceIndicatorMetricsRestClient.CreateGetAllThreatIntelligenceIndicatorMetricsRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, context);
+                using HttpMessage message = ThreatIntelligenceIndicatorMetricsRestClient.CreateGetAllThreatIntelligenceIndicatorMetricsRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ThreatIntelligenceMetricsList> response = Response.FromValue(ThreatIntelligenceMetricsList.FromResponse(result), result);
                 if (response.Value == null)
@@ -2570,7 +2570,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ThreatIntelligenceIndicatorMetricsRestClient.CreateGetAllThreatIntelligenceIndicatorMetricsRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, context);
+                using HttpMessage message = ThreatIntelligenceIndicatorMetricsRestClient.CreateGetAllThreatIntelligenceIndicatorMetricsRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ThreatIntelligenceMetricsList> response = Response.FromValue(ThreatIntelligenceMetricsList.FromResponse(result), result);
                 if (response.Value == null)
@@ -2620,7 +2620,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ThreatIntelligenceRestClient.CreateCountRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, tiType.ToString(), ThreatIntelligenceCountQuery.ToRequestContent(query), context);
+                using HttpMessage message = ThreatIntelligenceRestClient.CreateCountRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, tiType.ToString(), ThreatIntelligenceCountQuery.ToRequestContent(query), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ThreatIntelligenceCount> response = Response.FromValue(ThreatIntelligenceCount.FromResponse(result), result);
                 if (response.Value == null)
@@ -2670,7 +2670,7 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ThreatIntelligenceRestClient.CreateCountRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, tiType.ToString(), ThreatIntelligenceCountQuery.ToRequestContent(query), context);
+                using HttpMessage message = ThreatIntelligenceRestClient.CreateCountRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, tiType.ToString(), ThreatIntelligenceCountQuery.ToRequestContent(query), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ThreatIntelligenceCount> response = Response.FromValue(ThreatIntelligenceCount.FromResponse(result), result);
                 if (response.Value == null)
