@@ -29,10 +29,37 @@ function extractUnresolveScript(markdownSource) {
   const rest = markdownSource.slice(start.index + start[0].length);
   const end = /^ {0,13}\S/m.exec(rest);
   const body = end ? rest.slice(0, end.index) : rest;
-  return body
-    .split(/\r?\n/)
-    .map((line) => (line.startsWith("              ") ? line.slice(14) : line))
-    .join("\n");
+  // These original receipt/threat tests isolate the newly added freshness
+  // dependency; Snapshot.Tests exercises that dependency with real history data.
+  const freshnessStub = `
+process.env.GITHUB_WORKSPACE ||= '/workspace'; process.env.GH_AW_REVIEW_INPUT ||= 'captured-fixture';
+async function capturedFixture() {
+  const threads=[]; let cursor=null;
+  do {
+    const result=await github.graphql('query reviewThreads', {...context.repo,pr:context.payload.pull_request.number,cursor});
+    const page=result.repository.pullRequest.reviewThreads;
+    for(const thread of page.nodes) {
+      const comments=[...thread.comments.nodes]; let next=thread.comments.pageInfo;
+      while(next.hasNextPage) {
+        const result=await github.graphql('query PullRequestReviewThread', {threadId:thread.id,cursor:next.endCursor});
+        comments.push(...result.node.comments.nodes);next=result.node.comments.pageInfo;
+      }
+      threads.push({id:thread.id,isResolved:thread.isResolved,comments});
+    }
+    cursor=page.pageInfo.hasNextPage?page.pageInfo.endCursor:null;
+  } while(cursor);
+  return {pull_number:context.payload.pull_request.number,head_sha:context.payload.pull_request.head.sha,threads};
+}
+const originalRequireForFreshness=require;
+require=name=>name.endsWith('/ReviewSnapshot.cjs')?{assertMutationFresh:async()=>{
+  const pr=(await github.rest.pulls.get({...context.repo,pull_number:context.payload.pull_request.number})).data;
+  if(pr.state!=='open'||pr.draft||pr.head.sha!==context.payload.pull_request.head.sha)throw new Error('Stale PR state/head');
+}}:originalRequireForFreshness(name);
+`;
+  const script=body.split(/\r?\n/).map(line=>line.startsWith('              ')?line.slice(14):line).join('\n');
+  // Supply an already captured history to the production lookup, preserving
+  // the original pagination fixtures without reintroducing discovery in the job.
+  return freshnessStub + script.replace("JSON.parse(fs.readFileSync(process.env.GH_AW_REVIEW_INPUT, 'utf8'))", 'await capturedFixture()');
 }
 
 // Runs the extracted actions/github-script body in a fresh vm context that mocks just
@@ -41,7 +68,7 @@ function extractUnresolveScript(markdownSource) {
 // a run that gets past the guard stops at the very next check instead of needing a full
 // GraphQL/PR mock -- github.rest.pulls.get and github.graphql are wired to throw if the
 // guard ever lets a run reach them.
-function run(script, { conclusion, reason }) {
+function run(script, { conclusion, reason, expectedActions = false }) {
   const warnings = [];
   const infos = [];
   let readFileCalled = false;
@@ -51,6 +78,7 @@ function run(script, { conclusion, reason }) {
         GH_AW_DETECTION_CONCLUSION: conclusion,
         GH_AW_DETECTION_REASON: reason,
         GH_AW_AGENT_OUTPUT: "fixture.json",
+        GH_AW_EXPECTED_THREAD_ACTIONS: expectedActions ? 'true' : 'false',
       },
     },
     core: {
@@ -78,6 +106,11 @@ function run(script, { conclusion, reason }) {
 }
 
 const guardMessage = /did not conclude "success"/;
+
+test('a requested mutation blocked by detection fails instead of silently succeeding',async()=>{
+  const script=extractUnresolveScript(fs.readFileSync(workflowPath,'utf8'));
+  await assert.rejects(run(script,{conclusion:'warning',reason:'',expectedActions:true}),/Requested thread mutations blocked/);
+});
 
 test("blocks the reopen when threat detection did not cleanly conclude success", async () => {
   const script = extractUnresolveScript(fs.readFileSync(workflowPath, "utf8"));
@@ -159,10 +192,10 @@ test("does not reopen a thread when the agent did not request a matching reply",
   assert.deepEqual(mutations, [], "a reopen must not happen without a matching posted reply");
 });
 
-async function tryReopenWithEvidence({ manifest, rootId = 101, requestedRoot = rootId, requestedBody = "Still open." }) {
+async function tryReopenWithEvidence({ manifest, rootId = 101, requestedRoot = rootId, requestedBody = "Still open.", operation = "reopen", isResolved = true, missingThread = false, pullOverride = {} }) {
   const script = extractUnresolveScript(fs.readFileSync(workflowPath, "utf8"));
   const items = [
-    { type: "unresolve_review_thread", comment_id: String(rootId), reason: "still open" },
+    { type: "unresolve_review_thread", comment_id: String(rootId), reason: "verified state", operation },
     { type: "reply_to_pull_request_review_comment", comment_id: String(requestedRoot), body: requestedBody },
   ];
   const mutations = [];
@@ -172,12 +205,12 @@ async function tryReopenWithEvidence({ manifest, rootId = 101, requestedRoot = r
     context: { repo: { owner: "octo", repo: "widgets" }, payload: { pull_request: { number: 7, head: { sha: "deadbeef" } } } },
     github: {
       rest: { pulls: {
-        get: async () => ({ data: { state: "open", draft: false, head: { sha: "deadbeef" } } }),
+        get: async () => ({ data: { state: "open", draft: false, head: { sha: "deadbeef" }, ...pullOverride } }),
       } },
       graphql: async (query, vars) => {
-        if (query.includes("unresolveReviewThread")) { mutations.push(vars.threadId); return {}; }
+        if (query.includes("unresolveReviewThread") || query.includes("resolveReviewThread")) { mutations.push(vars.threadId); return {}; }
         return { repository: { pullRequest: { reviewThreads: { pageInfo: { hasNextPage: false, endCursor: null }, nodes: [
-          { id: "thread-0", isResolved: true, comments: { pageInfo: { hasNextPage: false, endCursor: null }, nodes: [{ databaseId: rootId }] } },
+          ...(!missingThread ? [{ id: "thread-0", isResolved, comments: { pageInfo: { hasNextPage: false, endCursor: null }, nodes: [{ databaseId: rootId }] } }] : []),
         ] } } } };
       },
     },
@@ -190,6 +223,28 @@ async function tryReopenWithEvidence({ manifest, rootId = 101, requestedRoot = r
   try { await vm.runInContext(`(async () => {\n${script}\n})()`, sandbox); } catch (e) { error = e; }
   return { error, mutations };
 }
+
+test('requested resolutions fail visibly when the PR closes or its head moves',async()=>{
+  for(const pullOverride of [{state:'closed'},{head:{sha:'moved'}}]) {
+    const result=await tryReopenWithEvidence({manifest:JSON.stringify({type:'reply_to_pull_request_review_comment',provider:'github',id:101}),operation:'resolve',isResolved:false,pullOverride});
+    assert.ok(result.error,'A stale requested resolution must fail the job');
+    assert.deepEqual(result.mutations,[]);
+  }
+});
+
+test('a missing requested thread fails instead of leaving a green run',async()=>{
+  const result=await tryReopenWithEvidence({manifest:JSON.stringify({type:'reply_to_pull_request_review_comment',provider:'github',id:101}),missingThread:true});
+  assert.match(result.error.message,/Could not find requested/);assert.deepEqual(result.mutations,[]);
+});
+
+test("resolves only after a requested reply was actually applied", async () => {
+  const absent = await tryReopenWithEvidence({ manifest: "", operation: "resolve", isResolved: false, requestedBody: "Addressed." });
+  assert.match(absent.error.message, /applied reply/i);
+  assert.deepEqual(absent.mutations, []);
+  const present = await tryReopenWithEvidence({ manifest: JSON.stringify({ type: "reply_to_pull_request_review_comment", provider: "github", id: 101 }), operation: "resolve", isResolved: false, requestedBody: "Addressed." });
+  assert.ifError(present.error);
+  assert.deepEqual(present.mutations, ["thread-0"]);
+});
 
 // Captured from safe-outputs-items in run 41568851809. Its id is the original
 // review comment, not the newly-created reply id (4450467376).
