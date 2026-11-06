@@ -133,7 +133,7 @@ function Assert-GeneratorSdkValidationPortableConfig {
     param([string[]]$Paths)
     foreach ($path in $Paths) {
         $content = Get-Content $path -Raw
-        $null = $content | ConvertFrom-Json -AsHashtable
+        $null = $content | ConvertFrom-Json
         if ($content -match '(?i)file:|https?://(localhost|127\.0\.0\.1|\[::1\])') {
             throw "Refusing to publish a PR with machine-local package references in $path."
         }

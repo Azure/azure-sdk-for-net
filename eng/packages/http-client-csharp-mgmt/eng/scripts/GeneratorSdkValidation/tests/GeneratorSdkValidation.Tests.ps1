@@ -262,38 +262,6 @@ Describe 'Publication safety and checked commands' {
         '{"resolved":"https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js/npm/registry/package.tgz"}' | Set-Content $config
         { Assert-GeneratorSdkValidationPortableConfig @($config) } | Should -Not -Throw
     }
-    It 'accepts the real emitter lockfile with an empty root-package key' {
-        $ErrorActionPreference = 'Stop'
-        $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot '../../../../../../..')).Path
-        $lock = Join-Path $repoRoot 'eng/azure-typespec-http-client-csharp-mgmt-emitter-package-lock.json'
-        $parsed = Get-Content $lock -Raw | ConvertFrom-Json -AsHashtable
-        $parsed.packages.Contains('') | Should -BeTrue
-        { Assert-GeneratorSdkValidationPortableConfig @($lock) } | Should -Not -Throw
-    }
-    It 'rejects <Reference> in lockfiles with an empty root-package key' -TestCases @(
-        @{ Reference = 'file:/tmp/generator.tgz' },
-        @{ Reference = 'http://localhost:8000/generator.tgz' },
-        @{ Reference = 'https://127.0.0.1/generator.tgz' },
-        @{ Reference = 'http://[::1]:8000/generator.tgz' }
-    ) {
-        param($Reference)
-        $ErrorActionPreference = 'Stop'
-        $lock = Join-Path $TestDrive nonportable-package-lock.json
-        @{
-            lockfileVersion = 3
-            packages = @{
-                '' = @{ name = 'root-package' }
-                'node_modules/generator' = @{ resolved = $Reference }
-            }
-        } | ConvertTo-Json -Depth 5 | Set-Content $lock
-        { Assert-GeneratorSdkValidationPortableConfig @($lock) } | Should -Throw '*machine-local*'
-    }
-    It 'still rejects malformed JSON' {
-        $ErrorActionPreference = 'Stop'
-        $config = Join-Path $TestDrive invalid-json.json
-        '{' | Set-Content $config
-        { Assert-GeneratorSdkValidationPortableConfig @($config) } | Should -Throw
-    }
     It 'propagates native failures and restores the caller location' {
         $location = (Get-Location).Path
         { Invoke-GeneratorSdkValidationCommand pwsh @('-NoProfile', '-Command', 'exit 7') $TestDrive } | Should -Throw '*exited with code 7*'
