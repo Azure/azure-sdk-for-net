@@ -13,6 +13,8 @@ namespace Azure.Messaging.WebPubSub.Chat
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ChatTopic))]
+    [ModelReaderWriterBuildable(typeof(ChatUserRoom))]
     [ModelReaderWriterBuildable(typeof(WebPubSubChatConversation))]
     [ModelReaderWriterBuildable(typeof(WebPubSubChatMessage))]
     [ModelReaderWriterBuildable(typeof(WebPubSubChatMessageContent))]

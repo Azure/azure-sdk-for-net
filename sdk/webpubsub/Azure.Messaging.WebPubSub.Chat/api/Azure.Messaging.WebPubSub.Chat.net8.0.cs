@@ -33,6 +33,63 @@ namespace Azure.Messaging.WebPubSub.Chat
         public static bool operator !=(Azure.Messaging.WebPubSub.Chat.ChatPermission left, Azure.Messaging.WebPubSub.Chat.ChatPermission right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ChatTopic : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.WebPubSub.Chat.ChatTopic>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.WebPubSub.Chat.ChatTopic>
+    {
+        public ChatTopic(string title) { }
+        public string ConversationId { get { throw null; } }
+        public string CreatedBy { get { throw null; } }
+        public System.DateTimeOffset CreatedOn { get { throw null; } }
+        public Azure.ETag Etag { get { throw null; } }
+        public string Id { get { throw null; } }
+        public Azure.Messaging.WebPubSub.Chat.ChatTopicState State { get { throw null; } set { } }
+        public string Title { get { throw null; } set { } }
+        protected virtual Azure.Messaging.WebPubSub.Chat.ChatTopic JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.Messaging.WebPubSub.Chat.ChatTopic (Azure.Response response) { throw null; }
+        public static implicit operator Azure.Core.RequestContent (Azure.Messaging.WebPubSub.Chat.ChatTopic chatTopic) { throw null; }
+        protected virtual Azure.Messaging.WebPubSub.Chat.ChatTopic PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Messaging.WebPubSub.Chat.ChatTopic System.ClientModel.Primitives.IJsonModel<Azure.Messaging.WebPubSub.Chat.ChatTopic>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.WebPubSub.Chat.ChatTopic>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Messaging.WebPubSub.Chat.ChatTopic System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.WebPubSub.Chat.ChatTopic>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.WebPubSub.Chat.ChatTopic>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.WebPubSub.Chat.ChatTopic>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ChatTopicState : System.IEquatable<Azure.Messaging.WebPubSub.Chat.ChatTopicState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ChatTopicState(string value) { throw null; }
+        public static Azure.Messaging.WebPubSub.Chat.ChatTopicState Archived { get { throw null; } }
+        public static Azure.Messaging.WebPubSub.Chat.ChatTopicState Normal { get { throw null; } }
+        public static Azure.Messaging.WebPubSub.Chat.ChatTopicState SoftDeleted { get { throw null; } }
+        public bool Equals(Azure.Messaging.WebPubSub.Chat.ChatTopicState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Messaging.WebPubSub.Chat.ChatTopicState left, Azure.Messaging.WebPubSub.Chat.ChatTopicState right) { throw null; }
+        public static implicit operator Azure.Messaging.WebPubSub.Chat.ChatTopicState (string value) { throw null; }
+        public static implicit operator Azure.Messaging.WebPubSub.Chat.ChatTopicState? (string value) { throw null; }
+        public static bool operator !=(Azure.Messaging.WebPubSub.Chat.ChatTopicState left, Azure.Messaging.WebPubSub.Chat.ChatTopicState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ChatUserRoom : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.WebPubSub.Chat.ChatUserRoom>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.WebPubSub.Chat.ChatUserRoom>
+    {
+        internal ChatUserRoom() { }
+        public string DefaultConversation { get { throw null; } }
+        public Azure.ETag Etag { get { throw null; } }
+        public string Id { get { throw null; } }
+        public string Title { get { throw null; } }
+        protected virtual Azure.Messaging.WebPubSub.Chat.ChatUserRoom JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.Messaging.WebPubSub.Chat.ChatUserRoom PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Messaging.WebPubSub.Chat.ChatUserRoom System.ClientModel.Primitives.IJsonModel<Azure.Messaging.WebPubSub.Chat.ChatUserRoom>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.WebPubSub.Chat.ChatUserRoom>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Messaging.WebPubSub.Chat.ChatUserRoom System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.WebPubSub.Chat.ChatUserRoom>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.WebPubSub.Chat.ChatUserRoom>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.WebPubSub.Chat.ChatUserRoom>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ClientAccessUriOptions
     {
         public ClientAccessUriOptions() { }
@@ -46,12 +103,24 @@ namespace Azure.Messaging.WebPubSub.Chat
         public string LatestMessageId { get { throw null; } set { } }
         public int? MaxPageSize { get { throw null; } set { } }
     }
+    public partial class UpdateMessageOptions
+    {
+        public UpdateMessageOptions() { }
+        public Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessageContent Content { get { throw null; } set { } }
+        public string CreatedBy { get { throw null; } set { } }
+    }
+    public partial class UpdateTopicOptions
+    {
+        public UpdateTopicOptions() { }
+        public Azure.Messaging.WebPubSub.Chat.ChatTopicState? State { get { throw null; } set { } }
+        public string Title { get { throw null; } set { } }
+    }
     public partial class WebPubSubChatConversation : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.WebPubSub.Chat.WebPubSubChatConversation>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.WebPubSub.Chat.WebPubSubChatConversation>
     {
         internal WebPubSubChatConversation() { }
         public Azure.ETag Etag { get { throw null; } }
         public string Id { get { throw null; } }
-        public string ParentRoom { get { throw null; } }
+        public string RoomId { get { throw null; } }
         protected virtual Azure.Messaging.WebPubSub.Chat.WebPubSubChatConversation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         public static explicit operator Azure.Messaging.WebPubSub.Chat.WebPubSubChatConversation (Azure.Response response) { throw null; }
@@ -84,9 +153,11 @@ namespace Azure.Messaging.WebPubSub.Chat
     }
     public partial class WebPubSubChatMessageContent : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessageContent>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessageContent>
     {
-        public WebPubSubChatMessageContent() { }
-        public System.BinaryData Binary { get { throw null; } set { } }
-        public string Text { get { throw null; } set { } }
+        internal WebPubSubChatMessageContent() { }
+        public System.BinaryData Binary { get { throw null; } }
+        public string Text { get { throw null; } }
+        public static Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessageContent FromBinary(System.BinaryData binary) { throw null; }
+        public static Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessageContent FromText(string text) { throw null; }
         protected virtual Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessageContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessageContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -99,7 +170,9 @@ namespace Azure.Messaging.WebPubSub.Chat
     }
     public static partial class WebPubSubChatModelFactory
     {
-        public static Azure.Messaging.WebPubSub.Chat.WebPubSubChatConversation WebPubSubChatConversation(string id = null, string parentRoom = null, Azure.ETag etag = default(Azure.ETag)) { throw null; }
+        public static Azure.Messaging.WebPubSub.Chat.ChatTopic ChatTopic(string id = null, string title = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), string createdBy = null, Azure.Messaging.WebPubSub.Chat.ChatTopicState state = default(Azure.Messaging.WebPubSub.Chat.ChatTopicState), string conversationId = null, Azure.ETag etag = default(Azure.ETag)) { throw null; }
+        public static Azure.Messaging.WebPubSub.Chat.ChatUserRoom ChatUserRoom(string id = null, string title = null, string defaultConversation = null, Azure.ETag etag = default(Azure.ETag)) { throw null; }
+        public static Azure.Messaging.WebPubSub.Chat.WebPubSubChatConversation WebPubSubChatConversation(string id = null, string roomId = null, Azure.ETag etag = default(Azure.ETag)) { throw null; }
         public static Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessage WebPubSubChatMessage(string id = null, string createdBy = null, Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessageContent content = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), Azure.ETag etag = default(Azure.ETag)) { throw null; }
         public static Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessageContent WebPubSubChatMessageContent(string text = null, System.BinaryData binary = null) { throw null; }
         public static Azure.Messaging.WebPubSub.Chat.WebPubSubChatRole WebPubSubChatRole(string name = null, System.Collections.Generic.IEnumerable<Azure.Messaging.WebPubSub.Chat.ChatPermission> permissions = null, Azure.ETag etag = default(Azure.ETag)) { throw null; }
@@ -177,21 +250,25 @@ namespace Azure.Messaging.WebPubSub.Chat
         public virtual string Hub { get { throw null; } }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response CreateOrReplaceRole(string roleName, Azure.Core.RequestContent content, Azure.MatchConditions matchConditions = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.Messaging.WebPubSub.Chat.WebPubSubChatRole> CreateOrReplaceRole(string roleName, Azure.Messaging.WebPubSub.Chat.WebPubSubChatRole resource, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Messaging.WebPubSub.Chat.WebPubSubChatRole> CreateOrReplaceRole(string roleName, Azure.Messaging.WebPubSub.Chat.WebPubSubChatRole role, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrReplaceRoleAsync(string roleName, Azure.Core.RequestContent content, Azure.MatchConditions matchConditions = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Messaging.WebPubSub.Chat.WebPubSubChatRole>> CreateOrReplaceRoleAsync(string roleName, Azure.Messaging.WebPubSub.Chat.WebPubSubChatRole resource, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Messaging.WebPubSub.Chat.WebPubSubChatRole>> CreateOrReplaceRoleAsync(string roleName, Azure.Messaging.WebPubSub.Chat.WebPubSubChatRole role, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response CreateOrReplaceRoom(string roomId, Azure.Core.RequestContent content, Azure.MatchConditions matchConditions = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoom> CreateOrReplaceRoom(string roomId, Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoom resource, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoom> CreateOrReplaceRoom(string roomId, Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoom room, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrReplaceRoomAsync(string roomId, Azure.Core.RequestContent content, Azure.MatchConditions matchConditions = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoom>> CreateOrReplaceRoomAsync(string roomId, Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoom resource, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoom>> CreateOrReplaceRoomAsync(string roomId, Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoom room, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response CreateOrReplaceRoomMember(string roomId, string userId, Azure.Core.RequestContent content, Azure.MatchConditions matchConditions = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoomMember> CreateOrReplaceRoomMember(string roomId, string userId, Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoomMember resource, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoomMember> CreateOrReplaceRoomMember(string roomId, string userId, Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoomMember member, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrReplaceRoomMemberAsync(string roomId, string userId, Azure.Core.RequestContent content, Azure.MatchConditions matchConditions = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoomMember>> CreateOrReplaceRoomMemberAsync(string roomId, string userId, Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoomMember resource, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoomMember>> CreateOrReplaceRoomMemberAsync(string roomId, string userId, Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoomMember member, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response CreateOrReplaceTopic(string roomId, string topicId, Azure.Core.RequestContent content, Azure.MatchConditions matchConditions = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response<Azure.Messaging.WebPubSub.Chat.ChatTopic> CreateOrReplaceTopic(string roomId, string topicId, Azure.Messaging.WebPubSub.Chat.ChatTopic topic, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrReplaceTopicAsync(string roomId, string topicId, Azure.Core.RequestContent content, Azure.MatchConditions matchConditions = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Messaging.WebPubSub.Chat.ChatTopic>> CreateOrReplaceTopicAsync(string roomId, string topicId, Azure.Messaging.WebPubSub.Chat.ChatTopic topic, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response CreateOrReplaceUser(string userId, Azure.Core.RequestContent content, Azure.MatchConditions matchConditions = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.Messaging.WebPubSub.Chat.WebPubSubChatUser> CreateOrReplaceUser(string userId, Azure.Messaging.WebPubSub.Chat.WebPubSubChatUser resource, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Messaging.WebPubSub.Chat.WebPubSubChatUser> CreateOrReplaceUser(string userId, Azure.Messaging.WebPubSub.Chat.WebPubSubChatUser user, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrReplaceUserAsync(string userId, Azure.Core.RequestContent content, Azure.MatchConditions matchConditions = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Messaging.WebPubSub.Chat.WebPubSubChatUser>> CreateOrReplaceUserAsync(string userId, Azure.Messaging.WebPubSub.Chat.WebPubSubChatUser resource, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Messaging.WebPubSub.Chat.WebPubSubChatUser>> CreateOrReplaceUserAsync(string userId, Azure.Messaging.WebPubSub.Chat.WebPubSubChatUser user, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteMessage(string conversationId, string messageId, Azure.MatchConditions matchConditions, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response DeleteMessage(string conversationId, string messageId, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteMessageAsync(string conversationId, string messageId, Azure.MatchConditions matchConditions, Azure.RequestContext context) { throw null; }
@@ -208,6 +285,10 @@ namespace Azure.Messaging.WebPubSub.Chat
         public virtual Azure.Response DeleteRoomMember(string roomId, string userId, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteRoomMemberAsync(string roomId, string userId, Azure.MatchConditions matchConditions, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteRoomMemberAsync(string roomId, string userId, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeleteTopic(string roomId, string topicId, Azure.MatchConditions matchConditions, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response DeleteTopic(string roomId, string topicId, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteTopicAsync(string roomId, string topicId, Azure.MatchConditions matchConditions, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteTopicAsync(string roomId, string topicId, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteUser(string userId, Azure.MatchConditions matchConditions, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response DeleteUser(string userId, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteUserAsync(string userId, Azure.MatchConditions matchConditions, Azure.RequestContext context) { throw null; }
@@ -238,14 +319,38 @@ namespace Azure.Messaging.WebPubSub.Chat
         public virtual Azure.Pageable<Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoomMember> GetRoomMembers(string roomId, int? maxPageSize = default(int?), string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetRoomMembersAsync(string roomId, int? maxPageSize, string continuationToken, Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoomMember> GetRoomMembersAsync(string roomId, int? maxPageSize = default(int?), string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetRooms(int? maxPageSize, string continuationToken, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoom> GetRooms(int? maxPageSize = default(int?), string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetRoomsAsync(int? maxPageSize, string continuationToken, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoom> GetRoomsAsync(int? maxPageSize = default(int?), string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetRoomsForUser(string userId, int? maxPageSize, string continuationToken, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.Messaging.WebPubSub.Chat.ChatUserRoom> GetRoomsForUser(string userId, int? maxPageSize = default(int?), string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetRoomsForUserAsync(string userId, int? maxPageSize, string continuationToken, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Messaging.WebPubSub.Chat.ChatUserRoom> GetRoomsForUserAsync(string userId, int? maxPageSize = default(int?), string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response GetTopic(string roomId, string topicId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response<Azure.Messaging.WebPubSub.Chat.ChatTopic> GetTopic(string roomId, string topicId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetTopicAsync(string roomId, string topicId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Messaging.WebPubSub.Chat.ChatTopic>> GetTopicAsync(string roomId, string topicId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetTopics(string roomId, int? maxPageSize, string continuationToken, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.Messaging.WebPubSub.Chat.ChatTopic> GetTopics(string roomId, int? maxPageSize = default(int?), string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetTopicsAsync(string roomId, int? maxPageSize, string continuationToken, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Messaging.WebPubSub.Chat.ChatTopic> GetTopicsAsync(string roomId, int? maxPageSize = default(int?), string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetUser(string userId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Messaging.WebPubSub.Chat.WebPubSubChatUser> GetUser(string userId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetUserAsync(string userId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Messaging.WebPubSub.Chat.WebPubSubChatUser>> GetUserAsync(string userId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetUsers(int? maxPageSize, string continuationToken, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.Messaging.WebPubSub.Chat.WebPubSubChatUser> GetUsers(int? maxPageSize = default(int?), string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetUsersAsync(int? maxPageSize, string continuationToken, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Messaging.WebPubSub.Chat.WebPubSubChatUser> GetUsersAsync(int? maxPageSize = default(int?), string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response UpdateMessage(string conversationId, string messageId, Azure.Core.RequestContent content, Azure.MatchConditions matchConditions = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessage> UpdateMessage(string conversationId, string messageId, Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessage message, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessage> UpdateMessage(string conversationId, string messageId, Azure.Messaging.WebPubSub.Chat.UpdateMessageOptions options, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateMessageAsync(string conversationId, string messageId, Azure.Core.RequestContent content, Azure.MatchConditions matchConditions = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessage>> UpdateMessageAsync(string conversationId, string messageId, Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessage message, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessage>> UpdateMessageAsync(string conversationId, string messageId, Azure.Messaging.WebPubSub.Chat.UpdateMessageOptions options, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response UpdateTopic(string roomId, string topicId, Azure.Core.RequestContent content, Azure.MatchConditions matchConditions = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response<Azure.Messaging.WebPubSub.Chat.ChatTopic> UpdateTopic(string roomId, string topicId, Azure.Messaging.WebPubSub.Chat.UpdateTopicOptions options, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateTopicAsync(string roomId, string topicId, Azure.Core.RequestContent content, Azure.MatchConditions matchConditions = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Messaging.WebPubSub.Chat.ChatTopic>> UpdateTopicAsync(string roomId, string topicId, Azure.Messaging.WebPubSub.Chat.UpdateTopicOptions options, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
     public static partial class WebPubSubChatServiceClientHostExtensions
@@ -257,11 +362,12 @@ namespace Azure.Messaging.WebPubSub.Chat
     }
     public partial class WebPubSubChatServiceClientOptions : Azure.Core.ClientOptions
     {
-        public WebPubSubChatServiceClientOptions(Azure.Messaging.WebPubSub.Chat.WebPubSubChatServiceClientOptions.ServiceVersion version = Azure.Messaging.WebPubSub.Chat.WebPubSubChatServiceClientOptions.ServiceVersion.V2026_02_01_Preview) { }
+        public WebPubSubChatServiceClientOptions(Azure.Messaging.WebPubSub.Chat.WebPubSubChatServiceClientOptions.ServiceVersion version = Azure.Messaging.WebPubSub.Chat.WebPubSubChatServiceClientOptions.ServiceVersion.V2026_08_01_Preview) { }
         public System.Uri ReverseProxyEndpoint { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V2026_02_01_Preview = 1,
+            V2026_08_01_Preview = 2,
         }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]

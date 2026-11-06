@@ -4,6 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Diagnostics;
 using Azure.Identity;
 
 namespace Azure.Messaging.WebPubSub.Chat.Tests.Samples
@@ -60,7 +61,6 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests.Samples
         {
             var client = new WebPubSubChatServiceClient(ConnectionString, "chat");
 
-            #region Snippet:WebPubSubChatCreateRoomAndMember
             // <ChatDotNet_CreateRoomAndMember>
             // Create (or replace) a room.
             WebPubSubChatRoom room = client.CreateOrReplaceRoom("room1", new WebPubSubChatRoom("General")).Value;
@@ -71,6 +71,98 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests.Samples
             // Add the user to the room as a room member.
             client.CreateOrReplaceRoomMember("room1", "user1", new WebPubSubChatRoomMember(BuiltInChatRoles.RoomMember));
             // </ChatDotNet_CreateRoomAndMember>
+        }
+
+        public async Task DiscoverRoomsAndUsersAsync()
+        {
+            var client = new WebPubSubChatServiceClient(ConnectionString, "chat");
+
+            #region Snippet:WebPubSubChatDiscoverRooms
+            await foreach (WebPubSubChatRoom room in client.GetRoomsAsync(maxPageSize: 20))
+            {
+                Console.WriteLine($"{room.Id}: {room.Title}");
+            }
+            #endregion
+
+            #region Snippet:WebPubSubChatDiscoverUsers
+            await foreach (WebPubSubChatUser user in client.GetUsersAsync(maxPageSize: 20))
+            {
+                Console.WriteLine($"{user.Id}: {user.Nickname}");
+            }
+            #endregion
+
+            #region Snippet:WebPubSubChatDiscoverUserRooms
+            await foreach (ChatUserRoom room in client.GetRoomsForUserAsync("user1"))
+            {
+                Console.WriteLine($"User belongs to {room.Title} ({room.Id})");
+            }
+            #endregion
+        }
+
+        public async Task ManageTopicsAsync()
+        {
+            var client = new WebPubSubChatServiceClient(ConnectionString, "chat");
+
+            #region Snippet:WebPubSubChatCreateTopic
+            ChatTopic topic = await client.CreateOrReplaceTopicAsync(
+                "room1", "planning", new ChatTopic("Planning"),
+                new MatchConditions { IfNoneMatch = ETag.All });
+            Console.WriteLine($"{topic.Id}: {topic.ConversationId}");
+            #endregion
+
+            #region Snippet:WebPubSubChatListTopics
+            await foreach (ChatTopic listedTopic in client.GetTopicsAsync("room1", maxPageSize: 20))
+            {
+                Console.WriteLine($"{listedTopic.Id}: {listedTopic.Title} ({listedTopic.State})");
+            }
+            #endregion
+
+            #region Snippet:WebPubSubChatGetTopic
+            topic = await client.GetTopicAsync("room1", "planning");
+            Console.WriteLine($"{topic.Title}: {topic.State}");
+            #endregion
+
+            #region Snippet:WebPubSubChatUpdateTopic
+            // Merge patch changes only the supplied properties.
+            topic = await client.UpdateTopicAsync(
+                "room1", "planning", new UpdateTopicOptions { State = ChatTopicState.Archived },
+                new MatchConditions { IfMatch = topic.Etag });
+            #endregion
+
+            #region Snippet:WebPubSubChatDeleteTopic
+            // Deleting a topic is a soft delete, not a permanent removal.
+            await client.DeleteTopicAsync(
+                "room1", "planning", new MatchConditions { IfMatch = topic.Etag });
+            #endregion
+        }
+
+        public void ResumeRoomListing()
+        {
+            var client = new WebPubSubChatServiceClient(ConnectionString, "chat");
+
+            #region Snippet:WebPubSubChatResumeRoomListing
+            string continuationToken = null;
+            foreach (Page<WebPubSubChatRoom> page in client.GetRooms().AsPages(pageSizeHint: 20))
+            {
+                foreach (WebPubSubChatRoom room in page.Values)
+                {
+                    Console.WriteLine(room.Title);
+                }
+                continuationToken = page.ContinuationToken;
+                break;
+            }
+
+            // AsPages accepts the opaque continuation link from a previous page.
+            if (continuationToken != null)
+            {
+                foreach (Page<WebPubSubChatRoom> page in client.GetRooms().AsPages(continuationToken))
+                {
+                    foreach (WebPubSubChatRoom room in page.Values)
+                    {
+                        Console.WriteLine(room.Title);
+                    }
+                }
+            }
             #endregion
         }
 
@@ -78,7 +170,6 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests.Samples
         {
             var client = new WebPubSubChatServiceClient(ConnectionString, "chat");
 
-            #region Snippet:WebPubSubChatDefineCustomRole
             // <ChatDotNet_DefineCustomRole>
             var role = new WebPubSubChatRole(new[]
             {
@@ -89,7 +180,6 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests.Samples
 
             client.CreateOrReplaceRole("room.contributor", role);
             // </ChatDotNet_DefineCustomRole>
-            #endregion
         }
 
         public void InspectBuiltInRole()
@@ -121,19 +211,10 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests.Samples
             #endregion
         }
 
-        public void HandleRequestFailure()
+        public void EnableLogging()
         {
-            var client = new WebPubSubChatServiceClient(ConnectionString, "chat");
-
-            #region Snippet:WebPubSubChatHandleRequestFailure
-            try
-            {
-                client.GetRoom("does-not-exist");
-            }
-            catch (RequestFailedException ex)
-            {
-                Console.WriteLine($"Request failed with status {ex.Status}: {ex.Message}");
-            }
+            #region Snippet:WebPubSubChatEnableLogging
+            using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
             #endregion
         }
 
@@ -295,7 +376,7 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests.Samples
             #region Snippet:WebPubSubChatGetConversation
             WebPubSubChatConversation conversation = client.GetConversation(room.DefaultConversation).Value;
 
-            Console.WriteLine($"Conversation {conversation.Id} belongs to room {conversation.ParentRoom}");
+            Console.WriteLine($"Conversation {conversation.Id} belongs to room {conversation.RoomId}");
             #endregion
         }
 
@@ -305,9 +386,10 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests.Samples
             WebPubSubChatRoom room = client.GetRoom("room1").Value;
 
             #region Snippet:WebPubSubChatUpdateMessage
-            var updatedMessage = new WebPubSubChatMessage(
-                "user1",
-                new WebPubSubChatMessageContent { Text = "Updated message text" });
+            var updatedMessage = new UpdateMessageOptions
+            {
+                Content = WebPubSubChatMessageContent.FromText("Updated message text")
+            };
 
             client.UpdateMessage(
                 room.DefaultConversation,

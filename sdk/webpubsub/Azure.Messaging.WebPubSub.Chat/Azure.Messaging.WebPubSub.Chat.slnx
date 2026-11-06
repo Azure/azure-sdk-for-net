@@ -1,4 +1,6 @@
 <Solution>
+  <Project Path="../../tools/Azure.SdkAnalyzers.CodeFixes/src/Azure.SdkAnalyzers.CodeFixes.csproj" />
+  <Project Path="../../tools/Azure.SdkAnalyzers/src/Azure.SdkAnalyzers.csproj" />
   <Project Path="src/Azure.Messaging.WebPubSub.Chat.csproj" />
   <Project Path="tests/Azure.Messaging.WebPubSub.Chat.Tests.csproj" />
 </Solution>

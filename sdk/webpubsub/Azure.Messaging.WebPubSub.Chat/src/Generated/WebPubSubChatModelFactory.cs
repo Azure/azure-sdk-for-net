@@ -17,12 +17,12 @@ namespace Azure.Messaging.WebPubSub.Chat
     {
         /// <summary> Represents a chat conversation. </summary>
         /// <param name="id"> Conversation identifier. </param>
-        /// <param name="parentRoom"> Parent room identifier. </param>
+        /// <param name="roomId"> Parent room identifier. </param>
         /// <param name="etag"> The entity tag for this resource. </param>
         /// <returns> A new <see cref="Chat.WebPubSubChatConversation"/> instance for mocking. </returns>
-        public static WebPubSubChatConversation WebPubSubChatConversation(string id = default, string parentRoom = default, ETag etag = default)
+        public static WebPubSubChatConversation WebPubSubChatConversation(string id = default, string roomId = default, ETag etag = default)
         {
-            return new WebPubSubChatConversation(id, parentRoom, etag, additionalBinaryDataProperties: null);
+            return new WebPubSubChatConversation(id, roomId, etag, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents a chat message. </summary>
@@ -79,6 +79,28 @@ namespace Azure.Messaging.WebPubSub.Chat
             return new WebPubSubChatRoom(id, title, defaultConversation, etag, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Represents a chat topic in a room. </summary>
+        /// <param name="id"> Topic identifier unique within the room. </param>
+        /// <param name="title"> Topic title. </param>
+        /// <param name="createdOn"> Timestamp when the topic was created. </param>
+        /// <param name="createdBy"> User who created the topic. </param>
+        /// <param name="state"> Current lifecycle state of the topic. </param>
+        /// <param name="conversationId"> Conversation associated with this topic. </param>
+        /// <param name="etag"> The entity tag for this resource. </param>
+        /// <returns> A new <see cref="Chat.ChatTopic"/> instance for mocking. </returns>
+        public static ChatTopic ChatTopic(string id = default, string title = default, DateTimeOffset createdOn = default, string createdBy = default, ChatTopicState state = default, string conversationId = default, ETag etag = default)
+        {
+            return new ChatTopic(
+                id,
+                title,
+                createdOn,
+                createdBy,
+                state,
+                conversationId,
+                etag,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Represents a room member. </summary>
         /// <param name="userId"> User ID of the member. </param>
         /// <param name="roleName"> Room role assigned to the user within this room. </param>
@@ -119,6 +141,23 @@ namespace Azure.Messaging.WebPubSub.Chat
                 etag,
                 additionalBinaryDataProperties: null,
                 roleName);
+        }
+
+        /// <summary>
+        /// Represents a read-only room projection used to list rooms associated with a user.
+        /// This model enables the standard resource operation to derive the
+        /// `/api/hubs/{hub}/chat/users/{userId}/rooms` collection path because
+        /// `ChatRoom` is a child of `Hub`, not `ChatUser`.
+        /// This model does not define an independent room lifecycle.
+        /// </summary>
+        /// <param name="id"> Room identifier. </param>
+        /// <param name="title"> Room title. </param>
+        /// <param name="defaultConversation"> Default conversation ID for this room. </param>
+        /// <param name="etag"> The entity tag for this resource. </param>
+        /// <returns> A new <see cref="Chat.ChatUserRoom"/> instance for mocking. </returns>
+        public static ChatUserRoom ChatUserRoom(string id = default, string title = default, string defaultConversation = default, ETag etag = default)
+        {
+            return new ChatUserRoom(id, title, defaultConversation, etag, additionalBinaryDataProperties: null);
         }
     }
 }
