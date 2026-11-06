@@ -171,6 +171,7 @@ describe("cleanupLiveEval", () => {
       workItemId: 36111,
       releasePlanId: 1600,
       isTestReleasePlan: true,
+      createdDate: "2026-01-01T00:00:00Z",
       apiSpecProjectPath: project,
       sdkInfo: [],
       ...overrides,
@@ -220,19 +221,60 @@ describe("cleanupLiveEval", () => {
     }
   });
 
+  it("stops all pre-cleanup mutations when any plan is recent or its age is unknown", async () => {
+    for (const createdDate of ["2026-08-18T09:00:00Z", undefined, "invalid", "2026-08-18T11:00:00Z"]) {
+      await assert.rejects(cleanupLiveEval({
+        azsdk: "azsdk.dll",
+        typeSpecProject: project,
+        now: Date.parse("2026-08-18T10:00:00Z"),
+        queryPlans: () => [36111, 36112].map((id) => ({
+          kind: "workItemId", id, pullRequestUrls: [],
+        })),
+        runCli: (_, args) => {
+          assert.equal(args[1], "get");
+          return {
+            release_plan_details: fixture({
+              workItemId: Number(args[3]),
+              createdDate: args[3] === "36112" ? createdDate : "2026-08-18T08:00:00Z",
+            }),
+          };
+        },
+      }), /stopped before any mutation/);
+    }
+  });
+
+  it("allows pre-cleanup at the two-hour boundary", async () => {
+    let abandoned = false;
+    await cleanupLiveEval({
+      azsdk: "azsdk.dll",
+      typeSpecProject: project,
+      now: Date.parse("2026-08-18T10:00:00Z"),
+      queryPlans: () => [{ kind: "workItemId", id: 36111, pullRequestUrls: [] }],
+      runCli: (_, args) => {
+        if (args[1] === "get") {
+          return { release_plan_details: fixture({ createdDate: "2026-08-18T08:00:00Z" }) };
+        }
+        abandoned = true;
+        return {};
+      },
+    });
+    assert.equal(abandoned, true);
+  });
+
   it("post-cleans a new plan and its Java PR through the abandonment CLI", async () => {
     const root = writeEvents([
       start("1", "azsdk_create_release_plan", {}),
-      complete("1", { release_plan_details: fixture() }),
+      complete("1", { release_plan_details: fixture({ createdDate: "2026-08-18T08:00:00Z" }) }),
     ]);
     const calls = [];
     await cleanupLiveEval({
       resultsDir: root,
       azsdk: "azsdk.dll",
+      now: Date.parse("2026-08-18T08:10:00Z"),
       runCli: (_, args) => {
         calls.push(args);
         return args[1] === "get"
-          ? { release_plan_details: fixture({ sdkInfo: [{ sdkPullRequestUrl: prUrl }] }) }
+          ? { release_plan_details: fixture({ createdDate: "2026-08-18T08:00:00Z", sdkInfo: [{ sdkPullRequestUrl: prUrl }] }) }
           : {};
       },
       getPullRequest: async () => ({
