@@ -9,14 +9,14 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Projects.Agents
 {
     [Experimental("AAIP001")]
-    internal partial class UnknownCreateTelephonyBindingContent : CreateTelephonyBindingContent
+    internal partial class UnknownCreateTelephonyBindingRequest : CreateTelephonyBindingRequest
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownCreateTelephonyBindingContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownCreateTelephonyBindingRequest"/>. </summary>
         /// <param name="provider"> The telephony provider. </param>
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> An optional display label for the binding. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownCreateTelephonyBindingContent(TelephonyProvider provider, string connectionName, string label, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(provider != default ? provider : "unknown", connectionName, label, additionalBinaryDataProperties)
+        internal UnknownCreateTelephonyBindingRequest(TelephonyProvider provider, string connectionName, string label, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(provider != default ? provider : "unknown", connectionName, label, additionalBinaryDataProperties)
         {
         }
     }

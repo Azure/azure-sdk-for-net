@@ -7,10 +7,10 @@ using System.ClientModel;
 #pragma warning disable SCME0004 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 namespace Azure.AI.Speech.Transcription
 {
-    internal partial class TranscriptionContent
+    internal partial class TranscriptionRequest
     {
-        /// <summary> Initializes a new instance of <see cref="TranscriptionContent"/> for deserialization. </summary>
-        internal TranscriptionContent()
+        /// <summary> Initializes a new instance of <see cref="TranscriptionRequest"/> for deserialization. </summary>
+        internal TranscriptionRequest()
         {
         }
 

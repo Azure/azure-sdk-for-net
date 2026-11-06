@@ -32,7 +32,7 @@ Synchronous sample:
 ```C# Snippet:Sample_CreateSkill_SkillsCRUD_Sync
 AgentsSkill skillFromFile = skillsClient.CreateSkillVersionFromFiles("roll-dice", GetDirectory("roll-dice"));
 Console.WriteLine($"Created skillfrom directory {skillFromFile.Name}, Id: {skillFromFile.Id}");
-SkillInlineContent content = new(
+SkillInlineRequest content = new(
     description: "Calculates the sum of two numbers.",
     instructions: """
         To calculate the sum  run
@@ -51,7 +51,7 @@ Asynchronous sample:
 ```C# Snippet:Sample_CreateSkill_SkillsCRUD_Async
 AgentsSkill skillFromFile = await skillsClient.CreateSkillVersionFromFilesAsync("roll-dice", GetDirectory("roll-dice"));
 Console.WriteLine($"Created skillfrom directory {skillFromFile.Name}, Id: {skillFromFile.Id}");
-SkillInlineContent content = new(
+SkillInlineRequest content = new(
     description: "Calculates the sum of two numbers.",
     instructions: """
         To calculate the sum  run
