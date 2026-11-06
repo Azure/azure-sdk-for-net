@@ -33,6 +33,10 @@ Use the Azure.Search.Documents client library to:
 
 ## Getting started
 
+This version of the library uses the `2026-10-01` GA service API by default. To
+select an earlier supported GA API, set `SearchClientOptions.ServiceVersion`
+when constructing `SearchClientOptions`.
+
 ### Install the package
 
 Install the Azure AI Search client library for .NET with [NuGet][nuget]:
@@ -84,17 +88,20 @@ to get started exploring APIs, but it should be managed carefully.*
 
 #### Create a SearchClient
 
-To instantiate the `SearchClient`, you'll need the **endpoint**, **API key** and **index name**:
+To instantiate the `SearchClient` using Microsoft Entra ID, you'll need the
+**endpoint**, **index name**, and a token credential from the `Azure.Identity`
+package. Grant the identity Search Index Data Reader for queries, or Search
+Index Data Contributor for uploading documents. The following snippet uses
+`Azure.Core.TokenCredential` and `Azure.Identity.DefaultAzureCredential`:
 
 ```C# Snippet:Azure_Search_Tests_Samples_Readme_Authenticate
 string indexName = "nycjobs";
 
-// Get the service endpoint and API key from the environment
+// Get the service endpoint and authenticate with Microsoft Entra ID
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
 
 // Create a client
-AzureKeyCredential credential = new AzureKeyCredential(key);
+TokenCredential credential = new DefaultAzureCredential();
 SearchClient client = new SearchClient(endpoint, indexName, credential);
 ```
 
@@ -231,7 +238,7 @@ Semantic ranking enhances the quality of search results for text-based queries. 
 - It applies secondary ranking to the initial result set, promoting the most semantically relevant results to the top.
 - It extracts and returns captions and answers in the response, which can be displayed on a search page to enhance the user's search experience.
 
-To learn more about semantic ranking, you can refer to the [sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample08_SemanticSearch.md).
+To learn more about semantic ranking, you can refer to the [sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/SemanticSearch.md).
 
 Additionally, for more comprehensive information about semantic ranking, including its concepts and usage, you can refer to the [documentation](https://learn.microsoft.com/azure/search/semantic-search-overview). The documentation provides in-depth explanations and guidance on leveraging the power of semantic ranking in Azure AI Search.
 
@@ -241,7 +248,7 @@ Additionally, for more comprehensive information about semantic ranking, includi
 
 The SDK supports image-based vector search queries through `VectorizableImageBinaryQuery` and `VectorizableImageUrlQuery`.
 
-To learn how to index vector fields and perform vector search, you can refer to the [sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch.md). This sample provides detailed guidance on indexing vector fields and demonstrates how to perform vector search.
+To learn how to index vector fields and perform vector search, you can refer to the [sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/VectorSearch.md). This sample provides detailed guidance on indexing vector fields and demonstrates how to perform vector search.
 
 Additionally, for more comprehensive information about vector search, including its concepts and usage, you can refer to the [documentation](https://learn.microsoft.com/azure/search/vector-search-overview). The documentation provides in-depth explanations and guidance on leveraging the power of vector search in Azure AI Search.
 
@@ -298,13 +305,12 @@ using Azure.Core.GeoJson;
 We'll then create a `SearchClient` to access our hotels search index.
 
 ```C# Snippet:Azure_Search_Tests_Samples_Readme_Client
-// Get the service endpoint and API key from the environment
+// Get the service endpoint and authenticate with Microsoft Entra ID
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
 string indexName = "hotels";
 
 // Create a client
-AzureKeyCredential credential = new AzureKeyCredential(key);
+TokenCredential credential = new DefaultAzureCredential();
 SearchClient client = new SearchClient(endpoint, indexName, credential);
 ```
 
@@ -411,10 +417,9 @@ which defines both simple and complex fields:
 
 ```C# Snippet:Azure_Search_Tests_Samples_Readme_CreateIndex
 Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
-string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
 
 // Create a service client
-AzureKeyCredential credential = new AzureKeyCredential(key);
+TokenCredential credential = new DefaultAzureCredential();
 SearchIndexClient client = new SearchIndexClient(endpoint, credential);
 
 // Create the index using FieldBuilder.
@@ -475,6 +480,12 @@ an index in a single batched request.  There are
 to be aware of.
 
 ```C# Snippet:Azure_Search_Tests_Samples_Readme_Index
+// Merge requires an existing document, so seed the key before batching the merge.
+client.UploadDocuments(new[]
+{
+    new Hotel { Id = "12", Name = "Existing Ranch" }
+});
+
 IndexDocumentsBatch<Hotel> batch = IndexDocumentsBatch.Create(
     IndexDocumentsAction.Upload(new Hotel { Id = "783", Name = "Upload Inn" }),
     IndexDocumentsAction.Merge(new Hotel { Id = "12", Name = "Renovated Ranch" }));
@@ -518,9 +529,13 @@ await foreach (SearchResult<Hotel> result in searchResponse.GetResultsAsync())
 
 Use `KnowledgeBaseRetrievalClient` to retrieve grounded responses from a knowledge base, and use `SearchIndexClient` for knowledge source and knowledge base CRUD operations:
 
-- [Set up and retrieve from a knowledge base](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample10_KnowledgeBaseRetrieval.md)
-- [Knowledge source CRUD operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample11_KnowledgeSourceOperations.md)
-- [Knowledge base CRUD operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample12_KnowledgeBaseOperations.md)
+- [Set up and retrieve from a knowledge base](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/KnowledgeBaseRetrieval.md)
+- [Knowledge source CRUD operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/KnowledgeSourceOperations.md)
+- [Knowledge base CRUD operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/KnowledgeBaseOperations.md)
+- [Configure a knowledge base](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/KnowledgeBaseConfiguration.md)
+- [Inspect retrieval responses](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/KnowledgeRetrievalResponse.md)
+- [Upload and manage files in a knowledge source](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/FileKnowledgeSource.md)
+- [Stream typed knowledge base retrieval events](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/KnowledgeBaseRetrievalStreaming.md)
 
 ### Authenticate in a National Cloud
 
@@ -574,7 +589,7 @@ See our [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/
 * Go further with Azure.Search.Documents and our [samples][samples]
 * Read more about the [Azure AI Search service](https://learn.microsoft.com/azure/search/search-what-is-azure-search)
 * Explore [vector search](https://learn.microsoft.com/azure/search/vector-search-overview), including image-based queries with `VectorizableImageBinaryQuery` and `VectorizableImageUrlQuery`
-* Learn about [index aliases](https://learn.microsoft.com/rest/api/searchservice/aliases) and [knowledge base retrieval](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample10_KnowledgeBaseRetrieval.md)
+* Learn about [index aliases](https://learn.microsoft.com/rest/api/searchservice/aliases) and [knowledge base retrieval](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/KnowledgeBaseRetrieval.md)
 
 ## Contributing
 

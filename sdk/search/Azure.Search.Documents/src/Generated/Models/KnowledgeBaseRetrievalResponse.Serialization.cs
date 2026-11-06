@@ -112,11 +112,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ResponseSensitivityLabelInfo))
-            {
-                writer.WritePropertyName("responseSensitivityLabelInfo"u8);
-                writer.WriteObjectValue(ResponseSensitivityLabelInfo, options);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -162,7 +157,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             IList<KnowledgeBaseMessage> response = default;
             IList<KnowledgeBaseActivityRecord> activity = default;
             IList<KnowledgeBaseReference> references = default;
-            PurviewSensitivityLabelInfo responseSensitivityLabelInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -208,21 +202,12 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     references = array;
                     continue;
                 }
-                if (prop.NameEquals("responseSensitivityLabelInfo"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    responseSensitivityLabelInfo = PurviewSensitivityLabelInfo.DeserializePurviewSensitivityLabelInfo(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new KnowledgeBaseRetrievalResponse(response ?? new ChangeTrackingList<KnowledgeBaseMessage>(), activity ?? new ChangeTrackingList<KnowledgeBaseActivityRecord>(), references ?? new ChangeTrackingList<KnowledgeBaseReference>(), responseSensitivityLabelInfo, additionalBinaryDataProperties);
+            return new KnowledgeBaseRetrievalResponse(response ?? new ChangeTrackingList<KnowledgeBaseMessage>(), activity ?? new ChangeTrackingList<KnowledgeBaseActivityRecord>(), references ?? new ChangeTrackingList<KnowledgeBaseReference>(), additionalBinaryDataProperties);
         }
     }
 }

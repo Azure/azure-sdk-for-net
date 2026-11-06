@@ -81,16 +81,6 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(EnableImageServing))
-            {
-                writer.WritePropertyName("enableImageServing"u8);
-                writer.WriteBooleanValue(EnableImageServing.Value);
-            }
-            if (Optional.IsDefined(EnableFreshness))
-            {
-                writer.WritePropertyName("enableFreshness"u8);
-                writer.WriteBooleanValue(EnableFreshness.Value);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -134,8 +124,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string name = default;
-            bool? enableImageServing = default;
-            bool? enableFreshness = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,30 +132,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     name = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("enableImageServing"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    enableImageServing = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("enableFreshness"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    enableFreshness = prop.Value.GetBoolean();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new KnowledgeSourceReference(name, enableImageServing, enableFreshness, additionalBinaryDataProperties);
+            return new KnowledgeSourceReference(name, additionalBinaryDataProperties);
         }
     }
 }

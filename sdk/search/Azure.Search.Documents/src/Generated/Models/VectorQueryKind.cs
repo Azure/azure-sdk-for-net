@@ -19,10 +19,6 @@ namespace Azure.Search.Documents.Models
         private const string VectorValue = "vector";
         /// <summary> Vector query where a text value that needs to be vectorized is provided. </summary>
         private const string TextValue = "text";
-        /// <summary> Vector query where an url that represents an image value that needs to be vectorized is provided. </summary>
-        private const string ImageUriValue = "imageUrl";
-        /// <summary> Vector query where a base 64 encoded binary of an image that needs to be vectorized is provided. </summary>
-        private const string ImageBinaryValue = "imageBinary";
 
         /// <summary> Initializes a new instance of <see cref="VectorQueryKind"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -39,12 +35,6 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Vector query where a text value that needs to be vectorized is provided. </summary>
         public static VectorQueryKind Text { get; } = new VectorQueryKind(TextValue);
-
-        /// <summary> Vector query where an url that represents an image value that needs to be vectorized is provided. </summary>
-        public static VectorQueryKind ImageUri { get; } = new VectorQueryKind(ImageUriValue);
-
-        /// <summary> Vector query where a base 64 encoded binary of an image that needs to be vectorized is provided. </summary>
-        public static VectorQueryKind ImageBinary { get; } = new VectorQueryKind(ImageBinaryValue);
 
         /// <summary> Determines if two <see cref="VectorQueryKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

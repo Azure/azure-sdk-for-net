@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- https://learn.microsoft.com/dotnet/fundamentals/package-validation/diagnostic-ids -->
+<Suppressions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <!-- These preview APIs were accidentally included in the 2026-04-01 GA release. -->
+  <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Azure.Search.Documents.Indexes.Models.AIFoundryModelCatalogName</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Azure.Search.Documents.Indexes.Models.AzureMachineLearningParameters</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Azure.Search.Documents.Indexes.Models.AzureMachineLearningVectorizer</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Azure.Search.Documents.Models.VectorizableImageBinaryQuery</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Azure.Search.Documents.Models.VectorizableImageUrlQuery</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseAgenticReasoningActivityRecord.get_RetrievalReasoningEffort</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.Search.Documents.Models.SearchModelFactory.AzureMachineLearningParameters(System.Uri,System.String,System.String,System.Nullable{System.TimeSpan},System.String,System.Nullable{Azure.Search.Documents.Indexes.Models.AIFoundryModelCatalogName})</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.Search.Documents.Models.SearchModelFactory.AzureMachineLearningVectorizer(System.String,Azure.Search.Documents.Indexes.Models.AzureMachineLearningParameters)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.Search.Documents.Models.SearchModelFactory.VectorizableImageBinaryQuery(System.Nullable{System.Int32},System.String,System.Nullable{System.Boolean},System.Nullable{System.Double},System.Nullable{System.Single},System.String)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.Search.Documents.Models.SearchModelFactory.VectorizableImageUrlQuery(System.Nullable{System.Int32},System.String,System.Nullable{System.Boolean},System.Nullable{System.Double},System.Nullable{System.Single},System.Uri)</Target>
+  </Suppression>
+</Suppressions>

@@ -110,7 +110,6 @@ namespace Azure.Search.Documents.Indexes.Models
             string name = default;
             string description = default;
             KnowledgeSourceKind kind = default;
-            KnowledgeSourceResultsProcessing? resultsProcessing = default;
             ETag? eTag = default;
             bool encryptionKeyIsDefined = false;
             SearchResourceEncryptionKey encryptionKey = default;
@@ -130,15 +129,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (prop.NameEquals("kind"u8))
                 {
                     kind = new KnowledgeSourceKind(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("resultsProcessing"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resultsProcessing = new KnowledgeSourceResultsProcessing(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("@odata.etag"u8))
@@ -170,7 +160,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 name,
                 description,
                 kind,
-                resultsProcessing,
                 eTag,
                 encryptionKey,
                 additionalBinaryDataProperties)

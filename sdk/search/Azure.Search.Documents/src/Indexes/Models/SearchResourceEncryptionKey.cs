@@ -12,11 +12,6 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary>
         /// Creates a new instance of the <see cref="SearchResourceEncryptionKey"/> class.
         /// </summary>
-        public SearchResourceEncryptionKey() { }
-
-        /// <summary>
-        /// Creates a new instance of the <see cref="SearchResourceEncryptionKey"/> class.
-        /// </summary>
         /// <param name="vaultUri">Required. The Azure Key Vault <see cref="Uri"/>.</param>
         /// <param name="keyName">Required. The name of the Azure Key Vault key to encrypt resources at rest.</param>
         /// <param name="keyVersion">Required. The version of the Azure Key Vault key to encrypt resources at rest.</param>
@@ -48,19 +43,19 @@ namespace Azure.Search.Documents.Indexes.Models
         private string _vaultUri;
 
         /// <summary>
-        /// Gets or sets the Azure Key Vault <see cref="Uri"/>.
+        /// Gets the Azure Key Vault <see cref="Uri"/>.
         /// </summary>
         public Uri VaultUri
         {
-            get => _vaultUri != null ? new Uri(_vaultUri) : null;
-            set => _vaultUri = value?.AbsoluteUri;
+            get => new Uri(_vaultUri);
+            private set => _vaultUri = value.AbsoluteUri;
         }
 
         /// <summary>
         /// Gets the name of the Azure Key Vault key to encrypt resources at rest.
         /// </summary>
         [CodeGenMember("KeyVaultKeyName")]
-        public string KeyName { get; set; }
+        public string KeyName { get; }
 
         /// <summary>
         /// Gets the version of the Azure Key Vault key to encrypt resources at rest.
@@ -69,7 +64,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// A version is required in case the key rotates.
         /// </remarks>
         [CodeGenMember("KeyVaultKeyVersion")]
-        public string KeyVersion { get; set; }
+        public string KeyVersion { get; }
 
         /// <summary>
         /// Gets or sets the application ID to access the Azure Key Vault specified in the <see cref="VaultUri"/>.

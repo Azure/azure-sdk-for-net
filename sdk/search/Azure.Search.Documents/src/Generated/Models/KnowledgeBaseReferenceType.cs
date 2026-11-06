@@ -25,16 +25,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         private const string IndexedOneLakeValue = "indexedOneLake";
         /// <summary> Web document reference. </summary>
         private const string WebValue = "web";
-        /// <summary> Remote SharePoint document reference. </summary>
-        private const string RemoteSharePointValue = "remoteSharePoint";
-        /// <summary> Work IQ document reference. </summary>
-        private const string WorkIQValue = "workIQ";
-        /// <summary> Fabric Data Agent document reference. </summary>
-        private const string FabricDataAgentValue = "fabricDataAgent";
-        /// <summary> Fabric Ontology document reference. </summary>
-        private const string FabricOntologyValue = "fabricOntology";
-        /// <summary> MCP server document reference. </summary>
-        private const string McpServerValue = "mcpServer";
         /// <summary> File document reference. </summary>
         private const string FileValue = "file";
         /// <summary> Indexed SQL document reference. </summary>
@@ -64,21 +54,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <summary> Web document reference. </summary>
         public static KnowledgeBaseReferenceType Web { get; } = new KnowledgeBaseReferenceType(WebValue);
-
-        /// <summary> Remote SharePoint document reference. </summary>
-        public static KnowledgeBaseReferenceType RemoteSharePoint { get; } = new KnowledgeBaseReferenceType(RemoteSharePointValue);
-
-        /// <summary> Work IQ document reference. </summary>
-        public static KnowledgeBaseReferenceType WorkIQ { get; } = new KnowledgeBaseReferenceType(WorkIQValue);
-
-        /// <summary> Fabric Data Agent document reference. </summary>
-        public static KnowledgeBaseReferenceType FabricDataAgent { get; } = new KnowledgeBaseReferenceType(FabricDataAgentValue);
-
-        /// <summary> Fabric Ontology document reference. </summary>
-        public static KnowledgeBaseReferenceType FabricOntology { get; } = new KnowledgeBaseReferenceType(FabricOntologyValue);
-
-        /// <summary> MCP server document reference. </summary>
-        public static KnowledgeBaseReferenceType McpServer { get; } = new KnowledgeBaseReferenceType(McpServerValue);
 
         /// <summary> File document reference. </summary>
         public static KnowledgeBaseReferenceType File { get; } = new KnowledgeBaseReferenceType(FileValue);

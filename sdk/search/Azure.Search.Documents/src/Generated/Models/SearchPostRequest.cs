@@ -26,7 +26,6 @@ namespace Azure.Search.Documents.Models
             ScoringParameters = new ChangeTrackingList<string>();
             SearchFields = new ChangeTrackingList<string>();
             Select = new ChangeTrackingList<string>();
-            SemanticFields = new ChangeTrackingList<string>();
             VectorQueries = new ChangeTrackingList<VectorQuery>();
         }
 
@@ -38,6 +37,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="highlightPostTag"> A string tag that is appended to hit highlights. Must be set with highlightPreTag. Default is &lt;/em&gt;. </param>
         /// <param name="highlightPreTag"> A string tag that is prepended to hit highlights. Must be set with highlightPostTag. Default is &lt;em&gt;. </param>
         /// <param name="minimumCoverage"> A number between 0 and 100 indicating the percentage of the index that must be covered by a search query in order for the query to be reported as a success. This parameter can be useful for ensuring search availability even for services with only one replica. The default is 100. </param>
+        /// <param name="moreLikeThis"> The key of the document to use as the basis for finding similar documents. This parameter cannot be used together with search text. </param>
         /// <param name="orderBy"> The comma-separated list of OData $orderby expressions by which to sort the results. Each expression can be either a field name or a call to either the geo.distance() or the search.score() functions. Each expression can be followed by asc to indicate ascending, or desc to indicate descending. The default is ascending order. Ties will be broken by the match scores of documents. If no $orderby is specified, the default sort order is descending by document match score. There can be at most 32 $orderby clauses. </param>
         /// <param name="queryType"> A value that specifies the syntax of the search query. The default is 'simple'. Use 'full' if your query uses the Lucene query syntax. </param>
         /// <param name="scoringStatistics"> A value that specifies whether we want to calculate scoring statistics (such as document frequency) globally for more consistent scoring, or locally, for lower latency. The default is 'local'. Use 'global' to aggregate scoring statistics globally before scoring. Using global scoring statistics can increase latency of search queries. </param>
@@ -48,8 +48,6 @@ namespace Azure.Search.Documents.Models
         /// <param name="searchText"> A full-text search query expression; Use "*" or omit this parameter to match all documents. </param>
         /// <param name="searchFields"> The comma-separated list of field names to which to scope the full-text search. When using fielded search (fieldName:searchExpression) in a full Lucene query, the field names of each fielded search expression take precedence over any field names listed in this parameter. </param>
         /// <param name="searchMode"> A value that specifies whether any or all of the search terms must be matched in order to count the document as a match. </param>
-        /// <param name="queryLanguage"> A value that specifies the language of the search query. </param>
-        /// <param name="querySpeller"> A value that specifies the type of the speller to use to spell-correct individual search query terms. </param>
         /// <param name="select"> The comma-separated list of fields to retrieve. If unspecified, all fields marked as retrievable in the schema are included. </param>
         /// <param name="skip"> The number of search results to skip. This value cannot be greater than 100,000. If you need to scan documents in sequence, but cannot use skip due to this limitation, consider using orderby on a totally-ordered key and filter with a range query instead. </param>
         /// <param name="top"> The number of search results to retrieve. This can be used in conjunction with $skip to implement client-side paging of search results. If results are truncated due to server-side paging, the response will include a continuation token that can be used to issue another Search request for the next page of results. </param>
@@ -59,13 +57,10 @@ namespace Azure.Search.Documents.Models
         /// <param name="semanticQuery"> Allows setting a separate search query that will be solely used for semantic reranking, semantic captions and semantic answers. Is useful for scenarios where there is a need to use different queries between the base retrieval and ranking phase, and the L2 semantic phase. </param>
         /// <param name="answers"> A value that specifies whether answers should be returned as part of the search response. </param>
         /// <param name="captions"> A value that specifies whether captions should be returned as part of the search response. </param>
-        /// <param name="queryRewrites"> A value that specifies whether query rewrites should be generated to augment the search query. </param>
-        /// <param name="semanticFields"> The comma-separated list of field names used for semantic ranking. </param>
         /// <param name="vectorQueries"> The query parameters for vector and hybrid search queries. </param>
         /// <param name="vectorFilterMode"> Determines whether or not filters are applied before or after the vector search is performed. Default is 'preFilter' for new indexes. </param>
-        /// <param name="hybridSearch"> The query parameters to configure hybrid search behaviors. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchPostRequest(bool? includeTotalCount, IList<string> facets, string filter, IList<string> highlightFields, string highlightPostTag, string highlightPreTag, double? minimumCoverage, IList<string> orderBy, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IList<string> scoringParameters, string scoringProfile, QueryDebugMode? debug, string searchText, IList<string> searchFields, SearchMode? searchMode, QueryLanguage? queryLanguage, QuerySpellerType? querySpeller, IList<string> @select, int? skip, int? top, string semanticConfigurationName, SemanticErrorMode? semanticErrorHandling, int? semanticMaxWaitInMilliseconds, string semanticQuery, QueryAnswerType? answers, QueryCaptionType? captions, QueryRewritesType? queryRewrites, IList<string> semanticFields, IList<VectorQuery> vectorQueries, VectorFilterMode? vectorFilterMode, HybridSearch hybridSearch, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchPostRequest(bool? includeTotalCount, IList<string> facets, string filter, IList<string> highlightFields, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string moreLikeThis, IList<string> orderBy, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IList<string> scoringParameters, string scoringProfile, QueryDebugMode? debug, string searchText, IList<string> searchFields, SearchMode? searchMode, IList<string> @select, int? skip, int? top, string semanticConfigurationName, SemanticErrorMode? semanticErrorHandling, int? semanticMaxWaitInMilliseconds, string semanticQuery, QueryAnswerType? answers, QueryCaptionType? captions, IList<VectorQuery> vectorQueries, VectorFilterMode? vectorFilterMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IncludeTotalCount = includeTotalCount;
             Facets = facets;
@@ -74,6 +69,7 @@ namespace Azure.Search.Documents.Models
             HighlightPostTag = highlightPostTag;
             HighlightPreTag = highlightPreTag;
             MinimumCoverage = minimumCoverage;
+            MoreLikeThis = moreLikeThis;
             OrderBy = orderBy;
             QueryType = queryType;
             ScoringStatistics = scoringStatistics;
@@ -84,8 +80,6 @@ namespace Azure.Search.Documents.Models
             SearchText = searchText;
             SearchFields = searchFields;
             SearchMode = searchMode;
-            QueryLanguage = queryLanguage;
-            QuerySpeller = querySpeller;
             Select = @select;
             Skip = skip;
             Top = top;
@@ -95,11 +89,8 @@ namespace Azure.Search.Documents.Models
             SemanticQuery = semanticQuery;
             Answers = answers;
             Captions = captions;
-            QueryRewrites = queryRewrites;
-            SemanticFields = semanticFields;
             VectorQueries = vectorQueries;
             VectorFilterMode = vectorFilterMode;
-            HybridSearch = hybridSearch;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -123,6 +114,9 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> A number between 0 and 100 indicating the percentage of the index that must be covered by a search query in order for the query to be reported as a success. This parameter can be useful for ensuring search availability even for services with only one replica. The default is 100. </summary>
         public double? MinimumCoverage { get; }
+
+        /// <summary> The key of the document to use as the basis for finding similar documents. This parameter cannot be used together with search text. </summary>
+        public string MoreLikeThis { get; }
 
         /// <summary> The comma-separated list of OData $orderby expressions by which to sort the results. Each expression can be either a field name or a call to either the geo.distance() or the search.score() functions. Each expression can be followed by asc to indicate ascending, or desc to indicate descending. The default is ascending order. Ties will be broken by the match scores of documents. If no $orderby is specified, the default sort order is descending by document match score. There can be at most 32 $orderby clauses. </summary>
         public IList<string> OrderBy { get; }
@@ -154,12 +148,6 @@ namespace Azure.Search.Documents.Models
         /// <summary> A value that specifies whether any or all of the search terms must be matched in order to count the document as a match. </summary>
         public SearchMode? SearchMode { get; }
 
-        /// <summary> A value that specifies the language of the search query. </summary>
-        public QueryLanguage? QueryLanguage { get; }
-
-        /// <summary> A value that specifies the type of the speller to use to spell-correct individual search query terms. </summary>
-        public QuerySpellerType? QuerySpeller { get; }
-
         /// <summary> The comma-separated list of fields to retrieve. If unspecified, all fields marked as retrievable in the schema are included. </summary>
         public IList<string> Select { get; }
 
@@ -187,19 +175,10 @@ namespace Azure.Search.Documents.Models
         /// <summary> A value that specifies whether captions should be returned as part of the search response. </summary>
         public QueryCaptionType? Captions { get; }
 
-        /// <summary> A value that specifies whether query rewrites should be generated to augment the search query. </summary>
-        public QueryRewritesType? QueryRewrites { get; }
-
-        /// <summary> The comma-separated list of field names used for semantic ranking. </summary>
-        public IList<string> SemanticFields { get; }
-
         /// <summary> The query parameters for vector and hybrid search queries. </summary>
         public IList<VectorQuery> VectorQueries { get; }
 
         /// <summary> Determines whether or not filters are applied before or after the vector search is performed. Default is 'preFilter' for new indexes. </summary>
         public VectorFilterMode? VectorFilterMode { get; }
-
-        /// <summary> The query parameters to configure hybrid search behaviors. </summary>
-        public HybridSearch HybridSearch { get; }
     }
 }

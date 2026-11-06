@@ -30,9 +30,8 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="lastResult"> The result of the most recent or an in-progress indexer execution. </param>
         /// <param name="executionHistory"> History of the recent indexer executions, sorted in reverse chronological order. </param>
         /// <param name="limits"> The execution limits for the indexer. </param>
-        /// <param name="currentState"> All of the state that defines and dictates the indexer's current execution. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchIndexerStatus(string name, IndexerStatus status, IndexerRuntime runtime, IndexerExecutionResult lastResult, IReadOnlyList<IndexerExecutionResult> executionHistory, SearchIndexerLimits limits, IndexerState currentState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchIndexerStatus(string name, IndexerStatus status, IndexerRuntime runtime, IndexerExecutionResult lastResult, IReadOnlyList<IndexerExecutionResult> executionHistory, SearchIndexerLimits limits, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Status = status;
@@ -40,7 +39,6 @@ namespace Azure.Search.Documents.Indexes.Models
             LastResult = lastResult;
             ExecutionHistory = executionHistory;
             Limits = limits;
-            CurrentState = currentState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -61,8 +59,5 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> The execution limits for the indexer. </summary>
         public SearchIndexerLimits Limits { get; }
-
-        /// <summary> All of the state that defines and dictates the indexer's current execution. </summary>
-        public IndexerState CurrentState { get; }
     }
 }

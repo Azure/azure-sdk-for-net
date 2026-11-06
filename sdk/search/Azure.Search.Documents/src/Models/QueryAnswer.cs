@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Globalization;
 using System.Text;
 using Azure.Core;
 
@@ -67,15 +68,15 @@ namespace Azure.Search.Documents.Models
                     queryAnswerStringValue.Append('|');
                     if (Count.HasValue)
                     {
-                        queryAnswerStringValue.Append($"{QueryAnswerCountRaw}{Count.Value},");
+                        queryAnswerStringValue.Append(QueryAnswerCountRaw).Append(Count.Value.ToString(CultureInfo.InvariantCulture)).Append(',');
                     }
                     if (Threshold.HasValue)
                     {
-                        queryAnswerStringValue.Append($"{QueryAnswerThresholdRaw}{Threshold.Value},");
+                        queryAnswerStringValue.Append(QueryAnswerThresholdRaw).Append(Threshold.Value.ToString(CultureInfo.InvariantCulture)).Append(',');
                     }
                     if (MaxCharLength.HasValue)
                     {
-                        queryAnswerStringValue.Append($"{QueryAnswerMaxCharLengthRaw}{MaxCharLength.Value},");
+                        queryAnswerStringValue.Append(QueryAnswerMaxCharLengthRaw).Append(MaxCharLength.Value.ToString(CultureInfo.InvariantCulture)).Append(',');
                     }
                     // Remove the trailing comma
                     queryAnswerStringValue.Length--;
@@ -101,7 +102,7 @@ namespace Azure.Search.Documents.Models
                             if (param.Contains(QueryAnswerCountRaw))
                             {
                                 var countPart = param.Substring(param.IndexOf(QueryAnswerCountRaw, StringComparison.OrdinalIgnoreCase) + QueryAnswerCountRaw.Length);
-                                if (int.TryParse(countPart, out int countValue))
+                                if (int.TryParse(countPart, NumberStyles.Integer, CultureInfo.InvariantCulture, out int countValue))
                                 {
                                     Count = countValue;
                                 }
@@ -109,7 +110,7 @@ namespace Azure.Search.Documents.Models
                             else if (param.Contains(QueryAnswerThresholdRaw))
                             {
                                 var thresholdPart = param.Substring(param.IndexOf(QueryAnswerThresholdRaw, StringComparison.OrdinalIgnoreCase) + QueryAnswerThresholdRaw.Length);
-                                if (double.TryParse(thresholdPart, out double thresholdValue))
+                                if (double.TryParse(thresholdPart, NumberStyles.Float, CultureInfo.InvariantCulture, out double thresholdValue))
                                 {
                                     Threshold = thresholdValue;
                                 }
@@ -117,7 +118,7 @@ namespace Azure.Search.Documents.Models
                             else if (param.Contains(QueryAnswerMaxCharLengthRaw))
                             {
                                 var maxCharLengthPart = param.Substring(param.IndexOf(QueryAnswerMaxCharLengthRaw, StringComparison.OrdinalIgnoreCase) + QueryAnswerMaxCharLengthRaw.Length);
-                                if (int.TryParse(maxCharLengthPart, out int maxCharLengthValue))
+                                if (int.TryParse(maxCharLengthPart, NumberStyles.Integer, CultureInfo.InvariantCulture, out int maxCharLengthValue))
                                 {
                                     MaxCharLength = maxCharLengthValue;
                                 }

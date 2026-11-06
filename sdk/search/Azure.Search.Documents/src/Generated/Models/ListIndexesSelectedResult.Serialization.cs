@@ -11,9 +11,8 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Search.Documents;
-using Azure.Search.Documents.Indexes.Models;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Response from a List Indexes request. If successful, it includes the full definitions of all indexes. </summary>
     internal partial class ListIndexesSelectedResult : IJsonModel<ListIndexesSelectedResult>
@@ -83,11 +82,6 @@ namespace Azure.Search.Documents.Models
             {
                 throw new FormatException($"The model {nameof(ListIndexesSelectedResult)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Count))
-            {
-                writer.WritePropertyName("@odata.count"u8);
-                writer.WriteNumberValue(Count.Value);
-            }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("value"u8);
@@ -145,21 +139,11 @@ namespace Azure.Search.Documents.Models
             {
                 return null;
             }
-            long? count = default;
             IReadOnlyList<SearchIndexResponse> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("@odata.count"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    count = prop.Value.GetInt64();
-                    continue;
-                }
                 if (prop.NameEquals("value"u8))
                 {
                     List<SearchIndexResponse> array = new List<SearchIndexResponse>();
@@ -180,7 +164,7 @@ namespace Azure.Search.Documents.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ListIndexesSelectedResult(count, value ?? new ChangeTrackingList<SearchIndexResponse>(), nextLink, additionalBinaryDataProperties);
+            return new ListIndexesSelectedResult(value ?? new ChangeTrackingList<SearchIndexResponse>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }
