@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _importPipelinesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, importPipelineName, ContainerRegistryImportPipelineData.ToRequestContent(data), context);
+                using HttpMessage message = _importPipelinesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, importPipelineName, ContainerRegistryImportPipelineData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerRegistryArmOperation<ContainerRegistryImportPipelineResource> operation = new ContainerRegistryArmOperation<ContainerRegistryImportPipelineResource>(
                     new ContainerRegistryImportPipelineResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _importPipelinesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, importPipelineName, ContainerRegistryImportPipelineData.ToRequestContent(data), context);
+                using HttpMessage message = _importPipelinesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, importPipelineName, ContainerRegistryImportPipelineData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerRegistryArmOperation<ContainerRegistryImportPipelineResource> operation = new ContainerRegistryArmOperation<ContainerRegistryImportPipelineResource>(
                     new ContainerRegistryImportPipelineResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _importPipelinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, importPipelineName, context);
+                using HttpMessage message = _importPipelinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, importPipelineName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerRegistryImportPipelineData> response = Response.FromValue(ContainerRegistryImportPipelineData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _importPipelinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, importPipelineName, context);
+                using HttpMessage message = _importPipelinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, importPipelineName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerRegistryImportPipelineData> response = Response.FromValue(ContainerRegistryImportPipelineData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _importPipelinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, importPipelineName, context);
+                using HttpMessage message = _importPipelinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, importPipelineName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ContainerRegistryImportPipelineData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _importPipelinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, importPipelineName, context);
+                using HttpMessage message = _importPipelinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, importPipelineName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ContainerRegistryImportPipelineData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _importPipelinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, importPipelineName, context);
+                using HttpMessage message = _importPipelinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, importPipelineName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ContainerRegistryImportPipelineData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _importPipelinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, importPipelineName, context);
+                using HttpMessage message = _importPipelinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, importPipelineName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ContainerRegistryImportPipelineData> response = default;

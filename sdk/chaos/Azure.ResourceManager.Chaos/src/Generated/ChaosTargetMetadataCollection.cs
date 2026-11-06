@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Chaos
     /// <summary>
     /// A class representing a collection of <see cref="ChaosTargetMetadataResource"/> and their operations.
     /// Each <see cref="ChaosTargetMetadataResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
-    /// To get a <see cref="ChaosTargetMetadataCollection"/> instance call the GetChaosTargetMetadatas method from an instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="ChaosTargetMetadataCollection"/> instance call the GetAllChaosTargetMetadata method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class ChaosTargetMetadataCollection : ArmCollection, IEnumerable<ChaosTargetMetadataResource>, IAsyncEnumerable<ChaosTargetMetadataResource>
     {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetTypesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, targetTypeName, context);
+                using HttpMessage message = _targetTypesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, targetTypeName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ChaosTargetMetadataData> response = Response.FromValue(ChaosTargetMetadataData.FromResponse(result), result);
                 if (response.Value == null)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetTypesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, targetTypeName, context);
+                using HttpMessage message = _targetTypesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, targetTypeName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ChaosTargetMetadataData> response = Response.FromValue(ChaosTargetMetadataData.FromResponse(result), result);
                 if (response.Value == null)
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetTypesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, targetTypeName, context);
+                using HttpMessage message = _targetTypesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, targetTypeName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ChaosTargetMetadataData> response = default;
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetTypesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, targetTypeName, context);
+                using HttpMessage message = _targetTypesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, targetTypeName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ChaosTargetMetadataData> response = default;
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetTypesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, targetTypeName, context);
+                using HttpMessage message = _targetTypesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, targetTypeName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ChaosTargetMetadataData> response = default;
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetTypesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, targetTypeName, context);
+                using HttpMessage message = _targetTypesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, targetTypeName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ChaosTargetMetadataData> response = default;

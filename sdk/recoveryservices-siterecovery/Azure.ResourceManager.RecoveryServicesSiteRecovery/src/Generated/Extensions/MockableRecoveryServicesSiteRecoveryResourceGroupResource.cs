@@ -1592,7 +1592,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ReplicationJobsRestClient.CreateExportSiteRecoveryJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, SiteRecoveryJobQueryContent.ToRequestContent(content), context);
+                using HttpMessage message = ReplicationJobsRestClient.CreateExportSiteRecoveryJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, SiteRecoveryJobQueryContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource>(
                     new SiteRecoveryJobResourceOperationSource(Client),
@@ -1650,7 +1650,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ReplicationJobsRestClient.CreateExportSiteRecoveryJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, SiteRecoveryJobQueryContent.ToRequestContent(content), context);
+                using HttpMessage message = ReplicationJobsRestClient.CreateExportSiteRecoveryJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, SiteRecoveryJobQueryContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource>(
                     new SiteRecoveryJobResourceOperationSource(Client),
@@ -1788,7 +1788,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SupportedOperatingSystemsRestClient.CreateGetSupportedOperatingSystemRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, instanceType, context);
+                using HttpMessage message = SupportedOperatingSystemsRestClient.CreateGetSupportedOperatingSystemRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, instanceType, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SiteRecoverySupportedOperatingSystems> response = Response.FromValue(SiteRecoverySupportedOperatingSystems.FromResponse(result), result);
                 if (response.Value == null)
@@ -1838,7 +1838,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SupportedOperatingSystemsRestClient.CreateGetSupportedOperatingSystemRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, instanceType, context);
+                using HttpMessage message = SupportedOperatingSystemsRestClient.CreateGetSupportedOperatingSystemRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, instanceType, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SiteRecoverySupportedOperatingSystems> response = Response.FromValue(SiteRecoverySupportedOperatingSystems.FromResponse(result), result);
                 if (response.Value == null)
@@ -1887,7 +1887,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ReplicationVaultHealthRestClient.CreateGetReplicationVaultHealthRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                using HttpMessage message = ReplicationVaultHealthRestClient.CreateGetReplicationVaultHealthRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<VaultHealthDetails> response = Response.FromValue(VaultHealthDetails.FromResponse(result), result);
                 if (response.Value == null)
@@ -1936,7 +1936,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ReplicationVaultHealthRestClient.CreateGetReplicationVaultHealthRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                using HttpMessage message = ReplicationVaultHealthRestClient.CreateGetReplicationVaultHealthRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<VaultHealthDetails> response = Response.FromValue(VaultHealthDetails.FromResponse(result), result);
                 if (response.Value == null)
@@ -1986,7 +1986,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ReplicationVaultHealthRestClient.CreateRefreshReplicationVaultHealthRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                using HttpMessage message = ReplicationVaultHealthRestClient.CreateRefreshReplicationVaultHealthRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<VaultHealthDetails> operation = new RecoveryServicesSiteRecoveryArmOperation<VaultHealthDetails>(
                     new VaultHealthDetailsOperationSource(),
@@ -2042,7 +2042,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ReplicationVaultHealthRestClient.CreateRefreshReplicationVaultHealthRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                using HttpMessage message = ReplicationVaultHealthRestClient.CreateRefreshReplicationVaultHealthRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<VaultHealthDetails> operation = new RecoveryServicesSiteRecoveryArmOperation<VaultHealthDetails>(
                     new VaultHealthDetailsOperationSource(),

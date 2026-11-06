@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _softDeletedSqlDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _softDeletedSqlDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SoftDeletedSqlDatabaseGetResultData> response = Response.FromValue(SoftDeletedSqlDatabaseGetResultData.FromResponse(result), result);
                 if (response.Value == null)
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _softDeletedSqlDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _softDeletedSqlDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SoftDeletedSqlDatabaseGetResultData> response = Response.FromValue(SoftDeletedSqlDatabaseGetResultData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _softDeletedSqlContainersRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _softDeletedSqlContainersRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SoftDeletedSqlContainersListResult> response = Response.FromValue(SoftDeletedSqlContainersListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _softDeletedSqlContainersRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _softDeletedSqlContainersRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SoftDeletedSqlContainersListResult> response = Response.FromValue(SoftDeletedSqlContainersListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _softDeletedSqlContainersRestClient.CreatePurgeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, containerName, softDeleteActionKind?.ToString(), context);
+                using HttpMessage message = _softDeletedSqlContainersRestClient.CreatePurgeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, containerName, softDeleteActionKind?.ToString(), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation operation = new CosmosDBArmOperation(_softDeletedSqlContainersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _softDeletedSqlContainersRestClient.CreatePurgeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, containerName, softDeleteActionKind?.ToString(), context);
+                using HttpMessage message = _softDeletedSqlContainersRestClient.CreatePurgeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, containerName, softDeleteActionKind?.ToString(), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation operation = new CosmosDBArmOperation(_softDeletedSqlContainersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _softDeletedSqlContainersRestClient.CreateRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, containerName, softDeleteActionKind?.ToString(), context);
+                using HttpMessage message = _softDeletedSqlContainersRestClient.CreateRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, containerName, softDeleteActionKind?.ToString(), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation operation = new CosmosDBArmOperation(_softDeletedSqlContainersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _softDeletedSqlContainersRestClient.CreateRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, containerName, softDeleteActionKind?.ToString(), context);
+                using HttpMessage message = _softDeletedSqlContainersRestClient.CreateRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, containerName, softDeleteActionKind?.ToString(), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation operation = new CosmosDBArmOperation(_softDeletedSqlContainersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

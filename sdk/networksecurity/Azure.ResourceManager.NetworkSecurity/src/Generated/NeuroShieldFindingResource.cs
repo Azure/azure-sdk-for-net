@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.NetworkSecurity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _neuroShieldFindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _neuroShieldFindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NeuroShieldFindingData> response = Response.FromValue(NeuroShieldFindingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.NetworkSecurity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _neuroShieldFindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _neuroShieldFindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NeuroShieldFindingData> response = Response.FromValue(NeuroShieldFindingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.NetworkSecurity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _neuroShieldFindingsRestClient.CreateMitigateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _neuroShieldFindingsRestClient.CreateMitigateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NeuroShieldMitigationActionResult> response = Response.FromValue(NeuroShieldMitigationActionResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.NetworkSecurity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _neuroShieldFindingsRestClient.CreateMitigateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _neuroShieldFindingsRestClient.CreateMitigateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NeuroShieldMitigationActionResult> response = Response.FromValue(NeuroShieldMitigationActionResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.NetworkSecurity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _neuroShieldFindingsRestClient.CreateRollbackRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _neuroShieldFindingsRestClient.CreateRollbackRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NeuroShieldMitigationActionResult> response = Response.FromValue(NeuroShieldMitigationActionResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.NetworkSecurity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _neuroShieldFindingsRestClient.CreateRollbackRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _neuroShieldFindingsRestClient.CreateRollbackRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NeuroShieldMitigationActionResult> response = Response.FromValue(NeuroShieldMitigationActionResult.FromResponse(result), result);
                 if (response.Value == null)

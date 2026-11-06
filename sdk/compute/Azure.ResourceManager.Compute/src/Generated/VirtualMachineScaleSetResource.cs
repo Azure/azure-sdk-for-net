@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand?.ToString(), context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand?.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<VirtualMachineScaleSetData> response = Response.FromValue(VirtualMachineScaleSetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand?.ToString(), context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand?.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<VirtualMachineScaleSetData> response = Response.FromValue(VirtualMachineScaleSetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetPatch.ToRequestContent(patch), matchConditions, context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetPatch.ToRequestContent(patch), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation<VirtualMachineScaleSetResource> operation = new ComputeArmOperation<VirtualMachineScaleSetResource>(
                     new VirtualMachineScaleSetResourceOperationSource(Client),
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetPatch.ToRequestContent(patch), matchConditions, context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetPatch.ToRequestContent(patch), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation<VirtualMachineScaleSetResource> operation = new ComputeArmOperation<VirtualMachineScaleSetResource>(
                     new VirtualMachineScaleSetResourceOperationSource(Client),
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDeletion, context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDeletion, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDeletion, context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDeletion, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateApproveRollingUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceIds.ToRequestContent(vmInstanceIds), context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateApproveRollingUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceIds.ToRequestContent(vmInstanceIds), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateApproveRollingUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceIds.ToRequestContent(vmInstanceIds), context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateApproveRollingUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceIds.ToRequestContent(vmInstanceIds), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateCancelVirtualMachineScaleSetRollingUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateCancelVirtualMachineScaleSetRollingUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateCancelVirtualMachineScaleSetRollingUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateCancelVirtualMachineScaleSetRollingUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateConvertToSinglePlacementGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetConvertToSinglePlacementGroupContent.ToRequestContent(content), context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateConvertToSinglePlacementGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetConvertToSinglePlacementGroupContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -694,7 +694,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateConvertToSinglePlacementGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetConvertToSinglePlacementGroupContent.ToRequestContent(content), context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateConvertToSinglePlacementGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetConvertToSinglePlacementGroupContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -740,7 +740,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateDeallocateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceIds.ToRequestContent(vmInstanceIds), hibernate, context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateDeallocateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceIds.ToRequestContent(vmInstanceIds), hibernate, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -791,7 +791,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateDeallocateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceIds.ToRequestContent(vmInstanceIds), hibernate, context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateDeallocateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceIds.ToRequestContent(vmInstanceIds), hibernate, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -845,7 +845,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateDeleteInstancesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceRequiredIds.ToRequestContent(vmInstanceIds), forceDeletion, context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateDeleteInstancesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceRequiredIds.ToRequestContent(vmInstanceIds), forceDeletion, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -899,7 +899,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateDeleteInstancesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceRequiredIds.ToRequestContent(vmInstanceIds), forceDeletion, context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateDeleteInstancesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceRequiredIds.ToRequestContent(vmInstanceIds), forceDeletion, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -950,7 +950,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateForceRecoveryServiceFabricPlatformUpdateDomainWalkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, platformUpdateDomain, zone, placementGroupId, context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateForceRecoveryServiceFabricPlatformUpdateDomainWalkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, platformUpdateDomain, zone, placementGroupId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RecoveryWalkResponse> response = Response.FromValue(RecoveryWalkResponse.FromResponse(result), result);
                 if (response.Value == null)
@@ -1001,7 +1001,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateForceRecoveryServiceFabricPlatformUpdateDomainWalkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, platformUpdateDomain, zone, placementGroupId, context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateForceRecoveryServiceFabricPlatformUpdateDomainWalkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, platformUpdateDomain, zone, placementGroupId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RecoveryWalkResponse> response = Response.FromValue(RecoveryWalkResponse.FromResponse(result), result);
                 if (response.Value == null)
@@ -1049,7 +1049,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateGetInstanceViewRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateGetInstanceViewRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<VirtualMachineScaleSetInstanceView> response = Response.FromValue(VirtualMachineScaleSetInstanceView.FromResponse(result), result);
                 if (response.Value == null)
@@ -1097,7 +1097,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateGetInstanceViewRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateGetInstanceViewRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<VirtualMachineScaleSetInstanceView> response = Response.FromValue(VirtualMachineScaleSetInstanceView.FromResponse(result), result);
                 if (response.Value == null)
@@ -1302,7 +1302,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateMigrateVMAvailabilityZoneRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MigrateVMAvailabilityZoneInput.ToRequestContent(content), context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateMigrateVMAvailabilityZoneRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MigrateVMAvailabilityZoneInput.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1355,7 +1355,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateMigrateVMAvailabilityZoneRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MigrateVMAvailabilityZoneInput.ToRequestContent(content), context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateMigrateVMAvailabilityZoneRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MigrateVMAvailabilityZoneInput.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1405,7 +1405,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreatePerformMaintenanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceIds.ToRequestContent(vmInstanceIds), context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreatePerformMaintenanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceIds.ToRequestContent(vmInstanceIds), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1455,7 +1455,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreatePerformMaintenanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceIds.ToRequestContent(vmInstanceIds), context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreatePerformMaintenanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceIds.ToRequestContent(vmInstanceIds), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1506,7 +1506,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreatePowerOffRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceIds.ToRequestContent(vmInstanceIds), skipShutdown, context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreatePowerOffRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceIds.ToRequestContent(vmInstanceIds), skipShutdown, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1557,7 +1557,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreatePowerOffRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceIds.ToRequestContent(vmInstanceIds), skipShutdown, context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreatePowerOffRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceIds.ToRequestContent(vmInstanceIds), skipShutdown, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1606,7 +1606,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateReapplyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateReapplyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1655,7 +1655,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateReapplyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateReapplyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1705,7 +1705,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateRedeployRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceIds.ToRequestContent(vmInstanceIds), context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateRedeployRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceIds.ToRequestContent(vmInstanceIds), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1755,7 +1755,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateRedeployRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceIds.ToRequestContent(vmInstanceIds), context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateRedeployRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceIds.ToRequestContent(vmInstanceIds), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1805,7 +1805,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetReimageContent.ToRequestContent(content), context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetReimageContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1855,7 +1855,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetReimageContent.ToRequestContent(content), context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetReimageContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1905,7 +1905,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateReimageAllRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceIds.ToRequestContent(vmInstanceIds), context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateReimageAllRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceIds.ToRequestContent(vmInstanceIds), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1955,7 +1955,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateReimageAllRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceIds.ToRequestContent(vmInstanceIds), context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateReimageAllRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceIds.ToRequestContent(vmInstanceIds), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2005,7 +2005,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceIds.ToRequestContent(vmInstanceIds), context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceIds.ToRequestContent(vmInstanceIds), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2055,7 +2055,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceIds.ToRequestContent(vmInstanceIds), context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceIds.ToRequestContent(vmInstanceIds), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2108,7 +2108,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateScaleOutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetScaleOutContent.ToRequestContent(content), context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateScaleOutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetScaleOutContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2161,7 +2161,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateScaleOutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetScaleOutContent.ToRequestContent(content), context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateScaleOutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetScaleOutContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2214,7 +2214,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateSetOrchestrationServiceStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, OrchestrationServiceStateContent.ToRequestContent(content), context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateSetOrchestrationServiceStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, OrchestrationServiceStateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2267,7 +2267,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateSetOrchestrationServiceStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, OrchestrationServiceStateContent.ToRequestContent(content), context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateSetOrchestrationServiceStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, OrchestrationServiceStateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2317,7 +2317,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreatePowerOnRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceIds.ToRequestContent(vmInstanceIds), context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreatePowerOnRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceIds.ToRequestContent(vmInstanceIds), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2367,7 +2367,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreatePowerOnRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceIds.ToRequestContent(vmInstanceIds), context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreatePowerOnRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceIds.ToRequestContent(vmInstanceIds), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2416,7 +2416,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateStartExtensionUpgradeVirtualMachineScaleSetRollingUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateStartExtensionUpgradeVirtualMachineScaleSetRollingUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2465,7 +2465,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateStartExtensionUpgradeVirtualMachineScaleSetRollingUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateStartExtensionUpgradeVirtualMachineScaleSetRollingUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2514,7 +2514,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateStartOSUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateStartOSUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2563,7 +2563,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateStartOSUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateStartOSUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2616,7 +2616,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateUpdateInstancesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceRequiredIds.ToRequestContent(vmInstanceIds), context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateUpdateInstancesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceRequiredIds.ToRequestContent(vmInstanceIds), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2669,7 +2669,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateUpdateInstancesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceRequiredIds.ToRequestContent(vmInstanceIds), context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateUpdateInstancesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineScaleSetVmInstanceRequiredIds.ToRequestContent(vmInstanceIds), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation operation = new ComputeArmOperation(_virtualMachineScaleSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2708,7 +2708,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualMachineScaleSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<VirtualMachineScaleSetData> response = Response.FromValue(VirtualMachineScaleSetData.FromResponse(result), result);
                     return Response.FromValue(new VirtualMachineScaleSetResource(Client, response.Value), response.GetRawResponse());
@@ -2756,7 +2756,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualMachineScaleSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<VirtualMachineScaleSetData> response = Response.FromValue(VirtualMachineScaleSetData.FromResponse(result), result);
                     return Response.FromValue(new VirtualMachineScaleSetResource(Client, response.Value), response.GetRawResponse());
@@ -2802,7 +2802,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualMachineScaleSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<VirtualMachineScaleSetData> response = Response.FromValue(VirtualMachineScaleSetData.FromResponse(result), result);
                     return Response.FromValue(new VirtualMachineScaleSetResource(Client, response.Value), response.GetRawResponse());
@@ -2844,7 +2844,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualMachineScaleSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<VirtualMachineScaleSetData> response = Response.FromValue(VirtualMachineScaleSetData.FromResponse(result), result);
                     return Response.FromValue(new VirtualMachineScaleSetResource(Client, response.Value), response.GetRawResponse());
@@ -2886,7 +2886,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualMachineScaleSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<VirtualMachineScaleSetData> response = Response.FromValue(VirtualMachineScaleSetData.FromResponse(result), result);
                     return Response.FromValue(new VirtualMachineScaleSetResource(Client, response.Value), response.GetRawResponse());
@@ -2932,7 +2932,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualMachineScaleSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<VirtualMachineScaleSetData> response = Response.FromValue(VirtualMachineScaleSetData.FromResponse(result), result);
                     return Response.FromValue(new VirtualMachineScaleSetResource(Client, response.Value), response.GetRawResponse());

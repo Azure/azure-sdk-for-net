@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _outboundFirewallRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, outboundRuleFqdn, context);
+                using HttpMessage message = _outboundFirewallRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, outboundRuleFqdn, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation<OutboundFirewallRuleResource> operation = new SqlArmOperation<OutboundFirewallRuleResource>(
                     new OutboundFirewallRuleResourceOperationSource(Client),
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _outboundFirewallRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, outboundRuleFqdn, context);
+                using HttpMessage message = _outboundFirewallRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, outboundRuleFqdn, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation<OutboundFirewallRuleResource> operation = new SqlArmOperation<OutboundFirewallRuleResource>(
                     new OutboundFirewallRuleResourceOperationSource(Client),
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _outboundFirewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, outboundRuleFqdn, context);
+                using HttpMessage message = _outboundFirewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, outboundRuleFqdn, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OutboundFirewallRuleData> response = Response.FromValue(OutboundFirewallRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _outboundFirewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, outboundRuleFqdn, context);
+                using HttpMessage message = _outboundFirewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, outboundRuleFqdn, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OutboundFirewallRuleData> response = Response.FromValue(OutboundFirewallRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _outboundFirewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, outboundRuleFqdn, context);
+                using HttpMessage message = _outboundFirewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, outboundRuleFqdn, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<OutboundFirewallRuleData> response = default;
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _outboundFirewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, outboundRuleFqdn, context);
+                using HttpMessage message = _outboundFirewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, outboundRuleFqdn, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<OutboundFirewallRuleData> response = default;
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _outboundFirewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, outboundRuleFqdn, context);
+                using HttpMessage message = _outboundFirewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, outboundRuleFqdn, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<OutboundFirewallRuleData> response = default;
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _outboundFirewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, outboundRuleFqdn, context);
+                using HttpMessage message = _outboundFirewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, outboundRuleFqdn, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<OutboundFirewallRuleData> response = default;

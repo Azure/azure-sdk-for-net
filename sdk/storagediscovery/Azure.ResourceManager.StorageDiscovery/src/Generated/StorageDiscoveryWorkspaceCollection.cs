@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.StorageDiscovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageDiscoveryWorkspacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageDiscoveryWorkspaceName, StorageDiscoveryWorkspaceData.ToRequestContent(data), context);
+                using HttpMessage message = _storageDiscoveryWorkspacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageDiscoveryWorkspaceName, StorageDiscoveryWorkspaceData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<StorageDiscoveryWorkspaceData> response = Response.FromValue(StorageDiscoveryWorkspaceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.StorageDiscovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageDiscoveryWorkspacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageDiscoveryWorkspaceName, StorageDiscoveryWorkspaceData.ToRequestContent(data), context);
+                using HttpMessage message = _storageDiscoveryWorkspacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageDiscoveryWorkspaceName, StorageDiscoveryWorkspaceData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<StorageDiscoveryWorkspaceData> response = Response.FromValue(StorageDiscoveryWorkspaceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.StorageDiscovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageDiscoveryWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageDiscoveryWorkspaceName, context);
+                using HttpMessage message = _storageDiscoveryWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageDiscoveryWorkspaceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<StorageDiscoveryWorkspaceData> response = Response.FromValue(StorageDiscoveryWorkspaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.StorageDiscovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageDiscoveryWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageDiscoveryWorkspaceName, context);
+                using HttpMessage message = _storageDiscoveryWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageDiscoveryWorkspaceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<StorageDiscoveryWorkspaceData> response = Response.FromValue(StorageDiscoveryWorkspaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.StorageDiscovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageDiscoveryWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageDiscoveryWorkspaceName, context);
+                using HttpMessage message = _storageDiscoveryWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageDiscoveryWorkspaceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<StorageDiscoveryWorkspaceData> response = default;
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.StorageDiscovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageDiscoveryWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageDiscoveryWorkspaceName, context);
+                using HttpMessage message = _storageDiscoveryWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageDiscoveryWorkspaceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<StorageDiscoveryWorkspaceData> response = default;
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.StorageDiscovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageDiscoveryWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageDiscoveryWorkspaceName, context);
+                using HttpMessage message = _storageDiscoveryWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageDiscoveryWorkspaceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<StorageDiscoveryWorkspaceData> response = default;
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.StorageDiscovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageDiscoveryWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageDiscoveryWorkspaceName, context);
+                using HttpMessage message = _storageDiscoveryWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageDiscoveryWorkspaceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<StorageDiscoveryWorkspaceData> response = default;

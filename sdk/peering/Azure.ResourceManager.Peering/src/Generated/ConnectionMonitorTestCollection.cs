@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Peering
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectionMonitorTestsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, ConnectionMonitorTestData.ToRequestContent(data), context);
+                using HttpMessage message = _connectionMonitorTestsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, ConnectionMonitorTestData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConnectionMonitorTestData> response = Response.FromValue(ConnectionMonitorTestData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Peering
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectionMonitorTestsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, ConnectionMonitorTestData.ToRequestContent(data), context);
+                using HttpMessage message = _connectionMonitorTestsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, ConnectionMonitorTestData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConnectionMonitorTestData> response = Response.FromValue(ConnectionMonitorTestData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Peering
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectionMonitorTestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, context);
+                using HttpMessage message = _connectionMonitorTestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConnectionMonitorTestData> response = Response.FromValue(ConnectionMonitorTestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Peering
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectionMonitorTestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, context);
+                using HttpMessage message = _connectionMonitorTestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConnectionMonitorTestData> response = Response.FromValue(ConnectionMonitorTestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Peering
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectionMonitorTestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, context);
+                using HttpMessage message = _connectionMonitorTestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ConnectionMonitorTestData> response = default;
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.Peering
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectionMonitorTestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, context);
+                using HttpMessage message = _connectionMonitorTestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ConnectionMonitorTestData> response = default;
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.Peering
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectionMonitorTestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, context);
+                using HttpMessage message = _connectionMonitorTestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ConnectionMonitorTestData> response = default;
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.Peering
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectionMonitorTestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, context);
+                using HttpMessage message = _connectionMonitorTestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ConnectionMonitorTestData> response = default;

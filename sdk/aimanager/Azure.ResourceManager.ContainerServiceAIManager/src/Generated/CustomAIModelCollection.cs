@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customAIModelsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, customAIModelName, CustomAIModelData.ToRequestContent(data), matchConditions, context);
+                using HttpMessage message = _customAIModelsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, customAIModelName, CustomAIModelData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceAIManagerArmOperation<CustomAIModelResource> operation = new ContainerServiceAIManagerArmOperation<CustomAIModelResource>(
                     new CustomAIModelResourceOperationSource(Client),
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customAIModelsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, customAIModelName, CustomAIModelData.ToRequestContent(data), matchConditions, context);
+                using HttpMessage message = _customAIModelsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, customAIModelName, CustomAIModelData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceAIManagerArmOperation<CustomAIModelResource> operation = new ContainerServiceAIManagerArmOperation<CustomAIModelResource>(
                     new CustomAIModelResourceOperationSource(Client),
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customAIModelsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, customAIModelName, context);
+                using HttpMessage message = _customAIModelsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, customAIModelName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CustomAIModelData> response = Response.FromValue(CustomAIModelData.FromResponse(result), result);
                 if (response.Value == null)
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customAIModelsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, customAIModelName, context);
+                using HttpMessage message = _customAIModelsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, customAIModelName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CustomAIModelData> response = Response.FromValue(CustomAIModelData.FromResponse(result), result);
                 if (response.Value == null)
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customAIModelsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, customAIModelName, context);
+                using HttpMessage message = _customAIModelsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, customAIModelName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CustomAIModelData> response = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customAIModelsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, customAIModelName, context);
+                using HttpMessage message = _customAIModelsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, customAIModelName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CustomAIModelData> response = default;
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customAIModelsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, customAIModelName, context);
+                using HttpMessage message = _customAIModelsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, customAIModelName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CustomAIModelData> response = default;
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customAIModelsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, customAIModelName, context);
+                using HttpMessage message = _customAIModelsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, customAIModelName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CustomAIModelData> response = default;

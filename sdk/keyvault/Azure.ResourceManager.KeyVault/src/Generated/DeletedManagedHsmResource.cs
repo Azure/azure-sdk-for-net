@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedManagedHsmsRestClient.CreateGetDeletedRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _deletedManagedHsmsRestClient.CreateGetDeletedRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DeletedManagedHsmData> response = Response.FromValue(DeletedManagedHsmData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedManagedHsmsRestClient.CreateGetDeletedRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _deletedManagedHsmsRestClient.CreateGetDeletedRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DeletedManagedHsmData> response = Response.FromValue(DeletedManagedHsmData.FromResponse(result), result);
                 if (response.Value == null)
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedManagedHsmsRestClient.CreatePurgeDeletedRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _deletedManagedHsmsRestClient.CreatePurgeDeletedRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 KeyVaultArmOperation operation = new KeyVaultArmOperation(_deletedManagedHsmsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedManagedHsmsRestClient.CreatePurgeDeletedRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _deletedManagedHsmsRestClient.CreatePurgeDeletedRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 KeyVaultArmOperation operation = new KeyVaultArmOperation(_deletedManagedHsmsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

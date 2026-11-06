@@ -734,7 +734,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RecoveryPointsRestClient.CreateGetRPExtendedInfoRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, RecoveryPointExtendedInfoContent.ToRequestContent(content), context);
+                using HttpMessage message = RecoveryPointsRestClient.CreateGetRPExtendedInfoRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, RecoveryPointExtendedInfoContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesBackupArmOperation<RPExtendedInfoResourceList> operation = new RecoveryServicesBackupArmOperation<RPExtendedInfoResourceList>(
                     new RPExtendedInfoResourceListOperationSource(),
@@ -796,7 +796,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RecoveryPointsRestClient.CreateGetRPExtendedInfoRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, RecoveryPointExtendedInfoContent.ToRequestContent(content), context);
+                using HttpMessage message = RecoveryPointsRestClient.CreateGetRPExtendedInfoRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, RecoveryPointExtendedInfoContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesBackupArmOperation<RPExtendedInfoResourceList> operation = new RecoveryServicesBackupArmOperation<RPExtendedInfoResourceList>(
                     new RPExtendedInfoResourceListOperationSource(),
@@ -856,7 +856,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RecoveryPointsRestClient.CreateGetRPExtendedInfoOperationResultRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, operationId, context);
+                using HttpMessage message = RecoveryPointsRestClient.CreateGetRPExtendedInfoOperationResultRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, operationId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RPExtendedInfoResourceList> response = Response.FromValue(RPExtendedInfoResourceList.FromResponse(result), result);
                 if (response.Value == null)
@@ -910,7 +910,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RecoveryPointsRestClient.CreateGetRPExtendedInfoOperationResultRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, operationId, context);
+                using HttpMessage message = RecoveryPointsRestClient.CreateGetRPExtendedInfoOperationResultRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, operationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RPExtendedInfoResourceList> response = Response.FromValue(RPExtendedInfoResourceList.FromResponse(result), result);
                 if (response.Value == null)
@@ -1132,7 +1132,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = JobsRestClient.CreateExportJobRequest(vaultName, Id.ResourceGroupName, Id.SubscriptionId, filter, context);
+                using HttpMessage message = JobsRestClient.CreateExportJobRequest(vaultName, Id.ResourceGroupName, Id.SubscriptionId, filter, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -1177,7 +1177,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = JobsRestClient.CreateExportJobRequest(vaultName, Id.ResourceGroupName, Id.SubscriptionId, filter, context);
+                using HttpMessage message = JobsRestClient.CreateExportJobRequest(vaultName, Id.ResourceGroupName, Id.SubscriptionId, filter, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -1399,7 +1399,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ProtectionContainersOperationGroupRestClient.CreateRefreshProtectionContainerRequest(vaultName, Id.ResourceGroupName, Id.SubscriptionId, fabricName, filter, context);
+                using HttpMessage message = ProtectionContainersOperationGroupRestClient.CreateRefreshProtectionContainerRequest(vaultName, Id.ResourceGroupName, Id.SubscriptionId, fabricName, filter, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -1447,7 +1447,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ProtectionContainersOperationGroupRestClient.CreateRefreshProtectionContainerRequest(vaultName, Id.ResourceGroupName, Id.SubscriptionId, fabricName, filter, context);
+                using HttpMessage message = ProtectionContainersOperationGroupRestClient.CreateRefreshProtectionContainerRequest(vaultName, Id.ResourceGroupName, Id.SubscriptionId, fabricName, filter, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -1745,7 +1745,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SecurityPINsRestClient.CreateGetSecurityPinRequest(vaultName, Id.ResourceGroupName, Id.SubscriptionId, SecurityPinContent.ToRequestContent(content), xMsAuthorizationAuxiliary, context);
+                using HttpMessage message = SecurityPINsRestClient.CreateGetSecurityPinRequest(vaultName, Id.ResourceGroupName, Id.SubscriptionId, SecurityPinContent.ToRequestContent(content), xMsAuthorizationAuxiliary, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TokenInformation> response = Response.FromValue(TokenInformation.FromResponse(result), result);
                 if (response.Value == null)
@@ -1796,7 +1796,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SecurityPINsRestClient.CreateGetSecurityPinRequest(vaultName, Id.ResourceGroupName, Id.SubscriptionId, SecurityPinContent.ToRequestContent(content), xMsAuthorizationAuxiliary, context);
+                using HttpMessage message = SecurityPINsRestClient.CreateGetSecurityPinRequest(vaultName, Id.ResourceGroupName, Id.SubscriptionId, SecurityPinContent.ToRequestContent(content), xMsAuthorizationAuxiliary, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TokenInformation> response = Response.FromValue(TokenInformation.FromResponse(result), result);
                 if (response.Value == null)
@@ -1849,7 +1849,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = FetchTieringCostRestClient.CreatePostFetchTieringCostRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, FetchTieringCostInfoContent.ToRequestContent(content), context);
+                using HttpMessage message = FetchTieringCostRestClient.CreatePostFetchTieringCostRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, FetchTieringCostInfoContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesBackupArmOperation<TieringCostInfo> operation = new RecoveryServicesBackupArmOperation<TieringCostInfo>(
                     new TieringCostInfoOperationSource(),
@@ -1908,7 +1908,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = FetchTieringCostRestClient.CreatePostFetchTieringCostRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, FetchTieringCostInfoContent.ToRequestContent(content), context);
+                using HttpMessage message = FetchTieringCostRestClient.CreatePostFetchTieringCostRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, FetchTieringCostInfoContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesBackupArmOperation<TieringCostInfo> operation = new RecoveryServicesBackupArmOperation<TieringCostInfo>(
                     new TieringCostInfoOperationSource(),
@@ -1965,7 +1965,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GetTieringCostOperationResultRestClient.CreateGetGetTieringCostOperationResultRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, operationId, context);
+                using HttpMessage message = GetTieringCostOperationResultRestClient.CreateGetGetTieringCostOperationResultRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, operationId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TieringCostInfo> response = Response.FromValue(TieringCostInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -2016,7 +2016,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GetTieringCostOperationResultRestClient.CreateGetGetTieringCostOperationResultRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, operationId, context);
+                using HttpMessage message = GetTieringCostOperationResultRestClient.CreateGetGetTieringCostOperationResultRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, operationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TieringCostInfo> response = Response.FromValue(TieringCostInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -2072,7 +2072,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ProtectionContainerRefreshOperationStatusesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, operationId, context);
+                using HttpMessage message = ProtectionContainerRefreshOperationStatusesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, operationId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BackupOperationStatus> response = Response.FromValue(BackupOperationStatus.FromResponse(result), result);
                 if (response.Value == null)
@@ -2128,7 +2128,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ProtectionContainerRefreshOperationStatusesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, operationId, context);
+                using HttpMessage message = ProtectionContainerRefreshOperationStatusesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, operationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BackupOperationStatus> response = Response.FromValue(BackupOperationStatus.FromResponse(result), result);
                 if (response.Value == null)

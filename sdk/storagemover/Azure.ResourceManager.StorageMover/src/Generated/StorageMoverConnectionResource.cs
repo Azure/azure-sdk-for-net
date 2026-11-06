@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.StorageMover
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _connectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<StorageMoverConnectionData> response = Response.FromValue(StorageMoverConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.StorageMover
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _connectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<StorageMoverConnectionData> response = Response.FromValue(StorageMoverConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.StorageMover
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _connectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageMoverArmOperation operation = new StorageMoverArmOperation(_connectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.StorageMover
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _connectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageMoverArmOperation operation = new StorageMoverArmOperation(_connectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.StorageMover
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, StorageMoverConnectionData.ToRequestContent(data), context);
+                using HttpMessage message = _connectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, StorageMoverConnectionData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<StorageMoverConnectionData> response = Response.FromValue(StorageMoverConnectionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.StorageMover
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, StorageMoverConnectionData.ToRequestContent(data), context);
+                using HttpMessage message = _connectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, StorageMoverConnectionData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<StorageMoverConnectionData> response = Response.FromValue(StorageMoverConnectionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

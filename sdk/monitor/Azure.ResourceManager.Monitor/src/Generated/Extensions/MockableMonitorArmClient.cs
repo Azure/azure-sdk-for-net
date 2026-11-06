@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = MetricsRestClient.CreateGetMonitorMetricsRequest(scope.ToString(), timespan, interval, metricnames, aggregation, top, @orderby, filter, resultType?.ToSerialString(), metricnamespace, autoAdjustTimegrain, validateDimensions, rollupby, context);
+                using HttpMessage message = MetricsRestClient.CreateGetMonitorMetricsRequest(scope.ToString(), timespan, interval, metricnames, aggregation, top, @orderby, filter, resultType?.ToSerialString(), metricnamespace, autoAdjustTimegrain, validateDimensions, rollupby, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MonitorMetricsResult> response = Response.FromValue(MonitorMetricsResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = MetricsRestClient.CreateGetMonitorMetricsRequest(scope.ToString(), timespan, interval, metricnames, aggregation, top, @orderby, filter, resultType?.ToSerialString(), metricnamespace, autoAdjustTimegrain, validateDimensions, rollupby, context);
+                using HttpMessage message = MetricsRestClient.CreateGetMonitorMetricsRequest(scope.ToString(), timespan, interval, metricnames, aggregation, top, @orderby, filter, resultType?.ToSerialString(), metricnamespace, autoAdjustTimegrain, validateDimensions, rollupby, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MonitorMetricsResult> response = Response.FromValue(MonitorMetricsResult.FromResponse(result), result);
                 if (response.Value == null)

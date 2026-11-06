@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ipamPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _ipamPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<IpamPoolData> response = Response.FromValue(IpamPoolData.FromResponse(result), result);
                 if (response.Value == null)
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ipamPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _ipamPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<IpamPoolData> response = Response.FromValue(IpamPoolData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ipamPoolsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IpamPoolPatch.ToRequestContent(patch), ifMatch, context);
+                using HttpMessage message = _ipamPoolsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IpamPoolPatch.ToRequestContent(patch), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<IpamPoolData> response = Response.FromValue(IpamPoolData.FromResponse(result), result);
                 if (response.Value == null)
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ipamPoolsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IpamPoolPatch.ToRequestContent(patch), ifMatch, context);
+                using HttpMessage message = _ipamPoolsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IpamPoolPatch.ToRequestContent(patch), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<IpamPoolData> response = Response.FromValue(IpamPoolData.FromResponse(result), result);
                 if (response.Value == null)
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ipamPoolsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
+                using HttpMessage message = _ipamPoolsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation operation = new NetworkArmOperation(_ipamPoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ipamPoolsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
+                using HttpMessage message = _ipamPoolsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation operation = new NetworkArmOperation(_ipamPoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ipamPoolsRestClient.CreateGetPoolUsageRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _ipamPoolsRestClient.CreateGetPoolUsageRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<IpamPoolUsage> response = Response.FromValue(IpamPoolUsage.FromResponse(result), result);
                 if (response.Value == null)
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ipamPoolsRestClient.CreateGetPoolUsageRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _ipamPoolsRestClient.CreateGetPoolUsageRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<IpamPoolUsage> response = Response.FromValue(IpamPoolUsage.FromResponse(result), result);
                 if (response.Value == null)
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _ipamPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _ipamPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<IpamPoolData> response = Response.FromValue(IpamPoolData.FromResponse(result), result);
                     return Response.FromValue(new IpamPoolResource(Client, response.Value), response.GetRawResponse());
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _ipamPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _ipamPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<IpamPoolData> response = Response.FromValue(IpamPoolData.FromResponse(result), result);
                     return Response.FromValue(new IpamPoolResource(Client, response.Value), response.GetRawResponse());
@@ -682,7 +682,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _ipamPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _ipamPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<IpamPoolData> response = Response.FromValue(IpamPoolData.FromResponse(result), result);
                     return Response.FromValue(new IpamPoolResource(Client, response.Value), response.GetRawResponse());
@@ -724,7 +724,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _ipamPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _ipamPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<IpamPoolData> response = Response.FromValue(IpamPoolData.FromResponse(result), result);
                     return Response.FromValue(new IpamPoolResource(Client, response.Value), response.GetRawResponse());
@@ -766,7 +766,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _ipamPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _ipamPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<IpamPoolData> response = Response.FromValue(IpamPoolData.FromResponse(result), result);
                     return Response.FromValue(new IpamPoolResource(Client, response.Value), response.GetRawResponse());
@@ -812,7 +812,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _ipamPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _ipamPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<IpamPoolData> response = Response.FromValue(IpamPoolData.FromResponse(result), result);
                     return Response.FromValue(new IpamPoolResource(Client, response.Value), response.GetRawResponse());

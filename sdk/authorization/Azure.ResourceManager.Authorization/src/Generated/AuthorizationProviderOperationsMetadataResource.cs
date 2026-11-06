@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _providerOperationsMetadataRestClient.CreateGetRequest(Id.Name, expand, context);
+                using HttpMessage message = _providerOperationsMetadataRestClient.CreateGetRequest(Id.Name, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AuthorizationProviderOperationsMetadataData> response = Response.FromValue(AuthorizationProviderOperationsMetadataData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _providerOperationsMetadataRestClient.CreateGetRequest(Id.Name, expand, context);
+                using HttpMessage message = _providerOperationsMetadataRestClient.CreateGetRequest(Id.Name, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AuthorizationProviderOperationsMetadataData> response = Response.FromValue(AuthorizationProviderOperationsMetadataData.FromResponse(result), result);
                 if (response.Value == null)

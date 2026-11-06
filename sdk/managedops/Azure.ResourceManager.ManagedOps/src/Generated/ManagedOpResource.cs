@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ManagedOps
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _managedOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ManagedOpData> response = Response.FromValue(ManagedOpData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ManagedOps
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _managedOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ManagedOpData> response = Response.FromValue(ManagedOpData.FromResponse(result), result);
                 if (response.Value == null)
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ManagedOps
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedOperationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, ManagedOpPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _managedOperationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, ManagedOpPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedOpsArmOperation<ManagedOpResource> operation = new ManagedOpsArmOperation<ManagedOpResource>(
                     new ManagedOpResourceOperationSource(Client),
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ManagedOps
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedOperationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, ManagedOpPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _managedOperationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, ManagedOpPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedOpsArmOperation<ManagedOpResource> operation = new ManagedOpsArmOperation<ManagedOpResource>(
                     new ManagedOpResourceOperationSource(Client),
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.ManagedOps
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedOperationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _managedOperationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedOpsArmOperation operation = new ManagedOpsArmOperation(_managedOperationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.ManagedOps
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedOperationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _managedOperationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedOpsArmOperation operation = new ManagedOpsArmOperation(_managedOperationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

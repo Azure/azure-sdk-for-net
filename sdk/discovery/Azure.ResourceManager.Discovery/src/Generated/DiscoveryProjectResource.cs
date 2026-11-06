@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _projectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _projectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DiscoveryProjectData> response = Response.FromValue(DiscoveryProjectData.FromResponse(result), result);
                 if (response.Value == null)
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _projectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _projectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DiscoveryProjectData> response = Response.FromValue(DiscoveryProjectData.FromResponse(result), result);
                 if (response.Value == null)
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _projectsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DiscoveryProjectData.ToRequestContent(data), context);
+                using HttpMessage message = _projectsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DiscoveryProjectData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DiscoveryArmOperation<DiscoveryProjectResource> operation = new DiscoveryArmOperation<DiscoveryProjectResource>(
                     new DiscoveryProjectResourceOperationSource(Client),
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _projectsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DiscoveryProjectData.ToRequestContent(data), context);
+                using HttpMessage message = _projectsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DiscoveryProjectData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DiscoveryArmOperation<DiscoveryProjectResource> operation = new DiscoveryArmOperation<DiscoveryProjectResource>(
                     new DiscoveryProjectResourceOperationSource(Client),
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _projectsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _projectsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DiscoveryArmOperation operation = new DiscoveryArmOperation(_projectsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.Discovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _projectsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _projectsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DiscoveryArmOperation operation = new DiscoveryArmOperation(_projectsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.Discovery
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _projectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _projectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DiscoveryProjectData> response = Response.FromValue(DiscoveryProjectData.FromResponse(result), result);
                     return Response.FromValue(new DiscoveryProjectResource(Client, response.Value), response.GetRawResponse());
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.Discovery
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _projectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _projectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DiscoveryProjectData> response = Response.FromValue(DiscoveryProjectData.FromResponse(result), result);
                     return Response.FromValue(new DiscoveryProjectResource(Client, response.Value), response.GetRawResponse());
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.Discovery
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _projectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _projectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DiscoveryProjectData> response = Response.FromValue(DiscoveryProjectData.FromResponse(result), result);
                     return Response.FromValue(new DiscoveryProjectResource(Client, response.Value), response.GetRawResponse());
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.Discovery
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _projectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _projectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DiscoveryProjectData> response = Response.FromValue(DiscoveryProjectData.FromResponse(result), result);
                     return Response.FromValue(new DiscoveryProjectResource(Client, response.Value), response.GetRawResponse());
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.Discovery
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _projectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _projectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DiscoveryProjectData> response = Response.FromValue(DiscoveryProjectData.FromResponse(result), result);
                     return Response.FromValue(new DiscoveryProjectResource(Client, response.Value), response.GetRawResponse());
@@ -653,7 +653,7 @@ namespace Azure.ResourceManager.Discovery
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _projectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _projectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DiscoveryProjectData> response = Response.FromValue(DiscoveryProjectData.FromResponse(result), result);
                     return Response.FromValue(new DiscoveryProjectResource(Client, response.Value), response.GetRawResponse());

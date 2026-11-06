@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentsConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _agentsConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AgentConnectorData> response = Response.FromValue(AgentConnectorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentsConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _agentsConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AgentConnectorData> response = Response.FromValue(AgentConnectorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentsConnectorsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _agentsConnectorsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SreAgentArmOperation operation = new SreAgentArmOperation(_agentsConnectorsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentsConnectorsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _agentsConnectorsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SreAgentArmOperation operation = new SreAgentArmOperation(_agentsConnectorsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentsConnectorsRestClient.CreateGetSecretsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _agentsConnectorsRestClient.CreateGetSecretsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AgentConnectorData> response = Response.FromValue(AgentConnectorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentsConnectorsRestClient.CreateGetSecretsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _agentsConnectorsRestClient.CreateGetSecretsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AgentConnectorData> response = Response.FromValue(AgentConnectorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentsConnectorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AgentConnectorData.ToRequestContent(data), context);
+                using HttpMessage message = _agentsConnectorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AgentConnectorData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SreAgentArmOperation<AgentConnectorResource> operation = new SreAgentArmOperation<AgentConnectorResource>(
                     new AgentConnectorResourceOperationSource(Client),
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentsConnectorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AgentConnectorData.ToRequestContent(data), context);
+                using HttpMessage message = _agentsConnectorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AgentConnectorData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SreAgentArmOperation<AgentConnectorResource> operation = new SreAgentArmOperation<AgentConnectorResource>(
                     new AgentConnectorResourceOperationSource(Client),

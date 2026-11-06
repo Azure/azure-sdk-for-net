@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CognitiveServicesManagedNetworkSettingsData> response = Response.FromValue(CognitiveServicesManagedNetworkSettingsData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CognitiveServicesManagedNetworkSettingsData> response = Response.FromValue(CognitiveServicesManagedNetworkSettingsData.FromResponse(result), result);
                 if (response.Value == null)
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreatePatchRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CognitiveServicesManagedNetworkSettingsData.ToRequestContent(data), context);
+                using HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreatePatchRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CognitiveServicesManagedNetworkSettingsData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CognitiveServicesArmOperation<CognitiveServicesManagedNetworkSettingsResource> operation = new CognitiveServicesArmOperation<CognitiveServicesManagedNetworkSettingsResource>(
                     new CognitiveServicesManagedNetworkSettingsResourceOperationSource(Client),
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreatePatchRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CognitiveServicesManagedNetworkSettingsData.ToRequestContent(data), context);
+                using HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreatePatchRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CognitiveServicesManagedNetworkSettingsData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CognitiveServicesArmOperation<CognitiveServicesManagedNetworkSettingsResource> operation = new CognitiveServicesArmOperation<CognitiveServicesManagedNetworkSettingsResource>(
                     new CognitiveServicesManagedNetworkSettingsResourceOperationSource(Client),
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CognitiveServicesArmOperation operation = new CognitiveServicesArmOperation(_managedNetworkSettingsPropertiesBasicResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CognitiveServicesArmOperation operation = new CognitiveServicesArmOperation(_managedNetworkSettingsPropertiesBasicResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreateUpdateOutboundRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CognitiveServicesManagedNetworkSettingsContent.ToRequestContent(content), context);
+                using HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreateUpdateOutboundRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CognitiveServicesManagedNetworkSettingsContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CognitiveServicesArmOperation<CognitiveServicesOutboundRuleListResult> operation = new CognitiveServicesArmOperation<CognitiveServicesOutboundRuleListResult>(
                     new CognitiveServicesOutboundRuleListResultOperationSource(),
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreateUpdateOutboundRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CognitiveServicesManagedNetworkSettingsContent.ToRequestContent(content), context);
+                using HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreateUpdateOutboundRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CognitiveServicesManagedNetworkSettingsContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CognitiveServicesArmOperation<CognitiveServicesOutboundRuleListResult> operation = new CognitiveServicesArmOperation<CognitiveServicesOutboundRuleListResult>(
                     new CognitiveServicesOutboundRuleListResultOperationSource(),
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreateProvisionManagedNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CognitiveServicesManagedNetworkProvisionConfig.ToRequestContent(body), context);
+                using HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreateProvisionManagedNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CognitiveServicesManagedNetworkProvisionConfig.ToRequestContent(body), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CognitiveServicesArmOperation<CognitiveServicesManagedNetworkProvisionStatus> operation = new CognitiveServicesArmOperation<CognitiveServicesManagedNetworkProvisionStatus>(
                     new CognitiveServicesManagedNetworkProvisionStatusOperationSource(),
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreateProvisionManagedNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CognitiveServicesManagedNetworkProvisionConfig.ToRequestContent(body), context);
+                using HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreateProvisionManagedNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CognitiveServicesManagedNetworkProvisionConfig.ToRequestContent(body), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CognitiveServicesArmOperation<CognitiveServicesManagedNetworkProvisionStatus> operation = new CognitiveServicesArmOperation<CognitiveServicesManagedNetworkProvisionStatus>(
                     new CognitiveServicesManagedNetworkProvisionStatusOperationSource(),

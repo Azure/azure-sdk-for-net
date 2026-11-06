@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ProfilesRestClient.CreateCheckTrafficManagerNameAvailabilityV2Request(Guid.Parse(Id.SubscriptionId), TrafficManagerRelativeDnsNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = ProfilesRestClient.CreateCheckTrafficManagerNameAvailabilityV2Request(Guid.Parse(Id.SubscriptionId), TrafficManagerRelativeDnsNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TrafficManagerNameAvailabilityResult> response = Response.FromValue(TrafficManagerNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ProfilesRestClient.CreateCheckTrafficManagerNameAvailabilityV2Request(Guid.Parse(Id.SubscriptionId), TrafficManagerRelativeDnsNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = ProfilesRestClient.CreateCheckTrafficManagerNameAvailabilityV2Request(Guid.Parse(Id.SubscriptionId), TrafficManagerRelativeDnsNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TrafficManagerNameAvailabilityResult> response = Response.FromValue(TrafficManagerNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

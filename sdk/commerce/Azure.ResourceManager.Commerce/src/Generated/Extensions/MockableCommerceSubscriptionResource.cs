@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Commerce.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RateCardRestClient.CreateGetRateCardRequest(Id.SubscriptionId, filter, context);
+                using HttpMessage message = RateCardRestClient.CreateGetRateCardRequest(Id.SubscriptionId, filter, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CommerceRateCardInfo> response = Response.FromValue(CommerceRateCardInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Commerce.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RateCardRestClient.CreateGetRateCardRequest(Id.SubscriptionId, filter, context);
+                using HttpMessage message = RateCardRestClient.CreateGetRateCardRequest(Id.SubscriptionId, filter, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CommerceRateCardInfo> response = Response.FromValue(CommerceRateCardInfo.FromResponse(result), result);
                 if (response.Value == null)

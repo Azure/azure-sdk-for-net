@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _credentialsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, CredentialData.ToRequestContent(data), context);
+                using HttpMessage message = _credentialsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, CredentialData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DeviceRegistryArmOperation<CredentialResource> operation = new DeviceRegistryArmOperation<CredentialResource>(
                     new CredentialResourceOperationSource(Client),
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _credentialsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, CredentialData.ToRequestContent(data), context);
+                using HttpMessage message = _credentialsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, CredentialData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DeviceRegistryArmOperation<CredentialResource> operation = new DeviceRegistryArmOperation<CredentialResource>(
                     new CredentialResourceOperationSource(Client),
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _credentialsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _credentialsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CredentialData> response = Response.FromValue(CredentialData.FromResponse(result), result);
                 if (response.Value == null)
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _credentialsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _credentialsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CredentialData> response = Response.FromValue(CredentialData.FromResponse(result), result);
                 if (response.Value == null)
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _credentialsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, CredentialPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _credentialsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, CredentialPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DeviceRegistryArmOperation<CredentialResource> operation = new DeviceRegistryArmOperation<CredentialResource>(
                     new CredentialResourceOperationSource(Client),
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _credentialsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, CredentialPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _credentialsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, CredentialPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DeviceRegistryArmOperation<CredentialResource> operation = new DeviceRegistryArmOperation<CredentialResource>(
                     new CredentialResourceOperationSource(Client),
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _credentialsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _credentialsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DeviceRegistryArmOperation operation = new DeviceRegistryArmOperation(_credentialsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _credentialsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _credentialsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DeviceRegistryArmOperation operation = new DeviceRegistryArmOperation(_credentialsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _credentialsRestClient.CreateSynchronizeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _credentialsRestClient.CreateSynchronizeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DeviceRegistryArmOperation operation = new DeviceRegistryArmOperation(_credentialsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _credentialsRestClient.CreateSynchronizeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _credentialsRestClient.CreateSynchronizeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DeviceRegistryArmOperation operation = new DeviceRegistryArmOperation(_credentialsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -645,7 +645,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _credentialsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                    using HttpMessage message = _credentialsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<CredentialData> response = Response.FromValue(CredentialData.FromResponse(result), result);
                     return Response.FromValue(new CredentialResource(Client, response.Value), response.GetRawResponse());
@@ -693,7 +693,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _credentialsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                    using HttpMessage message = _credentialsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<CredentialData> response = Response.FromValue(CredentialData.FromResponse(result), result);
                     return Response.FromValue(new CredentialResource(Client, response.Value), response.GetRawResponse());
@@ -739,7 +739,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _credentialsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                    using HttpMessage message = _credentialsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<CredentialData> response = Response.FromValue(CredentialData.FromResponse(result), result);
                     return Response.FromValue(new CredentialResource(Client, response.Value), response.GetRawResponse());
@@ -781,7 +781,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _credentialsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                    using HttpMessage message = _credentialsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<CredentialData> response = Response.FromValue(CredentialData.FromResponse(result), result);
                     return Response.FromValue(new CredentialResource(Client, response.Value), response.GetRawResponse());
@@ -823,7 +823,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _credentialsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                    using HttpMessage message = _credentialsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<CredentialData> response = Response.FromValue(CredentialData.FromResponse(result), result);
                     return Response.FromValue(new CredentialResource(Client, response.Value), response.GetRawResponse());
@@ -869,7 +869,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _credentialsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                    using HttpMessage message = _credentialsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<CredentialData> response = Response.FromValue(CredentialData.FromResponse(result), result);
                     return Response.FromValue(new CredentialResource(Client, response.Value), response.GetRawResponse());

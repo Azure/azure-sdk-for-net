@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionGroupsRestClient.CreateCreateOrupdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, protectionGroupName, ProtectionGroupData.ToRequestContent(data), context);
+                using HttpMessage message = _protectionGroupsRestClient.CreateCreateOrupdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, protectionGroupName, ProtectionGroupData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CommvaultContentStoreArmOperation<ProtectionGroupResource> operation = new CommvaultContentStoreArmOperation<ProtectionGroupResource>(
                     new ProtectionGroupResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionGroupsRestClient.CreateCreateOrupdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, protectionGroupName, ProtectionGroupData.ToRequestContent(data), context);
+                using HttpMessage message = _protectionGroupsRestClient.CreateCreateOrupdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, protectionGroupName, ProtectionGroupData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CommvaultContentStoreArmOperation<ProtectionGroupResource> operation = new CommvaultContentStoreArmOperation<ProtectionGroupResource>(
                     new ProtectionGroupResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, protectionGroupName, context);
+                using HttpMessage message = _protectionGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, protectionGroupName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ProtectionGroupData> response = Response.FromValue(ProtectionGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, protectionGroupName, context);
+                using HttpMessage message = _protectionGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, protectionGroupName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ProtectionGroupData> response = Response.FromValue(ProtectionGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, protectionGroupName, context);
+                using HttpMessage message = _protectionGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, protectionGroupName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ProtectionGroupData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, protectionGroupName, context);
+                using HttpMessage message = _protectionGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, protectionGroupName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ProtectionGroupData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, protectionGroupName, context);
+                using HttpMessage message = _protectionGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, protectionGroupName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ProtectionGroupData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, protectionGroupName, context);
+                using HttpMessage message = _protectionGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, protectionGroupName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ProtectionGroupData> response = default;

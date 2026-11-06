@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectedEnvironmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, connectedEnvironmentName, ContainerAppConnectedEnvironmentData.ToRequestContent(data), context);
+                using HttpMessage message = _connectedEnvironmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, connectedEnvironmentName, ContainerAppConnectedEnvironmentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppContainersArmOperation<ContainerAppConnectedEnvironmentResource> operation = new AppContainersArmOperation<ContainerAppConnectedEnvironmentResource>(
                     new ContainerAppConnectedEnvironmentResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectedEnvironmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, connectedEnvironmentName, ContainerAppConnectedEnvironmentData.ToRequestContent(data), context);
+                using HttpMessage message = _connectedEnvironmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, connectedEnvironmentName, ContainerAppConnectedEnvironmentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppContainersArmOperation<ContainerAppConnectedEnvironmentResource> operation = new AppContainersArmOperation<ContainerAppConnectedEnvironmentResource>(
                     new ContainerAppConnectedEnvironmentResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectedEnvironmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, connectedEnvironmentName, context);
+                using HttpMessage message = _connectedEnvironmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, connectedEnvironmentName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerAppConnectedEnvironmentData> response = Response.FromValue(ContainerAppConnectedEnvironmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectedEnvironmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, connectedEnvironmentName, context);
+                using HttpMessage message = _connectedEnvironmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, connectedEnvironmentName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerAppConnectedEnvironmentData> response = Response.FromValue(ContainerAppConnectedEnvironmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectedEnvironmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, connectedEnvironmentName, context);
+                using HttpMessage message = _connectedEnvironmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, connectedEnvironmentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ContainerAppConnectedEnvironmentData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectedEnvironmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, connectedEnvironmentName, context);
+                using HttpMessage message = _connectedEnvironmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, connectedEnvironmentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ContainerAppConnectedEnvironmentData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectedEnvironmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, connectedEnvironmentName, context);
+                using HttpMessage message = _connectedEnvironmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, connectedEnvironmentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ContainerAppConnectedEnvironmentData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectedEnvironmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, connectedEnvironmentName, context);
+                using HttpMessage message = _connectedEnvironmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, connectedEnvironmentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ContainerAppConnectedEnvironmentData> response = default;

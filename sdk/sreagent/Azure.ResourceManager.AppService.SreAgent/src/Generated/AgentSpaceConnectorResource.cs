@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentSpacesConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _agentSpacesConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AgentSpaceConnectorData> response = Response.FromValue(AgentSpaceConnectorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentSpacesConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _agentSpacesConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AgentSpaceConnectorData> response = Response.FromValue(AgentSpaceConnectorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentSpacesConnectorsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _agentSpacesConnectorsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SreAgentArmOperation operation = new SreAgentArmOperation(_agentSpacesConnectorsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentSpacesConnectorsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _agentSpacesConnectorsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SreAgentArmOperation operation = new SreAgentArmOperation(_agentSpacesConnectorsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentSpacesConnectorsRestClient.CreateGetSecretsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _agentSpacesConnectorsRestClient.CreateGetSecretsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AgentSpaceConnectorData> response = Response.FromValue(AgentSpaceConnectorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentSpacesConnectorsRestClient.CreateGetSecretsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _agentSpacesConnectorsRestClient.CreateGetSecretsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AgentSpaceConnectorData> response = Response.FromValue(AgentSpaceConnectorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentSpacesConnectorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AgentSpaceConnectorData.ToRequestContent(data), context);
+                using HttpMessage message = _agentSpacesConnectorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AgentSpaceConnectorData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SreAgentArmOperation<AgentSpaceConnectorResource> operation = new SreAgentArmOperation<AgentSpaceConnectorResource>(
                     new AgentSpaceConnectorResourceOperationSource(Client),
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentSpacesConnectorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AgentSpaceConnectorData.ToRequestContent(data), context);
+                using HttpMessage message = _agentSpacesConnectorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AgentSpaceConnectorData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SreAgentArmOperation<AgentSpaceConnectorResource> operation = new SreAgentArmOperation<AgentSpaceConnectorResource>(
                     new AgentSpaceConnectorResourceOperationSource(Client),

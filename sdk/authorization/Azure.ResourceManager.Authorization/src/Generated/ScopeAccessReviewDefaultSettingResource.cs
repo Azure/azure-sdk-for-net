@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeAccessReviewDefaultSettingsRestClient.CreatePutRequest(Id.Parent.ToString(), AccessReviewScheduleSettings.ToRequestContent(properties), context);
+                using HttpMessage message = _scopeAccessReviewDefaultSettingsRestClient.CreatePutRequest(Id.Parent.ToString(), AccessReviewScheduleSettings.ToRequestContent(properties), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AccessReviewDefaultSettingsData> response = Response.FromValue(AccessReviewDefaultSettingsData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeAccessReviewDefaultSettingsRestClient.CreatePutRequest(Id.Parent.ToString(), AccessReviewScheduleSettings.ToRequestContent(properties), context);
+                using HttpMessage message = _scopeAccessReviewDefaultSettingsRestClient.CreatePutRequest(Id.Parent.ToString(), AccessReviewScheduleSettings.ToRequestContent(properties), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AccessReviewDefaultSettingsData> response = Response.FromValue(AccessReviewDefaultSettingsData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeAccessReviewDefaultSettingsRestClient.CreateGetRequest(Id.Parent.ToString(), context);
+                using HttpMessage message = _scopeAccessReviewDefaultSettingsRestClient.CreateGetRequest(Id.Parent.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AccessReviewDefaultSettingsData> response = Response.FromValue(AccessReviewDefaultSettingsData.FromResponse(result), result);
                 if (response.Value == null)
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeAccessReviewDefaultSettingsRestClient.CreateGetRequest(Id.Parent.ToString(), context);
+                using HttpMessage message = _scopeAccessReviewDefaultSettingsRestClient.CreateGetRequest(Id.Parent.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AccessReviewDefaultSettingsData> response = Response.FromValue(AccessReviewDefaultSettingsData.FromResponse(result), result);
                 if (response.Value == null)

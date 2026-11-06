@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CdnClientRestClient.CreateCheckCdnNameAvailabilityRequest(CdnNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = CdnClientRestClient.CreateCheckCdnNameAvailabilityRequest(CdnNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CdnNameAvailabilityResult> response = Response.FromValue(CdnNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CdnClientRestClient.CreateCheckCdnNameAvailabilityRequest(CdnNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = CdnClientRestClient.CreateCheckCdnNameAvailabilityRequest(CdnNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CdnNameAvailabilityResult> response = Response.FromValue(CdnNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

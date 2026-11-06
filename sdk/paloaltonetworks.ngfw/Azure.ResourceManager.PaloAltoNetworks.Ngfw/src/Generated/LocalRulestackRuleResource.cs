@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _localRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _localRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LocalRulestackRuleData> response = Response.FromValue(LocalRulestackRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _localRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _localRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LocalRulestackRuleData> response = Response.FromValue(LocalRulestackRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _localRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _localRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NgfwArmOperation operation = new NgfwArmOperation(_localRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _localRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _localRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NgfwArmOperation operation = new NgfwArmOperation(_localRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _localRulesRestClient.CreateGetCountersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, firewallName, context);
+                using HttpMessage message = _localRulesRestClient.CreateGetCountersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, firewallName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FirewallRuleCounter> response = Response.FromValue(FirewallRuleCounter.FromResponse(result), result);
                 if (response.Value == null)
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _localRulesRestClient.CreateGetCountersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, firewallName, context);
+                using HttpMessage message = _localRulesRestClient.CreateGetCountersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, firewallName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FirewallRuleCounter> response = Response.FromValue(FirewallRuleCounter.FromResponse(result), result);
                 if (response.Value == null)
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _localRulesRestClient.CreateRefreshCountersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, firewallName, context);
+                using HttpMessage message = _localRulesRestClient.CreateRefreshCountersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, firewallName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _localRulesRestClient.CreateRefreshCountersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, firewallName, context);
+                using HttpMessage message = _localRulesRestClient.CreateRefreshCountersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, firewallName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _localRulesRestClient.CreateResetCountersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, firewallName, context);
+                using HttpMessage message = _localRulesRestClient.CreateResetCountersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, firewallName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FirewallRuleResetConter> response = Response.FromValue(FirewallRuleResetConter.FromResponse(result), result);
                 if (response.Value == null)
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _localRulesRestClient.CreateResetCountersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, firewallName, context);
+                using HttpMessage message = _localRulesRestClient.CreateResetCountersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, firewallName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FirewallRuleResetConter> response = Response.FromValue(FirewallRuleResetConter.FromResponse(result), result);
                 if (response.Value == null)
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _localRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, LocalRulestackRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _localRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, LocalRulestackRuleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NgfwArmOperation<LocalRulestackRuleResource> operation = new NgfwArmOperation<LocalRulestackRuleResource>(
                     new LocalRulestackRuleResourceOperationSource(Client),
@@ -666,7 +666,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _localRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, LocalRulestackRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _localRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, LocalRulestackRuleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NgfwArmOperation<LocalRulestackRuleResource> operation = new NgfwArmOperation<LocalRulestackRuleResource>(
                     new LocalRulestackRuleResourceOperationSource(Client),

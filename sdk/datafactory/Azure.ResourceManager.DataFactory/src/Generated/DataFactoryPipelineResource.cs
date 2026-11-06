@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _pipelinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifNoneMatch, context);
+                using HttpMessage message = _pipelinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifNoneMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataFactoryPipelineData> response = Response.FromValue(DataFactoryPipelineData.FromResponse(result), result);
                 if (response.Value == null)
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _pipelinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifNoneMatch, context);
+                using HttpMessage message = _pipelinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifNoneMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataFactoryPipelineData> response = Response.FromValue(DataFactoryPipelineData.FromResponse(result), result);
                 if (response.Value == null)
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _pipelinesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _pipelinesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _pipelinesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _pipelinesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _pipelinesRestClient.CreateCreateRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BinaryContentHelper.FromDictionary(parameterValueSpecification), referencePipelineRunId, isRecovery, startActivityName, startFromFailure, context);
+                using HttpMessage message = _pipelinesRestClient.CreateCreateRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BinaryContentHelper.FromDictionary(parameterValueSpecification), referencePipelineRunId, isRecovery, startActivityName, startFromFailure, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PipelineCreateRunResult> response = Response.FromValue(PipelineCreateRunResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _pipelinesRestClient.CreateCreateRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BinaryContentHelper.FromDictionary(parameterValueSpecification), referencePipelineRunId, isRecovery, startActivityName, startFromFailure, context);
+                using HttpMessage message = _pipelinesRestClient.CreateCreateRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BinaryContentHelper.FromDictionary(parameterValueSpecification), referencePipelineRunId, isRecovery, startActivityName, startFromFailure, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PipelineCreateRunResult> response = Response.FromValue(PipelineCreateRunResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _pipelinesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataFactoryPipelineData.ToRequestContent(data), ifMatch, context);
+                using HttpMessage message = _pipelinesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataFactoryPipelineData.ToRequestContent(data), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataFactoryPipelineData> response = Response.FromValue(DataFactoryPipelineData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _pipelinesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataFactoryPipelineData.ToRequestContent(data), ifMatch, context);
+                using HttpMessage message = _pipelinesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataFactoryPipelineData.ToRequestContent(data), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataFactoryPipelineData> response = Response.FromValue(DataFactoryPipelineData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

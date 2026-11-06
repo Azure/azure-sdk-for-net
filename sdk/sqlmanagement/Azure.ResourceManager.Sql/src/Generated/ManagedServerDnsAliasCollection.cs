@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedServerDnsAliasesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dnsAliasName, ManagedServerDnsAliasCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _managedServerDnsAliasesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dnsAliasName, ManagedServerDnsAliasCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation<ManagedServerDnsAliasResource> operation = new SqlArmOperation<ManagedServerDnsAliasResource>(
                     new ManagedServerDnsAliasResourceOperationSource(Client),
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedServerDnsAliasesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dnsAliasName, ManagedServerDnsAliasCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _managedServerDnsAliasesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dnsAliasName, ManagedServerDnsAliasCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation<ManagedServerDnsAliasResource> operation = new SqlArmOperation<ManagedServerDnsAliasResource>(
                     new ManagedServerDnsAliasResourceOperationSource(Client),
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedServerDnsAliasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dnsAliasName, context);
+                using HttpMessage message = _managedServerDnsAliasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dnsAliasName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ManagedServerDnsAliasData> response = Response.FromValue(ManagedServerDnsAliasData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedServerDnsAliasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dnsAliasName, context);
+                using HttpMessage message = _managedServerDnsAliasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dnsAliasName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ManagedServerDnsAliasData> response = Response.FromValue(ManagedServerDnsAliasData.FromResponse(result), result);
                 if (response.Value == null)
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedServerDnsAliasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dnsAliasName, context);
+                using HttpMessage message = _managedServerDnsAliasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dnsAliasName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ManagedServerDnsAliasData> response = default;
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedServerDnsAliasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dnsAliasName, context);
+                using HttpMessage message = _managedServerDnsAliasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dnsAliasName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ManagedServerDnsAliasData> response = default;
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedServerDnsAliasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dnsAliasName, context);
+                using HttpMessage message = _managedServerDnsAliasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dnsAliasName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ManagedServerDnsAliasData> response = default;
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedServerDnsAliasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dnsAliasName, context);
+                using HttpMessage message = _managedServerDnsAliasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dnsAliasName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ManagedServerDnsAliasData> response = default;

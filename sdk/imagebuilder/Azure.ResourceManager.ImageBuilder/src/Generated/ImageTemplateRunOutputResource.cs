@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ImageBuilder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRunOutputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRunOutputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ImageTemplateRunOutputData> response = Response.FromValue(ImageTemplateRunOutputData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ImageBuilder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRunOutputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRunOutputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ImageTemplateRunOutputData> response = Response.FromValue(ImageTemplateRunOutputData.FromResponse(result), result);
                 if (response.Value == null)

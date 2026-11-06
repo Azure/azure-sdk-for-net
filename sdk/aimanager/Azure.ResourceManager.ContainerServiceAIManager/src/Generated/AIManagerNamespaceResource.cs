@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _aiManagerNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _aiManagerNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AIManagerNamespaceData> response = Response.FromValue(AIManagerNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _aiManagerNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _aiManagerNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AIManagerNamespaceData> response = Response.FromValue(AIManagerNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _aiManagerNamespacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
+                using HttpMessage message = _aiManagerNamespacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceAIManagerArmOperation operation = new ContainerServiceAIManagerArmOperation(_aiManagerNamespacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _aiManagerNamespacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
+                using HttpMessage message = _aiManagerNamespacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceAIManagerArmOperation operation = new ContainerServiceAIManagerArmOperation(_aiManagerNamespacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _aiManagerNamespacesRestClient.CreateGetAccessKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _aiManagerNamespacesRestClient.CreateGetAccessKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AIManagerNamespaceAccessInfo> response = Response.FromValue(AIManagerNamespaceAccessInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _aiManagerNamespacesRestClient.CreateGetAccessKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _aiManagerNamespacesRestClient.CreateGetAccessKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AIManagerNamespaceAccessInfo> response = Response.FromValue(AIManagerNamespaceAccessInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _aiManagerNamespacesRestClient.CreateGetCredentialRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _aiManagerNamespacesRestClient.CreateGetCredentialRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AIManagerCredentialResults> response = Response.FromValue(AIManagerCredentialResults.FromResponse(result), result);
                 if (response.Value == null)
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _aiManagerNamespacesRestClient.CreateGetCredentialRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _aiManagerNamespacesRestClient.CreateGetCredentialRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AIManagerCredentialResults> response = Response.FromValue(AIManagerCredentialResults.FromResponse(result), result);
                 if (response.Value == null)
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _aiManagerNamespacesRestClient.CreateRotateKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _aiManagerNamespacesRestClient.CreateRotateKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AIManagerNamespaceAccessInfo> response = Response.FromValue(AIManagerNamespaceAccessInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _aiManagerNamespacesRestClient.CreateRotateKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _aiManagerNamespacesRestClient.CreateRotateKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AIManagerNamespaceAccessInfo> response = Response.FromValue(AIManagerNamespaceAccessInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -614,7 +614,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _aiManagerNamespacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AIManagerNamespaceData.ToRequestContent(data), matchConditions, context);
+                using HttpMessage message = _aiManagerNamespacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AIManagerNamespaceData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceAIManagerArmOperation<AIManagerNamespaceResource> operation = new ContainerServiceAIManagerArmOperation<AIManagerNamespaceResource>(
                     new AIManagerNamespaceResourceOperationSource(Client),
@@ -674,7 +674,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _aiManagerNamespacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AIManagerNamespaceData.ToRequestContent(data), matchConditions, context);
+                using HttpMessage message = _aiManagerNamespacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AIManagerNamespaceData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceAIManagerArmOperation<AIManagerNamespaceResource> operation = new ContainerServiceAIManagerArmOperation<AIManagerNamespaceResource>(
                     new AIManagerNamespaceResourceOperationSource(Client),

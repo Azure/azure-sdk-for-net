@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _replicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppConfigurationReplicaData> response = Response.FromValue(AppConfigurationReplicaData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _replicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppConfigurationReplicaData> response = Response.FromValue(AppConfigurationReplicaData.FromResponse(result), result);
                 if (response.Value == null)
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicasRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _replicasRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppConfigurationArmOperation operation = new AppConfigurationArmOperation(_replicasClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicasRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _replicasRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppConfigurationArmOperation operation = new AppConfigurationArmOperation(_replicasClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicasRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AppConfigurationReplicaData.ToRequestContent(data), context);
+                using HttpMessage message = _replicasRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AppConfigurationReplicaData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppConfigurationArmOperation<AppConfigurationReplicaResource> operation = new AppConfigurationArmOperation<AppConfigurationReplicaResource>(
                     new AppConfigurationReplicaResourceOperationSource(Client),
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicasRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AppConfigurationReplicaData.ToRequestContent(data), context);
+                using HttpMessage message = _replicasRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AppConfigurationReplicaData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppConfigurationArmOperation<AppConfigurationReplicaResource> operation = new AppConfigurationArmOperation<AppConfigurationReplicaResource>(
                     new AppConfigurationReplicaResourceOperationSource(Client),

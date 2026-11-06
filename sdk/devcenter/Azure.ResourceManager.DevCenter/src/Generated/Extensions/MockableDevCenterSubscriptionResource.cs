@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OperationStatusesRestClient.CreateGetDevCenterOperationStatusRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
+                using HttpMessage message = OperationStatusesRestClient.CreateGetDevCenterOperationStatusRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevCenterOperationStatus> response = Response.FromValue(DevCenterOperationStatus.FromResponse(result), result);
                 if (response.Value == null)
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OperationStatusesRestClient.CreateGetDevCenterOperationStatusRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
+                using HttpMessage message = OperationStatusesRestClient.CreateGetDevCenterOperationStatusRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevCenterOperationStatus> response = Response.FromValue(DevCenterOperationStatus.FromResponse(result), result);
                 if (response.Value == null)
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CheckNameAvailabilityRestClient.CreateCheckDevCenterNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), DevCenterNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = CheckNameAvailabilityRestClient.CreateCheckDevCenterNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), DevCenterNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevCenterNameAvailabilityResult> response = Response.FromValue(DevCenterNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CheckNameAvailabilityRestClient.CreateCheckDevCenterNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), DevCenterNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = CheckNameAvailabilityRestClient.CreateCheckDevCenterNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), DevCenterNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevCenterNameAvailabilityResult> response = Response.FromValue(DevCenterNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CheckScopedNameAvailabilityRestClient.CreateExecuteRequest(Guid.Parse(Id.SubscriptionId), DevCenterScopedNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = CheckScopedNameAvailabilityRestClient.CreateExecuteRequest(Guid.Parse(Id.SubscriptionId), DevCenterScopedNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevCenterNameAvailabilityResult> response = Response.FromValue(DevCenterNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.DevCenter.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CheckScopedNameAvailabilityRestClient.CreateExecuteRequest(Guid.Parse(Id.SubscriptionId), DevCenterScopedNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = CheckScopedNameAvailabilityRestClient.CreateExecuteRequest(Guid.Parse(Id.SubscriptionId), DevCenterScopedNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevCenterNameAvailabilityResult> response = Response.FromValue(DevCenterNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

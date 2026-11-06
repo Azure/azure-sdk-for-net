@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _confluentOrganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _confluentOrganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConfluentOrganizationData> response = Response.FromValue(ConfluentOrganizationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _confluentOrganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _confluentOrganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConfluentOrganizationData> response = Response.FromValue(ConfluentOrganizationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _confluentOrganizationRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ConfluentOrganizationPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _confluentOrganizationRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ConfluentOrganizationPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConfluentOrganizationData> response = Response.FromValue(ConfluentOrganizationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _confluentOrganizationRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ConfluentOrganizationPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _confluentOrganizationRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ConfluentOrganizationPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConfluentOrganizationData> response = Response.FromValue(ConfluentOrganizationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _confluentOrganizationRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _confluentOrganizationRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ConfluentArmOperation operation = new ConfluentArmOperation(_confluentOrganizationClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _confluentOrganizationRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _confluentOrganizationRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ConfluentArmOperation operation = new ConfluentArmOperation(_confluentOrganizationClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationResourceAPIKeyActionsRestClient.CreateDeleteClusterApiKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiKeyId, context);
+                using HttpMessage message = _organizationResourceAPIKeyActionsRestClient.CreateDeleteClusterApiKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiKeyId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationResourceAPIKeyActionsRestClient.CreateDeleteClusterApiKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiKeyId, context);
+                using HttpMessage message = _organizationResourceAPIKeyActionsRestClient.CreateDeleteClusterApiKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiKeyId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationResourceAPIKeyActionsRestClient.CreateGetClusterApiKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiKeyId, context);
+                using HttpMessage message = _organizationResourceAPIKeyActionsRestClient.CreateGetClusterApiKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiKeyId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConfluentApiKeyRecord> response = Response.FromValue(ConfluentApiKeyRecord.FromResponse(result), result);
                 if (response.Value == null)
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationResourceAPIKeyActionsRestClient.CreateGetClusterApiKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiKeyId, context);
+                using HttpMessage message = _organizationResourceAPIKeyActionsRestClient.CreateGetClusterApiKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiKeyId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConfluentApiKeyRecord> response = Response.FromValue(ConfluentApiKeyRecord.FromResponse(result), result);
                 if (response.Value == null)
@@ -633,7 +633,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationResourceRoleBindingIdActionsRestClient.CreateDeleteAccessRoleBindingRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleBindingId, context);
+                using HttpMessage message = _organizationResourceRoleBindingIdActionsRestClient.CreateDeleteAccessRoleBindingRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleBindingId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -681,7 +681,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationResourceRoleBindingIdActionsRestClient.CreateDeleteAccessRoleBindingRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleBindingId, context);
+                using HttpMessage message = _organizationResourceRoleBindingIdActionsRestClient.CreateDeleteAccessRoleBindingRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleBindingId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -728,7 +728,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _confluentOrganizationRestClient.CreateCreateAccessRoleBindingRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessRoleBindingCreateContent.ToRequestContent(content), context);
+                using HttpMessage message = _confluentOrganizationRestClient.CreateCreateAccessRoleBindingRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessRoleBindingCreateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AccessRoleBindingRecord> response = Response.FromValue(AccessRoleBindingRecord.FromResponse(result), result);
                 if (response.Value == null)
@@ -780,7 +780,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _confluentOrganizationRestClient.CreateCreateAccessRoleBindingRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessRoleBindingCreateContent.ToRequestContent(content), context);
+                using HttpMessage message = _confluentOrganizationRestClient.CreateCreateAccessRoleBindingRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessRoleBindingCreateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AccessRoleBindingRecord> response = Response.FromValue(AccessRoleBindingRecord.FromResponse(result), result);
                 if (response.Value == null)
@@ -832,7 +832,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _confluentOrganizationRestClient.CreateInviteUserRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessInvitationContent.ToRequestContent(content), context);
+                using HttpMessage message = _confluentOrganizationRestClient.CreateInviteUserRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessInvitationContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AccessInvitationRecord> response = Response.FromValue(AccessInvitationRecord.FromResponse(result), result);
                 if (response.Value == null)
@@ -884,7 +884,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _confluentOrganizationRestClient.CreateInviteUserRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessInvitationContent.ToRequestContent(content), context);
+                using HttpMessage message = _confluentOrganizationRestClient.CreateInviteUserRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessInvitationContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AccessInvitationRecord> response = Response.FromValue(AccessInvitationRecord.FromResponse(result), result);
                 if (response.Value == null)
@@ -932,7 +932,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _confluentOrganizationRestClient.CreateLatestLinkedSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _confluentOrganizationRestClient.CreateLatestLinkedSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LatestLinkedSaaSResult> response = Response.FromValue(LatestLinkedSaaSResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -980,7 +980,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _confluentOrganizationRestClient.CreateLatestLinkedSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _confluentOrganizationRestClient.CreateLatestLinkedSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LatestLinkedSaaSResult> response = Response.FromValue(LatestLinkedSaaSResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1033,7 +1033,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _confluentOrganizationRestClient.CreateLinkSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ConfluentSaaSInfo.ToRequestContent(content), context);
+                using HttpMessage message = _confluentOrganizationRestClient.CreateLinkSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ConfluentSaaSInfo.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ConfluentArmOperation<ConfluentOrganizationResource> operation = new ConfluentArmOperation<ConfluentOrganizationResource>(
                     new ConfluentOrganizationResourceOperationSource(Client),
@@ -1092,7 +1092,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _confluentOrganizationRestClient.CreateLinkSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ConfluentSaaSInfo.ToRequestContent(content), context);
+                using HttpMessage message = _confluentOrganizationRestClient.CreateLinkSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ConfluentSaaSInfo.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ConfluentArmOperation<ConfluentOrganizationResource> operation = new ConfluentArmOperation<ConfluentOrganizationResource>(
                     new ConfluentOrganizationResourceOperationSource(Client),
@@ -1150,7 +1150,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _confluentOrganizationRestClient.CreateGetAccessClustersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessListContent.ToRequestContent(content), context);
+                using HttpMessage message = _confluentOrganizationRestClient.CreateGetAccessClustersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessListContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AccessClusterListResult> response = Response.FromValue(AccessClusterListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1202,7 +1202,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _confluentOrganizationRestClient.CreateGetAccessClustersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessListContent.ToRequestContent(content), context);
+                using HttpMessage message = _confluentOrganizationRestClient.CreateGetAccessClustersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessListContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AccessClusterListResult> response = Response.FromValue(AccessClusterListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1254,7 +1254,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _confluentOrganizationRestClient.CreateGetAccessEnvironmentsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessListContent.ToRequestContent(content), context);
+                using HttpMessage message = _confluentOrganizationRestClient.CreateGetAccessEnvironmentsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessListContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AccessEnvironmentListResult> response = Response.FromValue(AccessEnvironmentListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1306,7 +1306,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _confluentOrganizationRestClient.CreateGetAccessEnvironmentsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessListContent.ToRequestContent(content), context);
+                using HttpMessage message = _confluentOrganizationRestClient.CreateGetAccessEnvironmentsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessListContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AccessEnvironmentListResult> response = Response.FromValue(AccessEnvironmentListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1358,7 +1358,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _confluentOrganizationRestClient.CreateGetAccessInvitationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessListContent.ToRequestContent(content), context);
+                using HttpMessage message = _confluentOrganizationRestClient.CreateGetAccessInvitationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessListContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AccessInvitationListResult> response = Response.FromValue(AccessInvitationListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1410,7 +1410,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _confluentOrganizationRestClient.CreateGetAccessInvitationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessListContent.ToRequestContent(content), context);
+                using HttpMessage message = _confluentOrganizationRestClient.CreateGetAccessInvitationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessListContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AccessInvitationListResult> response = Response.FromValue(AccessInvitationListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1462,7 +1462,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _confluentOrganizationRestClient.CreateGetRegionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessListContent.ToRequestContent(content), context);
+                using HttpMessage message = _confluentOrganizationRestClient.CreateGetRegionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessListContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConfluentRegionListResult> response = Response.FromValue(ConfluentRegionListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1514,7 +1514,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _confluentOrganizationRestClient.CreateGetRegionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessListContent.ToRequestContent(content), context);
+                using HttpMessage message = _confluentOrganizationRestClient.CreateGetRegionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessListContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConfluentRegionListResult> response = Response.FromValue(ConfluentRegionListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1566,7 +1566,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _confluentOrganizationRestClient.CreateGetAccessRoleBindingNamesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessListContent.ToRequestContent(content), context);
+                using HttpMessage message = _confluentOrganizationRestClient.CreateGetAccessRoleBindingNamesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessListContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AccessRoleBindingNameListResult> response = Response.FromValue(AccessRoleBindingNameListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1618,7 +1618,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _confluentOrganizationRestClient.CreateGetAccessRoleBindingNamesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessListContent.ToRequestContent(content), context);
+                using HttpMessage message = _confluentOrganizationRestClient.CreateGetAccessRoleBindingNamesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessListContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AccessRoleBindingNameListResult> response = Response.FromValue(AccessRoleBindingNameListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1670,7 +1670,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _confluentOrganizationRestClient.CreateGetAccessRoleBindingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessListContent.ToRequestContent(content), context);
+                using HttpMessage message = _confluentOrganizationRestClient.CreateGetAccessRoleBindingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessListContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AccessRoleBindingListResult> response = Response.FromValue(AccessRoleBindingListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1722,7 +1722,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _confluentOrganizationRestClient.CreateGetAccessRoleBindingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessListContent.ToRequestContent(content), context);
+                using HttpMessage message = _confluentOrganizationRestClient.CreateGetAccessRoleBindingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessListContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AccessRoleBindingListResult> response = Response.FromValue(AccessRoleBindingListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1774,7 +1774,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _confluentOrganizationRestClient.CreateGetAccessServiceAccountsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessListContent.ToRequestContent(content), context);
+                using HttpMessage message = _confluentOrganizationRestClient.CreateGetAccessServiceAccountsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessListContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AccessServiceAccountListResult> response = Response.FromValue(AccessServiceAccountListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1826,7 +1826,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _confluentOrganizationRestClient.CreateGetAccessServiceAccountsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessListContent.ToRequestContent(content), context);
+                using HttpMessage message = _confluentOrganizationRestClient.CreateGetAccessServiceAccountsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessListContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AccessServiceAccountListResult> response = Response.FromValue(AccessServiceAccountListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1878,7 +1878,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _confluentOrganizationRestClient.CreateGetAccessUsersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessListContent.ToRequestContent(content), context);
+                using HttpMessage message = _confluentOrganizationRestClient.CreateGetAccessUsersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessListContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AccessUserListResult> response = Response.FromValue(AccessUserListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1930,7 +1930,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _confluentOrganizationRestClient.CreateGetAccessUsersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessListContent.ToRequestContent(content), context);
+                using HttpMessage message = _confluentOrganizationRestClient.CreateGetAccessUsersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessListContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AccessUserListResult> response = Response.FromValue(AccessUserListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1969,7 +1969,7 @@ namespace Azure.ResourceManager.Confluent
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _confluentOrganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _confluentOrganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ConfluentOrganizationData> response = Response.FromValue(ConfluentOrganizationData.FromResponse(result), result);
                     return Response.FromValue(new ConfluentOrganizationResource(Client, response.Value), response.GetRawResponse());
@@ -2017,7 +2017,7 @@ namespace Azure.ResourceManager.Confluent
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _confluentOrganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _confluentOrganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ConfluentOrganizationData> response = Response.FromValue(ConfluentOrganizationData.FromResponse(result), result);
                     return Response.FromValue(new ConfluentOrganizationResource(Client, response.Value), response.GetRawResponse());
@@ -2063,7 +2063,7 @@ namespace Azure.ResourceManager.Confluent
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _confluentOrganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _confluentOrganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ConfluentOrganizationData> response = Response.FromValue(ConfluentOrganizationData.FromResponse(result), result);
                     return Response.FromValue(new ConfluentOrganizationResource(Client, response.Value), response.GetRawResponse());
@@ -2105,7 +2105,7 @@ namespace Azure.ResourceManager.Confluent
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _confluentOrganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _confluentOrganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ConfluentOrganizationData> response = Response.FromValue(ConfluentOrganizationData.FromResponse(result), result);
                     return Response.FromValue(new ConfluentOrganizationResource(Client, response.Value), response.GetRawResponse());
@@ -2147,7 +2147,7 @@ namespace Azure.ResourceManager.Confluent
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _confluentOrganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _confluentOrganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ConfluentOrganizationData> response = Response.FromValue(ConfluentOrganizationData.FromResponse(result), result);
                     return Response.FromValue(new ConfluentOrganizationResource(Client, response.Value), response.GetRawResponse());
@@ -2193,7 +2193,7 @@ namespace Azure.ResourceManager.Confluent
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _confluentOrganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _confluentOrganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ConfluentOrganizationData> response = Response.FromValue(ConfluentOrganizationData.FromResponse(result), result);
                     return Response.FromValue(new ConfluentOrganizationResource(Client, response.Value), response.GetRawResponse());

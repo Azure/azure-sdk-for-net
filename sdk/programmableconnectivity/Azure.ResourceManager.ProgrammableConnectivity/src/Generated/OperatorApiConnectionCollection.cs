@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _operatorApiConnectionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, operatorApiConnectionName, OperatorApiConnectionData.ToRequestContent(data), context);
+                using HttpMessage message = _operatorApiConnectionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, operatorApiConnectionName, OperatorApiConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ProgrammableConnectivityArmOperation<OperatorApiConnectionResource> operation = new ProgrammableConnectivityArmOperation<OperatorApiConnectionResource>(
                     new OperatorApiConnectionResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _operatorApiConnectionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, operatorApiConnectionName, OperatorApiConnectionData.ToRequestContent(data), context);
+                using HttpMessage message = _operatorApiConnectionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, operatorApiConnectionName, OperatorApiConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ProgrammableConnectivityArmOperation<OperatorApiConnectionResource> operation = new ProgrammableConnectivityArmOperation<OperatorApiConnectionResource>(
                     new OperatorApiConnectionResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _operatorApiConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, operatorApiConnectionName, context);
+                using HttpMessage message = _operatorApiConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, operatorApiConnectionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OperatorApiConnectionData> response = Response.FromValue(OperatorApiConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _operatorApiConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, operatorApiConnectionName, context);
+                using HttpMessage message = _operatorApiConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, operatorApiConnectionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OperatorApiConnectionData> response = Response.FromValue(OperatorApiConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _operatorApiConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, operatorApiConnectionName, context);
+                using HttpMessage message = _operatorApiConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, operatorApiConnectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<OperatorApiConnectionData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _operatorApiConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, operatorApiConnectionName, context);
+                using HttpMessage message = _operatorApiConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, operatorApiConnectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<OperatorApiConnectionData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _operatorApiConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, operatorApiConnectionName, context);
+                using HttpMessage message = _operatorApiConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, operatorApiConnectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<OperatorApiConnectionData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _operatorApiConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, operatorApiConnectionName, context);
+                using HttpMessage message = _operatorApiConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, operatorApiConnectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<OperatorApiConnectionData> response = default;

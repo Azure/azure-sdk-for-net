@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dnsResolverDomainListsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _dnsResolverDomainListsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DnsResolverDomainListData> response = Response.FromValue(DnsResolverDomainListData.FromResponse(result), result);
                 if (response.Value == null)
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dnsResolverDomainListsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _dnsResolverDomainListsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DnsResolverDomainListData> response = Response.FromValue(DnsResolverDomainListData.FromResponse(result), result);
                 if (response.Value == null)
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dnsResolverDomainListsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DnsResolverDomainListPatch.ToRequestContent(patch), ifMatch, context);
+                using HttpMessage message = _dnsResolverDomainListsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DnsResolverDomainListPatch.ToRequestContent(patch), ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DnsResolverArmOperation<DnsResolverDomainListResource> operation = new DnsResolverArmOperation<DnsResolverDomainListResource>(
                     new DnsResolverDomainListResourceOperationSource(Client),
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dnsResolverDomainListsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DnsResolverDomainListPatch.ToRequestContent(patch), ifMatch, context);
+                using HttpMessage message = _dnsResolverDomainListsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DnsResolverDomainListPatch.ToRequestContent(patch), ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DnsResolverArmOperation<DnsResolverDomainListResource> operation = new DnsResolverArmOperation<DnsResolverDomainListResource>(
                     new DnsResolverDomainListResourceOperationSource(Client),
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dnsResolverDomainListsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ifMatch, context);
+                using HttpMessage message = _dnsResolverDomainListsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DnsResolverArmOperation operation = new DnsResolverArmOperation(_dnsResolverDomainListsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dnsResolverDomainListsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ifMatch, context);
+                using HttpMessage message = _dnsResolverDomainListsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DnsResolverArmOperation operation = new DnsResolverArmOperation(_dnsResolverDomainListsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dnsResolverDomainListsRestClient.CreateBulkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DnsResolverDomainListBulk.ToRequestContent(dnsResolverDomainListBulk), matchConditions, context);
+                using HttpMessage message = _dnsResolverDomainListsRestClient.CreateBulkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DnsResolverDomainListBulk.ToRequestContent(dnsResolverDomainListBulk), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DnsResolverArmOperation<DnsResolverDomainListResource> operation = new DnsResolverArmOperation<DnsResolverDomainListResource>(
                     new DnsResolverDomainListResourceOperationSource(Client),
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dnsResolverDomainListsRestClient.CreateBulkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DnsResolverDomainListBulk.ToRequestContent(dnsResolverDomainListBulk), matchConditions, context);
+                using HttpMessage message = _dnsResolverDomainListsRestClient.CreateBulkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DnsResolverDomainListBulk.ToRequestContent(dnsResolverDomainListBulk), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DnsResolverArmOperation<DnsResolverDomainListResource> operation = new DnsResolverArmOperation<DnsResolverDomainListResource>(
                     new DnsResolverDomainListResourceOperationSource(Client),
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.DnsResolver
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _dnsResolverDomainListsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _dnsResolverDomainListsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DnsResolverDomainListData> response = Response.FromValue(DnsResolverDomainListData.FromResponse(result), result);
                     return Response.FromValue(new DnsResolverDomainListResource(Client, response.Value), response.GetRawResponse());
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.DnsResolver
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _dnsResolverDomainListsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _dnsResolverDomainListsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DnsResolverDomainListData> response = Response.FromValue(DnsResolverDomainListData.FromResponse(result), result);
                     return Response.FromValue(new DnsResolverDomainListResource(Client, response.Value), response.GetRawResponse());
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.DnsResolver
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _dnsResolverDomainListsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _dnsResolverDomainListsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DnsResolverDomainListData> response = Response.FromValue(DnsResolverDomainListData.FromResponse(result), result);
                     return Response.FromValue(new DnsResolverDomainListResource(Client, response.Value), response.GetRawResponse());
@@ -689,7 +689,7 @@ namespace Azure.ResourceManager.DnsResolver
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _dnsResolverDomainListsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _dnsResolverDomainListsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DnsResolverDomainListData> response = Response.FromValue(DnsResolverDomainListData.FromResponse(result), result);
                     return Response.FromValue(new DnsResolverDomainListResource(Client, response.Value), response.GetRawResponse());
@@ -731,7 +731,7 @@ namespace Azure.ResourceManager.DnsResolver
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _dnsResolverDomainListsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _dnsResolverDomainListsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DnsResolverDomainListData> response = Response.FromValue(DnsResolverDomainListData.FromResponse(result), result);
                     return Response.FromValue(new DnsResolverDomainListResource(Client, response.Value), response.GetRawResponse());
@@ -777,7 +777,7 @@ namespace Azure.ResourceManager.DnsResolver
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _dnsResolverDomainListsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _dnsResolverDomainListsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DnsResolverDomainListData> response = Response.FromValue(DnsResolverDomainListData.FromResponse(result), result);
                     return Response.FromValue(new DnsResolverDomainListResource(Client, response.Value), response.GetRawResponse());

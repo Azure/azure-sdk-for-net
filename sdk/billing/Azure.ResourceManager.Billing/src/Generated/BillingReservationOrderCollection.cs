@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationOrdersRestClient.CreateGetByBillingAccountRequest(Id.Name, reservationOrderId, expand, context);
+                using HttpMessage message = _reservationOrdersRestClient.CreateGetByBillingAccountRequest(Id.Name, reservationOrderId, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingReservationOrderData> response = Response.FromValue(BillingReservationOrderData.FromResponse(result), result);
                 if (response.Value == null)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationOrdersRestClient.CreateGetByBillingAccountRequest(Id.Name, reservationOrderId, expand, context);
+                using HttpMessage message = _reservationOrdersRestClient.CreateGetByBillingAccountRequest(Id.Name, reservationOrderId, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingReservationOrderData> response = Response.FromValue(BillingReservationOrderData.FromResponse(result), result);
                 if (response.Value == null)
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationOrdersRestClient.CreateGetByBillingAccountRequest(Id.Name, reservationOrderId, expand, context);
+                using HttpMessage message = _reservationOrdersRestClient.CreateGetByBillingAccountRequest(Id.Name, reservationOrderId, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BillingReservationOrderData> response = default;
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationOrdersRestClient.CreateGetByBillingAccountRequest(Id.Name, reservationOrderId, expand, context);
+                using HttpMessage message = _reservationOrdersRestClient.CreateGetByBillingAccountRequest(Id.Name, reservationOrderId, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BillingReservationOrderData> response = default;
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationOrdersRestClient.CreateGetByBillingAccountRequest(Id.Name, reservationOrderId, expand, context);
+                using HttpMessage message = _reservationOrdersRestClient.CreateGetByBillingAccountRequest(Id.Name, reservationOrderId, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BillingReservationOrderData> response = default;
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationOrdersRestClient.CreateGetByBillingAccountRequest(Id.Name, reservationOrderId, expand, context);
+                using HttpMessage message = _reservationOrdersRestClient.CreateGetByBillingAccountRequest(Id.Name, reservationOrderId, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BillingReservationOrderData> response = default;

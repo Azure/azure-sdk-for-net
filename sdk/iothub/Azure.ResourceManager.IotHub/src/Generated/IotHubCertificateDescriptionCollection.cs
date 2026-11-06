@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.IotHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, IotHubCertificateDescriptionData.ToRequestContent(data), ifMatch, context);
+                using HttpMessage message = _certificatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, IotHubCertificateDescriptionData.ToRequestContent(data), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<IotHubCertificateDescriptionData> response = Response.FromValue(IotHubCertificateDescriptionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.IotHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, IotHubCertificateDescriptionData.ToRequestContent(data), ifMatch, context);
+                using HttpMessage message = _certificatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, IotHubCertificateDescriptionData.ToRequestContent(data), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<IotHubCertificateDescriptionData> response = Response.FromValue(IotHubCertificateDescriptionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.IotHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, context);
+                using HttpMessage message = _certificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<IotHubCertificateDescriptionData> response = Response.FromValue(IotHubCertificateDescriptionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.IotHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, context);
+                using HttpMessage message = _certificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<IotHubCertificateDescriptionData> response = Response.FromValue(IotHubCertificateDescriptionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.IotHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, context);
+                using HttpMessage message = _certificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<IotHubCertificateDescriptionData> response = default;
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.IotHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, context);
+                using HttpMessage message = _certificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<IotHubCertificateDescriptionData> response = default;
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.IotHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, context);
+                using HttpMessage message = _certificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<IotHubCertificateDescriptionData> response = default;
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.IotHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, context);
+                using HttpMessage message = _certificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<IotHubCertificateDescriptionData> response = default;

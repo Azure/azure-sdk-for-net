@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoExportJobsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, autoExportJobName, AutoExportJobData.ToRequestContent(data), context);
+                using HttpMessage message = _autoExportJobsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, autoExportJobName, AutoExportJobData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageCacheArmOperation<AutoExportJobResource> operation = new StorageCacheArmOperation<AutoExportJobResource>(
                     new AutoExportJobResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoExportJobsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, autoExportJobName, AutoExportJobData.ToRequestContent(data), context);
+                using HttpMessage message = _autoExportJobsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, autoExportJobName, AutoExportJobData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageCacheArmOperation<AutoExportJobResource> operation = new StorageCacheArmOperation<AutoExportJobResource>(
                     new AutoExportJobResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoExportJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, autoExportJobName, context);
+                using HttpMessage message = _autoExportJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, autoExportJobName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AutoExportJobData> response = Response.FromValue(AutoExportJobData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoExportJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, autoExportJobName, context);
+                using HttpMessage message = _autoExportJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, autoExportJobName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AutoExportJobData> response = Response.FromValue(AutoExportJobData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoExportJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, autoExportJobName, context);
+                using HttpMessage message = _autoExportJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, autoExportJobName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AutoExportJobData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoExportJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, autoExportJobName, context);
+                using HttpMessage message = _autoExportJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, autoExportJobName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AutoExportJobData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoExportJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, autoExportJobName, context);
+                using HttpMessage message = _autoExportJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, autoExportJobName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AutoExportJobData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoExportJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, autoExportJobName, context);
+                using HttpMessage message = _autoExportJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, autoExportJobName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AutoExportJobData> response = default;

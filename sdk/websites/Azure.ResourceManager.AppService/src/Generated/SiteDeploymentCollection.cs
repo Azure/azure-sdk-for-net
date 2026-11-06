@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentsRestClient.CreateCreateDeploymentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, id, WebAppDeploymentData.ToRequestContent(data), context);
+                using HttpMessage message = _deploymentsRestClient.CreateCreateDeploymentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, id, WebAppDeploymentData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WebAppDeploymentData> response = Response.FromValue(WebAppDeploymentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentsRestClient.CreateCreateDeploymentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, id, WebAppDeploymentData.ToRequestContent(data), context);
+                using HttpMessage message = _deploymentsRestClient.CreateCreateDeploymentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, id, WebAppDeploymentData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WebAppDeploymentData> response = Response.FromValue(WebAppDeploymentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentsRestClient.CreateGetDeploymentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, id, context);
+                using HttpMessage message = _deploymentsRestClient.CreateGetDeploymentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, id, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WebAppDeploymentData> response = Response.FromValue(WebAppDeploymentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentsRestClient.CreateGetDeploymentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, id, context);
+                using HttpMessage message = _deploymentsRestClient.CreateGetDeploymentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, id, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WebAppDeploymentData> response = Response.FromValue(WebAppDeploymentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentsRestClient.CreateGetDeploymentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, id, context);
+                using HttpMessage message = _deploymentsRestClient.CreateGetDeploymentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, id, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WebAppDeploymentData> response = default;
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentsRestClient.CreateGetDeploymentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, id, context);
+                using HttpMessage message = _deploymentsRestClient.CreateGetDeploymentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, id, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WebAppDeploymentData> response = default;
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentsRestClient.CreateGetDeploymentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, id, context);
+                using HttpMessage message = _deploymentsRestClient.CreateGetDeploymentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, id, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WebAppDeploymentData> response = default;
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentsRestClient.CreateGetDeploymentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, id, context);
+                using HttpMessage message = _deploymentsRestClient.CreateGetDeploymentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, id, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WebAppDeploymentData> response = default;

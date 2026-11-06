@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupResourceStorageConfigsNonCRRRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, BackupResourceConfigData.ToRequestContent(data), context);
+                using HttpMessage message = _backupResourceStorageConfigsNonCRRRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, BackupResourceConfigData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BackupResourceConfigData> response = Response.FromValue(BackupResourceConfigData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupResourceStorageConfigsNonCRRRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, BackupResourceConfigData.ToRequestContent(data), context);
+                using HttpMessage message = _backupResourceStorageConfigsNonCRRRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, BackupResourceConfigData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BackupResourceConfigData> response = Response.FromValue(BackupResourceConfigData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupResourceStorageConfigsNonCRRRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _backupResourceStorageConfigsNonCRRRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BackupResourceConfigData> response = Response.FromValue(BackupResourceConfigData.FromResponse(result), result);
                 if (response.Value == null)
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupResourceStorageConfigsNonCRRRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _backupResourceStorageConfigsNonCRRRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BackupResourceConfigData> response = Response.FromValue(BackupResourceConfigData.FromResponse(result), result);
                 if (response.Value == null)
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupResourceStorageConfigsNonCRRRestClient.CreatePrepareDataMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, PrepareDataMoveContent.ToRequestContent(content), context);
+                using HttpMessage message = _backupResourceStorageConfigsNonCRRRestClient.CreatePrepareDataMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, PrepareDataMoveContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesBackupArmOperation operation = new RecoveryServicesBackupArmOperation(_backupResourceStorageConfigsNonCRRClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupResourceStorageConfigsNonCRRRestClient.CreatePrepareDataMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, PrepareDataMoveContent.ToRequestContent(content), context);
+                using HttpMessage message = _backupResourceStorageConfigsNonCRRRestClient.CreatePrepareDataMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, PrepareDataMoveContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesBackupArmOperation operation = new RecoveryServicesBackupArmOperation(_backupResourceStorageConfigsNonCRRClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupResourceStorageConfigsNonCRRRestClient.CreateTriggerDataMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, TriggerDataMoveContent.ToRequestContent(content), context);
+                using HttpMessage message = _backupResourceStorageConfigsNonCRRRestClient.CreateTriggerDataMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, TriggerDataMoveContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesBackupArmOperation operation = new RecoveryServicesBackupArmOperation(_backupResourceStorageConfigsNonCRRClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupResourceStorageConfigsNonCRRRestClient.CreateTriggerDataMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, TriggerDataMoveContent.ToRequestContent(content), context);
+                using HttpMessage message = _backupResourceStorageConfigsNonCRRRestClient.CreateTriggerDataMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, TriggerDataMoveContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesBackupArmOperation operation = new RecoveryServicesBackupArmOperation(_backupResourceStorageConfigsNonCRRClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

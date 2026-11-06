@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mongoDBResourcesRestClient.CreateGetMongoUserDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _mongoDBResourcesRestClient.CreateGetMongoUserDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MongoDBUserDefinitionData> response = Response.FromValue(MongoDBUserDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mongoDBResourcesRestClient.CreateGetMongoUserDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _mongoDBResourcesRestClient.CreateGetMongoUserDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MongoDBUserDefinitionData> response = Response.FromValue(MongoDBUserDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mongoDBResourcesRestClient.CreateDeleteMongoUserDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _mongoDBResourcesRestClient.CreateDeleteMongoUserDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation operation = new CosmosDBArmOperation(_mongoDBResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mongoDBResourcesRestClient.CreateDeleteMongoUserDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _mongoDBResourcesRestClient.CreateDeleteMongoUserDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation operation = new CosmosDBArmOperation(_mongoDBResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mongoDBResourcesRestClient.CreateCreateUpdateMongoUserDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MongoDBUserDefinitionCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _mongoDBResourcesRestClient.CreateCreateUpdateMongoUserDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MongoDBUserDefinitionCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<MongoDBUserDefinitionResource> operation = new CosmosDBArmOperation<MongoDBUserDefinitionResource>(
                     new MongoDBUserDefinitionResourceOperationSource(Client),
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mongoDBResourcesRestClient.CreateCreateUpdateMongoUserDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MongoDBUserDefinitionCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _mongoDBResourcesRestClient.CreateCreateUpdateMongoUserDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MongoDBUserDefinitionCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<MongoDBUserDefinitionResource> operation = new CosmosDBArmOperation<MongoDBUserDefinitionResource>(
                     new MongoDBUserDefinitionResourceOperationSource(Client),

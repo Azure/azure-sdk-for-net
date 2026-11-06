@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _postRulesRestClient.CreateCreateOrUpdateRequest(Id.Name, priority, PostRulestackRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _postRulesRestClient.CreateCreateOrUpdateRequest(Id.Name, priority, PostRulestackRuleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NgfwArmOperation<PostRulestackRuleResource> operation = new NgfwArmOperation<PostRulestackRuleResource>(
                     new PostRulestackRuleResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _postRulesRestClient.CreateCreateOrUpdateRequest(Id.Name, priority, PostRulestackRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _postRulesRestClient.CreateCreateOrUpdateRequest(Id.Name, priority, PostRulestackRuleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NgfwArmOperation<PostRulestackRuleResource> operation = new NgfwArmOperation<PostRulestackRuleResource>(
                     new PostRulestackRuleResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _postRulesRestClient.CreateGetRequest(Id.Name, priority, context);
+                using HttpMessage message = _postRulesRestClient.CreateGetRequest(Id.Name, priority, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PostRulestackRuleData> response = Response.FromValue(PostRulestackRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _postRulesRestClient.CreateGetRequest(Id.Name, priority, context);
+                using HttpMessage message = _postRulesRestClient.CreateGetRequest(Id.Name, priority, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PostRulestackRuleData> response = Response.FromValue(PostRulestackRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _postRulesRestClient.CreateGetRequest(Id.Name, priority, context);
+                using HttpMessage message = _postRulesRestClient.CreateGetRequest(Id.Name, priority, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PostRulestackRuleData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _postRulesRestClient.CreateGetRequest(Id.Name, priority, context);
+                using HttpMessage message = _postRulesRestClient.CreateGetRequest(Id.Name, priority, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PostRulestackRuleData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _postRulesRestClient.CreateGetRequest(Id.Name, priority, context);
+                using HttpMessage message = _postRulesRestClient.CreateGetRequest(Id.Name, priority, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PostRulestackRuleData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _postRulesRestClient.CreateGetRequest(Id.Name, priority, context);
+                using HttpMessage message = _postRulesRestClient.CreateGetRequest(Id.Name, priority, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PostRulestackRuleData> response = default;

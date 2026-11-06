@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevTestLabVmData> response = Response.FromValue(DevTestLabVmData.FromResponse(result), result);
                 if (response.Value == null)
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevTestLabVmData> response = Response.FromValue(DevTestLabVmData.FromResponse(result), result);
                 if (response.Value == null)
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabVmPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabVmPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevTestLabVmData> response = Response.FromValue(DevTestLabVmData.FromResponse(result), result);
                 if (response.Value == null)
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabVmPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabVmPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevTestLabVmData> response = Response.FromValue(DevTestLabVmData.FromResponse(result), result);
                 if (response.Value == null)
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateAddDataDiskRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabDataDiskProperties.ToRequestContent(dataDiskProperties), context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateAddDataDiskRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabDataDiskProperties.ToRequestContent(dataDiskProperties), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateAddDataDiskRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabDataDiskProperties.ToRequestContent(dataDiskProperties), context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateAddDataDiskRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabDataDiskProperties.ToRequestContent(dataDiskProperties), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateApplyArtifactsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabVmApplyArtifactsContent.ToRequestContent(content), context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateApplyArtifactsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabVmApplyArtifactsContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateApplyArtifactsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabVmApplyArtifactsContent.ToRequestContent(content), context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateApplyArtifactsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabVmApplyArtifactsContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateClaimRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateClaimRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -689,7 +689,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateClaimRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateClaimRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -742,7 +742,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateDetachDataDiskRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabVmDetachDataDiskContent.ToRequestContent(content), context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateDetachDataDiskRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabVmDetachDataDiskContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -795,7 +795,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateDetachDataDiskRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabVmDetachDataDiskContent.ToRequestContent(content), context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateDetachDataDiskRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabVmDetachDataDiskContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -843,7 +843,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateGetRdpFileContentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateGetRdpFileContentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevTestLabRdpConnection> response = Response.FromValue(DevTestLabRdpConnection.FromResponse(result), result);
                 if (response.Value == null)
@@ -891,7 +891,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateGetRdpFileContentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateGetRdpFileContentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevTestLabRdpConnection> response = Response.FromValue(DevTestLabRdpConnection.FromResponse(result), result);
                 if (response.Value == null)
@@ -939,7 +939,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateGetApplicableSchedulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateGetApplicableSchedulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevTestLabApplicableSchedule> response = Response.FromValue(DevTestLabApplicableSchedule.FromResponse(result), result);
                 if (response.Value == null)
@@ -987,7 +987,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateGetApplicableSchedulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateGetApplicableSchedulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevTestLabApplicableSchedule> response = Response.FromValue(DevTestLabApplicableSchedule.FromResponse(result), result);
                 if (response.Value == null)
@@ -1036,7 +1036,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateRedeployRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateRedeployRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1085,7 +1085,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateRedeployRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateRedeployRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1138,7 +1138,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateResizeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabVmResizeContent.ToRequestContent(content), context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateResizeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabVmResizeContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1191,7 +1191,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateResizeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabVmResizeContent.ToRequestContent(content), context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateResizeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabVmResizeContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1240,7 +1240,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1289,7 +1289,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1338,7 +1338,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1387,7 +1387,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1436,7 +1436,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1485,7 +1485,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1534,7 +1534,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateTransferDisksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateTransferDisksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1583,7 +1583,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateTransferDisksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateTransferDisksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1632,7 +1632,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateUnClaimRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateUnClaimRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1681,7 +1681,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateUnClaimRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateUnClaimRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevTestLabsArmOperation operation = new DevTestLabsArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1720,7 +1720,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
+                    using HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DevTestLabVmData> response = Response.FromValue(DevTestLabVmData.FromResponse(result), result);
                     return Response.FromValue(new DevTestLabVmResource(Client, response.Value), response.GetRawResponse());
@@ -1768,7 +1768,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
+                    using HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DevTestLabVmData> response = Response.FromValue(DevTestLabVmData.FromResponse(result), result);
                     return Response.FromValue(new DevTestLabVmResource(Client, response.Value), response.GetRawResponse());
@@ -1814,7 +1814,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
+                    using HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DevTestLabVmData> response = Response.FromValue(DevTestLabVmData.FromResponse(result), result);
                     return Response.FromValue(new DevTestLabVmResource(Client, response.Value), response.GetRawResponse());
@@ -1856,7 +1856,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
+                    using HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DevTestLabVmData> response = Response.FromValue(DevTestLabVmData.FromResponse(result), result);
                     return Response.FromValue(new DevTestLabVmResource(Client, response.Value), response.GetRawResponse());
@@ -1898,7 +1898,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
+                    using HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DevTestLabVmData> response = Response.FromValue(DevTestLabVmData.FromResponse(result), result);
                     return Response.FromValue(new DevTestLabVmResource(Client, response.Value), response.GetRawResponse());
@@ -1944,7 +1944,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
+                    using HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DevTestLabVmData> response = Response.FromValue(DevTestLabVmData.FromResponse(result), result);
                     return Response.FromValue(new DevTestLabVmResource(Client, response.Value), response.GetRawResponse());

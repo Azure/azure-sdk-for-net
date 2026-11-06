@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HciVmLoadBalancerData> response = Response.FromValue(HciVmLoadBalancerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HciVmLoadBalancerData> response = Response.FromValue(HciVmLoadBalancerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadBalancersRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HciVmLoadBalancerPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _loadBalancersRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HciVmLoadBalancerPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation<HciVmLoadBalancerResource> operation = new VmArmOperation<HciVmLoadBalancerResource>(
                     new HciVmLoadBalancerResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadBalancersRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HciVmLoadBalancerPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _loadBalancersRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HciVmLoadBalancerPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation<HciVmLoadBalancerResource> operation = new VmArmOperation<HciVmLoadBalancerResource>(
                     new HciVmLoadBalancerResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadBalancersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _loadBalancersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation operation = new VmArmOperation(_loadBalancersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadBalancersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _loadBalancersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation operation = new VmArmOperation(_loadBalancersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Hci.Vm
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<HciVmLoadBalancerData> response = Response.FromValue(HciVmLoadBalancerData.FromResponse(result), result);
                     return Response.FromValue(new HciVmLoadBalancerResource(Client, response.Value), response.GetRawResponse());
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.Hci.Vm
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<HciVmLoadBalancerData> response = Response.FromValue(HciVmLoadBalancerData.FromResponse(result), result);
                     return Response.FromValue(new HciVmLoadBalancerResource(Client, response.Value), response.GetRawResponse());
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.Hci.Vm
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<HciVmLoadBalancerData> response = Response.FromValue(HciVmLoadBalancerData.FromResponse(result), result);
                     return Response.FromValue(new HciVmLoadBalancerResource(Client, response.Value), response.GetRawResponse());
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.Hci.Vm
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<HciVmLoadBalancerData> response = Response.FromValue(HciVmLoadBalancerData.FromResponse(result), result);
                     return Response.FromValue(new HciVmLoadBalancerResource(Client, response.Value), response.GetRawResponse());
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.Hci.Vm
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<HciVmLoadBalancerData> response = Response.FromValue(HciVmLoadBalancerData.FromResponse(result), result);
                     return Response.FromValue(new HciVmLoadBalancerResource(Client, response.Value), response.GetRawResponse());
@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.Hci.Vm
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<HciVmLoadBalancerData> response = Response.FromValue(HciVmLoadBalancerData.FromResponse(result), result);
                     return Response.FromValue(new HciVmLoadBalancerResource(Client, response.Value), response.GetRawResponse());

@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _aiModelsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _aiModelsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AIModelData> response = Response.FromValue(AIModelData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _aiModelsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _aiModelsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AIModelData> response = Response.FromValue(AIModelData.FromResponse(result), result);
                 if (response.Value == null)
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _aiModelsRestClient.CreateCalculateCostRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _aiModelsRestClient.CreateCalculateCostRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CalculateCostResult> response = Response.FromValue(CalculateCostResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _aiModelsRestClient.CreateCalculateCostRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _aiModelsRestClient.CreateCalculateCostRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CalculateCostResult> response = Response.FromValue(CalculateCostResult.FromResponse(result), result);
                 if (response.Value == null)

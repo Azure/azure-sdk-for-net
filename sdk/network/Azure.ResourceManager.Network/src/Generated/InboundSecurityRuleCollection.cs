@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _inboundSecurityRuleRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleCollectionName, InboundSecurityRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _inboundSecurityRuleRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleCollectionName, InboundSecurityRuleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<InboundSecurityRuleResource> operation = new NetworkArmOperation<InboundSecurityRuleResource>(
                     new InboundSecurityRuleResourceOperationSource(Client),
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _inboundSecurityRuleRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleCollectionName, InboundSecurityRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _inboundSecurityRuleRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleCollectionName, InboundSecurityRuleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<InboundSecurityRuleResource> operation = new NetworkArmOperation<InboundSecurityRuleResource>(
                     new InboundSecurityRuleResourceOperationSource(Client),
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _inboundSecurityRuleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleCollectionName, context);
+                using HttpMessage message = _inboundSecurityRuleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleCollectionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<InboundSecurityRuleData> response = Response.FromValue(InboundSecurityRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _inboundSecurityRuleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleCollectionName, context);
+                using HttpMessage message = _inboundSecurityRuleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleCollectionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<InboundSecurityRuleData> response = Response.FromValue(InboundSecurityRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _inboundSecurityRuleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleCollectionName, context);
+                using HttpMessage message = _inboundSecurityRuleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleCollectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<InboundSecurityRuleData> response = default;
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _inboundSecurityRuleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleCollectionName, context);
+                using HttpMessage message = _inboundSecurityRuleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleCollectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<InboundSecurityRuleData> response = default;
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _inboundSecurityRuleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleCollectionName, context);
+                using HttpMessage message = _inboundSecurityRuleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleCollectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<InboundSecurityRuleData> response = default;
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _inboundSecurityRuleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleCollectionName, context);
+                using HttpMessage message = _inboundSecurityRuleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleCollectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<InboundSecurityRuleData> response = default;

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _preparedImageSpecificationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, preparedImageSpecificationName, PreparedImageSpecificationData.ToRequestContent(data), matchConditions, context);
+                using HttpMessage message = _preparedImageSpecificationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, preparedImageSpecificationName, PreparedImageSpecificationData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServicePreparedImgSpecArmOperation<PreparedImageSpecificationResource> operation = new ContainerServicePreparedImgSpecArmOperation<PreparedImageSpecificationResource>(
                     new PreparedImageSpecificationResourceOperationSource(Client),
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _preparedImageSpecificationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, preparedImageSpecificationName, PreparedImageSpecificationData.ToRequestContent(data), matchConditions, context);
+                using HttpMessage message = _preparedImageSpecificationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, preparedImageSpecificationName, PreparedImageSpecificationData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServicePreparedImgSpecArmOperation<PreparedImageSpecificationResource> operation = new ContainerServicePreparedImgSpecArmOperation<PreparedImageSpecificationResource>(
                     new PreparedImageSpecificationResourceOperationSource(Client),
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _preparedImageSpecificationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, preparedImageSpecificationName, context);
+                using HttpMessage message = _preparedImageSpecificationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, preparedImageSpecificationName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PreparedImageSpecificationData> response = Response.FromValue(PreparedImageSpecificationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _preparedImageSpecificationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, preparedImageSpecificationName, context);
+                using HttpMessage message = _preparedImageSpecificationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, preparedImageSpecificationName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PreparedImageSpecificationData> response = Response.FromValue(PreparedImageSpecificationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _preparedImageSpecificationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, preparedImageSpecificationName, context);
+                using HttpMessage message = _preparedImageSpecificationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, preparedImageSpecificationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PreparedImageSpecificationData> response = default;
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _preparedImageSpecificationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, preparedImageSpecificationName, context);
+                using HttpMessage message = _preparedImageSpecificationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, preparedImageSpecificationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PreparedImageSpecificationData> response = default;
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _preparedImageSpecificationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, preparedImageSpecificationName, context);
+                using HttpMessage message = _preparedImageSpecificationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, preparedImageSpecificationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PreparedImageSpecificationData> response = default;
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _preparedImageSpecificationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, preparedImageSpecificationName, context);
+                using HttpMessage message = _preparedImageSpecificationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, preparedImageSpecificationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PreparedImageSpecificationData> response = default;

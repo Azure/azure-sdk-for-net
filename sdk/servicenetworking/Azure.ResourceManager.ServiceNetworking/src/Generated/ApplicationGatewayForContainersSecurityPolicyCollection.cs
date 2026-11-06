@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _securityPoliciesInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, ApplicationGatewayForContainersSecurityPolicyData.ToRequestContent(data), context);
+                using HttpMessage message = _securityPoliciesInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, ApplicationGatewayForContainersSecurityPolicyData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceNetworkingArmOperation<ApplicationGatewayForContainersSecurityPolicyResource> operation = new ServiceNetworkingArmOperation<ApplicationGatewayForContainersSecurityPolicyResource>(
                     new ApplicationGatewayForContainersSecurityPolicyResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _securityPoliciesInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, ApplicationGatewayForContainersSecurityPolicyData.ToRequestContent(data), context);
+                using HttpMessage message = _securityPoliciesInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, ApplicationGatewayForContainersSecurityPolicyData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceNetworkingArmOperation<ApplicationGatewayForContainersSecurityPolicyResource> operation = new ServiceNetworkingArmOperation<ApplicationGatewayForContainersSecurityPolicyResource>(
                     new ApplicationGatewayForContainersSecurityPolicyResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _securityPoliciesInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, context);
+                using HttpMessage message = _securityPoliciesInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApplicationGatewayForContainersSecurityPolicyData> response = Response.FromValue(ApplicationGatewayForContainersSecurityPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _securityPoliciesInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, context);
+                using HttpMessage message = _securityPoliciesInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApplicationGatewayForContainersSecurityPolicyData> response = Response.FromValue(ApplicationGatewayForContainersSecurityPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _securityPoliciesInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, context);
+                using HttpMessage message = _securityPoliciesInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApplicationGatewayForContainersSecurityPolicyData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _securityPoliciesInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, context);
+                using HttpMessage message = _securityPoliciesInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApplicationGatewayForContainersSecurityPolicyData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _securityPoliciesInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, context);
+                using HttpMessage message = _securityPoliciesInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApplicationGatewayForContainersSecurityPolicyData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _securityPoliciesInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, context);
+                using HttpMessage message = _securityPoliciesInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApplicationGatewayForContainersSecurityPolicyData> response = default;

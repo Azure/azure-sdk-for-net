@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NotificationHubAuthorizationRuleData> response = Response.FromValue(NotificationHubAuthorizationRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NotificationHubAuthorizationRuleData> response = Response.FromValue(NotificationHubAuthorizationRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateDeleteAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateDeleteAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateDeleteAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateDeleteAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NotificationHubResourceKeys> response = Response.FromValue(NotificationHubResourceKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NotificationHubResourceKeys> response = Response.FromValue(NotificationHubResourceKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateRegenerateKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, NotificationHubPolicyKey.ToRequestContent(notificationHubPolicyKey), context);
+                using HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateRegenerateKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, NotificationHubPolicyKey.ToRequestContent(notificationHubPolicyKey), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NotificationHubResourceKeys> response = Response.FromValue(NotificationHubResourceKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateRegenerateKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, NotificationHubPolicyKey.ToRequestContent(notificationHubPolicyKey), context);
+                using HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateRegenerateKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, NotificationHubPolicyKey.ToRequestContent(notificationHubPolicyKey), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NotificationHubResourceKeys> response = Response.FromValue(NotificationHubResourceKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, NotificationHubAuthorizationRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, NotificationHubAuthorizationRuleData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NotificationHubAuthorizationRuleData> response = Response.FromValue(NotificationHubAuthorizationRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, NotificationHubAuthorizationRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, NotificationHubAuthorizationRuleData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NotificationHubAuthorizationRuleData> response = Response.FromValue(NotificationHubAuthorizationRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -629,7 +629,7 @@ namespace Azure.ResourceManager.NotificationHubs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NotificationHubAuthorizationRuleData> response = Response.FromValue(NotificationHubAuthorizationRuleData.FromResponse(result), result);
                     return Response.FromValue(new NotificationHubAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
@@ -672,7 +672,7 @@ namespace Azure.ResourceManager.NotificationHubs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NotificationHubAuthorizationRuleData> response = Response.FromValue(NotificationHubAuthorizationRuleData.FromResponse(result), result);
                     return Response.FromValue(new NotificationHubAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
@@ -713,7 +713,7 @@ namespace Azure.ResourceManager.NotificationHubs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NotificationHubAuthorizationRuleData> response = Response.FromValue(NotificationHubAuthorizationRuleData.FromResponse(result), result);
                     return Response.FromValue(new NotificationHubAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
@@ -754,7 +754,7 @@ namespace Azure.ResourceManager.NotificationHubs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NotificationHubAuthorizationRuleData> response = Response.FromValue(NotificationHubAuthorizationRuleData.FromResponse(result), result);
                     return Response.FromValue(new NotificationHubAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
@@ -795,7 +795,7 @@ namespace Azure.ResourceManager.NotificationHubs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NotificationHubAuthorizationRuleData> response = Response.FromValue(NotificationHubAuthorizationRuleData.FromResponse(result), result);
                     return Response.FromValue(new NotificationHubAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
@@ -836,7 +836,7 @@ namespace Azure.ResourceManager.NotificationHubs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _sharedAccessAuthorizationRuleResourcesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NotificationHubAuthorizationRuleData> response = Response.FromValue(NotificationHubAuthorizationRuleData.FromResponse(result), result);
                     return Response.FromValue(new NotificationHubAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());

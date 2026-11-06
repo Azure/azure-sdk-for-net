@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewInstancesAssignedForMyApprovalRestClient.CreateGetByIdRequest(_scheduleDefinitionId, id, context);
+                using HttpMessage message = _accessReviewInstancesAssignedForMyApprovalRestClient.CreateGetByIdRequest(_scheduleDefinitionId, id, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AccessReviewInstanceData> response = Response.FromValue(AccessReviewInstanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewInstancesAssignedForMyApprovalRestClient.CreateGetByIdRequest(_scheduleDefinitionId, id, context);
+                using HttpMessage message = _accessReviewInstancesAssignedForMyApprovalRestClient.CreateGetByIdRequest(_scheduleDefinitionId, id, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AccessReviewInstanceData> response = Response.FromValue(AccessReviewInstanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewInstancesAssignedForMyApprovalRestClient.CreateGetByIdRequest(_scheduleDefinitionId, id, context);
+                using HttpMessage message = _accessReviewInstancesAssignedForMyApprovalRestClient.CreateGetByIdRequest(_scheduleDefinitionId, id, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AccessReviewInstanceData> response = default;
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewInstancesAssignedForMyApprovalRestClient.CreateGetByIdRequest(_scheduleDefinitionId, id, context);
+                using HttpMessage message = _accessReviewInstancesAssignedForMyApprovalRestClient.CreateGetByIdRequest(_scheduleDefinitionId, id, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AccessReviewInstanceData> response = default;
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewInstancesAssignedForMyApprovalRestClient.CreateGetByIdRequest(_scheduleDefinitionId, id, context);
+                using HttpMessage message = _accessReviewInstancesAssignedForMyApprovalRestClient.CreateGetByIdRequest(_scheduleDefinitionId, id, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AccessReviewInstanceData> response = default;
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewInstancesAssignedForMyApprovalRestClient.CreateGetByIdRequest(_scheduleDefinitionId, id, context);
+                using HttpMessage message = _accessReviewInstancesAssignedForMyApprovalRestClient.CreateGetByIdRequest(_scheduleDefinitionId, id, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AccessReviewInstanceData> response = default;

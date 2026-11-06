@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attributeNamespacesRestClient.CreateGetRequest(Id.Name, context);
+                using HttpMessage message = _attributeNamespacesRestClient.CreateGetRequest(Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RoleManagementAttributeNamespaceData> response = Response.FromValue(RoleManagementAttributeNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attributeNamespacesRestClient.CreateGetRequest(Id.Name, context);
+                using HttpMessage message = _attributeNamespacesRestClient.CreateGetRequest(Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RoleManagementAttributeNamespaceData> response = Response.FromValue(RoleManagementAttributeNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attributeNamespacesRestClient.CreateDeleteRequest(Id.Name, context);
+                using HttpMessage message = _attributeNamespacesRestClient.CreateDeleteRequest(Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attributeNamespacesRestClient.CreateDeleteRequest(Id.Name, context);
+                using HttpMessage message = _attributeNamespacesRestClient.CreateDeleteRequest(Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attributeNamespacesRestClient.CreateCreateRequest(Id.Name, RoleManagementAttributeNamespaceCreateContent.ToRequestContent(content), context);
+                using HttpMessage message = _attributeNamespacesRestClient.CreateCreateRequest(Id.Name, RoleManagementAttributeNamespaceCreateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RoleManagementAttributeNamespaceData> response = Response.FromValue(RoleManagementAttributeNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attributeNamespacesRestClient.CreateCreateRequest(Id.Name, RoleManagementAttributeNamespaceCreateContent.ToRequestContent(content), context);
+                using HttpMessage message = _attributeNamespacesRestClient.CreateCreateRequest(Id.Name, RoleManagementAttributeNamespaceCreateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RoleManagementAttributeNamespaceData> response = Response.FromValue(RoleManagementAttributeNamespaceData.FromResponse(result), result);
                 if (response.Value == null)

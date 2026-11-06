@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.PlatformValidation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _validationTestCategoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _validationTestCategoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ValidationTestCategoryData> response = Response.FromValue(ValidationTestCategoryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.PlatformValidation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _validationTestCategoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _validationTestCategoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ValidationTestCategoryData> response = Response.FromValue(ValidationTestCategoryData.FromResponse(result), result);
                 if (response.Value == null)

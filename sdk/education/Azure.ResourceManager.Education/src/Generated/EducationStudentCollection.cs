@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _studentsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, studentAlias, EducationStudentData.ToRequestContent(data), context);
+                using HttpMessage message = _studentsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, studentAlias, EducationStudentData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EducationStudentData> response = Response.FromValue(EducationStudentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _studentsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, studentAlias, EducationStudentData.ToRequestContent(data), context);
+                using HttpMessage message = _studentsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, studentAlias, EducationStudentData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EducationStudentData> response = Response.FromValue(EducationStudentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _studentsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, studentAlias, context);
+                using HttpMessage message = _studentsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, studentAlias, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EducationStudentData> response = Response.FromValue(EducationStudentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _studentsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, studentAlias, context);
+                using HttpMessage message = _studentsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, studentAlias, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EducationStudentData> response = Response.FromValue(EducationStudentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _studentsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, studentAlias, context);
+                using HttpMessage message = _studentsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, studentAlias, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EducationStudentData> response = default;
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _studentsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, studentAlias, context);
+                using HttpMessage message = _studentsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, studentAlias, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EducationStudentData> response = default;
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _studentsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, studentAlias, context);
+                using HttpMessage message = _studentsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, studentAlias, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EducationStudentData> response = default;
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _studentsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, studentAlias, context);
+                using HttpMessage message = _studentsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, studentAlias, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EducationStudentData> response = default;

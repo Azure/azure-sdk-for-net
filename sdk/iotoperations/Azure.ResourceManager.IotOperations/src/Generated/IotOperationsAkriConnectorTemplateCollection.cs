@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.IotOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _akriConnectorTemplateRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, akriConnectorTemplateName, IotOperationsAkriConnectorTemplateData.ToRequestContent(data), context);
+                using HttpMessage message = _akriConnectorTemplateRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, akriConnectorTemplateName, IotOperationsAkriConnectorTemplateData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 IotOperationsArmOperation<IotOperationsAkriConnectorTemplateResource> operation = new IotOperationsArmOperation<IotOperationsAkriConnectorTemplateResource>(
                     new IotOperationsAkriConnectorTemplateResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.IotOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _akriConnectorTemplateRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, akriConnectorTemplateName, IotOperationsAkriConnectorTemplateData.ToRequestContent(data), context);
+                using HttpMessage message = _akriConnectorTemplateRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, akriConnectorTemplateName, IotOperationsAkriConnectorTemplateData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 IotOperationsArmOperation<IotOperationsAkriConnectorTemplateResource> operation = new IotOperationsArmOperation<IotOperationsAkriConnectorTemplateResource>(
                     new IotOperationsAkriConnectorTemplateResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.IotOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _akriConnectorTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, akriConnectorTemplateName, context);
+                using HttpMessage message = _akriConnectorTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, akriConnectorTemplateName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<IotOperationsAkriConnectorTemplateData> response = Response.FromValue(IotOperationsAkriConnectorTemplateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.IotOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _akriConnectorTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, akriConnectorTemplateName, context);
+                using HttpMessage message = _akriConnectorTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, akriConnectorTemplateName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<IotOperationsAkriConnectorTemplateData> response = Response.FromValue(IotOperationsAkriConnectorTemplateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.IotOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _akriConnectorTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, akriConnectorTemplateName, context);
+                using HttpMessage message = _akriConnectorTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, akriConnectorTemplateName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<IotOperationsAkriConnectorTemplateData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.IotOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _akriConnectorTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, akriConnectorTemplateName, context);
+                using HttpMessage message = _akriConnectorTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, akriConnectorTemplateName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<IotOperationsAkriConnectorTemplateData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.IotOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _akriConnectorTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, akriConnectorTemplateName, context);
+                using HttpMessage message = _akriConnectorTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, akriConnectorTemplateName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<IotOperationsAkriConnectorTemplateData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.IotOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _akriConnectorTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, akriConnectorTemplateName, context);
+                using HttpMessage message = _akriConnectorTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, akriConnectorTemplateName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<IotOperationsAkriConnectorTemplateData> response = default;

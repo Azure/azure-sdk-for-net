@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _disksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskName, ManagedDiskData.ToRequestContent(data), context);
+                using HttpMessage message = _disksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskName, ManagedDiskData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation<ManagedDiskResource> operation = new ComputeArmOperation<ManagedDiskResource>(
                     new ManagedDiskResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _disksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskName, ManagedDiskData.ToRequestContent(data), context);
+                using HttpMessage message = _disksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskName, ManagedDiskData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation<ManagedDiskResource> operation = new ComputeArmOperation<ManagedDiskResource>(
                     new ManagedDiskResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _disksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, diskName, context);
+                using HttpMessage message = _disksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, diskName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ManagedDiskData> response = Response.FromValue(ManagedDiskData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _disksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, diskName, context);
+                using HttpMessage message = _disksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, diskName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ManagedDiskData> response = Response.FromValue(ManagedDiskData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _disksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, diskName, context);
+                using HttpMessage message = _disksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, diskName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ManagedDiskData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _disksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, diskName, context);
+                using HttpMessage message = _disksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, diskName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ManagedDiskData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _disksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, diskName, context);
+                using HttpMessage message = _disksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, diskName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ManagedDiskData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _disksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, diskName, context);
+                using HttpMessage message = _disksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, diskName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ManagedDiskData> response = default;

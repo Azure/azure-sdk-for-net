@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PrivateTrafficManagerProfileData> response = Response.FromValue(PrivateTrafficManagerProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PrivateTrafficManagerProfileData> response = Response.FromValue(PrivateTrafficManagerProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _profilesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PrivateTrafficManagerProfilePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _profilesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PrivateTrafficManagerProfilePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PrivateTrafficManagerArmOperation<PrivateTrafficManagerProfileResource> operation = new PrivateTrafficManagerArmOperation<PrivateTrafficManagerProfileResource>(
                     new PrivateTrafficManagerProfileResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _profilesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PrivateTrafficManagerProfilePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _profilesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PrivateTrafficManagerProfilePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PrivateTrafficManagerArmOperation<PrivateTrafficManagerProfileResource> operation = new PrivateTrafficManagerArmOperation<PrivateTrafficManagerProfileResource>(
                     new PrivateTrafficManagerProfileResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _profilesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _profilesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PrivateTrafficManagerArmOperation operation = new PrivateTrafficManagerArmOperation(_profilesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _profilesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _profilesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PrivateTrafficManagerArmOperation operation = new PrivateTrafficManagerArmOperation(_profilesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<PrivateTrafficManagerProfileData> response = Response.FromValue(PrivateTrafficManagerProfileData.FromResponse(result), result);
                     return Response.FromValue(new PrivateTrafficManagerProfileResource(Client, response.Value), response.GetRawResponse());
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<PrivateTrafficManagerProfileData> response = Response.FromValue(PrivateTrafficManagerProfileData.FromResponse(result), result);
                     return Response.FromValue(new PrivateTrafficManagerProfileResource(Client, response.Value), response.GetRawResponse());
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<PrivateTrafficManagerProfileData> response = Response.FromValue(PrivateTrafficManagerProfileData.FromResponse(result), result);
                     return Response.FromValue(new PrivateTrafficManagerProfileResource(Client, response.Value), response.GetRawResponse());
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<PrivateTrafficManagerProfileData> response = Response.FromValue(PrivateTrafficManagerProfileData.FromResponse(result), result);
                     return Response.FromValue(new PrivateTrafficManagerProfileResource(Client, response.Value), response.GetRawResponse());
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<PrivateTrafficManagerProfileData> response = Response.FromValue(PrivateTrafficManagerProfileData.FromResponse(result), result);
                     return Response.FromValue(new PrivateTrafficManagerProfileResource(Client, response.Value), response.GetRawResponse());
@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<PrivateTrafficManagerProfileData> response = Response.FromValue(PrivateTrafficManagerProfileData.FromResponse(result), result);
                     return Response.FromValue(new PrivateTrafficManagerProfileResource(Client, response.Value), response.GetRawResponse());

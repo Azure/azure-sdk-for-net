@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _locationBasedCapabilitySetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _locationName, capabilitySetName, context);
+                using HttpMessage message = _locationBasedCapabilitySetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _locationName, capabilitySetName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MySqlFlexibleServersCapabilityData> response = Response.FromValue(MySqlFlexibleServersCapabilityData.FromResponse(result), result);
                 if (response.Value == null)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _locationBasedCapabilitySetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _locationName, capabilitySetName, context);
+                using HttpMessage message = _locationBasedCapabilitySetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _locationName, capabilitySetName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MySqlFlexibleServersCapabilityData> response = Response.FromValue(MySqlFlexibleServersCapabilityData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _locationBasedCapabilitySetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _locationName, capabilitySetName, context);
+                using HttpMessage message = _locationBasedCapabilitySetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _locationName, capabilitySetName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MySqlFlexibleServersCapabilityData> response = default;
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _locationBasedCapabilitySetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _locationName, capabilitySetName, context);
+                using HttpMessage message = _locationBasedCapabilitySetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _locationName, capabilitySetName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MySqlFlexibleServersCapabilityData> response = default;
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _locationBasedCapabilitySetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _locationName, capabilitySetName, context);
+                using HttpMessage message = _locationBasedCapabilitySetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _locationName, capabilitySetName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MySqlFlexibleServersCapabilityData> response = default;
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _locationBasedCapabilitySetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _locationName, capabilitySetName, context);
+                using HttpMessage message = _locationBasedCapabilitySetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _locationName, capabilitySetName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MySqlFlexibleServersCapabilityData> response = default;

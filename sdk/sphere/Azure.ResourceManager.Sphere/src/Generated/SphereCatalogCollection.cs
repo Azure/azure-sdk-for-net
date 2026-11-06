@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _catalogsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, catalogName, SphereCatalogData.ToRequestContent(data), context);
+                using HttpMessage message = _catalogsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, catalogName, SphereCatalogData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SphereArmOperation<SphereCatalogResource> operation = new SphereArmOperation<SphereCatalogResource>(
                     new SphereCatalogResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _catalogsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, catalogName, SphereCatalogData.ToRequestContent(data), context);
+                using HttpMessage message = _catalogsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, catalogName, SphereCatalogData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SphereArmOperation<SphereCatalogResource> operation = new SphereArmOperation<SphereCatalogResource>(
                     new SphereCatalogResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _catalogsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, catalogName, context);
+                using HttpMessage message = _catalogsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, catalogName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SphereCatalogData> response = Response.FromValue(SphereCatalogData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _catalogsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, catalogName, context);
+                using HttpMessage message = _catalogsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, catalogName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SphereCatalogData> response = Response.FromValue(SphereCatalogData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _catalogsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, catalogName, context);
+                using HttpMessage message = _catalogsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, catalogName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SphereCatalogData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _catalogsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, catalogName, context);
+                using HttpMessage message = _catalogsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, catalogName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SphereCatalogData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _catalogsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, catalogName, context);
+                using HttpMessage message = _catalogsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, catalogName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SphereCatalogData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _catalogsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, catalogName, context);
+                using HttpMessage message = _catalogsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, catalogName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SphereCatalogData> response = default;

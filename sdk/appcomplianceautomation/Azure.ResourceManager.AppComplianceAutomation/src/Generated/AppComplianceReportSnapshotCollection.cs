@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _snapshotRestClient.CreateGetRequest(Id.Name, snapshotName, context);
+                using HttpMessage message = _snapshotRestClient.CreateGetRequest(Id.Name, snapshotName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppComplianceReportSnapshotData> response = Response.FromValue(AppComplianceReportSnapshotData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _snapshotRestClient.CreateGetRequest(Id.Name, snapshotName, context);
+                using HttpMessage message = _snapshotRestClient.CreateGetRequest(Id.Name, snapshotName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppComplianceReportSnapshotData> response = Response.FromValue(AppComplianceReportSnapshotData.FromResponse(result), result);
                 if (response.Value == null)
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _snapshotRestClient.CreateGetRequest(Id.Name, snapshotName, context);
+                using HttpMessage message = _snapshotRestClient.CreateGetRequest(Id.Name, snapshotName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AppComplianceReportSnapshotData> response = default;
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _snapshotRestClient.CreateGetRequest(Id.Name, snapshotName, context);
+                using HttpMessage message = _snapshotRestClient.CreateGetRequest(Id.Name, snapshotName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AppComplianceReportSnapshotData> response = default;
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _snapshotRestClient.CreateGetRequest(Id.Name, snapshotName, context);
+                using HttpMessage message = _snapshotRestClient.CreateGetRequest(Id.Name, snapshotName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AppComplianceReportSnapshotData> response = default;
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _snapshotRestClient.CreateGetRequest(Id.Name, snapshotName, context);
+                using HttpMessage message = _snapshotRestClient.CreateGetRequest(Id.Name, snapshotName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AppComplianceReportSnapshotData> response = default;

@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MongoCluster
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mongoClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _mongoClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MongoClusterData> response = Response.FromValue(MongoClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.MongoCluster
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mongoClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _mongoClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MongoClusterData> response = Response.FromValue(MongoClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.MongoCluster
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mongoClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MongoClusterPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _mongoClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MongoClusterPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MongoClusterArmOperation<MongoClusterResource> operation = new MongoClusterArmOperation<MongoClusterResource>(
                     new MongoClusterResourceOperationSource(Client),
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.MongoCluster
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mongoClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MongoClusterPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _mongoClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MongoClusterPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MongoClusterArmOperation<MongoClusterResource> operation = new MongoClusterArmOperation<MongoClusterResource>(
                     new MongoClusterResourceOperationSource(Client),
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.MongoCluster
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mongoClustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _mongoClustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MongoClusterArmOperation operation = new MongoClusterArmOperation(_mongoClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.MongoCluster
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mongoClustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _mongoClustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MongoClusterArmOperation operation = new MongoClusterArmOperation(_mongoClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.MongoCluster
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mongoClustersRestClient.CreateGetConnectionStringsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _mongoClustersRestClient.CreateGetConnectionStringsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MongoClusterConnectionStringsResult> response = Response.FromValue(MongoClusterConnectionStringsResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.MongoCluster
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mongoClustersRestClient.CreateGetConnectionStringsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _mongoClustersRestClient.CreateGetConnectionStringsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MongoClusterConnectionStringsResult> response = Response.FromValue(MongoClusterConnectionStringsResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.MongoCluster
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mongoClustersRestClient.CreatePromoteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PromoteReplicaContent.ToRequestContent(content), context);
+                using HttpMessage message = _mongoClustersRestClient.CreatePromoteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PromoteReplicaContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MongoClusterArmOperation operation = new MongoClusterArmOperation(_mongoClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.MongoCluster
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mongoClustersRestClient.CreatePromoteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PromoteReplicaContent.ToRequestContent(content), context);
+                using HttpMessage message = _mongoClustersRestClient.CreatePromoteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PromoteReplicaContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MongoClusterArmOperation operation = new MongoClusterArmOperation(_mongoClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -797,7 +797,7 @@ namespace Azure.ResourceManager.MongoCluster
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _mongoClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _mongoClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<MongoClusterData> response = Response.FromValue(MongoClusterData.FromResponse(result), result);
                     return Response.FromValue(new MongoClusterResource(Client, response.Value), response.GetRawResponse());
@@ -845,7 +845,7 @@ namespace Azure.ResourceManager.MongoCluster
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _mongoClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _mongoClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<MongoClusterData> response = Response.FromValue(MongoClusterData.FromResponse(result), result);
                     return Response.FromValue(new MongoClusterResource(Client, response.Value), response.GetRawResponse());
@@ -891,7 +891,7 @@ namespace Azure.ResourceManager.MongoCluster
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _mongoClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _mongoClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<MongoClusterData> response = Response.FromValue(MongoClusterData.FromResponse(result), result);
                     return Response.FromValue(new MongoClusterResource(Client, response.Value), response.GetRawResponse());
@@ -933,7 +933,7 @@ namespace Azure.ResourceManager.MongoCluster
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _mongoClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _mongoClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<MongoClusterData> response = Response.FromValue(MongoClusterData.FromResponse(result), result);
                     return Response.FromValue(new MongoClusterResource(Client, response.Value), response.GetRawResponse());
@@ -975,7 +975,7 @@ namespace Azure.ResourceManager.MongoCluster
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _mongoClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _mongoClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<MongoClusterData> response = Response.FromValue(MongoClusterData.FromResponse(result), result);
                     return Response.FromValue(new MongoClusterResource(Client, response.Value), response.GetRawResponse());
@@ -1021,7 +1021,7 @@ namespace Azure.ResourceManager.MongoCluster
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _mongoClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _mongoClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<MongoClusterData> response = Response.FromValue(MongoClusterData.FromResponse(result), result);
                     return Response.FromValue(new MongoClusterResource(Client, response.Value), response.GetRawResponse());

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppJobsRestClient.CreateJobExecutionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobExecutionName, context);
+                using HttpMessage message = _containerAppJobsRestClient.CreateJobExecutionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobExecutionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerAppJobExecutionData> response = Response.FromValue(ContainerAppJobExecutionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppJobsRestClient.CreateJobExecutionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobExecutionName, context);
+                using HttpMessage message = _containerAppJobsRestClient.CreateJobExecutionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobExecutionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerAppJobExecutionData> response = Response.FromValue(ContainerAppJobExecutionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppJobsRestClient.CreateJobExecutionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobExecutionName, context);
+                using HttpMessage message = _containerAppJobsRestClient.CreateJobExecutionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobExecutionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ContainerAppJobExecutionData> response = default;
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppJobsRestClient.CreateJobExecutionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobExecutionName, context);
+                using HttpMessage message = _containerAppJobsRestClient.CreateJobExecutionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobExecutionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ContainerAppJobExecutionData> response = default;
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppJobsRestClient.CreateJobExecutionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobExecutionName, context);
+                using HttpMessage message = _containerAppJobsRestClient.CreateJobExecutionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobExecutionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ContainerAppJobExecutionData> response = default;
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppJobsRestClient.CreateJobExecutionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobExecutionName, context);
+                using HttpMessage message = _containerAppJobsRestClient.CreateJobExecutionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobExecutionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ContainerAppJobExecutionData> response = default;

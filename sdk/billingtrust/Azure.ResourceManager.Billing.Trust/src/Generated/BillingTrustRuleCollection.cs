@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Billing.Trust
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rulesRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), ruleName, BillingTrustRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _rulesRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), ruleName, BillingTrustRuleData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingTrustRuleData> response = Response.FromValue(BillingTrustRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Billing.Trust
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rulesRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), ruleName, BillingTrustRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _rulesRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), ruleName, BillingTrustRuleData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingTrustRuleData> response = Response.FromValue(BillingTrustRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Billing.Trust
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rulesRestClient.CreateGetRequest(Id.Parent.ToString(), ruleName, context);
+                using HttpMessage message = _rulesRestClient.CreateGetRequest(Id.Parent.ToString(), ruleName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingTrustRuleData> response = Response.FromValue(BillingTrustRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Billing.Trust
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rulesRestClient.CreateGetRequest(Id.Parent.ToString(), ruleName, context);
+                using HttpMessage message = _rulesRestClient.CreateGetRequest(Id.Parent.ToString(), ruleName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingTrustRuleData> response = Response.FromValue(BillingTrustRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Billing.Trust
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rulesRestClient.CreateGetRequest(Id.Parent.ToString(), ruleName, context);
+                using HttpMessage message = _rulesRestClient.CreateGetRequest(Id.Parent.ToString(), ruleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BillingTrustRuleData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Billing.Trust
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rulesRestClient.CreateGetRequest(Id.Parent.ToString(), ruleName, context);
+                using HttpMessage message = _rulesRestClient.CreateGetRequest(Id.Parent.ToString(), ruleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BillingTrustRuleData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Billing.Trust
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rulesRestClient.CreateGetRequest(Id.Parent.ToString(), ruleName, context);
+                using HttpMessage message = _rulesRestClient.CreateGetRequest(Id.Parent.ToString(), ruleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BillingTrustRuleData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Billing.Trust
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rulesRestClient.CreateGetRequest(Id.Parent.ToString(), ruleName, context);
+                using HttpMessage message = _rulesRestClient.CreateGetRequest(Id.Parent.ToString(), ruleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BillingTrustRuleData> response = default;

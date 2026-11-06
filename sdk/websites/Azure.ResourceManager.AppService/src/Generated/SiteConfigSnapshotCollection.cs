@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteConfigResourceOperationGroupRestClient.CreateGetConfigurationSnapshotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, snapshotId, context);
+                using HttpMessage message = _siteConfigResourceOperationGroupRestClient.CreateGetConfigurationSnapshotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, snapshotId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SiteConfigData> response = Response.FromValue(SiteConfigData.FromResponse(result), result);
                 if (response.Value == null)
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteConfigResourceOperationGroupRestClient.CreateGetConfigurationSnapshotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, snapshotId, context);
+                using HttpMessage message = _siteConfigResourceOperationGroupRestClient.CreateGetConfigurationSnapshotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, snapshotId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SiteConfigData> response = Response.FromValue(SiteConfigData.FromResponse(result), result);
                 if (response.Value == null)
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteConfigResourceOperationGroupRestClient.CreateGetConfigurationSnapshotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, snapshotId, context);
+                using HttpMessage message = _siteConfigResourceOperationGroupRestClient.CreateGetConfigurationSnapshotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, snapshotId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SiteConfigData> response = default;
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteConfigResourceOperationGroupRestClient.CreateGetConfigurationSnapshotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, snapshotId, context);
+                using HttpMessage message = _siteConfigResourceOperationGroupRestClient.CreateGetConfigurationSnapshotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, snapshotId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SiteConfigData> response = default;
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteConfigResourceOperationGroupRestClient.CreateGetConfigurationSnapshotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, snapshotId, context);
+                using HttpMessage message = _siteConfigResourceOperationGroupRestClient.CreateGetConfigurationSnapshotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, snapshotId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SiteConfigData> response = default;
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteConfigResourceOperationGroupRestClient.CreateGetConfigurationSnapshotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, snapshotId, context);
+                using HttpMessage message = _siteConfigResourceOperationGroupRestClient.CreateGetConfigurationSnapshotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, snapshotId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SiteConfigData> response = default;

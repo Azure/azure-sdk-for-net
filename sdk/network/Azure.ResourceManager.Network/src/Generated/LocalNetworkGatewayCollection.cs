@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _localNetworkGatewaysRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, localNetworkGatewayName, LocalNetworkGatewayData.ToRequestContent(data), context);
+                using HttpMessage message = _localNetworkGatewaysRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, localNetworkGatewayName, LocalNetworkGatewayData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<LocalNetworkGatewayResource> operation = new NetworkArmOperation<LocalNetworkGatewayResource>(
                     new LocalNetworkGatewayResourceOperationSource(Client),
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _localNetworkGatewaysRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, localNetworkGatewayName, LocalNetworkGatewayData.ToRequestContent(data), context);
+                using HttpMessage message = _localNetworkGatewaysRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, localNetworkGatewayName, LocalNetworkGatewayData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<LocalNetworkGatewayResource> operation = new NetworkArmOperation<LocalNetworkGatewayResource>(
                     new LocalNetworkGatewayResourceOperationSource(Client),
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _localNetworkGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, localNetworkGatewayName, context);
+                using HttpMessage message = _localNetworkGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, localNetworkGatewayName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LocalNetworkGatewayData> response = Response.FromValue(LocalNetworkGatewayData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _localNetworkGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, localNetworkGatewayName, context);
+                using HttpMessage message = _localNetworkGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, localNetworkGatewayName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LocalNetworkGatewayData> response = Response.FromValue(LocalNetworkGatewayData.FromResponse(result), result);
                 if (response.Value == null)
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _localNetworkGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, localNetworkGatewayName, context);
+                using HttpMessage message = _localNetworkGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, localNetworkGatewayName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<LocalNetworkGatewayData> response = default;
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _localNetworkGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, localNetworkGatewayName, context);
+                using HttpMessage message = _localNetworkGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, localNetworkGatewayName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<LocalNetworkGatewayData> response = default;
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _localNetworkGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, localNetworkGatewayName, context);
+                using HttpMessage message = _localNetworkGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, localNetworkGatewayName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<LocalNetworkGatewayData> response = default;
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _localNetworkGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, localNetworkGatewayName, context);
+                using HttpMessage message = _localNetworkGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, localNetworkGatewayName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<LocalNetworkGatewayData> response = default;

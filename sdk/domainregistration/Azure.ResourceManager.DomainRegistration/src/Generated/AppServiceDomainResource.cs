@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DomainRegistration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _domainsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceDomainData> response = Response.FromValue(AppServiceDomainData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DomainRegistration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _domainsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceDomainData> response = Response.FromValue(AppServiceDomainData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.DomainRegistration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, AppServiceDomainPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _domainsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, AppServiceDomainPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceDomainData> response = Response.FromValue(AppServiceDomainData.FromResponse(result), result);
                 if (response.Value == null)
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.DomainRegistration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, AppServiceDomainPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _domainsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, AppServiceDomainPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceDomainData> response = Response.FromValue(AppServiceDomainData.FromResponse(result), result);
                 if (response.Value == null)
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.DomainRegistration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceHardDeleteDomain, context);
+                using HttpMessage message = _domainsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceHardDeleteDomain, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.DomainRegistration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceHardDeleteDomain, context);
+                using HttpMessage message = _domainsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceHardDeleteDomain, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.DomainRegistration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainsRestClient.CreateRenewRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _domainsRestClient.CreateRenewRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.DomainRegistration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainsRestClient.CreateRenewRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _domainsRestClient.CreateRenewRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.DomainRegistration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainsRestClient.CreateTransferOutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _domainsRestClient.CreateTransferOutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceDomainData> response = Response.FromValue(AppServiceDomainData.FromResponse(result), result);
                 if (response.Value == null)
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.DomainRegistration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainsRestClient.CreateTransferOutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _domainsRestClient.CreateTransferOutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceDomainData> response = Response.FromValue(AppServiceDomainData.FromResponse(result), result);
                 if (response.Value == null)
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.DomainRegistration
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _domainsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _domainsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<AppServiceDomainData> response = Response.FromValue(AppServiceDomainData.FromResponse(result), result);
                     return Response.FromValue(new AppServiceDomainResource(Client, response.Value), response.GetRawResponse());
@@ -650,7 +650,7 @@ namespace Azure.ResourceManager.DomainRegistration
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _domainsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _domainsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<AppServiceDomainData> response = Response.FromValue(AppServiceDomainData.FromResponse(result), result);
                     return Response.FromValue(new AppServiceDomainResource(Client, response.Value), response.GetRawResponse());
@@ -696,7 +696,7 @@ namespace Azure.ResourceManager.DomainRegistration
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _domainsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _domainsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<AppServiceDomainData> response = Response.FromValue(AppServiceDomainData.FromResponse(result), result);
                     return Response.FromValue(new AppServiceDomainResource(Client, response.Value), response.GetRawResponse());
@@ -738,7 +738,7 @@ namespace Azure.ResourceManager.DomainRegistration
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _domainsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _domainsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<AppServiceDomainData> response = Response.FromValue(AppServiceDomainData.FromResponse(result), result);
                     return Response.FromValue(new AppServiceDomainResource(Client, response.Value), response.GetRawResponse());
@@ -780,7 +780,7 @@ namespace Azure.ResourceManager.DomainRegistration
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _domainsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _domainsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<AppServiceDomainData> response = Response.FromValue(AppServiceDomainData.FromResponse(result), result);
                     return Response.FromValue(new AppServiceDomainResource(Client, response.Value), response.GetRawResponse());
@@ -826,7 +826,7 @@ namespace Azure.ResourceManager.DomainRegistration
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _domainsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _domainsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<AppServiceDomainData> response = Response.FromValue(AppServiceDomainData.FromResponse(result), result);
                     return Response.FromValue(new AppServiceDomainResource(Client, response.Value), response.GetRawResponse());

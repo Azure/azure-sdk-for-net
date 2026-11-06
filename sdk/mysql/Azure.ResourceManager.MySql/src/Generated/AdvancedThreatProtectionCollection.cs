@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _advancedThreatProtectionSettingsRestClient.CreateUpdatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, advancedThreatProtectionName.ToString(), AdvancedThreatProtectionData.ToRequestContent(data), context);
+                using HttpMessage message = _advancedThreatProtectionSettingsRestClient.CreateUpdatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, advancedThreatProtectionName.ToString(), AdvancedThreatProtectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FlexibleServersArmOperation<AdvancedThreatProtectionResource> operation = new FlexibleServersArmOperation<AdvancedThreatProtectionResource>(
                     new AdvancedThreatProtectionResourceOperationSource(Client),
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _advancedThreatProtectionSettingsRestClient.CreateUpdatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, advancedThreatProtectionName.ToString(), AdvancedThreatProtectionData.ToRequestContent(data), context);
+                using HttpMessage message = _advancedThreatProtectionSettingsRestClient.CreateUpdatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, advancedThreatProtectionName.ToString(), AdvancedThreatProtectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FlexibleServersArmOperation<AdvancedThreatProtectionResource> operation = new FlexibleServersArmOperation<AdvancedThreatProtectionResource>(
                     new AdvancedThreatProtectionResourceOperationSource(Client),
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _advancedThreatProtectionSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, advancedThreatProtectionName.ToString(), context);
+                using HttpMessage message = _advancedThreatProtectionSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, advancedThreatProtectionName.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AdvancedThreatProtectionData> response = Response.FromValue(AdvancedThreatProtectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _advancedThreatProtectionSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, advancedThreatProtectionName.ToString(), context);
+                using HttpMessage message = _advancedThreatProtectionSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, advancedThreatProtectionName.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AdvancedThreatProtectionData> response = Response.FromValue(AdvancedThreatProtectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _advancedThreatProtectionSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, advancedThreatProtectionName.ToString(), context);
+                using HttpMessage message = _advancedThreatProtectionSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, advancedThreatProtectionName.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AdvancedThreatProtectionData> response = default;
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _advancedThreatProtectionSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, advancedThreatProtectionName.ToString(), context);
+                using HttpMessage message = _advancedThreatProtectionSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, advancedThreatProtectionName.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AdvancedThreatProtectionData> response = default;
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _advancedThreatProtectionSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, advancedThreatProtectionName.ToString(), context);
+                using HttpMessage message = _advancedThreatProtectionSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, advancedThreatProtectionName.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AdvancedThreatProtectionData> response = default;
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _advancedThreatProtectionSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, advancedThreatProtectionName.ToString(), context);
+                using HttpMessage message = _advancedThreatProtectionSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, advancedThreatProtectionName.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AdvancedThreatProtectionData> response = default;

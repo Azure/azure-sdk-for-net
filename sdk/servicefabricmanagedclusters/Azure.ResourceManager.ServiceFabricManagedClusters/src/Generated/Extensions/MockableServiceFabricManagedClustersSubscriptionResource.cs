@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ManagedClusterVersionRestClient.CreateGetManagedClusterVersionRequest(Id.SubscriptionId, location, clusterVersion, context);
+                using HttpMessage message = ManagedClusterVersionRestClient.CreateGetManagedClusterVersionRequest(Id.SubscriptionId, location, clusterVersion, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceFabricManagedClusterVersion> response = Response.FromValue(ServiceFabricManagedClusterVersion.FromResponse(result), result);
                 if (response.Value == null)
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ManagedClusterVersionRestClient.CreateGetManagedClusterVersionRequest(Id.SubscriptionId, location, clusterVersion, context);
+                using HttpMessage message = ManagedClusterVersionRestClient.CreateGetManagedClusterVersionRequest(Id.SubscriptionId, location, clusterVersion, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceFabricManagedClusterVersion> response = Response.FromValue(ServiceFabricManagedClusterVersion.FromResponse(result), result);
                 if (response.Value == null)
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ManagedClusterVersionRestClient.CreateGetManagedClusterVersionByEnvironmentRequest(Id.SubscriptionId, location, environment.ToString(), clusterVersion, context);
+                using HttpMessage message = ManagedClusterVersionRestClient.CreateGetManagedClusterVersionByEnvironmentRequest(Id.SubscriptionId, location, environment.ToString(), clusterVersion, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceFabricManagedClusterVersion> response = Response.FromValue(ServiceFabricManagedClusterVersion.FromResponse(result), result);
                 if (response.Value == null)
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ManagedClusterVersionRestClient.CreateGetManagedClusterVersionByEnvironmentRequest(Id.SubscriptionId, location, environment.ToString(), clusterVersion, context);
+                using HttpMessage message = ManagedClusterVersionRestClient.CreateGetManagedClusterVersionByEnvironmentRequest(Id.SubscriptionId, location, environment.ToString(), clusterVersion, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceFabricManagedClusterVersion> response = Response.FromValue(ServiceFabricManagedClusterVersion.FromResponse(result), result);
                 if (response.Value == null)
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ManagedUnsupportedVMSizesRestClient.CreateGetManagedUnsupportedVmSizeRequest(Id.SubscriptionId, location, vmSize, context);
+                using HttpMessage message = ManagedUnsupportedVMSizesRestClient.CreateGetManagedUnsupportedVmSizeRequest(Id.SubscriptionId, location, vmSize, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceFabricManagedUnsupportedVmSize> response = Response.FromValue(ServiceFabricManagedUnsupportedVmSize.FromResponse(result), result);
                 if (response.Value == null)
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ManagedUnsupportedVMSizesRestClient.CreateGetManagedUnsupportedVmSizeRequest(Id.SubscriptionId, location, vmSize, context);
+                using HttpMessage message = ManagedUnsupportedVMSizesRestClient.CreateGetManagedUnsupportedVmSizeRequest(Id.SubscriptionId, location, vmSize, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceFabricManagedUnsupportedVmSize> response = Response.FromValue(ServiceFabricManagedUnsupportedVmSize.FromResponse(result), result);
                 if (response.Value == null)

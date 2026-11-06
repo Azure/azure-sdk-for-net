@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ManagedOps
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), managedOpsName, ManagedOpData.ToRequestContent(data), context);
+                using HttpMessage message = _managedOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), managedOpsName, ManagedOpData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedOpsArmOperation<ManagedOpResource> operation = new ManagedOpsArmOperation<ManagedOpResource>(
                     new ManagedOpResourceOperationSource(Client),
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ManagedOps
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), managedOpsName, ManagedOpData.ToRequestContent(data), context);
+                using HttpMessage message = _managedOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), managedOpsName, ManagedOpData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedOpsArmOperation<ManagedOpResource> operation = new ManagedOpsArmOperation<ManagedOpResource>(
                     new ManagedOpResourceOperationSource(Client),
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ManagedOps
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), managedOpsName, context);
+                using HttpMessage message = _managedOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), managedOpsName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ManagedOpData> response = Response.FromValue(ManagedOpData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.ManagedOps
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), managedOpsName, context);
+                using HttpMessage message = _managedOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), managedOpsName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ManagedOpData> response = Response.FromValue(ManagedOpData.FromResponse(result), result);
                 if (response.Value == null)
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.ManagedOps
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), managedOpsName, context);
+                using HttpMessage message = _managedOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), managedOpsName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ManagedOpData> response = default;
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.ManagedOps
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), managedOpsName, context);
+                using HttpMessage message = _managedOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), managedOpsName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ManagedOpData> response = default;
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.ManagedOps
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), managedOpsName, context);
+                using HttpMessage message = _managedOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), managedOpsName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ManagedOpData> response = default;
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.ManagedOps
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), managedOpsName, context);
+                using HttpMessage message = _managedOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), managedOpsName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ManagedOpData> response = default;

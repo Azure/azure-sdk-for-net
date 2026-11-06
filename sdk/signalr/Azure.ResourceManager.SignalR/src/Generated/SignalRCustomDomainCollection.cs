@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customDomainsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, SignalRCustomDomainData.ToRequestContent(data), context);
+                using HttpMessage message = _customDomainsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, SignalRCustomDomainData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SignalRArmOperation<SignalRCustomDomainResource> operation = new SignalRArmOperation<SignalRCustomDomainResource>(
                     new SignalRCustomDomainResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customDomainsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, SignalRCustomDomainData.ToRequestContent(data), context);
+                using HttpMessage message = _customDomainsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, SignalRCustomDomainData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SignalRArmOperation<SignalRCustomDomainResource> operation = new SignalRArmOperation<SignalRCustomDomainResource>(
                     new SignalRCustomDomainResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customDomainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _customDomainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SignalRCustomDomainData> response = Response.FromValue(SignalRCustomDomainData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customDomainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _customDomainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SignalRCustomDomainData> response = Response.FromValue(SignalRCustomDomainData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customDomainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _customDomainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SignalRCustomDomainData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customDomainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _customDomainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SignalRCustomDomainData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customDomainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _customDomainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SignalRCustomDomainData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customDomainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _customDomainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SignalRCustomDomainData> response = default;

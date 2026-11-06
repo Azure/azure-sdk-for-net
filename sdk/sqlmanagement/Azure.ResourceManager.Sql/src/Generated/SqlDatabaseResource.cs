@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, context);
+                using HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SqlDatabaseData> response = Response.FromValue(SqlDatabaseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, context);
+                using HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SqlDatabaseData> response = Response.FromValue(SqlDatabaseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SqlDatabasePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _databasesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SqlDatabasePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation<SqlDatabaseResource> operation = new SqlArmOperation<SqlDatabaseResource>(
                     new SqlDatabaseResourceOperationSource(Client),
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SqlDatabasePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _databasesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SqlDatabasePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation<SqlDatabaseResource> operation = new SqlArmOperation<SqlDatabaseResource>(
                     new SqlDatabaseResourceOperationSource(Client),
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _databasesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation operation = new SqlArmOperation(_databasesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _databasesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation operation = new SqlArmOperation(_databasesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseOperationsRestClient.CreateCancelDatabaseOperationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, context);
+                using HttpMessage message = _databaseOperationsRestClient.CreateCancelDatabaseOperationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseOperationsRestClient.CreateCancelDatabaseOperationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, context);
+                using HttpMessage message = _databaseOperationsRestClient.CreateCancelDatabaseOperationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _restorePointsRestClient.CreateCreateRestorePointRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CreateDatabaseRestorePointDefinition.ToRequestContent(createDatabaseRestorePointDefinition), context);
+                using HttpMessage message = _restorePointsRestClient.CreateCreateRestorePointRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CreateDatabaseRestorePointDefinition.ToRequestContent(createDatabaseRestorePointDefinition), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation<SqlServerDatabaseRestorePointResource> operation = new SqlArmOperation<SqlServerDatabaseRestorePointResource>(
                     new SqlServerDatabaseRestorePointResourceOperationSource(Client),
@@ -632,7 +632,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _restorePointsRestClient.CreateCreateRestorePointRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CreateDatabaseRestorePointDefinition.ToRequestContent(createDatabaseRestorePointDefinition), context);
+                using HttpMessage message = _restorePointsRestClient.CreateCreateRestorePointRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CreateDatabaseRestorePointDefinition.ToRequestContent(createDatabaseRestorePointDefinition), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation<SqlServerDatabaseRestorePointResource> operation = new SqlArmOperation<SqlServerDatabaseRestorePointResource>(
                     new SqlServerDatabaseRestorePointResourceOperationSource(Client),
@@ -847,7 +847,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateExportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DatabaseExportDefinition.ToRequestContent(databaseExportDefinition), context);
+                using HttpMessage message = _databasesRestClient.CreateExportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DatabaseExportDefinition.ToRequestContent(databaseExportDefinition), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation<ImportExportOperationResult> operation = new SqlArmOperation<ImportExportOperationResult>(
                     new ImportExportOperationResultOperationSource(),
@@ -906,7 +906,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateExportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DatabaseExportDefinition.ToRequestContent(databaseExportDefinition), context);
+                using HttpMessage message = _databasesRestClient.CreateExportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DatabaseExportDefinition.ToRequestContent(databaseExportDefinition), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation<ImportExportOperationResult> operation = new SqlArmOperation<ImportExportOperationResult>(
                     new ImportExportOperationResultOperationSource(),
@@ -962,7 +962,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaType?.ToString(), context);
+                using HttpMessage message = _databasesRestClient.CreateFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaType?.ToString(), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation operation = new SqlArmOperation(_databasesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1012,7 +1012,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaType?.ToString(), context);
+                using HttpMessage message = _databasesRestClient.CreateFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaType?.ToString(), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation operation = new SqlArmOperation(_databasesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1065,7 +1065,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateImportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ImportExistingDatabaseDefinition.ToRequestContent(importExistingDatabaseDefinition), context);
+                using HttpMessage message = _databasesRestClient.CreateImportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ImportExistingDatabaseDefinition.ToRequestContent(importExistingDatabaseDefinition), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation<ImportExportOperationResult> operation = new SqlArmOperation<ImportExportOperationResult>(
                     new ImportExportOperationResultOperationSource(),
@@ -1124,7 +1124,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateImportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ImportExistingDatabaseDefinition.ToRequestContent(importExistingDatabaseDefinition), context);
+                using HttpMessage message = _databasesRestClient.CreateImportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ImportExistingDatabaseDefinition.ToRequestContent(importExistingDatabaseDefinition), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation<ImportExportOperationResult> operation = new SqlArmOperation<ImportExportOperationResult>(
                     new ImportExportOperationResultOperationSource(),
@@ -1179,7 +1179,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreatePauseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _databasesRestClient.CreatePauseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation<SqlDatabaseResource> operation = new SqlArmOperation<SqlDatabaseResource>(
                     new SqlDatabaseResourceOperationSource(Client),
@@ -1234,7 +1234,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreatePauseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _databasesRestClient.CreatePauseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation<SqlDatabaseResource> operation = new SqlArmOperation<SqlDatabaseResource>(
                     new SqlDatabaseResourceOperationSource(Client),
@@ -1292,7 +1292,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recommendedSensitivityLabelsRestClient.CreateUpdateRecommendedSensitivityLabelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RecommendedSensitivityLabelUpdateList.ToRequestContent(recommendedSensitivityLabelUpdateList), context);
+                using HttpMessage message = _recommendedSensitivityLabelsRestClient.CreateUpdateRecommendedSensitivityLabelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RecommendedSensitivityLabelUpdateList.ToRequestContent(recommendedSensitivityLabelUpdateList), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -1339,7 +1339,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recommendedSensitivityLabelsRestClient.CreateUpdateRecommendedSensitivityLabelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RecommendedSensitivityLabelUpdateList.ToRequestContent(recommendedSensitivityLabelUpdateList), context);
+                using HttpMessage message = _recommendedSensitivityLabelsRestClient.CreateUpdateRecommendedSensitivityLabelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RecommendedSensitivityLabelUpdateList.ToRequestContent(recommendedSensitivityLabelUpdateList), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -1386,7 +1386,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateRenameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SqlResourceMoveDefinition.ToRequestContent(sqlResourceMoveDefinition), context);
+                using HttpMessage message = _databasesRestClient.CreateRenameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SqlResourceMoveDefinition.ToRequestContent(sqlResourceMoveDefinition), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -1433,7 +1433,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateRenameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SqlResourceMoveDefinition.ToRequestContent(sqlResourceMoveDefinition), context);
+                using HttpMessage message = _databasesRestClient.CreateRenameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SqlResourceMoveDefinition.ToRequestContent(sqlResourceMoveDefinition), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -1477,7 +1477,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateResumeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _databasesRestClient.CreateResumeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation<SqlDatabaseResource> operation = new SqlArmOperation<SqlDatabaseResource>(
                     new SqlDatabaseResourceOperationSource(Client),
@@ -1532,7 +1532,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateResumeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _databasesRestClient.CreateResumeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation<SqlDatabaseResource> operation = new SqlArmOperation<SqlDatabaseResource>(
                     new SqlDatabaseResourceOperationSource(Client),
@@ -1588,7 +1588,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseEncryptionProtectorsRestClient.CreateRevalidateDatabaseEncryptionProtectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, encryptionProtectorName.ToString(), context);
+                using HttpMessage message = _databaseEncryptionProtectorsRestClient.CreateRevalidateDatabaseEncryptionProtectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, encryptionProtectorName.ToString(), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation operation = new SqlArmOperation(_databaseEncryptionProtectorsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1638,7 +1638,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseEncryptionProtectorsRestClient.CreateRevalidateDatabaseEncryptionProtectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, encryptionProtectorName.ToString(), context);
+                using HttpMessage message = _databaseEncryptionProtectorsRestClient.CreateRevalidateDatabaseEncryptionProtectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, encryptionProtectorName.ToString(), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation operation = new SqlArmOperation(_databaseEncryptionProtectorsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1688,7 +1688,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseEncryptionProtectorsRestClient.CreateRevertDatabaseEncryptionProtectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, encryptionProtectorName.ToString(), context);
+                using HttpMessage message = _databaseEncryptionProtectorsRestClient.CreateRevertDatabaseEncryptionProtectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, encryptionProtectorName.ToString(), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation operation = new SqlArmOperation(_databaseEncryptionProtectorsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1738,7 +1738,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseEncryptionProtectorsRestClient.CreateRevertDatabaseEncryptionProtectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, encryptionProtectorName.ToString(), context);
+                using HttpMessage message = _databaseEncryptionProtectorsRestClient.CreateRevertDatabaseEncryptionProtectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, encryptionProtectorName.ToString(), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation operation = new SqlArmOperation(_databaseEncryptionProtectorsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1790,7 +1790,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sensitivityLabelsRestClient.CreateUpdateSensitivityLabelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SensitivityLabelUpdateList.ToRequestContent(sensitivityLabelUpdateList), context);
+                using HttpMessage message = _sensitivityLabelsRestClient.CreateUpdateSensitivityLabelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SensitivityLabelUpdateList.ToRequestContent(sensitivityLabelUpdateList), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -1837,7 +1837,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sensitivityLabelsRestClient.CreateUpdateSensitivityLabelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SensitivityLabelUpdateList.ToRequestContent(sensitivityLabelUpdateList), context);
+                using HttpMessage message = _sensitivityLabelsRestClient.CreateUpdateSensitivityLabelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SensitivityLabelUpdateList.ToRequestContent(sensitivityLabelUpdateList), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -1959,7 +1959,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateUpgradeDataWarehouseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _databasesRestClient.CreateUpgradeDataWarehouseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation operation = new SqlArmOperation(_databasesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2008,7 +2008,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateUpgradeDataWarehouseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _databasesRestClient.CreateUpgradeDataWarehouseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation operation = new SqlArmOperation(_databasesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2064,7 +2064,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseExtensionsRestClient.CreateCreateOrUpdateDatabaseExtensionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, SqlDatabaseExtension.ToRequestContent(sqlDatabaseExtension), context);
+                using HttpMessage message = _databaseExtensionsRestClient.CreateCreateOrUpdateDatabaseExtensionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, SqlDatabaseExtension.ToRequestContent(sqlDatabaseExtension), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation<ImportExportExtensionsOperationResult> operation = new SqlArmOperation<ImportExportExtensionsOperationResult>(
                     new ImportExportExtensionsOperationResultOperationSource(),
@@ -2126,7 +2126,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseExtensionsRestClient.CreateCreateOrUpdateDatabaseExtensionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, SqlDatabaseExtension.ToRequestContent(sqlDatabaseExtension), context);
+                using HttpMessage message = _databaseExtensionsRestClient.CreateCreateOrUpdateDatabaseExtensionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, SqlDatabaseExtension.ToRequestContent(sqlDatabaseExtension), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation<ImportExportExtensionsOperationResult> operation = new SqlArmOperation<ImportExportExtensionsOperationResult>(
                     new ImportExportExtensionsOperationResultOperationSource(),
@@ -2249,7 +2249,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, default, context);
+                    using HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<SqlDatabaseData> response = Response.FromValue(SqlDatabaseData.FromResponse(result), result);
                     return Response.FromValue(new SqlDatabaseResource(Client, response.Value), response.GetRawResponse());
@@ -2297,7 +2297,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, default, context);
+                    using HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<SqlDatabaseData> response = Response.FromValue(SqlDatabaseData.FromResponse(result), result);
                     return Response.FromValue(new SqlDatabaseResource(Client, response.Value), response.GetRawResponse());
@@ -2343,7 +2343,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, default, context);
+                    using HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<SqlDatabaseData> response = Response.FromValue(SqlDatabaseData.FromResponse(result), result);
                     return Response.FromValue(new SqlDatabaseResource(Client, response.Value), response.GetRawResponse());
@@ -2385,7 +2385,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, default, context);
+                    using HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<SqlDatabaseData> response = Response.FromValue(SqlDatabaseData.FromResponse(result), result);
                     return Response.FromValue(new SqlDatabaseResource(Client, response.Value), response.GetRawResponse());
@@ -2427,7 +2427,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, default, context);
+                    using HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<SqlDatabaseData> response = Response.FromValue(SqlDatabaseData.FromResponse(result), result);
                     return Response.FromValue(new SqlDatabaseResource(Client, response.Value), response.GetRawResponse());
@@ -2473,7 +2473,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, default, context);
+                    using HttpMessage message = _databasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<SqlDatabaseData> response = Response.FromValue(SqlDatabaseData.FromResponse(result), result);
                     return Response.FromValue(new SqlDatabaseResource(Client, response.Value), response.GetRawResponse());

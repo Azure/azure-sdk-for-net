@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectedItemsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, protectedItemName, context);
+                using HttpMessage message = _protectedItemsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, protectedItemName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ProtectedItemData> response = Response.FromValue(ProtectedItemData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectedItemsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, protectedItemName, context);
+                using HttpMessage message = _protectedItemsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, protectedItemName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ProtectedItemData> response = Response.FromValue(ProtectedItemData.FromResponse(result), result);
                 if (response.Value == null)
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectedItemsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, protectedItemName, context);
+                using HttpMessage message = _protectedItemsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, protectedItemName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ProtectedItemData> response = default;
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectedItemsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, protectedItemName, context);
+                using HttpMessage message = _protectedItemsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, protectedItemName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ProtectedItemData> response = default;
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectedItemsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, protectedItemName, context);
+                using HttpMessage message = _protectedItemsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, protectedItemName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ProtectedItemData> response = default;
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectedItemsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, protectedItemName, context);
+                using HttpMessage message = _protectedItemsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, protectedItemName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ProtectedItemData> response = default;

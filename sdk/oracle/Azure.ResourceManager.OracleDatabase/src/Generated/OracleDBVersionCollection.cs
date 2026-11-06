@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dbVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, dbversionsname, context);
+                using HttpMessage message = _dbVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, dbversionsname, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OracleDBVersionData> response = Response.FromValue(OracleDBVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dbVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, dbversionsname, context);
+                using HttpMessage message = _dbVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, dbversionsname, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OracleDBVersionData> response = Response.FromValue(OracleDBVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dbVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, dbversionsname, context);
+                using HttpMessage message = _dbVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, dbversionsname, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<OracleDBVersionData> response = default;
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dbVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, dbversionsname, context);
+                using HttpMessage message = _dbVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, dbversionsname, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<OracleDBVersionData> response = default;
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dbVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, dbversionsname, context);
+                using HttpMessage message = _dbVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, dbversionsname, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<OracleDBVersionData> response = default;
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dbVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, dbversionsname, context);
+                using HttpMessage message = _dbVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, dbversionsname, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<OracleDBVersionData> response = default;

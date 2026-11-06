@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vmScaleSetName, VirtualMachineScaleSetData.ToRequestContent(data), matchConditions, context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vmScaleSetName, VirtualMachineScaleSetData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation<VirtualMachineScaleSetResource> operation = new ComputeArmOperation<VirtualMachineScaleSetResource>(
                     new VirtualMachineScaleSetResourceOperationSource(Client),
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vmScaleSetName, VirtualMachineScaleSetData.ToRequestContent(data), matchConditions, context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vmScaleSetName, VirtualMachineScaleSetData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation<VirtualMachineScaleSetResource> operation = new ComputeArmOperation<VirtualMachineScaleSetResource>(
                     new VirtualMachineScaleSetResourceOperationSource(Client),
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vmScaleSetName, expand?.ToString(), context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vmScaleSetName, expand?.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<VirtualMachineScaleSetData> response = Response.FromValue(VirtualMachineScaleSetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vmScaleSetName, expand?.ToString(), context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vmScaleSetName, expand?.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<VirtualMachineScaleSetData> response = Response.FromValue(VirtualMachineScaleSetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vmScaleSetName, expand?.ToString(), context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vmScaleSetName, expand?.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<VirtualMachineScaleSetData> response = default;
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vmScaleSetName, expand?.ToString(), context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vmScaleSetName, expand?.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<VirtualMachineScaleSetData> response = default;
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vmScaleSetName, expand?.ToString(), context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vmScaleSetName, expand?.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<VirtualMachineScaleSetData> response = default;
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vmScaleSetName, expand?.ToString(), context);
+                using HttpMessage message = _virtualMachineScaleSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vmScaleSetName, expand?.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<VirtualMachineScaleSetData> response = default;

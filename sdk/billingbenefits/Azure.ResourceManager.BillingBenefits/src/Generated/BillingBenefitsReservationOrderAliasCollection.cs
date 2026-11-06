@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationOrderAliasRestClient.CreateCreateRequest(reservationOrderAliasName, BillingBenefitsReservationOrderAliasCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _reservationOrderAliasRestClient.CreateCreateRequest(reservationOrderAliasName, BillingBenefitsReservationOrderAliasCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingBenefitsArmOperation<BillingBenefitsReservationOrderAliasResource> operation = new BillingBenefitsArmOperation<BillingBenefitsReservationOrderAliasResource>(
                     new BillingBenefitsReservationOrderAliasResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationOrderAliasRestClient.CreateCreateRequest(reservationOrderAliasName, BillingBenefitsReservationOrderAliasCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _reservationOrderAliasRestClient.CreateCreateRequest(reservationOrderAliasName, BillingBenefitsReservationOrderAliasCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingBenefitsArmOperation<BillingBenefitsReservationOrderAliasResource> operation = new BillingBenefitsArmOperation<BillingBenefitsReservationOrderAliasResource>(
                     new BillingBenefitsReservationOrderAliasResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationOrderAliasRestClient.CreateGetRequest(reservationOrderAliasName, context);
+                using HttpMessage message = _reservationOrderAliasRestClient.CreateGetRequest(reservationOrderAliasName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingBenefitsReservationOrderAliasData> response = Response.FromValue(BillingBenefitsReservationOrderAliasData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationOrderAliasRestClient.CreateGetRequest(reservationOrderAliasName, context);
+                using HttpMessage message = _reservationOrderAliasRestClient.CreateGetRequest(reservationOrderAliasName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingBenefitsReservationOrderAliasData> response = Response.FromValue(BillingBenefitsReservationOrderAliasData.FromResponse(result), result);
                 if (response.Value == null)
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationOrderAliasRestClient.CreateGetRequest(reservationOrderAliasName, context);
+                using HttpMessage message = _reservationOrderAliasRestClient.CreateGetRequest(reservationOrderAliasName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BillingBenefitsReservationOrderAliasData> response = default;
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationOrderAliasRestClient.CreateGetRequest(reservationOrderAliasName, context);
+                using HttpMessage message = _reservationOrderAliasRestClient.CreateGetRequest(reservationOrderAliasName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BillingBenefitsReservationOrderAliasData> response = default;
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationOrderAliasRestClient.CreateGetRequest(reservationOrderAliasName, context);
+                using HttpMessage message = _reservationOrderAliasRestClient.CreateGetRequest(reservationOrderAliasName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BillingBenefitsReservationOrderAliasData> response = default;
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationOrderAliasRestClient.CreateGetRequest(reservationOrderAliasName, context);
+                using HttpMessage message = _reservationOrderAliasRestClient.CreateGetRequest(reservationOrderAliasName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BillingBenefitsReservationOrderAliasData> response = default;

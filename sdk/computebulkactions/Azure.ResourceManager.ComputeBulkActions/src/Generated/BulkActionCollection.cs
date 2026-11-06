@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bulkActionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _location, name, BulkActionData.ToRequestContent(data), context);
+                using HttpMessage message = _bulkActionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _location, name, BulkActionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeBulkActionsArmOperation<BulkActionResource> operation = new ComputeBulkActionsArmOperation<BulkActionResource>(
                     new BulkActionResourceOperationSource(Client),
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bulkActionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _location, name, BulkActionData.ToRequestContent(data), context);
+                using HttpMessage message = _bulkActionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _location, name, BulkActionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeBulkActionsArmOperation<BulkActionResource> operation = new ComputeBulkActionsArmOperation<BulkActionResource>(
                     new BulkActionResourceOperationSource(Client),
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bulkActionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _location, name, context);
+                using HttpMessage message = _bulkActionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _location, name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BulkActionData> response = Response.FromValue(BulkActionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bulkActionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _location, name, context);
+                using HttpMessage message = _bulkActionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _location, name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BulkActionData> response = Response.FromValue(BulkActionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bulkActionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _location, name, context);
+                using HttpMessage message = _bulkActionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _location, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BulkActionData> response = default;
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bulkActionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _location, name, context);
+                using HttpMessage message = _bulkActionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _location, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BulkActionData> response = default;
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bulkActionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _location, name, context);
+                using HttpMessage message = _bulkActionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _location, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BulkActionData> response = default;
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bulkActionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _location, name, context);
+                using HttpMessage message = _bulkActionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _location, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BulkActionData> response = default;

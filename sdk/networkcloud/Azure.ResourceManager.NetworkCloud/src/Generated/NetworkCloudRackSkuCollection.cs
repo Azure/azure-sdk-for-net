@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rackSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), rackSkuName, context);
+                using HttpMessage message = _rackSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), rackSkuName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkCloudRackSkuData> response = Response.FromValue(NetworkCloudRackSkuData.FromResponse(result), result);
                 if (response.Value == null)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rackSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), rackSkuName, context);
+                using HttpMessage message = _rackSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), rackSkuName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkCloudRackSkuData> response = Response.FromValue(NetworkCloudRackSkuData.FromResponse(result), result);
                 if (response.Value == null)
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rackSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), rackSkuName, context);
+                using HttpMessage message = _rackSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), rackSkuName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkCloudRackSkuData> response = default;
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rackSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), rackSkuName, context);
+                using HttpMessage message = _rackSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), rackSkuName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkCloudRackSkuData> response = default;
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rackSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), rackSkuName, context);
+                using HttpMessage message = _rackSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), rackSkuName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkCloudRackSkuData> response = default;
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rackSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), rackSkuName, context);
+                using HttpMessage message = _rackSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), rackSkuName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkCloudRackSkuData> response = default;

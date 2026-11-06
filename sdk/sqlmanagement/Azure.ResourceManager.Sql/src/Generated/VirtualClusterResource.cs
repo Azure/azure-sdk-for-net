@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _virtualClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<VirtualClusterData> response = Response.FromValue(VirtualClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _virtualClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<VirtualClusterData> response = Response.FromValue(VirtualClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VirtualClusterPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _virtualClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VirtualClusterPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation<VirtualClusterResource> operation = new SqlArmOperation<VirtualClusterResource>(
                     new VirtualClusterResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VirtualClusterPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _virtualClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VirtualClusterPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation<VirtualClusterResource> operation = new SqlArmOperation<VirtualClusterResource>(
                     new VirtualClusterResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualClustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _virtualClustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation operation = new SqlArmOperation(_virtualClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualClustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _virtualClustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation operation = new SqlArmOperation(_virtualClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualClustersRestClient.CreateUpdateDnsServersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _virtualClustersRestClient.CreateUpdateDnsServersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation<ManagedInstanceUpdateDnsServersOperationData> operation = new SqlArmOperation<ManagedInstanceUpdateDnsServersOperationData>(
                     new ManagedInstanceUpdateDnsServersOperationDataOperationSource(),
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualClustersRestClient.CreateUpdateDnsServersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _virtualClustersRestClient.CreateUpdateDnsServersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation<ManagedInstanceUpdateDnsServersOperationData> operation = new SqlArmOperation<ManagedInstanceUpdateDnsServersOperationData>(
                     new ManagedInstanceUpdateDnsServersOperationDataOperationSource(),
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _virtualClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<VirtualClusterData> response = Response.FromValue(VirtualClusterData.FromResponse(result), result);
                     return Response.FromValue(new VirtualClusterResource(Client, response.Value), response.GetRawResponse());
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _virtualClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<VirtualClusterData> response = Response.FromValue(VirtualClusterData.FromResponse(result), result);
                     return Response.FromValue(new VirtualClusterResource(Client, response.Value), response.GetRawResponse());
@@ -632,7 +632,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _virtualClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<VirtualClusterData> response = Response.FromValue(VirtualClusterData.FromResponse(result), result);
                     return Response.FromValue(new VirtualClusterResource(Client, response.Value), response.GetRawResponse());
@@ -674,7 +674,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _virtualClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<VirtualClusterData> response = Response.FromValue(VirtualClusterData.FromResponse(result), result);
                     return Response.FromValue(new VirtualClusterResource(Client, response.Value), response.GetRawResponse());
@@ -716,7 +716,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _virtualClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<VirtualClusterData> response = Response.FromValue(VirtualClusterData.FromResponse(result), result);
                     return Response.FromValue(new VirtualClusterResource(Client, response.Value), response.GetRawResponse());
@@ -762,7 +762,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _virtualClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<VirtualClusterData> response = Response.FromValue(VirtualClusterData.FromResponse(result), result);
                     return Response.FromValue(new VirtualClusterResource(Client, response.Value), response.GetRawResponse());

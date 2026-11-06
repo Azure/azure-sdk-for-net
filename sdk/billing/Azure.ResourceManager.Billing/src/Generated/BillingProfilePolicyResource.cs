@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policiesRestClient.CreateCreateOrUpdateByBillingProfileRequest(Id.Parent.Parent.Name, Id.Parent.Name, BillingProfilePolicyData.ToRequestContent(data), context);
+                using HttpMessage message = _policiesRestClient.CreateCreateOrUpdateByBillingProfileRequest(Id.Parent.Parent.Name, Id.Parent.Name, BillingProfilePolicyData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingProfilePolicyResource> operation = new BillingArmOperation<BillingProfilePolicyResource>(
                     new BillingProfilePolicyResourceOperationSource(Client),
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policiesRestClient.CreateCreateOrUpdateByBillingProfileRequest(Id.Parent.Parent.Name, Id.Parent.Name, BillingProfilePolicyData.ToRequestContent(data), context);
+                using HttpMessage message = _policiesRestClient.CreateCreateOrUpdateByBillingProfileRequest(Id.Parent.Parent.Name, Id.Parent.Name, BillingProfilePolicyData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingProfilePolicyResource> operation = new BillingArmOperation<BillingProfilePolicyResource>(
                     new BillingProfilePolicyResourceOperationSource(Client),
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policiesRestClient.CreateGetByBillingProfileRequest(Id.Parent.Parent.Name, Id.Parent.Name, context);
+                using HttpMessage message = _policiesRestClient.CreateGetByBillingProfileRequest(Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingProfilePolicyData> response = Response.FromValue(BillingProfilePolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policiesRestClient.CreateGetByBillingProfileRequest(Id.Parent.Parent.Name, Id.Parent.Name, context);
+                using HttpMessage message = _policiesRestClient.CreateGetByBillingProfileRequest(Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingProfilePolicyData> response = Response.FromValue(BillingProfilePolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _policiesRestClient.CreateGetByBillingProfileRequest(Id.Parent.Parent.Name, Id.Parent.Name, context);
+                    using HttpMessage message = _policiesRestClient.CreateGetByBillingProfileRequest(Id.Parent.Parent.Name, Id.Parent.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<BillingProfilePolicyData> response = Response.FromValue(BillingProfilePolicyData.FromResponse(result), result);
                     return Response.FromValue(new BillingProfilePolicyResource(Client, response.Value), response.GetRawResponse());
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _policiesRestClient.CreateGetByBillingProfileRequest(Id.Parent.Parent.Name, Id.Parent.Name, context);
+                    using HttpMessage message = _policiesRestClient.CreateGetByBillingProfileRequest(Id.Parent.Parent.Name, Id.Parent.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<BillingProfilePolicyData> response = Response.FromValue(BillingProfilePolicyData.FromResponse(result), result);
                     return Response.FromValue(new BillingProfilePolicyResource(Client, response.Value), response.GetRawResponse());
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _policiesRestClient.CreateGetByBillingProfileRequest(Id.Parent.Parent.Name, Id.Parent.Name, context);
+                    using HttpMessage message = _policiesRestClient.CreateGetByBillingProfileRequest(Id.Parent.Parent.Name, Id.Parent.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<BillingProfilePolicyData> response = Response.FromValue(BillingProfilePolicyData.FromResponse(result), result);
                     return Response.FromValue(new BillingProfilePolicyResource(Client, response.Value), response.GetRawResponse());
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _policiesRestClient.CreateGetByBillingProfileRequest(Id.Parent.Parent.Name, Id.Parent.Name, context);
+                    using HttpMessage message = _policiesRestClient.CreateGetByBillingProfileRequest(Id.Parent.Parent.Name, Id.Parent.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<BillingProfilePolicyData> response = Response.FromValue(BillingProfilePolicyData.FromResponse(result), result);
                     return Response.FromValue(new BillingProfilePolicyResource(Client, response.Value), response.GetRawResponse());
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _policiesRestClient.CreateGetByBillingProfileRequest(Id.Parent.Parent.Name, Id.Parent.Name, context);
+                    using HttpMessage message = _policiesRestClient.CreateGetByBillingProfileRequest(Id.Parent.Parent.Name, Id.Parent.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<BillingProfilePolicyData> response = Response.FromValue(BillingProfilePolicyData.FromResponse(result), result);
                     return Response.FromValue(new BillingProfilePolicyResource(Client, response.Value), response.GetRawResponse());
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _policiesRestClient.CreateGetByBillingProfileRequest(Id.Parent.Parent.Name, Id.Parent.Name, context);
+                    using HttpMessage message = _policiesRestClient.CreateGetByBillingProfileRequest(Id.Parent.Parent.Name, Id.Parent.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<BillingProfilePolicyData> response = Response.FromValue(BillingProfilePolicyData.FromResponse(result), result);
                     return Response.FromValue(new BillingProfilePolicyResource(Client, response.Value), response.GetRawResponse());

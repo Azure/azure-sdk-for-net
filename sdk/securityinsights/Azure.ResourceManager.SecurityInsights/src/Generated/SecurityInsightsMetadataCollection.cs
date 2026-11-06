@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.SecurityInsights
     /// <summary>
     /// A class representing a collection of <see cref="SecurityInsightsMetadataResource"/> and their operations.
     /// Each <see cref="SecurityInsightsMetadataResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="SecurityInsightsMetadataCollection"/> instance call the GetSecurityInsightsMetadatas method from an instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="SecurityInsightsMetadataCollection"/> instance call the GetAllSecurityInsightsMetadata method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class SecurityInsightsMetadataCollection : ArmCollection, IEnumerable<SecurityInsightsMetadataResource>, IAsyncEnumerable<SecurityInsightsMetadataResource>
     {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metadataRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metadataName, SecurityInsightsMetadataData.ToRequestContent(data), context);
+                using HttpMessage message = _metadataRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metadataName, SecurityInsightsMetadataData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityInsightsMetadataData> response = Response.FromValue(SecurityInsightsMetadataData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metadataRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metadataName, SecurityInsightsMetadataData.ToRequestContent(data), context);
+                using HttpMessage message = _metadataRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metadataName, SecurityInsightsMetadataData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityInsightsMetadataData> response = Response.FromValue(SecurityInsightsMetadataData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metadataRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metadataName, context);
+                using HttpMessage message = _metadataRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metadataName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityInsightsMetadataData> response = Response.FromValue(SecurityInsightsMetadataData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metadataRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metadataName, context);
+                using HttpMessage message = _metadataRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metadataName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityInsightsMetadataData> response = Response.FromValue(SecurityInsightsMetadataData.FromResponse(result), result);
                 if (response.Value == null)
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metadataRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metadataName, context);
+                using HttpMessage message = _metadataRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metadataName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SecurityInsightsMetadataData> response = default;
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metadataRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metadataName, context);
+                using HttpMessage message = _metadataRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metadataName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SecurityInsightsMetadataData> response = default;
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metadataRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metadataName, context);
+                using HttpMessage message = _metadataRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metadataName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SecurityInsightsMetadataData> response = default;
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metadataRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metadataName, context);
+                using HttpMessage message = _metadataRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metadataName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SecurityInsightsMetadataData> response = default;

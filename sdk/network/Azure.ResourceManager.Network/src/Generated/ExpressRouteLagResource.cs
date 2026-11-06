@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteLagsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _expressRouteLagsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExpressRouteLagData> response = Response.FromValue(ExpressRouteLagData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteLagsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _expressRouteLagsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExpressRouteLagData> response = Response.FromValue(ExpressRouteLagData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteLagsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ExpressRouteLagPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _expressRouteLagsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ExpressRouteLagPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExpressRouteLagData> response = Response.FromValue(ExpressRouteLagData.FromResponse(result), result);
                 if (response.Value == null)
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteLagsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ExpressRouteLagPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _expressRouteLagsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ExpressRouteLagPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExpressRouteLagData> response = Response.FromValue(ExpressRouteLagData.FromResponse(result), result);
                 if (response.Value == null)
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteLagsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _expressRouteLagsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation operation = new NetworkArmOperation(_expressRouteLagsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteLagsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _expressRouteLagsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation operation = new NetworkArmOperation(_expressRouteLagsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteLagsRestClient.CreateGenerateLoaRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, GenerateExpressRouteLagsLoaContent.ToRequestContent(content), context);
+                using HttpMessage message = _expressRouteLagsRestClient.CreateGenerateLoaRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, GenerateExpressRouteLagsLoaContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GenerateExpressRouteLagsLoaResult> response = Response.FromValue(GenerateExpressRouteLagsLoaResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteLagsRestClient.CreateGenerateLoaRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, GenerateExpressRouteLagsLoaContent.ToRequestContent(content), context);
+                using HttpMessage message = _expressRouteLagsRestClient.CreateGenerateLoaRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, GenerateExpressRouteLagsLoaContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GenerateExpressRouteLagsLoaResult> response = Response.FromValue(GenerateExpressRouteLagsLoaResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteLagsRestClient.CreateLinksGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkName, context);
+                using HttpMessage message = _expressRouteLagsRestClient.CreateLinksGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExpressRouteLagLink> response = Response.FromValue(ExpressRouteLagLink.FromResponse(result), result);
                 if (response.Value == null)
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteLagsRestClient.CreateLinksGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkName, context);
+                using HttpMessage message = _expressRouteLagsRestClient.CreateLinksGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExpressRouteLagLink> response = Response.FromValue(ExpressRouteLagLink.FromResponse(result), result);
                 if (response.Value == null)
@@ -716,7 +716,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteLagsRestClient.CreateMembersGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkName, memberName, context);
+                using HttpMessage message = _expressRouteLagsRestClient.CreateMembersGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkName, memberName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExpressRouteLagMember> response = Response.FromValue(ExpressRouteLagMember.FromResponse(result), result);
                 if (response.Value == null)
@@ -771,7 +771,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteLagsRestClient.CreateMembersGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkName, memberName, context);
+                using HttpMessage message = _expressRouteLagsRestClient.CreateMembersGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkName, memberName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExpressRouteLagMember> response = Response.FromValue(ExpressRouteLagMember.FromResponse(result), result);
                 if (response.Value == null)
@@ -898,7 +898,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _expressRouteLagsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _expressRouteLagsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ExpressRouteLagData> response = Response.FromValue(ExpressRouteLagData.FromResponse(result), result);
                     return Response.FromValue(new ExpressRouteLagResource(Client, response.Value), response.GetRawResponse());
@@ -946,7 +946,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _expressRouteLagsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _expressRouteLagsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ExpressRouteLagData> response = Response.FromValue(ExpressRouteLagData.FromResponse(result), result);
                     return Response.FromValue(new ExpressRouteLagResource(Client, response.Value), response.GetRawResponse());
@@ -992,7 +992,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _expressRouteLagsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _expressRouteLagsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ExpressRouteLagData> response = Response.FromValue(ExpressRouteLagData.FromResponse(result), result);
                     return Response.FromValue(new ExpressRouteLagResource(Client, response.Value), response.GetRawResponse());
@@ -1034,7 +1034,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _expressRouteLagsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _expressRouteLagsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ExpressRouteLagData> response = Response.FromValue(ExpressRouteLagData.FromResponse(result), result);
                     return Response.FromValue(new ExpressRouteLagResource(Client, response.Value), response.GetRawResponse());
@@ -1076,7 +1076,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _expressRouteLagsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _expressRouteLagsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ExpressRouteLagData> response = Response.FromValue(ExpressRouteLagData.FromResponse(result), result);
                     return Response.FromValue(new ExpressRouteLagResource(Client, response.Value), response.GetRawResponse());
@@ -1122,7 +1122,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _expressRouteLagsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _expressRouteLagsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ExpressRouteLagData> response = Response.FromValue(ExpressRouteLagData.FromResponse(result), result);
                     return Response.FromValue(new ExpressRouteLagResource(Client, response.Value), response.GetRawResponse());

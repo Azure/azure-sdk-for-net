@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publicCloudConnectorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, publicCloudConnector, PublicCloudConnectorData.ToRequestContent(data), context);
+                using HttpMessage message = _publicCloudConnectorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, publicCloudConnector, PublicCloudConnectorData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridConnectivityArmOperation<PublicCloudConnectorResource> operation = new HybridConnectivityArmOperation<PublicCloudConnectorResource>(
                     new PublicCloudConnectorResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publicCloudConnectorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, publicCloudConnector, PublicCloudConnectorData.ToRequestContent(data), context);
+                using HttpMessage message = _publicCloudConnectorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, publicCloudConnector, PublicCloudConnectorData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridConnectivityArmOperation<PublicCloudConnectorResource> operation = new HybridConnectivityArmOperation<PublicCloudConnectorResource>(
                     new PublicCloudConnectorResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publicCloudConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, publicCloudConnector, context);
+                using HttpMessage message = _publicCloudConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, publicCloudConnector, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PublicCloudConnectorData> response = Response.FromValue(PublicCloudConnectorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publicCloudConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, publicCloudConnector, context);
+                using HttpMessage message = _publicCloudConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, publicCloudConnector, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PublicCloudConnectorData> response = Response.FromValue(PublicCloudConnectorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publicCloudConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, publicCloudConnector, context);
+                using HttpMessage message = _publicCloudConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, publicCloudConnector, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PublicCloudConnectorData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publicCloudConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, publicCloudConnector, context);
+                using HttpMessage message = _publicCloudConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, publicCloudConnector, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PublicCloudConnectorData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publicCloudConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, publicCloudConnector, context);
+                using HttpMessage message = _publicCloudConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, publicCloudConnector, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PublicCloudConnectorData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publicCloudConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, publicCloudConnector, context);
+                using HttpMessage message = _publicCloudConnectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, publicCloudConnector, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PublicCloudConnectorData> response = default;

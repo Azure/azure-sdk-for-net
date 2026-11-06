@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _partnerDestinationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, partnerDestinationName, PartnerDestinationData.ToRequestContent(data), context);
+                using HttpMessage message = _partnerDestinationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, partnerDestinationName, PartnerDestinationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 EventGridArmOperation<PartnerDestinationResource> operation = new EventGridArmOperation<PartnerDestinationResource>(
                     new PartnerDestinationResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _partnerDestinationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, partnerDestinationName, PartnerDestinationData.ToRequestContent(data), context);
+                using HttpMessage message = _partnerDestinationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, partnerDestinationName, PartnerDestinationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 EventGridArmOperation<PartnerDestinationResource> operation = new EventGridArmOperation<PartnerDestinationResource>(
                     new PartnerDestinationResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _partnerDestinationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, partnerDestinationName, context);
+                using HttpMessage message = _partnerDestinationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, partnerDestinationName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PartnerDestinationData> response = Response.FromValue(PartnerDestinationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _partnerDestinationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, partnerDestinationName, context);
+                using HttpMessage message = _partnerDestinationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, partnerDestinationName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PartnerDestinationData> response = Response.FromValue(PartnerDestinationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _partnerDestinationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, partnerDestinationName, context);
+                using HttpMessage message = _partnerDestinationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, partnerDestinationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PartnerDestinationData> response = default;
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _partnerDestinationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, partnerDestinationName, context);
+                using HttpMessage message = _partnerDestinationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, partnerDestinationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PartnerDestinationData> response = default;
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _partnerDestinationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, partnerDestinationName, context);
+                using HttpMessage message = _partnerDestinationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, partnerDestinationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PartnerDestinationData> response = default;
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _partnerDestinationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, partnerDestinationName, context);
+                using HttpMessage message = _partnerDestinationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, partnerDestinationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PartnerDestinationData> response = default;

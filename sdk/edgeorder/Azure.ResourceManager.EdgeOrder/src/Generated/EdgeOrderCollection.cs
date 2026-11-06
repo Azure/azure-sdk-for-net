@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _orderResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, orderName, context);
+                using HttpMessage message = _orderResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, orderName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EdgeOrderData> response = Response.FromValue(EdgeOrderData.FromResponse(result), result);
                 if (response.Value == null)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _orderResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, orderName, context);
+                using HttpMessage message = _orderResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, orderName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EdgeOrderData> response = Response.FromValue(EdgeOrderData.FromResponse(result), result);
                 if (response.Value == null)
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _orderResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, orderName, context);
+                using HttpMessage message = _orderResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, orderName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EdgeOrderData> response = default;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _orderResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, orderName, context);
+                using HttpMessage message = _orderResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, orderName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EdgeOrderData> response = default;
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _orderResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, orderName, context);
+                using HttpMessage message = _orderResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, orderName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EdgeOrderData> response = default;
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _orderResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, orderName, context);
+                using HttpMessage message = _orderResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, orderName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EdgeOrderData> response = default;

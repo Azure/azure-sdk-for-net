@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AlertRuleIncidentsRestClient.CreateGetRequest(Id.ResourceGroupName, ruleName, incidentName, Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = AlertRuleIncidentsRestClient.CreateGetRequest(Id.ResourceGroupName, ruleName, incidentName, Guid.Parse(Id.SubscriptionId), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MonitorIncident> response = Response.FromValue(MonitorIncident.FromResponse(result), result);
                 if (response.Value == null)
@@ -646,7 +646,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AlertRuleIncidentsRestClient.CreateGetRequest(Id.ResourceGroupName, ruleName, incidentName, Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = AlertRuleIncidentsRestClient.CreateGetRequest(Id.ResourceGroupName, ruleName, incidentName, Guid.Parse(Id.SubscriptionId), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MonitorIncident> response = Response.FromValue(MonitorIncident.FromResponse(result), result);
                 if (response.Value == null)

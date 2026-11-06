@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PolicyStatesRestClient.CreateTriggerPolicyStateEvaluationRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = PolicyStatesRestClient.CreateTriggerPolicyStateEvaluationRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PolicyInsightsArmOperation operation = new PolicyInsightsArmOperation(PolicyStatesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PolicyStatesRestClient.CreateTriggerPolicyStateEvaluationRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = PolicyStatesRestClient.CreateTriggerPolicyStateEvaluationRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PolicyInsightsArmOperation operation = new PolicyInsightsArmOperation(PolicyStatesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

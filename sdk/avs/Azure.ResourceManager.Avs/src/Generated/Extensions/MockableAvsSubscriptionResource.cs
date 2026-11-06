@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Avs.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LocationsRestClient.CreateCheckAvsTrialAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, AvsSku.ToRequestContent(sku), context);
+                using HttpMessage message = LocationsRestClient.CreateCheckAvsTrialAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, AvsSku.ToRequestContent(sku), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AvsSubscriptionTrialAvailabilityResult> response = Response.FromValue(AvsSubscriptionTrialAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Avs.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LocationsRestClient.CreateCheckAvsTrialAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, AvsSku.ToRequestContent(sku), context);
+                using HttpMessage message = LocationsRestClient.CreateCheckAvsTrialAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, AvsSku.ToRequestContent(sku), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AvsSubscriptionTrialAvailabilityResult> response = Response.FromValue(AvsSubscriptionTrialAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Avs.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LocationsRestClient.CreateCheckAvsQuotaAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, context);
+                using HttpMessage message = LocationsRestClient.CreateCheckAvsQuotaAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AvsSubscriptionQuotaAvailabilityResult> response = Response.FromValue(AvsSubscriptionQuotaAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Avs.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LocationsRestClient.CreateCheckAvsQuotaAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, context);
+                using HttpMessage message = LocationsRestClient.CreateCheckAvsQuotaAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AvsSubscriptionQuotaAvailabilityResult> response = Response.FromValue(AvsSubscriptionQuotaAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metricConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, encodedMetricName, MetricConfigurationData.ToRequestContent(data), context);
+                using HttpMessage message = _metricConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, encodedMetricName, MetricConfigurationData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MetricConfigurationData> response = Response.FromValue(MetricConfigurationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metricConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, encodedMetricName, MetricConfigurationData.ToRequestContent(data), context);
+                using HttpMessage message = _metricConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, encodedMetricName, MetricConfigurationData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MetricConfigurationData> response = Response.FromValue(MetricConfigurationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metricConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, encodedMetricName, context);
+                using HttpMessage message = _metricConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, encodedMetricName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MetricConfigurationData> response = Response.FromValue(MetricConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metricConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, encodedMetricName, context);
+                using HttpMessage message = _metricConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, encodedMetricName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MetricConfigurationData> response = Response.FromValue(MetricConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metricConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, encodedMetricName, context);
+                using HttpMessage message = _metricConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, encodedMetricName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MetricConfigurationData> response = default;
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metricConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, encodedMetricName, context);
+                using HttpMessage message = _metricConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, encodedMetricName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MetricConfigurationData> response = default;
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metricConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, encodedMetricName, context);
+                using HttpMessage message = _metricConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, encodedMetricName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MetricConfigurationData> response = default;
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metricConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, encodedMetricName, context);
+                using HttpMessage message = _metricConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, encodedMetricName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MetricConfigurationData> response = default;

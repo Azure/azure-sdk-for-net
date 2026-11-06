@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, PostgreSqlFlexibleServerConfigurationCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _configurationsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, PostgreSqlFlexibleServerConfigurationCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FlexibleServersArmOperation<PostgreSqlFlexibleServerConfigurationResource> operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerConfigurationResource>(
                     new PostgreSqlFlexibleServerConfigurationResourceOperationSource(Client),
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, PostgreSqlFlexibleServerConfigurationCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _configurationsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, PostgreSqlFlexibleServerConfigurationCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FlexibleServersArmOperation<PostgreSqlFlexibleServerConfigurationResource> operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerConfigurationResource>(
                     new PostgreSqlFlexibleServerConfigurationResourceOperationSource(Client),
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, context);
+                using HttpMessage message = _configurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PostgreSqlFlexibleServerConfigurationData> response = Response.FromValue(PostgreSqlFlexibleServerConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, context);
+                using HttpMessage message = _configurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PostgreSqlFlexibleServerConfigurationData> response = Response.FromValue(PostgreSqlFlexibleServerConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, context);
+                using HttpMessage message = _configurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PostgreSqlFlexibleServerConfigurationData> response = default;
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, context);
+                using HttpMessage message = _configurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PostgreSqlFlexibleServerConfigurationData> response = default;
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, context);
+                using HttpMessage message = _configurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PostgreSqlFlexibleServerConfigurationData> response = default;
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, context);
+                using HttpMessage message = _configurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PostgreSqlFlexibleServerConfigurationData> response = default;

@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _informationProtectionPoliciesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _informationProtectionPoliciesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<InformationProtectionPolicyData> response = Response.FromValue(InformationProtectionPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _informationProtectionPoliciesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _informationProtectionPoliciesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<InformationProtectionPolicyData> response = Response.FromValue(InformationProtectionPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _informationProtectionPoliciesRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, InformationProtectionPolicyData.ToRequestContent(data), context);
+                using HttpMessage message = _informationProtectionPoliciesRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, InformationProtectionPolicyData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<InformationProtectionPolicyData> response = Response.FromValue(InformationProtectionPolicyData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _informationProtectionPoliciesRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, InformationProtectionPolicyData.ToRequestContent(data), context);
+                using HttpMessage message = _informationProtectionPoliciesRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, InformationProtectionPolicyData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<InformationProtectionPolicyData> response = Response.FromValue(InformationProtectionPolicyData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

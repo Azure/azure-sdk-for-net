@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Search
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nspConfigName, context);
+                using HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nspConfigName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SearchServiceNetworkSecurityPerimeterConfigurationData> response = Response.FromValue(SearchServiceNetworkSecurityPerimeterConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Search
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nspConfigName, context);
+                using HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nspConfigName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SearchServiceNetworkSecurityPerimeterConfigurationData> response = Response.FromValue(SearchServiceNetworkSecurityPerimeterConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Search
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nspConfigName, context);
+                using HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nspConfigName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SearchServiceNetworkSecurityPerimeterConfigurationData> response = default;
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Search
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nspConfigName, context);
+                using HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nspConfigName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SearchServiceNetworkSecurityPerimeterConfigurationData> response = default;
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Search
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nspConfigName, context);
+                using HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nspConfigName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SearchServiceNetworkSecurityPerimeterConfigurationData> response = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Search
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nspConfigName, context);
+                using HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nspConfigName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SearchServiceNetworkSecurityPerimeterConfigurationData> response = default;

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DependencyMap
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mapsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, mapName, DependencyMapData.ToRequestContent(data), context);
+                using HttpMessage message = _mapsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, mapName, DependencyMapData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DependencyMapArmOperation<DependencyMapResource> operation = new DependencyMapArmOperation<DependencyMapResource>(
                     new DependencyMapResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DependencyMap
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mapsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, mapName, DependencyMapData.ToRequestContent(data), context);
+                using HttpMessage message = _mapsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, mapName, DependencyMapData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DependencyMapArmOperation<DependencyMapResource> operation = new DependencyMapArmOperation<DependencyMapResource>(
                     new DependencyMapResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DependencyMap
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mapsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, mapName, context);
+                using HttpMessage message = _mapsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, mapName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DependencyMapData> response = Response.FromValue(DependencyMapData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DependencyMap
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mapsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, mapName, context);
+                using HttpMessage message = _mapsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, mapName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DependencyMapData> response = Response.FromValue(DependencyMapData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.DependencyMap
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mapsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, mapName, context);
+                using HttpMessage message = _mapsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, mapName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DependencyMapData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.DependencyMap
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mapsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, mapName, context);
+                using HttpMessage message = _mapsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, mapName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DependencyMapData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.DependencyMap
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mapsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, mapName, context);
+                using HttpMessage message = _mapsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, mapName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DependencyMapData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.DependencyMap
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mapsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, mapName, context);
+                using HttpMessage message = _mapsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, mapName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DependencyMapData> response = default;

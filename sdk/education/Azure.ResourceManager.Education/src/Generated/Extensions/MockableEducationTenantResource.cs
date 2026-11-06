@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Education.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = EducationClientRestClient.CreateRedeemInvitationCodeRequest(EducationRedeemContent.ToRequestContent(content), context);
+                using HttpMessage message = EducationClientRestClient.CreateRedeemInvitationCodeRequest(EducationRedeemContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Education.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = EducationClientRestClient.CreateRedeemInvitationCodeRequest(EducationRedeemContent.ToRequestContent(content), context);
+                using HttpMessage message = EducationClientRestClient.CreateRedeemInvitationCodeRequest(EducationRedeemContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Education.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OperationsRestClient.CreateGetAllRequest(context);
+                using HttpMessage message = OperationsRestClient.CreateGetAllRequest(context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OperationListResult> response = Response.FromValue(OperationListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Education.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OperationsRestClient.CreateGetAllRequest(context);
+                using HttpMessage message = OperationsRestClient.CreateGetAllRequest(context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OperationListResult> response = Response.FromValue(OperationListResult.FromResponse(result), result);
                 if (response.Value == null)

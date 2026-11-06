@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hostPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _hostPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HostPoolData> response = Response.FromValue(HostPoolData.FromResponse(result), result);
                 if (response.Value == null)
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hostPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _hostPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HostPoolData> response = Response.FromValue(HostPoolData.FromResponse(result), result);
                 if (response.Value == null)
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hostPoolsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HostPoolPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _hostPoolsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HostPoolPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HostPoolData> response = Response.FromValue(HostPoolData.FromResponse(result), result);
                 if (response.Value == null)
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hostPoolsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HostPoolPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _hostPoolsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HostPoolPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HostPoolData> response = Response.FromValue(HostPoolData.FromResponse(result), result);
                 if (response.Value == null)
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hostPoolsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, force, context);
+                using HttpMessage message = _hostPoolsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, force, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hostPoolsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, force, context);
+                using HttpMessage message = _hostPoolsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, force, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hostPoolsRestClient.CreateRetrieveRegistrationTokenRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _hostPoolsRestClient.CreateRetrieveRegistrationTokenRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HostPoolRegistrationInfo> response = Response.FromValue(HostPoolRegistrationInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hostPoolsRestClient.CreateRetrieveRegistrationTokenRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _hostPoolsRestClient.CreateRetrieveRegistrationTokenRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HostPoolRegistrationInfo> response = Response.FromValue(HostPoolRegistrationInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -1049,7 +1049,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _hostPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _hostPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<HostPoolData> response = Response.FromValue(HostPoolData.FromResponse(result), result);
                     return Response.FromValue(new HostPoolResource(Client, response.Value), response.GetRawResponse());
@@ -1097,7 +1097,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _hostPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _hostPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<HostPoolData> response = Response.FromValue(HostPoolData.FromResponse(result), result);
                     return Response.FromValue(new HostPoolResource(Client, response.Value), response.GetRawResponse());
@@ -1143,7 +1143,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _hostPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _hostPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<HostPoolData> response = Response.FromValue(HostPoolData.FromResponse(result), result);
                     return Response.FromValue(new HostPoolResource(Client, response.Value), response.GetRawResponse());
@@ -1185,7 +1185,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _hostPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _hostPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<HostPoolData> response = Response.FromValue(HostPoolData.FromResponse(result), result);
                     return Response.FromValue(new HostPoolResource(Client, response.Value), response.GetRawResponse());
@@ -1227,7 +1227,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _hostPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _hostPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<HostPoolData> response = Response.FromValue(HostPoolData.FromResponse(result), result);
                     return Response.FromValue(new HostPoolResource(Client, response.Value), response.GetRawResponse());
@@ -1273,7 +1273,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _hostPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _hostPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<HostPoolData> response = Response.FromValue(HostPoolData.FromResponse(result), result);
                     return Response.FromValue(new HostPoolResource(Client, response.Value), response.GetRawResponse());

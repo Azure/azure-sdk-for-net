@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _databasesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<KustoDatabaseData> response = Response.FromValue(KustoDatabaseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _databasesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<KustoDatabaseData> response = Response.FromValue(KustoDatabaseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, KustoDatabaseData.ToRequestContent(data), callerRole?.ToString(), context);
+                using HttpMessage message = _databasesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, KustoDatabaseData.ToRequestContent(data), callerRole?.ToString(), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 KustoArmOperation<KustoDatabaseResource> operation = new KustoArmOperation<KustoDatabaseResource>(
                     new KustoDatabaseResourceOperationSource(Client),
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, KustoDatabaseData.ToRequestContent(data), callerRole?.ToString(), context);
+                using HttpMessage message = _databasesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, KustoDatabaseData.ToRequestContent(data), callerRole?.ToString(), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 KustoArmOperation<KustoDatabaseResource> operation = new KustoArmOperation<KustoDatabaseResource>(
                     new KustoDatabaseResourceOperationSource(Client),
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _databasesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 KustoArmOperation operation = new KustoArmOperation(_databasesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _databasesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 KustoArmOperation operation = new KustoArmOperation(_databasesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasePrincipalAssignmentsRestClient.CreateCheckKustoDatabasePrincipalAssignmentNameAvailabilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, KustoDatabasePrincipalAssignmentNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = _databasePrincipalAssignmentsRestClient.CreateCheckKustoDatabasePrincipalAssignmentNameAvailabilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, KustoDatabasePrincipalAssignmentNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<KustoNameAvailabilityResult> response = Response.FromValue(KustoNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasePrincipalAssignmentsRestClient.CreateCheckKustoDatabasePrincipalAssignmentNameAvailabilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, KustoDatabasePrincipalAssignmentNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = _databasePrincipalAssignmentsRestClient.CreateCheckKustoDatabasePrincipalAssignmentNameAvailabilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, KustoDatabasePrincipalAssignmentNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<KustoNameAvailabilityResult> response = Response.FromValue(KustoNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataConnectionsRestClient.CreateCheckKustoDataConnectionNameAvailabilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, KustoDataConnectionNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = _dataConnectionsRestClient.CreateCheckKustoDataConnectionNameAvailabilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, KustoDataConnectionNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<KustoNameAvailabilityResult> response = Response.FromValue(KustoNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -703,7 +703,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataConnectionsRestClient.CreateCheckKustoDataConnectionNameAvailabilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, KustoDataConnectionNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = _dataConnectionsRestClient.CreateCheckKustoDataConnectionNameAvailabilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, KustoDataConnectionNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<KustoNameAvailabilityResult> response = Response.FromValue(KustoNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -756,7 +756,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataConnectionsRestClient.CreateValidateDataConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataConnectionValidationContent.ToRequestContent(content), context);
+                using HttpMessage message = _dataConnectionsRestClient.CreateValidateDataConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataConnectionValidationContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 KustoArmOperation<DataConnectionValidationResults> operation = new KustoArmOperation<DataConnectionValidationResults>(
                     new DataConnectionValidationResultsOperationSource(),
@@ -815,7 +815,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataConnectionsRestClient.CreateValidateDataConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataConnectionValidationContent.ToRequestContent(content), context);
+                using HttpMessage message = _dataConnectionsRestClient.CreateValidateDataConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataConnectionValidationContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 KustoArmOperation<DataConnectionValidationResults> operation = new KustoArmOperation<DataConnectionValidationResults>(
                     new DataConnectionValidationResultsOperationSource(),
@@ -873,7 +873,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseRestClient.CreateInviteFollowerDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DatabaseInviteFollowerContent.ToRequestContent(content), context);
+                using HttpMessage message = _databaseRestClient.CreateInviteFollowerDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DatabaseInviteFollowerContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DatabaseInviteFollowerResult> response = Response.FromValue(DatabaseInviteFollowerResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -925,7 +925,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseRestClient.CreateInviteFollowerDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DatabaseInviteFollowerContent.ToRequestContent(content), context);
+                using HttpMessage message = _databaseRestClient.CreateInviteFollowerDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DatabaseInviteFollowerContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DatabaseInviteFollowerResult> response = Response.FromValue(DatabaseInviteFollowerResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1143,7 +1143,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scriptsRestClient.CreateCheckKustoScriptNameAvailabilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, KustoScriptNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = _scriptsRestClient.CreateCheckKustoScriptNameAvailabilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, KustoScriptNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<KustoNameAvailabilityResult> response = Response.FromValue(KustoNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1195,7 +1195,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scriptsRestClient.CreateCheckKustoScriptNameAvailabilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, KustoScriptNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = _scriptsRestClient.CreateCheckKustoScriptNameAvailabilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, KustoScriptNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<KustoNameAvailabilityResult> response = Response.FromValue(KustoNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

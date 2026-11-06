@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleEligibilityScheduleInstancesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _roleEligibilityScheduleInstancesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RoleEligibilityScheduleInstanceData> response = Response.FromValue(RoleEligibilityScheduleInstanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleEligibilityScheduleInstancesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _roleEligibilityScheduleInstancesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RoleEligibilityScheduleInstanceData> response = Response.FromValue(RoleEligibilityScheduleInstanceData.FromResponse(result), result);
                 if (response.Value == null)

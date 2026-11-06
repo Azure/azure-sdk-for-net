@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SiteNetworkServicesRestClient.CreateCancelOperationRequest(Id.SubscriptionId, CancelInformation.ToRequestContent(cancelInformation), context);
+                using HttpMessage message = SiteNetworkServicesRestClient.CreateCancelOperationRequest(Id.SubscriptionId, CancelInformation.ToRequestContent(cancelInformation), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridNetworkArmOperation operation = new HybridNetworkArmOperation(SiteNetworkServicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SiteNetworkServicesRestClient.CreateCancelOperationRequest(Id.SubscriptionId, CancelInformation.ToRequestContent(cancelInformation), context);
+                using HttpMessage message = SiteNetworkServicesRestClient.CreateCancelOperationRequest(Id.SubscriptionId, CancelInformation.ToRequestContent(cancelInformation), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridNetworkArmOperation operation = new HybridNetworkArmOperation(SiteNetworkServicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

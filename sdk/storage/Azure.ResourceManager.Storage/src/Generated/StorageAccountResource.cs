@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageAccountsRestClient.CreateGetPropertiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expand?.ToSerialString(), context);
+                using HttpMessage message = _storageAccountsRestClient.CreateGetPropertiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expand?.ToSerialString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<StorageAccountData> response = Response.FromValue(StorageAccountData.FromResponse(result), result);
                 if (response.Value == null)
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageAccountsRestClient.CreateGetPropertiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expand?.ToSerialString(), context);
+                using HttpMessage message = _storageAccountsRestClient.CreateGetPropertiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expand?.ToSerialString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<StorageAccountData> response = Response.FromValue(StorageAccountData.FromResponse(result), result);
                 if (response.Value == null)
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageAccountsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StorageAccountPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _storageAccountsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StorageAccountPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<StorageAccountData> response = Response.FromValue(StorageAccountData.FromResponse(result), result);
                 if (response.Value == null)
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageAccountsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StorageAccountPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _storageAccountsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StorageAccountPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<StorageAccountData> response = Response.FromValue(StorageAccountData.FromResponse(result), result);
                 if (response.Value == null)
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageAccountsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _storageAccountsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageAccountsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _storageAccountsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _blobAccessPointConnectionTestsRestClient.CreateTestBlobAccessPointProposedConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BlobAccessPointProposedConnectionTestContent.ToRequestContent(content), context);
+                using HttpMessage message = _blobAccessPointConnectionTestsRestClient.CreateTestBlobAccessPointProposedConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BlobAccessPointProposedConnectionTestContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageArmOperation<BlobAccessPointConnectionTestResult> operation = new StorageArmOperation<BlobAccessPointConnectionTestResult>(
                     new BlobAccessPointConnectionTestResultOperationSource(),
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _blobAccessPointConnectionTestsRestClient.CreateTestBlobAccessPointProposedConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BlobAccessPointProposedConnectionTestContent.ToRequestContent(content), context);
+                using HttpMessage message = _blobAccessPointConnectionTestsRestClient.CreateTestBlobAccessPointProposedConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BlobAccessPointProposedConnectionTestContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageArmOperation<BlobAccessPointConnectionTestResult> operation = new StorageArmOperation<BlobAccessPointConnectionTestResult>(
                     new BlobAccessPointConnectionTestResultOperationSource(),
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageAccountsRestClient.CreateAbortHierarchicalNamespaceMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _storageAccountsRestClient.CreateAbortHierarchicalNamespaceMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageArmOperation operation = new StorageArmOperation(_storageAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageAccountsRestClient.CreateAbortHierarchicalNamespaceMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _storageAccountsRestClient.CreateAbortHierarchicalNamespaceMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageArmOperation operation = new StorageArmOperation(_storageAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -665,7 +665,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageAccountsRestClient.CreateCustomerInitiatedMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StorageAccountMigrationData.ToRequestContent(data), context);
+                using HttpMessage message = _storageAccountsRestClient.CreateCustomerInitiatedMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StorageAccountMigrationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageArmOperation operation = new StorageArmOperation(_storageAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -718,7 +718,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageAccountsRestClient.CreateCustomerInitiatedMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StorageAccountMigrationData.ToRequestContent(data), context);
+                using HttpMessage message = _storageAccountsRestClient.CreateCustomerInitiatedMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StorageAccountMigrationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageArmOperation operation = new StorageArmOperation(_storageAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -768,7 +768,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageAccountsRestClient.CreateFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, failoverType?.ToString(), context);
+                using HttpMessage message = _storageAccountsRestClient.CreateFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, failoverType?.ToString(), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageArmOperation operation = new StorageArmOperation(_storageAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -818,7 +818,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageAccountsRestClient.CreateFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, failoverType?.ToString(), context);
+                using HttpMessage message = _storageAccountsRestClient.CreateFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, failoverType?.ToString(), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageArmOperation operation = new StorageArmOperation(_storageAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -872,7 +872,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageAccountsRestClient.CreateEnableHierarchicalNamespaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestType, context);
+                using HttpMessage message = _storageAccountsRestClient.CreateEnableHierarchicalNamespaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestType, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageArmOperation operation = new StorageArmOperation(_storageAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -926,7 +926,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageAccountsRestClient.CreateEnableHierarchicalNamespaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestType, context);
+                using HttpMessage message = _storageAccountsRestClient.CreateEnableHierarchicalNamespaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestType, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageArmOperation operation = new StorageArmOperation(_storageAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -978,7 +978,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageAccountsRestClient.CreateGetAccountSasRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccountSasContent.ToRequestContent(content), context);
+                using HttpMessage message = _storageAccountsRestClient.CreateGetAccountSasRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccountSasContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GetAccountSasResult> response = Response.FromValue(GetAccountSasResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1030,7 +1030,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageAccountsRestClient.CreateGetAccountSasRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccountSasContent.ToRequestContent(content), context);
+                using HttpMessage message = _storageAccountsRestClient.CreateGetAccountSasRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccountSasContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GetAccountSasResult> response = Response.FromValue(GetAccountSasResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1078,7 +1078,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkResourcesRestClient.CreateGetByStorageAccountRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _privateLinkResourcesRestClient.CreateGetByStorageAccountRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<StoragePrivateLinkResourceListResult> response = Response.FromValue(StoragePrivateLinkResourceListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1126,7 +1126,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkResourcesRestClient.CreateGetByStorageAccountRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _privateLinkResourcesRestClient.CreateGetByStorageAccountRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<StoragePrivateLinkResourceListResult> response = Response.FromValue(StoragePrivateLinkResourceListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1175,7 +1175,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageAccountsRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expand?.ToString(), context);
+                using HttpMessage message = _storageAccountsRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expand?.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<StorageAccountListKeysResult> response = Response.FromValue(StorageAccountListKeysResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1224,7 +1224,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageAccountsRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expand?.ToString(), context);
+                using HttpMessage message = _storageAccountsRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expand?.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<StorageAccountListKeysResult> response = Response.FromValue(StorageAccountListKeysResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1276,7 +1276,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageAccountsRestClient.CreateGetServiceSasRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ServiceSasContent.ToRequestContent(content), context);
+                using HttpMessage message = _storageAccountsRestClient.CreateGetServiceSasRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ServiceSasContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GetServiceSasResult> response = Response.FromValue(GetServiceSasResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1328,7 +1328,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageAccountsRestClient.CreateGetServiceSasRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ServiceSasContent.ToRequestContent(content), context);
+                using HttpMessage message = _storageAccountsRestClient.CreateGetServiceSasRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ServiceSasContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GetServiceSasResult> response = Response.FromValue(GetServiceSasResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1376,7 +1376,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageAccountsRestClient.CreateRevokeUserDelegationKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _storageAccountsRestClient.CreateRevokeUserDelegationKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -1419,7 +1419,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageAccountsRestClient.CreateRevokeUserDelegationKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _storageAccountsRestClient.CreateRevokeUserDelegationKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -1537,7 +1537,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _storageAccountsRestClient.CreateGetPropertiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _storageAccountsRestClient.CreateGetPropertiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<StorageAccountData> response = Response.FromValue(StorageAccountData.FromResponse(result), result);
                     return Response.FromValue(new StorageAccountResource(Client, response.Value), response.GetRawResponse());
@@ -1585,7 +1585,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _storageAccountsRestClient.CreateGetPropertiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _storageAccountsRestClient.CreateGetPropertiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<StorageAccountData> response = Response.FromValue(StorageAccountData.FromResponse(result), result);
                     return Response.FromValue(new StorageAccountResource(Client, response.Value), response.GetRawResponse());
@@ -1631,7 +1631,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _storageAccountsRestClient.CreateGetPropertiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _storageAccountsRestClient.CreateGetPropertiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<StorageAccountData> response = Response.FromValue(StorageAccountData.FromResponse(result), result);
                     return Response.FromValue(new StorageAccountResource(Client, response.Value), response.GetRawResponse());
@@ -1673,7 +1673,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _storageAccountsRestClient.CreateGetPropertiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _storageAccountsRestClient.CreateGetPropertiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<StorageAccountData> response = Response.FromValue(StorageAccountData.FromResponse(result), result);
                     return Response.FromValue(new StorageAccountResource(Client, response.Value), response.GetRawResponse());
@@ -1715,7 +1715,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _storageAccountsRestClient.CreateGetPropertiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _storageAccountsRestClient.CreateGetPropertiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<StorageAccountData> response = Response.FromValue(StorageAccountData.FromResponse(result), result);
                     return Response.FromValue(new StorageAccountResource(Client, response.Value), response.GetRawResponse());
@@ -1761,7 +1761,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _storageAccountsRestClient.CreateGetPropertiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _storageAccountsRestClient.CreateGetPropertiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<StorageAccountData> response = Response.FromValue(StorageAccountData.FromResponse(result), result);
                     return Response.FromValue(new StorageAccountResource(Client, response.Value), response.GetRawResponse());

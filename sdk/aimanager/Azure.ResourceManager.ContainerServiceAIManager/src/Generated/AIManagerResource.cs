@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _aiManagersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _aiManagersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AIManagerData> response = Response.FromValue(AIManagerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _aiManagersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _aiManagersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AIManagerData> response = Response.FromValue(AIManagerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _aiManagersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AIManagerPatch.ToRequestContent(patch), ifMatch, context);
+                using HttpMessage message = _aiManagersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AIManagerPatch.ToRequestContent(patch), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AIManagerData> response = Response.FromValue(AIManagerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _aiManagersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AIManagerPatch.ToRequestContent(patch), ifMatch, context);
+                using HttpMessage message = _aiManagersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AIManagerPatch.ToRequestContent(patch), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AIManagerData> response = Response.FromValue(AIManagerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _aiManagersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ifMatch, context);
+                using HttpMessage message = _aiManagersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceAIManagerArmOperation operation = new ContainerServiceAIManagerArmOperation(_aiManagersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _aiManagersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ifMatch, context);
+                using HttpMessage message = _aiManagersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceAIManagerArmOperation operation = new ContainerServiceAIManagerArmOperation(_aiManagersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _aiManagersRestClient.CreateGetCredentialRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _aiManagersRestClient.CreateGetCredentialRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AIManagerCredentialResults> response = Response.FromValue(AIManagerCredentialResults.FromResponse(result), result);
                 if (response.Value == null)
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _aiManagersRestClient.CreateGetCredentialRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _aiManagersRestClient.CreateGetCredentialRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AIManagerCredentialResults> response = Response.FromValue(AIManagerCredentialResults.FromResponse(result), result);
                 if (response.Value == null)
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _aiManagersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _aiManagersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<AIManagerData> response = Response.FromValue(AIManagerData.FromResponse(result), result);
                     return Response.FromValue(new AIManagerResource(Client, response.Value), response.GetRawResponse());
@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _aiManagersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _aiManagersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<AIManagerData> response = Response.FromValue(AIManagerData.FromResponse(result), result);
                     return Response.FromValue(new AIManagerResource(Client, response.Value), response.GetRawResponse());
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _aiManagersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _aiManagersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<AIManagerData> response = Response.FromValue(AIManagerData.FromResponse(result), result);
                     return Response.FromValue(new AIManagerResource(Client, response.Value), response.GetRawResponse());
@@ -650,7 +650,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _aiManagersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _aiManagersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<AIManagerData> response = Response.FromValue(AIManagerData.FromResponse(result), result);
                     return Response.FromValue(new AIManagerResource(Client, response.Value), response.GetRawResponse());
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _aiManagersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _aiManagersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<AIManagerData> response = Response.FromValue(AIManagerData.FromResponse(result), result);
                     return Response.FromValue(new AIManagerResource(Client, response.Value), response.GetRawResponse());
@@ -738,7 +738,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _aiManagersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _aiManagersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<AIManagerData> response = Response.FromValue(AIManagerData.FromResponse(result), result);
                     return Response.FromValue(new AIManagerResource(Client, response.Value), response.GetRawResponse());

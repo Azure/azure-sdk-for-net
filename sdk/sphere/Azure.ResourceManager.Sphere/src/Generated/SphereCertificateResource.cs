@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _certificatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SphereCertificateData> response = Response.FromValue(SphereCertificateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _certificatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SphereCertificateData> response = Response.FromValue(SphereCertificateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificatesRestClient.CreateRetrieveCertChainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _certificatesRestClient.CreateRetrieveCertChainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SphereCertificateChainResult> response = Response.FromValue(SphereCertificateChainResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificatesRestClient.CreateRetrieveCertChainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _certificatesRestClient.CreateRetrieveCertChainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SphereCertificateChainResult> response = Response.FromValue(SphereCertificateChainResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificatesRestClient.CreateRetrieveProofOfPossessionNonceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ProofOfPossessionNonceContent.ToRequestContent(content), context);
+                using HttpMessage message = _certificatesRestClient.CreateRetrieveProofOfPossessionNonceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ProofOfPossessionNonceContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ProofOfPossessionNonceResponse> response = Response.FromValue(ProofOfPossessionNonceResponse.FromResponse(result), result);
                 if (response.Value == null)
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificatesRestClient.CreateRetrieveProofOfPossessionNonceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ProofOfPossessionNonceContent.ToRequestContent(content), context);
+                using HttpMessage message = _certificatesRestClient.CreateRetrieveProofOfPossessionNonceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ProofOfPossessionNonceContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ProofOfPossessionNonceResponse> response = Response.FromValue(ProofOfPossessionNonceResponse.FromResponse(result), result);
                 if (response.Value == null)

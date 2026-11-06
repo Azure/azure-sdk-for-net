@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ProfileData> response = Response.FromValue(ProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ProfileData> response = Response.FromValue(ProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _profilesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ProfilePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _profilesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ProfilePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<ProfileResource> operation = new CdnArmOperation<ProfileResource>(
                     new ProfileResourceOperationSource(Client),
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _profilesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ProfilePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _profilesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ProfilePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<ProfileResource> operation = new CdnArmOperation<ProfileResource>(
                     new ProfileResourceOperationSource(Client),
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _profilesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _profilesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation operation = new CdnArmOperation(_profilesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _profilesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _profilesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation operation = new CdnArmOperation(_profilesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _profilesRestClient.CreateCheckCdnMigrationCompatibilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _profilesRestClient.CreateCheckCdnMigrationCompatibilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<CanMigrateResult> operation = new CdnArmOperation<CanMigrateResult>(
                     new CanMigrateResultOperationSource(),
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _profilesRestClient.CreateCheckCdnMigrationCompatibilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _profilesRestClient.CreateCheckCdnMigrationCompatibilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<CanMigrateResult> operation = new CdnArmOperation<CanMigrateResult>(
                     new CanMigrateResultOperationSource(),
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _profilesRestClient.CreateMigrateCdnToAfdRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CdnMigrationToAfdContent.ToRequestContent(content), context);
+                using HttpMessage message = _profilesRestClient.CreateMigrateCdnToAfdRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CdnMigrationToAfdContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<MigrateResult> operation = new CdnArmOperation<MigrateResult>(
                     new MigrateResultOperationSource(),
@@ -626,7 +626,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _profilesRestClient.CreateMigrateCdnToAfdRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CdnMigrationToAfdContent.ToRequestContent(content), context);
+                using HttpMessage message = _profilesRestClient.CreateMigrateCdnToAfdRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CdnMigrationToAfdContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<MigrateResult> operation = new CdnArmOperation<MigrateResult>(
                     new MigrateResultOperationSource(),
@@ -684,7 +684,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _afdProfilesRestClient.CreateCheckEndpointNameAvailabilityFrontDoorProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EndpointNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = _afdProfilesRestClient.CreateCheckEndpointNameAvailabilityFrontDoorProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EndpointNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EndpointNameAvailabilityResult> response = Response.FromValue(EndpointNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -736,7 +736,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _afdProfilesRestClient.CreateCheckEndpointNameAvailabilityFrontDoorProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EndpointNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = _afdProfilesRestClient.CreateCheckEndpointNameAvailabilityFrontDoorProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EndpointNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EndpointNameAvailabilityResult> response = Response.FromValue(EndpointNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -788,7 +788,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _afdProfilesRestClient.CreateCheckFrontDoorProfileHostNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HostNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = _afdProfilesRestClient.CreateCheckFrontDoorProfileHostNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HostNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CdnNameAvailabilityResult> response = Response.FromValue(CdnNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -840,7 +840,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _afdProfilesRestClient.CreateCheckFrontDoorProfileHostNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HostNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = _afdProfilesRestClient.CreateCheckFrontDoorProfileHostNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HostNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CdnNameAvailabilityResult> response = Response.FromValue(CdnNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -888,7 +888,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _profilesRestClient.CreateGenerateSsoUriRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _profilesRestClient.CreateGenerateSsoUriRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SsoUri> response = Response.FromValue(SsoUri.FromResponse(result), result);
                 if (response.Value == null)
@@ -936,7 +936,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _profilesRestClient.CreateGenerateSsoUriRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _profilesRestClient.CreateGenerateSsoUriRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SsoUri> response = Response.FromValue(SsoUri.FromResponse(result), result);
                 if (response.Value == null)
@@ -984,7 +984,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _logAnalyticsRestClient.CreateGetLogAnalyticsLocationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _logAnalyticsRestClient.CreateGetLogAnalyticsLocationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContinentsResponse> response = Response.FromValue(ContinentsResponse.FromResponse(result), result);
                 if (response.Value == null)
@@ -1032,7 +1032,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _logAnalyticsRestClient.CreateGetLogAnalyticsLocationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _logAnalyticsRestClient.CreateGetLogAnalyticsLocationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContinentsResponse> response = Response.FromValue(ContinentsResponse.FromResponse(result), result);
                 if (response.Value == null)
@@ -1094,7 +1094,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _logAnalyticsRestClient.CreateGetLogAnalyticsMetricsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, granularity.ToString(), customDomains, protocols, groupBy, continents, countryOrRegions, context);
+                using HttpMessage message = _logAnalyticsRestClient.CreateGetLogAnalyticsMetricsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, granularity.ToString(), customDomains, protocols, groupBy, continents, countryOrRegions, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MetricsResponse> response = Response.FromValue(MetricsResponse.FromResponse(result), result);
                 if (response.Value == null)
@@ -1156,7 +1156,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _logAnalyticsRestClient.CreateGetLogAnalyticsMetricsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, granularity.ToString(), customDomains, protocols, groupBy, continents, countryOrRegions, context);
+                using HttpMessage message = _logAnalyticsRestClient.CreateGetLogAnalyticsMetricsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, granularity.ToString(), customDomains, protocols, groupBy, continents, countryOrRegions, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MetricsResponse> response = Response.FromValue(MetricsResponse.FromResponse(result), result);
                 if (response.Value == null)
@@ -1214,7 +1214,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _logAnalyticsRestClient.CreateGetLogAnalyticsRankingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, rankings, metrics, maxRanking, dateTimeBegin, dateTimeEnd, customDomains, context);
+                using HttpMessage message = _logAnalyticsRestClient.CreateGetLogAnalyticsRankingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, rankings, metrics, maxRanking, dateTimeBegin, dateTimeEnd, customDomains, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RankingsResponse> response = Response.FromValue(RankingsResponse.FromResponse(result), result);
                 if (response.Value == null)
@@ -1272,7 +1272,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _logAnalyticsRestClient.CreateGetLogAnalyticsRankingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, rankings, metrics, maxRanking, dateTimeBegin, dateTimeEnd, customDomains, context);
+                using HttpMessage message = _logAnalyticsRestClient.CreateGetLogAnalyticsRankingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, rankings, metrics, maxRanking, dateTimeBegin, dateTimeEnd, customDomains, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RankingsResponse> response = Response.FromValue(RankingsResponse.FromResponse(result), result);
                 if (response.Value == null)
@@ -1320,7 +1320,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _logAnalyticsRestClient.CreateGetLogAnalyticsResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _logAnalyticsRestClient.CreateGetLogAnalyticsResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourcesResponse> response = Response.FromValue(ResourcesResponse.FromResponse(result), result);
                 if (response.Value == null)
@@ -1368,7 +1368,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _logAnalyticsRestClient.CreateGetLogAnalyticsResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _logAnalyticsRestClient.CreateGetLogAnalyticsResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourcesResponse> response = Response.FromValue(ResourcesResponse.FromResponse(result), result);
                 if (response.Value == null)
@@ -1426,7 +1426,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _logAnalyticsRestClient.CreateGetWafLogAnalyticsMetricsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, granularity.ToString(), actions, groupBy, ruleTypes, context);
+                using HttpMessage message = _logAnalyticsRestClient.CreateGetWafLogAnalyticsMetricsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, granularity.ToString(), actions, groupBy, ruleTypes, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WafMetricsResponse> response = Response.FromValue(WafMetricsResponse.FromResponse(result), result);
                 if (response.Value == null)
@@ -1484,7 +1484,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _logAnalyticsRestClient.CreateGetWafLogAnalyticsMetricsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, granularity.ToString(), actions, groupBy, ruleTypes, context);
+                using HttpMessage message = _logAnalyticsRestClient.CreateGetWafLogAnalyticsMetricsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, granularity.ToString(), actions, groupBy, ruleTypes, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WafMetricsResponse> response = Response.FromValue(WafMetricsResponse.FromResponse(result), result);
                 if (response.Value == null)
@@ -1543,7 +1543,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _logAnalyticsRestClient.CreateGetWafLogAnalyticsRankingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, maxRanking, rankings, actions, ruleTypes, context);
+                using HttpMessage message = _logAnalyticsRestClient.CreateGetWafLogAnalyticsRankingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, maxRanking, rankings, actions, ruleTypes, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WafRankingsResponse> response = Response.FromValue(WafRankingsResponse.FromResponse(result), result);
                 if (response.Value == null)
@@ -1602,7 +1602,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _logAnalyticsRestClient.CreateGetWafLogAnalyticsRankingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, maxRanking, rankings, actions, ruleTypes, context);
+                using HttpMessage message = _logAnalyticsRestClient.CreateGetWafLogAnalyticsRankingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, maxRanking, rankings, actions, ruleTypes, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WafRankingsResponse> response = Response.FromValue(WafRankingsResponse.FromResponse(result), result);
                 if (response.Value == null)
@@ -1726,7 +1726,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _profilesRestClient.CreateGetSupportedOptimizationTypesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _profilesRestClient.CreateGetSupportedOptimizationTypesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SupportedOptimizationTypesListResult> response = Response.FromValue(SupportedOptimizationTypesListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1774,7 +1774,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _profilesRestClient.CreateGetSupportedOptimizationTypesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _profilesRestClient.CreateGetSupportedOptimizationTypesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SupportedOptimizationTypesListResult> response = Response.FromValue(SupportedOptimizationTypesListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1823,7 +1823,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _profilesRestClient.CreateAbortMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _profilesRestClient.CreateAbortMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation operation = new CdnArmOperation(_profilesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1872,7 +1872,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _profilesRestClient.CreateAbortMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _profilesRestClient.CreateAbortMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation operation = new CdnArmOperation(_profilesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1921,7 +1921,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _profilesRestClient.CreateMigrationCommitRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _profilesRestClient.CreateMigrationCommitRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation operation = new CdnArmOperation(_profilesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -1970,7 +1970,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _profilesRestClient.CreateMigrationCommitRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _profilesRestClient.CreateMigrationCommitRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation operation = new CdnArmOperation(_profilesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -2099,7 +2099,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _afdProfilesRestClient.CreateUpgradeFrontDoorProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ProfileUpgradeContent.ToRequestContent(content), context);
+                using HttpMessage message = _afdProfilesRestClient.CreateUpgradeFrontDoorProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ProfileUpgradeContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<ProfileResource> operation = new CdnArmOperation<ProfileResource>(
                     new ProfileResourceOperationSource(Client),
@@ -2158,7 +2158,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _afdProfilesRestClient.CreateUpgradeFrontDoorProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ProfileUpgradeContent.ToRequestContent(content), context);
+                using HttpMessage message = _afdProfilesRestClient.CreateUpgradeFrontDoorProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ProfileUpgradeContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<ProfileResource> operation = new CdnArmOperation<ProfileResource>(
                     new ProfileResourceOperationSource(Client),
@@ -2216,7 +2216,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _afdProfilesRestClient.CreateValidateSecretFrontDoorProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ValidateSecretContent.ToRequestContent(content), context);
+                using HttpMessage message = _afdProfilesRestClient.CreateValidateSecretFrontDoorProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ValidateSecretContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ValidateSecretResult> response = Response.FromValue(ValidateSecretResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -2268,7 +2268,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _afdProfilesRestClient.CreateValidateSecretFrontDoorProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ValidateSecretContent.ToRequestContent(content), context);
+                using HttpMessage message = _afdProfilesRestClient.CreateValidateSecretFrontDoorProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ValidateSecretContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ValidateSecretResult> response = Response.FromValue(ValidateSecretResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -2307,7 +2307,7 @@ namespace Azure.ResourceManager.Cdn
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ProfileData> response = Response.FromValue(ProfileData.FromResponse(result), result);
                     return Response.FromValue(new ProfileResource(Client, response.Value), response.GetRawResponse());
@@ -2355,7 +2355,7 @@ namespace Azure.ResourceManager.Cdn
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ProfileData> response = Response.FromValue(ProfileData.FromResponse(result), result);
                     return Response.FromValue(new ProfileResource(Client, response.Value), response.GetRawResponse());
@@ -2401,7 +2401,7 @@ namespace Azure.ResourceManager.Cdn
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ProfileData> response = Response.FromValue(ProfileData.FromResponse(result), result);
                     return Response.FromValue(new ProfileResource(Client, response.Value), response.GetRawResponse());
@@ -2443,7 +2443,7 @@ namespace Azure.ResourceManager.Cdn
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ProfileData> response = Response.FromValue(ProfileData.FromResponse(result), result);
                     return Response.FromValue(new ProfileResource(Client, response.Value), response.GetRawResponse());
@@ -2485,7 +2485,7 @@ namespace Azure.ResourceManager.Cdn
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ProfileData> response = Response.FromValue(ProfileData.FromResponse(result), result);
                     return Response.FromValue(new ProfileResource(Client, response.Value), response.GetRawResponse());
@@ -2531,7 +2531,7 @@ namespace Azure.ResourceManager.Cdn
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ProfileData> response = Response.FromValue(ProfileData.FromResponse(result), result);
                     return Response.FromValue(new ProfileResource(Client, response.Value), response.GetRawResponse());

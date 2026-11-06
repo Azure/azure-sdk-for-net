@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schemaVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _schemaVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DeviceRegistrySchemaVersionData> response = Response.FromValue(DeviceRegistrySchemaVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schemaVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _schemaVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DeviceRegistrySchemaVersionData> response = Response.FromValue(DeviceRegistrySchemaVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schemaVersionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _schemaVersionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DeviceRegistryArmOperation operation = new DeviceRegistryArmOperation(_schemaVersionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schemaVersionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _schemaVersionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DeviceRegistryArmOperation operation = new DeviceRegistryArmOperation(_schemaVersionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schemaVersionsRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, DeviceRegistrySchemaVersionData.ToRequestContent(data), context);
+                using HttpMessage message = _schemaVersionsRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, DeviceRegistrySchemaVersionData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DeviceRegistrySchemaVersionData> response = Response.FromValue(DeviceRegistrySchemaVersionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schemaVersionsRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, DeviceRegistrySchemaVersionData.ToRequestContent(data), context);
+                using HttpMessage message = _schemaVersionsRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, DeviceRegistrySchemaVersionData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DeviceRegistrySchemaVersionData> response = Response.FromValue(DeviceRegistrySchemaVersionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

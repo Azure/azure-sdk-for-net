@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateGetSubscriptionLevelRequest(Guid.Parse(Id.SubscriptionId), Id.Name, alertName, context);
+                using HttpMessage message = _alertsRestClient.CreateGetSubscriptionLevelRequest(Guid.Parse(Id.SubscriptionId), Id.Name, alertName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityAlertData> response = Response.FromValue(SecurityAlertData.FromResponse(result), result);
                 if (response.Value == null)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateGetSubscriptionLevelRequest(Guid.Parse(Id.SubscriptionId), Id.Name, alertName, context);
+                using HttpMessage message = _alertsRestClient.CreateGetSubscriptionLevelRequest(Guid.Parse(Id.SubscriptionId), Id.Name, alertName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityAlertData> response = Response.FromValue(SecurityAlertData.FromResponse(result), result);
                 if (response.Value == null)
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateSimulateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, SecurityAlertSimulatorContent.ToRequestContent(content), context);
+                using HttpMessage message = _alertsRestClient.CreateSimulateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, SecurityAlertSimulatorContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SecurityCenterArmOperation operation = new SecurityCenterArmOperation(_alertsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateSimulateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, SecurityAlertSimulatorContent.ToRequestContent(content), context);
+                using HttpMessage message = _alertsRestClient.CreateSimulateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, SecurityAlertSimulatorContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SecurityCenterArmOperation operation = new SecurityCenterArmOperation(_alertsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateGetSubscriptionLevelRequest(Guid.Parse(Id.SubscriptionId), Id.Name, alertName, context);
+                using HttpMessage message = _alertsRestClient.CreateGetSubscriptionLevelRequest(Guid.Parse(Id.SubscriptionId), Id.Name, alertName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SecurityAlertData> response = default;
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateGetSubscriptionLevelRequest(Guid.Parse(Id.SubscriptionId), Id.Name, alertName, context);
+                using HttpMessage message = _alertsRestClient.CreateGetSubscriptionLevelRequest(Guid.Parse(Id.SubscriptionId), Id.Name, alertName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SecurityAlertData> response = default;
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateGetSubscriptionLevelRequest(Guid.Parse(Id.SubscriptionId), Id.Name, alertName, context);
+                using HttpMessage message = _alertsRestClient.CreateGetSubscriptionLevelRequest(Guid.Parse(Id.SubscriptionId), Id.Name, alertName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SecurityAlertData> response = default;
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateGetSubscriptionLevelRequest(Guid.Parse(Id.SubscriptionId), Id.Name, alertName, context);
+                using HttpMessage message = _alertsRestClient.CreateGetSubscriptionLevelRequest(Guid.Parse(Id.SubscriptionId), Id.Name, alertName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SecurityAlertData> response = default;

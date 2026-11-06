@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, RelayNamespaceData.ToRequestContent(data), context);
+                using HttpMessage message = _namespacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, RelayNamespaceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RelayArmOperation<RelayNamespaceResource> operation = new RelayArmOperation<RelayNamespaceResource>(
                     new RelayNamespaceResourceOperationSource(Client),
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, RelayNamespaceData.ToRequestContent(data), context);
+                using HttpMessage message = _namespacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, RelayNamespaceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RelayArmOperation<RelayNamespaceResource> operation = new RelayArmOperation<RelayNamespaceResource>(
                     new RelayNamespaceResourceOperationSource(Client),
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, context);
+                using HttpMessage message = _namespacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RelayNamespaceData> response = Response.FromValue(RelayNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, context);
+                using HttpMessage message = _namespacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RelayNamespaceData> response = Response.FromValue(RelayNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, context);
+                using HttpMessage message = _namespacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RelayNamespaceData> response = default;
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, context);
+                using HttpMessage message = _namespacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RelayNamespaceData> response = default;
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, context);
+                using HttpMessage message = _namespacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RelayNamespaceData> response = default;
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, context);
+                using HttpMessage message = _namespacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RelayNamespaceData> response = default;

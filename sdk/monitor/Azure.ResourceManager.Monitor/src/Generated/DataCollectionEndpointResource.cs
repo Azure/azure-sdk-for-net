@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataCollectionEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _dataCollectionEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataCollectionEndpointData> response = Response.FromValue(DataCollectionEndpointData.FromResponse(result), result);
                 if (response.Value == null)
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataCollectionEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _dataCollectionEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataCollectionEndpointData> response = Response.FromValue(DataCollectionEndpointData.FromResponse(result), result);
                 if (response.Value == null)
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataCollectionEndpointsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ResourceForUpdate.ToRequestContent(body), context);
+                using HttpMessage message = _dataCollectionEndpointsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ResourceForUpdate.ToRequestContent(body), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataCollectionEndpointData> response = Response.FromValue(DataCollectionEndpointData.FromResponse(result), result);
                 if (response.Value == null)
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataCollectionEndpointsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ResourceForUpdate.ToRequestContent(body), context);
+                using HttpMessage message = _dataCollectionEndpointsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ResourceForUpdate.ToRequestContent(body), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataCollectionEndpointData> response = Response.FromValue(DataCollectionEndpointData.FromResponse(result), result);
                 if (response.Value == null)
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataCollectionEndpointsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _dataCollectionEndpointsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataCollectionEndpointsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _dataCollectionEndpointsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nspDataCollectionEndpointRestClient.CreateGetNetworkSecurityPerimeterConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                using HttpMessage message = _nspDataCollectionEndpointRestClient.CreateGetNetworkSecurityPerimeterConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MonitorNetworkSecurityPerimeterConfigurationData> response = Response.FromValue(MonitorNetworkSecurityPerimeterConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nspDataCollectionEndpointRestClient.CreateGetNetworkSecurityPerimeterConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                using HttpMessage message = _nspDataCollectionEndpointRestClient.CreateGetNetworkSecurityPerimeterConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MonitorNetworkSecurityPerimeterConfigurationData> response = Response.FromValue(MonitorNetworkSecurityPerimeterConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -694,7 +694,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nspDataCollectionEndpointRestClient.CreateReconcileNetworkSecurityPerimeterConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                using HttpMessage message = _nspDataCollectionEndpointRestClient.CreateReconcileNetworkSecurityPerimeterConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MonitorArmOperation operation = new MonitorArmOperation(_nspDataCollectionEndpointClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nspDataCollectionEndpointRestClient.CreateReconcileNetworkSecurityPerimeterConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                using HttpMessage message = _nspDataCollectionEndpointRestClient.CreateReconcileNetworkSecurityPerimeterConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MonitorArmOperation operation = new MonitorArmOperation(_nspDataCollectionEndpointClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -787,7 +787,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _dataCollectionEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _dataCollectionEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DataCollectionEndpointData> response = Response.FromValue(DataCollectionEndpointData.FromResponse(result), result);
                     return Response.FromValue(new DataCollectionEndpointResource(Client, response.Value), response.GetRawResponse());
@@ -835,7 +835,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _dataCollectionEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _dataCollectionEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DataCollectionEndpointData> response = Response.FromValue(DataCollectionEndpointData.FromResponse(result), result);
                     return Response.FromValue(new DataCollectionEndpointResource(Client, response.Value), response.GetRawResponse());
@@ -881,7 +881,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _dataCollectionEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _dataCollectionEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DataCollectionEndpointData> response = Response.FromValue(DataCollectionEndpointData.FromResponse(result), result);
                     return Response.FromValue(new DataCollectionEndpointResource(Client, response.Value), response.GetRawResponse());
@@ -923,7 +923,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _dataCollectionEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _dataCollectionEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DataCollectionEndpointData> response = Response.FromValue(DataCollectionEndpointData.FromResponse(result), result);
                     return Response.FromValue(new DataCollectionEndpointResource(Client, response.Value), response.GetRawResponse());
@@ -965,7 +965,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _dataCollectionEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _dataCollectionEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DataCollectionEndpointData> response = Response.FromValue(DataCollectionEndpointData.FromResponse(result), result);
                     return Response.FromValue(new DataCollectionEndpointResource(Client, response.Value), response.GetRawResponse());
@@ -1011,7 +1011,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _dataCollectionEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _dataCollectionEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DataCollectionEndpointData> response = Response.FromValue(DataCollectionEndpointData.FromResponse(result), result);
                     return Response.FromValue(new DataCollectionEndpointResource(Client, response.Value), response.GetRawResponse());

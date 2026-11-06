@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _alertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SapMonitorAlertData> response = Response.FromValue(SapMonitorAlertData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _alertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SapMonitorAlertData> response = Response.FromValue(SapMonitorAlertData.FromResponse(result), result);
                 if (response.Value == null)
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _alertsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadsSapMonitorArmOperation operation = new WorkloadsSapMonitorArmOperation(_alertsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _alertsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadsSapMonitorArmOperation operation = new WorkloadsSapMonitorArmOperation(_alertsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SapMonitorAlertData.ToRequestContent(data), context);
+                using HttpMessage message = _alertsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SapMonitorAlertData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadsSapMonitorArmOperation<SapMonitorAlertResource> operation = new WorkloadsSapMonitorArmOperation<SapMonitorAlertResource>(
                     new SapMonitorAlertResourceOperationSource(Client),
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SapMonitorAlertData.ToRequestContent(data), context);
+                using HttpMessage message = _alertsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SapMonitorAlertData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadsSapMonitorArmOperation<SapMonitorAlertResource> operation = new WorkloadsSapMonitorArmOperation<SapMonitorAlertResource>(
                     new SapMonitorAlertResourceOperationSource(Client),

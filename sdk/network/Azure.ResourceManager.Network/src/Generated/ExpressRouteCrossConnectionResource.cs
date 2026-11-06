@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExpressRouteCrossConnectionData> response = Response.FromValue(ExpressRouteCrossConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExpressRouteCrossConnectionData> response = Response.FromValue(ExpressRouteCrossConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTagsObject.ToRequestContent(crossConnectionParameters), context);
+                using HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTagsObject.ToRequestContent(crossConnectionParameters), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExpressRouteCrossConnectionData> response = Response.FromValue(ExpressRouteCrossConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTagsObject.ToRequestContent(crossConnectionParameters), context);
+                using HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTagsObject.ToRequestContent(crossConnectionParameters), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExpressRouteCrossConnectionData> response = Response.FromValue(ExpressRouteCrossConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateCommitCircuitMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitContent.ToRequestContent(content), context);
+                using HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateCommitCircuitMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult> operation = new NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult>(
                     new MigrateExpressRouteCircuitHealthCheckResultOperationSource(),
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateCommitCircuitMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitContent.ToRequestContent(content), context);
+                using HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateCommitCircuitMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult> operation = new NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult>(
                     new MigrateExpressRouteCircuitHealthCheckResultOperationSource(),
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetCircuitMigrationInfoRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitValidateAndHealthCheckContent.ToRequestContent(content), context);
+                using HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetCircuitMigrationInfoRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitValidateAndHealthCheckContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult> operation = new NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult>(
                     new MigrateExpressRouteCircuitHealthCheckResultOperationSource(),
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetCircuitMigrationInfoRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitValidateAndHealthCheckContent.ToRequestContent(content), context);
+                using HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetCircuitMigrationInfoRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitValidateAndHealthCheckContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult> operation = new NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult>(
                     new MigrateExpressRouteCircuitHealthCheckResultOperationSource(),
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateMigrateCircuitRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitContent.ToRequestContent(content), context);
+                using HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateMigrateCircuitRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult> operation = new NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult>(
                     new MigrateExpressRouteCircuitHealthCheckResultOperationSource(),
@@ -625,7 +625,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateMigrateCircuitRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitContent.ToRequestContent(content), context);
+                using HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateMigrateCircuitRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult> operation = new NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult>(
                     new MigrateExpressRouteCircuitHealthCheckResultOperationSource(),
@@ -684,7 +684,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreatePrepareCircuitMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitContent.ToRequestContent(content), context);
+                using HttpMessage message = _expressRouteCrossConnectionsRestClient.CreatePrepareCircuitMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult> operation = new NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult>(
                     new MigrateExpressRouteCircuitHealthCheckResultOperationSource(),
@@ -743,7 +743,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreatePrepareCircuitMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitContent.ToRequestContent(content), context);
+                using HttpMessage message = _expressRouteCrossConnectionsRestClient.CreatePrepareCircuitMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult> operation = new NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult>(
                     new MigrateExpressRouteCircuitHealthCheckResultOperationSource(),
@@ -802,7 +802,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateRestoreBgpForCircuitMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitContent.ToRequestContent(content), context);
+                using HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateRestoreBgpForCircuitMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult> operation = new NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult>(
                     new MigrateExpressRouteCircuitHealthCheckResultOperationSource(),
@@ -861,7 +861,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateRestoreBgpForCircuitMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitContent.ToRequestContent(content), context);
+                using HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateRestoreBgpForCircuitMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult> operation = new NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult>(
                     new MigrateExpressRouteCircuitHealthCheckResultOperationSource(),
@@ -920,7 +920,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateRollbackCircuitMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitContent.ToRequestContent(content), context);
+                using HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateRollbackCircuitMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult> operation = new NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult>(
                     new MigrateExpressRouteCircuitHealthCheckResultOperationSource(),
@@ -979,7 +979,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateRollbackCircuitMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitContent.ToRequestContent(content), context);
+                using HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateRollbackCircuitMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult> operation = new NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult>(
                     new MigrateExpressRouteCircuitHealthCheckResultOperationSource(),
@@ -1038,7 +1038,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateShutDownBgpForCircuitMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitContent.ToRequestContent(content), context);
+                using HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateShutDownBgpForCircuitMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult> operation = new NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult>(
                     new MigrateExpressRouteCircuitHealthCheckResultOperationSource(),
@@ -1097,7 +1097,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateShutDownBgpForCircuitMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitContent.ToRequestContent(content), context);
+                using HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateShutDownBgpForCircuitMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult> operation = new NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult>(
                     new MigrateExpressRouteCircuitHealthCheckResultOperationSource(),
@@ -1156,7 +1156,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateValidateCircuitMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitValidateAndHealthCheckContent.ToRequestContent(content), context);
+                using HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateValidateCircuitMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitValidateAndHealthCheckContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<MigrateExpressRouteCircuitValidateResult> operation = new NetworkArmOperation<MigrateExpressRouteCircuitValidateResult>(
                     new MigrateExpressRouteCircuitValidateResultOperationSource(),
@@ -1215,7 +1215,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateValidateCircuitMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitValidateAndHealthCheckContent.ToRequestContent(content), context);
+                using HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateValidateCircuitMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitValidateAndHealthCheckContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<MigrateExpressRouteCircuitValidateResult> operation = new NetworkArmOperation<MigrateExpressRouteCircuitValidateResult>(
                     new MigrateExpressRouteCircuitValidateResultOperationSource(),
@@ -1260,7 +1260,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ExpressRouteCrossConnectionData> response = Response.FromValue(ExpressRouteCrossConnectionData.FromResponse(result), result);
                     return Response.FromValue(new ExpressRouteCrossConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -1308,7 +1308,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ExpressRouteCrossConnectionData> response = Response.FromValue(ExpressRouteCrossConnectionData.FromResponse(result), result);
                     return Response.FromValue(new ExpressRouteCrossConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -1354,7 +1354,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ExpressRouteCrossConnectionData> response = Response.FromValue(ExpressRouteCrossConnectionData.FromResponse(result), result);
                     return Response.FromValue(new ExpressRouteCrossConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -1396,7 +1396,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ExpressRouteCrossConnectionData> response = Response.FromValue(ExpressRouteCrossConnectionData.FromResponse(result), result);
                     return Response.FromValue(new ExpressRouteCrossConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -1438,7 +1438,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ExpressRouteCrossConnectionData> response = Response.FromValue(ExpressRouteCrossConnectionData.FromResponse(result), result);
                     return Response.FromValue(new ExpressRouteCrossConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -1484,7 +1484,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ExpressRouteCrossConnectionData> response = Response.FromValue(ExpressRouteCrossConnectionData.FromResponse(result), result);
                     return Response.FromValue(new ExpressRouteCrossConnectionResource(Client, response.Value), response.GetRawResponse());

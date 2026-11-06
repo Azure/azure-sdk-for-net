@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dnsForwardingRulesetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _dnsForwardingRulesetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DnsForwardingRulesetData> response = Response.FromValue(DnsForwardingRulesetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dnsForwardingRulesetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _dnsForwardingRulesetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DnsForwardingRulesetData> response = Response.FromValue(DnsForwardingRulesetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dnsForwardingRulesetsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DnsForwardingRulesetPatch.ToRequestContent(patch), ifMatch, context);
+                using HttpMessage message = _dnsForwardingRulesetsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DnsForwardingRulesetPatch.ToRequestContent(patch), ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DnsResolverArmOperation<DnsForwardingRulesetResource> operation = new DnsResolverArmOperation<DnsForwardingRulesetResource>(
                     new DnsForwardingRulesetResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dnsForwardingRulesetsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DnsForwardingRulesetPatch.ToRequestContent(patch), ifMatch, context);
+                using HttpMessage message = _dnsForwardingRulesetsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DnsForwardingRulesetPatch.ToRequestContent(patch), ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DnsResolverArmOperation<DnsForwardingRulesetResource> operation = new DnsResolverArmOperation<DnsForwardingRulesetResource>(
                     new DnsForwardingRulesetResourceOperationSource(Client),
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dnsForwardingRulesetsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ifMatch, context);
+                using HttpMessage message = _dnsForwardingRulesetsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DnsResolverArmOperation operation = new DnsResolverArmOperation(_dnsForwardingRulesetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dnsForwardingRulesetsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ifMatch, context);
+                using HttpMessage message = _dnsForwardingRulesetsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DnsResolverArmOperation operation = new DnsResolverArmOperation(_dnsForwardingRulesetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.DnsResolver
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _dnsForwardingRulesetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _dnsForwardingRulesetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DnsForwardingRulesetData> response = Response.FromValue(DnsForwardingRulesetData.FromResponse(result), result);
                     return Response.FromValue(new DnsForwardingRulesetResource(Client, response.Value), response.GetRawResponse());
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.DnsResolver
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _dnsForwardingRulesetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _dnsForwardingRulesetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DnsForwardingRulesetData> response = Response.FromValue(DnsForwardingRulesetData.FromResponse(result), result);
                     return Response.FromValue(new DnsForwardingRulesetResource(Client, response.Value), response.GetRawResponse());
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.DnsResolver
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _dnsForwardingRulesetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _dnsForwardingRulesetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DnsForwardingRulesetData> response = Response.FromValue(DnsForwardingRulesetData.FromResponse(result), result);
                     return Response.FromValue(new DnsForwardingRulesetResource(Client, response.Value), response.GetRawResponse());
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.DnsResolver
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _dnsForwardingRulesetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _dnsForwardingRulesetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DnsForwardingRulesetData> response = Response.FromValue(DnsForwardingRulesetData.FromResponse(result), result);
                     return Response.FromValue(new DnsForwardingRulesetResource(Client, response.Value), response.GetRawResponse());
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.DnsResolver
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _dnsForwardingRulesetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _dnsForwardingRulesetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DnsForwardingRulesetData> response = Response.FromValue(DnsForwardingRulesetData.FromResponse(result), result);
                     return Response.FromValue(new DnsForwardingRulesetResource(Client, response.Value), response.GetRawResponse());
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.DnsResolver
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _dnsForwardingRulesetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _dnsForwardingRulesetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DnsForwardingRulesetData> response = Response.FromValue(DnsForwardingRulesetData.FromResponse(result), result);
                     return Response.FromValue(new DnsForwardingRulesetResource(Client, response.Value), response.GetRawResponse());

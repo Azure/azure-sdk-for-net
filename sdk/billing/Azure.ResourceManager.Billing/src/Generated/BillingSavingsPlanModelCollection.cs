@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _savingsPlansRestClient.CreateGetByBillingAccountRequest(Id.Parent.Name, Id.Name, savingsPlanId, expand, context);
+                using HttpMessage message = _savingsPlansRestClient.CreateGetByBillingAccountRequest(Id.Parent.Name, Id.Name, savingsPlanId, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingSavingsPlanModelData> response = Response.FromValue(BillingSavingsPlanModelData.FromResponse(result), result);
                 if (response.Value == null)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _savingsPlansRestClient.CreateGetByBillingAccountRequest(Id.Parent.Name, Id.Name, savingsPlanId, expand, context);
+                using HttpMessage message = _savingsPlansRestClient.CreateGetByBillingAccountRequest(Id.Parent.Name, Id.Name, savingsPlanId, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingSavingsPlanModelData> response = Response.FromValue(BillingSavingsPlanModelData.FromResponse(result), result);
                 if (response.Value == null)
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _savingsPlansRestClient.CreateGetByBillingAccountRequest(Id.Parent.Name, Id.Name, savingsPlanId, expand, context);
+                using HttpMessage message = _savingsPlansRestClient.CreateGetByBillingAccountRequest(Id.Parent.Name, Id.Name, savingsPlanId, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BillingSavingsPlanModelData> response = default;
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _savingsPlansRestClient.CreateGetByBillingAccountRequest(Id.Parent.Name, Id.Name, savingsPlanId, expand, context);
+                using HttpMessage message = _savingsPlansRestClient.CreateGetByBillingAccountRequest(Id.Parent.Name, Id.Name, savingsPlanId, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BillingSavingsPlanModelData> response = default;
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _savingsPlansRestClient.CreateGetByBillingAccountRequest(Id.Parent.Name, Id.Name, savingsPlanId, expand, context);
+                using HttpMessage message = _savingsPlansRestClient.CreateGetByBillingAccountRequest(Id.Parent.Name, Id.Name, savingsPlanId, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BillingSavingsPlanModelData> response = default;
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _savingsPlansRestClient.CreateGetByBillingAccountRequest(Id.Parent.Name, Id.Name, savingsPlanId, expand, context);
+                using HttpMessage message = _savingsPlansRestClient.CreateGetByBillingAccountRequest(Id.Parent.Name, Id.Name, savingsPlanId, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BillingSavingsPlanModelData> response = default;

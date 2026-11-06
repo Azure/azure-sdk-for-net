@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _administratorsMicrosoftEntraRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, objectId, PostgreSqlFlexibleServerMicrosoftEntraAdministratorCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _administratorsMicrosoftEntraRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, objectId, PostgreSqlFlexibleServerMicrosoftEntraAdministratorCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FlexibleServersArmOperation<PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource> operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource>(
                     new PostgreSqlFlexibleServerMicrosoftEntraAdministratorResourceOperationSource(Client),
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _administratorsMicrosoftEntraRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, objectId, PostgreSqlFlexibleServerMicrosoftEntraAdministratorCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _administratorsMicrosoftEntraRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, objectId, PostgreSqlFlexibleServerMicrosoftEntraAdministratorCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FlexibleServersArmOperation<PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource> operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource>(
                     new PostgreSqlFlexibleServerMicrosoftEntraAdministratorResourceOperationSource(Client),
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _administratorsMicrosoftEntraRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, objectId, context);
+                using HttpMessage message = _administratorsMicrosoftEntraRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, objectId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData> response = Response.FromValue(PostgreSqlFlexibleServerMicrosoftEntraAdministratorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _administratorsMicrosoftEntraRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, objectId, context);
+                using HttpMessage message = _administratorsMicrosoftEntraRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, objectId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData> response = Response.FromValue(PostgreSqlFlexibleServerMicrosoftEntraAdministratorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _administratorsMicrosoftEntraRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, objectId, context);
+                using HttpMessage message = _administratorsMicrosoftEntraRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, objectId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData> response = default;
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _administratorsMicrosoftEntraRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, objectId, context);
+                using HttpMessage message = _administratorsMicrosoftEntraRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, objectId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData> response = default;
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _administratorsMicrosoftEntraRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, objectId, context);
+                using HttpMessage message = _administratorsMicrosoftEntraRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, objectId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData> response = default;
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _administratorsMicrosoftEntraRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, objectId, context);
+                using HttpMessage message = _administratorsMicrosoftEntraRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, objectId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData> response = default;

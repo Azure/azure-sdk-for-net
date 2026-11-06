@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _artifactsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactName, context);
+                using HttpMessage message = _artifactsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DisconnectedOperationsArtifactData> response = Response.FromValue(DisconnectedOperationsArtifactData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _artifactsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactName, context);
+                using HttpMessage message = _artifactsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DisconnectedOperationsArtifactData> response = Response.FromValue(DisconnectedOperationsArtifactData.FromResponse(result), result);
                 if (response.Value == null)
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _artifactsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactName, context);
+                using HttpMessage message = _artifactsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DisconnectedOperationsArtifactData> response = default;
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _artifactsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactName, context);
+                using HttpMessage message = _artifactsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DisconnectedOperationsArtifactData> response = default;
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _artifactsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactName, context);
+                using HttpMessage message = _artifactsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DisconnectedOperationsArtifactData> response = default;
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _artifactsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactName, context);
+                using HttpMessage message = _artifactsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DisconnectedOperationsArtifactData> response = default;

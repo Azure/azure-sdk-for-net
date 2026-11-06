@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Datadog
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _monitoredSubscriptionsRestClient.CreateCreateorUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, DatadogMonitoredSubscriptionData.ToRequestContent(data), context);
+                using HttpMessage message = _monitoredSubscriptionsRestClient.CreateCreateorUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, DatadogMonitoredSubscriptionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DatadogArmOperation<DatadogMonitoredSubscriptionResource> operation = new DatadogArmOperation<DatadogMonitoredSubscriptionResource>(
                     new DatadogMonitoredSubscriptionResourceOperationSource(Client),
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Datadog
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _monitoredSubscriptionsRestClient.CreateCreateorUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, DatadogMonitoredSubscriptionData.ToRequestContent(data), context);
+                using HttpMessage message = _monitoredSubscriptionsRestClient.CreateCreateorUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, DatadogMonitoredSubscriptionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DatadogArmOperation<DatadogMonitoredSubscriptionResource> operation = new DatadogArmOperation<DatadogMonitoredSubscriptionResource>(
                     new DatadogMonitoredSubscriptionResourceOperationSource(Client),
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Datadog
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _monitoredSubscriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, context);
+                using HttpMessage message = _monitoredSubscriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DatadogMonitoredSubscriptionData> response = Response.FromValue(DatadogMonitoredSubscriptionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Datadog
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _monitoredSubscriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, context);
+                using HttpMessage message = _monitoredSubscriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DatadogMonitoredSubscriptionData> response = Response.FromValue(DatadogMonitoredSubscriptionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Datadog
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _monitoredSubscriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, context);
+                using HttpMessage message = _monitoredSubscriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DatadogMonitoredSubscriptionData> response = default;
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.Datadog
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _monitoredSubscriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, context);
+                using HttpMessage message = _monitoredSubscriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DatadogMonitoredSubscriptionData> response = default;
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Datadog
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _monitoredSubscriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, context);
+                using HttpMessage message = _monitoredSubscriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DatadogMonitoredSubscriptionData> response = default;
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.Datadog
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _monitoredSubscriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, context);
+                using HttpMessage message = _monitoredSubscriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DatadogMonitoredSubscriptionData> response = default;

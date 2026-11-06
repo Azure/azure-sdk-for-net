@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionEdgeSiteRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), siteName, EdgeSiteData.ToRequestContent(data), context);
+                using HttpMessage message = _subscriptionEdgeSiteRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), siteName, EdgeSiteData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SiteManagerArmOperation<SubscriptionEdgeSiteResource> operation = new SiteManagerArmOperation<SubscriptionEdgeSiteResource>(
                     new SubscriptionEdgeSiteResourceOperationSource(Client),
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionEdgeSiteRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), siteName, EdgeSiteData.ToRequestContent(data), context);
+                using HttpMessage message = _subscriptionEdgeSiteRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), siteName, EdgeSiteData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SiteManagerArmOperation<SubscriptionEdgeSiteResource> operation = new SiteManagerArmOperation<SubscriptionEdgeSiteResource>(
                     new SubscriptionEdgeSiteResourceOperationSource(Client),
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionEdgeSiteRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), siteName, context);
+                using HttpMessage message = _subscriptionEdgeSiteRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), siteName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EdgeSiteData> response = Response.FromValue(EdgeSiteData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionEdgeSiteRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), siteName, context);
+                using HttpMessage message = _subscriptionEdgeSiteRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), siteName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EdgeSiteData> response = Response.FromValue(EdgeSiteData.FromResponse(result), result);
                 if (response.Value == null)
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionEdgeSiteRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), siteName, context);
+                using HttpMessage message = _subscriptionEdgeSiteRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), siteName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EdgeSiteData> response = default;
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionEdgeSiteRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), siteName, context);
+                using HttpMessage message = _subscriptionEdgeSiteRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), siteName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EdgeSiteData> response = default;
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionEdgeSiteRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), siteName, context);
+                using HttpMessage message = _subscriptionEdgeSiteRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), siteName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EdgeSiteData> response = default;
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionEdgeSiteRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), siteName, context);
+                using HttpMessage message = _subscriptionEdgeSiteRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), siteName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EdgeSiteData> response = default;

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopingConfigurationRestClient.CreateCreateOrUpdateRequest(Id.Name, scopingConfigurationName, AppComplianceReportScopingConfigurationData.ToRequestContent(data), context);
+                using HttpMessage message = _scopingConfigurationRestClient.CreateCreateOrUpdateRequest(Id.Name, scopingConfigurationName, AppComplianceReportScopingConfigurationData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppComplianceReportScopingConfigurationData> response = Response.FromValue(AppComplianceReportScopingConfigurationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopingConfigurationRestClient.CreateCreateOrUpdateRequest(Id.Name, scopingConfigurationName, AppComplianceReportScopingConfigurationData.ToRequestContent(data), context);
+                using HttpMessage message = _scopingConfigurationRestClient.CreateCreateOrUpdateRequest(Id.Name, scopingConfigurationName, AppComplianceReportScopingConfigurationData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppComplianceReportScopingConfigurationData> response = Response.FromValue(AppComplianceReportScopingConfigurationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopingConfigurationRestClient.CreateGetRequest(Id.Name, scopingConfigurationName, context);
+                using HttpMessage message = _scopingConfigurationRestClient.CreateGetRequest(Id.Name, scopingConfigurationName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppComplianceReportScopingConfigurationData> response = Response.FromValue(AppComplianceReportScopingConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopingConfigurationRestClient.CreateGetRequest(Id.Name, scopingConfigurationName, context);
+                using HttpMessage message = _scopingConfigurationRestClient.CreateGetRequest(Id.Name, scopingConfigurationName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppComplianceReportScopingConfigurationData> response = Response.FromValue(AppComplianceReportScopingConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopingConfigurationRestClient.CreateGetRequest(Id.Name, scopingConfigurationName, context);
+                using HttpMessage message = _scopingConfigurationRestClient.CreateGetRequest(Id.Name, scopingConfigurationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AppComplianceReportScopingConfigurationData> response = default;
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopingConfigurationRestClient.CreateGetRequest(Id.Name, scopingConfigurationName, context);
+                using HttpMessage message = _scopingConfigurationRestClient.CreateGetRequest(Id.Name, scopingConfigurationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AppComplianceReportScopingConfigurationData> response = default;
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopingConfigurationRestClient.CreateGetRequest(Id.Name, scopingConfigurationName, context);
+                using HttpMessage message = _scopingConfigurationRestClient.CreateGetRequest(Id.Name, scopingConfigurationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AppComplianceReportScopingConfigurationData> response = default;
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopingConfigurationRestClient.CreateGetRequest(Id.Name, scopingConfigurationName, context);
+                using HttpMessage message = _scopingConfigurationRestClient.CreateGetRequest(Id.Name, scopingConfigurationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AppComplianceReportScopingConfigurationData> response = default;

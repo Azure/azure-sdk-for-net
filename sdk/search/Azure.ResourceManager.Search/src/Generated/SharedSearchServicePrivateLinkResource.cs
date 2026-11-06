@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Search
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
+                using HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SharedSearchServicePrivateLinkResourceData> response = Response.FromValue(SharedSearchServicePrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Search
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
+                using HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SharedSearchServicePrivateLinkResourceData> response = Response.FromValue(SharedSearchServicePrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Search
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
+                using HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SearchArmOperation operation = new SearchArmOperation(_sharedPrivateLinkResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Search
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
+                using HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SearchArmOperation operation = new SearchArmOperation(_sharedPrivateLinkResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Search
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SharedSearchServicePrivateLinkResourceData.ToRequestContent(data), default, context);
+                using HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SharedSearchServicePrivateLinkResourceData.ToRequestContent(data), default, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SearchArmOperation<SharedSearchServicePrivateLinkResource> operation = new SearchArmOperation<SharedSearchServicePrivateLinkResource>(
                     new SharedSearchServicePrivateLinkResourceOperationSource(Client),
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Search
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SharedSearchServicePrivateLinkResourceData.ToRequestContent(data), default, context);
+                using HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SharedSearchServicePrivateLinkResourceData.ToRequestContent(data), default, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SearchArmOperation<SharedSearchServicePrivateLinkResource> operation = new SearchArmOperation<SharedSearchServicePrivateLinkResource>(
                     new SharedSearchServicePrivateLinkResourceOperationSource(Client),

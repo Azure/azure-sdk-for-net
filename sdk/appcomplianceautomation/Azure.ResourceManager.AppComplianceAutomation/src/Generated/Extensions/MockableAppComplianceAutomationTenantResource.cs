@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ProviderActionsRestClient.CreateCheckAppComplianceReportNameAvailabilityRequest(AppComplianceReportNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = ProviderActionsRestClient.CreateCheckAppComplianceReportNameAvailabilityRequest(AppComplianceReportNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppComplianceReportNameAvailabilityResult> response = Response.FromValue(AppComplianceReportNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ProviderActionsRestClient.CreateCheckAppComplianceReportNameAvailabilityRequest(AppComplianceReportNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = ProviderActionsRestClient.CreateCheckAppComplianceReportNameAvailabilityRequest(AppComplianceReportNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppComplianceReportNameAvailabilityResult> response = Response.FromValue(AppComplianceReportNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ProviderActionsRestClient.CreateGetCollectionCountProviderActionRequest(ReportCollectionGetCountContent.ToRequestContent(content), context);
+                using HttpMessage message = ProviderActionsRestClient.CreateGetCollectionCountProviderActionRequest(ReportCollectionGetCountContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ReportCollectionGetCountResult> response = Response.FromValue(ReportCollectionGetCountResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ProviderActionsRestClient.CreateGetCollectionCountProviderActionRequest(ReportCollectionGetCountContent.ToRequestContent(content), context);
+                using HttpMessage message = ProviderActionsRestClient.CreateGetCollectionCountProviderActionRequest(ReportCollectionGetCountContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ReportCollectionGetCountResult> response = Response.FromValue(ReportCollectionGetCountResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ProviderActionsRestClient.CreateGetOverviewStatusProviderActionRequest(AppComplianceGetOverviewStatusContent.ToRequestContent(content), context);
+                using HttpMessage message = ProviderActionsRestClient.CreateGetOverviewStatusProviderActionRequest(AppComplianceGetOverviewStatusContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppComplianceGetOverviewStatusResult> response = Response.FromValue(AppComplianceGetOverviewStatusResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ProviderActionsRestClient.CreateGetOverviewStatusProviderActionRequest(AppComplianceGetOverviewStatusContent.ToRequestContent(content), context);
+                using HttpMessage message = ProviderActionsRestClient.CreateGetOverviewStatusProviderActionRequest(AppComplianceGetOverviewStatusContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppComplianceGetOverviewStatusResult> response = Response.FromValue(AppComplianceGetOverviewStatusResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ProviderActionsRestClient.CreateOnboardProviderActionRequest(AppComplianceOnboardContent.ToRequestContent(content), context);
+                using HttpMessage message = ProviderActionsRestClient.CreateOnboardProviderActionRequest(AppComplianceOnboardContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppComplianceAutomationArmOperation<AppComplianceOnboardResult> operation = new AppComplianceAutomationArmOperation<AppComplianceOnboardResult>(
                     new AppComplianceOnboardResultOperationSource(),
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ProviderActionsRestClient.CreateOnboardProviderActionRequest(AppComplianceOnboardContent.ToRequestContent(content), context);
+                using HttpMessage message = ProviderActionsRestClient.CreateOnboardProviderActionRequest(AppComplianceOnboardContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppComplianceAutomationArmOperation<AppComplianceOnboardResult> operation = new AppComplianceAutomationArmOperation<AppComplianceOnboardResult>(
                     new AppComplianceOnboardResultOperationSource(),
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ProviderActionsRestClient.CreateTriggerEvaluationProviderActionRequest(TriggerEvaluationContent.ToRequestContent(content), context);
+                using HttpMessage message = ProviderActionsRestClient.CreateTriggerEvaluationProviderActionRequest(TriggerEvaluationContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppComplianceAutomationArmOperation<TriggerEvaluationResult> operation = new AppComplianceAutomationArmOperation<TriggerEvaluationResult>(
                     new TriggerEvaluationResultOperationSource(),
@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ProviderActionsRestClient.CreateTriggerEvaluationProviderActionRequest(TriggerEvaluationContent.ToRequestContent(content), context);
+                using HttpMessage message = ProviderActionsRestClient.CreateTriggerEvaluationProviderActionRequest(TriggerEvaluationContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppComplianceAutomationArmOperation<TriggerEvaluationResult> operation = new AppComplianceAutomationArmOperation<TriggerEvaluationResult>(
                     new TriggerEvaluationResultOperationSource(),
@@ -645,7 +645,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ProviderActionsRestClient.CreateGetInUseStorageAccountsProviderActionRequest(ReportListInUseStorageAccountsContent.ToRequestContent(content), context);
+                using HttpMessage message = ProviderActionsRestClient.CreateGetInUseStorageAccountsProviderActionRequest(ReportListInUseStorageAccountsContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ReportListInUseStorageAccountsResult> response = Response.FromValue(ReportListInUseStorageAccountsResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -693,7 +693,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ProviderActionsRestClient.CreateGetInUseStorageAccountsProviderActionRequest(ReportListInUseStorageAccountsContent.ToRequestContent(content), context);
+                using HttpMessage message = ProviderActionsRestClient.CreateGetInUseStorageAccountsProviderActionRequest(ReportListInUseStorageAccountsContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ReportListInUseStorageAccountsResult> response = Response.FromValue(ReportListInUseStorageAccountsResult.FromResponse(result), result);
                 if (response.Value == null)

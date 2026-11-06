@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisEnterpriseClusterRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _redisEnterpriseClusterRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RedisEnterpriseClusterData> response = Response.FromValue(RedisEnterpriseClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisEnterpriseClusterRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _redisEnterpriseClusterRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RedisEnterpriseClusterData> response = Response.FromValue(RedisEnterpriseClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisEnterpriseClusterRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RedisEnterpriseClusterPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _redisEnterpriseClusterRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RedisEnterpriseClusterPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RedisEnterpriseArmOperation<RedisEnterpriseClusterResource> operation = new RedisEnterpriseArmOperation<RedisEnterpriseClusterResource>(
                     new RedisEnterpriseClusterResourceOperationSource(Client),
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisEnterpriseClusterRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RedisEnterpriseClusterPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _redisEnterpriseClusterRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RedisEnterpriseClusterPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RedisEnterpriseArmOperation<RedisEnterpriseClusterResource> operation = new RedisEnterpriseArmOperation<RedisEnterpriseClusterResource>(
                     new RedisEnterpriseClusterResourceOperationSource(Client),
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisEnterpriseClusterRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _redisEnterpriseClusterRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RedisEnterpriseArmOperation operation = new RedisEnterpriseArmOperation(_redisEnterpriseClusterClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisEnterpriseClusterRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _redisEnterpriseClusterRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RedisEnterpriseArmOperation operation = new RedisEnterpriseArmOperation(_redisEnterpriseClusterClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisEnterpriseClusterRestClient.CreateGetSkusForScalingRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _redisEnterpriseClusterRestClient.CreateGetSkusForScalingRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RedisEnterpriseSkuDetailsList> response = Response.FromValue(RedisEnterpriseSkuDetailsList.FromResponse(result), result);
                 if (response.Value == null)
@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisEnterpriseClusterRestClient.CreateGetSkusForScalingRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _redisEnterpriseClusterRestClient.CreateGetSkusForScalingRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RedisEnterpriseSkuDetailsList> response = Response.FromValue(RedisEnterpriseSkuDetailsList.FromResponse(result), result);
                 if (response.Value == null)
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateUnlinkMigratedEndpointRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _clustersRestClient.CreateUnlinkMigratedEndpointRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RedisEnterpriseArmOperation operation = new RedisEnterpriseArmOperation(_clustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -668,7 +668,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateUnlinkMigratedEndpointRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _clustersRestClient.CreateUnlinkMigratedEndpointRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RedisEnterpriseArmOperation operation = new RedisEnterpriseArmOperation(_clustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -707,7 +707,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _redisEnterpriseClusterRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _redisEnterpriseClusterRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<RedisEnterpriseClusterData> response = Response.FromValue(RedisEnterpriseClusterData.FromResponse(result), result);
                     return Response.FromValue(new RedisEnterpriseClusterResource(Client, response.Value), response.GetRawResponse());
@@ -755,7 +755,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _redisEnterpriseClusterRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _redisEnterpriseClusterRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<RedisEnterpriseClusterData> response = Response.FromValue(RedisEnterpriseClusterData.FromResponse(result), result);
                     return Response.FromValue(new RedisEnterpriseClusterResource(Client, response.Value), response.GetRawResponse());
@@ -801,7 +801,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _redisEnterpriseClusterRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _redisEnterpriseClusterRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<RedisEnterpriseClusterData> response = Response.FromValue(RedisEnterpriseClusterData.FromResponse(result), result);
                     return Response.FromValue(new RedisEnterpriseClusterResource(Client, response.Value), response.GetRawResponse());
@@ -843,7 +843,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _redisEnterpriseClusterRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _redisEnterpriseClusterRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<RedisEnterpriseClusterData> response = Response.FromValue(RedisEnterpriseClusterData.FromResponse(result), result);
                     return Response.FromValue(new RedisEnterpriseClusterResource(Client, response.Value), response.GetRawResponse());
@@ -885,7 +885,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _redisEnterpriseClusterRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _redisEnterpriseClusterRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<RedisEnterpriseClusterData> response = Response.FromValue(RedisEnterpriseClusterData.FromResponse(result), result);
                     return Response.FromValue(new RedisEnterpriseClusterResource(Client, response.Value), response.GetRawResponse());
@@ -931,7 +931,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _redisEnterpriseClusterRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _redisEnterpriseClusterRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<RedisEnterpriseClusterData> response = Response.FromValue(RedisEnterpriseClusterData.FromResponse(result), result);
                     return Response.FromValue(new RedisEnterpriseClusterResource(Client, response.Value), response.GetRawResponse());

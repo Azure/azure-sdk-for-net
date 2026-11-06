@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionTopicsRestClient.CreateGetRequest(Id.Parent.ToString(), context);
+                using HttpMessage message = _extensionTopicsRestClient.CreateGetRequest(Id.Parent.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExtensionTopicData> response = Response.FromValue(ExtensionTopicData.FromResponse(result), result);
                 if (response.Value == null)
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionTopicsRestClient.CreateGetRequest(Id.Parent.ToString(), context);
+                using HttpMessage message = _extensionTopicsRestClient.CreateGetRequest(Id.Parent.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExtensionTopicData> response = Response.FromValue(ExtensionTopicData.FromResponse(result), result);
                 if (response.Value == null)

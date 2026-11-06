@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AlertsRestClient.CreateGetServiceAlertSummaryRequest(scope.ToString(), groupby.ToString(), includeSmartGroupsCount, targetResource, targetResourceType, targetResourceGroup, monitorService?.ToString(), monitorCondition?.ToString(), severity?.ToString(), alertState?.ToString(), alertRule, timeRange?.ToString(), customTimeRange, context);
+                using HttpMessage message = AlertsRestClient.CreateGetServiceAlertSummaryRequest(scope.ToString(), groupby.ToString(), includeSmartGroupsCount, targetResource, targetResourceType, targetResourceGroup, monitorService?.ToString(), monitorCondition?.ToString(), severity?.ToString(), alertState?.ToString(), alertRule, timeRange?.ToString(), customTimeRange, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceAlertSummary> response = Response.FromValue(ServiceAlertSummary.FromResponse(result), result);
                 if (response.Value == null)
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AlertsRestClient.CreateGetServiceAlertSummaryRequest(scope.ToString(), groupby.ToString(), includeSmartGroupsCount, targetResource, targetResourceType, targetResourceGroup, monitorService?.ToString(), monitorCondition?.ToString(), severity?.ToString(), alertState?.ToString(), alertRule, timeRange?.ToString(), customTimeRange, context);
+                using HttpMessage message = AlertsRestClient.CreateGetServiceAlertSummaryRequest(scope.ToString(), groupby.ToString(), includeSmartGroupsCount, targetResource, targetResourceType, targetResourceGroup, monitorService?.ToString(), monitorCondition?.ToString(), severity?.ToString(), alertState?.ToString(), alertRule, timeRange?.ToString(), customTimeRange, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceAlertSummary> response = Response.FromValue(ServiceAlertSummary.FromResponse(result), result);
                 if (response.Value == null)

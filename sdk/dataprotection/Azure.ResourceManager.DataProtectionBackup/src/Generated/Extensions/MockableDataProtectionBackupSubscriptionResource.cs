@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = DataProtectionOperationGroupRestClient.CreateCheckDataProtectionBackupFeatureSupportRequest(Guid.Parse(Id.SubscriptionId), location, BackupFeatureValidationContentBase.ToRequestContent(content), context);
+                using HttpMessage message = DataProtectionOperationGroupRestClient.CreateCheckDataProtectionBackupFeatureSupportRequest(Guid.Parse(Id.SubscriptionId), location, BackupFeatureValidationContentBase.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BackupFeatureValidationResultBase> response = Response.FromValue(BackupFeatureValidationResultBase.FromResponse(result), result);
                 if (response.Value == null)
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = DataProtectionOperationGroupRestClient.CreateCheckDataProtectionBackupFeatureSupportRequest(Guid.Parse(Id.SubscriptionId), location, BackupFeatureValidationContentBase.ToRequestContent(content), context);
+                using HttpMessage message = DataProtectionOperationGroupRestClient.CreateCheckDataProtectionBackupFeatureSupportRequest(Guid.Parse(Id.SubscriptionId), location, BackupFeatureValidationContentBase.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BackupFeatureValidationResultBase> response = Response.FromValue(BackupFeatureValidationResultBase.FromResponse(result), result);
                 if (response.Value == null)

@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.StorageSync
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _cloudEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CloudEndpointData> response = Response.FromValue(CloudEndpointData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.StorageSync
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _cloudEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CloudEndpointData> response = Response.FromValue(CloudEndpointData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.StorageSync
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudEndpointsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CloudEndpointPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _cloudEndpointsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CloudEndpointPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageSyncArmOperation<CloudEndpointResource> operation = new StorageSyncArmOperation<CloudEndpointResource>(
                     new CloudEndpointResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.StorageSync
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudEndpointsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CloudEndpointPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _cloudEndpointsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CloudEndpointPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageSyncArmOperation<CloudEndpointResource> operation = new StorageSyncArmOperation<CloudEndpointResource>(
                     new CloudEndpointResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.StorageSync
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudEndpointsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _cloudEndpointsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageSyncArmOperation operation = new StorageSyncArmOperation(_cloudEndpointsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.StorageSync
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudEndpointsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _cloudEndpointsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageSyncArmOperation operation = new StorageSyncArmOperation(_cloudEndpointsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.StorageSync
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudEndpointsRestClient.CreateAfsShareMetadataCertificatePublicKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _cloudEndpointsRestClient.CreateAfsShareMetadataCertificatePublicKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CloudEndpointAfsShareMetadataCertificatePublicKeys> response = Response.FromValue(CloudEndpointAfsShareMetadataCertificatePublicKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.StorageSync
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudEndpointsRestClient.CreateAfsShareMetadataCertificatePublicKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _cloudEndpointsRestClient.CreateAfsShareMetadataCertificatePublicKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CloudEndpointAfsShareMetadataCertificatePublicKeys> response = Response.FromValue(CloudEndpointAfsShareMetadataCertificatePublicKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.StorageSync
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudEndpointsRestClient.CreatePostBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CloudEndpointBackupContent.ToRequestContent(content), context);
+                using HttpMessage message = _cloudEndpointsRestClient.CreatePostBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CloudEndpointBackupContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageSyncArmOperation<CloudEndpointPostBackupResult> operation = new StorageSyncArmOperation<CloudEndpointPostBackupResult>(
                     new CloudEndpointPostBackupResultOperationSource(),
@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.StorageSync
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudEndpointsRestClient.CreatePostBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CloudEndpointBackupContent.ToRequestContent(content), context);
+                using HttpMessage message = _cloudEndpointsRestClient.CreatePostBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CloudEndpointBackupContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageSyncArmOperation<CloudEndpointPostBackupResult> operation = new StorageSyncArmOperation<CloudEndpointPostBackupResult>(
                     new CloudEndpointPostBackupResultOperationSource(),
@@ -656,7 +656,7 @@ namespace Azure.ResourceManager.StorageSync
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudEndpointsRestClient.CreatePostRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, PostRestoreContent.ToRequestContent(content), context);
+                using HttpMessage message = _cloudEndpointsRestClient.CreatePostRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, PostRestoreContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageSyncArmOperation operation = new StorageSyncArmOperation(_cloudEndpointsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -709,7 +709,7 @@ namespace Azure.ResourceManager.StorageSync
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudEndpointsRestClient.CreatePostRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, PostRestoreContent.ToRequestContent(content), context);
+                using HttpMessage message = _cloudEndpointsRestClient.CreatePostRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, PostRestoreContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageSyncArmOperation operation = new StorageSyncArmOperation(_cloudEndpointsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -762,7 +762,7 @@ namespace Azure.ResourceManager.StorageSync
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudEndpointsRestClient.CreatePreBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CloudEndpointBackupContent.ToRequestContent(content), context);
+                using HttpMessage message = _cloudEndpointsRestClient.CreatePreBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CloudEndpointBackupContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageSyncArmOperation operation = new StorageSyncArmOperation(_cloudEndpointsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -815,7 +815,7 @@ namespace Azure.ResourceManager.StorageSync
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudEndpointsRestClient.CreatePreBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CloudEndpointBackupContent.ToRequestContent(content), context);
+                using HttpMessage message = _cloudEndpointsRestClient.CreatePreBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CloudEndpointBackupContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageSyncArmOperation operation = new StorageSyncArmOperation(_cloudEndpointsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -868,7 +868,7 @@ namespace Azure.ResourceManager.StorageSync
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudEndpointsRestClient.CreatePreRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, PreRestoreContent.ToRequestContent(content), context);
+                using HttpMessage message = _cloudEndpointsRestClient.CreatePreRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, PreRestoreContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageSyncArmOperation operation = new StorageSyncArmOperation(_cloudEndpointsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -921,7 +921,7 @@ namespace Azure.ResourceManager.StorageSync
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudEndpointsRestClient.CreatePreRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, PreRestoreContent.ToRequestContent(content), context);
+                using HttpMessage message = _cloudEndpointsRestClient.CreatePreRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, PreRestoreContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageSyncArmOperation operation = new StorageSyncArmOperation(_cloudEndpointsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -969,7 +969,7 @@ namespace Azure.ResourceManager.StorageSync
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudEndpointsRestClient.CreateRestoreHeartbeatRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _cloudEndpointsRestClient.CreateRestoreHeartbeatRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -1012,7 +1012,7 @@ namespace Azure.ResourceManager.StorageSync
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudEndpointsRestClient.CreateRestoreHeartbeatRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _cloudEndpointsRestClient.CreateRestoreHeartbeatRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -1060,7 +1060,7 @@ namespace Azure.ResourceManager.StorageSync
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudEndpointsRestClient.CreateTriggerChangeDetectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, TriggerChangeDetectionContent.ToRequestContent(content), context);
+                using HttpMessage message = _cloudEndpointsRestClient.CreateTriggerChangeDetectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, TriggerChangeDetectionContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageSyncArmOperation operation = new StorageSyncArmOperation(_cloudEndpointsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1113,7 +1113,7 @@ namespace Azure.ResourceManager.StorageSync
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudEndpointsRestClient.CreateTriggerChangeDetectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, TriggerChangeDetectionContent.ToRequestContent(content), context);
+                using HttpMessage message = _cloudEndpointsRestClient.CreateTriggerChangeDetectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, TriggerChangeDetectionContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageSyncArmOperation operation = new StorageSyncArmOperation(_cloudEndpointsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

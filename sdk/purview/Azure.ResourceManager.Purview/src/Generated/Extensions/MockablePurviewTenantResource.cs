@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Purview.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = DefaultAccountsRestClient.CreateGetDefaultAccountRequest(scopeTenantId, scopeType.ToString(), scope, context);
+                using HttpMessage message = DefaultAccountsRestClient.CreateGetDefaultAccountRequest(scopeTenantId, scopeType.ToString(), scope, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DefaultPurviewAccountPayload> response = Response.FromValue(DefaultPurviewAccountPayload.FromResponse(result), result);
                 if (response.Value == null)
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Purview.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = DefaultAccountsRestClient.CreateGetDefaultAccountRequest(scopeTenantId, scopeType.ToString(), scope, context);
+                using HttpMessage message = DefaultAccountsRestClient.CreateGetDefaultAccountRequest(scopeTenantId, scopeType.ToString(), scope, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DefaultPurviewAccountPayload> response = Response.FromValue(DefaultPurviewAccountPayload.FromResponse(result), result);
                 if (response.Value == null)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Purview.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = DefaultAccountsRestClient.CreateRemoveDefaultAccountRequest(scopeTenantId, scopeType.ToString(), scope, context);
+                using HttpMessage message = DefaultAccountsRestClient.CreateRemoveDefaultAccountRequest(scopeTenantId, scopeType.ToString(), scope, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Purview.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = DefaultAccountsRestClient.CreateRemoveDefaultAccountRequest(scopeTenantId, scopeType.ToString(), scope, context);
+                using HttpMessage message = DefaultAccountsRestClient.CreateRemoveDefaultAccountRequest(scopeTenantId, scopeType.ToString(), scope, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Purview.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = DefaultAccountsRestClient.CreateSetDefaultAccountRequest(DefaultPurviewAccountPayload.ToRequestContent(defaultAccountPayload), context);
+                using HttpMessage message = DefaultAccountsRestClient.CreateSetDefaultAccountRequest(DefaultPurviewAccountPayload.ToRequestContent(defaultAccountPayload), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DefaultPurviewAccountPayload> response = Response.FromValue(DefaultPurviewAccountPayload.FromResponse(result), result);
                 if (response.Value == null)
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Purview.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = DefaultAccountsRestClient.CreateSetDefaultAccountRequest(DefaultPurviewAccountPayload.ToRequestContent(defaultAccountPayload), context);
+                using HttpMessage message = DefaultAccountsRestClient.CreateSetDefaultAccountRequest(DefaultPurviewAccountPayload.ToRequestContent(defaultAccountPayload), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DefaultPurviewAccountPayload> response = Response.FromValue(DefaultPurviewAccountPayload.FromResponse(result), result);
                 if (response.Value == null)

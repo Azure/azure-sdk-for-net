@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, fluxConfigurationName, FluxConfigurationData.ToRequestContent(data), context);
+                using HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, fluxConfigurationName, FluxConfigurationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FluxConfigurationsArmOperation<FluxConfigurationResource> operation = new FluxConfigurationsArmOperation<FluxConfigurationResource>(
                     new FluxConfigurationResourceOperationSource(Client),
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, fluxConfigurationName, FluxConfigurationData.ToRequestContent(data), context);
+                using HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, fluxConfigurationName, FluxConfigurationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FluxConfigurationsArmOperation<FluxConfigurationResource> operation = new FluxConfigurationsArmOperation<FluxConfigurationResource>(
                     new FluxConfigurationResourceOperationSource(Client),
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, fluxConfigurationName, context);
+                using HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, fluxConfigurationName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FluxConfigurationData> response = Response.FromValue(FluxConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, fluxConfigurationName, context);
+                using HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, fluxConfigurationName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FluxConfigurationData> response = Response.FromValue(FluxConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, fluxConfigurationName, context);
+                using HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, fluxConfigurationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<FluxConfigurationData> response = default;
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, fluxConfigurationName, context);
+                using HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, fluxConfigurationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<FluxConfigurationData> response = default;
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, fluxConfigurationName, context);
+                using HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, fluxConfigurationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<FluxConfigurationData> response = default;
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, fluxConfigurationName, context);
+                using HttpMessage message = _fluxConfigurationInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, fluxConfigurationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<FluxConfigurationData> response = default;

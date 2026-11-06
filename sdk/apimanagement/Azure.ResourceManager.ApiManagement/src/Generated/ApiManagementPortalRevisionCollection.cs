@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _portalRevisionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, portalRevisionId, ApiManagementPortalRevisionData.ToRequestContent(data), context);
+                using HttpMessage message = _portalRevisionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, portalRevisionId, ApiManagementPortalRevisionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ApiManagementArmOperation<ApiManagementPortalRevisionResource> operation = new ApiManagementArmOperation<ApiManagementPortalRevisionResource>(
                     new ApiManagementPortalRevisionResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _portalRevisionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, portalRevisionId, ApiManagementPortalRevisionData.ToRequestContent(data), context);
+                using HttpMessage message = _portalRevisionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, portalRevisionId, ApiManagementPortalRevisionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ApiManagementArmOperation<ApiManagementPortalRevisionResource> operation = new ApiManagementArmOperation<ApiManagementPortalRevisionResource>(
                     new ApiManagementPortalRevisionResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _portalRevisionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, portalRevisionId, context);
+                using HttpMessage message = _portalRevisionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, portalRevisionId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementPortalRevisionData> response = Response.FromValue(ApiManagementPortalRevisionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _portalRevisionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, portalRevisionId, context);
+                using HttpMessage message = _portalRevisionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, portalRevisionId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementPortalRevisionData> response = Response.FromValue(ApiManagementPortalRevisionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _portalRevisionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, portalRevisionId, context);
+                using HttpMessage message = _portalRevisionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, portalRevisionId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementPortalRevisionData> response = default;
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _portalRevisionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, portalRevisionId, context);
+                using HttpMessage message = _portalRevisionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, portalRevisionId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementPortalRevisionData> response = default;
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _portalRevisionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, portalRevisionId, context);
+                using HttpMessage message = _portalRevisionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, portalRevisionId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementPortalRevisionData> response = default;
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _portalRevisionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, portalRevisionId, context);
+                using HttpMessage message = _portalRevisionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, portalRevisionId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementPortalRevisionData> response = default;

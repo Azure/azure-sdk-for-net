@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CodeSigningAccountsRestClient.CreateCheckArtifactSigningAccountNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ArtifactSigningAccountNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = CodeSigningAccountsRestClient.CreateCheckArtifactSigningAccountNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ArtifactSigningAccountNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ArtifactSigningAccountNameAvailabilityResult> response = Response.FromValue(ArtifactSigningAccountNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CodeSigningAccountsRestClient.CreateCheckArtifactSigningAccountNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ArtifactSigningAccountNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = CodeSigningAccountsRestClient.CreateCheckArtifactSigningAccountNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ArtifactSigningAccountNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ArtifactSigningAccountNameAvailabilityResult> response = Response.FromValue(ArtifactSigningAccountNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.NetworkSecurity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _neuroShieldProtectedResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _neuroShieldProtectedResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NeuroShieldProtectedResourceData> response = Response.FromValue(NeuroShieldProtectedResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.NetworkSecurity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _neuroShieldProtectedResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _neuroShieldProtectedResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NeuroShieldProtectedResourceData> response = Response.FromValue(NeuroShieldProtectedResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.NetworkSecurity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _neuroShieldProtectedResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
+                using HttpMessage message = _neuroShieldProtectedResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkSecurityArmOperation operation = new NetworkSecurityArmOperation(_neuroShieldProtectedResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.NetworkSecurity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _neuroShieldProtectedResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
+                using HttpMessage message = _neuroShieldProtectedResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkSecurityArmOperation operation = new NetworkSecurityArmOperation(_neuroShieldProtectedResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.NetworkSecurity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _neuroShieldProtectedResourcesRestClient.CreateTriggerInventoryUploadRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _neuroShieldProtectedResourcesRestClient.CreateTriggerInventoryUploadRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NeuroShieldInventoryUploadRequestResult> response = Response.FromValue(NeuroShieldInventoryUploadRequestResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.NetworkSecurity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _neuroShieldProtectedResourcesRestClient.CreateTriggerInventoryUploadRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _neuroShieldProtectedResourcesRestClient.CreateTriggerInventoryUploadRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NeuroShieldInventoryUploadRequestResult> response = Response.FromValue(NeuroShieldInventoryUploadRequestResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.NetworkSecurity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _neuroShieldProtectedResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NeuroShieldProtectedResourceData.ToRequestContent(data), ifMatch, context);
+                using HttpMessage message = _neuroShieldProtectedResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NeuroShieldProtectedResourceData.ToRequestContent(data), ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkSecurityArmOperation<NeuroShieldProtectedResource> operation = new NetworkSecurityArmOperation<NeuroShieldProtectedResource>(
                     new NeuroShieldProtectedResourceOperationSource(Client),
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.NetworkSecurity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _neuroShieldProtectedResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NeuroShieldProtectedResourceData.ToRequestContent(data), ifMatch, context);
+                using HttpMessage message = _neuroShieldProtectedResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NeuroShieldProtectedResourceData.ToRequestContent(data), ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkSecurityArmOperation<NeuroShieldProtectedResource> operation = new NetworkSecurityArmOperation<NeuroShieldProtectedResource>(
                     new NeuroShieldProtectedResourceOperationSource(Client),

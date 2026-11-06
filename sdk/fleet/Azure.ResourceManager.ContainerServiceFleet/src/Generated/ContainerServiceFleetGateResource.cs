@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _gatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerServiceFleetGateData> response = Response.FromValue(ContainerServiceFleetGateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _gatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerServiceFleetGateData> response = Response.FromValue(ContainerServiceFleetGateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerServiceFleetGatePatch.ToRequestContent(patch), matchConditions, context);
+                using HttpMessage message = _gatesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerServiceFleetGatePatch.ToRequestContent(patch), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceFleetArmOperation<ContainerServiceFleetGateResource> operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetGateResource>(
                     new ContainerServiceFleetGateResourceOperationSource(Client),
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerServiceFleetGatePatch.ToRequestContent(patch), matchConditions, context);
+                using HttpMessage message = _gatesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerServiceFleetGatePatch.ToRequestContent(patch), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceFleetArmOperation<ContainerServiceFleetGateResource> operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetGateResource>(
                     new ContainerServiceFleetGateResourceOperationSource(Client),

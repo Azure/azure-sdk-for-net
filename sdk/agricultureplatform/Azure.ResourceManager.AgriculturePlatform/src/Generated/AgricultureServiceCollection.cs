@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agriServiceRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, agriServiceResourceName, AgricultureServiceData.ToRequestContent(data), context);
+                using HttpMessage message = _agriServiceRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, agriServiceResourceName, AgricultureServiceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AgriculturePlatformArmOperation<AgricultureServiceResource> operation = new AgriculturePlatformArmOperation<AgricultureServiceResource>(
                     new AgricultureServiceResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agriServiceRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, agriServiceResourceName, AgricultureServiceData.ToRequestContent(data), context);
+                using HttpMessage message = _agriServiceRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, agriServiceResourceName, AgricultureServiceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AgriculturePlatformArmOperation<AgricultureServiceResource> operation = new AgriculturePlatformArmOperation<AgricultureServiceResource>(
                     new AgricultureServiceResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agriServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, agriServiceResourceName, context);
+                using HttpMessage message = _agriServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, agriServiceResourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AgricultureServiceData> response = Response.FromValue(AgricultureServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agriServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, agriServiceResourceName, context);
+                using HttpMessage message = _agriServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, agriServiceResourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AgricultureServiceData> response = Response.FromValue(AgricultureServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agriServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, agriServiceResourceName, context);
+                using HttpMessage message = _agriServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, agriServiceResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AgricultureServiceData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agriServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, agriServiceResourceName, context);
+                using HttpMessage message = _agriServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, agriServiceResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AgricultureServiceData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agriServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, agriServiceResourceName, context);
+                using HttpMessage message = _agriServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, agriServiceResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AgricultureServiceData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agriServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, agriServiceResourceName, context);
+                using HttpMessage message = _agriServiceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, agriServiceResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AgricultureServiceData> response = default;

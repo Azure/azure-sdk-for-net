@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DomainServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainServiceOperationGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, domainServiceName, DomainServiceData.ToRequestContent(data), context);
+                using HttpMessage message = _domainServiceOperationGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, domainServiceName, DomainServiceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DomainServicesArmOperation<DomainServiceResource> operation = new DomainServicesArmOperation<DomainServiceResource>(
                     new DomainServiceResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DomainServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainServiceOperationGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, domainServiceName, DomainServiceData.ToRequestContent(data), context);
+                using HttpMessage message = _domainServiceOperationGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, domainServiceName, DomainServiceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DomainServicesArmOperation<DomainServiceResource> operation = new DomainServicesArmOperation<DomainServiceResource>(
                     new DomainServiceResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DomainServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainServiceOperationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, domainServiceName, context);
+                using HttpMessage message = _domainServiceOperationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, domainServiceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DomainServiceData> response = Response.FromValue(DomainServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DomainServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainServiceOperationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, domainServiceName, context);
+                using HttpMessage message = _domainServiceOperationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, domainServiceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DomainServiceData> response = Response.FromValue(DomainServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.DomainServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainServiceOperationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, domainServiceName, context);
+                using HttpMessage message = _domainServiceOperationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, domainServiceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DomainServiceData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.DomainServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainServiceOperationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, domainServiceName, context);
+                using HttpMessage message = _domainServiceOperationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, domainServiceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DomainServiceData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.DomainServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainServiceOperationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, domainServiceName, context);
+                using HttpMessage message = _domainServiceOperationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, domainServiceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DomainServiceData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.DomainServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _domainServiceOperationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, domainServiceName, context);
+                using HttpMessage message = _domainServiceOperationGroupRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, domainServiceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DomainServiceData> response = default;

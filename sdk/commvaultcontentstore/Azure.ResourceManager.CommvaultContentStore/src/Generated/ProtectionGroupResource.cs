@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _protectionGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ProtectionGroupData> response = Response.FromValue(ProtectionGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _protectionGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ProtectionGroupData> response = Response.FromValue(ProtectionGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionGroupsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _protectionGroupsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CommvaultContentStoreArmOperation operation = new CommvaultContentStoreArmOperation(_protectionGroupsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionGroupsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _protectionGroupsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CommvaultContentStoreArmOperation operation = new CommvaultContentStoreArmOperation(_protectionGroupsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionGroupsRestClient.CreateBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackupProtectionGroupContent.ToRequestContent(content), context);
+                using HttpMessage message = _protectionGroupsRestClient.CreateBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackupProtectionGroupContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BackupProtectionGroupResult> response = Response.FromValue(BackupProtectionGroupResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionGroupsRestClient.CreateBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackupProtectionGroupContent.ToRequestContent(content), context);
+                using HttpMessage message = _protectionGroupsRestClient.CreateBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackupProtectionGroupContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BackupProtectionGroupResult> response = Response.FromValue(BackupProtectionGroupResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionGroupsRestClient.CreateRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RestoreProtectionItemContent.ToRequestContent(content), context);
+                using HttpMessage message = _protectionGroupsRestClient.CreateRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RestoreProtectionItemContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RestoreProtectionItemResult> response = Response.FromValue(RestoreProtectionItemResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionGroupsRestClient.CreateRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RestoreProtectionItemContent.ToRequestContent(content), context);
+                using HttpMessage message = _protectionGroupsRestClient.CreateRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RestoreProtectionItemContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RestoreProtectionItemResult> response = Response.FromValue(RestoreProtectionItemResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionGroupsRestClient.CreateResumeBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _protectionGroupsRestClient.CreateResumeBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionGroupsRestClient.CreateResumeBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _protectionGroupsRestClient.CreateResumeBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionGroupsRestClient.CreateStopBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StopBackupProtectionGroupContent.ToRequestContent(content), context);
+                using HttpMessage message = _protectionGroupsRestClient.CreateStopBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StopBackupProtectionGroupContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CommvaultContentStoreArmOperation operation = new CommvaultContentStoreArmOperation(_protectionGroupsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -670,7 +670,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionGroupsRestClient.CreateStopBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StopBackupProtectionGroupContent.ToRequestContent(content), context);
+                using HttpMessage message = _protectionGroupsRestClient.CreateStopBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StopBackupProtectionGroupContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CommvaultContentStoreArmOperation operation = new CommvaultContentStoreArmOperation(_protectionGroupsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -723,7 +723,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionGroupsRestClient.CreateCreateOrupdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ProtectionGroupData.ToRequestContent(data), context);
+                using HttpMessage message = _protectionGroupsRestClient.CreateCreateOrupdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ProtectionGroupData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CommvaultContentStoreArmOperation<ProtectionGroupResource> operation = new CommvaultContentStoreArmOperation<ProtectionGroupResource>(
                     new ProtectionGroupResourceOperationSource(Client),
@@ -782,7 +782,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionGroupsRestClient.CreateCreateOrupdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ProtectionGroupData.ToRequestContent(data), context);
+                using HttpMessage message = _protectionGroupsRestClient.CreateCreateOrupdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ProtectionGroupData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CommvaultContentStoreArmOperation<ProtectionGroupResource> operation = new CommvaultContentStoreArmOperation<ProtectionGroupResource>(
                     new ProtectionGroupResourceOperationSource(Client),

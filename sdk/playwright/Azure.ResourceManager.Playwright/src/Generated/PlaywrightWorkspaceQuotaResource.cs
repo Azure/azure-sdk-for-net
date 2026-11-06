@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Playwright
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _playwrightWorkspaceQuotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _playwrightWorkspaceQuotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PlaywrightWorkspaceQuotaData> response = Response.FromValue(PlaywrightWorkspaceQuotaData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Playwright
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _playwrightWorkspaceQuotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _playwrightWorkspaceQuotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PlaywrightWorkspaceQuotaData> response = Response.FromValue(PlaywrightWorkspaceQuotaData.FromResponse(result), result);
                 if (response.Value == null)

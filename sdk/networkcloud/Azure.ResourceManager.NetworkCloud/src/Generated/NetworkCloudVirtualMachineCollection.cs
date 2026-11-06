@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineName, NetworkCloudVirtualMachineData.ToRequestContent(data), matchConditions, context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineName, NetworkCloudVirtualMachineData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkCloudArmOperation<NetworkCloudVirtualMachineResource> operation = new NetworkCloudArmOperation<NetworkCloudVirtualMachineResource>(
                     new NetworkCloudVirtualMachineResourceOperationSource(Client),
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineName, NetworkCloudVirtualMachineData.ToRequestContent(data), matchConditions, context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineName, NetworkCloudVirtualMachineData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkCloudArmOperation<NetworkCloudVirtualMachineResource> operation = new NetworkCloudArmOperation<NetworkCloudVirtualMachineResource>(
                     new NetworkCloudVirtualMachineResourceOperationSource(Client),
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineName, context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkCloudVirtualMachineData> response = Response.FromValue(NetworkCloudVirtualMachineData.FromResponse(result), result);
                 if (response.Value == null)
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineName, context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkCloudVirtualMachineData> response = Response.FromValue(NetworkCloudVirtualMachineData.FromResponse(result), result);
                 if (response.Value == null)
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineName, context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkCloudVirtualMachineData> response = default;
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineName, context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkCloudVirtualMachineData> response = default;
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineName, context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkCloudVirtualMachineData> response = default;
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineName, context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkCloudVirtualMachineData> response = default;

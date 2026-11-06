@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cacheRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _cacheRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerRegistryCacheRuleData> response = Response.FromValue(ContainerRegistryCacheRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cacheRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _cacheRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerRegistryCacheRuleData> response = Response.FromValue(ContainerRegistryCacheRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cacheRulesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerRegistryCacheRulePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _cacheRulesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerRegistryCacheRulePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerRegistryArmOperation<ContainerRegistryCacheRuleResource> operation = new ContainerRegistryArmOperation<ContainerRegistryCacheRuleResource>(
                     new ContainerRegistryCacheRuleResourceOperationSource(Client),
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cacheRulesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerRegistryCacheRulePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _cacheRulesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerRegistryCacheRulePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerRegistryArmOperation<ContainerRegistryCacheRuleResource> operation = new ContainerRegistryArmOperation<ContainerRegistryCacheRuleResource>(
                     new ContainerRegistryCacheRuleResourceOperationSource(Client),
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cacheRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _cacheRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerRegistryArmOperation operation = new ContainerRegistryArmOperation(_cacheRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cacheRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _cacheRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerRegistryArmOperation operation = new ContainerRegistryArmOperation(_cacheRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

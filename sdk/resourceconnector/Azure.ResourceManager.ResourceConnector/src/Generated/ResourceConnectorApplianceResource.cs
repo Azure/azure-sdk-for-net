@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appliancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _appliancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceConnectorApplianceData> response = Response.FromValue(ResourceConnectorApplianceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appliancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _appliancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceConnectorApplianceData> response = Response.FromValue(ResourceConnectorApplianceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appliancesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ResourceConnectorAppliancePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _appliancesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ResourceConnectorAppliancePatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceConnectorApplianceData> response = Response.FromValue(ResourceConnectorApplianceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appliancesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ResourceConnectorAppliancePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _appliancesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ResourceConnectorAppliancePatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceConnectorApplianceData> response = Response.FromValue(ResourceConnectorApplianceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appliancesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _appliancesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResourceConnectorArmOperation operation = new ResourceConnectorArmOperation(_appliancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appliancesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _appliancesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResourceConnectorArmOperation operation = new ResourceConnectorArmOperation(_appliancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appliancesRestClient.CreateGetUpgradeGraphRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, upgradeGraph, context);
+                using HttpMessage message = _appliancesRestClient.CreateGetUpgradeGraphRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, upgradeGraph, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApplianceUpgradeGraph> response = Response.FromValue(ApplianceUpgradeGraph.FromResponse(result), result);
                 if (response.Value == null)
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appliancesRestClient.CreateGetUpgradeGraphRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, upgradeGraph, context);
+                using HttpMessage message = _appliancesRestClient.CreateGetUpgradeGraphRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, upgradeGraph, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApplianceUpgradeGraph> response = Response.FromValue(ApplianceUpgradeGraph.FromResponse(result), result);
                 if (response.Value == null)
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appliancesRestClient.CreateGetClusterUserCredentialRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _appliancesRestClient.CreateGetClusterUserCredentialRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApplianceListCredentialResult> response = Response.FromValue(ApplianceListCredentialResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appliancesRestClient.CreateGetClusterUserCredentialRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _appliancesRestClient.CreateGetClusterUserCredentialRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApplianceListCredentialResult> response = Response.FromValue(ApplianceListCredentialResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -633,7 +633,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appliancesRestClient.CreateGetKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, artifactType, context);
+                using HttpMessage message = _appliancesRestClient.CreateGetKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, artifactType, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApplianceListKeysResult> response = Response.FromValue(ApplianceListKeysResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -682,7 +682,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appliancesRestClient.CreateGetKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, artifactType, context);
+                using HttpMessage message = _appliancesRestClient.CreateGetKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, artifactType, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApplianceListKeysResult> response = Response.FromValue(ApplianceListKeysResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -721,7 +721,7 @@ namespace Azure.ResourceManager.ResourceConnector
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _appliancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _appliancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ResourceConnectorApplianceData> response = Response.FromValue(ResourceConnectorApplianceData.FromResponse(result), result);
                     return Response.FromValue(new ResourceConnectorApplianceResource(Client, response.Value), response.GetRawResponse());
@@ -769,7 +769,7 @@ namespace Azure.ResourceManager.ResourceConnector
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _appliancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _appliancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ResourceConnectorApplianceData> response = Response.FromValue(ResourceConnectorApplianceData.FromResponse(result), result);
                     return Response.FromValue(new ResourceConnectorApplianceResource(Client, response.Value), response.GetRawResponse());
@@ -815,7 +815,7 @@ namespace Azure.ResourceManager.ResourceConnector
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _appliancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _appliancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ResourceConnectorApplianceData> response = Response.FromValue(ResourceConnectorApplianceData.FromResponse(result), result);
                     return Response.FromValue(new ResourceConnectorApplianceResource(Client, response.Value), response.GetRawResponse());
@@ -857,7 +857,7 @@ namespace Azure.ResourceManager.ResourceConnector
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _appliancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _appliancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ResourceConnectorApplianceData> response = Response.FromValue(ResourceConnectorApplianceData.FromResponse(result), result);
                     return Response.FromValue(new ResourceConnectorApplianceResource(Client, response.Value), response.GetRawResponse());
@@ -899,7 +899,7 @@ namespace Azure.ResourceManager.ResourceConnector
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _appliancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _appliancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ResourceConnectorApplianceData> response = Response.FromValue(ResourceConnectorApplianceData.FromResponse(result), result);
                     return Response.FromValue(new ResourceConnectorApplianceResource(Client, response.Value), response.GetRawResponse());
@@ -945,7 +945,7 @@ namespace Azure.ResourceManager.ResourceConnector
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _appliancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _appliancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ResourceConnectorApplianceData> response = Response.FromValue(ResourceConnectorApplianceData.FromResponse(result), result);
                     return Response.FromValue(new ResourceConnectorApplianceResource(Client, response.Value), response.GetRawResponse());

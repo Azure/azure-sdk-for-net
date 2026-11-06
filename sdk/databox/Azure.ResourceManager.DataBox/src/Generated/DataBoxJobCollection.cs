@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataBox
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobResourcesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, DataBoxJobData.ToRequestContent(data), context);
+                using HttpMessage message = _jobResourcesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, DataBoxJobData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataBoxArmOperation<DataBoxJobResource> operation = new DataBoxArmOperation<DataBoxJobResource>(
                     new DataBoxJobResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DataBox
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobResourcesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, DataBoxJobData.ToRequestContent(data), context);
+                using HttpMessage message = _jobResourcesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, DataBoxJobData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataBoxArmOperation<DataBoxJobResource> operation = new DataBoxArmOperation<DataBoxJobResource>(
                     new DataBoxJobResourceOperationSource(Client),
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.DataBox
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, expand, context);
+                using HttpMessage message = _jobResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataBoxJobData> response = Response.FromValue(DataBoxJobData.FromResponse(result), result);
                 if (response.Value == null)
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.DataBox
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, expand, context);
+                using HttpMessage message = _jobResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataBoxJobData> response = Response.FromValue(DataBoxJobData.FromResponse(result), result);
                 if (response.Value == null)
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.DataBox
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, expand, context);
+                using HttpMessage message = _jobResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DataBoxJobData> response = default;
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.DataBox
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, expand, context);
+                using HttpMessage message = _jobResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DataBoxJobData> response = default;
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.DataBox
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, expand, context);
+                using HttpMessage message = _jobResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DataBoxJobData> response = default;
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.DataBox
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, expand, context);
+                using HttpMessage message = _jobResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DataBoxJobData> response = default;

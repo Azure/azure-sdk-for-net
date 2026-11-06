@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationChannelsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, context);
+                using HttpMessage message = _notificationChannelsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevTestLabNotificationChannelData> response = Response.FromValue(DevTestLabNotificationChannelData.FromResponse(result), result);
                 if (response.Value == null)
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationChannelsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, context);
+                using HttpMessage message = _notificationChannelsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevTestLabNotificationChannelData> response = Response.FromValue(DevTestLabNotificationChannelData.FromResponse(result), result);
                 if (response.Value == null)
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationChannelsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabNotificationChannelPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _notificationChannelsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabNotificationChannelPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevTestLabNotificationChannelData> response = Response.FromValue(DevTestLabNotificationChannelData.FromResponse(result), result);
                 if (response.Value == null)
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationChannelsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabNotificationChannelPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _notificationChannelsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabNotificationChannelPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevTestLabNotificationChannelData> response = Response.FromValue(DevTestLabNotificationChannelData.FromResponse(result), result);
                 if (response.Value == null)
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationChannelsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _notificationChannelsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationChannelsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _notificationChannelsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationChannelsRestClient.CreateNotifyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabNotificationChannelNotifyContent.ToRequestContent(content), context);
+                using HttpMessage message = _notificationChannelsRestClient.CreateNotifyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabNotificationChannelNotifyContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _notificationChannelsRestClient.CreateNotifyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabNotificationChannelNotifyContent.ToRequestContent(content), context);
+                using HttpMessage message = _notificationChannelsRestClient.CreateNotifyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevTestLabNotificationChannelNotifyContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _notificationChannelsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
+                    using HttpMessage message = _notificationChannelsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DevTestLabNotificationChannelData> response = Response.FromValue(DevTestLabNotificationChannelData.FromResponse(result), result);
                     return Response.FromValue(new DevTestLabNotificationChannelResource(Client, response.Value), response.GetRawResponse());
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _notificationChannelsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
+                    using HttpMessage message = _notificationChannelsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DevTestLabNotificationChannelData> response = Response.FromValue(DevTestLabNotificationChannelData.FromResponse(result), result);
                     return Response.FromValue(new DevTestLabNotificationChannelResource(Client, response.Value), response.GetRawResponse());
@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _notificationChannelsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
+                    using HttpMessage message = _notificationChannelsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DevTestLabNotificationChannelData> response = Response.FromValue(DevTestLabNotificationChannelData.FromResponse(result), result);
                     return Response.FromValue(new DevTestLabNotificationChannelResource(Client, response.Value), response.GetRawResponse());
@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _notificationChannelsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
+                    using HttpMessage message = _notificationChannelsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DevTestLabNotificationChannelData> response = Response.FromValue(DevTestLabNotificationChannelData.FromResponse(result), result);
                     return Response.FromValue(new DevTestLabNotificationChannelResource(Client, response.Value), response.GetRawResponse());
@@ -694,7 +694,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _notificationChannelsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
+                    using HttpMessage message = _notificationChannelsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DevTestLabNotificationChannelData> response = Response.FromValue(DevTestLabNotificationChannelData.FromResponse(result), result);
                     return Response.FromValue(new DevTestLabNotificationChannelResource(Client, response.Value), response.GetRawResponse());
@@ -740,7 +740,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _notificationChannelsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
+                    using HttpMessage message = _notificationChannelsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DevTestLabNotificationChannelData> response = Response.FromValue(DevTestLabNotificationChannelData.FromResponse(result), result);
                     return Response.FromValue(new DevTestLabNotificationChannelResource(Client, response.Value), response.GetRawResponse());

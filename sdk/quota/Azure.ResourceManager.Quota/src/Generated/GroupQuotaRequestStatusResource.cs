@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _submittedResourceRequestStatusesRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _submittedResourceRequestStatusesRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GroupQuotaRequestStatusData> response = Response.FromValue(GroupQuotaRequestStatusData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _submittedResourceRequestStatusesRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _submittedResourceRequestStatusesRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GroupQuotaRequestStatusData> response = Response.FromValue(GroupQuotaRequestStatusData.FromResponse(result), result);
                 if (response.Value == null)

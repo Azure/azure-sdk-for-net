@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineTemplatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineTemplateName, ScVmmVirtualMachineTemplateData.ToRequestContent(data), context);
+                using HttpMessage message = _virtualMachineTemplatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineTemplateName, ScVmmVirtualMachineTemplateData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ScVmmArmOperation<ScVmmVirtualMachineTemplateResource> operation = new ScVmmArmOperation<ScVmmVirtualMachineTemplateResource>(
                     new ScVmmVirtualMachineTemplateResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineTemplatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineTemplateName, ScVmmVirtualMachineTemplateData.ToRequestContent(data), context);
+                using HttpMessage message = _virtualMachineTemplatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineTemplateName, ScVmmVirtualMachineTemplateData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ScVmmArmOperation<ScVmmVirtualMachineTemplateResource> operation = new ScVmmArmOperation<ScVmmVirtualMachineTemplateResource>(
                     new ScVmmVirtualMachineTemplateResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineTemplateName, context);
+                using HttpMessage message = _virtualMachineTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineTemplateName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ScVmmVirtualMachineTemplateData> response = Response.FromValue(ScVmmVirtualMachineTemplateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineTemplateName, context);
+                using HttpMessage message = _virtualMachineTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineTemplateName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ScVmmVirtualMachineTemplateData> response = Response.FromValue(ScVmmVirtualMachineTemplateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineTemplateName, context);
+                using HttpMessage message = _virtualMachineTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineTemplateName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ScVmmVirtualMachineTemplateData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineTemplateName, context);
+                using HttpMessage message = _virtualMachineTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineTemplateName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ScVmmVirtualMachineTemplateData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineTemplateName, context);
+                using HttpMessage message = _virtualMachineTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineTemplateName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ScVmmVirtualMachineTemplateData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineTemplateName, context);
+                using HttpMessage message = _virtualMachineTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineTemplateName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ScVmmVirtualMachineTemplateData> response = default;

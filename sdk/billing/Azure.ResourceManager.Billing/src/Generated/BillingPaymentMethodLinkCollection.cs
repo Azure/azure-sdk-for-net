@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _paymentMethodsRestClient.CreateGetByBillingProfileRequest(Id.Parent.Name, Id.Name, paymentMethodName, context);
+                using HttpMessage message = _paymentMethodsRestClient.CreateGetByBillingProfileRequest(Id.Parent.Name, Id.Name, paymentMethodName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingPaymentMethodLinkData> response = Response.FromValue(BillingPaymentMethodLinkData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _paymentMethodsRestClient.CreateGetByBillingProfileRequest(Id.Parent.Name, Id.Name, paymentMethodName, context);
+                using HttpMessage message = _paymentMethodsRestClient.CreateGetByBillingProfileRequest(Id.Parent.Name, Id.Name, paymentMethodName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingPaymentMethodLinkData> response = Response.FromValue(BillingPaymentMethodLinkData.FromResponse(result), result);
                 if (response.Value == null)
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _paymentMethodsRestClient.CreateGetByBillingProfileRequest(Id.Parent.Name, Id.Name, paymentMethodName, context);
+                using HttpMessage message = _paymentMethodsRestClient.CreateGetByBillingProfileRequest(Id.Parent.Name, Id.Name, paymentMethodName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BillingPaymentMethodLinkData> response = default;
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _paymentMethodsRestClient.CreateGetByBillingProfileRequest(Id.Parent.Name, Id.Name, paymentMethodName, context);
+                using HttpMessage message = _paymentMethodsRestClient.CreateGetByBillingProfileRequest(Id.Parent.Name, Id.Name, paymentMethodName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BillingPaymentMethodLinkData> response = default;
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _paymentMethodsRestClient.CreateGetByBillingProfileRequest(Id.Parent.Name, Id.Name, paymentMethodName, context);
+                using HttpMessage message = _paymentMethodsRestClient.CreateGetByBillingProfileRequest(Id.Parent.Name, Id.Name, paymentMethodName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BillingPaymentMethodLinkData> response = default;
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _paymentMethodsRestClient.CreateGetByBillingProfileRequest(Id.Parent.Name, Id.Name, paymentMethodName, context);
+                using HttpMessage message = _paymentMethodsRestClient.CreateGetByBillingProfileRequest(Id.Parent.Name, Id.Name, paymentMethodName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BillingPaymentMethodLinkData> response = default;

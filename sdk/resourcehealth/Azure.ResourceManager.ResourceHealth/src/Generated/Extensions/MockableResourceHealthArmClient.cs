@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AvailabilityStatusesRestClient.CreateGetAvailabilityStatusRequest(scope.ToString(), filter, expand, context);
+                using HttpMessage message = AvailabilityStatusesRestClient.CreateGetAvailabilityStatusRequest(scope.ToString(), filter, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceHealthAvailabilityStatus> response = Response.FromValue(ResourceHealthAvailabilityStatus.FromResponse(result), result);
                 if (response.Value == null)
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AvailabilityStatusesRestClient.CreateGetAvailabilityStatusRequest(scope.ToString(), filter, expand, context);
+                using HttpMessage message = AvailabilityStatusesRestClient.CreateGetAvailabilityStatusRequest(scope.ToString(), filter, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceHealthAvailabilityStatus> response = Response.FromValue(ResourceHealthAvailabilityStatus.FromResponse(result), result);
                 if (response.Value == null)
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ChildAvailabilityStatusesRestClient.CreateGetAvailabilityStatusOfChildResourceRequest(scope.ToString(), filter, expand, context);
+                using HttpMessage message = ChildAvailabilityStatusesRestClient.CreateGetAvailabilityStatusOfChildResourceRequest(scope.ToString(), filter, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceHealthAvailabilityStatus> response = Response.FromValue(ResourceHealthAvailabilityStatus.FromResponse(result), result);
                 if (response.Value == null)
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ChildAvailabilityStatusesRestClient.CreateGetAvailabilityStatusOfChildResourceRequest(scope.ToString(), filter, expand, context);
+                using HttpMessage message = ChildAvailabilityStatusesRestClient.CreateGetAvailabilityStatusOfChildResourceRequest(scope.ToString(), filter, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceHealthAvailabilityStatus> response = Response.FromValue(ResourceHealthAvailabilityStatus.FromResponse(result), result);
                 if (response.Value == null)

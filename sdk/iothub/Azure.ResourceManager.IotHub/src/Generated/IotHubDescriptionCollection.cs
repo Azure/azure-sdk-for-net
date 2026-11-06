@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.IotHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iotHubResourceRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, IotHubDescriptionData.ToRequestContent(data), ifMatch, context);
+                using HttpMessage message = _iotHubResourceRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, IotHubDescriptionData.ToRequestContent(data), ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 IotHubArmOperation<IotHubDescriptionResource> operation = new IotHubArmOperation<IotHubDescriptionResource>(
                     new IotHubDescriptionResourceOperationSource(Client),
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.IotHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iotHubResourceRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, IotHubDescriptionData.ToRequestContent(data), ifMatch, context);
+                using HttpMessage message = _iotHubResourceRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, IotHubDescriptionData.ToRequestContent(data), ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 IotHubArmOperation<IotHubDescriptionResource> operation = new IotHubArmOperation<IotHubDescriptionResource>(
                     new IotHubDescriptionResourceOperationSource(Client),
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.IotHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iotHubResourceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                using HttpMessage message = _iotHubResourceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<IotHubDescriptionData> response = Response.FromValue(IotHubDescriptionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.IotHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iotHubResourceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                using HttpMessage message = _iotHubResourceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<IotHubDescriptionData> response = Response.FromValue(IotHubDescriptionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.IotHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iotHubResourceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                using HttpMessage message = _iotHubResourceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<IotHubDescriptionData> response = default;
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.IotHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iotHubResourceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                using HttpMessage message = _iotHubResourceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<IotHubDescriptionData> response = default;
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.IotHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iotHubResourceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                using HttpMessage message = _iotHubResourceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<IotHubDescriptionData> response = default;
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.IotHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iotHubResourceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                using HttpMessage message = _iotHubResourceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<IotHubDescriptionData> response = default;

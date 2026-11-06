@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policySetDefinitionVersionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, policyDefinitionVersion, PolicySetDefinitionVersionData.ToRequestContent(data), context);
+                using HttpMessage message = _policySetDefinitionVersionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, policyDefinitionVersion, PolicySetDefinitionVersionData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PolicySetDefinitionVersionData> response = Response.FromValue(PolicySetDefinitionVersionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policySetDefinitionVersionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, policyDefinitionVersion, PolicySetDefinitionVersionData.ToRequestContent(data), context);
+                using HttpMessage message = _policySetDefinitionVersionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, policyDefinitionVersion, PolicySetDefinitionVersionData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PolicySetDefinitionVersionData> response = Response.FromValue(PolicySetDefinitionVersionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policySetDefinitionVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, policyDefinitionVersion, expand, context);
+                using HttpMessage message = _policySetDefinitionVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, policyDefinitionVersion, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PolicySetDefinitionVersionData> response = Response.FromValue(PolicySetDefinitionVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policySetDefinitionVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, policyDefinitionVersion, expand, context);
+                using HttpMessage message = _policySetDefinitionVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, policyDefinitionVersion, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PolicySetDefinitionVersionData> response = Response.FromValue(PolicySetDefinitionVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policySetDefinitionVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, policyDefinitionVersion, expand, context);
+                using HttpMessage message = _policySetDefinitionVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, policyDefinitionVersion, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PolicySetDefinitionVersionData> response = default;
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policySetDefinitionVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, policyDefinitionVersion, expand, context);
+                using HttpMessage message = _policySetDefinitionVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, policyDefinitionVersion, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PolicySetDefinitionVersionData> response = default;
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policySetDefinitionVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, policyDefinitionVersion, expand, context);
+                using HttpMessage message = _policySetDefinitionVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, policyDefinitionVersion, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PolicySetDefinitionVersionData> response = default;
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policySetDefinitionVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, policyDefinitionVersion, expand, context);
+                using HttpMessage message = _policySetDefinitionVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, policyDefinitionVersion, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PolicySetDefinitionVersionData> response = default;

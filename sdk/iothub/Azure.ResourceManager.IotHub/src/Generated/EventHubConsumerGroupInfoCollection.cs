@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.IotHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iotHubResourceRestClient.CreateCreateEventHubConsumerGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _eventHubEndpointName, name, EventHubConsumerGroupInfoCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _iotHubResourceRestClient.CreateCreateEventHubConsumerGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _eventHubEndpointName, name, EventHubConsumerGroupInfoCreateOrUpdateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EventHubConsumerGroupInfoData> response = Response.FromValue(EventHubConsumerGroupInfoData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.IotHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iotHubResourceRestClient.CreateCreateEventHubConsumerGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _eventHubEndpointName, name, EventHubConsumerGroupInfoCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _iotHubResourceRestClient.CreateCreateEventHubConsumerGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _eventHubEndpointName, name, EventHubConsumerGroupInfoCreateOrUpdateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EventHubConsumerGroupInfoData> response = Response.FromValue(EventHubConsumerGroupInfoData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.IotHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iotHubResourceRestClient.CreateGetEventHubConsumerGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _eventHubEndpointName, name, context);
+                using HttpMessage message = _iotHubResourceRestClient.CreateGetEventHubConsumerGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _eventHubEndpointName, name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EventHubConsumerGroupInfoData> response = Response.FromValue(EventHubConsumerGroupInfoData.FromResponse(result), result);
                 if (response.Value == null)
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.IotHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iotHubResourceRestClient.CreateGetEventHubConsumerGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _eventHubEndpointName, name, context);
+                using HttpMessage message = _iotHubResourceRestClient.CreateGetEventHubConsumerGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _eventHubEndpointName, name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EventHubConsumerGroupInfoData> response = Response.FromValue(EventHubConsumerGroupInfoData.FromResponse(result), result);
                 if (response.Value == null)
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.IotHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iotHubResourceRestClient.CreateGetEventHubConsumerGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _eventHubEndpointName, name, context);
+                using HttpMessage message = _iotHubResourceRestClient.CreateGetEventHubConsumerGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _eventHubEndpointName, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EventHubConsumerGroupInfoData> response = default;
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.IotHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iotHubResourceRestClient.CreateGetEventHubConsumerGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _eventHubEndpointName, name, context);
+                using HttpMessage message = _iotHubResourceRestClient.CreateGetEventHubConsumerGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _eventHubEndpointName, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EventHubConsumerGroupInfoData> response = default;
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.IotHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iotHubResourceRestClient.CreateGetEventHubConsumerGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _eventHubEndpointName, name, context);
+                using HttpMessage message = _iotHubResourceRestClient.CreateGetEventHubConsumerGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _eventHubEndpointName, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EventHubConsumerGroupInfoData> response = default;
@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.IotHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iotHubResourceRestClient.CreateGetEventHubConsumerGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _eventHubEndpointName, name, context);
+                using HttpMessage message = _iotHubResourceRestClient.CreateGetEventHubConsumerGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _eventHubEndpointName, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EventHubConsumerGroupInfoData> response = default;

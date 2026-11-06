@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expand, detailLevel?.ToString(), context);
+                using HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expand, detailLevel?.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LoadBalancerData> response = Response.FromValue(LoadBalancerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expand, detailLevel?.ToString(), context);
+                using HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expand, detailLevel?.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LoadBalancerData> response = Response.FromValue(LoadBalancerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadBalancersRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTagsObject.ToRequestContent(networkTagsObject), context);
+                using HttpMessage message = _loadBalancersRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTagsObject.ToRequestContent(networkTagsObject), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LoadBalancerData> response = Response.FromValue(LoadBalancerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadBalancersRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTagsObject.ToRequestContent(networkTagsObject), context);
+                using HttpMessage message = _loadBalancersRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTagsObject.ToRequestContent(networkTagsObject), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LoadBalancerData> response = Response.FromValue(LoadBalancerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadBalancersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _loadBalancersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation operation = new NetworkArmOperation(_loadBalancersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadBalancersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _loadBalancersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation operation = new NetworkArmOperation(_loadBalancersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadBalancersRestClient.CreateMigrateToIPBasedRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateLoadBalancerToIPBasedContent.ToRequestContent(content), context);
+                using HttpMessage message = _loadBalancersRestClient.CreateMigrateToIPBasedRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateLoadBalancerToIPBasedContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MigrateLoadBalancerToIPBasedResult> response = Response.FromValue(MigrateLoadBalancerToIPBasedResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadBalancersRestClient.CreateMigrateToIPBasedRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateLoadBalancerToIPBasedContent.ToRequestContent(content), context);
+                using HttpMessage message = _loadBalancersRestClient.CreateMigrateToIPBasedRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateLoadBalancerToIPBasedContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MigrateLoadBalancerToIPBasedResult> response = Response.FromValue(MigrateLoadBalancerToIPBasedResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, default, context);
+                    using HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<LoadBalancerData> response = Response.FromValue(LoadBalancerData.FromResponse(result), result);
                     return Response.FromValue(new LoadBalancerResource(Client, response.Value), response.GetRawResponse());
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, default, context);
+                    using HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<LoadBalancerData> response = Response.FromValue(LoadBalancerData.FromResponse(result), result);
                     return Response.FromValue(new LoadBalancerResource(Client, response.Value), response.GetRawResponse());
@@ -697,7 +697,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, default, context);
+                    using HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<LoadBalancerData> response = Response.FromValue(LoadBalancerData.FromResponse(result), result);
                     return Response.FromValue(new LoadBalancerResource(Client, response.Value), response.GetRawResponse());
@@ -739,7 +739,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, default, context);
+                    using HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<LoadBalancerData> response = Response.FromValue(LoadBalancerData.FromResponse(result), result);
                     return Response.FromValue(new LoadBalancerResource(Client, response.Value), response.GetRawResponse());
@@ -781,7 +781,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, default, context);
+                    using HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<LoadBalancerData> response = Response.FromValue(LoadBalancerData.FromResponse(result), result);
                     return Response.FromValue(new LoadBalancerResource(Client, response.Value), response.GetRawResponse());
@@ -827,7 +827,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, default, context);
+                    using HttpMessage message = _loadBalancersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<LoadBalancerData> response = Response.FromValue(LoadBalancerData.FromResponse(result), result);
                     return Response.FromValue(new LoadBalancerResource(Client, response.Value), response.GetRawResponse());

@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateGetByIdTenantRequest(Guid.Parse(Id.Name), context);
+                using HttpMessage message = _alertsRestClient.CreateGetByIdTenantRequest(Guid.Parse(Id.Name), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceAlertData> response = Response.FromValue(ServiceAlertData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateGetByIdTenantRequest(Guid.Parse(Id.Name), context);
+                using HttpMessage message = _alertsRestClient.CreateGetByIdTenantRequest(Guid.Parse(Id.Name), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceAlertData> response = Response.FromValue(ServiceAlertData.FromResponse(result), result);
                 if (response.Value == null)
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateChangeStateRequest(Guid.Parse(Id.Name), newState.ToString(), ServiceAlertChangeStateContent.ToRequestContent(content), context);
+                using HttpMessage message = _alertsRestClient.CreateChangeStateRequest(Guid.Parse(Id.Name), newState.ToString(), ServiceAlertChangeStateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceAlertData> response = Response.FromValue(ServiceAlertData.FromResponse(result), result);
                 if (response.Value == null)
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateChangeStateRequest(Guid.Parse(Id.Name), newState.ToString(), ServiceAlertChangeStateContent.ToRequestContent(content), context);
+                using HttpMessage message = _alertsRestClient.CreateChangeStateRequest(Guid.Parse(Id.Name), newState.ToString(), ServiceAlertChangeStateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceAlertData> response = Response.FromValue(ServiceAlertData.FromResponse(result), result);
                 if (response.Value == null)
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateGetHistoryRequest(Guid.Parse(Id.Name), context);
+                using HttpMessage message = _alertsRestClient.CreateGetHistoryRequest(Guid.Parse(Id.Name), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceAlertModification> response = Response.FromValue(ServiceAlertModification.FromResponse(result), result);
                 if (response.Value == null)
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateGetHistoryRequest(Guid.Parse(Id.Name), context);
+                using HttpMessage message = _alertsRestClient.CreateGetHistoryRequest(Guid.Parse(Id.Name), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceAlertModification> response = Response.FromValue(ServiceAlertModification.FromResponse(result), result);
                 if (response.Value == null)

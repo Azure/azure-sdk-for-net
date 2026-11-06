@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _operatorApiPlansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), operatorApiPlanName, context);
+                using HttpMessage message = _operatorApiPlansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), operatorApiPlanName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OperatorApiPlanData> response = Response.FromValue(OperatorApiPlanData.FromResponse(result), result);
                 if (response.Value == null)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _operatorApiPlansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), operatorApiPlanName, context);
+                using HttpMessage message = _operatorApiPlansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), operatorApiPlanName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OperatorApiPlanData> response = Response.FromValue(OperatorApiPlanData.FromResponse(result), result);
                 if (response.Value == null)
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _operatorApiPlansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), operatorApiPlanName, context);
+                using HttpMessage message = _operatorApiPlansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), operatorApiPlanName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<OperatorApiPlanData> response = default;
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _operatorApiPlansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), operatorApiPlanName, context);
+                using HttpMessage message = _operatorApiPlansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), operatorApiPlanName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<OperatorApiPlanData> response = default;
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _operatorApiPlansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), operatorApiPlanName, context);
+                using HttpMessage message = _operatorApiPlansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), operatorApiPlanName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<OperatorApiPlanData> response = default;
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _operatorApiPlansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), operatorApiPlanName, context);
+                using HttpMessage message = _operatorApiPlansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), operatorApiPlanName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<OperatorApiPlanData> response = default;

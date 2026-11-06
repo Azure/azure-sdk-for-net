@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectedItemRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _protectedItemRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataReplicationProtectedItemData> response = Response.FromValue(DataReplicationProtectedItemData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectedItemRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _protectedItemRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataReplicationProtectedItemData> response = Response.FromValue(DataReplicationProtectedItemData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectedItemRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataReplicationProtectedItemPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _protectedItemRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataReplicationProtectedItemPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesDataReplicationArmOperation<DataReplicationProtectedItemResource> operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationProtectedItemResource>(
                     new DataReplicationProtectedItemResourceOperationSource(Client),
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectedItemRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataReplicationProtectedItemPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _protectedItemRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataReplicationProtectedItemPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesDataReplicationArmOperation<DataReplicationProtectedItemResource> operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationProtectedItemResource>(
                     new DataReplicationProtectedItemResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectedItemRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, forceDelete, context);
+                using HttpMessage message = _protectedItemRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, forceDelete, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesDataReplicationArmOperation operation = new RecoveryServicesDataReplicationArmOperation(_protectedItemClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectedItemRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, forceDelete, context);
+                using HttpMessage message = _protectedItemRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, forceDelete, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesDataReplicationArmOperation operation = new RecoveryServicesDataReplicationArmOperation(_protectedItemClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectedItemRestClient.CreatePlannedFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, Models.PlannedFailover.ToRequestContent(body), context);
+                using HttpMessage message = _protectedItemRestClient.CreatePlannedFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, Models.PlannedFailover.ToRequestContent(body), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesDataReplicationArmOperation<PlannedFailover> operation = new RecoveryServicesDataReplicationArmOperation<PlannedFailover>(
                     new PlannedFailoverOperationSource(),
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectedItemRestClient.CreatePlannedFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, Models.PlannedFailover.ToRequestContent(body), context);
+                using HttpMessage message = _protectedItemRestClient.CreatePlannedFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, Models.PlannedFailover.ToRequestContent(body), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesDataReplicationArmOperation<PlannedFailover> operation = new RecoveryServicesDataReplicationArmOperation<PlannedFailover>(
                     new PlannedFailoverOperationSource(),

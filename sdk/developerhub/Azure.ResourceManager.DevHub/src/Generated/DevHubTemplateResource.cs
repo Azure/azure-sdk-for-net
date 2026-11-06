@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _templateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _templateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevHubTemplateData> response = Response.FromValue(DevHubTemplateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _templateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _templateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevHubTemplateData> response = Response.FromValue(DevHubTemplateData.FromResponse(result), result);
                 if (response.Value == null)

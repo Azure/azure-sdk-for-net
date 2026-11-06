@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mongoDBResourcesRestClient.CreateCreateUpdateMongoDBDatabaseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, MongoDBDatabaseCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _mongoDBResourcesRestClient.CreateCreateUpdateMongoDBDatabaseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, MongoDBDatabaseCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<MongoDBDatabaseResource> operation = new CosmosDBArmOperation<MongoDBDatabaseResource>(
                     new MongoDBDatabaseResourceOperationSource(Client),
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mongoDBResourcesRestClient.CreateCreateUpdateMongoDBDatabaseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, MongoDBDatabaseCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _mongoDBResourcesRestClient.CreateCreateUpdateMongoDBDatabaseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, MongoDBDatabaseCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<MongoDBDatabaseResource> operation = new CosmosDBArmOperation<MongoDBDatabaseResource>(
                     new MongoDBDatabaseResourceOperationSource(Client),
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mongoDBResourcesRestClient.CreateGetMongoDBDatabaseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, context);
+                using HttpMessage message = _mongoDBResourcesRestClient.CreateGetMongoDBDatabaseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MongoDBDatabaseData> response = Response.FromValue(MongoDBDatabaseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mongoDBResourcesRestClient.CreateGetMongoDBDatabaseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, context);
+                using HttpMessage message = _mongoDBResourcesRestClient.CreateGetMongoDBDatabaseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MongoDBDatabaseData> response = Response.FromValue(MongoDBDatabaseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mongoDBResourcesRestClient.CreateGetMongoDBDatabaseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, context);
+                using HttpMessage message = _mongoDBResourcesRestClient.CreateGetMongoDBDatabaseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MongoDBDatabaseData> response = default;
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mongoDBResourcesRestClient.CreateGetMongoDBDatabaseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, context);
+                using HttpMessage message = _mongoDBResourcesRestClient.CreateGetMongoDBDatabaseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MongoDBDatabaseData> response = default;
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mongoDBResourcesRestClient.CreateGetMongoDBDatabaseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, context);
+                using HttpMessage message = _mongoDBResourcesRestClient.CreateGetMongoDBDatabaseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MongoDBDatabaseData> response = default;
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mongoDBResourcesRestClient.CreateGetMongoDBDatabaseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, context);
+                using HttpMessage message = _mongoDBResourcesRestClient.CreateGetMongoDBDatabaseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, databaseName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MongoDBDatabaseData> response = default;

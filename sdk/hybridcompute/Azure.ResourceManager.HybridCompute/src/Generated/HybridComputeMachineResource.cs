@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _machinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expand, context);
+                using HttpMessage message = _machinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HybridComputeMachineData> response = Response.FromValue(HybridComputeMachineData.FromResponse(result), result);
                 if (response.Value == null)
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _machinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expand, context);
+                using HttpMessage message = _machinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HybridComputeMachineData> response = Response.FromValue(HybridComputeMachineData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _machinesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HybridComputeMachinePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _machinesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HybridComputeMachinePatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HybridComputeMachineData> response = Response.FromValue(HybridComputeMachineData.FromResponse(result), result);
                 if (response.Value == null)
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _machinesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HybridComputeMachinePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _machinesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HybridComputeMachinePatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HybridComputeMachineData> response = Response.FromValue(HybridComputeMachineData.FromResponse(result), result);
                 if (response.Value == null)
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _machinesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _machinesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridComputeArmOperation operation = new HybridComputeArmOperation(_machinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _machinesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _machinesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridComputeArmOperation operation = new HybridComputeArmOperation(_machinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _machinesRestClient.CreateAssessPatchesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _machinesRestClient.CreateAssessPatchesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridComputeArmOperation<MachineAssessPatchesResult> operation = new HybridComputeArmOperation<MachineAssessPatchesResult>(
                     new MachineAssessPatchesResultOperationSource(),
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _machinesRestClient.CreateAssessPatchesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _machinesRestClient.CreateAssessPatchesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridComputeArmOperation<MachineAssessPatchesResult> operation = new HybridComputeArmOperation<MachineAssessPatchesResult>(
                     new MachineAssessPatchesResultOperationSource(),
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkScopesRestClient.CreateGetValidationDetailsForMachinePrivateLinkScopeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _privateLinkScopesRestClient.CreateGetValidationDetailsForMachinePrivateLinkScopeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PrivateLinkScopeValidationDetails> response = Response.FromValue(PrivateLinkScopeValidationDetails.FromResponse(result), result);
                 if (response.Value == null)
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkScopesRestClient.CreateGetValidationDetailsForMachinePrivateLinkScopeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _privateLinkScopesRestClient.CreateGetValidationDetailsForMachinePrivateLinkScopeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PrivateLinkScopeValidationDetails> response = Response.FromValue(PrivateLinkScopeValidationDetails.FromResponse(result), result);
                 if (response.Value == null)
@@ -655,7 +655,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _machinesRestClient.CreateInstallPatchesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MachineInstallPatchesContent.ToRequestContent(content), context);
+                using HttpMessage message = _machinesRestClient.CreateInstallPatchesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MachineInstallPatchesContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridComputeArmOperation<MachineInstallPatchesResult> operation = new HybridComputeArmOperation<MachineInstallPatchesResult>(
                     new MachineInstallPatchesResultOperationSource(),
@@ -714,7 +714,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _machinesRestClient.CreateInstallPatchesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MachineInstallPatchesContent.ToRequestContent(content), context);
+                using HttpMessage message = _machinesRestClient.CreateInstallPatchesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MachineInstallPatchesContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridComputeArmOperation<MachineInstallPatchesResult> operation = new HybridComputeArmOperation<MachineInstallPatchesResult>(
                     new MachineInstallPatchesResultOperationSource(),
@@ -768,7 +768,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkProfileRestClient.CreateGetNetworkProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkProfileRestClient.CreateGetNetworkProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HybridComputeNetworkProfile> response = Response.FromValue(HybridComputeNetworkProfile.FromResponse(result), result);
                 if (response.Value == null)
@@ -816,7 +816,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkProfileRestClient.CreateGetNetworkProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkProfileRestClient.CreateGetNetworkProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HybridComputeNetworkProfile> response = Response.FromValue(HybridComputeNetworkProfile.FromResponse(result), result);
                 if (response.Value == null)
@@ -869,7 +869,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hybridComputeClientRestClient.CreateSetupExtensionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SetupExtensionContent.ToRequestContent(content), context);
+                using HttpMessage message = _hybridComputeClientRestClient.CreateSetupExtensionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SetupExtensionContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridComputeArmOperation<SetupExtensionContent> operation = new HybridComputeArmOperation<SetupExtensionContent>(
                     new SetupExtensionContentOperationSource(),
@@ -928,7 +928,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hybridComputeClientRestClient.CreateSetupExtensionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SetupExtensionContent.ToRequestContent(content), context);
+                using HttpMessage message = _hybridComputeClientRestClient.CreateSetupExtensionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SetupExtensionContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridComputeArmOperation<SetupExtensionContent> operation = new HybridComputeArmOperation<SetupExtensionContent>(
                     new SetupExtensionContentOperationSource(),
@@ -987,7 +987,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hybridComputeClientRestClient.CreateUpgradeExtensionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MachineExtensionUpgrade.ToRequestContent(extensionUpgradeParameters), context);
+                using HttpMessage message = _hybridComputeClientRestClient.CreateUpgradeExtensionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MachineExtensionUpgrade.ToRequestContent(extensionUpgradeParameters), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridComputeArmOperation operation = new HybridComputeArmOperation(_hybridComputeClientClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1040,7 +1040,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hybridComputeClientRestClient.CreateUpgradeExtensionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MachineExtensionUpgrade.ToRequestContent(extensionUpgradeParameters), context);
+                using HttpMessage message = _hybridComputeClientRestClient.CreateUpgradeExtensionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MachineExtensionUpgrade.ToRequestContent(extensionUpgradeParameters), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridComputeArmOperation operation = new HybridComputeArmOperation(_hybridComputeClientClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1079,7 +1079,7 @@ namespace Azure.ResourceManager.HybridCompute
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _machinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _machinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<HybridComputeMachineData> response = Response.FromValue(HybridComputeMachineData.FromResponse(result), result);
                     return Response.FromValue(new HybridComputeMachineResource(Client, response.Value), response.GetRawResponse());
@@ -1127,7 +1127,7 @@ namespace Azure.ResourceManager.HybridCompute
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _machinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _machinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<HybridComputeMachineData> response = Response.FromValue(HybridComputeMachineData.FromResponse(result), result);
                     return Response.FromValue(new HybridComputeMachineResource(Client, response.Value), response.GetRawResponse());
@@ -1173,7 +1173,7 @@ namespace Azure.ResourceManager.HybridCompute
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _machinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _machinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<HybridComputeMachineData> response = Response.FromValue(HybridComputeMachineData.FromResponse(result), result);
                     return Response.FromValue(new HybridComputeMachineResource(Client, response.Value), response.GetRawResponse());
@@ -1215,7 +1215,7 @@ namespace Azure.ResourceManager.HybridCompute
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _machinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _machinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<HybridComputeMachineData> response = Response.FromValue(HybridComputeMachineData.FromResponse(result), result);
                     return Response.FromValue(new HybridComputeMachineResource(Client, response.Value), response.GetRawResponse());
@@ -1257,7 +1257,7 @@ namespace Azure.ResourceManager.HybridCompute
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _machinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _machinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<HybridComputeMachineData> response = Response.FromValue(HybridComputeMachineData.FromResponse(result), result);
                     return Response.FromValue(new HybridComputeMachineResource(Client, response.Value), response.GetRawResponse());
@@ -1303,7 +1303,7 @@ namespace Azure.ResourceManager.HybridCompute
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _machinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _machinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<HybridComputeMachineData> response = Response.FromValue(HybridComputeMachineData.FromResponse(result), result);
                     return Response.FromValue(new HybridComputeMachineResource(Client, response.Value), response.GetRawResponse());

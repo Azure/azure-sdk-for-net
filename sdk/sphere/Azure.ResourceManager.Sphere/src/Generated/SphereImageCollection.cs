@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _imagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, SphereImageData.ToRequestContent(data), context);
+                using HttpMessage message = _imagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, SphereImageData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SphereArmOperation<SphereImageResource> operation = new SphereArmOperation<SphereImageResource>(
                     new SphereImageResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _imagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, SphereImageData.ToRequestContent(data), context);
+                using HttpMessage message = _imagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, SphereImageData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SphereArmOperation<SphereImageResource> operation = new SphereArmOperation<SphereImageResource>(
                     new SphereImageResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _imagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, context);
+                using HttpMessage message = _imagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SphereImageData> response = Response.FromValue(SphereImageData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _imagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, context);
+                using HttpMessage message = _imagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SphereImageData> response = Response.FromValue(SphereImageData.FromResponse(result), result);
                 if (response.Value == null)
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _imagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, context);
+                using HttpMessage message = _imagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SphereImageData> response = default;
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _imagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, context);
+                using HttpMessage message = _imagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SphereImageData> response = default;
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _imagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, context);
+                using HttpMessage message = _imagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SphereImageData> response = default;
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _imagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, context);
+                using HttpMessage message = _imagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SphereImageData> response = default;

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationAssignmentsForSubscriptionsRestClient.CreateCreateOrUpdateConfigurationAssignmentBySubscriptionRequest(Guid.Parse(Id.SubscriptionId), configurationAssignmentName, MaintenanceConfigurationAssignmentData.ToRequestContent(data), context);
+                using HttpMessage message = _configurationAssignmentsForSubscriptionsRestClient.CreateCreateOrUpdateConfigurationAssignmentBySubscriptionRequest(Guid.Parse(Id.SubscriptionId), configurationAssignmentName, MaintenanceConfigurationAssignmentData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MaintenanceConfigurationAssignmentData> response = Response.FromValue(MaintenanceConfigurationAssignmentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationAssignmentsForSubscriptionsRestClient.CreateCreateOrUpdateConfigurationAssignmentBySubscriptionRequest(Guid.Parse(Id.SubscriptionId), configurationAssignmentName, MaintenanceConfigurationAssignmentData.ToRequestContent(data), context);
+                using HttpMessage message = _configurationAssignmentsForSubscriptionsRestClient.CreateCreateOrUpdateConfigurationAssignmentBySubscriptionRequest(Guid.Parse(Id.SubscriptionId), configurationAssignmentName, MaintenanceConfigurationAssignmentData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MaintenanceConfigurationAssignmentData> response = Response.FromValue(MaintenanceConfigurationAssignmentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationAssignmentsForSubscriptionsRestClient.CreateGetConfigurationAssignmentBySubscriptionRequest(Guid.Parse(Id.SubscriptionId), configurationAssignmentName, context);
+                using HttpMessage message = _configurationAssignmentsForSubscriptionsRestClient.CreateGetConfigurationAssignmentBySubscriptionRequest(Guid.Parse(Id.SubscriptionId), configurationAssignmentName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MaintenanceConfigurationAssignmentData> response = Response.FromValue(MaintenanceConfigurationAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationAssignmentsForSubscriptionsRestClient.CreateGetConfigurationAssignmentBySubscriptionRequest(Guid.Parse(Id.SubscriptionId), configurationAssignmentName, context);
+                using HttpMessage message = _configurationAssignmentsForSubscriptionsRestClient.CreateGetConfigurationAssignmentBySubscriptionRequest(Guid.Parse(Id.SubscriptionId), configurationAssignmentName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MaintenanceConfigurationAssignmentData> response = Response.FromValue(MaintenanceConfigurationAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationAssignmentsForSubscriptionsRestClient.CreateGetConfigurationAssignmentBySubscriptionRequest(Guid.Parse(Id.SubscriptionId), configurationAssignmentName, context);
+                using HttpMessage message = _configurationAssignmentsForSubscriptionsRestClient.CreateGetConfigurationAssignmentBySubscriptionRequest(Guid.Parse(Id.SubscriptionId), configurationAssignmentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MaintenanceConfigurationAssignmentData> response = default;
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationAssignmentsForSubscriptionsRestClient.CreateGetConfigurationAssignmentBySubscriptionRequest(Guid.Parse(Id.SubscriptionId), configurationAssignmentName, context);
+                using HttpMessage message = _configurationAssignmentsForSubscriptionsRestClient.CreateGetConfigurationAssignmentBySubscriptionRequest(Guid.Parse(Id.SubscriptionId), configurationAssignmentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MaintenanceConfigurationAssignmentData> response = default;
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationAssignmentsForSubscriptionsRestClient.CreateGetConfigurationAssignmentBySubscriptionRequest(Guid.Parse(Id.SubscriptionId), configurationAssignmentName, context);
+                using HttpMessage message = _configurationAssignmentsForSubscriptionsRestClient.CreateGetConfigurationAssignmentBySubscriptionRequest(Guid.Parse(Id.SubscriptionId), configurationAssignmentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MaintenanceConfigurationAssignmentData> response = default;
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationAssignmentsForSubscriptionsRestClient.CreateGetConfigurationAssignmentBySubscriptionRequest(Guid.Parse(Id.SubscriptionId), configurationAssignmentName, context);
+                using HttpMessage message = _configurationAssignmentsForSubscriptionsRestClient.CreateGetConfigurationAssignmentBySubscriptionRequest(Guid.Parse(Id.SubscriptionId), configurationAssignmentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MaintenanceConfigurationAssignmentData> response = default;

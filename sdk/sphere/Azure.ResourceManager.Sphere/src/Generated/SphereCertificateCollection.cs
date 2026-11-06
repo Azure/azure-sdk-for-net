@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serialNumber, context);
+                using HttpMessage message = _certificatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serialNumber, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SphereCertificateData> response = Response.FromValue(SphereCertificateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serialNumber, context);
+                using HttpMessage message = _certificatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serialNumber, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SphereCertificateData> response = Response.FromValue(SphereCertificateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serialNumber, context);
+                using HttpMessage message = _certificatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serialNumber, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SphereCertificateData> response = default;
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serialNumber, context);
+                using HttpMessage message = _certificatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serialNumber, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SphereCertificateData> response = default;
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serialNumber, context);
+                using HttpMessage message = _certificatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serialNumber, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SphereCertificateData> response = default;
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serialNumber, context);
+                using HttpMessage message = _certificatesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serialNumber, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SphereCertificateData> response = default;

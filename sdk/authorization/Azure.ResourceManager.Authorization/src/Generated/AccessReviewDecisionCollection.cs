@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewInstanceMyDecisionsRestClient.CreateGetByIdRequest(Id.Parent.Name, Id.Name, decisionId, context);
+                using HttpMessage message = _accessReviewInstanceMyDecisionsRestClient.CreateGetByIdRequest(Id.Parent.Name, Id.Name, decisionId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AccessReviewDecisionData> response = Response.FromValue(AccessReviewDecisionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewInstanceMyDecisionsRestClient.CreateGetByIdRequest(Id.Parent.Name, Id.Name, decisionId, context);
+                using HttpMessage message = _accessReviewInstanceMyDecisionsRestClient.CreateGetByIdRequest(Id.Parent.Name, Id.Name, decisionId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AccessReviewDecisionData> response = Response.FromValue(AccessReviewDecisionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewInstanceMyDecisionsRestClient.CreateGetByIdRequest(Id.Parent.Name, Id.Name, decisionId, context);
+                using HttpMessage message = _accessReviewInstanceMyDecisionsRestClient.CreateGetByIdRequest(Id.Parent.Name, Id.Name, decisionId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AccessReviewDecisionData> response = default;
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewInstanceMyDecisionsRestClient.CreateGetByIdRequest(Id.Parent.Name, Id.Name, decisionId, context);
+                using HttpMessage message = _accessReviewInstanceMyDecisionsRestClient.CreateGetByIdRequest(Id.Parent.Name, Id.Name, decisionId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AccessReviewDecisionData> response = default;
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewInstanceMyDecisionsRestClient.CreateGetByIdRequest(Id.Parent.Name, Id.Name, decisionId, context);
+                using HttpMessage message = _accessReviewInstanceMyDecisionsRestClient.CreateGetByIdRequest(Id.Parent.Name, Id.Name, decisionId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AccessReviewDecisionData> response = default;
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewInstanceMyDecisionsRestClient.CreateGetByIdRequest(Id.Parent.Name, Id.Name, decisionId, context);
+                using HttpMessage message = _accessReviewInstanceMyDecisionsRestClient.CreateGetByIdRequest(Id.Parent.Name, Id.Name, decisionId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AccessReviewDecisionData> response = default;

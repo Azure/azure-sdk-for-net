@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hcpOperatorIdentityRoleSetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, hcpOperatorIdentityRoleSetName, context);
+                using HttpMessage message = _hcpOperatorIdentityRoleSetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, hcpOperatorIdentityRoleSetName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HcpOperatorIdentityRoleSetData> response = Response.FromValue(HcpOperatorIdentityRoleSetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hcpOperatorIdentityRoleSetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, hcpOperatorIdentityRoleSetName, context);
+                using HttpMessage message = _hcpOperatorIdentityRoleSetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, hcpOperatorIdentityRoleSetName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HcpOperatorIdentityRoleSetData> response = Response.FromValue(HcpOperatorIdentityRoleSetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hcpOperatorIdentityRoleSetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, hcpOperatorIdentityRoleSetName, context);
+                using HttpMessage message = _hcpOperatorIdentityRoleSetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, hcpOperatorIdentityRoleSetName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HcpOperatorIdentityRoleSetData> response = default;
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hcpOperatorIdentityRoleSetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, hcpOperatorIdentityRoleSetName, context);
+                using HttpMessage message = _hcpOperatorIdentityRoleSetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, hcpOperatorIdentityRoleSetName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HcpOperatorIdentityRoleSetData> response = default;
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hcpOperatorIdentityRoleSetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, hcpOperatorIdentityRoleSetName, context);
+                using HttpMessage message = _hcpOperatorIdentityRoleSetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, hcpOperatorIdentityRoleSetName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HcpOperatorIdentityRoleSetData> response = default;
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hcpOperatorIdentityRoleSetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, hcpOperatorIdentityRoleSetName, context);
+                using HttpMessage message = _hcpOperatorIdentityRoleSetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, hcpOperatorIdentityRoleSetName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HcpOperatorIdentityRoleSetData> response = default;

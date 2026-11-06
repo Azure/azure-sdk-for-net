@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ClustersRestClient.CreateCheckCosmosDBForPostgreSqlClusterNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), CosmosDBForPostgreSqlClusterNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = ClustersRestClient.CreateCheckCosmosDBForPostgreSqlClusterNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), CosmosDBForPostgreSqlClusterNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CosmosDBForPostgreSqlClusterNameAvailabilityResult> response = Response.FromValue(CosmosDBForPostgreSqlClusterNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ClustersRestClient.CreateCheckCosmosDBForPostgreSqlClusterNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), CosmosDBForPostgreSqlClusterNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = ClustersRestClient.CreateCheckCosmosDBForPostgreSqlClusterNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), CosmosDBForPostgreSqlClusterNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CosmosDBForPostgreSqlClusterNameAvailabilityResult> response = Response.FromValue(CosmosDBForPostgreSqlClusterNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

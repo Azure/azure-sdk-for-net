@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RegistriesRestClient.CreateScheduleRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, registryName, ContainerRegistryRunContent.ToRequestContent(content), context);
+                using HttpMessage message = RegistriesRestClient.CreateScheduleRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, registryName, ContainerRegistryRunContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerRegistryRunData> response = Response.FromValue(ContainerRegistryRunData.FromResponse(result), result);
                 if (response.Value == null)
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RegistriesRestClient.CreateScheduleRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, registryName, ContainerRegistryRunContent.ToRequestContent(content), context);
+                using HttpMessage message = RegistriesRestClient.CreateScheduleRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, registryName, ContainerRegistryRunContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerRegistryRunData> response = Response.FromValue(ContainerRegistryRunData.FromResponse(result), result);
                 if (response.Value == null)
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RegistriesRestClient.CreateGetBuildSourceUploadUrlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, registryName, context);
+                using HttpMessage message = RegistriesRestClient.CreateGetBuildSourceUploadUrlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, registryName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerRegistryTaskSourceUploadResult> response = Response.FromValue(ContainerRegistryTaskSourceUploadResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RegistriesRestClient.CreateGetBuildSourceUploadUrlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, registryName, context);
+                using HttpMessage message = RegistriesRestClient.CreateGetBuildSourceUploadUrlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, registryName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerRegistryTaskSourceUploadResult> response = Response.FromValue(ContainerRegistryTaskSourceUploadResult.FromResponse(result), result);
                 if (response.Value == null)

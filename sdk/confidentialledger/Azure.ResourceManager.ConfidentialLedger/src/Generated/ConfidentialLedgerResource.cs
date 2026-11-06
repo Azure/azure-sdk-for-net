@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ledgerRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _ledgerRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConfidentialLedgerData> response = Response.FromValue(ConfidentialLedgerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ledgerRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _ledgerRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConfidentialLedgerData> response = Response.FromValue(ConfidentialLedgerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ledgerRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ConfidentialLedgerData.ToRequestContent(data), context);
+                using HttpMessage message = _ledgerRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ConfidentialLedgerData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ConfidentialLedgerArmOperation<ConfidentialLedgerResource> operation = new ConfidentialLedgerArmOperation<ConfidentialLedgerResource>(
                     new ConfidentialLedgerResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ledgerRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ConfidentialLedgerData.ToRequestContent(data), context);
+                using HttpMessage message = _ledgerRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ConfidentialLedgerData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ConfidentialLedgerArmOperation<ConfidentialLedgerResource> operation = new ConfidentialLedgerArmOperation<ConfidentialLedgerResource>(
                     new ConfidentialLedgerResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ledgerRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _ledgerRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ConfidentialLedgerArmOperation operation = new ConfidentialLedgerArmOperation(_ledgerClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ledgerRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _ledgerRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ConfidentialLedgerArmOperation operation = new ConfidentialLedgerArmOperation(_ledgerClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ledgerRestClient.CreateFilesExportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ConfidentialLedgerFilesExportContent.ToRequestContent(content), context);
+                using HttpMessage message = _ledgerRestClient.CreateFilesExportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ConfidentialLedgerFilesExportContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ConfidentialLedgerArmOperation<ConfidentialLedgerFilesExportResult> operation = new ConfidentialLedgerArmOperation<ConfidentialLedgerFilesExportResult>(
                     new ConfidentialLedgerFilesExportResultOperationSource(),
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ledgerRestClient.CreateFilesExportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ConfidentialLedgerFilesExportContent.ToRequestContent(content), context);
+                using HttpMessage message = _ledgerRestClient.CreateFilesExportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ConfidentialLedgerFilesExportContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ConfidentialLedgerArmOperation<ConfidentialLedgerFilesExportResult> operation = new ConfidentialLedgerArmOperation<ConfidentialLedgerFilesExportResult>(
                     new ConfidentialLedgerFilesExportResultOperationSource(),
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _ledgerRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _ledgerRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ConfidentialLedgerData> response = Response.FromValue(ConfidentialLedgerData.FromResponse(result), result);
                     return Response.FromValue(new ConfidentialLedgerResource(Client, response.Value), response.GetRawResponse());
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _ledgerRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _ledgerRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ConfidentialLedgerData> response = Response.FromValue(ConfidentialLedgerData.FromResponse(result), result);
                     return Response.FromValue(new ConfidentialLedgerResource(Client, response.Value), response.GetRawResponse());
@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _ledgerRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _ledgerRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ConfidentialLedgerData> response = Response.FromValue(ConfidentialLedgerData.FromResponse(result), result);
                     return Response.FromValue(new ConfidentialLedgerResource(Client, response.Value), response.GetRawResponse());
@@ -682,7 +682,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _ledgerRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _ledgerRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ConfidentialLedgerData> response = Response.FromValue(ConfidentialLedgerData.FromResponse(result), result);
                     return Response.FromValue(new ConfidentialLedgerResource(Client, response.Value), response.GetRawResponse());
@@ -724,7 +724,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _ledgerRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _ledgerRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ConfidentialLedgerData> response = Response.FromValue(ConfidentialLedgerData.FromResponse(result), result);
                     return Response.FromValue(new ConfidentialLedgerResource(Client, response.Value), response.GetRawResponse());
@@ -770,7 +770,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _ledgerRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _ledgerRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ConfidentialLedgerData> response = Response.FromValue(ConfidentialLedgerData.FromResponse(result), result);
                     return Response.FromValue(new ConfidentialLedgerResource(Client, response.Value), response.GetRawResponse());

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customDomainsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, WebPubSubCustomDomainData.ToRequestContent(data), context);
+                using HttpMessage message = _customDomainsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, WebPubSubCustomDomainData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WebPubSubArmOperation<WebPubSubCustomDomainResource> operation = new WebPubSubArmOperation<WebPubSubCustomDomainResource>(
                     new WebPubSubCustomDomainResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customDomainsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, WebPubSubCustomDomainData.ToRequestContent(data), context);
+                using HttpMessage message = _customDomainsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, WebPubSubCustomDomainData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WebPubSubArmOperation<WebPubSubCustomDomainResource> operation = new WebPubSubArmOperation<WebPubSubCustomDomainResource>(
                     new WebPubSubCustomDomainResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customDomainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _customDomainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WebPubSubCustomDomainData> response = Response.FromValue(WebPubSubCustomDomainData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customDomainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _customDomainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WebPubSubCustomDomainData> response = Response.FromValue(WebPubSubCustomDomainData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customDomainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _customDomainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WebPubSubCustomDomainData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customDomainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _customDomainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WebPubSubCustomDomainData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customDomainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _customDomainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WebPubSubCustomDomainData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customDomainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, context);
+                using HttpMessage message = _customDomainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WebPubSubCustomDomainData> response = default;

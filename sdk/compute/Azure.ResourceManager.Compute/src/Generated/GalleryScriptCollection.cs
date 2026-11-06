@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _galleryScriptsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryScriptName, GalleryScriptData.ToRequestContent(data), context);
+                using HttpMessage message = _galleryScriptsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryScriptName, GalleryScriptData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation<GalleryScriptResource> operation = new ComputeArmOperation<GalleryScriptResource>(
                     new GalleryScriptResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _galleryScriptsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryScriptName, GalleryScriptData.ToRequestContent(data), context);
+                using HttpMessage message = _galleryScriptsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryScriptName, GalleryScriptData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation<GalleryScriptResource> operation = new ComputeArmOperation<GalleryScriptResource>(
                     new GalleryScriptResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _galleryScriptsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryScriptName, context);
+                using HttpMessage message = _galleryScriptsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryScriptName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GalleryScriptData> response = Response.FromValue(GalleryScriptData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _galleryScriptsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryScriptName, context);
+                using HttpMessage message = _galleryScriptsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryScriptName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GalleryScriptData> response = Response.FromValue(GalleryScriptData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _galleryScriptsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryScriptName, context);
+                using HttpMessage message = _galleryScriptsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryScriptName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<GalleryScriptData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _galleryScriptsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryScriptName, context);
+                using HttpMessage message = _galleryScriptsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryScriptName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<GalleryScriptData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _galleryScriptsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryScriptName, context);
+                using HttpMessage message = _galleryScriptsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryScriptName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<GalleryScriptData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _galleryScriptsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryScriptName, context);
+                using HttpMessage message = _galleryScriptsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryScriptName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<GalleryScriptData> response = default;

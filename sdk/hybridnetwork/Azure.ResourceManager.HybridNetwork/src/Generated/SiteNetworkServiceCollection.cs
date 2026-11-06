@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteNetworkServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, siteNetworkServiceName, SiteNetworkServiceData.ToRequestContent(data), context);
+                using HttpMessage message = _siteNetworkServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, siteNetworkServiceName, SiteNetworkServiceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridNetworkArmOperation<SiteNetworkServiceResource> operation = new HybridNetworkArmOperation<SiteNetworkServiceResource>(
                     new SiteNetworkServiceResourceOperationSource(Client),
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteNetworkServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, siteNetworkServiceName, SiteNetworkServiceData.ToRequestContent(data), context);
+                using HttpMessage message = _siteNetworkServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, siteNetworkServiceName, SiteNetworkServiceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridNetworkArmOperation<SiteNetworkServiceResource> operation = new HybridNetworkArmOperation<SiteNetworkServiceResource>(
                     new SiteNetworkServiceResourceOperationSource(Client),
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteNetworkServicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, siteNetworkServiceName, context);
+                using HttpMessage message = _siteNetworkServicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, siteNetworkServiceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SiteNetworkServiceData> response = Response.FromValue(SiteNetworkServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteNetworkServicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, siteNetworkServiceName, context);
+                using HttpMessage message = _siteNetworkServicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, siteNetworkServiceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SiteNetworkServiceData> response = Response.FromValue(SiteNetworkServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteNetworkServicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, siteNetworkServiceName, context);
+                using HttpMessage message = _siteNetworkServicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, siteNetworkServiceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SiteNetworkServiceData> response = default;
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteNetworkServicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, siteNetworkServiceName, context);
+                using HttpMessage message = _siteNetworkServicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, siteNetworkServiceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SiteNetworkServiceData> response = default;
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteNetworkServicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, siteNetworkServiceName, context);
+                using HttpMessage message = _siteNetworkServicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, siteNetworkServiceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SiteNetworkServiceData> response = default;
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteNetworkServicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, siteNetworkServiceName, context);
+                using HttpMessage message = _siteNetworkServicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, siteNetworkServiceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SiteNetworkServiceData> response = default;

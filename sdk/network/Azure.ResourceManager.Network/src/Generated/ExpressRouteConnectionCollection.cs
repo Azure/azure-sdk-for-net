@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteConnectionsRestClient.CreateCreateOrUpdateExpressRouteConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, ExpressRouteConnectionData.ToRequestContent(data), context);
+                using HttpMessage message = _expressRouteConnectionsRestClient.CreateCreateOrUpdateExpressRouteConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, ExpressRouteConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<ExpressRouteConnectionResource> operation = new NetworkArmOperation<ExpressRouteConnectionResource>(
                     new ExpressRouteConnectionResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteConnectionsRestClient.CreateCreateOrUpdateExpressRouteConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, ExpressRouteConnectionData.ToRequestContent(data), context);
+                using HttpMessage message = _expressRouteConnectionsRestClient.CreateCreateOrUpdateExpressRouteConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, ExpressRouteConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<ExpressRouteConnectionResource> operation = new NetworkArmOperation<ExpressRouteConnectionResource>(
                     new ExpressRouteConnectionResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteConnectionsRestClient.CreateGetExpressRouteConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
+                using HttpMessage message = _expressRouteConnectionsRestClient.CreateGetExpressRouteConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExpressRouteConnectionData> response = Response.FromValue(ExpressRouteConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteConnectionsRestClient.CreateGetExpressRouteConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
+                using HttpMessage message = _expressRouteConnectionsRestClient.CreateGetExpressRouteConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExpressRouteConnectionData> response = Response.FromValue(ExpressRouteConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteConnectionsRestClient.CreateGetExpressRouteConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
+                using HttpMessage message = _expressRouteConnectionsRestClient.CreateGetExpressRouteConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ExpressRouteConnectionData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteConnectionsRestClient.CreateGetExpressRouteConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
+                using HttpMessage message = _expressRouteConnectionsRestClient.CreateGetExpressRouteConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ExpressRouteConnectionData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteConnectionsRestClient.CreateGetExpressRouteConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
+                using HttpMessage message = _expressRouteConnectionsRestClient.CreateGetExpressRouteConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ExpressRouteConnectionData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteConnectionsRestClient.CreateGetExpressRouteConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
+                using HttpMessage message = _expressRouteConnectionsRestClient.CreateGetExpressRouteConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ExpressRouteConnectionData> response = default;

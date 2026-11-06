@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.PrivateDns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recordSetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "AAAA", relativeRecordSetName, PrivateDnsAaaaRecordData.ToRequestContent(parameters), matchConditions, context);
+                using HttpMessage message = _recordSetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "AAAA", relativeRecordSetName, PrivateDnsAaaaRecordData.ToRequestContent(parameters), matchConditions, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PrivateDnsAaaaRecordData> response = Response.FromValue(PrivateDnsAaaaRecordData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.PrivateDns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recordSetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "AAAA", relativeRecordSetName, PrivateDnsAaaaRecordData.ToRequestContent(parameters), matchConditions, context);
+                using HttpMessage message = _recordSetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "AAAA", relativeRecordSetName, PrivateDnsAaaaRecordData.ToRequestContent(parameters), matchConditions, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PrivateDnsAaaaRecordData> response = Response.FromValue(PrivateDnsAaaaRecordData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.PrivateDns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "AAAA", aaaaRecordName, context);
+                using HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "AAAA", aaaaRecordName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PrivateDnsAaaaRecordData> response = Response.FromValue(PrivateDnsAaaaRecordData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.PrivateDns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "AAAA", aaaaRecordName, context);
+                using HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "AAAA", aaaaRecordName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PrivateDnsAaaaRecordData> response = Response.FromValue(PrivateDnsAaaaRecordData.FromResponse(result), result);
                 if (response.Value == null)
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.PrivateDns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "AAAA", aaaaRecordName, context);
+                using HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "AAAA", aaaaRecordName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PrivateDnsAaaaRecordData> response = default;
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.PrivateDns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "AAAA", aaaaRecordName, context);
+                using HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "AAAA", aaaaRecordName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PrivateDnsAaaaRecordData> response = default;
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.PrivateDns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "AAAA", aaaaRecordName, context);
+                using HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "AAAA", aaaaRecordName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PrivateDnsAaaaRecordData> response = default;
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.PrivateDns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "AAAA", aaaaRecordName, context);
+                using HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "AAAA", aaaaRecordName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PrivateDnsAaaaRecordData> response = default;

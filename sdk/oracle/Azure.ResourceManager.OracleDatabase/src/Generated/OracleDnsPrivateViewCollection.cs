@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dnsPrivateViewsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, dnsprivateviewocid, context);
+                using HttpMessage message = _dnsPrivateViewsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, dnsprivateviewocid, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OracleDnsPrivateViewData> response = Response.FromValue(OracleDnsPrivateViewData.FromResponse(result), result);
                 if (response.Value == null)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dnsPrivateViewsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, dnsprivateviewocid, context);
+                using HttpMessage message = _dnsPrivateViewsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, dnsprivateviewocid, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OracleDnsPrivateViewData> response = Response.FromValue(OracleDnsPrivateViewData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dnsPrivateViewsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, dnsprivateviewocid, context);
+                using HttpMessage message = _dnsPrivateViewsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, dnsprivateviewocid, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<OracleDnsPrivateViewData> response = default;
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dnsPrivateViewsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, dnsprivateviewocid, context);
+                using HttpMessage message = _dnsPrivateViewsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, dnsprivateviewocid, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<OracleDnsPrivateViewData> response = default;
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dnsPrivateViewsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, dnsprivateviewocid, context);
+                using HttpMessage message = _dnsPrivateViewsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, dnsprivateviewocid, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<OracleDnsPrivateViewData> response = default;
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dnsPrivateViewsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, dnsprivateviewocid, context);
+                using HttpMessage message = _dnsPrivateViewsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, dnsprivateviewocid, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<OracleDnsPrivateViewData> response = default;

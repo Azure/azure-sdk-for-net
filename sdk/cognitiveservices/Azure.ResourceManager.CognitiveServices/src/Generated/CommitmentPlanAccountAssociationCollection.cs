@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _commitmentPlanAccountAssociationsRestClient.CreateCreateOrUpdateAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, CommitmentPlanAccountAssociationData.ToRequestContent(data), context);
+                using HttpMessage message = _commitmentPlanAccountAssociationsRestClient.CreateCreateOrUpdateAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, CommitmentPlanAccountAssociationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CognitiveServicesArmOperation<CommitmentPlanAccountAssociationResource> operation = new CognitiveServicesArmOperation<CommitmentPlanAccountAssociationResource>(
                     new CommitmentPlanAccountAssociationResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _commitmentPlanAccountAssociationsRestClient.CreateCreateOrUpdateAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, CommitmentPlanAccountAssociationData.ToRequestContent(data), context);
+                using HttpMessage message = _commitmentPlanAccountAssociationsRestClient.CreateCreateOrUpdateAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, CommitmentPlanAccountAssociationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CognitiveServicesArmOperation<CommitmentPlanAccountAssociationResource> operation = new CognitiveServicesArmOperation<CommitmentPlanAccountAssociationResource>(
                     new CommitmentPlanAccountAssociationResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _commitmentPlanAccountAssociationsRestClient.CreateGetAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, context);
+                using HttpMessage message = _commitmentPlanAccountAssociationsRestClient.CreateGetAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CommitmentPlanAccountAssociationData> response = Response.FromValue(CommitmentPlanAccountAssociationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _commitmentPlanAccountAssociationsRestClient.CreateGetAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, context);
+                using HttpMessage message = _commitmentPlanAccountAssociationsRestClient.CreateGetAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CommitmentPlanAccountAssociationData> response = Response.FromValue(CommitmentPlanAccountAssociationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _commitmentPlanAccountAssociationsRestClient.CreateGetAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, context);
+                using HttpMessage message = _commitmentPlanAccountAssociationsRestClient.CreateGetAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CommitmentPlanAccountAssociationData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _commitmentPlanAccountAssociationsRestClient.CreateGetAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, context);
+                using HttpMessage message = _commitmentPlanAccountAssociationsRestClient.CreateGetAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CommitmentPlanAccountAssociationData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _commitmentPlanAccountAssociationsRestClient.CreateGetAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, context);
+                using HttpMessage message = _commitmentPlanAccountAssociationsRestClient.CreateGetAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CommitmentPlanAccountAssociationData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _commitmentPlanAccountAssociationsRestClient.CreateGetAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, context);
+                using HttpMessage message = _commitmentPlanAccountAssociationsRestClient.CreateGetAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CommitmentPlanAccountAssociationData> response = default;

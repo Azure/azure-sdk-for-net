@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _healthcareApisIotConnectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _healthcareApisIotConnectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HealthcareApisIotConnectorData> response = Response.FromValue(HealthcareApisIotConnectorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _healthcareApisIotConnectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _healthcareApisIotConnectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HealthcareApisIotConnectorData> response = Response.FromValue(HealthcareApisIotConnectorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iotConnectorsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, Id.Parent.Name, HealthcareApisIotConnectorPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _iotConnectorsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, Id.Parent.Name, HealthcareApisIotConnectorPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HealthcareApisArmOperation<HealthcareApisIotConnectorResource> operation = new HealthcareApisArmOperation<HealthcareApisIotConnectorResource>(
                     new HealthcareApisIotConnectorResourceOperationSource(Client),
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iotConnectorsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, Id.Parent.Name, HealthcareApisIotConnectorPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _iotConnectorsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, Id.Parent.Name, HealthcareApisIotConnectorPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HealthcareApisArmOperation<HealthcareApisIotConnectorResource> operation = new HealthcareApisArmOperation<HealthcareApisIotConnectorResource>(
                     new HealthcareApisIotConnectorResourceOperationSource(Client),
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iotConnectorsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, Id.Parent.Name, context);
+                using HttpMessage message = _iotConnectorsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, Id.Parent.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HealthcareApisArmOperation operation = new HealthcareApisArmOperation(_iotConnectorsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iotConnectorsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, Id.Parent.Name, context);
+                using HttpMessage message = _iotConnectorsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, Id.Parent.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HealthcareApisArmOperation operation = new HealthcareApisArmOperation(_iotConnectorsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.HealthcareApis
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _healthcareApisIotConnectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _healthcareApisIotConnectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<HealthcareApisIotConnectorData> response = Response.FromValue(HealthcareApisIotConnectorData.FromResponse(result), result);
                     return Response.FromValue(new HealthcareApisIotConnectorResource(Client, response.Value), response.GetRawResponse());
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.HealthcareApis
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _healthcareApisIotConnectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _healthcareApisIotConnectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<HealthcareApisIotConnectorData> response = Response.FromValue(HealthcareApisIotConnectorData.FromResponse(result), result);
                     return Response.FromValue(new HealthcareApisIotConnectorResource(Client, response.Value), response.GetRawResponse());
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.HealthcareApis
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _healthcareApisIotConnectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _healthcareApisIotConnectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<HealthcareApisIotConnectorData> response = Response.FromValue(HealthcareApisIotConnectorData.FromResponse(result), result);
                     return Response.FromValue(new HealthcareApisIotConnectorResource(Client, response.Value), response.GetRawResponse());
@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.HealthcareApis
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _healthcareApisIotConnectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _healthcareApisIotConnectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<HealthcareApisIotConnectorData> response = Response.FromValue(HealthcareApisIotConnectorData.FromResponse(result), result);
                     return Response.FromValue(new HealthcareApisIotConnectorResource(Client, response.Value), response.GetRawResponse());
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.HealthcareApis
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _healthcareApisIotConnectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _healthcareApisIotConnectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<HealthcareApisIotConnectorData> response = Response.FromValue(HealthcareApisIotConnectorData.FromResponse(result), result);
                     return Response.FromValue(new HealthcareApisIotConnectorResource(Client, response.Value), response.GetRawResponse());
@@ -658,7 +658,7 @@ namespace Azure.ResourceManager.HealthcareApis
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _healthcareApisIotConnectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _healthcareApisIotConnectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<HealthcareApisIotConnectorData> response = Response.FromValue(HealthcareApisIotConnectorData.FromResponse(result), result);
                     return Response.FromValue(new HealthcareApisIotConnectorResource(Client, response.Value), response.GetRawResponse());

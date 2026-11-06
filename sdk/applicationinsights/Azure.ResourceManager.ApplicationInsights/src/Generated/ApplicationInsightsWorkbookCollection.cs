@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workbooksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, ApplicationInsightsWorkbookData.ToRequestContent(data), sourceId, context);
+                using HttpMessage message = _workbooksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, ApplicationInsightsWorkbookData.ToRequestContent(data), sourceId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApplicationInsightsWorkbookData> response = Response.FromValue(ApplicationInsightsWorkbookData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workbooksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, ApplicationInsightsWorkbookData.ToRequestContent(data), sourceId, context);
+                using HttpMessage message = _workbooksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, ApplicationInsightsWorkbookData.ToRequestContent(data), sourceId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApplicationInsightsWorkbookData> response = Response.FromValue(ApplicationInsightsWorkbookData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workbooksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, canFetchContent, context);
+                using HttpMessage message = _workbooksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, canFetchContent, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApplicationInsightsWorkbookData> response = Response.FromValue(ApplicationInsightsWorkbookData.FromResponse(result), result);
                 if (response.Value == null)
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workbooksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, canFetchContent, context);
+                using HttpMessage message = _workbooksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, canFetchContent, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApplicationInsightsWorkbookData> response = Response.FromValue(ApplicationInsightsWorkbookData.FromResponse(result), result);
                 if (response.Value == null)
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workbooksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, canFetchContent, context);
+                using HttpMessage message = _workbooksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, canFetchContent, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApplicationInsightsWorkbookData> response = default;
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workbooksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, canFetchContent, context);
+                using HttpMessage message = _workbooksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, canFetchContent, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApplicationInsightsWorkbookData> response = default;
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workbooksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, canFetchContent, context);
+                using HttpMessage message = _workbooksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, canFetchContent, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApplicationInsightsWorkbookData> response = default;
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workbooksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, canFetchContent, context);
+                using HttpMessage message = _workbooksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, canFetchContent, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApplicationInsightsWorkbookData> response = default;

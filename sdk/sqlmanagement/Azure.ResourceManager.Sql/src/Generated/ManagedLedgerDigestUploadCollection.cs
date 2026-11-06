@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedLedgerDigestUploadsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads.ToString(), ManagedLedgerDigestUploadData.ToRequestContent(data), context);
+                using HttpMessage message = _managedLedgerDigestUploadsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads.ToString(), ManagedLedgerDigestUploadData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation<ManagedLedgerDigestUploadResource> operation = new SqlArmOperation<ManagedLedgerDigestUploadResource>(
                     new ManagedLedgerDigestUploadResourceOperationSource(Client),
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedLedgerDigestUploadsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads.ToString(), ManagedLedgerDigestUploadData.ToRequestContent(data), context);
+                using HttpMessage message = _managedLedgerDigestUploadsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads.ToString(), ManagedLedgerDigestUploadData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation<ManagedLedgerDigestUploadResource> operation = new SqlArmOperation<ManagedLedgerDigestUploadResource>(
                     new ManagedLedgerDigestUploadResourceOperationSource(Client),
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedLedgerDigestUploadsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads.ToString(), context);
+                using HttpMessage message = _managedLedgerDigestUploadsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ManagedLedgerDigestUploadData> response = Response.FromValue(ManagedLedgerDigestUploadData.FromResponse(result), result);
                 if (response.Value == null)
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedLedgerDigestUploadsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads.ToString(), context);
+                using HttpMessage message = _managedLedgerDigestUploadsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ManagedLedgerDigestUploadData> response = Response.FromValue(ManagedLedgerDigestUploadData.FromResponse(result), result);
                 if (response.Value == null)
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedLedgerDigestUploadsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads.ToString(), context);
+                using HttpMessage message = _managedLedgerDigestUploadsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ManagedLedgerDigestUploadData> response = default;
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedLedgerDigestUploadsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads.ToString(), context);
+                using HttpMessage message = _managedLedgerDigestUploadsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ManagedLedgerDigestUploadData> response = default;
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedLedgerDigestUploadsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads.ToString(), context);
+                using HttpMessage message = _managedLedgerDigestUploadsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ManagedLedgerDigestUploadData> response = default;
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedLedgerDigestUploadsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads.ToString(), context);
+                using HttpMessage message = _managedLedgerDigestUploadsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ManagedLedgerDigestUploadData> response = default;

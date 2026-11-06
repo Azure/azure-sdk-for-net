@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _healthcareApisWorkspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _healthcareApisWorkspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HealthcareApisWorkspaceData> response = Response.FromValue(HealthcareApisWorkspaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _healthcareApisWorkspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _healthcareApisWorkspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HealthcareApisWorkspaceData> response = Response.FromValue(HealthcareApisWorkspaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _healthcareApisWorkspacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HealthcareApisWorkspacePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _healthcareApisWorkspacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HealthcareApisWorkspacePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HealthcareApisArmOperation<HealthcareApisWorkspaceResource> operation = new HealthcareApisArmOperation<HealthcareApisWorkspaceResource>(
                     new HealthcareApisWorkspaceResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _healthcareApisWorkspacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HealthcareApisWorkspacePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _healthcareApisWorkspacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HealthcareApisWorkspacePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HealthcareApisArmOperation<HealthcareApisWorkspaceResource> operation = new HealthcareApisArmOperation<HealthcareApisWorkspaceResource>(
                     new HealthcareApisWorkspaceResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _healthcareApisWorkspacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _healthcareApisWorkspacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HealthcareApisArmOperation operation = new HealthcareApisArmOperation(_healthcareApisWorkspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _healthcareApisWorkspacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _healthcareApisWorkspacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HealthcareApisArmOperation operation = new HealthcareApisArmOperation(_healthcareApisWorkspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.HealthcareApis
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _healthcareApisWorkspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _healthcareApisWorkspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<HealthcareApisWorkspaceData> response = Response.FromValue(HealthcareApisWorkspaceData.FromResponse(result), result);
                     return Response.FromValue(new HealthcareApisWorkspaceResource(Client, response.Value), response.GetRawResponse());
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.HealthcareApis
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _healthcareApisWorkspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _healthcareApisWorkspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<HealthcareApisWorkspaceData> response = Response.FromValue(HealthcareApisWorkspaceData.FromResponse(result), result);
                     return Response.FromValue(new HealthcareApisWorkspaceResource(Client, response.Value), response.GetRawResponse());
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.HealthcareApis
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _healthcareApisWorkspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _healthcareApisWorkspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<HealthcareApisWorkspaceData> response = Response.FromValue(HealthcareApisWorkspaceData.FromResponse(result), result);
                     return Response.FromValue(new HealthcareApisWorkspaceResource(Client, response.Value), response.GetRawResponse());
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.HealthcareApis
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _healthcareApisWorkspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _healthcareApisWorkspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<HealthcareApisWorkspaceData> response = Response.FromValue(HealthcareApisWorkspaceData.FromResponse(result), result);
                     return Response.FromValue(new HealthcareApisWorkspaceResource(Client, response.Value), response.GetRawResponse());
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.HealthcareApis
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _healthcareApisWorkspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _healthcareApisWorkspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<HealthcareApisWorkspaceData> response = Response.FromValue(HealthcareApisWorkspaceData.FromResponse(result), result);
                     return Response.FromValue(new HealthcareApisWorkspaceResource(Client, response.Value), response.GetRawResponse());
@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.HealthcareApis
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _healthcareApisWorkspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _healthcareApisWorkspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<HealthcareApisWorkspaceData> response = Response.FromValue(HealthcareApisWorkspaceData.FromResponse(result), result);
                     return Response.FromValue(new HealthcareApisWorkspaceResource(Client, response.Value), response.GetRawResponse());

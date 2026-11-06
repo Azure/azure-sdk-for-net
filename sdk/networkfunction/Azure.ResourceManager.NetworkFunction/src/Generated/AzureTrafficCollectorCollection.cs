@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.NetworkFunction
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureTrafficCollectorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, azureTrafficCollectorName, AzureTrafficCollectorData.ToRequestContent(data), context);
+                using HttpMessage message = _azureTrafficCollectorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, azureTrafficCollectorName, AzureTrafficCollectorData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkFunctionArmOperation<AzureTrafficCollectorResource> operation = new NetworkFunctionArmOperation<AzureTrafficCollectorResource>(
                     new AzureTrafficCollectorResourceOperationSource(Client),
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.NetworkFunction
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureTrafficCollectorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, azureTrafficCollectorName, AzureTrafficCollectorData.ToRequestContent(data), context);
+                using HttpMessage message = _azureTrafficCollectorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, azureTrafficCollectorName, AzureTrafficCollectorData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkFunctionArmOperation<AzureTrafficCollectorResource> operation = new NetworkFunctionArmOperation<AzureTrafficCollectorResource>(
                     new AzureTrafficCollectorResourceOperationSource(Client),
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.NetworkFunction
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureTrafficCollectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, azureTrafficCollectorName, context);
+                using HttpMessage message = _azureTrafficCollectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, azureTrafficCollectorName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AzureTrafficCollectorData> response = Response.FromValue(AzureTrafficCollectorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.NetworkFunction
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureTrafficCollectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, azureTrafficCollectorName, context);
+                using HttpMessage message = _azureTrafficCollectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, azureTrafficCollectorName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AzureTrafficCollectorData> response = Response.FromValue(AzureTrafficCollectorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.NetworkFunction
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureTrafficCollectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, azureTrafficCollectorName, context);
+                using HttpMessage message = _azureTrafficCollectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, azureTrafficCollectorName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AzureTrafficCollectorData> response = default;
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.NetworkFunction
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureTrafficCollectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, azureTrafficCollectorName, context);
+                using HttpMessage message = _azureTrafficCollectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, azureTrafficCollectorName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AzureTrafficCollectorData> response = default;
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.NetworkFunction
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureTrafficCollectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, azureTrafficCollectorName, context);
+                using HttpMessage message = _azureTrafficCollectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, azureTrafficCollectorName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AzureTrafficCollectorData> response = default;
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.NetworkFunction
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureTrafficCollectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, azureTrafficCollectorName, context);
+                using HttpMessage message = _azureTrafficCollectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, azureTrafficCollectorName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AzureTrafficCollectorData> response = default;

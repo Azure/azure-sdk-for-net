@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionAliasResponsesRestClient.CreateGetRequest(Id.Name, context);
+                using HttpMessage message = _subscriptionAliasResponsesRestClient.CreateGetRequest(Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SubscriptionAliasData> response = Response.FromValue(SubscriptionAliasData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionAliasResponsesRestClient.CreateGetRequest(Id.Name, context);
+                using HttpMessage message = _subscriptionAliasResponsesRestClient.CreateGetRequest(Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SubscriptionAliasData> response = Response.FromValue(SubscriptionAliasData.FromResponse(result), result);
                 if (response.Value == null)
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionAliasResponsesRestClient.CreateDeleteRequest(Id.Name, context);
+                using HttpMessage message = _subscriptionAliasResponsesRestClient.CreateDeleteRequest(Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionAliasResponsesRestClient.CreateDeleteRequest(Id.Name, context);
+                using HttpMessage message = _subscriptionAliasResponsesRestClient.CreateDeleteRequest(Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionAliasResponsesRestClient.CreateCreateRequest(Id.Name, SubscriptionAliasCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _subscriptionAliasResponsesRestClient.CreateCreateRequest(Id.Name, SubscriptionAliasCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SubscriptionArmOperation<SubscriptionAliasResource> operation = new SubscriptionArmOperation<SubscriptionAliasResource>(
                     new SubscriptionAliasResourceOperationSource(Client),
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionAliasResponsesRestClient.CreateCreateRequest(Id.Name, SubscriptionAliasCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _subscriptionAliasResponsesRestClient.CreateCreateRequest(Id.Name, SubscriptionAliasCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SubscriptionArmOperation<SubscriptionAliasResource> operation = new SubscriptionArmOperation<SubscriptionAliasResource>(
                     new SubscriptionAliasResourceOperationSource(Client),

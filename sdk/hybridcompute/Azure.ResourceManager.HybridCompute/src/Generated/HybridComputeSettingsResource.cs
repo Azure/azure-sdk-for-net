@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _settingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _settingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ArcSettingsData> response = Response.FromValue(ArcSettingsData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _settingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _settingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ArcSettingsData> response = Response.FromValue(ArcSettingsData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _settingsRestClient.CreatePatchRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, ArcSettingsData.ToRequestContent(data), context);
+                using HttpMessage message = _settingsRestClient.CreatePatchRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, ArcSettingsData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ArcSettingsData> response = Response.FromValue(ArcSettingsData.FromResponse(result), result);
                 if (response.Value == null)
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _settingsRestClient.CreatePatchRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, ArcSettingsData.ToRequestContent(data), context);
+                using HttpMessage message = _settingsRestClient.CreatePatchRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, ArcSettingsData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ArcSettingsData> response = Response.FromValue(ArcSettingsData.FromResponse(result), result);
                 if (response.Value == null)

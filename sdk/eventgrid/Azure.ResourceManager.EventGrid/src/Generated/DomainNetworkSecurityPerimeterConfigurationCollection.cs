@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, "domains", Id.Name, perimeterGuid, associationName, context);
+                using HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, "domains", Id.Name, perimeterGuid, associationName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkSecurityPerimeterConfigurationData> response = Response.FromValue(NetworkSecurityPerimeterConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, "domains", Id.Name, perimeterGuid, associationName, context);
+                using HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, "domains", Id.Name, perimeterGuid, associationName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkSecurityPerimeterConfigurationData> response = Response.FromValue(NetworkSecurityPerimeterConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, "domains", Id.Name, perimeterGuid, associationName, context);
+                using HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, "domains", Id.Name, perimeterGuid, associationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkSecurityPerimeterConfigurationData> response = default;
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, "domains", Id.Name, perimeterGuid, associationName, context);
+                using HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, "domains", Id.Name, perimeterGuid, associationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkSecurityPerimeterConfigurationData> response = default;
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, "domains", Id.Name, perimeterGuid, associationName, context);
+                using HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, "domains", Id.Name, perimeterGuid, associationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkSecurityPerimeterConfigurationData> response = default;
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, "domains", Id.Name, perimeterGuid, associationName, context);
+                using HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, "domains", Id.Name, perimeterGuid, associationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkSecurityPerimeterConfigurationData> response = default;

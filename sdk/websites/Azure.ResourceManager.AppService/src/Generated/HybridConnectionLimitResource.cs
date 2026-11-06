@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hybridConnectionLimitsOperationGroupRestClient.CreateGetHybridConnectionPlanLimitRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _hybridConnectionLimitsOperationGroupRestClient.CreateGetHybridConnectionPlanLimitRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HybridConnectionLimitData> response = Response.FromValue(HybridConnectionLimitData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hybridConnectionLimitsOperationGroupRestClient.CreateGetHybridConnectionPlanLimitRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _hybridConnectionLimitsOperationGroupRestClient.CreateGetHybridConnectionPlanLimitRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HybridConnectionLimitData> response = Response.FromValue(HybridConnectionLimitData.FromResponse(result), result);
                 if (response.Value == null)

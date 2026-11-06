@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.IotOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _brokerRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, brokerName, IotOperationsBrokerData.ToRequestContent(data), context);
+                using HttpMessage message = _brokerRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, brokerName, IotOperationsBrokerData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 IotOperationsArmOperation<IotOperationsBrokerResource> operation = new IotOperationsArmOperation<IotOperationsBrokerResource>(
                     new IotOperationsBrokerResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.IotOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _brokerRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, brokerName, IotOperationsBrokerData.ToRequestContent(data), context);
+                using HttpMessage message = _brokerRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, brokerName, IotOperationsBrokerData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 IotOperationsArmOperation<IotOperationsBrokerResource> operation = new IotOperationsArmOperation<IotOperationsBrokerResource>(
                     new IotOperationsBrokerResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.IotOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _brokerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, brokerName, context);
+                using HttpMessage message = _brokerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, brokerName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<IotOperationsBrokerData> response = Response.FromValue(IotOperationsBrokerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.IotOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _brokerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, brokerName, context);
+                using HttpMessage message = _brokerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, brokerName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<IotOperationsBrokerData> response = Response.FromValue(IotOperationsBrokerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.IotOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _brokerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, brokerName, context);
+                using HttpMessage message = _brokerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, brokerName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<IotOperationsBrokerData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.IotOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _brokerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, brokerName, context);
+                using HttpMessage message = _brokerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, brokerName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<IotOperationsBrokerData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.IotOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _brokerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, brokerName, context);
+                using HttpMessage message = _brokerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, brokerName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<IotOperationsBrokerData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.IotOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _brokerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, brokerName, context);
+                using HttpMessage message = _brokerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, brokerName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<IotOperationsBrokerData> response = default;

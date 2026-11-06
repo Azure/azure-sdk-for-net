@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _remediationsRestClient.CreateGetAtResourceRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _remediationsRestClient.CreateGetAtResourceRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PolicyRemediationData> response = Response.FromValue(PolicyRemediationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _remediationsRestClient.CreateGetAtResourceRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _remediationsRestClient.CreateGetAtResourceRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PolicyRemediationData> response = Response.FromValue(PolicyRemediationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _remediationsRestClient.CreateCancelRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _remediationsRestClient.CreateCancelRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PolicyRemediationData> response = Response.FromValue(PolicyRemediationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _remediationsRestClient.CreateCancelRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _remediationsRestClient.CreateCancelRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PolicyRemediationData> response = Response.FromValue(PolicyRemediationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _remediationsRestClient.CreateCreateOrUpdateAtResourceRequest(Id.Parent.ToString(), Id.Name, PolicyRemediationData.ToRequestContent(data), context);
+                using HttpMessage message = _remediationsRestClient.CreateCreateOrUpdateAtResourceRequest(Id.Parent.ToString(), Id.Name, PolicyRemediationData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PolicyRemediationData> response = Response.FromValue(PolicyRemediationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _remediationsRestClient.CreateCreateOrUpdateAtResourceRequest(Id.Parent.ToString(), Id.Name, PolicyRemediationData.ToRequestContent(data), context);
+                using HttpMessage message = _remediationsRestClient.CreateCreateOrUpdateAtResourceRequest(Id.Parent.ToString(), Id.Name, PolicyRemediationData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PolicyRemediationData> response = Response.FromValue(PolicyRemediationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

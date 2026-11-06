@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateGetResourceGroupLevelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, alertName, context);
+                using HttpMessage message = _alertsRestClient.CreateGetResourceGroupLevelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, alertName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityAlertData> response = Response.FromValue(SecurityAlertData.FromResponse(result), result);
                 if (response.Value == null)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateGetResourceGroupLevelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, alertName, context);
+                using HttpMessage message = _alertsRestClient.CreateGetResourceGroupLevelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, alertName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityAlertData> response = Response.FromValue(SecurityAlertData.FromResponse(result), result);
                 if (response.Value == null)
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateGetResourceGroupLevelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, alertName, context);
+                using HttpMessage message = _alertsRestClient.CreateGetResourceGroupLevelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, alertName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SecurityAlertData> response = default;
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateGetResourceGroupLevelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, alertName, context);
+                using HttpMessage message = _alertsRestClient.CreateGetResourceGroupLevelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, alertName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SecurityAlertData> response = default;
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateGetResourceGroupLevelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, alertName, context);
+                using HttpMessage message = _alertsRestClient.CreateGetResourceGroupLevelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, alertName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SecurityAlertData> response = default;
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateGetResourceGroupLevelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, alertName, context);
+                using HttpMessage message = _alertsRestClient.CreateGetResourceGroupLevelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, alertName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SecurityAlertData> response = default;

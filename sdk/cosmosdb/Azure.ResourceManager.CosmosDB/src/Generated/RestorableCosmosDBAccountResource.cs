@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _restorableDatabaseAccountsRestClient.CreateGetByLocationRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Guid.Parse(Id.Name), context);
+                using HttpMessage message = _restorableDatabaseAccountsRestClient.CreateGetByLocationRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Guid.Parse(Id.Name), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RestorableCosmosDBAccountData> response = Response.FromValue(RestorableCosmosDBAccountData.FromResponse(result), result);
                 if (response.Value == null)
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _restorableDatabaseAccountsRestClient.CreateGetByLocationRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Guid.Parse(Id.Name), context);
+                using HttpMessage message = _restorableDatabaseAccountsRestClient.CreateGetByLocationRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Guid.Parse(Id.Name), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RestorableCosmosDBAccountData> response = Response.FromValue(RestorableCosmosDBAccountData.FromResponse(result), result);
                 if (response.Value == null)

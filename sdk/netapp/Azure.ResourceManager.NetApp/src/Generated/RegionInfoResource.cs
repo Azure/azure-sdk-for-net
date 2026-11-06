@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _netAppResourceRegionInfosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, context);
+                using HttpMessage message = _netAppResourceRegionInfosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RegionInfoResourceData> response = Response.FromValue(RegionInfoResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _netAppResourceRegionInfosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, context);
+                using HttpMessage message = _netAppResourceRegionInfosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RegionInfoResourceData> response = Response.FromValue(RegionInfoResourceData.FromResponse(result), result);
                 if (response.Value == null)

@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _supportTicketNoSubFileRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _supportTicketNoSubFileRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SupportFileDetailData> response = Response.FromValue(SupportFileDetailData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _supportTicketNoSubFileRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _supportTicketNoSubFileRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SupportFileDetailData> response = Response.FromValue(SupportFileDetailData.FromResponse(result), result);
                 if (response.Value == null)
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _supportTicketNoSubFileRestClient.CreateUploadRequest(Id.Parent.Name, Id.Name, UploadFileContent.ToRequestContent(content), context);
+                using HttpMessage message = _supportTicketNoSubFileRestClient.CreateUploadRequest(Id.Parent.Name, Id.Name, UploadFileContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _supportTicketNoSubFileRestClient.CreateUploadRequest(Id.Parent.Name, Id.Name, UploadFileContent.ToRequestContent(content), context);
+                using HttpMessage message = _supportTicketNoSubFileRestClient.CreateUploadRequest(Id.Parent.Name, Id.Name, UploadFileContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _supportTicketNoSubFileRestClient.CreateCreateRequest(Id.Parent.Name, Id.Name, SupportFileDetailData.ToRequestContent(data), context);
+                using HttpMessage message = _supportTicketNoSubFileRestClient.CreateCreateRequest(Id.Parent.Name, Id.Name, SupportFileDetailData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SupportFileDetailData> response = Response.FromValue(SupportFileDetailData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _supportTicketNoSubFileRestClient.CreateCreateRequest(Id.Parent.Name, Id.Name, SupportFileDetailData.ToRequestContent(data), context);
+                using HttpMessage message = _supportTicketNoSubFileRestClient.CreateCreateRequest(Id.Parent.Name, Id.Name, SupportFileDetailData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SupportFileDetailData> response = Response.FromValue(SupportFileDetailData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

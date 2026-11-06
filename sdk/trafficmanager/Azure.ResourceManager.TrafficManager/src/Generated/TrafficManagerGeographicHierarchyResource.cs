@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _geographicHierarchiesRestClient.CreateGetDefaultRequest(context);
+                using HttpMessage message = _geographicHierarchiesRestClient.CreateGetDefaultRequest(context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TrafficManagerGeographicHierarchyData> response = Response.FromValue(TrafficManagerGeographicHierarchyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _geographicHierarchiesRestClient.CreateGetDefaultRequest(context);
+                using HttpMessage message = _geographicHierarchiesRestClient.CreateGetDefaultRequest(context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TrafficManagerGeographicHierarchyData> response = Response.FromValue(TrafficManagerGeographicHierarchyData.FromResponse(result), result);
                 if (response.Value == null)

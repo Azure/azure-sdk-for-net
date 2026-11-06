@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotasEntitiesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _groupQuotasEntitiesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GroupQuotaEntityData> response = Response.FromValue(GroupQuotaEntityData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotasEntitiesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _groupQuotasEntitiesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GroupQuotaEntityData> response = Response.FromValue(GroupQuotaEntityData.FromResponse(result), result);
                 if (response.Value == null)
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotasEntitiesRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, GroupQuotaEntityPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _groupQuotasEntitiesRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, GroupQuotaEntityPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 QuotaArmOperation<GroupQuotaEntityResource> operation = new QuotaArmOperation<GroupQuotaEntityResource>(
                     new GroupQuotaEntityResourceOperationSource(Client),
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotasEntitiesRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, GroupQuotaEntityPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _groupQuotasEntitiesRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, GroupQuotaEntityPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 QuotaArmOperation<GroupQuotaEntityResource> operation = new QuotaArmOperation<GroupQuotaEntityResource>(
                     new GroupQuotaEntityResourceOperationSource(Client),
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotasEntitiesRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _groupQuotasEntitiesRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 QuotaArmOperation operation = new QuotaArmOperation(_groupQuotasEntitiesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotasEntitiesRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _groupQuotasEntitiesRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 QuotaArmOperation operation = new QuotaArmOperation(_groupQuotasEntitiesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

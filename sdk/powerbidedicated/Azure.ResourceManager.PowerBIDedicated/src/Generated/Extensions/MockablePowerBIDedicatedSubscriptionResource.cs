@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CapacitiesRestClient.CreateCheckNameAvailabilityCapacityRequest(Id.SubscriptionId, location, CheckCapacityNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = CapacitiesRestClient.CreateCheckNameAvailabilityCapacityRequest(Id.SubscriptionId, location, CheckCapacityNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CheckCapacityNameAvailabilityResult> response = Response.FromValue(CheckCapacityNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CapacitiesRestClient.CreateCheckNameAvailabilityCapacityRequest(Id.SubscriptionId, location, CheckCapacityNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = CapacitiesRestClient.CreateCheckNameAvailabilityCapacityRequest(Id.SubscriptionId, location, CheckCapacityNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CheckCapacityNameAvailabilityResult> response = Response.FromValue(CheckCapacityNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

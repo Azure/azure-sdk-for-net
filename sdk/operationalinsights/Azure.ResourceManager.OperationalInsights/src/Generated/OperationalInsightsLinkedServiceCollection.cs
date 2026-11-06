@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkedServicesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedServiceName, OperationalInsightsLinkedServiceData.ToRequestContent(data), context);
+                using HttpMessage message = _linkedServicesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedServiceName, OperationalInsightsLinkedServiceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OperationalInsightsArmOperation<OperationalInsightsLinkedServiceResource> operation = new OperationalInsightsArmOperation<OperationalInsightsLinkedServiceResource>(
                     new OperationalInsightsLinkedServiceResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkedServicesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedServiceName, OperationalInsightsLinkedServiceData.ToRequestContent(data), context);
+                using HttpMessage message = _linkedServicesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedServiceName, OperationalInsightsLinkedServiceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OperationalInsightsArmOperation<OperationalInsightsLinkedServiceResource> operation = new OperationalInsightsArmOperation<OperationalInsightsLinkedServiceResource>(
                     new OperationalInsightsLinkedServiceResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkedServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedServiceName, context);
+                using HttpMessage message = _linkedServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedServiceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OperationalInsightsLinkedServiceData> response = Response.FromValue(OperationalInsightsLinkedServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkedServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedServiceName, context);
+                using HttpMessage message = _linkedServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedServiceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OperationalInsightsLinkedServiceData> response = Response.FromValue(OperationalInsightsLinkedServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkedServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedServiceName, context);
+                using HttpMessage message = _linkedServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedServiceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<OperationalInsightsLinkedServiceData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkedServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedServiceName, context);
+                using HttpMessage message = _linkedServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedServiceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<OperationalInsightsLinkedServiceData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkedServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedServiceName, context);
+                using HttpMessage message = _linkedServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedServiceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<OperationalInsightsLinkedServiceData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkedServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedServiceName, context);
+                using HttpMessage message = _linkedServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedServiceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<OperationalInsightsLinkedServiceData> response = default;

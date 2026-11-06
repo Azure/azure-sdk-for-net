@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scalingPlanPooledSchedulesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scalingPlanScheduleName, ScalingPlanPooledScheduleData.ToRequestContent(data), context);
+                using HttpMessage message = _scalingPlanPooledSchedulesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scalingPlanScheduleName, ScalingPlanPooledScheduleData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ScalingPlanPooledScheduleData> response = Response.FromValue(ScalingPlanPooledScheduleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scalingPlanPooledSchedulesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scalingPlanScheduleName, ScalingPlanPooledScheduleData.ToRequestContent(data), context);
+                using HttpMessage message = _scalingPlanPooledSchedulesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scalingPlanScheduleName, ScalingPlanPooledScheduleData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ScalingPlanPooledScheduleData> response = Response.FromValue(ScalingPlanPooledScheduleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scalingPlanPooledSchedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scalingPlanScheduleName, context);
+                using HttpMessage message = _scalingPlanPooledSchedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scalingPlanScheduleName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ScalingPlanPooledScheduleData> response = Response.FromValue(ScalingPlanPooledScheduleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scalingPlanPooledSchedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scalingPlanScheduleName, context);
+                using HttpMessage message = _scalingPlanPooledSchedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scalingPlanScheduleName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ScalingPlanPooledScheduleData> response = Response.FromValue(ScalingPlanPooledScheduleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scalingPlanPooledSchedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scalingPlanScheduleName, context);
+                using HttpMessage message = _scalingPlanPooledSchedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scalingPlanScheduleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ScalingPlanPooledScheduleData> response = default;
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scalingPlanPooledSchedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scalingPlanScheduleName, context);
+                using HttpMessage message = _scalingPlanPooledSchedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scalingPlanScheduleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ScalingPlanPooledScheduleData> response = default;
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scalingPlanPooledSchedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scalingPlanScheduleName, context);
+                using HttpMessage message = _scalingPlanPooledSchedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scalingPlanScheduleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ScalingPlanPooledScheduleData> response = default;
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scalingPlanPooledSchedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scalingPlanScheduleName, context);
+                using HttpMessage message = _scalingPlanPooledSchedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, scalingPlanScheduleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ScalingPlanPooledScheduleData> response = default;

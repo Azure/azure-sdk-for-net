@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionRestClient.CreateGetPrivateLinkResourceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateLinkSubResourceName, context);
+                using HttpMessage message = _privateEndpointConnectionRestClient.CreateGetPrivateLinkResourceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateLinkSubResourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementPrivateLinkResourceData> response = Response.FromValue(ApiManagementPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionRestClient.CreateGetPrivateLinkResourceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateLinkSubResourceName, context);
+                using HttpMessage message = _privateEndpointConnectionRestClient.CreateGetPrivateLinkResourceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateLinkSubResourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementPrivateLinkResourceData> response = Response.FromValue(ApiManagementPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionRestClient.CreateGetPrivateLinkResourceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateLinkSubResourceName, context);
+                using HttpMessage message = _privateEndpointConnectionRestClient.CreateGetPrivateLinkResourceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateLinkSubResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementPrivateLinkResourceData> response = default;
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionRestClient.CreateGetPrivateLinkResourceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateLinkSubResourceName, context);
+                using HttpMessage message = _privateEndpointConnectionRestClient.CreateGetPrivateLinkResourceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateLinkSubResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementPrivateLinkResourceData> response = default;
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionRestClient.CreateGetPrivateLinkResourceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateLinkSubResourceName, context);
+                using HttpMessage message = _privateEndpointConnectionRestClient.CreateGetPrivateLinkResourceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateLinkSubResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementPrivateLinkResourceData> response = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionRestClient.CreateGetPrivateLinkResourceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateLinkSubResourceName, context);
+                using HttpMessage message = _privateEndpointConnectionRestClient.CreateGetPrivateLinkResourceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateLinkSubResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementPrivateLinkResourceData> response = default;

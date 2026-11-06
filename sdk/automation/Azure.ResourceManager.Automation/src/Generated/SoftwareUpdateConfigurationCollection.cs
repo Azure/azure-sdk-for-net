@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _softwareUpdateConfigurationsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, SoftwareUpdateConfigurationData.ToRequestContent(data), clientRequestId, context);
+                using HttpMessage message = _softwareUpdateConfigurationsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, SoftwareUpdateConfigurationData.ToRequestContent(data), clientRequestId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SoftwareUpdateConfigurationData> response = Response.FromValue(SoftwareUpdateConfigurationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _softwareUpdateConfigurationsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, SoftwareUpdateConfigurationData.ToRequestContent(data), clientRequestId, context);
+                using HttpMessage message = _softwareUpdateConfigurationsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, SoftwareUpdateConfigurationData.ToRequestContent(data), clientRequestId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SoftwareUpdateConfigurationData> response = Response.FromValue(SoftwareUpdateConfigurationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _softwareUpdateConfigurationsRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, clientRequestId, context);
+                using HttpMessage message = _softwareUpdateConfigurationsRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, clientRequestId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SoftwareUpdateConfigurationData> response = Response.FromValue(SoftwareUpdateConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _softwareUpdateConfigurationsRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, clientRequestId, context);
+                using HttpMessage message = _softwareUpdateConfigurationsRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, clientRequestId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SoftwareUpdateConfigurationData> response = Response.FromValue(SoftwareUpdateConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _softwareUpdateConfigurationsRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, clientRequestId, context);
+                using HttpMessage message = _softwareUpdateConfigurationsRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, clientRequestId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SoftwareUpdateConfigurationData> response = default;
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _softwareUpdateConfigurationsRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, clientRequestId, context);
+                using HttpMessage message = _softwareUpdateConfigurationsRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, clientRequestId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SoftwareUpdateConfigurationData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _softwareUpdateConfigurationsRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, clientRequestId, context);
+                using HttpMessage message = _softwareUpdateConfigurationsRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, clientRequestId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SoftwareUpdateConfigurationData> response = default;
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _softwareUpdateConfigurationsRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, clientRequestId, context);
+                using HttpMessage message = _softwareUpdateConfigurationsRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, clientRequestId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SoftwareUpdateConfigurationData> response = default;

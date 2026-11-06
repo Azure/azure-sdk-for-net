@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _availabilityGroupListenersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, context);
+                using HttpMessage message = _availabilityGroupListenersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AvailabilityGroupListenerData> response = Response.FromValue(AvailabilityGroupListenerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _availabilityGroupListenersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, context);
+                using HttpMessage message = _availabilityGroupListenersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AvailabilityGroupListenerData> response = Response.FromValue(AvailabilityGroupListenerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _availabilityGroupListenersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _availabilityGroupListenersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlVirtualMachineArmOperation operation = new SqlVirtualMachineArmOperation(_availabilityGroupListenersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _availabilityGroupListenersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _availabilityGroupListenersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlVirtualMachineArmOperation operation = new SqlVirtualMachineArmOperation(_availabilityGroupListenersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _availabilityGroupListenersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, AvailabilityGroupListenerData.ToRequestContent(data), context);
+                using HttpMessage message = _availabilityGroupListenersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, AvailabilityGroupListenerData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlVirtualMachineArmOperation<AvailabilityGroupListenerResource> operation = new SqlVirtualMachineArmOperation<AvailabilityGroupListenerResource>(
                     new AvailabilityGroupListenerResourceOperationSource(Client),
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _availabilityGroupListenersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, AvailabilityGroupListenerData.ToRequestContent(data), context);
+                using HttpMessage message = _availabilityGroupListenersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, AvailabilityGroupListenerData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlVirtualMachineArmOperation<AvailabilityGroupListenerResource> operation = new SqlVirtualMachineArmOperation<AvailabilityGroupListenerResource>(
                     new AvailabilityGroupListenerResourceOperationSource(Client),

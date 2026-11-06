@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _contentTypeRestClient.CreateCreateOrUpdateContentTypeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, contentTypeId, ApiManagementContentTypeData.ToRequestContent(data), ifMatch, context);
+                using HttpMessage message = _contentTypeRestClient.CreateCreateOrUpdateContentTypeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, contentTypeId, ApiManagementContentTypeData.ToRequestContent(data), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementContentTypeData> response = Response.FromValue(ApiManagementContentTypeData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _contentTypeRestClient.CreateCreateOrUpdateContentTypeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, contentTypeId, ApiManagementContentTypeData.ToRequestContent(data), ifMatch, context);
+                using HttpMessage message = _contentTypeRestClient.CreateCreateOrUpdateContentTypeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, contentTypeId, ApiManagementContentTypeData.ToRequestContent(data), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementContentTypeData> response = Response.FromValue(ApiManagementContentTypeData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _contentTypeRestClient.CreateGetContentTypeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, contentTypeId, context);
+                using HttpMessage message = _contentTypeRestClient.CreateGetContentTypeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, contentTypeId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementContentTypeData> response = Response.FromValue(ApiManagementContentTypeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _contentTypeRestClient.CreateGetContentTypeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, contentTypeId, context);
+                using HttpMessage message = _contentTypeRestClient.CreateGetContentTypeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, contentTypeId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementContentTypeData> response = Response.FromValue(ApiManagementContentTypeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _contentTypeRestClient.CreateGetContentTypeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, contentTypeId, context);
+                using HttpMessage message = _contentTypeRestClient.CreateGetContentTypeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, contentTypeId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementContentTypeData> response = default;
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _contentTypeRestClient.CreateGetContentTypeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, contentTypeId, context);
+                using HttpMessage message = _contentTypeRestClient.CreateGetContentTypeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, contentTypeId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementContentTypeData> response = default;
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _contentTypeRestClient.CreateGetContentTypeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, contentTypeId, context);
+                using HttpMessage message = _contentTypeRestClient.CreateGetContentTypeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, contentTypeId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementContentTypeData> response = default;
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _contentTypeRestClient.CreateGetContentTypeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, contentTypeId, context);
+                using HttpMessage message = _contentTypeRestClient.CreateGetContentTypeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, contentTypeId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementContentTypeData> response = default;

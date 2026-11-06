@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SolutionsClientRestClient.CreatePortalRegistryPackageRequest(ManagedApplicationsRegistryPackagePlan.ToRequestContent(managedApplicationsRegistryPackagePlan), context);
+                using HttpMessage message = SolutionsClientRestClient.CreatePortalRegistryPackageRequest(ManagedApplicationsRegistryPackagePlan.ToRequestContent(managedApplicationsRegistryPackagePlan), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ManagedApplicationsRegistryPackage> response = Response.FromValue(ManagedApplicationsRegistryPackage.FromResponse(result), result);
                 if (response.Value == null)
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SolutionsClientRestClient.CreatePortalRegistryPackageRequest(ManagedApplicationsRegistryPackagePlan.ToRequestContent(managedApplicationsRegistryPackagePlan), context);
+                using HttpMessage message = SolutionsClientRestClient.CreatePortalRegistryPackageRequest(ManagedApplicationsRegistryPackagePlan.ToRequestContent(managedApplicationsRegistryPackagePlan), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ManagedApplicationsRegistryPackage> response = Response.FromValue(ManagedApplicationsRegistryPackage.FromResponse(result), result);
                 if (response.Value == null)
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ApplicationsRestClient.CreateGetByIdRequest(applicationId, context);
+                using HttpMessage message = ApplicationsRestClient.CreateGetByIdRequest(applicationId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ManagedApplicationData> response = Response.FromValue(ManagedApplicationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ApplicationsRestClient.CreateGetByIdRequest(applicationId, context);
+                using HttpMessage message = ApplicationsRestClient.CreateGetByIdRequest(applicationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ManagedApplicationData> response = Response.FromValue(ManagedApplicationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ApplicationsRestClient.CreateCreateOrUpdateByIdRequest(applicationId, ManagedApplicationData.ToRequestContent(data), context);
+                using HttpMessage message = ApplicationsRestClient.CreateCreateOrUpdateByIdRequest(applicationId, ManagedApplicationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedApplicationsArmOperation<ManagedApplicationResource> operation = new ManagedApplicationsArmOperation<ManagedApplicationResource>(
                     new ManagedApplicationResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ApplicationsRestClient.CreateCreateOrUpdateByIdRequest(applicationId, ManagedApplicationData.ToRequestContent(data), context);
+                using HttpMessage message = ApplicationsRestClient.CreateCreateOrUpdateByIdRequest(applicationId, ManagedApplicationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedApplicationsArmOperation<ManagedApplicationResource> operation = new ManagedApplicationsArmOperation<ManagedApplicationResource>(
                     new ManagedApplicationResourceOperationSource(Client),
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ApplicationsRestClient.CreateUpdateByIdRequest(applicationId, ApplicationPatch.ToRequestContent(patch), context);
+                using HttpMessage message = ApplicationsRestClient.CreateUpdateByIdRequest(applicationId, ApplicationPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedApplicationsArmOperation<ManagedApplicationResource> operation = new ManagedApplicationsArmOperation<ManagedApplicationResource>(
                     new ManagedApplicationResourceOperationSource(Client),
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ApplicationsRestClient.CreateUpdateByIdRequest(applicationId, ApplicationPatch.ToRequestContent(patch), context);
+                using HttpMessage message = ApplicationsRestClient.CreateUpdateByIdRequest(applicationId, ApplicationPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedApplicationsArmOperation<ManagedApplicationResource> operation = new ManagedApplicationsArmOperation<ManagedApplicationResource>(
                     new ManagedApplicationResourceOperationSource(Client),
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ApplicationsRestClient.CreateDeleteByIdRequest(applicationId, context);
+                using HttpMessage message = ApplicationsRestClient.CreateDeleteByIdRequest(applicationId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedApplicationsArmOperation operation = new ManagedApplicationsArmOperation(ApplicationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ApplicationsRestClient.CreateDeleteByIdRequest(applicationId, context);
+                using HttpMessage message = ApplicationsRestClient.CreateDeleteByIdRequest(applicationId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedApplicationsArmOperation operation = new ManagedApplicationsArmOperation(ApplicationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)

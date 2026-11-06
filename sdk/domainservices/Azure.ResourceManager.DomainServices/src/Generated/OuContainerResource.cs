@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DomainServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ouContainerRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _ouContainerRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OuContainerData> response = Response.FromValue(OuContainerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.DomainServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ouContainerRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _ouContainerRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OuContainerData> response = Response.FromValue(OuContainerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.DomainServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ouContainerRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, OuContainerCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _ouContainerRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, OuContainerCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DomainServicesArmOperation<OuContainerResource> operation = new DomainServicesArmOperation<OuContainerResource>(
                     new OuContainerResourceOperationSource(Client),
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.DomainServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ouContainerRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, OuContainerCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _ouContainerRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, OuContainerCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DomainServicesArmOperation<OuContainerResource> operation = new DomainServicesArmOperation<OuContainerResource>(
                     new OuContainerResourceOperationSource(Client),
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.DomainServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ouContainerRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _ouContainerRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DomainServicesArmOperation operation = new DomainServicesArmOperation(_ouContainerClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.DomainServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ouContainerRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _ouContainerRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DomainServicesArmOperation operation = new DomainServicesArmOperation(_ouContainerClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _localRulestacksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _localRulestacksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LocalRulestackData> response = Response.FromValue(LocalRulestackData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _localRulestacksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _localRulestacksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LocalRulestackData> response = Response.FromValue(LocalRulestackData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _localRulestacksRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, LocalRulestackPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _localRulestacksRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, LocalRulestackPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LocalRulestackData> response = Response.FromValue(LocalRulestackData.FromResponse(result), result);
                 if (response.Value == null)
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _localRulestacksRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, LocalRulestackPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _localRulestacksRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, LocalRulestackPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LocalRulestackData> response = Response.FromValue(LocalRulestackData.FromResponse(result), result);
                 if (response.Value == null)
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _localRulestacksRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _localRulestacksRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NgfwArmOperation operation = new NgfwArmOperation(_localRulestacksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _localRulestacksRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _localRulestacksRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NgfwArmOperation operation = new NgfwArmOperation(_localRulestacksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _localRulestacksRestClient.CreateCommitRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _localRulestacksRestClient.CreateCommitRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NgfwArmOperation operation = new NgfwArmOperation(_localRulestacksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _localRulestacksRestClient.CreateCommitRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _localRulestacksRestClient.CreateCommitRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NgfwArmOperation operation = new NgfwArmOperation(_localRulestacksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _localRulestacksRestClient.CreateGetChangeLogRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _localRulestacksRestClient.CreateGetChangeLogRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RulestackChangelog> response = Response.FromValue(RulestackChangelog.FromResponse(result), result);
                 if (response.Value == null)
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _localRulestacksRestClient.CreateGetChangeLogRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _localRulestacksRestClient.CreateGetChangeLogRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RulestackChangelog> response = Response.FromValue(RulestackChangelog.FromResponse(result), result);
                 if (response.Value == null)
@@ -618,7 +618,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _localRulestacksRestClient.CreateGetSupportInfoRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, email, context);
+                using HttpMessage message = _localRulestacksRestClient.CreateGetSupportInfoRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, email, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FirewallSupportInfo> response = Response.FromValue(FirewallSupportInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -667,7 +667,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _localRulestacksRestClient.CreateGetSupportInfoRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, email, context);
+                using HttpMessage message = _localRulestacksRestClient.CreateGetSupportInfoRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, email, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FirewallSupportInfo> response = Response.FromValue(FirewallSupportInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -718,7 +718,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _localRulestacksRestClient.CreateGetAdvancedSecurityObjectsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, @type.ToString(), skip, top, context);
+                using HttpMessage message = _localRulestacksRestClient.CreateGetAdvancedSecurityObjectsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, @type.ToString(), skip, top, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AdvancedSecurityObjectListResult> response = Response.FromValue(AdvancedSecurityObjectListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -769,7 +769,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _localRulestacksRestClient.CreateGetAdvancedSecurityObjectsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, @type.ToString(), skip, top, context);
+                using HttpMessage message = _localRulestacksRestClient.CreateGetAdvancedSecurityObjectsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, @type.ToString(), skip, top, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AdvancedSecurityObjectListResult> response = Response.FromValue(AdvancedSecurityObjectListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1080,7 +1080,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _localRulestacksRestClient.CreateGetSecurityServicesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, @type.ToString(), skip, top, context);
+                using HttpMessage message = _localRulestacksRestClient.CreateGetSecurityServicesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, @type.ToString(), skip, top, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RulestackSecurityServiceListResult> response = Response.FromValue(RulestackSecurityServiceListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1131,7 +1131,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _localRulestacksRestClient.CreateGetSecurityServicesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, @type.ToString(), skip, top, context);
+                using HttpMessage message = _localRulestacksRestClient.CreateGetSecurityServicesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, @type.ToString(), skip, top, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RulestackSecurityServiceListResult> response = Response.FromValue(RulestackSecurityServiceListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1179,7 +1179,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _localRulestacksRestClient.CreateRevertRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _localRulestacksRestClient.CreateRevertRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -1222,7 +1222,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _localRulestacksRestClient.CreateRevertRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _localRulestacksRestClient.CreateRevertRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -1256,7 +1256,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _localRulestacksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _localRulestacksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<LocalRulestackData> response = Response.FromValue(LocalRulestackData.FromResponse(result), result);
                     return Response.FromValue(new LocalRulestackResource(Client, response.Value), response.GetRawResponse());
@@ -1304,7 +1304,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _localRulestacksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _localRulestacksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<LocalRulestackData> response = Response.FromValue(LocalRulestackData.FromResponse(result), result);
                     return Response.FromValue(new LocalRulestackResource(Client, response.Value), response.GetRawResponse());
@@ -1350,7 +1350,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _localRulestacksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _localRulestacksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<LocalRulestackData> response = Response.FromValue(LocalRulestackData.FromResponse(result), result);
                     return Response.FromValue(new LocalRulestackResource(Client, response.Value), response.GetRawResponse());
@@ -1392,7 +1392,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _localRulestacksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _localRulestacksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<LocalRulestackData> response = Response.FromValue(LocalRulestackData.FromResponse(result), result);
                     return Response.FromValue(new LocalRulestackResource(Client, response.Value), response.GetRawResponse());
@@ -1434,7 +1434,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _localRulestacksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _localRulestacksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<LocalRulestackData> response = Response.FromValue(LocalRulestackData.FromResponse(result), result);
                     return Response.FromValue(new LocalRulestackResource(Client, response.Value), response.GetRawResponse());
@@ -1480,7 +1480,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _localRulestacksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _localRulestacksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<LocalRulestackData> response = Response.FromValue(LocalRulestackData.FromResponse(result), result);
                     return Response.FromValue(new LocalRulestackResource(Client, response.Value), response.GetRawResponse());

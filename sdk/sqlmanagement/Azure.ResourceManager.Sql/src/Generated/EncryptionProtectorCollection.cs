@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _encryptionProtectorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, encryptionProtectorName.ToString(), EncryptionProtectorData.ToRequestContent(data), context);
+                using HttpMessage message = _encryptionProtectorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, encryptionProtectorName.ToString(), EncryptionProtectorData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation<EncryptionProtectorResource> operation = new SqlArmOperation<EncryptionProtectorResource>(
                     new EncryptionProtectorResourceOperationSource(Client),
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _encryptionProtectorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, encryptionProtectorName.ToString(), EncryptionProtectorData.ToRequestContent(data), context);
+                using HttpMessage message = _encryptionProtectorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, encryptionProtectorName.ToString(), EncryptionProtectorData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation<EncryptionProtectorResource> operation = new SqlArmOperation<EncryptionProtectorResource>(
                     new EncryptionProtectorResourceOperationSource(Client),
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _encryptionProtectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, encryptionProtectorName.ToString(), context);
+                using HttpMessage message = _encryptionProtectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, encryptionProtectorName.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EncryptionProtectorData> response = Response.FromValue(EncryptionProtectorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _encryptionProtectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, encryptionProtectorName.ToString(), context);
+                using HttpMessage message = _encryptionProtectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, encryptionProtectorName.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EncryptionProtectorData> response = Response.FromValue(EncryptionProtectorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _encryptionProtectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, encryptionProtectorName.ToString(), context);
+                using HttpMessage message = _encryptionProtectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, encryptionProtectorName.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EncryptionProtectorData> response = default;
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _encryptionProtectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, encryptionProtectorName.ToString(), context);
+                using HttpMessage message = _encryptionProtectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, encryptionProtectorName.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EncryptionProtectorData> response = default;
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _encryptionProtectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, encryptionProtectorName.ToString(), context);
+                using HttpMessage message = _encryptionProtectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, encryptionProtectorName.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EncryptionProtectorData> response = default;
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _encryptionProtectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, encryptionProtectorName.ToString(), context);
+                using HttpMessage message = _encryptionProtectorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, encryptionProtectorName.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EncryptionProtectorData> response = default;

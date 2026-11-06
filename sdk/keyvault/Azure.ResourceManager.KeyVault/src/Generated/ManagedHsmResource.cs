@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _managedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ManagedHsmData> response = Response.FromValue(ManagedHsmData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _managedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ManagedHsmData> response = Response.FromValue(ManagedHsmData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedHsmsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ManagedHsmData.ToRequestContent(data), context);
+                using HttpMessage message = _managedHsmsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ManagedHsmData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 KeyVaultArmOperation<ManagedHsmResource> operation = new KeyVaultArmOperation<ManagedHsmResource>(
                     new ManagedHsmResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedHsmsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ManagedHsmData.ToRequestContent(data), context);
+                using HttpMessage message = _managedHsmsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ManagedHsmData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 KeyVaultArmOperation<ManagedHsmResource> operation = new KeyVaultArmOperation<ManagedHsmResource>(
                     new ManagedHsmResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedHsmsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _managedHsmsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 KeyVaultArmOperation operation = new KeyVaultArmOperation(_managedHsmsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedHsmsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _managedHsmsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 KeyVaultArmOperation operation = new KeyVaultArmOperation(_managedHsmsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _managedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _managedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ManagedHsmData> response = Response.FromValue(ManagedHsmData.FromResponse(result), result);
                     return Response.FromValue(new ManagedHsmResource(Client, response.Value), response.GetRawResponse());
@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _managedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _managedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ManagedHsmData> response = Response.FromValue(ManagedHsmData.FromResponse(result), result);
                     return Response.FromValue(new ManagedHsmResource(Client, response.Value), response.GetRawResponse());
@@ -674,7 +674,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _managedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _managedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ManagedHsmData> response = Response.FromValue(ManagedHsmData.FromResponse(result), result);
                     return Response.FromValue(new ManagedHsmResource(Client, response.Value), response.GetRawResponse());
@@ -716,7 +716,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _managedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _managedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ManagedHsmData> response = Response.FromValue(ManagedHsmData.FromResponse(result), result);
                     return Response.FromValue(new ManagedHsmResource(Client, response.Value), response.GetRawResponse());
@@ -758,7 +758,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _managedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _managedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ManagedHsmData> response = Response.FromValue(ManagedHsmData.FromResponse(result), result);
                     return Response.FromValue(new ManagedHsmResource(Client, response.Value), response.GetRawResponse());
@@ -804,7 +804,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _managedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _managedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ManagedHsmData> response = Response.FromValue(ManagedHsmData.FromResponse(result), result);
                     return Response.FromValue(new ManagedHsmResource(Client, response.Value), response.GetRawResponse());

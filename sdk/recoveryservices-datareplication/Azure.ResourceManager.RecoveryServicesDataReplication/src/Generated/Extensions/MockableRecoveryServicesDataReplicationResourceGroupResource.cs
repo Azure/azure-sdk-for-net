@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = DeploymentPreflightOperationsRestClient.CreatePerformDeploymentPreflightValidationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, deploymentId, DeploymentPreflight.ToRequestContent(body), context);
+                using HttpMessage message = DeploymentPreflightOperationsRestClient.CreatePerformDeploymentPreflightValidationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, deploymentId, DeploymentPreflight.ToRequestContent(body), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DeploymentPreflight> response = Response.FromValue(DeploymentPreflight.FromResponse(result), result);
                 if (response.Value == null)
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = DeploymentPreflightOperationsRestClient.CreatePerformDeploymentPreflightValidationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, deploymentId, DeploymentPreflight.ToRequestContent(body), context);
+                using HttpMessage message = DeploymentPreflightOperationsRestClient.CreatePerformDeploymentPreflightValidationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, deploymentId, DeploymentPreflight.ToRequestContent(body), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DeploymentPreflight> response = Response.FromValue(DeploymentPreflight.FromResponse(result), result);
                 if (response.Value == null)

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serverInstanceName, SapDiscoveryServerInstanceData.ToRequestContent(data), context);
+                using HttpMessage message = _serverInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serverInstanceName, SapDiscoveryServerInstanceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MigrationDiscoverySapArmOperation<SapDiscoveryServerInstanceResource> operation = new MigrationDiscoverySapArmOperation<SapDiscoveryServerInstanceResource>(
                     new SapDiscoveryServerInstanceResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serverInstanceName, SapDiscoveryServerInstanceData.ToRequestContent(data), context);
+                using HttpMessage message = _serverInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serverInstanceName, SapDiscoveryServerInstanceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MigrationDiscoverySapArmOperation<SapDiscoveryServerInstanceResource> operation = new MigrationDiscoverySapArmOperation<SapDiscoveryServerInstanceResource>(
                     new SapDiscoveryServerInstanceResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverInstancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serverInstanceName, context);
+                using HttpMessage message = _serverInstancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serverInstanceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SapDiscoveryServerInstanceData> response = Response.FromValue(SapDiscoveryServerInstanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverInstancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serverInstanceName, context);
+                using HttpMessage message = _serverInstancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serverInstanceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SapDiscoveryServerInstanceData> response = Response.FromValue(SapDiscoveryServerInstanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverInstancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serverInstanceName, context);
+                using HttpMessage message = _serverInstancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serverInstanceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SapDiscoveryServerInstanceData> response = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverInstancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serverInstanceName, context);
+                using HttpMessage message = _serverInstancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serverInstanceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SapDiscoveryServerInstanceData> response = default;
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverInstancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serverInstanceName, context);
+                using HttpMessage message = _serverInstancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serverInstanceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SapDiscoveryServerInstanceData> response = default;
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverInstancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serverInstanceName, context);
+                using HttpMessage message = _serverInstancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, serverInstanceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SapDiscoveryServerInstanceData> response = default;

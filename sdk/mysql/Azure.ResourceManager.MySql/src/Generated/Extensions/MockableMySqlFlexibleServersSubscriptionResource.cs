@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CheckVirtualNetworkSubnetUsageRestClient.CreateExecuteCheckVirtualNetworkSubnetUsageRequest(Guid.Parse(Id.SubscriptionId), locationName, MySqlFlexibleServerVirtualNetworkSubnetUsageParameter.ToRequestContent(mySqlFlexibleServerVirtualNetworkSubnetUsageParameter), context);
+                using HttpMessage message = CheckVirtualNetworkSubnetUsageRestClient.CreateExecuteCheckVirtualNetworkSubnetUsageRequest(Guid.Parse(Id.SubscriptionId), locationName, MySqlFlexibleServerVirtualNetworkSubnetUsageParameter.ToRequestContent(mySqlFlexibleServerVirtualNetworkSubnetUsageParameter), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MySqlFlexibleServerVirtualNetworkSubnetUsageResult> response = Response.FromValue(MySqlFlexibleServerVirtualNetworkSubnetUsageResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CheckVirtualNetworkSubnetUsageRestClient.CreateExecuteCheckVirtualNetworkSubnetUsageRequest(Guid.Parse(Id.SubscriptionId), locationName, MySqlFlexibleServerVirtualNetworkSubnetUsageParameter.ToRequestContent(mySqlFlexibleServerVirtualNetworkSubnetUsageParameter), context);
+                using HttpMessage message = CheckVirtualNetworkSubnetUsageRestClient.CreateExecuteCheckVirtualNetworkSubnetUsageRequest(Guid.Parse(Id.SubscriptionId), locationName, MySqlFlexibleServerVirtualNetworkSubnetUsageParameter.ToRequestContent(mySqlFlexibleServerVirtualNetworkSubnetUsageParameter), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MySqlFlexibleServerVirtualNetworkSubnetUsageResult> response = Response.FromValue(MySqlFlexibleServerVirtualNetworkSubnetUsageResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CheckNameAvailabilityRestClient.CreateCheckMySqlFlexibleServerNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), locationName, MySqlFlexibleServerNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = CheckNameAvailabilityRestClient.CreateCheckMySqlFlexibleServerNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), locationName, MySqlFlexibleServerNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MySqlFlexibleServerNameAvailabilityResult> response = Response.FromValue(MySqlFlexibleServerNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CheckNameAvailabilityRestClient.CreateCheckMySqlFlexibleServerNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), locationName, MySqlFlexibleServerNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = CheckNameAvailabilityRestClient.CreateCheckMySqlFlexibleServerNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), locationName, MySqlFlexibleServerNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MySqlFlexibleServerNameAvailabilityResult> response = Response.FromValue(MySqlFlexibleServerNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CheckNameAvailabilityWithoutLocationRestClient.CreateCheckMySqlFlexibleServerNameAvailabilityWithoutLocationRequest(Guid.Parse(Id.SubscriptionId), MySqlFlexibleServerNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = CheckNameAvailabilityWithoutLocationRestClient.CreateCheckMySqlFlexibleServerNameAvailabilityWithoutLocationRequest(Guid.Parse(Id.SubscriptionId), MySqlFlexibleServerNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MySqlFlexibleServerNameAvailabilityResult> response = Response.FromValue(MySqlFlexibleServerNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CheckNameAvailabilityWithoutLocationRestClient.CreateCheckMySqlFlexibleServerNameAvailabilityWithoutLocationRequest(Guid.Parse(Id.SubscriptionId), MySqlFlexibleServerNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = CheckNameAvailabilityWithoutLocationRestClient.CreateCheckMySqlFlexibleServerNameAvailabilityWithoutLocationRequest(Guid.Parse(Id.SubscriptionId), MySqlFlexibleServerNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MySqlFlexibleServerNameAvailabilityResult> response = Response.FromValue(MySqlFlexibleServerNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetLifeCycleHookEventsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, lifecycleHookEventName, context);
+                using HttpMessage message = _virtualMachineScaleSetLifeCycleHookEventsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, lifecycleHookEventName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<VirtualMachineScaleSetLifecycleHookEventData> response = Response.FromValue(VirtualMachineScaleSetLifecycleHookEventData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetLifeCycleHookEventsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, lifecycleHookEventName, context);
+                using HttpMessage message = _virtualMachineScaleSetLifeCycleHookEventsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, lifecycleHookEventName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<VirtualMachineScaleSetLifecycleHookEventData> response = Response.FromValue(VirtualMachineScaleSetLifecycleHookEventData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetLifeCycleHookEventsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, lifecycleHookEventName, context);
+                using HttpMessage message = _virtualMachineScaleSetLifeCycleHookEventsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, lifecycleHookEventName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<VirtualMachineScaleSetLifecycleHookEventData> response = default;
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetLifeCycleHookEventsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, lifecycleHookEventName, context);
+                using HttpMessage message = _virtualMachineScaleSetLifeCycleHookEventsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, lifecycleHookEventName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<VirtualMachineScaleSetLifecycleHookEventData> response = default;
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetLifeCycleHookEventsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, lifecycleHookEventName, context);
+                using HttpMessage message = _virtualMachineScaleSetLifeCycleHookEventsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, lifecycleHookEventName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<VirtualMachineScaleSetLifecycleHookEventData> response = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetLifeCycleHookEventsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, lifecycleHookEventName, context);
+                using HttpMessage message = _virtualMachineScaleSetLifeCycleHookEventsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, lifecycleHookEventName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<VirtualMachineScaleSetLifecycleHookEventData> response = default;

@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _defenderForStorageRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _defenderForStorageRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DefenderForStorageSettingData> response = Response.FromValue(DefenderForStorageSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _defenderForStorageRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _defenderForStorageRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DefenderForStorageSettingData> response = Response.FromValue(DefenderForStorageSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _defenderForStorageRestClient.CreateCancelMalwareScanRequest(Id.Parent.ToString(), Id.Name, scanId, context);
+                using HttpMessage message = _defenderForStorageRestClient.CreateCancelMalwareScanRequest(Id.Parent.ToString(), Id.Name, scanId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MalwareScan> response = Response.FromValue(MalwareScan.FromResponse(result), result);
                 if (response.Value == null)
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _defenderForStorageRestClient.CreateCancelMalwareScanRequest(Id.Parent.ToString(), Id.Name, scanId, context);
+                using HttpMessage message = _defenderForStorageRestClient.CreateCancelMalwareScanRequest(Id.Parent.ToString(), Id.Name, scanId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MalwareScan> response = Response.FromValue(MalwareScan.FromResponse(result), result);
                 if (response.Value == null)
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _defenderForStorageRestClient.CreateGetMalwareScanRequest(Id.Parent.ToString(), Id.Name, scanId, context);
+                using HttpMessage message = _defenderForStorageRestClient.CreateGetMalwareScanRequest(Id.Parent.ToString(), Id.Name, scanId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MalwareScan> response = Response.FromValue(MalwareScan.FromResponse(result), result);
                 if (response.Value == null)
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _defenderForStorageRestClient.CreateGetMalwareScanRequest(Id.Parent.ToString(), Id.Name, scanId, context);
+                using HttpMessage message = _defenderForStorageRestClient.CreateGetMalwareScanRequest(Id.Parent.ToString(), Id.Name, scanId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MalwareScan> response = Response.FromValue(MalwareScan.FromResponse(result), result);
                 if (response.Value == null)
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _defenderForStorageRestClient.CreateStartMalwareScanRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _defenderForStorageRestClient.CreateStartMalwareScanRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MalwareScan> response = Response.FromValue(MalwareScan.FromResponse(result), result);
                 if (response.Value == null)
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _defenderForStorageRestClient.CreateStartMalwareScanRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _defenderForStorageRestClient.CreateStartMalwareScanRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MalwareScan> response = Response.FromValue(MalwareScan.FromResponse(result), result);
                 if (response.Value == null)
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _defenderForStorageRestClient.CreateCreateRequest(Id.Parent.ToString(), Id.Name, DefenderForStorageSettingData.ToRequestContent(data), context);
+                using HttpMessage message = _defenderForStorageRestClient.CreateCreateRequest(Id.Parent.ToString(), Id.Name, DefenderForStorageSettingData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DefenderForStorageSettingData> response = Response.FromValue(DefenderForStorageSettingData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _defenderForStorageRestClient.CreateCreateRequest(Id.Parent.ToString(), Id.Name, DefenderForStorageSettingData.ToRequestContent(data), context);
+                using HttpMessage message = _defenderForStorageRestClient.CreateCreateRequest(Id.Parent.ToString(), Id.Name, DefenderForStorageSettingData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DefenderForStorageSettingData> response = Response.FromValue(DefenderForStorageSettingData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

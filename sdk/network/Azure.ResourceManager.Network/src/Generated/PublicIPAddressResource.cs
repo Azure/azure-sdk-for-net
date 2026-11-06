@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="publicIPAddressName"> The publicIpAddressName. </param>
+        /// <param name="publicIPAddressName"> The publicIPAddressName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string publicIPAddressName)
         {
             string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIPAddressName}";
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publicIPAddressesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expand, context);
+                using HttpMessage message = _publicIPAddressesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PublicIPAddressData> response = Response.FromValue(PublicIPAddressData.FromResponse(result), result);
                 if (response.Value == null)
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publicIPAddressesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expand, context);
+                using HttpMessage message = _publicIPAddressesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PublicIPAddressData> response = Response.FromValue(PublicIPAddressData.FromResponse(result), result);
                 if (response.Value == null)
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publicIPAddressesRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTagsObject.ToRequestContent(networkTagsObject), context);
+                using HttpMessage message = _publicIPAddressesRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTagsObject.ToRequestContent(networkTagsObject), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PublicIPAddressData> response = Response.FromValue(PublicIPAddressData.FromResponse(result), result);
                 if (response.Value == null)
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publicIPAddressesRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTagsObject.ToRequestContent(networkTagsObject), context);
+                using HttpMessage message = _publicIPAddressesRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTagsObject.ToRequestContent(networkTagsObject), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PublicIPAddressData> response = Response.FromValue(PublicIPAddressData.FromResponse(result), result);
                 if (response.Value == null)
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publicIPAddressesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _publicIPAddressesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation operation = new NetworkArmOperation(_publicIPAddressesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publicIPAddressesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _publicIPAddressesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation operation = new NetworkArmOperation(_publicIPAddressesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publicIPAddressesRestClient.CreateDdosProtectionStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _publicIPAddressesRestClient.CreateDdosProtectionStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<PublicIPDdosProtectionStatusResult> operation = new NetworkArmOperation<PublicIPDdosProtectionStatusResult>(
                     new PublicIPDdosProtectionStatusResultOperationSource(),
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publicIPAddressesRestClient.CreateDdosProtectionStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _publicIPAddressesRestClient.CreateDdosProtectionStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<PublicIPDdosProtectionStatusResult> operation = new NetworkArmOperation<PublicIPDdosProtectionStatusResult>(
                     new PublicIPDdosProtectionStatusResultOperationSource(),
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publicIPAddressesRestClient.CreateDisassociateCloudServiceReservedPublicIPRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DisassociateCloudServicePublicIPContent.ToRequestContent(content), context);
+                using HttpMessage message = _publicIPAddressesRestClient.CreateDisassociateCloudServiceReservedPublicIPRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DisassociateCloudServicePublicIPContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<PublicIPAddressResource> operation = new NetworkArmOperation<PublicIPAddressResource>(
                     new PublicIPAddressResourceOperationSource(Client),
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publicIPAddressesRestClient.CreateDisassociateCloudServiceReservedPublicIPRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DisassociateCloudServicePublicIPContent.ToRequestContent(content), context);
+                using HttpMessage message = _publicIPAddressesRestClient.CreateDisassociateCloudServiceReservedPublicIPRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DisassociateCloudServicePublicIPContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<PublicIPAddressResource> operation = new NetworkArmOperation<PublicIPAddressResource>(
                     new PublicIPAddressResourceOperationSource(Client),
@@ -658,7 +658,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publicIPAddressesRestClient.CreateReserveCloudServicePublicIPAddressRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ReserveCloudServicePublicIPAddressContent.ToRequestContent(content), context);
+                using HttpMessage message = _publicIPAddressesRestClient.CreateReserveCloudServicePublicIPAddressRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ReserveCloudServicePublicIPAddressContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<PublicIPAddressResource> operation = new NetworkArmOperation<PublicIPAddressResource>(
                     new PublicIPAddressResourceOperationSource(Client),
@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publicIPAddressesRestClient.CreateReserveCloudServicePublicIPAddressRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ReserveCloudServicePublicIPAddressContent.ToRequestContent(content), context);
+                using HttpMessage message = _publicIPAddressesRestClient.CreateReserveCloudServicePublicIPAddressRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ReserveCloudServicePublicIPAddressContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<PublicIPAddressResource> operation = new NetworkArmOperation<PublicIPAddressResource>(
                     new PublicIPAddressResourceOperationSource(Client),
@@ -762,7 +762,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _publicIPAddressesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _publicIPAddressesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<PublicIPAddressData> response = Response.FromValue(PublicIPAddressData.FromResponse(result), result);
                     return Response.FromValue(new PublicIPAddressResource(Client, response.Value), response.GetRawResponse());
@@ -810,7 +810,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _publicIPAddressesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _publicIPAddressesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<PublicIPAddressData> response = Response.FromValue(PublicIPAddressData.FromResponse(result), result);
                     return Response.FromValue(new PublicIPAddressResource(Client, response.Value), response.GetRawResponse());
@@ -856,7 +856,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _publicIPAddressesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _publicIPAddressesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<PublicIPAddressData> response = Response.FromValue(PublicIPAddressData.FromResponse(result), result);
                     return Response.FromValue(new PublicIPAddressResource(Client, response.Value), response.GetRawResponse());
@@ -898,7 +898,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _publicIPAddressesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _publicIPAddressesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<PublicIPAddressData> response = Response.FromValue(PublicIPAddressData.FromResponse(result), result);
                     return Response.FromValue(new PublicIPAddressResource(Client, response.Value), response.GetRawResponse());
@@ -940,7 +940,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _publicIPAddressesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _publicIPAddressesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<PublicIPAddressData> response = Response.FromValue(PublicIPAddressData.FromResponse(result), result);
                     return Response.FromValue(new PublicIPAddressResource(Client, response.Value), response.GetRawResponse());
@@ -986,7 +986,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _publicIPAddressesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _publicIPAddressesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<PublicIPAddressData> response = Response.FromValue(PublicIPAddressData.FromResponse(result), result);
                     return Response.FromValue(new PublicIPAddressResource(Client, response.Value), response.GetRawResponse());

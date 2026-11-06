@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RecoveryServicesOperationGroupRestClient.CreateCheckRecoveryServicesNameAvailabilityRequest(Id.SubscriptionId, Id.ResourceGroupName, location, RecoveryServicesNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = RecoveryServicesOperationGroupRestClient.CreateCheckRecoveryServicesNameAvailabilityRequest(Id.SubscriptionId, Id.ResourceGroupName, location, RecoveryServicesNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RecoveryServicesNameAvailabilityResult> response = Response.FromValue(RecoveryServicesNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RecoveryServicesOperationGroupRestClient.CreateCheckRecoveryServicesNameAvailabilityRequest(Id.SubscriptionId, Id.ResourceGroupName, location, RecoveryServicesNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = RecoveryServicesOperationGroupRestClient.CreateCheckRecoveryServicesNameAvailabilityRequest(Id.SubscriptionId, Id.ResourceGroupName, location, RecoveryServicesNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RecoveryServicesNameAvailabilityResult> response = Response.FromValue(RecoveryServicesNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

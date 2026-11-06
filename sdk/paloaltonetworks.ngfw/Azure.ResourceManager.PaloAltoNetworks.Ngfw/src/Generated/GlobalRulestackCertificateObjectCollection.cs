@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateObjectGlobalRulestackRestClient.CreateCreateOrUpdateRequest(Id.Name, name, GlobalRulestackCertificateObjectData.ToRequestContent(data), context);
+                using HttpMessage message = _certificateObjectGlobalRulestackRestClient.CreateCreateOrUpdateRequest(Id.Name, name, GlobalRulestackCertificateObjectData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NgfwArmOperation<GlobalRulestackCertificateObjectResource> operation = new NgfwArmOperation<GlobalRulestackCertificateObjectResource>(
                     new GlobalRulestackCertificateObjectResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateObjectGlobalRulestackRestClient.CreateCreateOrUpdateRequest(Id.Name, name, GlobalRulestackCertificateObjectData.ToRequestContent(data), context);
+                using HttpMessage message = _certificateObjectGlobalRulestackRestClient.CreateCreateOrUpdateRequest(Id.Name, name, GlobalRulestackCertificateObjectData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NgfwArmOperation<GlobalRulestackCertificateObjectResource> operation = new NgfwArmOperation<GlobalRulestackCertificateObjectResource>(
                     new GlobalRulestackCertificateObjectResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateObjectGlobalRulestackRestClient.CreateGetRequest(Id.Name, name, context);
+                using HttpMessage message = _certificateObjectGlobalRulestackRestClient.CreateGetRequest(Id.Name, name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GlobalRulestackCertificateObjectData> response = Response.FromValue(GlobalRulestackCertificateObjectData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateObjectGlobalRulestackRestClient.CreateGetRequest(Id.Name, name, context);
+                using HttpMessage message = _certificateObjectGlobalRulestackRestClient.CreateGetRequest(Id.Name, name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GlobalRulestackCertificateObjectData> response = Response.FromValue(GlobalRulestackCertificateObjectData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateObjectGlobalRulestackRestClient.CreateGetRequest(Id.Name, name, context);
+                using HttpMessage message = _certificateObjectGlobalRulestackRestClient.CreateGetRequest(Id.Name, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<GlobalRulestackCertificateObjectData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateObjectGlobalRulestackRestClient.CreateGetRequest(Id.Name, name, context);
+                using HttpMessage message = _certificateObjectGlobalRulestackRestClient.CreateGetRequest(Id.Name, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<GlobalRulestackCertificateObjectData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateObjectGlobalRulestackRestClient.CreateGetRequest(Id.Name, name, context);
+                using HttpMessage message = _certificateObjectGlobalRulestackRestClient.CreateGetRequest(Id.Name, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<GlobalRulestackCertificateObjectData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateObjectGlobalRulestackRestClient.CreateGetRequest(Id.Name, name, context);
+                using HttpMessage message = _certificateObjectGlobalRulestackRestClient.CreateGetRequest(Id.Name, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<GlobalRulestackCertificateObjectData> response = default;

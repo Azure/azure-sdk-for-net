@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _provisioningServiceDescriptionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, DeviceProvisioningServiceData.ToRequestContent(data), context);
+                using HttpMessage message = _provisioningServiceDescriptionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, DeviceProvisioningServiceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DeviceProvisioningServicesArmOperation<DeviceProvisioningServiceResource> operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServiceResource>(
                     new DeviceProvisioningServiceResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _provisioningServiceDescriptionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, DeviceProvisioningServiceData.ToRequestContent(data), context);
+                using HttpMessage message = _provisioningServiceDescriptionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, DeviceProvisioningServiceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DeviceProvisioningServicesArmOperation<DeviceProvisioningServiceResource> operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServiceResource>(
                     new DeviceProvisioningServiceResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _provisioningServiceDescriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, context);
+                using HttpMessage message = _provisioningServiceDescriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DeviceProvisioningServiceData> response = Response.FromValue(DeviceProvisioningServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _provisioningServiceDescriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, context);
+                using HttpMessage message = _provisioningServiceDescriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DeviceProvisioningServiceData> response = Response.FromValue(DeviceProvisioningServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _provisioningServiceDescriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, context);
+                using HttpMessage message = _provisioningServiceDescriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DeviceProvisioningServiceData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _provisioningServiceDescriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, context);
+                using HttpMessage message = _provisioningServiceDescriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DeviceProvisioningServiceData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _provisioningServiceDescriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, context);
+                using HttpMessage message = _provisioningServiceDescriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DeviceProvisioningServiceData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _provisioningServiceDescriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, context);
+                using HttpMessage message = _provisioningServiceDescriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DeviceProvisioningServiceData> response = default;

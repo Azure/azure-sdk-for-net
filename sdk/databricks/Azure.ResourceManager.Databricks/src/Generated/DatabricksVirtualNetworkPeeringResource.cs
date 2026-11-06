@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Databricks
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vNetPeeringRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _vNetPeeringRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DatabricksVirtualNetworkPeeringData> response = Response.FromValue(DatabricksVirtualNetworkPeeringData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Databricks
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vNetPeeringRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _vNetPeeringRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DatabricksVirtualNetworkPeeringData> response = Response.FromValue(DatabricksVirtualNetworkPeeringData.FromResponse(result), result);
                 if (response.Value == null)
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Databricks
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vNetPeeringRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _vNetPeeringRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DatabricksArmOperation operation = new DatabricksArmOperation(_vNetPeeringClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Databricks
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vNetPeeringRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _vNetPeeringRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DatabricksArmOperation operation = new DatabricksArmOperation(_vNetPeeringClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Databricks
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vNetPeeringRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DatabricksVirtualNetworkPeeringData.ToRequestContent(data), context);
+                using HttpMessage message = _vNetPeeringRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DatabricksVirtualNetworkPeeringData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DatabricksArmOperation<DatabricksVirtualNetworkPeeringResource> operation = new DatabricksArmOperation<DatabricksVirtualNetworkPeeringResource>(
                     new DatabricksVirtualNetworkPeeringResourceOperationSource(Client),
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.Databricks
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vNetPeeringRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DatabricksVirtualNetworkPeeringData.ToRequestContent(data), context);
+                using HttpMessage message = _vNetPeeringRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DatabricksVirtualNetworkPeeringData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DatabricksArmOperation<DatabricksVirtualNetworkPeeringResource> operation = new DatabricksArmOperation<DatabricksVirtualNetworkPeeringResource>(
                     new DatabricksVirtualNetworkPeeringResourceOperationSource(Client),

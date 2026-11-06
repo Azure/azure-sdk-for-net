@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.BotService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = BotsOperationGroupRestClient.CreateCheckBotServiceNameAvailabilityRequest(BotServiceNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = BotsOperationGroupRestClient.CreateCheckBotServiceNameAvailabilityRequest(BotServiceNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BotServiceNameAvailabilityResult> response = Response.FromValue(BotServiceNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.BotService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = BotsOperationGroupRestClient.CreateCheckBotServiceNameAvailabilityRequest(BotServiceNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = BotsOperationGroupRestClient.CreateCheckBotServiceNameAvailabilityRequest(BotServiceNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BotServiceNameAvailabilityResult> response = Response.FromValue(BotServiceNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

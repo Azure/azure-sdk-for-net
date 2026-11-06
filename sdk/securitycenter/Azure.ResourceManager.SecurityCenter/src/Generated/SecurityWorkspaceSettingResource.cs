@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _workspaceSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityWorkspaceSettingData> response = Response.FromValue(SecurityWorkspaceSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _workspaceSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityWorkspaceSettingData> response = Response.FromValue(SecurityWorkspaceSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceSettingsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, SecurityWorkspaceSettingData.ToRequestContent(data), context);
+                using HttpMessage message = _workspaceSettingsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, SecurityWorkspaceSettingData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityWorkspaceSettingData> response = Response.FromValue(SecurityWorkspaceSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceSettingsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, SecurityWorkspaceSettingData.ToRequestContent(data), context);
+                using HttpMessage message = _workspaceSettingsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, SecurityWorkspaceSettingData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityWorkspaceSettingData> response = Response.FromValue(SecurityWorkspaceSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceSettingsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _workspaceSettingsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceSettingsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _workspaceSettingsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());

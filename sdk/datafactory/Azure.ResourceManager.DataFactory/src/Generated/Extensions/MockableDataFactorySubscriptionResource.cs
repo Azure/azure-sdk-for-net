@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DataFactory.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = FactoriesRestClient.CreateConfigureFactoryRepoInformationRequest(Guid.Parse(Id.SubscriptionId), locationId, FactoryRepoContent.ToRequestContent(content), context);
+                using HttpMessage message = FactoriesRestClient.CreateConfigureFactoryRepoInformationRequest(Guid.Parse(Id.SubscriptionId), locationId, FactoryRepoContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataFactoryData> response = Response.FromValue(DataFactoryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DataFactory.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = FactoriesRestClient.CreateConfigureFactoryRepoInformationRequest(Guid.Parse(Id.SubscriptionId), locationId, FactoryRepoContent.ToRequestContent(content), context);
+                using HttpMessage message = FactoriesRestClient.CreateConfigureFactoryRepoInformationRequest(Guid.Parse(Id.SubscriptionId), locationId, FactoryRepoContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataFactoryData> response = Response.FromValue(DataFactoryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.DataFactory.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ExposureControlRestClient.CreateGetFeatureValueExposureControlRequest(Guid.Parse(Id.SubscriptionId), locationId, ExposureControlContent.ToRequestContent(content), context);
+                using HttpMessage message = ExposureControlRestClient.CreateGetFeatureValueExposureControlRequest(Guid.Parse(Id.SubscriptionId), locationId, ExposureControlContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExposureControlResult> response = Response.FromValue(ExposureControlResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.DataFactory.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ExposureControlRestClient.CreateGetFeatureValueExposureControlRequest(Guid.Parse(Id.SubscriptionId), locationId, ExposureControlContent.ToRequestContent(content), context);
+                using HttpMessage message = ExposureControlRestClient.CreateGetFeatureValueExposureControlRequest(Guid.Parse(Id.SubscriptionId), locationId, ExposureControlContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExposureControlResult> response = Response.FromValue(ExposureControlResult.FromResponse(result), result);
                 if (response.Value == null)

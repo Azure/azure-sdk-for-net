@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _cloudHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CloudHsmClusterData> response = Response.FromValue(CloudHsmClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _cloudHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CloudHsmClusterData> response = Response.FromValue(CloudHsmClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudHsmClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudHsmClusterPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _cloudHsmClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudHsmClusterPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HardwareSecurityModulesArmOperation<CloudHsmClusterResource> operation = new HardwareSecurityModulesArmOperation<CloudHsmClusterResource>(
                     new CloudHsmClusterResourceOperationSource(Client),
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudHsmClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudHsmClusterPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _cloudHsmClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudHsmClusterPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HardwareSecurityModulesArmOperation<CloudHsmClusterResource> operation = new HardwareSecurityModulesArmOperation<CloudHsmClusterResource>(
                     new CloudHsmClusterResourceOperationSource(Client),
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudHsmClustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _cloudHsmClustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HardwareSecurityModulesArmOperation operation = new HardwareSecurityModulesArmOperation(_cloudHsmClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudHsmClustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _cloudHsmClustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HardwareSecurityModulesArmOperation operation = new HardwareSecurityModulesArmOperation(_cloudHsmClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudHsmClustersRestClient.CreateBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudHsmClusterBackupContent.ToRequestContent(content), context);
+                using HttpMessage message = _cloudHsmClustersRestClient.CreateBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudHsmClusterBackupContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HardwareSecurityModulesArmOperation<CloudHsmClusterBackupResult> operation = new HardwareSecurityModulesArmOperation<CloudHsmClusterBackupResult>(
                     new CloudHsmClusterBackupResultOperationSource(),
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudHsmClustersRestClient.CreateBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudHsmClusterBackupContent.ToRequestContent(content), context);
+                using HttpMessage message = _cloudHsmClustersRestClient.CreateBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudHsmClusterBackupContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HardwareSecurityModulesArmOperation<CloudHsmClusterBackupResult> operation = new HardwareSecurityModulesArmOperation<CloudHsmClusterBackupResult>(
                     new CloudHsmClusterBackupResultOperationSource(),
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudHsmClusterBackupStatusRestClient.CreateGetCloudHsmClusterBackupStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobId, context);
+                using HttpMessage message = _cloudHsmClusterBackupStatusRestClient.CreateGetCloudHsmClusterBackupStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CloudHsmClusterBackupResult> response = Response.FromValue(CloudHsmClusterBackupResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -620,7 +620,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudHsmClusterBackupStatusRestClient.CreateGetCloudHsmClusterBackupStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobId, context);
+                using HttpMessage message = _cloudHsmClusterBackupStatusRestClient.CreateGetCloudHsmClusterBackupStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CloudHsmClusterBackupResult> response = Response.FromValue(CloudHsmClusterBackupResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -673,7 +673,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudHsmClusterRestoreStatusRestClient.CreateGetCloudHsmClusterRestoreStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobId, context);
+                using HttpMessage message = _cloudHsmClusterRestoreStatusRestClient.CreateGetCloudHsmClusterRestoreStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CloudHsmClusterRestoreResult> response = Response.FromValue(CloudHsmClusterRestoreResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -726,7 +726,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudHsmClusterRestoreStatusRestClient.CreateGetCloudHsmClusterRestoreStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobId, context);
+                using HttpMessage message = _cloudHsmClusterRestoreStatusRestClient.CreateGetCloudHsmClusterRestoreStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CloudHsmClusterRestoreResult> response = Response.FromValue(CloudHsmClusterRestoreResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -855,7 +855,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudHsmClustersRestClient.CreateRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudHsmClusterRestoreContent.ToRequestContent(content), context);
+                using HttpMessage message = _cloudHsmClustersRestClient.CreateRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudHsmClusterRestoreContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HardwareSecurityModulesArmOperation<CloudHsmClusterRestoreResult> operation = new HardwareSecurityModulesArmOperation<CloudHsmClusterRestoreResult>(
                     new CloudHsmClusterRestoreResultOperationSource(),
@@ -914,7 +914,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudHsmClustersRestClient.CreateRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudHsmClusterRestoreContent.ToRequestContent(content), context);
+                using HttpMessage message = _cloudHsmClustersRestClient.CreateRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudHsmClusterRestoreContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HardwareSecurityModulesArmOperation<CloudHsmClusterRestoreResult> operation = new HardwareSecurityModulesArmOperation<CloudHsmClusterRestoreResult>(
                     new CloudHsmClusterRestoreResultOperationSource(),
@@ -970,7 +970,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudHsmClustersRestClient.CreateValidateBackupPropertiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudHsmClusterBackupContent.ToRequestContent(content), context);
+                using HttpMessage message = _cloudHsmClustersRestClient.CreateValidateBackupPropertiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudHsmClusterBackupContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HardwareSecurityModulesArmOperation<CloudHsmClusterBackupResult> operation = new HardwareSecurityModulesArmOperation<CloudHsmClusterBackupResult>(
                     new CloudHsmClusterBackupResultOperationSource(),
@@ -1026,7 +1026,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudHsmClustersRestClient.CreateValidateBackupPropertiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudHsmClusterBackupContent.ToRequestContent(content), context);
+                using HttpMessage message = _cloudHsmClustersRestClient.CreateValidateBackupPropertiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudHsmClusterBackupContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HardwareSecurityModulesArmOperation<CloudHsmClusterBackupResult> operation = new HardwareSecurityModulesArmOperation<CloudHsmClusterBackupResult>(
                     new CloudHsmClusterBackupResultOperationSource(),
@@ -1082,7 +1082,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudHsmClustersRestClient.CreateValidateRestorePropertiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudHsmClusterRestoreContent.ToRequestContent(content), context);
+                using HttpMessage message = _cloudHsmClustersRestClient.CreateValidateRestorePropertiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudHsmClusterRestoreContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HardwareSecurityModulesArmOperation<CloudHsmClusterRestoreResult> operation = new HardwareSecurityModulesArmOperation<CloudHsmClusterRestoreResult>(
                     new CloudHsmClusterRestoreResultOperationSource(),
@@ -1138,7 +1138,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudHsmClustersRestClient.CreateValidateRestorePropertiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudHsmClusterRestoreContent.ToRequestContent(content), context);
+                using HttpMessage message = _cloudHsmClustersRestClient.CreateValidateRestorePropertiesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudHsmClusterRestoreContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HardwareSecurityModulesArmOperation<CloudHsmClusterRestoreResult> operation = new HardwareSecurityModulesArmOperation<CloudHsmClusterRestoreResult>(
                     new CloudHsmClusterRestoreResultOperationSource(),
@@ -1183,7 +1183,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cloudHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _cloudHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<CloudHsmClusterData> response = Response.FromValue(CloudHsmClusterData.FromResponse(result), result);
                     return Response.FromValue(new CloudHsmClusterResource(Client, response.Value), response.GetRawResponse());
@@ -1231,7 +1231,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cloudHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _cloudHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<CloudHsmClusterData> response = Response.FromValue(CloudHsmClusterData.FromResponse(result), result);
                     return Response.FromValue(new CloudHsmClusterResource(Client, response.Value), response.GetRawResponse());
@@ -1277,7 +1277,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cloudHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _cloudHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<CloudHsmClusterData> response = Response.FromValue(CloudHsmClusterData.FromResponse(result), result);
                     return Response.FromValue(new CloudHsmClusterResource(Client, response.Value), response.GetRawResponse());
@@ -1319,7 +1319,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cloudHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _cloudHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<CloudHsmClusterData> response = Response.FromValue(CloudHsmClusterData.FromResponse(result), result);
                     return Response.FromValue(new CloudHsmClusterResource(Client, response.Value), response.GetRawResponse());
@@ -1361,7 +1361,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cloudHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _cloudHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<CloudHsmClusterData> response = Response.FromValue(CloudHsmClusterData.FromResponse(result), result);
                     return Response.FromValue(new CloudHsmClusterResource(Client, response.Value), response.GetRawResponse());
@@ -1407,7 +1407,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cloudHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _cloudHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<CloudHsmClusterData> response = Response.FromValue(CloudHsmClusterData.FromResponse(result), result);
                     return Response.FromValue(new CloudHsmClusterResource(Client, response.Value), response.GetRawResponse());

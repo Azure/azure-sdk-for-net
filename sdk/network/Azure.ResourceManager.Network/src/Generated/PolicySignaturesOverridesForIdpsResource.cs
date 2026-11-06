@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firewallPolicyIdpsSignaturesOverridesRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, PolicySignaturesOverridesForIdpsData.ToRequestContent(data), context);
+                using HttpMessage message = _firewallPolicyIdpsSignaturesOverridesRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, PolicySignaturesOverridesForIdpsData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PolicySignaturesOverridesForIdpsData> response = Response.FromValue(PolicySignaturesOverridesForIdpsData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firewallPolicyIdpsSignaturesOverridesRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, PolicySignaturesOverridesForIdpsData.ToRequestContent(data), context);
+                using HttpMessage message = _firewallPolicyIdpsSignaturesOverridesRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, PolicySignaturesOverridesForIdpsData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PolicySignaturesOverridesForIdpsData> response = Response.FromValue(PolicySignaturesOverridesForIdpsData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firewallPolicyIdpsSignaturesOverridesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _firewallPolicyIdpsSignaturesOverridesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PolicySignaturesOverridesForIdpsData> response = Response.FromValue(PolicySignaturesOverridesForIdpsData.FromResponse(result), result);
                 if (response.Value == null)
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firewallPolicyIdpsSignaturesOverridesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _firewallPolicyIdpsSignaturesOverridesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PolicySignaturesOverridesForIdpsData> response = Response.FromValue(PolicySignaturesOverridesForIdpsData.FromResponse(result), result);
                 if (response.Value == null)
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firewallPolicyIdpsSignaturesOverridesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, PolicySignaturesOverridesForIdpsData.ToRequestContent(data), context);
+                using HttpMessage message = _firewallPolicyIdpsSignaturesOverridesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, PolicySignaturesOverridesForIdpsData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PolicySignaturesOverridesForIdpsData> response = Response.FromValue(PolicySignaturesOverridesForIdpsData.FromResponse(result), result);
                 if (response.Value == null)
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firewallPolicyIdpsSignaturesOverridesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, PolicySignaturesOverridesForIdpsData.ToRequestContent(data), context);
+                using HttpMessage message = _firewallPolicyIdpsSignaturesOverridesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, PolicySignaturesOverridesForIdpsData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PolicySignaturesOverridesForIdpsData> response = Response.FromValue(PolicySignaturesOverridesForIdpsData.FromResponse(result), result);
                 if (response.Value == null)

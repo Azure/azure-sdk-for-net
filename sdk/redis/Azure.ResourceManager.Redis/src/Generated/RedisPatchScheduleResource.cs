@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Redis
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="defaultName"> The default. </param>
+        /// <param name="defaultName"> The defaultName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, RedisPatchScheduleDefaultName defaultName)
         {
             string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{name}/patchSchedules/{defaultName}";
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisPatchSchedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _redisPatchSchedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RedisPatchScheduleData> response = Response.FromValue(RedisPatchScheduleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisPatchSchedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _redisPatchSchedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RedisPatchScheduleData> response = Response.FromValue(RedisPatchScheduleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisPatchSchedulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _redisPatchSchedulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisPatchSchedulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _redisPatchSchedulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisPatchSchedulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RedisPatchScheduleData.ToRequestContent(data), context);
+                using HttpMessage message = _redisPatchSchedulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RedisPatchScheduleData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RedisPatchScheduleData> response = Response.FromValue(RedisPatchScheduleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _redisPatchSchedulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RedisPatchScheduleData.ToRequestContent(data), context);
+                using HttpMessage message = _redisPatchSchedulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RedisPatchScheduleData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RedisPatchScheduleData> response = Response.FromValue(RedisPatchScheduleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

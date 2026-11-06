@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceConfigurationResourcesRestClient.CreateCreateOrupdateRequest(Id.Parent.ToString(), Id.Name, serviceConfigurationName, HybridConnectivityServiceConfigurationData.ToRequestContent(data), context);
+                using HttpMessage message = _serviceConfigurationResourcesRestClient.CreateCreateOrupdateRequest(Id.Parent.ToString(), Id.Name, serviceConfigurationName, HybridConnectivityServiceConfigurationData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HybridConnectivityServiceConfigurationData> response = Response.FromValue(HybridConnectivityServiceConfigurationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceConfigurationResourcesRestClient.CreateCreateOrupdateRequest(Id.Parent.ToString(), Id.Name, serviceConfigurationName, HybridConnectivityServiceConfigurationData.ToRequestContent(data), context);
+                using HttpMessage message = _serviceConfigurationResourcesRestClient.CreateCreateOrupdateRequest(Id.Parent.ToString(), Id.Name, serviceConfigurationName, HybridConnectivityServiceConfigurationData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HybridConnectivityServiceConfigurationData> response = Response.FromValue(HybridConnectivityServiceConfigurationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceConfigurationResourcesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, serviceConfigurationName, context);
+                using HttpMessage message = _serviceConfigurationResourcesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, serviceConfigurationName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HybridConnectivityServiceConfigurationData> response = Response.FromValue(HybridConnectivityServiceConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceConfigurationResourcesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, serviceConfigurationName, context);
+                using HttpMessage message = _serviceConfigurationResourcesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, serviceConfigurationName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HybridConnectivityServiceConfigurationData> response = Response.FromValue(HybridConnectivityServiceConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceConfigurationResourcesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, serviceConfigurationName, context);
+                using HttpMessage message = _serviceConfigurationResourcesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, serviceConfigurationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HybridConnectivityServiceConfigurationData> response = default;
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceConfigurationResourcesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, serviceConfigurationName, context);
+                using HttpMessage message = _serviceConfigurationResourcesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, serviceConfigurationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HybridConnectivityServiceConfigurationData> response = default;
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceConfigurationResourcesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, serviceConfigurationName, context);
+                using HttpMessage message = _serviceConfigurationResourcesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, serviceConfigurationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HybridConnectivityServiceConfigurationData> response = default;
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceConfigurationResourcesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, serviceConfigurationName, context);
+                using HttpMessage message = _serviceConfigurationResourcesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, serviceConfigurationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HybridConnectivityServiceConfigurationData> response = default;

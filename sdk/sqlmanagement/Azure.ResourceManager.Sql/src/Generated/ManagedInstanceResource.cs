@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedInstancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expand, context);
+                using HttpMessage message = _managedInstancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ManagedInstanceData> response = Response.FromValue(ManagedInstanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedInstancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expand, context);
+                using HttpMessage message = _managedInstancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ManagedInstanceData> response = Response.FromValue(ManagedInstanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedInstancesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ManagedInstancePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _managedInstancesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ManagedInstancePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation<ManagedInstanceResource> operation = new SqlArmOperation<ManagedInstanceResource>(
                     new ManagedInstanceResourceOperationSource(Client),
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedInstancesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ManagedInstancePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _managedInstancesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ManagedInstancePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation<ManagedInstanceResource> operation = new SqlArmOperation<ManagedInstanceResource>(
                     new ManagedInstanceResourceOperationSource(Client),
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedInstancesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _managedInstancesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation operation = new SqlArmOperation(_managedInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedInstancesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _managedInstancesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation operation = new SqlArmOperation(_managedInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedInstanceTdeCertificatesRestClient.CreateCreateManagedInstanceTdeCertificateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TdeCertificate.ToRequestContent(tdeCertificate), context);
+                using HttpMessage message = _managedInstanceTdeCertificatesRestClient.CreateCreateManagedInstanceTdeCertificateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TdeCertificate.ToRequestContent(tdeCertificate), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation operation = new SqlArmOperation(_managedInstanceTdeCertificatesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedInstanceTdeCertificatesRestClient.CreateCreateManagedInstanceTdeCertificateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TdeCertificate.ToRequestContent(tdeCertificate), context);
+                using HttpMessage message = _managedInstanceTdeCertificatesRestClient.CreateCreateManagedInstanceTdeCertificateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TdeCertificate.ToRequestContent(tdeCertificate), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation operation = new SqlArmOperation(_managedInstanceTdeCertificatesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedInstancesRestClient.CreateFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicaType?.ToString(), context);
+                using HttpMessage message = _managedInstancesRestClient.CreateFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicaType?.ToString(), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation operation = new SqlArmOperation(_managedInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedInstancesRestClient.CreateFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicaType?.ToString(), context);
+                using HttpMessage message = _managedInstancesRestClient.CreateFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicaType?.ToString(), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation operation = new SqlArmOperation(_managedInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -991,7 +991,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedInstancesRestClient.CreateReevaluateInaccessibleDatabaseStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _managedInstancesRestClient.CreateReevaluateInaccessibleDatabaseStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation operation = new SqlArmOperation(_managedInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1040,7 +1040,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedInstancesRestClient.CreateReevaluateInaccessibleDatabaseStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _managedInstancesRestClient.CreateReevaluateInaccessibleDatabaseStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation operation = new SqlArmOperation(_managedInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1089,7 +1089,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedInstancesRestClient.CreateRefreshStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _managedInstancesRestClient.CreateRefreshStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation<SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult> operation = new SqlArmOperation<SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult>(
                     new SqlManagedInstanceRefreshExternalGovernanceStatusOperationResultOperationSource(),
@@ -1144,7 +1144,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedInstancesRestClient.CreateRefreshStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _managedInstancesRestClient.CreateRefreshStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation<SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult> operation = new SqlArmOperation<SqlManagedInstanceRefreshExternalGovernanceStatusOperationResult>(
                     new SqlManagedInstanceRefreshExternalGovernanceStatusOperationResultOperationSource(),
@@ -1199,7 +1199,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedInstancesRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _managedInstancesRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation<ManagedInstanceResource> operation = new SqlArmOperation<ManagedInstanceResource>(
                     new ManagedInstanceResourceOperationSource(Client),
@@ -1254,7 +1254,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedInstancesRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _managedInstancesRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation<ManagedInstanceResource> operation = new SqlArmOperation<ManagedInstanceResource>(
                     new ManagedInstanceResourceOperationSource(Client),
@@ -1309,7 +1309,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedInstancesRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _managedInstancesRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation<ManagedInstanceResource> operation = new SqlArmOperation<ManagedInstanceResource>(
                     new ManagedInstanceResourceOperationSource(Client),
@@ -1364,7 +1364,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedInstancesRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _managedInstancesRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation<ManagedInstanceResource> operation = new SqlArmOperation<ManagedInstanceResource>(
                     new ManagedInstanceResourceOperationSource(Client),
@@ -1423,7 +1423,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedInstancesRestClient.CreateValidateAzureKeyVaultEncryptionKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent.ToRequestContent(content), context);
+                using HttpMessage message = _managedInstancesRestClient.CreateValidateAzureKeyVaultEncryptionKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation operation = new SqlArmOperation(_managedInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1476,7 +1476,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedInstancesRestClient.CreateValidateAzureKeyVaultEncryptionKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent.ToRequestContent(content), context);
+                using HttpMessage message = _managedInstancesRestClient.CreateValidateAzureKeyVaultEncryptionKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation operation = new SqlArmOperation(_managedInstancesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1515,7 +1515,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _managedInstancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _managedInstancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ManagedInstanceData> response = Response.FromValue(ManagedInstanceData.FromResponse(result), result);
                     return Response.FromValue(new ManagedInstanceResource(Client, response.Value), response.GetRawResponse());
@@ -1563,7 +1563,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _managedInstancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _managedInstancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ManagedInstanceData> response = Response.FromValue(ManagedInstanceData.FromResponse(result), result);
                     return Response.FromValue(new ManagedInstanceResource(Client, response.Value), response.GetRawResponse());
@@ -1609,7 +1609,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _managedInstancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _managedInstancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ManagedInstanceData> response = Response.FromValue(ManagedInstanceData.FromResponse(result), result);
                     return Response.FromValue(new ManagedInstanceResource(Client, response.Value), response.GetRawResponse());
@@ -1651,7 +1651,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _managedInstancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _managedInstancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ManagedInstanceData> response = Response.FromValue(ManagedInstanceData.FromResponse(result), result);
                     return Response.FromValue(new ManagedInstanceResource(Client, response.Value), response.GetRawResponse());
@@ -1693,7 +1693,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _managedInstancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _managedInstancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ManagedInstanceData> response = Response.FromValue(ManagedInstanceData.FromResponse(result), result);
                     return Response.FromValue(new ManagedInstanceResource(Client, response.Value), response.GetRawResponse());
@@ -1739,7 +1739,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _managedInstancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _managedInstancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ManagedInstanceData> response = Response.FromValue(ManagedInstanceData.FromResponse(result), result);
                     return Response.FromValue(new ManagedInstanceResource(Client, response.Value), response.GetRawResponse());

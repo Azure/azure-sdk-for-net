@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Purview
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkResourcesRestClient.CreateGetByGroupIdRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, context);
+                using HttpMessage message = _privateLinkResourcesRestClient.CreateGetByGroupIdRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PurviewPrivateLinkResourceData> response = Response.FromValue(PurviewPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Purview
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkResourcesRestClient.CreateGetByGroupIdRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, context);
+                using HttpMessage message = _privateLinkResourcesRestClient.CreateGetByGroupIdRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PurviewPrivateLinkResourceData> response = Response.FromValue(PurviewPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Purview
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkResourcesRestClient.CreateGetByGroupIdRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, context);
+                using HttpMessage message = _privateLinkResourcesRestClient.CreateGetByGroupIdRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PurviewPrivateLinkResourceData> response = default;
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Purview
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkResourcesRestClient.CreateGetByGroupIdRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, context);
+                using HttpMessage message = _privateLinkResourcesRestClient.CreateGetByGroupIdRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PurviewPrivateLinkResourceData> response = default;
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Purview
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkResourcesRestClient.CreateGetByGroupIdRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, context);
+                using HttpMessage message = _privateLinkResourcesRestClient.CreateGetByGroupIdRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PurviewPrivateLinkResourceData> response = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Purview
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkResourcesRestClient.CreateGetByGroupIdRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, context);
+                using HttpMessage message = _privateLinkResourcesRestClient.CreateGetByGroupIdRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PurviewPrivateLinkResourceData> response = default;

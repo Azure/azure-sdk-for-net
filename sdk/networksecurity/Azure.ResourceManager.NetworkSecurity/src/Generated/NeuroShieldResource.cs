@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.NetworkSecurity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _neuroShieldsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _neuroShieldsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NeuroShieldData> response = Response.FromValue(NeuroShieldData.FromResponse(result), result);
                 if (response.Value == null)
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.NetworkSecurity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _neuroShieldsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _neuroShieldsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NeuroShieldData> response = Response.FromValue(NeuroShieldData.FromResponse(result), result);
                 if (response.Value == null)
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.NetworkSecurity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _neuroShieldsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NeuroShieldPatch.ToRequestContent(patch), ifMatch, context);
+                using HttpMessage message = _neuroShieldsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NeuroShieldPatch.ToRequestContent(patch), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NeuroShieldData> response = Response.FromValue(NeuroShieldData.FromResponse(result), result);
                 if (response.Value == null)
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.NetworkSecurity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _neuroShieldsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NeuroShieldPatch.ToRequestContent(patch), ifMatch, context);
+                using HttpMessage message = _neuroShieldsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NeuroShieldPatch.ToRequestContent(patch), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NeuroShieldData> response = Response.FromValue(NeuroShieldData.FromResponse(result), result);
                 if (response.Value == null)
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.NetworkSecurity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _neuroShieldsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _neuroShieldsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.NetworkSecurity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _neuroShieldsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _neuroShieldsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());

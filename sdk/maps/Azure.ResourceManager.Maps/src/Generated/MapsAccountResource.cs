@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Maps
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _accountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MapsAccountData> response = Response.FromValue(MapsAccountData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Maps
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _accountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MapsAccountData> response = Response.FromValue(MapsAccountData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Maps
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MapsAccountPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _accountsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MapsAccountPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MapsAccountData> response = Response.FromValue(MapsAccountData.FromResponse(result), result);
                 if (response.Value == null)
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Maps
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MapsAccountPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _accountsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MapsAccountPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MapsAccountData> response = Response.FromValue(MapsAccountData.FromResponse(result), result);
                 if (response.Value == null)
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Maps
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _accountsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.Maps
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _accountsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Maps
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountsRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _accountsRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MapsAccountKeys> response = Response.FromValue(MapsAccountKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.Maps
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountsRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _accountsRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MapsAccountKeys> response = Response.FromValue(MapsAccountKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.Maps
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountsRestClient.CreateGetSasRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MapsAccountSasContent.ToRequestContent(content), context);
+                using HttpMessage message = _accountsRestClient.CreateGetSasRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MapsAccountSasContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MapsAccountSasToken> response = Response.FromValue(MapsAccountSasToken.FromResponse(result), result);
                 if (response.Value == null)
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.Maps
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountsRestClient.CreateGetSasRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MapsAccountSasContent.ToRequestContent(content), context);
+                using HttpMessage message = _accountsRestClient.CreateGetSasRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MapsAccountSasContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MapsAccountSasToken> response = Response.FromValue(MapsAccountSasToken.FromResponse(result), result);
                 if (response.Value == null)
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.Maps
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountsRestClient.CreateRegenerateKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MapsKeySpecification.ToRequestContent(keySpecification), context);
+                using HttpMessage message = _accountsRestClient.CreateRegenerateKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MapsKeySpecification.ToRequestContent(keySpecification), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MapsAccountKeys> response = Response.FromValue(MapsAccountKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -687,7 +687,7 @@ namespace Azure.ResourceManager.Maps
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountsRestClient.CreateRegenerateKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MapsKeySpecification.ToRequestContent(keySpecification), context);
+                using HttpMessage message = _accountsRestClient.CreateRegenerateKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MapsKeySpecification.ToRequestContent(keySpecification), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MapsAccountKeys> response = Response.FromValue(MapsAccountKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -726,7 +726,7 @@ namespace Azure.ResourceManager.Maps
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _accountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _accountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<MapsAccountData> response = Response.FromValue(MapsAccountData.FromResponse(result), result);
                     return Response.FromValue(new MapsAccountResource(Client, response.Value), response.GetRawResponse());
@@ -774,7 +774,7 @@ namespace Azure.ResourceManager.Maps
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _accountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _accountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<MapsAccountData> response = Response.FromValue(MapsAccountData.FromResponse(result), result);
                     return Response.FromValue(new MapsAccountResource(Client, response.Value), response.GetRawResponse());
@@ -820,7 +820,7 @@ namespace Azure.ResourceManager.Maps
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _accountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _accountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<MapsAccountData> response = Response.FromValue(MapsAccountData.FromResponse(result), result);
                     return Response.FromValue(new MapsAccountResource(Client, response.Value), response.GetRawResponse());
@@ -862,7 +862,7 @@ namespace Azure.ResourceManager.Maps
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _accountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _accountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<MapsAccountData> response = Response.FromValue(MapsAccountData.FromResponse(result), result);
                     return Response.FromValue(new MapsAccountResource(Client, response.Value), response.GetRawResponse());
@@ -904,7 +904,7 @@ namespace Azure.ResourceManager.Maps
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _accountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _accountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<MapsAccountData> response = Response.FromValue(MapsAccountData.FromResponse(result), result);
                     return Response.FromValue(new MapsAccountResource(Client, response.Value), response.GetRawResponse());
@@ -950,7 +950,7 @@ namespace Azure.ResourceManager.Maps
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _accountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _accountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<MapsAccountData> response = Response.FromValue(MapsAccountData.FromResponse(result), result);
                     return Response.FromValue(new MapsAccountResource(Client, response.Value), response.GetRawResponse());

@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tablesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _tablesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OperationalInsightsTableData> response = Response.FromValue(OperationalInsightsTableData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tablesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _tablesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OperationalInsightsTableData> response = Response.FromValue(OperationalInsightsTableData.FromResponse(result), result);
                 if (response.Value == null)
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tablesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, OperationalInsightsTableData.ToRequestContent(data), context);
+                using HttpMessage message = _tablesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, OperationalInsightsTableData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OperationalInsightsArmOperation<OperationalInsightsTableResource> operation = new OperationalInsightsArmOperation<OperationalInsightsTableResource>(
                     new OperationalInsightsTableResourceOperationSource(Client),
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tablesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, OperationalInsightsTableData.ToRequestContent(data), context);
+                using HttpMessage message = _tablesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, OperationalInsightsTableData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OperationalInsightsArmOperation<OperationalInsightsTableResource> operation = new OperationalInsightsArmOperation<OperationalInsightsTableResource>(
                     new OperationalInsightsTableResourceOperationSource(Client),
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tablesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _tablesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OperationalInsightsArmOperation operation = new OperationalInsightsArmOperation(_tablesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tablesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _tablesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OperationalInsightsArmOperation operation = new OperationalInsightsArmOperation(_tablesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tablesRestClient.CreateCancelSearchRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _tablesRestClient.CreateCancelSearchRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tablesRestClient.CreateCancelSearchRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _tablesRestClient.CreateCancelSearchRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tablesRestClient.CreateMigrateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _tablesRestClient.CreateMigrateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tablesRestClient.CreateMigrateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _tablesRestClient.CreateMigrateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }

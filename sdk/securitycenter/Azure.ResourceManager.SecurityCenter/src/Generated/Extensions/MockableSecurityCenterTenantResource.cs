@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SensitivitySettingsRestClient.CreateGetSensitivitySettingsRequest(context);
+                using HttpMessage message = SensitivitySettingsRestClient.CreateGetSensitivitySettingsRequest(context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SensitivitySettingsListResult> response = Response.FromValue(SensitivitySettingsListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SensitivitySettingsRestClient.CreateGetSensitivitySettingsRequest(context);
+                using HttpMessage message = SensitivitySettingsRestClient.CreateGetSensitivitySettingsRequest(context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SensitivitySettingsListResult> response = Response.FromValue(SensitivitySettingsListResult.FromResponse(result), result);
                 if (response.Value == null)

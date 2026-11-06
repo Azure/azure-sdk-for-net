@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _paymentMethodsRestClient.CreateGetByUserRequest(Id.Name, context);
+                using HttpMessage message = _paymentMethodsRestClient.CreateGetByUserRequest(Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingPaymentMethodData> response = Response.FromValue(BillingPaymentMethodData.FromResponse(result), result);
                 if (response.Value == null)
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _paymentMethodsRestClient.CreateGetByUserRequest(Id.Name, context);
+                using HttpMessage message = _paymentMethodsRestClient.CreateGetByUserRequest(Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingPaymentMethodData> response = Response.FromValue(BillingPaymentMethodData.FromResponse(result), result);
                 if (response.Value == null)
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _paymentMethodsRestClient.CreateDeleteByUserRequest(Id.Name, context);
+                using HttpMessage message = _paymentMethodsRestClient.CreateDeleteByUserRequest(Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _paymentMethodsRestClient.CreateDeleteByUserRequest(Id.Name, context);
+                using HttpMessage message = _paymentMethodsRestClient.CreateDeleteByUserRequest(Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());

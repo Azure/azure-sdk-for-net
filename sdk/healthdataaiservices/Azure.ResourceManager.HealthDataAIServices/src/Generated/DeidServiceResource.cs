@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deidServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _deidServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DeidServiceData> response = Response.FromValue(DeidServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deidServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _deidServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DeidServiceData> response = Response.FromValue(DeidServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deidServicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeidServicePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _deidServicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeidServicePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HealthDataAIServicesArmOperation<DeidServiceResource> operation = new HealthDataAIServicesArmOperation<DeidServiceResource>(
                     new DeidServiceResourceOperationSource(Client),
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deidServicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeidServicePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _deidServicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeidServicePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HealthDataAIServicesArmOperation<DeidServiceResource> operation = new HealthDataAIServicesArmOperation<DeidServiceResource>(
                     new DeidServiceResourceOperationSource(Client),
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deidServicesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _deidServicesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HealthDataAIServicesArmOperation operation = new HealthDataAIServicesArmOperation(_deidServicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deidServicesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _deidServicesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HealthDataAIServicesArmOperation operation = new HealthDataAIServicesArmOperation(_deidServicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _deidServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _deidServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DeidServiceData> response = Response.FromValue(DeidServiceData.FromResponse(result), result);
                     return Response.FromValue(new DeidServiceResource(Client, response.Value), response.GetRawResponse());
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _deidServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _deidServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DeidServiceData> response = Response.FromValue(DeidServiceData.FromResponse(result), result);
                     return Response.FromValue(new DeidServiceResource(Client, response.Value), response.GetRawResponse());
@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _deidServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _deidServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DeidServiceData> response = Response.FromValue(DeidServiceData.FromResponse(result), result);
                     return Response.FromValue(new DeidServiceResource(Client, response.Value), response.GetRawResponse());
@@ -645,7 +645,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _deidServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _deidServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DeidServiceData> response = Response.FromValue(DeidServiceData.FromResponse(result), result);
                     return Response.FromValue(new DeidServiceResource(Client, response.Value), response.GetRawResponse());
@@ -687,7 +687,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _deidServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _deidServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DeidServiceData> response = Response.FromValue(DeidServiceData.FromResponse(result), result);
                     return Response.FromValue(new DeidServiceResource(Client, response.Value), response.GetRawResponse());
@@ -733,7 +733,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _deidServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _deidServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DeidServiceData> response = Response.FromValue(DeidServiceData.FromResponse(result), result);
                     return Response.FromValue(new DeidServiceResource(Client, response.Value), response.GetRawResponse());

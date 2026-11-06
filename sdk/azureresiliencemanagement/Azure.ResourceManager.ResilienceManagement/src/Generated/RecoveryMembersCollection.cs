@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ResilienceManagement
     /// <summary>
     /// A class representing a collection of <see cref="RecoveryMembersResource"/> and their operations.
     /// Each <see cref="RecoveryMembersResource"/> in the collection will belong to the same instance of <see cref="RecoveryPlanResource"/>.
-    /// To get a <see cref="RecoveryMembersCollection"/> instance call the GetRecoveryMembers method from an instance of <see cref="RecoveryPlanResource"/>.
+    /// To get a <see cref="RecoveryMembersCollection"/> instance call the GetAllRecoveryMembers method from an instance of <see cref="RecoveryPlanResource"/>.
     /// </summary>
     public partial class RecoveryMembersCollection : ArmCollection, IEnumerable<RecoveryMembersResource>, IAsyncEnumerable<RecoveryMembersResource>
     {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryResourcesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, recoveryResourceName, context);
+                using HttpMessage message = _recoveryResourcesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, recoveryResourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RecoveryMembersData> response = Response.FromValue(RecoveryMembersData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryResourcesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, recoveryResourceName, context);
+                using HttpMessage message = _recoveryResourcesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, recoveryResourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RecoveryMembersData> response = Response.FromValue(RecoveryMembersData.FromResponse(result), result);
                 if (response.Value == null)
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryResourcesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, recoveryResourceName, context);
+                using HttpMessage message = _recoveryResourcesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, recoveryResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RecoveryMembersData> response = default;
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryResourcesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, recoveryResourceName, context);
+                using HttpMessage message = _recoveryResourcesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, recoveryResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RecoveryMembersData> response = default;
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryResourcesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, recoveryResourceName, context);
+                using HttpMessage message = _recoveryResourcesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, recoveryResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RecoveryMembersData> response = default;
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryResourcesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, recoveryResourceName, context);
+                using HttpMessage message = _recoveryResourcesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, recoveryResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RecoveryMembersData> response = default;

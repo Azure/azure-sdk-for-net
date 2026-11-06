@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppsLabelHistoryRestClient.CreateGetLabelHistoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, labelName, context);
+                using HttpMessage message = _containerAppsLabelHistoryRestClient.CreateGetLabelHistoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, labelName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LabelHistoryData> response = Response.FromValue(LabelHistoryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppsLabelHistoryRestClient.CreateGetLabelHistoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, labelName, context);
+                using HttpMessage message = _containerAppsLabelHistoryRestClient.CreateGetLabelHistoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, labelName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LabelHistoryData> response = Response.FromValue(LabelHistoryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppsLabelHistoryRestClient.CreateGetLabelHistoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, labelName, context);
+                using HttpMessage message = _containerAppsLabelHistoryRestClient.CreateGetLabelHistoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, labelName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<LabelHistoryData> response = default;
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppsLabelHistoryRestClient.CreateGetLabelHistoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, labelName, context);
+                using HttpMessage message = _containerAppsLabelHistoryRestClient.CreateGetLabelHistoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, labelName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<LabelHistoryData> response = default;
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppsLabelHistoryRestClient.CreateGetLabelHistoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, labelName, context);
+                using HttpMessage message = _containerAppsLabelHistoryRestClient.CreateGetLabelHistoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, labelName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<LabelHistoryData> response = default;
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppsLabelHistoryRestClient.CreateGetLabelHistoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, labelName, context);
+                using HttpMessage message = _containerAppsLabelHistoryRestClient.CreateGetLabelHistoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, labelName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<LabelHistoryData> response = default;

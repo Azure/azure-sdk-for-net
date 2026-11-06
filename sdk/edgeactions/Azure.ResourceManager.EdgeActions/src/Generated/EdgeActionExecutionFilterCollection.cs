@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.EdgeActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeActionExecutionFiltersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, executionFilter, EdgeActionExecutionFilterData.ToRequestContent(data), context);
+                using HttpMessage message = _edgeActionExecutionFiltersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, executionFilter, EdgeActionExecutionFilterData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 EdgeActionsArmOperation<EdgeActionExecutionFilterResource> operation = new EdgeActionsArmOperation<EdgeActionExecutionFilterResource>(
                     new EdgeActionExecutionFilterResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.EdgeActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeActionExecutionFiltersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, executionFilter, EdgeActionExecutionFilterData.ToRequestContent(data), context);
+                using HttpMessage message = _edgeActionExecutionFiltersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, executionFilter, EdgeActionExecutionFilterData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 EdgeActionsArmOperation<EdgeActionExecutionFilterResource> operation = new EdgeActionsArmOperation<EdgeActionExecutionFilterResource>(
                     new EdgeActionExecutionFilterResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.EdgeActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeActionExecutionFiltersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, executionFilter, context);
+                using HttpMessage message = _edgeActionExecutionFiltersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, executionFilter, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EdgeActionExecutionFilterData> response = Response.FromValue(EdgeActionExecutionFilterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.EdgeActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeActionExecutionFiltersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, executionFilter, context);
+                using HttpMessage message = _edgeActionExecutionFiltersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, executionFilter, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EdgeActionExecutionFilterData> response = Response.FromValue(EdgeActionExecutionFilterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.EdgeActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeActionExecutionFiltersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, executionFilter, context);
+                using HttpMessage message = _edgeActionExecutionFiltersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, executionFilter, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EdgeActionExecutionFilterData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.EdgeActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeActionExecutionFiltersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, executionFilter, context);
+                using HttpMessage message = _edgeActionExecutionFiltersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, executionFilter, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EdgeActionExecutionFilterData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.EdgeActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeActionExecutionFiltersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, executionFilter, context);
+                using HttpMessage message = _edgeActionExecutionFiltersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, executionFilter, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EdgeActionExecutionFilterData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.EdgeActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeActionExecutionFiltersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, executionFilter, context);
+                using HttpMessage message = _edgeActionExecutionFiltersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, executionFilter, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EdgeActionExecutionFilterData> response = default;

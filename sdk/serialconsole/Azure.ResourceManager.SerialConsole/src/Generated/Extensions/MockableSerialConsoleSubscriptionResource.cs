@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SerialConsole.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SerialConsoleClientRestClient.CreateGetConsoleStatusRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = SerialConsoleClientRestClient.CreateGetConsoleStatusRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SerialConsoleStatus> response = Response.FromValue(SerialConsoleStatus.FromResponse(result), result);
                 if (response.Value == null)
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.SerialConsole.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SerialConsoleClientRestClient.CreateGetConsoleStatusRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = SerialConsoleClientRestClient.CreateGetConsoleStatusRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SerialConsoleStatus> response = Response.FromValue(SerialConsoleStatus.FromResponse(result), result);
                 if (response.Value == null)
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.SerialConsole.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SerialConsoleOperationGroupRestClient.CreateDisableConsoleRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = SerialConsoleOperationGroupRestClient.CreateDisableConsoleRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SerialConsoleStatus> response = Response.FromValue(SerialConsoleStatus.FromResponse(result), result);
                 if (response.Value == null)
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.SerialConsole.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SerialConsoleOperationGroupRestClient.CreateDisableConsoleRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = SerialConsoleOperationGroupRestClient.CreateDisableConsoleRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SerialConsoleStatus> response = Response.FromValue(SerialConsoleStatus.FromResponse(result), result);
                 if (response.Value == null)
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.SerialConsole.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SerialConsoleOperationGroupRestClient.CreateEnableConsoleRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = SerialConsoleOperationGroupRestClient.CreateEnableConsoleRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SerialConsoleStatus> response = Response.FromValue(SerialConsoleStatus.FromResponse(result), result);
                 if (response.Value == null)
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.SerialConsole.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SerialConsoleOperationGroupRestClient.CreateEnableConsoleRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = SerialConsoleOperationGroupRestClient.CreateEnableConsoleRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SerialConsoleStatus> response = Response.FromValue(SerialConsoleStatus.FromResponse(result), result);
                 if (response.Value == null)

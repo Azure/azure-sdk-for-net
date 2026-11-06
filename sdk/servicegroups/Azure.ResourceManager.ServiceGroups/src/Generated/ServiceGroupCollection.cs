@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ServiceGroups
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managementClientRestClient.CreateCreateOrUpdateServiceGroupRequest(serviceGroupName, ServiceGroupData.ToRequestContent(data), context);
+                using HttpMessage message = _managementClientRestClient.CreateCreateOrUpdateServiceGroupRequest(serviceGroupName, ServiceGroupData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceGroupsArmOperation<ServiceGroupResource> operation = new ServiceGroupsArmOperation<ServiceGroupResource>(
                     new ServiceGroupResourceOperationSource(Client),
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ServiceGroups
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managementClientRestClient.CreateCreateOrUpdateServiceGroupRequest(serviceGroupName, ServiceGroupData.ToRequestContent(data), context);
+                using HttpMessage message = _managementClientRestClient.CreateCreateOrUpdateServiceGroupRequest(serviceGroupName, ServiceGroupData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceGroupsArmOperation<ServiceGroupResource> operation = new ServiceGroupsArmOperation<ServiceGroupResource>(
                     new ServiceGroupResourceOperationSource(Client),
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ServiceGroups
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGroupsOperationGroupRestClient.CreateGetRequest(serviceGroupName, context);
+                using HttpMessage message = _serviceGroupsOperationGroupRestClient.CreateGetRequest(serviceGroupName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceGroupData> response = Response.FromValue(ServiceGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.ServiceGroups
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGroupsOperationGroupRestClient.CreateGetRequest(serviceGroupName, context);
+                using HttpMessage message = _serviceGroupsOperationGroupRestClient.CreateGetRequest(serviceGroupName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceGroupData> response = Response.FromValue(ServiceGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.ServiceGroups
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGroupsOperationGroupRestClient.CreateGetRequest(serviceGroupName, context);
+                using HttpMessage message = _serviceGroupsOperationGroupRestClient.CreateGetRequest(serviceGroupName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ServiceGroupData> response = default;
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.ServiceGroups
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGroupsOperationGroupRestClient.CreateGetRequest(serviceGroupName, context);
+                using HttpMessage message = _serviceGroupsOperationGroupRestClient.CreateGetRequest(serviceGroupName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ServiceGroupData> response = default;
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.ServiceGroups
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGroupsOperationGroupRestClient.CreateGetRequest(serviceGroupName, context);
+                using HttpMessage message = _serviceGroupsOperationGroupRestClient.CreateGetRequest(serviceGroupName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ServiceGroupData> response = default;
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.ServiceGroups
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGroupsOperationGroupRestClient.CreateGetRequest(serviceGroupName, context);
+                using HttpMessage message = _serviceGroupsOperationGroupRestClient.CreateGetRequest(serviceGroupName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ServiceGroupData> response = default;

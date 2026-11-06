@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantFileWorkspaceRestClient.CreateGetRequest(Id.Name, context);
+                using HttpMessage message = _tenantFileWorkspaceRestClient.CreateGetRequest(Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FileWorkspaceDetailData> response = Response.FromValue(FileWorkspaceDetailData.FromResponse(result), result);
                 if (response.Value == null)
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantFileWorkspaceRestClient.CreateGetRequest(Id.Name, context);
+                using HttpMessage message = _tenantFileWorkspaceRestClient.CreateGetRequest(Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FileWorkspaceDetailData> response = Response.FromValue(FileWorkspaceDetailData.FromResponse(result), result);
                 if (response.Value == null)
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantFileWorkspaceRestClient.CreateCreateRequest(Id.Name, context);
+                using HttpMessage message = _tenantFileWorkspaceRestClient.CreateCreateRequest(Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FileWorkspaceDetailData> response = Response.FromValue(FileWorkspaceDetailData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantFileWorkspaceRestClient.CreateCreateRequest(Id.Name, context);
+                using HttpMessage message = _tenantFileWorkspaceRestClient.CreateCreateRequest(Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FileWorkspaceDetailData> response = Response.FromValue(FileWorkspaceDetailData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

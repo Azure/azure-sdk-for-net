@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _softwareUpdateConfigurationsRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, clientRequestId, context);
+                using HttpMessage message = _softwareUpdateConfigurationsRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, clientRequestId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SoftwareUpdateConfigurationData> response = Response.FromValue(SoftwareUpdateConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _softwareUpdateConfigurationsRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, clientRequestId, context);
+                using HttpMessage message = _softwareUpdateConfigurationsRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, clientRequestId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SoftwareUpdateConfigurationData> response = Response.FromValue(SoftwareUpdateConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _softwareUpdateConfigurationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, clientRequestId, context);
+                using HttpMessage message = _softwareUpdateConfigurationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, clientRequestId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _softwareUpdateConfigurationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, clientRequestId, context);
+                using HttpMessage message = _softwareUpdateConfigurationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, clientRequestId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _softwareUpdateConfigurationsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SoftwareUpdateConfigurationData.ToRequestContent(data), clientRequestId, context);
+                using HttpMessage message = _softwareUpdateConfigurationsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SoftwareUpdateConfigurationData.ToRequestContent(data), clientRequestId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SoftwareUpdateConfigurationData> response = Response.FromValue(SoftwareUpdateConfigurationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _softwareUpdateConfigurationsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SoftwareUpdateConfigurationData.ToRequestContent(data), clientRequestId, context);
+                using HttpMessage message = _softwareUpdateConfigurationsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SoftwareUpdateConfigurationData.ToRequestContent(data), clientRequestId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SoftwareUpdateConfigurationData> response = Response.FromValue(SoftwareUpdateConfigurationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

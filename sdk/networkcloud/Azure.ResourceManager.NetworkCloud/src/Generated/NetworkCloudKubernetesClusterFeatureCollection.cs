@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _kubernetesClusterFeaturesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, featureName, NetworkCloudKubernetesClusterFeatureData.ToRequestContent(data), matchConditions, context);
+                using HttpMessage message = _kubernetesClusterFeaturesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, featureName, NetworkCloudKubernetesClusterFeatureData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkCloudArmOperation<NetworkCloudKubernetesClusterFeatureResource> operation = new NetworkCloudArmOperation<NetworkCloudKubernetesClusterFeatureResource>(
                     new NetworkCloudKubernetesClusterFeatureResourceOperationSource(Client),
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _kubernetesClusterFeaturesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, featureName, NetworkCloudKubernetesClusterFeatureData.ToRequestContent(data), matchConditions, context);
+                using HttpMessage message = _kubernetesClusterFeaturesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, featureName, NetworkCloudKubernetesClusterFeatureData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkCloudArmOperation<NetworkCloudKubernetesClusterFeatureResource> operation = new NetworkCloudArmOperation<NetworkCloudKubernetesClusterFeatureResource>(
                     new NetworkCloudKubernetesClusterFeatureResourceOperationSource(Client),
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _kubernetesClusterFeaturesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, featureName, context);
+                using HttpMessage message = _kubernetesClusterFeaturesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, featureName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkCloudKubernetesClusterFeatureData> response = Response.FromValue(NetworkCloudKubernetesClusterFeatureData.FromResponse(result), result);
                 if (response.Value == null)
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _kubernetesClusterFeaturesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, featureName, context);
+                using HttpMessage message = _kubernetesClusterFeaturesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, featureName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkCloudKubernetesClusterFeatureData> response = Response.FromValue(NetworkCloudKubernetesClusterFeatureData.FromResponse(result), result);
                 if (response.Value == null)
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _kubernetesClusterFeaturesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, featureName, context);
+                using HttpMessage message = _kubernetesClusterFeaturesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, featureName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkCloudKubernetesClusterFeatureData> response = default;
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _kubernetesClusterFeaturesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, featureName, context);
+                using HttpMessage message = _kubernetesClusterFeaturesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, featureName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkCloudKubernetesClusterFeatureData> response = default;
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _kubernetesClusterFeaturesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, featureName, context);
+                using HttpMessage message = _kubernetesClusterFeaturesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, featureName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkCloudKubernetesClusterFeatureData> response = default;
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _kubernetesClusterFeaturesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, featureName, context);
+                using HttpMessage message = _kubernetesClusterFeaturesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, featureName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkCloudKubernetesClusterFeatureData> response = default;

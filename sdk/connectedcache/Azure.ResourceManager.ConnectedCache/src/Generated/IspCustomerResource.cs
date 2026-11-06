@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ConnectedCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ispCustomersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _ispCustomersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<IspCustomerData> response = Response.FromValue(IspCustomerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ConnectedCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ispCustomersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _ispCustomersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<IspCustomerData> response = Response.FromValue(IspCustomerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.ConnectedCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ispCustomersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ConnectedCachePatchContent.ToRequestContent(content), context);
+                using HttpMessage message = _ispCustomersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ConnectedCachePatchContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<IspCustomerData> response = Response.FromValue(IspCustomerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.ConnectedCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ispCustomersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ConnectedCachePatchContent.ToRequestContent(content), context);
+                using HttpMessage message = _ispCustomersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ConnectedCachePatchContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<IspCustomerData> response = Response.FromValue(IspCustomerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.ConnectedCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ispCustomersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _ispCustomersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ConnectedCacheArmOperation operation = new ConnectedCacheArmOperation(_ispCustomersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.ConnectedCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ispCustomersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _ispCustomersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ConnectedCacheArmOperation operation = new ConnectedCacheArmOperation(_ispCustomersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.ConnectedCache
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _ispCustomersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _ispCustomersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<IspCustomerData> response = Response.FromValue(IspCustomerData.FromResponse(result), result);
                     return Response.FromValue(new IspCustomerResource(Client, response.Value), response.GetRawResponse());
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.ConnectedCache
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _ispCustomersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _ispCustomersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<IspCustomerData> response = Response.FromValue(IspCustomerData.FromResponse(result), result);
                     return Response.FromValue(new IspCustomerResource(Client, response.Value), response.GetRawResponse());
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.ConnectedCache
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _ispCustomersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _ispCustomersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<IspCustomerData> response = Response.FromValue(IspCustomerData.FromResponse(result), result);
                     return Response.FromValue(new IspCustomerResource(Client, response.Value), response.GetRawResponse());
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.ConnectedCache
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _ispCustomersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _ispCustomersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<IspCustomerData> response = Response.FromValue(IspCustomerData.FromResponse(result), result);
                     return Response.FromValue(new IspCustomerResource(Client, response.Value), response.GetRawResponse());
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.ConnectedCache
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _ispCustomersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _ispCustomersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<IspCustomerData> response = Response.FromValue(IspCustomerData.FromResponse(result), result);
                     return Response.FromValue(new IspCustomerResource(Client, response.Value), response.GetRawResponse());
@@ -638,7 +638,7 @@ namespace Azure.ResourceManager.ConnectedCache
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _ispCustomersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _ispCustomersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<IspCustomerData> response = Response.FromValue(IspCustomerData.FromResponse(result), result);
                     return Response.FromValue(new IspCustomerResource(Client, response.Value), response.GetRawResponse());

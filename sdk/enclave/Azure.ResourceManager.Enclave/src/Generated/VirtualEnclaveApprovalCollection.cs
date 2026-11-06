@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Enclave
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _approvalRestClient.CreateCreateOrUpdateRequest(Id.ToString(), approvalName, VirtualEnclaveApprovalData.ToRequestContent(data), context);
+                using HttpMessage message = _approvalRestClient.CreateCreateOrUpdateRequest(Id.ToString(), approvalName, VirtualEnclaveApprovalData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 EnclaveArmOperation<VirtualEnclaveApprovalResource> operation = new EnclaveArmOperation<VirtualEnclaveApprovalResource>(
                     new VirtualEnclaveApprovalResourceOperationSource(Client),
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Enclave
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _approvalRestClient.CreateCreateOrUpdateRequest(Id.ToString(), approvalName, VirtualEnclaveApprovalData.ToRequestContent(data), context);
+                using HttpMessage message = _approvalRestClient.CreateCreateOrUpdateRequest(Id.ToString(), approvalName, VirtualEnclaveApprovalData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 EnclaveArmOperation<VirtualEnclaveApprovalResource> operation = new EnclaveArmOperation<VirtualEnclaveApprovalResource>(
                     new VirtualEnclaveApprovalResourceOperationSource(Client),
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Enclave
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _approvalRestClient.CreateGetRequest(Id.ToString(), approvalName, context);
+                using HttpMessage message = _approvalRestClient.CreateGetRequest(Id.ToString(), approvalName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<VirtualEnclaveApprovalData> response = Response.FromValue(VirtualEnclaveApprovalData.FromResponse(result), result);
                 if (response.Value == null)
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Enclave
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _approvalRestClient.CreateGetRequest(Id.ToString(), approvalName, context);
+                using HttpMessage message = _approvalRestClient.CreateGetRequest(Id.ToString(), approvalName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<VirtualEnclaveApprovalData> response = Response.FromValue(VirtualEnclaveApprovalData.FromResponse(result), result);
                 if (response.Value == null)
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Enclave
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _approvalRestClient.CreateGetRequest(Id.ToString(), approvalName, context);
+                using HttpMessage message = _approvalRestClient.CreateGetRequest(Id.ToString(), approvalName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<VirtualEnclaveApprovalData> response = default;
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Enclave
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _approvalRestClient.CreateGetRequest(Id.ToString(), approvalName, context);
+                using HttpMessage message = _approvalRestClient.CreateGetRequest(Id.ToString(), approvalName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<VirtualEnclaveApprovalData> response = default;
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.Enclave
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _approvalRestClient.CreateGetRequest(Id.ToString(), approvalName, context);
+                using HttpMessage message = _approvalRestClient.CreateGetRequest(Id.ToString(), approvalName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<VirtualEnclaveApprovalData> response = default;
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.Enclave
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _approvalRestClient.CreateGetRequest(Id.ToString(), approvalName, context);
+                using HttpMessage message = _approvalRestClient.CreateGetRequest(Id.ToString(), approvalName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<VirtualEnclaveApprovalData> response = default;

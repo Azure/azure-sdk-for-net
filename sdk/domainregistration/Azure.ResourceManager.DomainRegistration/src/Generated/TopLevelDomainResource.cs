@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DomainRegistration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _topLevelDomainsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, context);
+                using HttpMessage message = _topLevelDomainsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TopLevelDomainData> response = Response.FromValue(TopLevelDomainData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DomainRegistration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _topLevelDomainsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, context);
+                using HttpMessage message = _topLevelDomainsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TopLevelDomainData> response = Response.FromValue(TopLevelDomainData.FromResponse(result), result);
                 if (response.Value == null)

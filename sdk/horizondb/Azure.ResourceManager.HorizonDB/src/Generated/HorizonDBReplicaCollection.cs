@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBReplicasRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaName, HorizonDBReplicaData.ToRequestContent(data), context);
+                using HttpMessage message = _horizonDBReplicasRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaName, HorizonDBReplicaData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HorizonDBArmOperation<HorizonDBReplicaResource> operation = new HorizonDBArmOperation<HorizonDBReplicaResource>(
                     new HorizonDBReplicaResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBReplicasRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaName, HorizonDBReplicaData.ToRequestContent(data), context);
+                using HttpMessage message = _horizonDBReplicasRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaName, HorizonDBReplicaData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HorizonDBArmOperation<HorizonDBReplicaResource> operation = new HorizonDBArmOperation<HorizonDBReplicaResource>(
                     new HorizonDBReplicaResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBReplicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaName, context);
+                using HttpMessage message = _horizonDBReplicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HorizonDBReplicaData> response = Response.FromValue(HorizonDBReplicaData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBReplicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaName, context);
+                using HttpMessage message = _horizonDBReplicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HorizonDBReplicaData> response = Response.FromValue(HorizonDBReplicaData.FromResponse(result), result);
                 if (response.Value == null)
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBReplicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaName, context);
+                using HttpMessage message = _horizonDBReplicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HorizonDBReplicaData> response = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBReplicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaName, context);
+                using HttpMessage message = _horizonDBReplicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HorizonDBReplicaData> response = default;
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBReplicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaName, context);
+                using HttpMessage message = _horizonDBReplicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HorizonDBReplicaData> response = default;
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBReplicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaName, context);
+                using HttpMessage message = _horizonDBReplicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HorizonDBReplicaData> response = default;

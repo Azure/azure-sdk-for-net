@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _replicationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerRegistryReplicationData> response = Response.FromValue(ContainerRegistryReplicationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _replicationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerRegistryReplicationData> response = Response.FromValue(ContainerRegistryReplicationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerRegistryReplicationPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _replicationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerRegistryReplicationPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerRegistryArmOperation<ContainerRegistryReplicationResource> operation = new ContainerRegistryArmOperation<ContainerRegistryReplicationResource>(
                     new ContainerRegistryReplicationResourceOperationSource(Client),
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerRegistryReplicationPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _replicationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerRegistryReplicationPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerRegistryArmOperation<ContainerRegistryReplicationResource> operation = new ContainerRegistryArmOperation<ContainerRegistryReplicationResource>(
                     new ContainerRegistryReplicationResourceOperationSource(Client),
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _replicationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerRegistryArmOperation operation = new ContainerRegistryArmOperation(_replicationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _replicationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerRegistryArmOperation operation = new ContainerRegistryArmOperation(_replicationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _replicationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _replicationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ContainerRegistryReplicationData> response = Response.FromValue(ContainerRegistryReplicationData.FromResponse(result), result);
                     return Response.FromValue(new ContainerRegistryReplicationResource(Client, response.Value), response.GetRawResponse());
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _replicationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _replicationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ContainerRegistryReplicationData> response = Response.FromValue(ContainerRegistryReplicationData.FromResponse(result), result);
                     return Response.FromValue(new ContainerRegistryReplicationResource(Client, response.Value), response.GetRawResponse());
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _replicationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _replicationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ContainerRegistryReplicationData> response = Response.FromValue(ContainerRegistryReplicationData.FromResponse(result), result);
                     return Response.FromValue(new ContainerRegistryReplicationResource(Client, response.Value), response.GetRawResponse());
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _replicationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _replicationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ContainerRegistryReplicationData> response = Response.FromValue(ContainerRegistryReplicationData.FromResponse(result), result);
                     return Response.FromValue(new ContainerRegistryReplicationResource(Client, response.Value), response.GetRawResponse());
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _replicationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _replicationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ContainerRegistryReplicationData> response = Response.FromValue(ContainerRegistryReplicationData.FromResponse(result), result);
                     return Response.FromValue(new ContainerRegistryReplicationResource(Client, response.Value), response.GetRawResponse());
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _replicationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _replicationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ContainerRegistryReplicationData> response = Response.FromValue(ContainerRegistryReplicationData.FromResponse(result), result);
                     return Response.FromValue(new ContainerRegistryReplicationResource(Client, response.Value), response.GetRawResponse());

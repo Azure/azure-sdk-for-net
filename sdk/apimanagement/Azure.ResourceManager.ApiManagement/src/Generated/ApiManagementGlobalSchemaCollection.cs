@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _globalSchemaRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaId, ApiManagementGlobalSchemaData.ToRequestContent(data), ifMatch, context);
+                using HttpMessage message = _globalSchemaRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaId, ApiManagementGlobalSchemaData.ToRequestContent(data), ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ApiManagementArmOperation<ApiManagementGlobalSchemaResource> operation = new ApiManagementArmOperation<ApiManagementGlobalSchemaResource>(
                     new ApiManagementGlobalSchemaResourceOperationSource(Client),
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _globalSchemaRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaId, ApiManagementGlobalSchemaData.ToRequestContent(data), ifMatch, context);
+                using HttpMessage message = _globalSchemaRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaId, ApiManagementGlobalSchemaData.ToRequestContent(data), ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ApiManagementArmOperation<ApiManagementGlobalSchemaResource> operation = new ApiManagementArmOperation<ApiManagementGlobalSchemaResource>(
                     new ApiManagementGlobalSchemaResourceOperationSource(Client),
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _globalSchemaRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaId, context);
+                using HttpMessage message = _globalSchemaRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiManagementGlobalSchemaData> response = Response.FromValue(ApiManagementGlobalSchemaData.FromResponse(result), result);
                 if (response.Value == null)
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _globalSchemaRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaId, context);
+                using HttpMessage message = _globalSchemaRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiManagementGlobalSchemaData> response = Response.FromValue(ApiManagementGlobalSchemaData.FromResponse(result), result);
                 if (response.Value == null)
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _globalSchemaRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaId, context);
+                using HttpMessage message = _globalSchemaRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementGlobalSchemaData> response = default;
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _globalSchemaRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaId, context);
+                using HttpMessage message = _globalSchemaRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementGlobalSchemaData> response = default;
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _globalSchemaRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaId, context);
+                using HttpMessage message = _globalSchemaRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiManagementGlobalSchemaData> response = default;
@@ -558,7 +558,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _globalSchemaRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaId, context);
+                using HttpMessage message = _globalSchemaRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, schemaId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiManagementGlobalSchemaData> response = default;

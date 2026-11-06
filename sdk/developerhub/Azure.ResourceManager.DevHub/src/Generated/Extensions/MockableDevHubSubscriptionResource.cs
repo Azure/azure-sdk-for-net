@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.DevHub.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = DevHubClientRestClient.CreateGeneratePreviewArtifactsRequest(Guid.Parse(Id.SubscriptionId), location, DevHubArtifactGenerationProperties.ToRequestContent(devHubArtifactGenerationProperties), context);
+                using HttpMessage message = DevHubClientRestClient.CreateGeneratePreviewArtifactsRequest(Guid.Parse(Id.SubscriptionId), location, DevHubArtifactGenerationProperties.ToRequestContent(devHubArtifactGenerationProperties), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 using JsonDocument document = JsonDocument.Parse(result.Content, ModelSerializationExtensions.JsonDocumentOptions);
                 IDictionary<string, string> value = default;
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.DevHub.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = DevHubClientRestClient.CreateGeneratePreviewArtifactsRequest(Guid.Parse(Id.SubscriptionId), location, DevHubArtifactGenerationProperties.ToRequestContent(devHubArtifactGenerationProperties), context);
+                using HttpMessage message = DevHubClientRestClient.CreateGeneratePreviewArtifactsRequest(Guid.Parse(Id.SubscriptionId), location, DevHubArtifactGenerationProperties.ToRequestContent(devHubArtifactGenerationProperties), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 using JsonDocument document = JsonDocument.Parse(result.Content, ModelSerializationExtensions.JsonDocumentOptions);
                 IDictionary<string, string> value = default;
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.DevHub.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = DevHubClientRestClient.CreateGetGitHubOAuthRequest(Guid.Parse(Id.SubscriptionId), location, context);
+                using HttpMessage message = DevHubClientRestClient.CreateGetGitHubOAuthRequest(Guid.Parse(Id.SubscriptionId), location, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DeveloperHubGitHubOAuthListResult> response = Response.FromValue(DeveloperHubGitHubOAuthListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.DevHub.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = DevHubClientRestClient.CreateGetGitHubOAuthRequest(Guid.Parse(Id.SubscriptionId), location, context);
+                using HttpMessage message = DevHubClientRestClient.CreateGetGitHubOAuthRequest(Guid.Parse(Id.SubscriptionId), location, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DeveloperHubGitHubOAuthListResult> response = Response.FromValue(DeveloperHubGitHubOAuthListResult.FromResponse(result), result);
                 if (response.Value == null)

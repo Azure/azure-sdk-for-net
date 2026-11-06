@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateCreateOrUpdateRequest(privateStoreId, PrivateStoreData.ToRequestContent(data), context);
+                using HttpMessage message = _privateStoreRestClient.CreateCreateOrUpdateRequest(privateStoreId, PrivateStoreData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateCreateOrUpdateRequest(privateStoreId, PrivateStoreData.ToRequestContent(data), context);
+                using HttpMessage message = _privateStoreRestClient.CreateCreateOrUpdateRequest(privateStoreId, PrivateStoreData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateGetRequest(privateStoreId, context);
+                using HttpMessage message = _privateStoreRestClient.CreateGetRequest(privateStoreId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PrivateStoreData> response = Response.FromValue(PrivateStoreData.FromResponse(result), result);
                 if (response.Value == null)
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateGetRequest(privateStoreId, context);
+                using HttpMessage message = _privateStoreRestClient.CreateGetRequest(privateStoreId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PrivateStoreData> response = Response.FromValue(PrivateStoreData.FromResponse(result), result);
                 if (response.Value == null)
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateGetRequest(privateStoreId, context);
+                using HttpMessage message = _privateStoreRestClient.CreateGetRequest(privateStoreId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PrivateStoreData> response = default;
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateGetRequest(privateStoreId, context);
+                using HttpMessage message = _privateStoreRestClient.CreateGetRequest(privateStoreId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PrivateStoreData> response = default;
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateGetRequest(privateStoreId, context);
+                using HttpMessage message = _privateStoreRestClient.CreateGetRequest(privateStoreId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PrivateStoreData> response = default;
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateGetRequest(privateStoreId, context);
+                using HttpMessage message = _privateStoreRestClient.CreateGetRequest(privateStoreId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PrivateStoreData> response = default;

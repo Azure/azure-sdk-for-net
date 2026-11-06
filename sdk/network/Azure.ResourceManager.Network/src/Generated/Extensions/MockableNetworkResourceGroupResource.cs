@@ -3539,7 +3539,7 @@ namespace Azure.ResourceManager.Network.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, CheckPrivateLinkServiceVisibilityRequest.ToRequestContent(content), context);
+                using HttpMessage message = PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, CheckPrivateLinkServiceVisibilityRequest.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<PrivateLinkServiceVisibility> operation = new NetworkArmOperation<PrivateLinkServiceVisibility>(
                     new PrivateLinkServiceVisibilityOperationSource(),
@@ -3595,7 +3595,7 @@ namespace Azure.ResourceManager.Network.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, CheckPrivateLinkServiceVisibilityRequest.ToRequestContent(content), context);
+                using HttpMessage message = PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, CheckPrivateLinkServiceVisibilityRequest.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<PrivateLinkServiceVisibility> operation = new NetworkArmOperation<PrivateLinkServiceVisibility>(
                     new PrivateLinkServiceVisibilityOperationSource(),

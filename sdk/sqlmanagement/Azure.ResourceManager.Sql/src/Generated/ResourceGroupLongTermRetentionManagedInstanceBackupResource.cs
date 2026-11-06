@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _longTermRetentionManagedInstanceBackupsRestClient.CreateGetByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _longTermRetentionManagedInstanceBackupsRestClient.CreateGetByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ManagedInstanceLongTermRetentionBackupData> response = Response.FromValue(ManagedInstanceLongTermRetentionBackupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _longTermRetentionManagedInstanceBackupsRestClient.CreateGetByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _longTermRetentionManagedInstanceBackupsRestClient.CreateGetByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ManagedInstanceLongTermRetentionBackupData> response = Response.FromValue(ManagedInstanceLongTermRetentionBackupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _longTermRetentionManagedInstanceBackupsRestClient.CreateDeleteByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _longTermRetentionManagedInstanceBackupsRestClient.CreateDeleteByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation operation = new SqlArmOperation(_longTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _longTermRetentionManagedInstanceBackupsRestClient.CreateDeleteByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _longTermRetentionManagedInstanceBackupsRestClient.CreateDeleteByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation operation = new SqlArmOperation(_longTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _longTermRetentionManagedInstanceBackupsRestClient.CreateLockTimeBasedImmutabilityByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _longTermRetentionManagedInstanceBackupsRestClient.CreateLockTimeBasedImmutabilityByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation<ResourceGroupLongTermRetentionManagedInstanceBackupResource> operation = new SqlArmOperation<ResourceGroupLongTermRetentionManagedInstanceBackupResource>(
                     new ResourceGroupLongTermRetentionManagedInstanceBackupResourceOperationSource(Client),
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _longTermRetentionManagedInstanceBackupsRestClient.CreateLockTimeBasedImmutabilityByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _longTermRetentionManagedInstanceBackupsRestClient.CreateLockTimeBasedImmutabilityByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation<ResourceGroupLongTermRetentionManagedInstanceBackupResource> operation = new SqlArmOperation<ResourceGroupLongTermRetentionManagedInstanceBackupResource>(
                     new ResourceGroupLongTermRetentionManagedInstanceBackupResourceOperationSource(Client),
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _longTermRetentionManagedInstanceBackupsRestClient.CreateRemoveLegalHoldImmutabilityByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _longTermRetentionManagedInstanceBackupsRestClient.CreateRemoveLegalHoldImmutabilityByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation<ResourceGroupLongTermRetentionManagedInstanceBackupResource> operation = new SqlArmOperation<ResourceGroupLongTermRetentionManagedInstanceBackupResource>(
                     new ResourceGroupLongTermRetentionManagedInstanceBackupResourceOperationSource(Client),
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _longTermRetentionManagedInstanceBackupsRestClient.CreateRemoveLegalHoldImmutabilityByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _longTermRetentionManagedInstanceBackupsRestClient.CreateRemoveLegalHoldImmutabilityByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation<ResourceGroupLongTermRetentionManagedInstanceBackupResource> operation = new SqlArmOperation<ResourceGroupLongTermRetentionManagedInstanceBackupResource>(
                     new ResourceGroupLongTermRetentionManagedInstanceBackupResourceOperationSource(Client),
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _longTermRetentionManagedInstanceBackupsRestClient.CreateRemoveTimeBasedImmutabilityByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _longTermRetentionManagedInstanceBackupsRestClient.CreateRemoveTimeBasedImmutabilityByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation<ResourceGroupLongTermRetentionManagedInstanceBackupResource> operation = new SqlArmOperation<ResourceGroupLongTermRetentionManagedInstanceBackupResource>(
                     new ResourceGroupLongTermRetentionManagedInstanceBackupResourceOperationSource(Client),
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _longTermRetentionManagedInstanceBackupsRestClient.CreateRemoveTimeBasedImmutabilityByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _longTermRetentionManagedInstanceBackupsRestClient.CreateRemoveTimeBasedImmutabilityByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation<ResourceGroupLongTermRetentionManagedInstanceBackupResource> operation = new SqlArmOperation<ResourceGroupLongTermRetentionManagedInstanceBackupResource>(
                     new ResourceGroupLongTermRetentionManagedInstanceBackupResourceOperationSource(Client),
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _longTermRetentionManagedInstanceBackupsRestClient.CreateSetLegalHoldImmutabilityByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _longTermRetentionManagedInstanceBackupsRestClient.CreateSetLegalHoldImmutabilityByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation<ResourceGroupLongTermRetentionManagedInstanceBackupResource> operation = new SqlArmOperation<ResourceGroupLongTermRetentionManagedInstanceBackupResource>(
                     new ResourceGroupLongTermRetentionManagedInstanceBackupResourceOperationSource(Client),
@@ -706,7 +706,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _longTermRetentionManagedInstanceBackupsRestClient.CreateSetLegalHoldImmutabilityByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _longTermRetentionManagedInstanceBackupsRestClient.CreateSetLegalHoldImmutabilityByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation<ResourceGroupLongTermRetentionManagedInstanceBackupResource> operation = new SqlArmOperation<ResourceGroupLongTermRetentionManagedInstanceBackupResource>(
                     new ResourceGroupLongTermRetentionManagedInstanceBackupResourceOperationSource(Client),

@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _governanceRulesRestClient.CreateCreateOrUpdateRequest(Id.ToString(), ruleId, GovernanceRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _governanceRulesRestClient.CreateCreateOrUpdateRequest(Id.ToString(), ruleId, GovernanceRuleData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GovernanceRuleData> response = Response.FromValue(GovernanceRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _governanceRulesRestClient.CreateCreateOrUpdateRequest(Id.ToString(), ruleId, GovernanceRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _governanceRulesRestClient.CreateCreateOrUpdateRequest(Id.ToString(), ruleId, GovernanceRuleData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GovernanceRuleData> response = Response.FromValue(GovernanceRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _governanceRulesRestClient.CreateGetRequest(Id.ToString(), ruleId, context);
+                using HttpMessage message = _governanceRulesRestClient.CreateGetRequest(Id.ToString(), ruleId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GovernanceRuleData> response = Response.FromValue(GovernanceRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _governanceRulesRestClient.CreateGetRequest(Id.ToString(), ruleId, context);
+                using HttpMessage message = _governanceRulesRestClient.CreateGetRequest(Id.ToString(), ruleId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GovernanceRuleData> response = Response.FromValue(GovernanceRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _governanceRulesRestClient.CreateGetRequest(Id.ToString(), ruleId, context);
+                using HttpMessage message = _governanceRulesRestClient.CreateGetRequest(Id.ToString(), ruleId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<GovernanceRuleData> response = default;
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _governanceRulesRestClient.CreateGetRequest(Id.ToString(), ruleId, context);
+                using HttpMessage message = _governanceRulesRestClient.CreateGetRequest(Id.ToString(), ruleId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<GovernanceRuleData> response = default;
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _governanceRulesRestClient.CreateGetRequest(Id.ToString(), ruleId, context);
+                using HttpMessage message = _governanceRulesRestClient.CreateGetRequest(Id.ToString(), ruleId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<GovernanceRuleData> response = default;
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _governanceRulesRestClient.CreateGetRequest(Id.ToString(), ruleId, context);
+                using HttpMessage message = _governanceRulesRestClient.CreateGetRequest(Id.ToString(), ruleId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<GovernanceRuleData> response = default;

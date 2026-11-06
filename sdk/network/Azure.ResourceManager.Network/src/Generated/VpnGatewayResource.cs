@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vpnGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _vpnGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<VpnGatewayData> response = Response.FromValue(VpnGatewayData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vpnGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _vpnGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<VpnGatewayData> response = Response.FromValue(VpnGatewayData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vpnGatewaysRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTagsObject.ToRequestContent(vpnGatewayParameters), context);
+                using HttpMessage message = _vpnGatewaysRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTagsObject.ToRequestContent(vpnGatewayParameters), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<VpnGatewayResource> operation = new NetworkArmOperation<VpnGatewayResource>(
                     new VpnGatewayResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vpnGatewaysRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTagsObject.ToRequestContent(vpnGatewayParameters), context);
+                using HttpMessage message = _vpnGatewaysRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTagsObject.ToRequestContent(vpnGatewayParameters), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<VpnGatewayResource> operation = new NetworkArmOperation<VpnGatewayResource>(
                     new VpnGatewayResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vpnGatewaysRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _vpnGatewaysRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation operation = new NetworkArmOperation(_vpnGatewaysClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vpnGatewaysRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _vpnGatewaysRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation operation = new NetworkArmOperation(_vpnGatewaysClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vpnGatewaysRestClient.CreateResetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ipConfigurationId, context);
+                using HttpMessage message = _vpnGatewaysRestClient.CreateResetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ipConfigurationId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<VpnGatewayResource> operation = new NetworkArmOperation<VpnGatewayResource>(
                     new VpnGatewayResourceOperationSource(Client),
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vpnGatewaysRestClient.CreateResetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ipConfigurationId, context);
+                using HttpMessage message = _vpnGatewaysRestClient.CreateResetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ipConfigurationId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<VpnGatewayResource> operation = new NetworkArmOperation<VpnGatewayResource>(
                     new VpnGatewayResourceOperationSource(Client),
@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vpnGatewaysRestClient.CreateStartPacketCaptureRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VpnGatewayPacketCaptureStartContent.ToRequestContent(content), context);
+                using HttpMessage message = _vpnGatewaysRestClient.CreateStartPacketCaptureRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VpnGatewayPacketCaptureStartContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<string> operation = new NetworkArmOperation<string>(
                     new StringOperationSource(),
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vpnGatewaysRestClient.CreateStartPacketCaptureRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VpnGatewayPacketCaptureStartContent.ToRequestContent(content), context);
+                using HttpMessage message = _vpnGatewaysRestClient.CreateStartPacketCaptureRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VpnGatewayPacketCaptureStartContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<string> operation = new NetworkArmOperation<string>(
                     new StringOperationSource(),
@@ -663,7 +663,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vpnGatewaysRestClient.CreateStopPacketCaptureRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VpnGatewayPacketCaptureStopContent.ToRequestContent(content), context);
+                using HttpMessage message = _vpnGatewaysRestClient.CreateStopPacketCaptureRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VpnGatewayPacketCaptureStopContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<string> operation = new NetworkArmOperation<string>(
                     new StringOperationSource(),
@@ -719,7 +719,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vpnGatewaysRestClient.CreateStopPacketCaptureRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VpnGatewayPacketCaptureStopContent.ToRequestContent(content), context);
+                using HttpMessage message = _vpnGatewaysRestClient.CreateStopPacketCaptureRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VpnGatewayPacketCaptureStopContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<string> operation = new NetworkArmOperation<string>(
                     new StringOperationSource(),
@@ -764,7 +764,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _vpnGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _vpnGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<VpnGatewayData> response = Response.FromValue(VpnGatewayData.FromResponse(result), result);
                     return Response.FromValue(new VpnGatewayResource(Client, response.Value), response.GetRawResponse());
@@ -812,7 +812,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _vpnGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _vpnGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<VpnGatewayData> response = Response.FromValue(VpnGatewayData.FromResponse(result), result);
                     return Response.FromValue(new VpnGatewayResource(Client, response.Value), response.GetRawResponse());
@@ -858,7 +858,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _vpnGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _vpnGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<VpnGatewayData> response = Response.FromValue(VpnGatewayData.FromResponse(result), result);
                     return Response.FromValue(new VpnGatewayResource(Client, response.Value), response.GetRawResponse());
@@ -900,7 +900,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _vpnGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _vpnGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<VpnGatewayData> response = Response.FromValue(VpnGatewayData.FromResponse(result), result);
                     return Response.FromValue(new VpnGatewayResource(Client, response.Value), response.GetRawResponse());
@@ -942,7 +942,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _vpnGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _vpnGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<VpnGatewayData> response = Response.FromValue(VpnGatewayData.FromResponse(result), result);
                     return Response.FromValue(new VpnGatewayResource(Client, response.Value), response.GetRawResponse());
@@ -988,7 +988,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _vpnGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _vpnGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<VpnGatewayData> response = Response.FromValue(VpnGatewayData.FromResponse(result), result);
                     return Response.FromValue(new VpnGatewayResource(Client, response.Value), response.GetRawResponse());

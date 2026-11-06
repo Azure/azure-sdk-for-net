@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _volumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _volumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkCloudVolumeData> response = Response.FromValue(NetworkCloudVolumeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _volumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _volumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkCloudVolumeData> response = Response.FromValue(NetworkCloudVolumeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _volumesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkCloudVolumePatch.ToRequestContent(patch), matchConditions, context);
+                using HttpMessage message = _volumesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkCloudVolumePatch.ToRequestContent(patch), matchConditions, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkCloudVolumeData> response = Response.FromValue(NetworkCloudVolumeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _volumesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkCloudVolumePatch.ToRequestContent(patch), matchConditions, context);
+                using HttpMessage message = _volumesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkCloudVolumePatch.ToRequestContent(patch), matchConditions, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkCloudVolumeData> response = Response.FromValue(NetworkCloudVolumeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _volumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _volumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NetworkCloudVolumeData> response = Response.FromValue(NetworkCloudVolumeData.FromResponse(result), result);
                     return Response.FromValue(new NetworkCloudVolumeResource(Client, response.Value), response.GetRawResponse());
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _volumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _volumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NetworkCloudVolumeData> response = Response.FromValue(NetworkCloudVolumeData.FromResponse(result), result);
                     return Response.FromValue(new NetworkCloudVolumeResource(Client, response.Value), response.GetRawResponse());
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _volumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _volumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NetworkCloudVolumeData> response = Response.FromValue(NetworkCloudVolumeData.FromResponse(result), result);
                     return Response.FromValue(new NetworkCloudVolumeResource(Client, response.Value), response.GetRawResponse());
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _volumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _volumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NetworkCloudVolumeData> response = Response.FromValue(NetworkCloudVolumeData.FromResponse(result), result);
                     return Response.FromValue(new NetworkCloudVolumeResource(Client, response.Value), response.GetRawResponse());
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _volumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _volumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NetworkCloudVolumeData> response = Response.FromValue(NetworkCloudVolumeData.FromResponse(result), result);
                     return Response.FromValue(new NetworkCloudVolumeResource(Client, response.Value), response.GetRawResponse());
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _volumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _volumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NetworkCloudVolumeData> response = Response.FromValue(NetworkCloudVolumeData.FromResponse(result), result);
                     return Response.FromValue(new NetworkCloudVolumeResource(Client, response.Value), response.GetRawResponse());

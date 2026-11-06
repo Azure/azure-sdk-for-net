@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.NetworkSecurity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _neuroShieldFindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, findingId, context);
+                using HttpMessage message = _neuroShieldFindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, findingId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NeuroShieldFindingData> response = Response.FromValue(NeuroShieldFindingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.NetworkSecurity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _neuroShieldFindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, findingId, context);
+                using HttpMessage message = _neuroShieldFindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, findingId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NeuroShieldFindingData> response = Response.FromValue(NeuroShieldFindingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.NetworkSecurity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _neuroShieldFindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, findingId, context);
+                using HttpMessage message = _neuroShieldFindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, findingId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NeuroShieldFindingData> response = default;
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.NetworkSecurity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _neuroShieldFindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, findingId, context);
+                using HttpMessage message = _neuroShieldFindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, findingId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NeuroShieldFindingData> response = default;
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.NetworkSecurity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _neuroShieldFindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, findingId, context);
+                using HttpMessage message = _neuroShieldFindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, findingId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NeuroShieldFindingData> response = default;
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.NetworkSecurity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _neuroShieldFindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, findingId, context);
+                using HttpMessage message = _neuroShieldFindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, findingId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NeuroShieldFindingData> response = default;

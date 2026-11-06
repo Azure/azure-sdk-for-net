@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _signalRReplicaSharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _signalRReplicaSharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SignalRSharedPrivateLinkResourceData> response = Response.FromValue(SignalRSharedPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _signalRReplicaSharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _signalRReplicaSharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SignalRSharedPrivateLinkResourceData> response = Response.FromValue(SignalRSharedPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _signalRReplicaSharedPrivateLinkResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, SignalRSharedPrivateLinkResourceData.ToRequestContent(data), context);
+                using HttpMessage message = _signalRReplicaSharedPrivateLinkResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, SignalRSharedPrivateLinkResourceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SignalRArmOperation<SignalRReplicaSharedPrivateLinkResource> operation = new SignalRArmOperation<SignalRReplicaSharedPrivateLinkResource>(
                     new SignalRReplicaSharedPrivateLinkResourceOperationSource(Client),
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _signalRReplicaSharedPrivateLinkResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, SignalRSharedPrivateLinkResourceData.ToRequestContent(data), context);
+                using HttpMessage message = _signalRReplicaSharedPrivateLinkResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, SignalRSharedPrivateLinkResourceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SignalRArmOperation<SignalRReplicaSharedPrivateLinkResource> operation = new SignalRArmOperation<SignalRReplicaSharedPrivateLinkResource>(
                     new SignalRReplicaSharedPrivateLinkResourceOperationSource(Client),

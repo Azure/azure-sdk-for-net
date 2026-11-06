@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Communication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _emailServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _emailServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EmailServiceResourceData> response = Response.FromValue(EmailServiceResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Communication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _emailServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _emailServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EmailServiceResourceData> response = Response.FromValue(EmailServiceResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Communication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _emailServicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EmailServiceResourcePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _emailServicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EmailServiceResourcePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CommunicationArmOperation<EmailServiceResource> operation = new CommunicationArmOperation<EmailServiceResource>(
                     new EmailServiceResourceOperationSource(Client),
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Communication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _emailServicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EmailServiceResourcePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _emailServicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EmailServiceResourcePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CommunicationArmOperation<EmailServiceResource> operation = new CommunicationArmOperation<EmailServiceResource>(
                     new EmailServiceResourceOperationSource(Client),
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Communication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _emailServicesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _emailServicesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CommunicationArmOperation operation = new CommunicationArmOperation(_emailServicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.Communication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _emailServicesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _emailServicesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CommunicationArmOperation operation = new CommunicationArmOperation(_emailServicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.Communication
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _emailServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _emailServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<EmailServiceResourceData> response = Response.FromValue(EmailServiceResourceData.FromResponse(result), result);
                     return Response.FromValue(new EmailServiceResource(Client, response.Value), response.GetRawResponse());
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Communication
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _emailServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _emailServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<EmailServiceResourceData> response = Response.FromValue(EmailServiceResourceData.FromResponse(result), result);
                     return Response.FromValue(new EmailServiceResource(Client, response.Value), response.GetRawResponse());
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.Communication
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _emailServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _emailServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<EmailServiceResourceData> response = Response.FromValue(EmailServiceResourceData.FromResponse(result), result);
                     return Response.FromValue(new EmailServiceResource(Client, response.Value), response.GetRawResponse());
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.Communication
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _emailServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _emailServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<EmailServiceResourceData> response = Response.FromValue(EmailServiceResourceData.FromResponse(result), result);
                     return Response.FromValue(new EmailServiceResource(Client, response.Value), response.GetRawResponse());
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.Communication
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _emailServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _emailServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<EmailServiceResourceData> response = Response.FromValue(EmailServiceResourceData.FromResponse(result), result);
                     return Response.FromValue(new EmailServiceResource(Client, response.Value), response.GetRawResponse());
@@ -659,7 +659,7 @@ namespace Azure.ResourceManager.Communication
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _emailServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _emailServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<EmailServiceResourceData> response = Response.FromValue(EmailServiceResourceData.FromResponse(result), result);
                     return Response.FromValue(new EmailServiceResource(Client, response.Value), response.GetRawResponse());

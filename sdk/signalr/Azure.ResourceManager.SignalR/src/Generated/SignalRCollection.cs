@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _signalRResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, SignalRData.ToRequestContent(data), context);
+                using HttpMessage message = _signalRResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, SignalRData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SignalRArmOperation<SignalRResource> operation = new SignalRArmOperation<SignalRResource>(
                     new SignalRResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _signalRResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, SignalRData.ToRequestContent(data), context);
+                using HttpMessage message = _signalRResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, SignalRData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SignalRArmOperation<SignalRResource> operation = new SignalRArmOperation<SignalRResource>(
                     new SignalRResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _signalRResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                using HttpMessage message = _signalRResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SignalRData> response = Response.FromValue(SignalRData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _signalRResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                using HttpMessage message = _signalRResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SignalRData> response = Response.FromValue(SignalRData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _signalRResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                using HttpMessage message = _signalRResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SignalRData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _signalRResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                using HttpMessage message = _signalRResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SignalRData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _signalRResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                using HttpMessage message = _signalRResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SignalRData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _signalRResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                using HttpMessage message = _signalRResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SignalRData> response = default;

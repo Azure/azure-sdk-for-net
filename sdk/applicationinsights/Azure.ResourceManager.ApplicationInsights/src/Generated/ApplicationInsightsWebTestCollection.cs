@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webTestsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, webTestName, ApplicationInsightsWebTestData.ToRequestContent(data), context);
+                using HttpMessage message = _webTestsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, webTestName, ApplicationInsightsWebTestData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApplicationInsightsWebTestData> response = Response.FromValue(ApplicationInsightsWebTestData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webTestsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, webTestName, ApplicationInsightsWebTestData.ToRequestContent(data), context);
+                using HttpMessage message = _webTestsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, webTestName, ApplicationInsightsWebTestData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApplicationInsightsWebTestData> response = Response.FromValue(ApplicationInsightsWebTestData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, webTestName, context);
+                using HttpMessage message = _webTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, webTestName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApplicationInsightsWebTestData> response = Response.FromValue(ApplicationInsightsWebTestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, webTestName, context);
+                using HttpMessage message = _webTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, webTestName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApplicationInsightsWebTestData> response = Response.FromValue(ApplicationInsightsWebTestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, webTestName, context);
+                using HttpMessage message = _webTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, webTestName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApplicationInsightsWebTestData> response = default;
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, webTestName, context);
+                using HttpMessage message = _webTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, webTestName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApplicationInsightsWebTestData> response = default;
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, webTestName, context);
+                using HttpMessage message = _webTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, webTestName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApplicationInsightsWebTestData> response = default;
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, webTestName, context);
+                using HttpMessage message = _webTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, webTestName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApplicationInsightsWebTestData> response = default;

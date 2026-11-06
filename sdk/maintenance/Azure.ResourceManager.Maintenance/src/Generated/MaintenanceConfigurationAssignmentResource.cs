@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationAssignmentsRestClient.CreateGetConfigurationAssignmentByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.ResourceType.Type, Id.Parent.Parent.Name, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _configurationAssignmentsRestClient.CreateGetConfigurationAssignmentByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.ResourceType.Type, Id.Parent.Parent.Name, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MaintenanceConfigurationAssignmentData> response = Response.FromValue(MaintenanceConfigurationAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationAssignmentsRestClient.CreateGetConfigurationAssignmentByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.ResourceType.Type, Id.Parent.Parent.Name, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _configurationAssignmentsRestClient.CreateGetConfigurationAssignmentByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.ResourceType.Type, Id.Parent.Parent.Name, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MaintenanceConfigurationAssignmentData> response = Response.FromValue(MaintenanceConfigurationAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationAssignmentsRestClient.CreateDeleteConfigurationAssignmentByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.ResourceType.Type, Id.Parent.Parent.Name, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _configurationAssignmentsRestClient.CreateDeleteConfigurationAssignmentByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.ResourceType.Type, Id.Parent.Parent.Name, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationAssignmentsRestClient.CreateDeleteConfigurationAssignmentByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.ResourceType.Type, Id.Parent.Parent.Name, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _configurationAssignmentsRestClient.CreateDeleteConfigurationAssignmentByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.ResourceType.Type, Id.Parent.Parent.Name, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationAssignmentsRestClient.CreateCreateOrUpdateConfigurationAssignmentByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.ResourceType.Type, Id.Parent.Parent.Name, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, MaintenanceConfigurationAssignmentData.ToRequestContent(data), context);
+                using HttpMessage message = _configurationAssignmentsRestClient.CreateCreateOrUpdateConfigurationAssignmentByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.ResourceType.Type, Id.Parent.Parent.Name, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, MaintenanceConfigurationAssignmentData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MaintenanceConfigurationAssignmentData> response = Response.FromValue(MaintenanceConfigurationAssignmentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationAssignmentsRestClient.CreateCreateOrUpdateConfigurationAssignmentByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.ResourceType.Type, Id.Parent.Parent.Name, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, MaintenanceConfigurationAssignmentData.ToRequestContent(data), context);
+                using HttpMessage message = _configurationAssignmentsRestClient.CreateCreateOrUpdateConfigurationAssignmentByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.ResourceType.Type, Id.Parent.Parent.Name, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, MaintenanceConfigurationAssignmentData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MaintenanceConfigurationAssignmentData> response = Response.FromValue(MaintenanceConfigurationAssignmentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

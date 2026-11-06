@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _giVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, giversionname, context);
+                using HttpMessage message = _giVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, giversionname, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OracleGIVersionData> response = Response.FromValue(OracleGIVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _giVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, giversionname, context);
+                using HttpMessage message = _giVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, giversionname, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OracleGIVersionData> response = Response.FromValue(OracleGIVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _giVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, giversionname, context);
+                using HttpMessage message = _giVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, giversionname, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<OracleGIVersionData> response = default;
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _giVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, giversionname, context);
+                using HttpMessage message = _giVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, giversionname, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<OracleGIVersionData> response = default;
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _giVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, giversionname, context);
+                using HttpMessage message = _giVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, giversionname, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<OracleGIVersionData> response = default;
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _giVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, giversionname, context);
+                using HttpMessage message = _giVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, giversionname, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<OracleGIVersionData> response = default;

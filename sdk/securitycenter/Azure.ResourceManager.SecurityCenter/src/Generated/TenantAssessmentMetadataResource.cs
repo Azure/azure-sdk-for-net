@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _assessmentsMetadataRestClient.CreateGetRequest(Id.Name, context);
+                using HttpMessage message = _assessmentsMetadataRestClient.CreateGetRequest(Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityAssessmentMetadataData> response = Response.FromValue(SecurityAssessmentMetadataData.FromResponse(result), result);
                 if (response.Value == null)
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _assessmentsMetadataRestClient.CreateGetRequest(Id.Name, context);
+                using HttpMessage message = _assessmentsMetadataRestClient.CreateGetRequest(Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityAssessmentMetadataData> response = Response.FromValue(SecurityAssessmentMetadataData.FromResponse(result), result);
                 if (response.Value == null)

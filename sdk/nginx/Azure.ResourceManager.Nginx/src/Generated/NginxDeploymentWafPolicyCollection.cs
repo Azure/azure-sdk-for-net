@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Nginx
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nginxDeploymentWafPoliciesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, wafPolicyName, NginxDeploymentWafPolicyData.ToRequestContent(data), context);
+                using HttpMessage message = _nginxDeploymentWafPoliciesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, wafPolicyName, NginxDeploymentWafPolicyData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NginxArmOperation<NginxDeploymentWafPolicyResource> operation = new NginxArmOperation<NginxDeploymentWafPolicyResource>(
                     new NginxDeploymentWafPolicyResourceOperationSource(Client),
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Nginx
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nginxDeploymentWafPoliciesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, wafPolicyName, NginxDeploymentWafPolicyData.ToRequestContent(data), context);
+                using HttpMessage message = _nginxDeploymentWafPoliciesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, wafPolicyName, NginxDeploymentWafPolicyData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NginxArmOperation<NginxDeploymentWafPolicyResource> operation = new NginxArmOperation<NginxDeploymentWafPolicyResource>(
                     new NginxDeploymentWafPolicyResourceOperationSource(Client),
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Nginx
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nginxDeploymentWafPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, wafPolicyName, context);
+                using HttpMessage message = _nginxDeploymentWafPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, wafPolicyName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NginxDeploymentWafPolicyData> response = Response.FromValue(NginxDeploymentWafPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Nginx
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nginxDeploymentWafPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, wafPolicyName, context);
+                using HttpMessage message = _nginxDeploymentWafPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, wafPolicyName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NginxDeploymentWafPolicyData> response = Response.FromValue(NginxDeploymentWafPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Nginx
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nginxDeploymentWafPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, wafPolicyName, context);
+                using HttpMessage message = _nginxDeploymentWafPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, wafPolicyName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NginxDeploymentWafPolicyData> response = default;
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Nginx
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nginxDeploymentWafPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, wafPolicyName, context);
+                using HttpMessage message = _nginxDeploymentWafPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, wafPolicyName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NginxDeploymentWafPolicyData> response = default;
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.Nginx
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nginxDeploymentWafPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, wafPolicyName, context);
+                using HttpMessage message = _nginxDeploymentWafPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, wafPolicyName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NginxDeploymentWafPolicyData> response = default;
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.Nginx
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nginxDeploymentWafPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, wafPolicyName, context);
+                using HttpMessage message = _nginxDeploymentWafPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, wafPolicyName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NginxDeploymentWafPolicyData> response = default;

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customCertificatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, SignalRCustomCertificateData.ToRequestContent(data), context);
+                using HttpMessage message = _customCertificatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, SignalRCustomCertificateData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SignalRArmOperation<SignalRCustomCertificateResource> operation = new SignalRArmOperation<SignalRCustomCertificateResource>(
                     new SignalRCustomCertificateResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customCertificatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, SignalRCustomCertificateData.ToRequestContent(data), context);
+                using HttpMessage message = _customCertificatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, SignalRCustomCertificateData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SignalRArmOperation<SignalRCustomCertificateResource> operation = new SignalRArmOperation<SignalRCustomCertificateResource>(
                     new SignalRCustomCertificateResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customCertificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, context);
+                using HttpMessage message = _customCertificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SignalRCustomCertificateData> response = Response.FromValue(SignalRCustomCertificateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customCertificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, context);
+                using HttpMessage message = _customCertificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SignalRCustomCertificateData> response = Response.FromValue(SignalRCustomCertificateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customCertificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, context);
+                using HttpMessage message = _customCertificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SignalRCustomCertificateData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customCertificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, context);
+                using HttpMessage message = _customCertificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SignalRCustomCertificateData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customCertificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, context);
+                using HttpMessage message = _customCertificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SignalRCustomCertificateData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customCertificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, context);
+                using HttpMessage message = _customCertificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SignalRCustomCertificateData> response = default;

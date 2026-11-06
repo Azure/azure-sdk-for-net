@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyAssignmentsRestClient.CreateCreateRequest(Id.ToString(), policyAssignmentName, PolicyAssignmentData.ToRequestContent(data), context);
+                using HttpMessage message = _policyAssignmentsRestClient.CreateCreateRequest(Id.ToString(), policyAssignmentName, PolicyAssignmentData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PolicyAssignmentData> response = Response.FromValue(PolicyAssignmentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyAssignmentsRestClient.CreateCreateRequest(Id.ToString(), policyAssignmentName, PolicyAssignmentData.ToRequestContent(data), context);
+                using HttpMessage message = _policyAssignmentsRestClient.CreateCreateRequest(Id.ToString(), policyAssignmentName, PolicyAssignmentData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PolicyAssignmentData> response = Response.FromValue(PolicyAssignmentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyAssignmentsRestClient.CreateGetRequest(Id.ToString(), policyAssignmentName, expand, context);
+                using HttpMessage message = _policyAssignmentsRestClient.CreateGetRequest(Id.ToString(), policyAssignmentName, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PolicyAssignmentData> response = Response.FromValue(PolicyAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyAssignmentsRestClient.CreateGetRequest(Id.ToString(), policyAssignmentName, expand, context);
+                using HttpMessage message = _policyAssignmentsRestClient.CreateGetRequest(Id.ToString(), policyAssignmentName, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PolicyAssignmentData> response = Response.FromValue(PolicyAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyAssignmentsRestClient.CreateGetRequest(Id.ToString(), policyAssignmentName, expand, context);
+                using HttpMessage message = _policyAssignmentsRestClient.CreateGetRequest(Id.ToString(), policyAssignmentName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PolicyAssignmentData> response = default;
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyAssignmentsRestClient.CreateGetRequest(Id.ToString(), policyAssignmentName, expand, context);
+                using HttpMessage message = _policyAssignmentsRestClient.CreateGetRequest(Id.ToString(), policyAssignmentName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PolicyAssignmentData> response = default;
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyAssignmentsRestClient.CreateGetRequest(Id.ToString(), policyAssignmentName, expand, context);
+                using HttpMessage message = _policyAssignmentsRestClient.CreateGetRequest(Id.ToString(), policyAssignmentName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PolicyAssignmentData> response = default;
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyAssignmentsRestClient.CreateGetRequest(Id.ToString(), policyAssignmentName, expand, context);
+                using HttpMessage message = _policyAssignmentsRestClient.CreateGetRequest(Id.ToString(), policyAssignmentName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PolicyAssignmentData> response = default;

@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bareMetalMachineKeySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _bareMetalMachineKeySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkCloudBareMetalMachineKeySetData> response = Response.FromValue(NetworkCloudBareMetalMachineKeySetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bareMetalMachineKeySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _bareMetalMachineKeySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkCloudBareMetalMachineKeySetData> response = Response.FromValue(NetworkCloudBareMetalMachineKeySetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bareMetalMachineKeySetsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NetworkCloudBareMetalMachineKeySetPatch.ToRequestContent(patch), matchConditions, context);
+                using HttpMessage message = _bareMetalMachineKeySetsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NetworkCloudBareMetalMachineKeySetPatch.ToRequestContent(patch), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkCloudArmOperation<NetworkCloudBareMetalMachineKeySetResource> operation = new NetworkCloudArmOperation<NetworkCloudBareMetalMachineKeySetResource>(
                     new NetworkCloudBareMetalMachineKeySetResourceOperationSource(Client),
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bareMetalMachineKeySetsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NetworkCloudBareMetalMachineKeySetPatch.ToRequestContent(patch), matchConditions, context);
+                using HttpMessage message = _bareMetalMachineKeySetsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NetworkCloudBareMetalMachineKeySetPatch.ToRequestContent(patch), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkCloudArmOperation<NetworkCloudBareMetalMachineKeySetResource> operation = new NetworkCloudArmOperation<NetworkCloudBareMetalMachineKeySetResource>(
                     new NetworkCloudBareMetalMachineKeySetResourceOperationSource(Client),
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _bareMetalMachineKeySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _bareMetalMachineKeySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NetworkCloudBareMetalMachineKeySetData> response = Response.FromValue(NetworkCloudBareMetalMachineKeySetData.FromResponse(result), result);
                     return Response.FromValue(new NetworkCloudBareMetalMachineKeySetResource(Client, response.Value), response.GetRawResponse());
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _bareMetalMachineKeySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _bareMetalMachineKeySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NetworkCloudBareMetalMachineKeySetData> response = Response.FromValue(NetworkCloudBareMetalMachineKeySetData.FromResponse(result), result);
                     return Response.FromValue(new NetworkCloudBareMetalMachineKeySetResource(Client, response.Value), response.GetRawResponse());
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _bareMetalMachineKeySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _bareMetalMachineKeySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NetworkCloudBareMetalMachineKeySetData> response = Response.FromValue(NetworkCloudBareMetalMachineKeySetData.FromResponse(result), result);
                     return Response.FromValue(new NetworkCloudBareMetalMachineKeySetResource(Client, response.Value), response.GetRawResponse());
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _bareMetalMachineKeySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _bareMetalMachineKeySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NetworkCloudBareMetalMachineKeySetData> response = Response.FromValue(NetworkCloudBareMetalMachineKeySetData.FromResponse(result), result);
                     return Response.FromValue(new NetworkCloudBareMetalMachineKeySetResource(Client, response.Value), response.GetRawResponse());
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _bareMetalMachineKeySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _bareMetalMachineKeySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NetworkCloudBareMetalMachineKeySetData> response = Response.FromValue(NetworkCloudBareMetalMachineKeySetData.FromResponse(result), result);
                     return Response.FromValue(new NetworkCloudBareMetalMachineKeySetResource(Client, response.Value), response.GetRawResponse());
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _bareMetalMachineKeySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _bareMetalMachineKeySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NetworkCloudBareMetalMachineKeySetData> response = Response.FromValue(NetworkCloudBareMetalMachineKeySetData.FromResponse(result), result);
                     return Response.FromValue(new NetworkCloudBareMetalMachineKeySetResource(Client, response.Value), response.GetRawResponse());

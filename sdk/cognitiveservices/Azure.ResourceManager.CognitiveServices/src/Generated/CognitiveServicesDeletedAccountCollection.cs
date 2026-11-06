@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedAccountsRestClient.CreateGetRequest(Id.SubscriptionId, location, resourceGroupName, accountName, context);
+                using HttpMessage message = _deletedAccountsRestClient.CreateGetRequest(Id.SubscriptionId, location, resourceGroupName, accountName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CognitiveServicesAccountData> response = Response.FromValue(CognitiveServicesAccountData.FromResponse(result), result);
                 if (response.Value == null)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedAccountsRestClient.CreateGetRequest(Id.SubscriptionId, location, resourceGroupName, accountName, context);
+                using HttpMessage message = _deletedAccountsRestClient.CreateGetRequest(Id.SubscriptionId, location, resourceGroupName, accountName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CognitiveServicesAccountData> response = Response.FromValue(CognitiveServicesAccountData.FromResponse(result), result);
                 if (response.Value == null)
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedAccountsRestClient.CreateGetRequest(Id.SubscriptionId, location, resourceGroupName, accountName, context);
+                using HttpMessage message = _deletedAccountsRestClient.CreateGetRequest(Id.SubscriptionId, location, resourceGroupName, accountName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CognitiveServicesAccountData> response = default;
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedAccountsRestClient.CreateGetRequest(Id.SubscriptionId, location, resourceGroupName, accountName, context);
+                using HttpMessage message = _deletedAccountsRestClient.CreateGetRequest(Id.SubscriptionId, location, resourceGroupName, accountName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CognitiveServicesAccountData> response = default;
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedAccountsRestClient.CreateGetRequest(Id.SubscriptionId, location, resourceGroupName, accountName, context);
+                using HttpMessage message = _deletedAccountsRestClient.CreateGetRequest(Id.SubscriptionId, location, resourceGroupName, accountName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CognitiveServicesAccountData> response = default;
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedAccountsRestClient.CreateGetRequest(Id.SubscriptionId, location, resourceGroupName, accountName, context);
+                using HttpMessage message = _deletedAccountsRestClient.CreateGetRequest(Id.SubscriptionId, location, resourceGroupName, accountName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CognitiveServicesAccountData> response = default;

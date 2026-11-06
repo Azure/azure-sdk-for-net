@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RecommendationsRestClient.CreateRecommendVmSkuRequest(Guid.Parse(Id.SubscriptionId), location, RecommendVmSkuContent.ToRequestContent(content), context);
+                using HttpMessage message = RecommendationsRestClient.CreateRecommendVmSkuRequest(Guid.Parse(Id.SubscriptionId), location, RecommendVmSkuContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RecommendVmSkuResult> response = Response.FromValue(RecommendVmSkuResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AIInfraOptimization.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RecommendationsRestClient.CreateRecommendVmSkuRequest(Guid.Parse(Id.SubscriptionId), location, RecommendVmSkuContent.ToRequestContent(content), context);
+                using HttpMessage message = RecommendationsRestClient.CreateRecommendVmSkuRequest(Guid.Parse(Id.SubscriptionId), location, RecommendVmSkuContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RecommendVmSkuResult> response = Response.FromValue(RecommendVmSkuResult.FromResponse(result), result);
                 if (response.Value == null)

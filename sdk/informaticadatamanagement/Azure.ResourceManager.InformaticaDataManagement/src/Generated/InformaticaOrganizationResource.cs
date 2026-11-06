@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _organizationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<InformaticaOrganizationData> response = Response.FromValue(InformaticaOrganizationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _organizationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<InformaticaOrganizationData> response = Response.FromValue(InformaticaOrganizationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, InformaticaOrganizationPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _organizationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, InformaticaOrganizationPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<InformaticaOrganizationData> response = Response.FromValue(InformaticaOrganizationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, InformaticaOrganizationPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _organizationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, InformaticaOrganizationPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<InformaticaOrganizationData> response = Response.FromValue(InformaticaOrganizationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _organizationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 InformaticaDataManagementArmOperation operation = new InformaticaDataManagementArmOperation(_organizationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _organizationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 InformaticaDataManagementArmOperation operation = new InformaticaDataManagementArmOperation(_organizationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationsRestClient.CreateGetAllServerlessRuntimesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _organizationsRestClient.CreateGetAllServerlessRuntimesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<InformaticaServerlessRuntimeResourceList> response = Response.FromValue(InformaticaServerlessRuntimeResourceList.FromResponse(result), result);
                 if (response.Value == null)
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationsRestClient.CreateGetAllServerlessRuntimesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _organizationsRestClient.CreateGetAllServerlessRuntimesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<InformaticaServerlessRuntimeResourceList> response = Response.FromValue(InformaticaServerlessRuntimeResourceList.FromResponse(result), result);
                 if (response.Value == null)
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationsRestClient.CreateGetServerlessMetadataRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _organizationsRestClient.CreateGetServerlessMetadataRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServerlessMetadataResponse> response = Response.FromValue(ServerlessMetadataResponse.FromResponse(result), result);
                 if (response.Value == null)
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationsRestClient.CreateGetServerlessMetadataRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _organizationsRestClient.CreateGetServerlessMetadataRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServerlessMetadataResponse> response = Response.FromValue(ServerlessMetadataResponse.FromResponse(result), result);
                 if (response.Value == null)
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _organizationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _organizationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<InformaticaOrganizationData> response = Response.FromValue(InformaticaOrganizationData.FromResponse(result), result);
                     return Response.FromValue(new InformaticaOrganizationResource(Client, response.Value), response.GetRawResponse());
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _organizationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _organizationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<InformaticaOrganizationData> response = Response.FromValue(InformaticaOrganizationData.FromResponse(result), result);
                     return Response.FromValue(new InformaticaOrganizationResource(Client, response.Value), response.GetRawResponse());
@@ -700,7 +700,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _organizationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _organizationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<InformaticaOrganizationData> response = Response.FromValue(InformaticaOrganizationData.FromResponse(result), result);
                     return Response.FromValue(new InformaticaOrganizationResource(Client, response.Value), response.GetRawResponse());
@@ -742,7 +742,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _organizationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _organizationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<InformaticaOrganizationData> response = Response.FromValue(InformaticaOrganizationData.FromResponse(result), result);
                     return Response.FromValue(new InformaticaOrganizationResource(Client, response.Value), response.GetRawResponse());
@@ -784,7 +784,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _organizationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _organizationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<InformaticaOrganizationData> response = Response.FromValue(InformaticaOrganizationData.FromResponse(result), result);
                     return Response.FromValue(new InformaticaOrganizationResource(Client, response.Value), response.GetRawResponse());
@@ -830,7 +830,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _organizationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _organizationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<InformaticaOrganizationData> response = Response.FromValue(InformaticaOrganizationData.FromResponse(result), result);
                     return Response.FromValue(new InformaticaOrganizationResource(Client, response.Value), response.GetRawResponse());

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schemaRegistryRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaGroupName, EventHubsSchemaGroupData.ToRequestContent(data), context);
+                using HttpMessage message = _schemaRegistryRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaGroupName, EventHubsSchemaGroupData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EventHubsSchemaGroupData> response = Response.FromValue(EventHubsSchemaGroupData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schemaRegistryRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaGroupName, EventHubsSchemaGroupData.ToRequestContent(data), context);
+                using HttpMessage message = _schemaRegistryRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaGroupName, EventHubsSchemaGroupData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EventHubsSchemaGroupData> response = Response.FromValue(EventHubsSchemaGroupData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schemaRegistryRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaGroupName, context);
+                using HttpMessage message = _schemaRegistryRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaGroupName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EventHubsSchemaGroupData> response = Response.FromValue(EventHubsSchemaGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schemaRegistryRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaGroupName, context);
+                using HttpMessage message = _schemaRegistryRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaGroupName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EventHubsSchemaGroupData> response = Response.FromValue(EventHubsSchemaGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schemaRegistryRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaGroupName, context);
+                using HttpMessage message = _schemaRegistryRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaGroupName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EventHubsSchemaGroupData> response = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schemaRegistryRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaGroupName, context);
+                using HttpMessage message = _schemaRegistryRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaGroupName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EventHubsSchemaGroupData> response = default;
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schemaRegistryRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaGroupName, context);
+                using HttpMessage message = _schemaRegistryRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaGroupName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EventHubsSchemaGroupData> response = default;
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schemaRegistryRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaGroupName, context);
+                using HttpMessage message = _schemaRegistryRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, schemaGroupName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EventHubsSchemaGroupData> response = default;

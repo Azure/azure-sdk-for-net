@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AppClientRestClient.CreateGetCustomDomainVerificationIdRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = AppClientRestClient.CreateGetCustomDomainVerificationIdRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<string> response = Response.FromValue(JsonDocument.Parse(result.Content, ModelSerializationExtensions.JsonDocumentOptions).RootElement.GetString(), result);
                 if (response.Value == null)
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AppClientRestClient.CreateGetCustomDomainVerificationIdRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = AppClientRestClient.CreateGetCustomDomainVerificationIdRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<string> response = Response.FromValue(JsonDocument.Parse(result.Content, ModelSerializationExtensions.JsonDocumentOptions).RootElement.GetString(), result);
                 if (response.Value == null)

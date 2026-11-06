@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Hci.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OwnershipVouchersRestClient.CreateValidateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, ValidateOwnershipVouchersContent.ToRequestContent(content), context);
+                using HttpMessage message = OwnershipVouchersRestClient.CreateValidateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, ValidateOwnershipVouchersContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ValidateOwnershipVouchersResult> response = Response.FromValue(ValidateOwnershipVouchersResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Hci.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OwnershipVouchersRestClient.CreateValidateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, ValidateOwnershipVouchersContent.ToRequestContent(content), context);
+                using HttpMessage message = OwnershipVouchersRestClient.CreateValidateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, ValidateOwnershipVouchersContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ValidateOwnershipVouchersResult> response = Response.FromValue(ValidateOwnershipVouchersResult.FromResponse(result), result);
                 if (response.Value == null)

@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HciClusterData> response = Response.FromValue(HciClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HciClusterData> response = Response.FromValue(HciClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HciClusterPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _clustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HciClusterPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HciClusterData> response = Response.FromValue(HciClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HciClusterPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _clustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HciClusterPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HciClusterData> response = Response.FromValue(HciClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _clustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation operation = new HciArmOperation(_clustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _clustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation operation = new HciArmOperation(_clustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateConfigureRemoteSupportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RemoteSupportContent.ToRequestContent(content), context);
+                using HttpMessage message = _clustersRestClient.CreateConfigureRemoteSupportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RemoteSupportContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation<HciClusterResource> operation = new HciArmOperation<HciClusterResource>(
                     new HciClusterResourceOperationSource(Client),
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateConfigureRemoteSupportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RemoteSupportContent.ToRequestContent(content), context);
+                using HttpMessage message = _clustersRestClient.CreateConfigureRemoteSupportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RemoteSupportContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation<HciClusterResource> operation = new HciArmOperation<HciClusterResource>(
                     new HciClusterResourceOperationSource(Client),
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateCreateIdentityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _clustersRestClient.CreateCreateIdentityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation<HciClusterIdentityResult> operation = new HciArmOperation<HciClusterIdentityResult>(
                     new HciClusterIdentityResultOperationSource(),
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateCreateIdentityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _clustersRestClient.CreateCreateIdentityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation<HciClusterIdentityResult> operation = new HciArmOperation<HciClusterIdentityResult>(
                     new HciClusterIdentityResultOperationSource(),
@@ -661,7 +661,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateExtendSoftwareAssuranceBenefitRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SoftwareAssuranceChangeContent.ToRequestContent(content), context);
+                using HttpMessage message = _clustersRestClient.CreateExtendSoftwareAssuranceBenefitRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SoftwareAssuranceChangeContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation<HciClusterResource> operation = new HciArmOperation<HciClusterResource>(
                     new HciClusterResourceOperationSource(Client),
@@ -720,7 +720,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateExtendSoftwareAssuranceBenefitRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SoftwareAssuranceChangeContent.ToRequestContent(content), context);
+                using HttpMessage message = _clustersRestClient.CreateExtendSoftwareAssuranceBenefitRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SoftwareAssuranceChangeContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation<HciClusterResource> operation = new HciArmOperation<HciClusterResource>(
                     new HciClusterResourceOperationSource(Client),
@@ -859,7 +859,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateTriggerLogCollectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, LogCollectionContent.ToRequestContent(content), context);
+                using HttpMessage message = _clustersRestClient.CreateTriggerLogCollectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, LogCollectionContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation<HciClusterResource> operation = new HciArmOperation<HciClusterResource>(
                     new HciClusterResourceOperationSource(Client),
@@ -918,7 +918,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateTriggerLogCollectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, LogCollectionContent.ToRequestContent(content), context);
+                using HttpMessage message = _clustersRestClient.CreateTriggerLogCollectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, LogCollectionContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation<HciClusterResource> operation = new HciArmOperation<HciClusterResource>(
                     new HciClusterResourceOperationSource(Client),
@@ -977,7 +977,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateUpdateSecretsLocationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SecretsLocationsChangeContent.ToRequestContent(content), context);
+                using HttpMessage message = _clustersRestClient.CreateUpdateSecretsLocationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SecretsLocationsChangeContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation<HciClusterResource> operation = new HciArmOperation<HciClusterResource>(
                     new HciClusterResourceOperationSource(Client),
@@ -1036,7 +1036,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateUpdateSecretsLocationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SecretsLocationsChangeContent.ToRequestContent(content), context);
+                using HttpMessage message = _clustersRestClient.CreateUpdateSecretsLocationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SecretsLocationsChangeContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation<HciClusterResource> operation = new HciArmOperation<HciClusterResource>(
                     new HciClusterResourceOperationSource(Client),
@@ -1095,7 +1095,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateUploadCertificateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HciClusterCertificateContent.ToRequestContent(content), context);
+                using HttpMessage message = _clustersRestClient.CreateUploadCertificateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HciClusterCertificateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation operation = new HciArmOperation(_clustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -1148,7 +1148,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateUploadCertificateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HciClusterCertificateContent.ToRequestContent(content), context);
+                using HttpMessage message = _clustersRestClient.CreateUploadCertificateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HciClusterCertificateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation operation = new HciArmOperation(_clustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -1187,7 +1187,7 @@ namespace Azure.ResourceManager.Hci
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<HciClusterData> response = Response.FromValue(HciClusterData.FromResponse(result), result);
                     return Response.FromValue(new HciClusterResource(Client, response.Value), response.GetRawResponse());
@@ -1235,7 +1235,7 @@ namespace Azure.ResourceManager.Hci
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<HciClusterData> response = Response.FromValue(HciClusterData.FromResponse(result), result);
                     return Response.FromValue(new HciClusterResource(Client, response.Value), response.GetRawResponse());
@@ -1281,7 +1281,7 @@ namespace Azure.ResourceManager.Hci
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<HciClusterData> response = Response.FromValue(HciClusterData.FromResponse(result), result);
                     return Response.FromValue(new HciClusterResource(Client, response.Value), response.GetRawResponse());
@@ -1323,7 +1323,7 @@ namespace Azure.ResourceManager.Hci
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<HciClusterData> response = Response.FromValue(HciClusterData.FromResponse(result), result);
                     return Response.FromValue(new HciClusterResource(Client, response.Value), response.GetRawResponse());
@@ -1365,7 +1365,7 @@ namespace Azure.ResourceManager.Hci
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<HciClusterData> response = Response.FromValue(HciClusterData.FromResponse(result), result);
                     return Response.FromValue(new HciClusterResource(Client, response.Value), response.GetRawResponse());
@@ -1411,7 +1411,7 @@ namespace Azure.ResourceManager.Hci
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<HciClusterData> response = Response.FromValue(HciClusterData.FromResponse(result), result);
                     return Response.FromValue(new HciClusterResource(Client, response.Value), response.GetRawResponse());

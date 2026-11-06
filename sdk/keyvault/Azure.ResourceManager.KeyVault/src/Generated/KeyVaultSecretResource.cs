@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _secretsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _secretsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<KeyVaultSecretData> response = Response.FromValue(KeyVaultSecretData.FromResponse(result), result);
                 if (response.Value == null)
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _secretsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _secretsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<KeyVaultSecretData> response = Response.FromValue(KeyVaultSecretData.FromResponse(result), result);
                 if (response.Value == null)
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _secretsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, KeyVaultSecretPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _secretsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, KeyVaultSecretPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<KeyVaultSecretData> response = Response.FromValue(KeyVaultSecretData.FromResponse(result), result);
                 if (response.Value == null)
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _secretsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, KeyVaultSecretPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _secretsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, KeyVaultSecretPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<KeyVaultSecretData> response = Response.FromValue(KeyVaultSecretData.FromResponse(result), result);
                 if (response.Value == null)
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _secretsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _secretsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<KeyVaultSecretData> response = Response.FromValue(KeyVaultSecretData.FromResponse(result), result);
                     return Response.FromValue(new KeyVaultSecretResource(Client, response.Value), response.GetRawResponse());
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _secretsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _secretsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<KeyVaultSecretData> response = Response.FromValue(KeyVaultSecretData.FromResponse(result), result);
                     return Response.FromValue(new KeyVaultSecretResource(Client, response.Value), response.GetRawResponse());
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _secretsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _secretsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<KeyVaultSecretData> response = Response.FromValue(KeyVaultSecretData.FromResponse(result), result);
                     return Response.FromValue(new KeyVaultSecretResource(Client, response.Value), response.GetRawResponse());
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _secretsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _secretsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<KeyVaultSecretData> response = Response.FromValue(KeyVaultSecretData.FromResponse(result), result);
                     return Response.FromValue(new KeyVaultSecretResource(Client, response.Value), response.GetRawResponse());
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _secretsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _secretsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<KeyVaultSecretData> response = Response.FromValue(KeyVaultSecretData.FromResponse(result), result);
                     return Response.FromValue(new KeyVaultSecretResource(Client, response.Value), response.GetRawResponse());
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _secretsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _secretsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<KeyVaultSecretData> response = Response.FromValue(KeyVaultSecretData.FromResponse(result), result);
                     return Response.FromValue(new KeyVaultSecretResource(Client, response.Value), response.GetRawResponse());

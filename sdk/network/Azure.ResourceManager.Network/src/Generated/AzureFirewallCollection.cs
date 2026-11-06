@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureFirewallsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureFirewallName, AzureFirewallData.ToRequestContent(data), createAfcControlPlane, context);
+                using HttpMessage message = _azureFirewallsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureFirewallName, AzureFirewallData.ToRequestContent(data), createAfcControlPlane, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<AzureFirewallResource> operation = new NetworkArmOperation<AzureFirewallResource>(
                     new AzureFirewallResourceOperationSource(Client),
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureFirewallsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureFirewallName, AzureFirewallData.ToRequestContent(data), createAfcControlPlane, context);
+                using HttpMessage message = _azureFirewallsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureFirewallName, AzureFirewallData.ToRequestContent(data), createAfcControlPlane, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<AzureFirewallResource> operation = new NetworkArmOperation<AzureFirewallResource>(
                     new AzureFirewallResourceOperationSource(Client),
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureFirewallsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureFirewallName, context);
+                using HttpMessage message = _azureFirewallsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureFirewallName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AzureFirewallData> response = Response.FromValue(AzureFirewallData.FromResponse(result), result);
                 if (response.Value == null)
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureFirewallsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureFirewallName, context);
+                using HttpMessage message = _azureFirewallsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureFirewallName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AzureFirewallData> response = Response.FromValue(AzureFirewallData.FromResponse(result), result);
                 if (response.Value == null)
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureFirewallsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureFirewallName, context);
+                using HttpMessage message = _azureFirewallsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureFirewallName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AzureFirewallData> response = default;
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureFirewallsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureFirewallName, context);
+                using HttpMessage message = _azureFirewallsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureFirewallName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AzureFirewallData> response = default;
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureFirewallsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureFirewallName, context);
+                using HttpMessage message = _azureFirewallsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureFirewallName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AzureFirewallData> response = default;
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureFirewallsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureFirewallName, context);
+                using HttpMessage message = _azureFirewallsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureFirewallName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AzureFirewallData> response = default;

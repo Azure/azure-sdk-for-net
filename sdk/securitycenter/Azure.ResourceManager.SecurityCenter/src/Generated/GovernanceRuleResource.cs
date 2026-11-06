@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _governanceRulesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _governanceRulesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GovernanceRuleData> response = Response.FromValue(GovernanceRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _governanceRulesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _governanceRulesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GovernanceRuleData> response = Response.FromValue(GovernanceRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _governanceRulesRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _governanceRulesRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SecurityCenterArmOperation operation = new SecurityCenterArmOperation(_governanceRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _governanceRulesRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _governanceRulesRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SecurityCenterArmOperation operation = new SecurityCenterArmOperation(_governanceRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -306,9 +306,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="executeGovernanceRuleParams"> Execute governance rule over a given scope. </param>
+        /// <param name="ExecuteGovernanceRuleParams"> Execute governance rule over a given scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> ExecuteAsync(WaitUntil waitUntil, ExecuteGovernanceRuleParams executeGovernanceRuleParams = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> ExecuteAsync(WaitUntil waitUntil, ExecuteGovernanceRuleParams ExecuteGovernanceRuleParams = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _governanceRulesClientDiagnostics.CreateScope("GovernanceRuleResource.Execute");
             scope.Start();
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _governanceRulesRestClient.CreateExecuteRequest(Id.Parent.ToString(), Id.Name, ExecuteGovernanceRuleParams.ToRequestContent(executeGovernanceRuleParams), context);
+                using HttpMessage message = _governanceRulesRestClient.CreateExecuteRequest(Id.Parent.ToString(), Id.Name, ExecuteGovernanceRuleParams.ToRequestContent(ExecuteGovernanceRuleParams), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SecurityCenterArmOperation operation = new SecurityCenterArmOperation(_governanceRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -356,9 +356,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="executeGovernanceRuleParams"> Execute governance rule over a given scope. </param>
+        /// <param name="ExecuteGovernanceRuleParams"> Execute governance rule over a given scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Execute(WaitUntil waitUntil, ExecuteGovernanceRuleParams executeGovernanceRuleParams = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Execute(WaitUntil waitUntil, ExecuteGovernanceRuleParams ExecuteGovernanceRuleParams = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _governanceRulesClientDiagnostics.CreateScope("GovernanceRuleResource.Execute");
             scope.Start();
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _governanceRulesRestClient.CreateExecuteRequest(Id.Parent.ToString(), Id.Name, ExecuteGovernanceRuleParams.ToRequestContent(executeGovernanceRuleParams), context);
+                using HttpMessage message = _governanceRulesRestClient.CreateExecuteRequest(Id.Parent.ToString(), Id.Name, ExecuteGovernanceRuleParams.ToRequestContent(ExecuteGovernanceRuleParams), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SecurityCenterArmOperation operation = new SecurityCenterArmOperation(_governanceRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _governanceRulesRestClient.CreateOperationResultsRequest(Id.Parent.ToString(), Id.Name, operationId, context);
+                using HttpMessage message = _governanceRulesRestClient.CreateOperationResultsRequest(Id.Parent.ToString(), Id.Name, operationId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityCenterOperationResult> response = Response.FromValue(SecurityCenterOperationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _governanceRulesRestClient.CreateOperationResultsRequest(Id.Parent.ToString(), Id.Name, operationId, context);
+                using HttpMessage message = _governanceRulesRestClient.CreateOperationResultsRequest(Id.Parent.ToString(), Id.Name, operationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityCenterOperationResult> response = Response.FromValue(SecurityCenterOperationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _governanceRulesRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, GovernanceRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _governanceRulesRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, GovernanceRuleData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GovernanceRuleData> response = Response.FromValue(GovernanceRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _governanceRulesRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, GovernanceRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _governanceRulesRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, GovernanceRuleData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GovernanceRuleData> response = Response.FromValue(GovernanceRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

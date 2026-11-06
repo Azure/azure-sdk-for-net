@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _complianceResultsRestClient.CreateGetRequest(Id.ToString(), complianceResultName, context);
+                using HttpMessage message = _complianceResultsRestClient.CreateGetRequest(Id.ToString(), complianceResultName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ComplianceResultData> response = Response.FromValue(ComplianceResultData.FromResponse(result), result);
                 if (response.Value == null)
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _complianceResultsRestClient.CreateGetRequest(Id.ToString(), complianceResultName, context);
+                using HttpMessage message = _complianceResultsRestClient.CreateGetRequest(Id.ToString(), complianceResultName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ComplianceResultData> response = Response.FromValue(ComplianceResultData.FromResponse(result), result);
                 if (response.Value == null)
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _complianceResultsRestClient.CreateGetRequest(Id.ToString(), complianceResultName, context);
+                using HttpMessage message = _complianceResultsRestClient.CreateGetRequest(Id.ToString(), complianceResultName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ComplianceResultData> response = default;
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _complianceResultsRestClient.CreateGetRequest(Id.ToString(), complianceResultName, context);
+                using HttpMessage message = _complianceResultsRestClient.CreateGetRequest(Id.ToString(), complianceResultName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ComplianceResultData> response = default;
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _complianceResultsRestClient.CreateGetRequest(Id.ToString(), complianceResultName, context);
+                using HttpMessage message = _complianceResultsRestClient.CreateGetRequest(Id.ToString(), complianceResultName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ComplianceResultData> response = default;
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _complianceResultsRestClient.CreateGetRequest(Id.ToString(), complianceResultName, context);
+                using HttpMessage message = _complianceResultsRestClient.CreateGetRequest(Id.ToString(), complianceResultName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ComplianceResultData> response = default;

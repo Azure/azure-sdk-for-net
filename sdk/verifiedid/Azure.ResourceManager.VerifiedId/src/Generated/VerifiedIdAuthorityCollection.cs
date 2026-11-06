@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.VerifiedId
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _authoritiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, authorityName, VerifiedIdAuthorityData.ToRequestContent(data), context);
+                using HttpMessage message = _authoritiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, authorityName, VerifiedIdAuthorityData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VerifiedIdArmOperation<VerifiedIdAuthorityResource> operation = new VerifiedIdArmOperation<VerifiedIdAuthorityResource>(
                     new VerifiedIdAuthorityResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.VerifiedId
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _authoritiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, authorityName, VerifiedIdAuthorityData.ToRequestContent(data), context);
+                using HttpMessage message = _authoritiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, authorityName, VerifiedIdAuthorityData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VerifiedIdArmOperation<VerifiedIdAuthorityResource> operation = new VerifiedIdArmOperation<VerifiedIdAuthorityResource>(
                     new VerifiedIdAuthorityResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.VerifiedId
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _authoritiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, authorityName, context);
+                using HttpMessage message = _authoritiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, authorityName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<VerifiedIdAuthorityData> response = Response.FromValue(VerifiedIdAuthorityData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.VerifiedId
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _authoritiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, authorityName, context);
+                using HttpMessage message = _authoritiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, authorityName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<VerifiedIdAuthorityData> response = Response.FromValue(VerifiedIdAuthorityData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.VerifiedId
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _authoritiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, authorityName, context);
+                using HttpMessage message = _authoritiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, authorityName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<VerifiedIdAuthorityData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.VerifiedId
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _authoritiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, authorityName, context);
+                using HttpMessage message = _authoritiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, authorityName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<VerifiedIdAuthorityData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.VerifiedId
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _authoritiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, authorityName, context);
+                using HttpMessage message = _authoritiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, authorityName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<VerifiedIdAuthorityData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.VerifiedId
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _authoritiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, authorityName, context);
+                using HttpMessage message = _authoritiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, authorityName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<VerifiedIdAuthorityData> response = default;

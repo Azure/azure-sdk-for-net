@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ManagedApplications
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ManagedApplicationData> response = Response.FromValue(ManagedApplicationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ManagedApplications
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ManagedApplicationData> response = Response.FromValue(ManagedApplicationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ManagedApplications
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ApplicationPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _applicationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ApplicationPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedApplicationsArmOperation<ManagedApplicationResource> operation = new ManagedApplicationsArmOperation<ManagedApplicationResource>(
                     new ManagedApplicationResourceOperationSource(Client),
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ManagedApplications
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ApplicationPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _applicationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ApplicationPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedApplicationsArmOperation<ManagedApplicationResource> operation = new ManagedApplicationsArmOperation<ManagedApplicationResource>(
                     new ManagedApplicationResourceOperationSource(Client),
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.ManagedApplications
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _applicationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedApplicationsArmOperation operation = new ManagedApplicationsArmOperation(_applicationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.ManagedApplications
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _applicationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedApplicationsArmOperation operation = new ManagedApplicationsArmOperation(_applicationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.ManagedApplications
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationsRestClient.CreateGetAllowedUpgradePlansRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _applicationsRestClient.CreateGetAllowedUpgradePlansRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AllowedUpgradePlansResult> response = Response.FromValue(AllowedUpgradePlansResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.ManagedApplications
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationsRestClient.CreateGetAllowedUpgradePlansRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _applicationsRestClient.CreateGetAllowedUpgradePlansRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AllowedUpgradePlansResult> response = Response.FromValue(AllowedUpgradePlansResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.ManagedApplications
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationsRestClient.CreateGetTokensRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ManagedApplicationsListTokenRequestContent.ToRequestContent(content), context);
+                using HttpMessage message = _applicationsRestClient.CreateGetTokensRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ManagedApplicationsListTokenRequestContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ManagedIdentityTokenResult> response = Response.FromValue(ManagedIdentityTokenResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.ManagedApplications
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationsRestClient.CreateGetTokensRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ManagedApplicationsListTokenRequestContent.ToRequestContent(content), context);
+                using HttpMessage message = _applicationsRestClient.CreateGetTokensRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ManagedApplicationsListTokenRequestContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ManagedIdentityTokenResult> response = Response.FromValue(ManagedIdentityTokenResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -639,7 +639,7 @@ namespace Azure.ResourceManager.ManagedApplications
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationsRestClient.CreateRefreshPermissionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _applicationsRestClient.CreateRefreshPermissionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedApplicationsArmOperation operation = new ManagedApplicationsArmOperation(_applicationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -688,7 +688,7 @@ namespace Azure.ResourceManager.ManagedApplications
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationsRestClient.CreateRefreshPermissionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _applicationsRestClient.CreateRefreshPermissionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedApplicationsArmOperation operation = new ManagedApplicationsArmOperation(_applicationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -741,7 +741,7 @@ namespace Azure.ResourceManager.ManagedApplications
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationsRestClient.CreateUpdateAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, UpdateAccessContent.ToRequestContent(content), context);
+                using HttpMessage message = _applicationsRestClient.CreateUpdateAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, UpdateAccessContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedApplicationsArmOperation<UpdateAccessContent> operation = new ManagedApplicationsArmOperation<UpdateAccessContent>(
                     new UpdateAccessContentOperationSource(),
@@ -800,7 +800,7 @@ namespace Azure.ResourceManager.ManagedApplications
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationsRestClient.CreateUpdateAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, UpdateAccessContent.ToRequestContent(content), context);
+                using HttpMessage message = _applicationsRestClient.CreateUpdateAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, UpdateAccessContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedApplicationsArmOperation<UpdateAccessContent> operation = new ManagedApplicationsArmOperation<UpdateAccessContent>(
                     new UpdateAccessContentOperationSource(),
@@ -845,7 +845,7 @@ namespace Azure.ResourceManager.ManagedApplications
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ManagedApplicationData> response = Response.FromValue(ManagedApplicationData.FromResponse(result), result);
                     return Response.FromValue(new ManagedApplicationResource(Client, response.Value), response.GetRawResponse());
@@ -893,7 +893,7 @@ namespace Azure.ResourceManager.ManagedApplications
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ManagedApplicationData> response = Response.FromValue(ManagedApplicationData.FromResponse(result), result);
                     return Response.FromValue(new ManagedApplicationResource(Client, response.Value), response.GetRawResponse());
@@ -939,7 +939,7 @@ namespace Azure.ResourceManager.ManagedApplications
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ManagedApplicationData> response = Response.FromValue(ManagedApplicationData.FromResponse(result), result);
                     return Response.FromValue(new ManagedApplicationResource(Client, response.Value), response.GetRawResponse());
@@ -981,7 +981,7 @@ namespace Azure.ResourceManager.ManagedApplications
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ManagedApplicationData> response = Response.FromValue(ManagedApplicationData.FromResponse(result), result);
                     return Response.FromValue(new ManagedApplicationResource(Client, response.Value), response.GetRawResponse());
@@ -1023,7 +1023,7 @@ namespace Azure.ResourceManager.ManagedApplications
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ManagedApplicationData> response = Response.FromValue(ManagedApplicationData.FromResponse(result), result);
                     return Response.FromValue(new ManagedApplicationResource(Client, response.Value), response.GetRawResponse());
@@ -1069,7 +1069,7 @@ namespace Azure.ResourceManager.ManagedApplications
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ManagedApplicationData> response = Response.FromValue(ManagedApplicationData.FromResponse(result), result);
                     return Response.FromValue(new ManagedApplicationResource(Client, response.Value), response.GetRawResponse());

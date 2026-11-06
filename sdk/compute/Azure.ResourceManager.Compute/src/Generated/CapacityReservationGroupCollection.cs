@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capacityReservationGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, capacityReservationGroupName, CapacityReservationGroupData.ToRequestContent(data), context);
+                using HttpMessage message = _capacityReservationGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, capacityReservationGroupName, CapacityReservationGroupData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CapacityReservationGroupData> response = Response.FromValue(CapacityReservationGroupData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capacityReservationGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, capacityReservationGroupName, CapacityReservationGroupData.ToRequestContent(data), context);
+                using HttpMessage message = _capacityReservationGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, capacityReservationGroupName, CapacityReservationGroupData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CapacityReservationGroupData> response = Response.FromValue(CapacityReservationGroupData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capacityReservationGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, capacityReservationGroupName, expand?.ToString(), context);
+                using HttpMessage message = _capacityReservationGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, capacityReservationGroupName, expand?.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CapacityReservationGroupData> response = Response.FromValue(CapacityReservationGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capacityReservationGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, capacityReservationGroupName, expand?.ToString(), context);
+                using HttpMessage message = _capacityReservationGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, capacityReservationGroupName, expand?.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CapacityReservationGroupData> response = Response.FromValue(CapacityReservationGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capacityReservationGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, capacityReservationGroupName, expand?.ToString(), context);
+                using HttpMessage message = _capacityReservationGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, capacityReservationGroupName, expand?.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CapacityReservationGroupData> response = default;
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capacityReservationGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, capacityReservationGroupName, expand?.ToString(), context);
+                using HttpMessage message = _capacityReservationGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, capacityReservationGroupName, expand?.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CapacityReservationGroupData> response = default;
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capacityReservationGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, capacityReservationGroupName, expand?.ToString(), context);
+                using HttpMessage message = _capacityReservationGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, capacityReservationGroupName, expand?.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CapacityReservationGroupData> response = default;
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capacityReservationGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, capacityReservationGroupName, expand?.ToString(), context);
+                using HttpMessage message = _capacityReservationGroupsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, capacityReservationGroupName, expand?.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CapacityReservationGroupData> response = default;

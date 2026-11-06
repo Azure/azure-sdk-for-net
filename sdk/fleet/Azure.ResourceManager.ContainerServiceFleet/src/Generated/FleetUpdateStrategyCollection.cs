@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetUpdateStrategiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, updateStrategyName, FleetUpdateStrategyData.ToRequestContent(data), matchConditions, context);
+                using HttpMessage message = _fleetUpdateStrategiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, updateStrategyName, FleetUpdateStrategyData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceFleetArmOperation<FleetUpdateStrategyResource> operation = new ContainerServiceFleetArmOperation<FleetUpdateStrategyResource>(
                     new FleetUpdateStrategyResourceOperationSource(Client),
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetUpdateStrategiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, updateStrategyName, FleetUpdateStrategyData.ToRequestContent(data), matchConditions, context);
+                using HttpMessage message = _fleetUpdateStrategiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, updateStrategyName, FleetUpdateStrategyData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceFleetArmOperation<FleetUpdateStrategyResource> operation = new ContainerServiceFleetArmOperation<FleetUpdateStrategyResource>(
                     new FleetUpdateStrategyResourceOperationSource(Client),
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetUpdateStrategiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, updateStrategyName, context);
+                using HttpMessage message = _fleetUpdateStrategiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, updateStrategyName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FleetUpdateStrategyData> response = Response.FromValue(FleetUpdateStrategyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetUpdateStrategiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, updateStrategyName, context);
+                using HttpMessage message = _fleetUpdateStrategiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, updateStrategyName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FleetUpdateStrategyData> response = Response.FromValue(FleetUpdateStrategyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetUpdateStrategiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, updateStrategyName, context);
+                using HttpMessage message = _fleetUpdateStrategiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, updateStrategyName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<FleetUpdateStrategyData> response = default;
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetUpdateStrategiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, updateStrategyName, context);
+                using HttpMessage message = _fleetUpdateStrategiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, updateStrategyName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<FleetUpdateStrategyData> response = default;
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetUpdateStrategiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, updateStrategyName, context);
+                using HttpMessage message = _fleetUpdateStrategiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, updateStrategyName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<FleetUpdateStrategyData> response = default;
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fleetUpdateStrategiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, updateStrategyName, context);
+                using HttpMessage message = _fleetUpdateStrategiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, updateStrategyName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<FleetUpdateStrategyData> response = default;

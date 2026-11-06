@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationTypesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationTypeName, ServiceFabricManagedApplicationTypeData.ToRequestContent(data), context);
+                using HttpMessage message = _applicationTypesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationTypeName, ServiceFabricManagedApplicationTypeData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceFabricManagedApplicationTypeData> response = Response.FromValue(ServiceFabricManagedApplicationTypeData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationTypesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationTypeName, ServiceFabricManagedApplicationTypeData.ToRequestContent(data), context);
+                using HttpMessage message = _applicationTypesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationTypeName, ServiceFabricManagedApplicationTypeData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceFabricManagedApplicationTypeData> response = Response.FromValue(ServiceFabricManagedApplicationTypeData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationTypesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationTypeName, context);
+                using HttpMessage message = _applicationTypesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationTypeName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceFabricManagedApplicationTypeData> response = Response.FromValue(ServiceFabricManagedApplicationTypeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationTypesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationTypeName, context);
+                using HttpMessage message = _applicationTypesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationTypeName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceFabricManagedApplicationTypeData> response = Response.FromValue(ServiceFabricManagedApplicationTypeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationTypesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationTypeName, context);
+                using HttpMessage message = _applicationTypesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationTypeName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ServiceFabricManagedApplicationTypeData> response = default;
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationTypesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationTypeName, context);
+                using HttpMessage message = _applicationTypesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationTypeName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ServiceFabricManagedApplicationTypeData> response = default;
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationTypesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationTypeName, context);
+                using HttpMessage message = _applicationTypesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationTypeName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ServiceFabricManagedApplicationTypeData> response = default;
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationTypesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationTypeName, context);
+                using HttpMessage message = _applicationTypesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationTypeName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ServiceFabricManagedApplicationTypeData> response = default;

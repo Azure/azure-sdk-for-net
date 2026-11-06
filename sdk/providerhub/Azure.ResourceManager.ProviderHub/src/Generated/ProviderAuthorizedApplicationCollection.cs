@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _authorizedApplicationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, applicationId, ProviderAuthorizedApplicationData.ToRequestContent(data), context);
+                using HttpMessage message = _authorizedApplicationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, applicationId, ProviderAuthorizedApplicationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ProviderHubArmOperation<ProviderAuthorizedApplicationResource> operation = new ProviderHubArmOperation<ProviderAuthorizedApplicationResource>(
                     new ProviderAuthorizedApplicationResourceOperationSource(Client),
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _authorizedApplicationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, applicationId, ProviderAuthorizedApplicationData.ToRequestContent(data), context);
+                using HttpMessage message = _authorizedApplicationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, applicationId, ProviderAuthorizedApplicationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ProviderHubArmOperation<ProviderAuthorizedApplicationResource> operation = new ProviderHubArmOperation<ProviderAuthorizedApplicationResource>(
                     new ProviderAuthorizedApplicationResourceOperationSource(Client),
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _authorizedApplicationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, applicationId, context);
+                using HttpMessage message = _authorizedApplicationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, applicationId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ProviderAuthorizedApplicationData> response = Response.FromValue(ProviderAuthorizedApplicationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _authorizedApplicationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, applicationId, context);
+                using HttpMessage message = _authorizedApplicationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, applicationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ProviderAuthorizedApplicationData> response = Response.FromValue(ProviderAuthorizedApplicationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _authorizedApplicationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, applicationId, context);
+                using HttpMessage message = _authorizedApplicationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, applicationId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ProviderAuthorizedApplicationData> response = default;
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _authorizedApplicationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, applicationId, context);
+                using HttpMessage message = _authorizedApplicationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, applicationId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ProviderAuthorizedApplicationData> response = default;
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _authorizedApplicationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, applicationId, context);
+                using HttpMessage message = _authorizedApplicationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, applicationId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ProviderAuthorizedApplicationData> response = default;
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _authorizedApplicationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, applicationId, context);
+                using HttpMessage message = _authorizedApplicationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, applicationId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ProviderAuthorizedApplicationData> response = default;

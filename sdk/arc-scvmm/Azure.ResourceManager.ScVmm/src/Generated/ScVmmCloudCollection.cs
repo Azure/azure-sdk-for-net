@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudResourceName, ScVmmCloudData.ToRequestContent(data), context);
+                using HttpMessage message = _cloudsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudResourceName, ScVmmCloudData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ScVmmArmOperation<ScVmmCloudResource> operation = new ScVmmArmOperation<ScVmmCloudResource>(
                     new ScVmmCloudResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudResourceName, ScVmmCloudData.ToRequestContent(data), context);
+                using HttpMessage message = _cloudsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudResourceName, ScVmmCloudData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ScVmmArmOperation<ScVmmCloudResource> operation = new ScVmmArmOperation<ScVmmCloudResource>(
                     new ScVmmCloudResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudResourceName, context);
+                using HttpMessage message = _cloudsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudResourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ScVmmCloudData> response = Response.FromValue(ScVmmCloudData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudResourceName, context);
+                using HttpMessage message = _cloudsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudResourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ScVmmCloudData> response = Response.FromValue(ScVmmCloudData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudResourceName, context);
+                using HttpMessage message = _cloudsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ScVmmCloudData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudResourceName, context);
+                using HttpMessage message = _cloudsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ScVmmCloudData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudResourceName, context);
+                using HttpMessage message = _cloudsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ScVmmCloudData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudResourceName, context);
+                using HttpMessage message = _cloudsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ScVmmCloudData> response = default;

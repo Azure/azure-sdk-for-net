@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PolicyTokensRestClient.CreateAcquireAtManagementGroupRequest(Id.Name, PolicyTokenRequestContent.ToRequestContent(content), context);
+                using HttpMessage message = PolicyTokensRestClient.CreateAcquireAtManagementGroupRequest(Id.Name, PolicyTokenRequestContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PolicyTokenAcquisitionResult> response = Response.FromValue(PolicyTokenAcquisitionResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PolicyTokensRestClient.CreateAcquireAtManagementGroupRequest(Id.Name, PolicyTokenRequestContent.ToRequestContent(content), context);
+                using HttpMessage message = PolicyTokensRestClient.CreateAcquireAtManagementGroupRequest(Id.Name, PolicyTokenRequestContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PolicyTokenAcquisitionResult> response = Response.FromValue(PolicyTokenAcquisitionResult.FromResponse(result), result);
                 if (response.Value == null)

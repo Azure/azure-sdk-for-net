@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeDeviceJobsRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, jobsName, EdgeDeviceJobData.ToRequestContent(data), context);
+                using HttpMessage message = _edgeDeviceJobsRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, jobsName, EdgeDeviceJobData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation<EdgeDeviceJobResource> operation = new HciArmOperation<EdgeDeviceJobResource>(
                     new EdgeDeviceJobResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeDeviceJobsRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, jobsName, EdgeDeviceJobData.ToRequestContent(data), context);
+                using HttpMessage message = _edgeDeviceJobsRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, jobsName, EdgeDeviceJobData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation<EdgeDeviceJobResource> operation = new HciArmOperation<EdgeDeviceJobResource>(
                     new EdgeDeviceJobResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeDeviceJobsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, jobsName, context);
+                using HttpMessage message = _edgeDeviceJobsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, jobsName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EdgeDeviceJobData> response = Response.FromValue(EdgeDeviceJobData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeDeviceJobsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, jobsName, context);
+                using HttpMessage message = _edgeDeviceJobsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, jobsName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EdgeDeviceJobData> response = Response.FromValue(EdgeDeviceJobData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeDeviceJobsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, jobsName, context);
+                using HttpMessage message = _edgeDeviceJobsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, jobsName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EdgeDeviceJobData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeDeviceJobsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, jobsName, context);
+                using HttpMessage message = _edgeDeviceJobsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, jobsName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EdgeDeviceJobData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeDeviceJobsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, jobsName, context);
+                using HttpMessage message = _edgeDeviceJobsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, jobsName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EdgeDeviceJobData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeDeviceJobsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, jobsName, context);
+                using HttpMessage message = _edgeDeviceJobsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, jobsName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EdgeDeviceJobData> response = default;

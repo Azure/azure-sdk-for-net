@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _virtualNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HybridContainerServiceVirtualNetworkData> response = Response.FromValue(HybridContainerServiceVirtualNetworkData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _virtualNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HybridContainerServiceVirtualNetworkData> response = Response.FromValue(HybridContainerServiceVirtualNetworkData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworksRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HybridContainerServiceVirtualNetworkPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _virtualNetworksRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HybridContainerServiceVirtualNetworkPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridContainerServiceArmOperation<HybridContainerServiceVirtualNetworkResource> operation = new HybridContainerServiceArmOperation<HybridContainerServiceVirtualNetworkResource>(
                     new HybridContainerServiceVirtualNetworkResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworksRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HybridContainerServiceVirtualNetworkPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _virtualNetworksRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HybridContainerServiceVirtualNetworkPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridContainerServiceArmOperation<HybridContainerServiceVirtualNetworkResource> operation = new HybridContainerServiceArmOperation<HybridContainerServiceVirtualNetworkResource>(
                     new HybridContainerServiceVirtualNetworkResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworksRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _virtualNetworksRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridContainerServiceArmOperation operation = new HybridContainerServiceArmOperation(_virtualNetworksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworksRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _virtualNetworksRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridContainerServiceArmOperation operation = new HybridContainerServiceArmOperation(_virtualNetworksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.HybridContainerService
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _virtualNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<HybridContainerServiceVirtualNetworkData> response = Response.FromValue(HybridContainerServiceVirtualNetworkData.FromResponse(result), result);
                     return Response.FromValue(new HybridContainerServiceVirtualNetworkResource(Client, response.Value), response.GetRawResponse());
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.HybridContainerService
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _virtualNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<HybridContainerServiceVirtualNetworkData> response = Response.FromValue(HybridContainerServiceVirtualNetworkData.FromResponse(result), result);
                     return Response.FromValue(new HybridContainerServiceVirtualNetworkResource(Client, response.Value), response.GetRawResponse());
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.HybridContainerService
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _virtualNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<HybridContainerServiceVirtualNetworkData> response = Response.FromValue(HybridContainerServiceVirtualNetworkData.FromResponse(result), result);
                     return Response.FromValue(new HybridContainerServiceVirtualNetworkResource(Client, response.Value), response.GetRawResponse());
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.HybridContainerService
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _virtualNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<HybridContainerServiceVirtualNetworkData> response = Response.FromValue(HybridContainerServiceVirtualNetworkData.FromResponse(result), result);
                     return Response.FromValue(new HybridContainerServiceVirtualNetworkResource(Client, response.Value), response.GetRawResponse());
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.HybridContainerService
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _virtualNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<HybridContainerServiceVirtualNetworkData> response = Response.FromValue(HybridContainerServiceVirtualNetworkData.FromResponse(result), result);
                     return Response.FromValue(new HybridContainerServiceVirtualNetworkResource(Client, response.Value), response.GetRawResponse());
@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.HybridContainerService
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _virtualNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<HybridContainerServiceVirtualNetworkData> response = Response.FromValue(HybridContainerServiceVirtualNetworkData.FromResponse(result), result);
                     return Response.FromValue(new HybridContainerServiceVirtualNetworkResource(Client, response.Value), response.GetRawResponse());

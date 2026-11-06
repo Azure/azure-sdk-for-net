@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _topologyMapsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _topologyMapsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TopologyMapData> response = Response.FromValue(TopologyMapData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _topologyMapsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _topologyMapsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TopologyMapData> response = Response.FromValue(TopologyMapData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _topologyMapsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TopologyMapPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _topologyMapsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TopologyMapPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PrivateTrafficManagerArmOperation<TopologyMapResource> operation = new PrivateTrafficManagerArmOperation<TopologyMapResource>(
                     new TopologyMapResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _topologyMapsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TopologyMapPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _topologyMapsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TopologyMapPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PrivateTrafficManagerArmOperation<TopologyMapResource> operation = new PrivateTrafficManagerArmOperation<TopologyMapResource>(
                     new TopologyMapResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _topologyMapsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _topologyMapsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PrivateTrafficManagerArmOperation operation = new PrivateTrafficManagerArmOperation(_topologyMapsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _topologyMapsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _topologyMapsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PrivateTrafficManagerArmOperation operation = new PrivateTrafficManagerArmOperation(_topologyMapsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _topologyMapsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _topologyMapsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<TopologyMapData> response = Response.FromValue(TopologyMapData.FromResponse(result), result);
                     return Response.FromValue(new TopologyMapResource(Client, response.Value), response.GetRawResponse());
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _topologyMapsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _topologyMapsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<TopologyMapData> response = Response.FromValue(TopologyMapData.FromResponse(result), result);
                     return Response.FromValue(new TopologyMapResource(Client, response.Value), response.GetRawResponse());
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _topologyMapsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _topologyMapsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<TopologyMapData> response = Response.FromValue(TopologyMapData.FromResponse(result), result);
                     return Response.FromValue(new TopologyMapResource(Client, response.Value), response.GetRawResponse());
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _topologyMapsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _topologyMapsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<TopologyMapData> response = Response.FromValue(TopologyMapData.FromResponse(result), result);
                     return Response.FromValue(new TopologyMapResource(Client, response.Value), response.GetRawResponse());
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _topologyMapsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _topologyMapsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<TopologyMapData> response = Response.FromValue(TopologyMapData.FromResponse(result), result);
                     return Response.FromValue(new TopologyMapResource(Client, response.Value), response.GetRawResponse());
@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _topologyMapsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _topologyMapsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<TopologyMapData> response = Response.FromValue(TopologyMapData.FromResponse(result), result);
                     return Response.FromValue(new TopologyMapResource(Client, response.Value), response.GetRawResponse());

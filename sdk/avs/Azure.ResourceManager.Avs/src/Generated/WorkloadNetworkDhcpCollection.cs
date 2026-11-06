@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateCreateDhcpRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, dhcpId, WorkloadNetworkDhcpData.ToRequestContent(data), context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateCreateDhcpRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, dhcpId, WorkloadNetworkDhcpData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation<WorkloadNetworkDhcpResource> operation = new AvsArmOperation<WorkloadNetworkDhcpResource>(
                     new WorkloadNetworkDhcpResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateCreateDhcpRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, dhcpId, WorkloadNetworkDhcpData.ToRequestContent(data), context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateCreateDhcpRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, dhcpId, WorkloadNetworkDhcpData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation<WorkloadNetworkDhcpResource> operation = new AvsArmOperation<WorkloadNetworkDhcpResource>(
                     new WorkloadNetworkDhcpResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateGetDhcpRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dhcpId, Id.Parent.Name, context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateGetDhcpRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dhcpId, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WorkloadNetworkDhcpData> response = Response.FromValue(WorkloadNetworkDhcpData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateGetDhcpRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dhcpId, Id.Parent.Name, context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateGetDhcpRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dhcpId, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WorkloadNetworkDhcpData> response = Response.FromValue(WorkloadNetworkDhcpData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateGetDhcpRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dhcpId, Id.Parent.Name, context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateGetDhcpRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dhcpId, Id.Parent.Name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WorkloadNetworkDhcpData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateGetDhcpRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dhcpId, Id.Parent.Name, context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateGetDhcpRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dhcpId, Id.Parent.Name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WorkloadNetworkDhcpData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateGetDhcpRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dhcpId, Id.Parent.Name, context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateGetDhcpRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dhcpId, Id.Parent.Name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WorkloadNetworkDhcpData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateGetDhcpRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dhcpId, Id.Parent.Name, context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateGetDhcpRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dhcpId, Id.Parent.Name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WorkloadNetworkDhcpData> response = default;

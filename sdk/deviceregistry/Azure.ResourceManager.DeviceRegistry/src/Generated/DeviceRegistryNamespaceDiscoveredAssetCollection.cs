@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespaceDiscoveredAssetsRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, discoveredAssetName, DeviceRegistryNamespaceDiscoveredAssetData.ToRequestContent(data), context);
+                using HttpMessage message = _namespaceDiscoveredAssetsRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, discoveredAssetName, DeviceRegistryNamespaceDiscoveredAssetData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DeviceRegistryArmOperation<DeviceRegistryNamespaceDiscoveredAssetResource> operation = new DeviceRegistryArmOperation<DeviceRegistryNamespaceDiscoveredAssetResource>(
                     new DeviceRegistryNamespaceDiscoveredAssetResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespaceDiscoveredAssetsRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, discoveredAssetName, DeviceRegistryNamespaceDiscoveredAssetData.ToRequestContent(data), context);
+                using HttpMessage message = _namespaceDiscoveredAssetsRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, discoveredAssetName, DeviceRegistryNamespaceDiscoveredAssetData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DeviceRegistryArmOperation<DeviceRegistryNamespaceDiscoveredAssetResource> operation = new DeviceRegistryArmOperation<DeviceRegistryNamespaceDiscoveredAssetResource>(
                     new DeviceRegistryNamespaceDiscoveredAssetResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespaceDiscoveredAssetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, discoveredAssetName, context);
+                using HttpMessage message = _namespaceDiscoveredAssetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, discoveredAssetName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DeviceRegistryNamespaceDiscoveredAssetData> response = Response.FromValue(DeviceRegistryNamespaceDiscoveredAssetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespaceDiscoveredAssetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, discoveredAssetName, context);
+                using HttpMessage message = _namespaceDiscoveredAssetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, discoveredAssetName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DeviceRegistryNamespaceDiscoveredAssetData> response = Response.FromValue(DeviceRegistryNamespaceDiscoveredAssetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespaceDiscoveredAssetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, discoveredAssetName, context);
+                using HttpMessage message = _namespaceDiscoveredAssetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, discoveredAssetName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DeviceRegistryNamespaceDiscoveredAssetData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespaceDiscoveredAssetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, discoveredAssetName, context);
+                using HttpMessage message = _namespaceDiscoveredAssetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, discoveredAssetName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DeviceRegistryNamespaceDiscoveredAssetData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespaceDiscoveredAssetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, discoveredAssetName, context);
+                using HttpMessage message = _namespaceDiscoveredAssetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, discoveredAssetName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DeviceRegistryNamespaceDiscoveredAssetData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespaceDiscoveredAssetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, discoveredAssetName, context);
+                using HttpMessage message = _namespaceDiscoveredAssetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, discoveredAssetName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DeviceRegistryNamespaceDiscoveredAssetData> response = default;

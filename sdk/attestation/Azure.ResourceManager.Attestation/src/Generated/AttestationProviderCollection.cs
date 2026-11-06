@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Attestation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attestationProvidersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, AttestationProviderCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _attestationProvidersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, AttestationProviderCreateOrUpdateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AttestationProviderData> response = Response.FromValue(AttestationProviderData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Attestation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attestationProvidersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, AttestationProviderCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _attestationProvidersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, AttestationProviderCreateOrUpdateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AttestationProviderData> response = Response.FromValue(AttestationProviderData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Attestation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attestationProvidersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, context);
+                using HttpMessage message = _attestationProvidersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AttestationProviderData> response = Response.FromValue(AttestationProviderData.FromResponse(result), result);
                 if (response.Value == null)
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Attestation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attestationProvidersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, context);
+                using HttpMessage message = _attestationProvidersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AttestationProviderData> response = Response.FromValue(AttestationProviderData.FromResponse(result), result);
                 if (response.Value == null)
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Attestation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attestationProvidersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, context);
+                using HttpMessage message = _attestationProvidersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AttestationProviderData> response = default;
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.Attestation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attestationProvidersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, context);
+                using HttpMessage message = _attestationProvidersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AttestationProviderData> response = default;
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.Attestation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attestationProvidersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, context);
+                using HttpMessage message = _attestationProvidersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AttestationProviderData> response = default;
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.Attestation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attestationProvidersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, context);
+                using HttpMessage message = _attestationProvidersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AttestationProviderData> response = default;

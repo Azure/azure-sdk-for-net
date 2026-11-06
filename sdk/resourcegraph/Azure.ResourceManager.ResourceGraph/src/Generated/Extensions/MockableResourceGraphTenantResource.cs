@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ResourceChangesOperationsRestClient.CreateGetResourceChangesRequest(ResourceChangesRequestParameters.ToRequestContent(content), context);
+                using HttpMessage message = ResourceChangesOperationsRestClient.CreateGetResourceChangesRequest(ResourceChangesRequestParameters.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceChangeList> response = Response.FromValue(ResourceChangeList.FromResponse(result), result);
                 if (response.Value == null)
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ResourceChangesOperationsRestClient.CreateGetResourceChangesRequest(ResourceChangesRequestParameters.ToRequestContent(content), context);
+                using HttpMessage message = ResourceChangesOperationsRestClient.CreateGetResourceChangesRequest(ResourceChangesRequestParameters.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceChangeList> response = Response.FromValue(ResourceChangeList.FromResponse(result), result);
                 if (response.Value == null)
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ResourceGraphOperationsRestClient.CreateGetResourcesRequest(ResourceQueryContent.ToRequestContent(content), context);
+                using HttpMessage message = ResourceGraphOperationsRestClient.CreateGetResourcesRequest(ResourceQueryContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceQueryResult> response = Response.FromValue(ResourceQueryResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ResourceGraphOperationsRestClient.CreateGetResourcesRequest(ResourceQueryContent.ToRequestContent(content), context);
+                using HttpMessage message = ResourceGraphOperationsRestClient.CreateGetResourcesRequest(ResourceQueryContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceQueryResult> response = Response.FromValue(ResourceQueryResult.FromResponse(result), result);
                 if (response.Value == null)

@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OperationalInsightsWorkspaceData> response = Response.FromValue(OperationalInsightsWorkspaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OperationalInsightsWorkspaceData> response = Response.FromValue(OperationalInsightsWorkspaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, OperationalInsightsWorkspacePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _workspacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, OperationalInsightsWorkspacePatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OperationalInsightsWorkspaceData> response = Response.FromValue(OperationalInsightsWorkspaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, OperationalInsightsWorkspacePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _workspacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, OperationalInsightsWorkspacePatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OperationalInsightsWorkspaceData> response = Response.FromValue(OperationalInsightsWorkspaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, force, context);
+                using HttpMessage message = _workspacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, force, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OperationalInsightsArmOperation operation = new OperationalInsightsArmOperation(_workspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, force, context);
+                using HttpMessage message = _workspacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, force, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OperationalInsightsArmOperation operation = new OperationalInsightsArmOperation(_workspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateGetNetworkSecurityPerimeterConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                using HttpMessage message = _workspacesRestClient.CreateGetNetworkSecurityPerimeterConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OperationalInsightsNetworkSecurityPerimeterConfiguration> response = Response.FromValue(OperationalInsightsNetworkSecurityPerimeterConfiguration.FromResponse(result), result);
                 if (response.Value == null)
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateGetNetworkSecurityPerimeterConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                using HttpMessage message = _workspacesRestClient.CreateGetNetworkSecurityPerimeterConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OperationalInsightsNetworkSecurityPerimeterConfiguration> response = Response.FromValue(OperationalInsightsNetworkSecurityPerimeterConfiguration.FromResponse(result), result);
                 if (response.Value == null)
@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateReconcileNetworkSecurityPerimeterConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                using HttpMessage message = _workspacesRestClient.CreateReconcileNetworkSecurityPerimeterConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OperationalInsightsArmOperation operation = new OperationalInsightsArmOperation(_workspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -706,7 +706,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateReconcileNetworkSecurityPerimeterConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                using HttpMessage message = _workspacesRestClient.CreateReconcileNetworkSecurityPerimeterConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OperationalInsightsArmOperation operation = new OperationalInsightsArmOperation(_workspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -759,7 +759,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _intelligencePacksRestClient.CreateDisableIntelligencePackRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, intelligencePackName, context);
+                using HttpMessage message = _intelligencePacksRestClient.CreateDisableIntelligencePackRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, intelligencePackName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -807,7 +807,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _intelligencePacksRestClient.CreateDisableIntelligencePackRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, intelligencePackName, context);
+                using HttpMessage message = _intelligencePacksRestClient.CreateDisableIntelligencePackRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, intelligencePackName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -855,7 +855,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _intelligencePacksRestClient.CreateEnableIntelligencePackRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, intelligencePackName, context);
+                using HttpMessage message = _intelligencePacksRestClient.CreateEnableIntelligencePackRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, intelligencePackName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -903,7 +903,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _intelligencePacksRestClient.CreateEnableIntelligencePackRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, intelligencePackName, context);
+                using HttpMessage message = _intelligencePacksRestClient.CreateEnableIntelligencePackRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, intelligencePackName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -948,7 +948,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateFailbackRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _workspacesRestClient.CreateFailbackRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OperationalInsightsArmOperation operation = new OperationalInsightsArmOperation(_workspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -998,7 +998,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateFailbackRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _workspacesRestClient.CreateFailbackRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OperationalInsightsArmOperation operation = new OperationalInsightsArmOperation(_workspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1047,7 +1047,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewaysRestClient.CreateDeleteGatewayRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, gatewayId, context);
+                using HttpMessage message = _gatewaysRestClient.CreateDeleteGatewayRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, gatewayId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -1091,7 +1091,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewaysRestClient.CreateDeleteGatewayRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, gatewayId, context);
+                using HttpMessage message = _gatewaysRestClient.CreateDeleteGatewayRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, gatewayId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -1139,7 +1139,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacePurgeRestClient.CreateGetPurgeStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, purgeId, context);
+                using HttpMessage message = _workspacePurgeRestClient.CreateGetPurgeStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, purgeId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OperationalInsightsWorkspacePurgeStatusResult> response = Response.FromValue(OperationalInsightsWorkspacePurgeStatusResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1192,7 +1192,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacePurgeRestClient.CreateGetPurgeStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, purgeId, context);
+                using HttpMessage message = _workspacePurgeRestClient.CreateGetPurgeStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, purgeId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OperationalInsightsWorkspacePurgeStatusResult> response = Response.FromValue(OperationalInsightsWorkspacePurgeStatusResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1240,7 +1240,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedKeysRestClient.CreateGetSharedKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sharedKeysRestClient.CreateGetSharedKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OperationalInsightsWorkspaceSharedKeys> response = Response.FromValue(OperationalInsightsWorkspaceSharedKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -1288,7 +1288,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedKeysRestClient.CreateGetSharedKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sharedKeysRestClient.CreateGetSharedKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OperationalInsightsWorkspaceSharedKeys> response = Response.FromValue(OperationalInsightsWorkspaceSharedKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -1570,7 +1570,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacePurgeRestClient.CreatePurgeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, OperationalInsightsWorkspacePurgeContent.ToRequestContent(content), context);
+                using HttpMessage message = _workspacePurgeRestClient.CreatePurgeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, OperationalInsightsWorkspacePurgeContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OperationalInsightsWorkspacePurgeResult> response = Response.FromValue(OperationalInsightsWorkspacePurgeResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1624,7 +1624,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacePurgeRestClient.CreatePurgeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, OperationalInsightsWorkspacePurgeContent.ToRequestContent(content), context);
+                using HttpMessage message = _workspacePurgeRestClient.CreatePurgeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, OperationalInsightsWorkspacePurgeContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OperationalInsightsWorkspacePurgeResult> response = Response.FromValue(OperationalInsightsWorkspacePurgeResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1678,7 +1678,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacePurgeRestClient.CreatePurgeLakeDataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WorkspacePurgeLakeDataBody.ToRequestContent(body), context);
+                using HttpMessage message = _workspacePurgeRestClient.CreatePurgeLakeDataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WorkspacePurgeLakeDataBody.ToRequestContent(body), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OperationalInsightsArmOperation operation = new OperationalInsightsArmOperation(_workspacePurgeClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1732,7 +1732,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacePurgeRestClient.CreatePurgeLakeDataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WorkspacePurgeLakeDataBody.ToRequestContent(body), context);
+                using HttpMessage message = _workspacePurgeRestClient.CreatePurgeLakeDataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WorkspacePurgeLakeDataBody.ToRequestContent(body), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OperationalInsightsArmOperation operation = new OperationalInsightsArmOperation(_workspacePurgeClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1780,7 +1780,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedKeysRestClient.CreateRegenerateSharedKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sharedKeysRestClient.CreateRegenerateSharedKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OperationalInsightsWorkspaceSharedKeys> response = Response.FromValue(OperationalInsightsWorkspaceSharedKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -1828,7 +1828,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedKeysRestClient.CreateRegenerateSharedKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _sharedKeysRestClient.CreateRegenerateSharedKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OperationalInsightsWorkspaceSharedKeys> response = Response.FromValue(OperationalInsightsWorkspaceSharedKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -2019,7 +2019,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<OperationalInsightsWorkspaceData> response = Response.FromValue(OperationalInsightsWorkspaceData.FromResponse(result), result);
                     return Response.FromValue(new OperationalInsightsWorkspaceResource(Client, response.Value), response.GetRawResponse());
@@ -2067,7 +2067,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<OperationalInsightsWorkspaceData> response = Response.FromValue(OperationalInsightsWorkspaceData.FromResponse(result), result);
                     return Response.FromValue(new OperationalInsightsWorkspaceResource(Client, response.Value), response.GetRawResponse());
@@ -2113,7 +2113,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<OperationalInsightsWorkspaceData> response = Response.FromValue(OperationalInsightsWorkspaceData.FromResponse(result), result);
                     return Response.FromValue(new OperationalInsightsWorkspaceResource(Client, response.Value), response.GetRawResponse());
@@ -2155,7 +2155,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<OperationalInsightsWorkspaceData> response = Response.FromValue(OperationalInsightsWorkspaceData.FromResponse(result), result);
                     return Response.FromValue(new OperationalInsightsWorkspaceResource(Client, response.Value), response.GetRawResponse());
@@ -2197,7 +2197,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<OperationalInsightsWorkspaceData> response = Response.FromValue(OperationalInsightsWorkspaceData.FromResponse(result), result);
                     return Response.FromValue(new OperationalInsightsWorkspaceResource(Client, response.Value), response.GetRawResponse());
@@ -2243,7 +2243,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<OperationalInsightsWorkspaceData> response = Response.FromValue(OperationalInsightsWorkspaceData.FromResponse(result), result);
                     return Response.FromValue(new OperationalInsightsWorkspaceResource(Client, response.Value), response.GetRawResponse());

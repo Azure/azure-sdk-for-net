@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PlatformValidation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _validationTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), validationTestName, context);
+                using HttpMessage message = _validationTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), validationTestName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ValidationTestData> response = Response.FromValue(ValidationTestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.PlatformValidation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _validationTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), validationTestName, context);
+                using HttpMessage message = _validationTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), validationTestName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ValidationTestData> response = Response.FromValue(ValidationTestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.PlatformValidation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _validationTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), validationTestName, context);
+                using HttpMessage message = _validationTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), validationTestName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ValidationTestData> response = default;
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.PlatformValidation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _validationTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), validationTestName, context);
+                using HttpMessage message = _validationTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), validationTestName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ValidationTestData> response = default;
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.PlatformValidation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _validationTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), validationTestName, context);
+                using HttpMessage message = _validationTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), validationTestName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ValidationTestData> response = default;
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.PlatformValidation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _validationTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), validationTestName, context);
+                using HttpMessage message = _validationTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), validationTestName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ValidationTestData> response = default;

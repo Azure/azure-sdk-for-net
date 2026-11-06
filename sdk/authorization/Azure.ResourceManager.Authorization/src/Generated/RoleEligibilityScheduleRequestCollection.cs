@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleEligibilityScheduleRequestsRestClient.CreateCreateRequest(Id.ToString(), roleEligibilityScheduleRequestName, RoleEligibilityScheduleRequestData.ToRequestContent(data), context);
+                using HttpMessage message = _roleEligibilityScheduleRequestsRestClient.CreateCreateRequest(Id.ToString(), roleEligibilityScheduleRequestName, RoleEligibilityScheduleRequestData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RoleEligibilityScheduleRequestData> response = Response.FromValue(RoleEligibilityScheduleRequestData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleEligibilityScheduleRequestsRestClient.CreateCreateRequest(Id.ToString(), roleEligibilityScheduleRequestName, RoleEligibilityScheduleRequestData.ToRequestContent(data), context);
+                using HttpMessage message = _roleEligibilityScheduleRequestsRestClient.CreateCreateRequest(Id.ToString(), roleEligibilityScheduleRequestName, RoleEligibilityScheduleRequestData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RoleEligibilityScheduleRequestData> response = Response.FromValue(RoleEligibilityScheduleRequestData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleEligibilityScheduleRequestsRestClient.CreateGetRequest(Id.ToString(), roleEligibilityScheduleRequestName, context);
+                using HttpMessage message = _roleEligibilityScheduleRequestsRestClient.CreateGetRequest(Id.ToString(), roleEligibilityScheduleRequestName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RoleEligibilityScheduleRequestData> response = Response.FromValue(RoleEligibilityScheduleRequestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleEligibilityScheduleRequestsRestClient.CreateGetRequest(Id.ToString(), roleEligibilityScheduleRequestName, context);
+                using HttpMessage message = _roleEligibilityScheduleRequestsRestClient.CreateGetRequest(Id.ToString(), roleEligibilityScheduleRequestName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RoleEligibilityScheduleRequestData> response = Response.FromValue(RoleEligibilityScheduleRequestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleEligibilityScheduleRequestsRestClient.CreateGetRequest(Id.ToString(), roleEligibilityScheduleRequestName, context);
+                using HttpMessage message = _roleEligibilityScheduleRequestsRestClient.CreateGetRequest(Id.ToString(), roleEligibilityScheduleRequestName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RoleEligibilityScheduleRequestData> response = default;
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleEligibilityScheduleRequestsRestClient.CreateGetRequest(Id.ToString(), roleEligibilityScheduleRequestName, context);
+                using HttpMessage message = _roleEligibilityScheduleRequestsRestClient.CreateGetRequest(Id.ToString(), roleEligibilityScheduleRequestName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RoleEligibilityScheduleRequestData> response = default;
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleEligibilityScheduleRequestsRestClient.CreateGetRequest(Id.ToString(), roleEligibilityScheduleRequestName, context);
+                using HttpMessage message = _roleEligibilityScheduleRequestsRestClient.CreateGetRequest(Id.ToString(), roleEligibilityScheduleRequestName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RoleEligibilityScheduleRequestData> response = default;
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleEligibilityScheduleRequestsRestClient.CreateGetRequest(Id.ToString(), roleEligibilityScheduleRequestName, context);
+                using HttpMessage message = _roleEligibilityScheduleRequestsRestClient.CreateGetRequest(Id.ToString(), roleEligibilityScheduleRequestName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RoleEligibilityScheduleRequestData> response = default;

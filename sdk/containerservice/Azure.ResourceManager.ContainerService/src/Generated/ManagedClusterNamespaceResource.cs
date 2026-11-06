@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _managedNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ManagedClusterNamespaceData> response = Response.FromValue(ManagedClusterNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _managedNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ManagedClusterNamespaceData> response = Response.FromValue(ManagedClusterNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNamespacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerServiceTagsObject.ToRequestContent(containerServiceTagsObject), context);
+                using HttpMessage message = _managedNamespacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerServiceTagsObject.ToRequestContent(containerServiceTagsObject), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ManagedClusterNamespaceData> response = Response.FromValue(ManagedClusterNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNamespacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerServiceTagsObject.ToRequestContent(containerServiceTagsObject), context);
+                using HttpMessage message = _managedNamespacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerServiceTagsObject.ToRequestContent(containerServiceTagsObject), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ManagedClusterNamespaceData> response = Response.FromValue(ManagedClusterNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNamespacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _managedNamespacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceArmOperation operation = new ContainerServiceArmOperation(_managedNamespacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNamespacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _managedNamespacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceArmOperation operation = new ContainerServiceArmOperation(_managedNamespacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNamespacesRestClient.CreateGetCredentialRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _managedNamespacesRestClient.CreateGetCredentialRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ManagedClusterCredentials> response = Response.FromValue(ManagedClusterCredentials.FromResponse(result), result);
                 if (response.Value == null)
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNamespacesRestClient.CreateGetCredentialRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _managedNamespacesRestClient.CreateGetCredentialRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ManagedClusterCredentials> response = Response.FromValue(ManagedClusterCredentials.FromResponse(result), result);
                 if (response.Value == null)
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.ContainerService
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _managedNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _managedNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ManagedClusterNamespaceData> response = Response.FromValue(ManagedClusterNamespaceData.FromResponse(result), result);
                     return Response.FromValue(new ManagedClusterNamespaceResource(Client, response.Value), response.GetRawResponse());
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.ContainerService
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _managedNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _managedNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ManagedClusterNamespaceData> response = Response.FromValue(ManagedClusterNamespaceData.FromResponse(result), result);
                     return Response.FromValue(new ManagedClusterNamespaceResource(Client, response.Value), response.GetRawResponse());
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.ContainerService
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _managedNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _managedNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ManagedClusterNamespaceData> response = Response.FromValue(ManagedClusterNamespaceData.FromResponse(result), result);
                     return Response.FromValue(new ManagedClusterNamespaceResource(Client, response.Value), response.GetRawResponse());
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.ContainerService
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _managedNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _managedNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ManagedClusterNamespaceData> response = Response.FromValue(ManagedClusterNamespaceData.FromResponse(result), result);
                     return Response.FromValue(new ManagedClusterNamespaceResource(Client, response.Value), response.GetRawResponse());
@@ -690,7 +690,7 @@ namespace Azure.ResourceManager.ContainerService
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _managedNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _managedNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ManagedClusterNamespaceData> response = Response.FromValue(ManagedClusterNamespaceData.FromResponse(result), result);
                     return Response.FromValue(new ManagedClusterNamespaceResource(Client, response.Value), response.GetRawResponse());
@@ -736,7 +736,7 @@ namespace Azure.ResourceManager.ContainerService
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _managedNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _managedNamespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ManagedClusterNamespaceData> response = Response.FromValue(ManagedClusterNamespaceData.FromResponse(result), result);
                     return Response.FromValue(new ManagedClusterNamespaceResource(Client, response.Value), response.GetRawResponse());

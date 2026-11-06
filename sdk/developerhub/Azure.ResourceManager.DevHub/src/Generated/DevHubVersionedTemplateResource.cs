@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _versionedTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _versionedTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevHubVersionedTemplateData> response = Response.FromValue(DevHubVersionedTemplateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _versionedTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _versionedTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevHubVersionedTemplateData> response = Response.FromValue(DevHubVersionedTemplateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _versionedTemplateRestClient.CreateGenerateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, BinaryContentHelper.FromDictionary(parameters), context);
+                using HttpMessage message = _versionedTemplateRestClient.CreateGenerateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, BinaryContentHelper.FromDictionary(parameters), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DeveloperHubGenerateVersionedTemplateResult> response = Response.FromValue(DeveloperHubGenerateVersionedTemplateResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _versionedTemplateRestClient.CreateGenerateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, BinaryContentHelper.FromDictionary(parameters), context);
+                using HttpMessage message = _versionedTemplateRestClient.CreateGenerateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, BinaryContentHelper.FromDictionary(parameters), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DeveloperHubGenerateVersionedTemplateResult> response = Response.FromValue(DeveloperHubGenerateVersionedTemplateResult.FromResponse(result), result);
                 if (response.Value == null)

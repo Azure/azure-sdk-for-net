@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantFileWorkspaceRestClient.CreateCreateRequest(fileWorkspaceName, context);
+                using HttpMessage message = _tenantFileWorkspaceRestClient.CreateCreateRequest(fileWorkspaceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FileWorkspaceDetailData> response = Response.FromValue(FileWorkspaceDetailData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantFileWorkspaceRestClient.CreateCreateRequest(fileWorkspaceName, context);
+                using HttpMessage message = _tenantFileWorkspaceRestClient.CreateCreateRequest(fileWorkspaceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FileWorkspaceDetailData> response = Response.FromValue(FileWorkspaceDetailData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantFileWorkspaceRestClient.CreateGetRequest(fileWorkspaceName, context);
+                using HttpMessage message = _tenantFileWorkspaceRestClient.CreateGetRequest(fileWorkspaceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FileWorkspaceDetailData> response = Response.FromValue(FileWorkspaceDetailData.FromResponse(result), result);
                 if (response.Value == null)
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantFileWorkspaceRestClient.CreateGetRequest(fileWorkspaceName, context);
+                using HttpMessage message = _tenantFileWorkspaceRestClient.CreateGetRequest(fileWorkspaceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FileWorkspaceDetailData> response = Response.FromValue(FileWorkspaceDetailData.FromResponse(result), result);
                 if (response.Value == null)
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantFileWorkspaceRestClient.CreateGetRequest(fileWorkspaceName, context);
+                using HttpMessage message = _tenantFileWorkspaceRestClient.CreateGetRequest(fileWorkspaceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<FileWorkspaceDetailData> response = default;
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantFileWorkspaceRestClient.CreateGetRequest(fileWorkspaceName, context);
+                using HttpMessage message = _tenantFileWorkspaceRestClient.CreateGetRequest(fileWorkspaceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<FileWorkspaceDetailData> response = default;
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantFileWorkspaceRestClient.CreateGetRequest(fileWorkspaceName, context);
+                using HttpMessage message = _tenantFileWorkspaceRestClient.CreateGetRequest(fileWorkspaceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<FileWorkspaceDetailData> response = default;
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantFileWorkspaceRestClient.CreateGetRequest(fileWorkspaceName, context);
+                using HttpMessage message = _tenantFileWorkspaceRestClient.CreateGetRequest(fileWorkspaceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<FileWorkspaceDetailData> response = default;

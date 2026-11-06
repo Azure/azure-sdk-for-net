@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.SignalR.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SignalROperationGroupRestClient.CreateCheckSignalRNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, SignalRNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = SignalROperationGroupRestClient.CreateCheckSignalRNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, SignalRNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SignalRNameAvailabilityResult> response = Response.FromValue(SignalRNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.SignalR.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SignalROperationGroupRestClient.CreateCheckSignalRNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, SignalRNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = SignalROperationGroupRestClient.CreateCheckSignalRNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, SignalRNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SignalRNameAvailabilityResult> response = Response.FromValue(SignalRNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
