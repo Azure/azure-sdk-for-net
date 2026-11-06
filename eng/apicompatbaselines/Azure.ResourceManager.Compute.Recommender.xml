@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- https://learn.microsoft.com/dotnet/fundamentals/package-validation/diagnostic-ids -->
+<Suppressions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <!-- Intentional Diagnostic-to-PlacementScores API renames for API version 2026-10-05-preview. -->
+  <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Azure.ResourceManager.Compute.Recommender.ComputeRecommenderDiagnosticData</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Azure.ResourceManager.Compute.Recommender.ComputeRecommenderDiagnosticResource</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.ResourceManager.Compute.Recommender.ComputeRecommenderExtensions.GetComputeRecommenderDiagnostic(Azure.ResourceManager.Resources.SubscriptionResource)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.ResourceManager.Compute.Recommender.ComputeRecommenderExtensions.GetComputeRecommenderDiagnosticResource(Azure.ResourceManager.ArmClient,Azure.Core.ResourceIdentifier)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.ResourceManager.Compute.Recommender.Mocking.MockableComputeRecommenderArmClient.GetComputeRecommenderDiagnosticResource(Azure.Core.ResourceIdentifier)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.ResourceManager.Compute.Recommender.Mocking.MockableComputeRecommenderSubscriptionResource.GetComputeRecommenderDiagnostic</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.ResourceManager.Compute.Recommender.Models.ArmComputeRecommenderModelFactory.ComputeRecommenderDiagnosticData(Azure.Core.ResourceIdentifier,System.String,Azure.Core.ResourceType,Azure.ResourceManager.Models.SystemData,System.Collections.Generic.IEnumerable{System.String})</Target>
+  </Suppression>
+  <!-- IsQuotaAvailable was intentionally removed; the replacement factory overload accepts placementPreference. -->
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.ResourceManager.Compute.Recommender.Models.ArmComputeRecommenderModelFactory.ComputeRecommenderPlacementScore(System.String,System.Nullable{Azure.Core.AzureLocation},System.String,System.String,System.Nullable{System.Boolean})</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.ResourceManager.Compute.Recommender.Models.ComputeRecommenderPlacementScore.get_IsQuotaAvailable</Target>
+  </Suppression>
+</Suppressions>

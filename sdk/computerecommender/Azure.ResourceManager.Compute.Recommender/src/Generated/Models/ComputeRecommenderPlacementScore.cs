@@ -27,15 +27,15 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         /// <param name="region"> The region. </param>
         /// <param name="availabilityZone"> The availability zone. </param>
         /// <param name="score"> A placement score indicating the likelihood of successfully allocating the specified Spot VM(s), as well as the expected lifetimes of the Spot VM(s) after allocation. </param>
-        /// <param name="isQuotaAvailable"> Whether the desired quota is available. </param>
+        /// <param name="placementPreference"> Placement preference from 0 to 10 (inclusive). Higher is better. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeRecommenderPlacementScore(string sku, AzureLocation? region, string availabilityZone, string score, bool? isQuotaAvailable, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeRecommenderPlacementScore(string sku, AzureLocation? region, string availabilityZone, string score, int? placementPreference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sku = sku;
             Region = region;
             AvailabilityZone = availabilityZone;
             Score = score;
-            IsQuotaAvailable = isQuotaAvailable;
+            PlacementPreference = placementPreference;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         /// <summary> A placement score indicating the likelihood of successfully allocating the specified Spot VM(s), as well as the expected lifetimes of the Spot VM(s) after allocation. </summary>
         public string Score { get; }
 
-        /// <summary> Whether the desired quota is available. </summary>
-        public bool? IsQuotaAvailable { get; }
+        /// <summary> Placement preference from 0 to 10 (inclusive). Higher is better. </summary>
+        public int? PlacementPreference { get; }
     }
 }

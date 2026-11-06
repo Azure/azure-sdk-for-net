@@ -13,35 +13,35 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.Recommender
 {
-    /// <summary> Contains metadata of a diagnostic type. </summary>
-    public partial class ComputeRecommenderDiagnosticData : ResourceData
+    /// <summary> Contains metadata of the compute placement scoring resource. </summary>
+    public partial class ComputePlacementScoresData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ComputeRecommenderDiagnosticData"/>. </summary>
-        internal ComputeRecommenderDiagnosticData()
+        /// <summary> Initializes a new instance of <see cref="ComputePlacementScoresData"/>. </summary>
+        internal ComputePlacementScoresData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ComputeRecommenderDiagnosticData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputePlacementScoresData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Contains additional properties of a diagnostic. </param>
+        /// <param name="properties"> Contains additional properties of a placement scores resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeRecommenderDiagnosticData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ComputeRecommenderDiagnosticProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal ComputePlacementScoresData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ComputeRecommenderPlacementScoresProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Contains additional properties of a diagnostic. </summary>
-        internal ComputeRecommenderDiagnosticProperties Properties { get; }
+        /// <summary> Contains additional properties of a placement scores resource. </summary>
+        internal ComputeRecommenderPlacementScoresProperties Properties { get; }
 
-        /// <summary> Describes what are the supported resource types for a diagnostic. </summary>
-        public IList<string> ComputeRecommenderDiagnosticSupportedResourceTypes
+        /// <summary> Describes the supported resource types for placement scoring. </summary>
+        public IList<string> ComputeRecommenderPlacementScoresSupportedResourceTypes
         {
             get
             {

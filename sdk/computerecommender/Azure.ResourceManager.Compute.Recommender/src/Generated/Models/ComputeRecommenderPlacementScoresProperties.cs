@@ -11,28 +11,28 @@ using Azure.ResourceManager.Compute.Recommender;
 
 namespace Azure.ResourceManager.Compute.Recommender.Models
 {
-    /// <summary> Contains additional properties of a diagnostic. </summary>
-    internal partial class ComputeRecommenderDiagnosticProperties
+    /// <summary> Contains additional properties of a placement scores resource. </summary>
+    internal partial class ComputeRecommenderPlacementScoresProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ComputeRecommenderDiagnosticProperties"/>. </summary>
-        internal ComputeRecommenderDiagnosticProperties()
+        /// <summary> Initializes a new instance of <see cref="ComputeRecommenderPlacementScoresProperties"/>. </summary>
+        internal ComputeRecommenderPlacementScoresProperties()
         {
             SupportedResourceTypes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ComputeRecommenderDiagnosticProperties"/>. </summary>
-        /// <param name="supportedResourceTypes"> Describes what are the supported resource types for a diagnostic. </param>
+        /// <summary> Initializes a new instance of <see cref="ComputeRecommenderPlacementScoresProperties"/>. </summary>
+        /// <param name="supportedResourceTypes"> Describes the supported resource types for placement scoring. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeRecommenderDiagnosticProperties(IList<string> supportedResourceTypes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeRecommenderPlacementScoresProperties(IList<string> supportedResourceTypes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SupportedResourceTypes = supportedResourceTypes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Describes what are the supported resource types for a diagnostic. </summary>
+        /// <summary> Describes the supported resource types for placement scoring. </summary>
         public IList<string> SupportedResourceTypes { get; } = new ChangeTrackingList<string>();
     }
 }

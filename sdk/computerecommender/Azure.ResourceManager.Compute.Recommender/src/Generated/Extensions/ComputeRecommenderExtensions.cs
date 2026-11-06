@@ -29,6 +29,42 @@ namespace Azure.ResourceManager.Compute.Recommender
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ComputeRecommenderPlacementScoresResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeRecommenderArmClient.GetComputeRecommenderPlacementScoresResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ComputeRecommenderPlacementScoresResource"/> object. </returns>
+        public static ComputeRecommenderPlacementScoresResource GetComputeRecommenderPlacementScoresResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableComputeRecommenderArmClient(client).GetComputeRecommenderPlacementScoresResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ComputePlacementScoresResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeRecommenderArmClient.GetComputePlacementScoresResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ComputePlacementScoresResource"/> object. </returns>
+        public static ComputePlacementScoresResource GetComputePlacementScoresResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableComputeRecommenderArmClient(client).GetComputePlacementScoresResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ComputeSkuMixPlacementResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -47,21 +83,37 @@ namespace Azure.ResourceManager.Compute.Recommender
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ComputeRecommenderDiagnosticResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ComputeRecommenderPlacementScoresResource"/> along with the instance operations that can be performed on it in the <see cref="SubscriptionResource"/>.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeRecommenderArmClient.GetComputeRecommenderDiagnosticResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeRecommenderSubscriptionResource.GetComputeRecommenderPlacementScores()"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ComputeRecommenderDiagnosticResource"/> object. </returns>
-        public static ComputeRecommenderDiagnosticResource GetComputeRecommenderDiagnosticResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> Returns a <see cref="ComputeRecommenderPlacementScoresResource"/> object. </returns>
+        public static ComputeRecommenderPlacementScoresResource GetComputeRecommenderPlacementScores(this SubscriptionResource subscriptionResource)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableComputeRecommenderArmClient(client).GetComputeRecommenderDiagnosticResource(id);
+            return GetMockableComputeRecommenderSubscriptionResource(subscriptionResource).GetComputeRecommenderPlacementScores();
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ComputePlacementScoresResource"/> along with the instance operations that can be performed on it in the <see cref="SubscriptionResource"/>.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeRecommenderSubscriptionResource.GetComputePlacementScores()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> Returns a <see cref="ComputePlacementScoresResource"/> object. </returns>
+        public static ComputePlacementScoresResource GetComputePlacementScores(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableComputeRecommenderSubscriptionResource(subscriptionResource).GetComputePlacementScores();
         }
 
         /// <summary>
@@ -79,23 +131,6 @@ namespace Azure.ResourceManager.Compute.Recommender
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableComputeRecommenderSubscriptionResource(subscriptionResource).GetComputeSkuMixPlacement();
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ComputeRecommenderDiagnosticResource"/> along with the instance operations that can be performed on it in the <see cref="SubscriptionResource"/>.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeRecommenderSubscriptionResource.GetComputeRecommenderDiagnostic()"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> Returns a <see cref="ComputeRecommenderDiagnosticResource"/> object. </returns>
-        public static ComputeRecommenderDiagnosticResource GetComputeRecommenderDiagnostic(this SubscriptionResource subscriptionResource)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableComputeRecommenderSubscriptionResource(subscriptionResource).GetComputeRecommenderDiagnostic();
         }
     }
 }
