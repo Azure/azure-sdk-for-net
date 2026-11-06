@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = QuotasRestClient.CreateUpdateRequest(Id.SubscriptionId, location, MachineLearningQuotaUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = QuotasRestClient.CreateUpdateRequest(Id.SubscriptionId, location, MachineLearningQuotaUpdateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MachineLearningWorkspaceQuotaStatusResult> response = Response.FromValue(MachineLearningWorkspaceQuotaStatusResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = QuotasRestClient.CreateUpdateRequest(Id.SubscriptionId, location, MachineLearningQuotaUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = QuotasRestClient.CreateUpdateRequest(Id.SubscriptionId, location, MachineLearningQuotaUpdateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MachineLearningWorkspaceQuotaStatusResult> response = Response.FromValue(MachineLearningWorkspaceQuotaStatusResult.FromResponse(result), result);
                 if (response.Value == null)

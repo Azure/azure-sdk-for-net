@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ipCommunitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _ipCommunitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkFabricIPCommunityData> response = Response.FromValue(NetworkFabricIPCommunityData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ipCommunitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _ipCommunitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkFabricIPCommunityData> response = Response.FromValue(NetworkFabricIPCommunityData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ipCommunitiesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricIPCommunityPatchContent.ToRequestContent(content), context);
+                using HttpMessage message = _ipCommunitiesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricIPCommunityPatchContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<NetworkFabricIPCommunityResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricIPCommunityResource>(
                     new NetworkFabricIPCommunityResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ipCommunitiesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricIPCommunityPatchContent.ToRequestContent(content), context);
+                using HttpMessage message = _ipCommunitiesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricIPCommunityPatchContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<NetworkFabricIPCommunityResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricIPCommunityResource>(
                     new NetworkFabricIPCommunityResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ipCommunitiesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _ipCommunitiesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation operation = new ManagedNetworkFabricArmOperation(_ipCommunitiesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ipCommunitiesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _ipCommunitiesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation operation = new ManagedNetworkFabricArmOperation(_ipCommunitiesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _ipCommunitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _ipCommunitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NetworkFabricIPCommunityData> response = Response.FromValue(NetworkFabricIPCommunityData.FromResponse(result), result);
                     return Response.FromValue(new NetworkFabricIPCommunityResource(Client, response.Value), response.GetRawResponse());
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _ipCommunitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _ipCommunitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NetworkFabricIPCommunityData> response = Response.FromValue(NetworkFabricIPCommunityData.FromResponse(result), result);
                     return Response.FromValue(new NetworkFabricIPCommunityResource(Client, response.Value), response.GetRawResponse());
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _ipCommunitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _ipCommunitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NetworkFabricIPCommunityData> response = Response.FromValue(NetworkFabricIPCommunityData.FromResponse(result), result);
                     return Response.FromValue(new NetworkFabricIPCommunityResource(Client, response.Value), response.GetRawResponse());
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _ipCommunitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _ipCommunitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NetworkFabricIPCommunityData> response = Response.FromValue(NetworkFabricIPCommunityData.FromResponse(result), result);
                     return Response.FromValue(new NetworkFabricIPCommunityResource(Client, response.Value), response.GetRawResponse());
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _ipCommunitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _ipCommunitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NetworkFabricIPCommunityData> response = Response.FromValue(NetworkFabricIPCommunityData.FromResponse(result), result);
                     return Response.FromValue(new NetworkFabricIPCommunityResource(Client, response.Value), response.GetRawResponse());
@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _ipCommunitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _ipCommunitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NetworkFabricIPCommunityData> response = Response.FromValue(NetworkFabricIPCommunityData.FromResponse(result), result);
                     return Response.FromValue(new NetworkFabricIPCommunityResource(Client, response.Value), response.GetRawResponse());

@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFabricsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkFabricsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkFabricData> response = Response.FromValue(NetworkFabricData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFabricsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkFabricsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkFabricData> response = Response.FromValue(NetworkFabricData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFabricsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricPatchContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkFabricsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricPatchContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<NetworkFabricResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricResource>(
                     new NetworkFabricResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFabricsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricPatchContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkFabricsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricPatchContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<NetworkFabricResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricResource>(
                     new NetworkFabricResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFabricsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkFabricsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation operation = new ManagedNetworkFabricArmOperation(_networkFabricsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFabricsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkFabricsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation operation = new ManagedNetworkFabricArmOperation(_networkFabricsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFabricsRestClient.CreateArmConfigurationDiffRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkFabricsRestClient.CreateArmConfigurationDiffRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<ArmConfigurationDiffOperationResult> operation = new ManagedNetworkFabricArmOperation<ArmConfigurationDiffOperationResult>(
                     new ArmConfigurationDiffOperationResultOperationSource(),
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFabricsRestClient.CreateArmConfigurationDiffRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkFabricsRestClient.CreateArmConfigurationDiffRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<ArmConfigurationDiffOperationResult> operation = new ManagedNetworkFabricArmOperation<ArmConfigurationDiffOperationResult>(
                     new ArmConfigurationDiffOperationResultOperationSource(),
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFabricsRestClient.CreateCommitBatchStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CommitBatchStatusContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkFabricsRestClient.CreateCommitBatchStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CommitBatchStatusContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<CommitBatchStatusOperationResult> operation = new ManagedNetworkFabricArmOperation<CommitBatchStatusOperationResult>(
                     new CommitBatchStatusOperationResultOperationSource(),
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFabricsRestClient.CreateCommitBatchStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CommitBatchStatusContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkFabricsRestClient.CreateCommitBatchStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CommitBatchStatusContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<CommitBatchStatusOperationResult> operation = new ManagedNetworkFabricArmOperation<CommitBatchStatusOperationResult>(
                     new CommitBatchStatusOperationResultOperationSource(),
@@ -667,7 +667,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFabricsRestClient.CreateApplyConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CommitConfigurationContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkFabricsRestClient.CreateApplyConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CommitConfigurationContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<CommitConfigurationResult> operation = new ManagedNetworkFabricArmOperation<CommitConfigurationResult>(
                     new CommitConfigurationResultOperationSource(),
@@ -723,7 +723,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFabricsRestClient.CreateApplyConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CommitConfigurationContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkFabricsRestClient.CreateApplyConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CommitConfigurationContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<CommitConfigurationResult> operation = new ManagedNetworkFabricArmOperation<CommitConfigurationResult>(
                     new CommitConfigurationResultOperationSource(),
@@ -782,7 +782,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFabricsRestClient.CreateDiscardCommitBatchRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DiscardCommitBatchContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkFabricsRestClient.CreateDiscardCommitBatchRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DiscardCommitBatchContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<DiscardCommitBatchOperationResult> operation = new ManagedNetworkFabricArmOperation<DiscardCommitBatchOperationResult>(
                     new DiscardCommitBatchOperationResultOperationSource(),
@@ -841,7 +841,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFabricsRestClient.CreateDiscardCommitBatchRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DiscardCommitBatchContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkFabricsRestClient.CreateDiscardCommitBatchRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DiscardCommitBatchContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<DiscardCommitBatchOperationResult> operation = new ManagedNetworkFabricArmOperation<DiscardCommitBatchOperationResult>(
                     new DiscardCommitBatchOperationResultOperationSource(),
@@ -896,7 +896,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFabricsRestClient.CreateRetrieveTopologyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkFabricsRestClient.CreateRetrieveTopologyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<NetworkFabricTopologyResult> operation = new ManagedNetworkFabricArmOperation<NetworkFabricTopologyResult>(
                     new NetworkFabricTopologyResultOperationSource(),
@@ -951,7 +951,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFabricsRestClient.CreateRetrieveTopologyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkFabricsRestClient.CreateRetrieveTopologyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<NetworkFabricTopologyResult> operation = new ManagedNetworkFabricArmOperation<NetworkFabricTopologyResult>(
                     new NetworkFabricTopologyResultOperationSource(),
@@ -1006,7 +1006,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFabricsRestClient.CreateResyncCertificatesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkFabricsRestClient.CreateResyncCertificatesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<NetworkFabricResyncCertificatesResult> operation = new ManagedNetworkFabricArmOperation<NetworkFabricResyncCertificatesResult>(
                     new NetworkFabricResyncCertificatesResultOperationSource(),
@@ -1061,7 +1061,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFabricsRestClient.CreateResyncCertificatesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkFabricsRestClient.CreateResyncCertificatesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<NetworkFabricResyncCertificatesResult> operation = new ManagedNetworkFabricArmOperation<NetworkFabricResyncCertificatesResult>(
                     new NetworkFabricResyncCertificatesResultOperationSource(),
@@ -1117,7 +1117,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFabricsRestClient.CreateResyncPasswordsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkFabricsRestClient.CreateResyncPasswordsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<NetworkFabricResyncPasswordsResult> operation = new ManagedNetworkFabricArmOperation<NetworkFabricResyncPasswordsResult>(
                     new NetworkFabricResyncPasswordsResultOperationSource(),
@@ -1173,7 +1173,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFabricsRestClient.CreateResyncPasswordsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkFabricsRestClient.CreateResyncPasswordsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<NetworkFabricResyncPasswordsResult> operation = new ManagedNetworkFabricArmOperation<NetworkFabricResyncPasswordsResult>(
                     new NetworkFabricResyncPasswordsResultOperationSource(),
@@ -1228,7 +1228,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFabricsRestClient.CreateRotateCertificatesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkFabricsRestClient.CreateRotateCertificatesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<NetworkFabricRotateCertificatesResult> operation = new ManagedNetworkFabricArmOperation<NetworkFabricRotateCertificatesResult>(
                     new NetworkFabricRotateCertificatesResultOperationSource(),
@@ -1283,7 +1283,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFabricsRestClient.CreateRotateCertificatesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkFabricsRestClient.CreateRotateCertificatesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<NetworkFabricRotateCertificatesResult> operation = new ManagedNetworkFabricArmOperation<NetworkFabricRotateCertificatesResult>(
                     new NetworkFabricRotateCertificatesResultOperationSource(),
@@ -1341,7 +1341,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFabricsRestClient.CreateRotatePasswordsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkFabricsRestClient.CreateRotatePasswordsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<NetworkFabricRotatePasswordsResult> operation = new ManagedNetworkFabricArmOperation<NetworkFabricRotatePasswordsResult>(
                     new NetworkFabricRotatePasswordsResultOperationSource(),
@@ -1399,7 +1399,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFabricsRestClient.CreateRotatePasswordsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkFabricsRestClient.CreateRotatePasswordsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<NetworkFabricRotatePasswordsResult> operation = new ManagedNetworkFabricArmOperation<NetworkFabricRotatePasswordsResult>(
                     new NetworkFabricRotatePasswordsResultOperationSource(),
@@ -1458,7 +1458,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFabricsRestClient.CreateSetInfraManagementBfdConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UpdateAdministrativeStateContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkFabricsRestClient.CreateSetInfraManagementBfdConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UpdateAdministrativeStateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult> operation = new ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult>(
                     new UpdateAdministrativeStateResultOperationSource(),
@@ -1517,7 +1517,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFabricsRestClient.CreateSetInfraManagementBfdConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UpdateAdministrativeStateContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkFabricsRestClient.CreateSetInfraManagementBfdConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UpdateAdministrativeStateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult> operation = new ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult>(
                     new UpdateAdministrativeStateResultOperationSource(),
@@ -1576,7 +1576,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFabricsRestClient.CreateSetWorkloadManagementBfdConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UpdateAdministrativeStateContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkFabricsRestClient.CreateSetWorkloadManagementBfdConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UpdateAdministrativeStateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult> operation = new ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult>(
                     new UpdateAdministrativeStateResultOperationSource(),
@@ -1635,7 +1635,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFabricsRestClient.CreateSetWorkloadManagementBfdConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UpdateAdministrativeStateContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkFabricsRestClient.CreateSetWorkloadManagementBfdConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UpdateAdministrativeStateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult> operation = new ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult>(
                     new UpdateAdministrativeStateResultOperationSource(),
@@ -1694,7 +1694,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFabricsRestClient.CreateValidateConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ValidateConfigurationContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkFabricsRestClient.CreateValidateConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ValidateConfigurationContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<ValidateConfigurationResult> operation = new ManagedNetworkFabricArmOperation<ValidateConfigurationResult>(
                     new ValidateConfigurationResultOperationSource(),
@@ -1753,7 +1753,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFabricsRestClient.CreateValidateConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ValidateConfigurationContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkFabricsRestClient.CreateValidateConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ValidateConfigurationContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<ValidateConfigurationResult> operation = new ManagedNetworkFabricArmOperation<ValidateConfigurationResult>(
                     new ValidateConfigurationResultOperationSource(),
@@ -1808,7 +1808,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFabricsRestClient.CreateViewDeviceConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkFabricsRestClient.CreateViewDeviceConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<ViewDeviceConfigurationOperationResult> operation = new ManagedNetworkFabricArmOperation<ViewDeviceConfigurationOperationResult>(
                     new ViewDeviceConfigurationOperationResultOperationSource(),
@@ -1863,7 +1863,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFabricsRestClient.CreateViewDeviceConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkFabricsRestClient.CreateViewDeviceConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<ViewDeviceConfigurationOperationResult> operation = new ManagedNetworkFabricArmOperation<ViewDeviceConfigurationOperationResult>(
                     new ViewDeviceConfigurationOperationResultOperationSource(),
@@ -1908,7 +1908,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _networkFabricsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _networkFabricsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NetworkFabricData> response = Response.FromValue(NetworkFabricData.FromResponse(result), result);
                     return Response.FromValue(new NetworkFabricResource(Client, response.Value), response.GetRawResponse());
@@ -1956,7 +1956,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _networkFabricsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _networkFabricsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NetworkFabricData> response = Response.FromValue(NetworkFabricData.FromResponse(result), result);
                     return Response.FromValue(new NetworkFabricResource(Client, response.Value), response.GetRawResponse());
@@ -2002,7 +2002,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _networkFabricsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _networkFabricsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NetworkFabricData> response = Response.FromValue(NetworkFabricData.FromResponse(result), result);
                     return Response.FromValue(new NetworkFabricResource(Client, response.Value), response.GetRawResponse());
@@ -2044,7 +2044,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _networkFabricsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _networkFabricsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NetworkFabricData> response = Response.FromValue(NetworkFabricData.FromResponse(result), result);
                     return Response.FromValue(new NetworkFabricResource(Client, response.Value), response.GetRawResponse());
@@ -2086,7 +2086,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _networkFabricsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _networkFabricsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NetworkFabricData> response = Response.FromValue(NetworkFabricData.FromResponse(result), result);
                     return Response.FromValue(new NetworkFabricResource(Client, response.Value), response.GetRawResponse());
@@ -2132,7 +2132,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _networkFabricsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _networkFabricsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NetworkFabricData> response = Response.FromValue(NetworkFabricData.FromResponse(result), result);
                     return Response.FromValue(new NetworkFabricResource(Client, response.Value), response.GetRawResponse());

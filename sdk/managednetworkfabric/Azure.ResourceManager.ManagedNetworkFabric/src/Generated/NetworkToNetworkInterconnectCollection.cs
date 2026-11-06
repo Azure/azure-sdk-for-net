@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkToNetworkInterconnectsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkToNetworkInterconnectName, NetworkToNetworkInterconnectData.ToRequestContent(data), context);
+                using HttpMessage message = _networkToNetworkInterconnectsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkToNetworkInterconnectName, NetworkToNetworkInterconnectData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<NetworkToNetworkInterconnectResource> operation = new ManagedNetworkFabricArmOperation<NetworkToNetworkInterconnectResource>(
                     new NetworkToNetworkInterconnectResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkToNetworkInterconnectsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkToNetworkInterconnectName, NetworkToNetworkInterconnectData.ToRequestContent(data), context);
+                using HttpMessage message = _networkToNetworkInterconnectsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkToNetworkInterconnectName, NetworkToNetworkInterconnectData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<NetworkToNetworkInterconnectResource> operation = new ManagedNetworkFabricArmOperation<NetworkToNetworkInterconnectResource>(
                     new NetworkToNetworkInterconnectResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkToNetworkInterconnectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkToNetworkInterconnectName, context);
+                using HttpMessage message = _networkToNetworkInterconnectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkToNetworkInterconnectName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkToNetworkInterconnectData> response = Response.FromValue(NetworkToNetworkInterconnectData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkToNetworkInterconnectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkToNetworkInterconnectName, context);
+                using HttpMessage message = _networkToNetworkInterconnectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkToNetworkInterconnectName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkToNetworkInterconnectData> response = Response.FromValue(NetworkToNetworkInterconnectData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkToNetworkInterconnectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkToNetworkInterconnectName, context);
+                using HttpMessage message = _networkToNetworkInterconnectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkToNetworkInterconnectName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkToNetworkInterconnectData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkToNetworkInterconnectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkToNetworkInterconnectName, context);
+                using HttpMessage message = _networkToNetworkInterconnectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkToNetworkInterconnectName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkToNetworkInterconnectData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkToNetworkInterconnectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkToNetworkInterconnectName, context);
+                using HttpMessage message = _networkToNetworkInterconnectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkToNetworkInterconnectName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkToNetworkInterconnectData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkToNetworkInterconnectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkToNetworkInterconnectName, context);
+                using HttpMessage message = _networkToNetworkInterconnectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkToNetworkInterconnectName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkToNetworkInterconnectData> response = default;

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ManagedApplications
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jitRequestsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, JitRequestDefinitionData.ToRequestContent(data), context);
+                using HttpMessage message = _jitRequestsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, JitRequestDefinitionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedApplicationsArmOperation<JitRequestDefinitionResource> operation = new ManagedApplicationsArmOperation<JitRequestDefinitionResource>(
                     new JitRequestDefinitionResourceOperationSource(Client),
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ManagedApplications
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jitRequestsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, JitRequestDefinitionData.ToRequestContent(data), context);
+                using HttpMessage message = _jitRequestsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, JitRequestDefinitionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedApplicationsArmOperation<JitRequestDefinitionResource> operation = new ManagedApplicationsArmOperation<JitRequestDefinitionResource>(
                     new JitRequestDefinitionResourceOperationSource(Client),
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ManagedApplications
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jitRequestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, context);
+                using HttpMessage message = _jitRequestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<JitRequestDefinitionData> response = Response.FromValue(JitRequestDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.ManagedApplications
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jitRequestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, context);
+                using HttpMessage message = _jitRequestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<JitRequestDefinitionData> response = Response.FromValue(JitRequestDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.ManagedApplications
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jitRequestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, context);
+                using HttpMessage message = _jitRequestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<JitRequestDefinitionData> response = default;
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.ManagedApplications
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jitRequestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, context);
+                using HttpMessage message = _jitRequestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<JitRequestDefinitionData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.ManagedApplications
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jitRequestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, context);
+                using HttpMessage message = _jitRequestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<JitRequestDefinitionData> response = default;
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.ManagedApplications
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jitRequestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, context);
+                using HttpMessage message = _jitRequestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, jitRequestName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<JitRequestDefinitionData> response = default;

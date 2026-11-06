@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, MachineLearningOutboundRuleBasicData.ToRequestContent(data), context);
+                using HttpMessage message = _managedNetworkSettingsRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, MachineLearningOutboundRuleBasicData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MachineLearningArmOperation<MachineLearningOutboundRuleBasicResource> operation = new MachineLearningArmOperation<MachineLearningOutboundRuleBasicResource>(
                     new MachineLearningOutboundRuleBasicResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, MachineLearningOutboundRuleBasicData.ToRequestContent(data), context);
+                using HttpMessage message = _managedNetworkSettingsRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, MachineLearningOutboundRuleBasicData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MachineLearningArmOperation<MachineLearningOutboundRuleBasicResource> operation = new MachineLearningArmOperation<MachineLearningOutboundRuleBasicResource>(
                     new MachineLearningOutboundRuleBasicResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsRuleRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, context);
+                using HttpMessage message = _managedNetworkSettingsRuleRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MachineLearningOutboundRuleBasicData> response = Response.FromValue(MachineLearningOutboundRuleBasicData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsRuleRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, context);
+                using HttpMessage message = _managedNetworkSettingsRuleRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MachineLearningOutboundRuleBasicData> response = Response.FromValue(MachineLearningOutboundRuleBasicData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsRuleRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, context);
+                using HttpMessage message = _managedNetworkSettingsRuleRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MachineLearningOutboundRuleBasicData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsRuleRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, context);
+                using HttpMessage message = _managedNetworkSettingsRuleRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MachineLearningOutboundRuleBasicData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsRuleRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, context);
+                using HttpMessage message = _managedNetworkSettingsRuleRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MachineLearningOutboundRuleBasicData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsRuleRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, context);
+                using HttpMessage message = _managedNetworkSettingsRuleRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MachineLearningOutboundRuleBasicData> response = default;

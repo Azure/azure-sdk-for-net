@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registryEnvironmentContainersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentName, MachineLearningEnvironmentContainerData.ToRequestContent(data), context);
+                using HttpMessage message = _registryEnvironmentContainersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentName, MachineLearningEnvironmentContainerData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MachineLearningArmOperation<MachineLearningRegistryEnvironmentContainerResource> operation = new MachineLearningArmOperation<MachineLearningRegistryEnvironmentContainerResource>(
                     new MachineLearningRegistryEnvironmentContainerResourceOperationSource(Client),
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registryEnvironmentContainersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentName, MachineLearningEnvironmentContainerData.ToRequestContent(data), context);
+                using HttpMessage message = _registryEnvironmentContainersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentName, MachineLearningEnvironmentContainerData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MachineLearningArmOperation<MachineLearningRegistryEnvironmentContainerResource> operation = new MachineLearningArmOperation<MachineLearningRegistryEnvironmentContainerResource>(
                     new MachineLearningRegistryEnvironmentContainerResourceOperationSource(Client),
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registryEnvironmentContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentName, context);
+                using HttpMessage message = _registryEnvironmentContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MachineLearningEnvironmentContainerData> response = Response.FromValue(MachineLearningEnvironmentContainerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registryEnvironmentContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentName, context);
+                using HttpMessage message = _registryEnvironmentContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MachineLearningEnvironmentContainerData> response = Response.FromValue(MachineLearningEnvironmentContainerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registryEnvironmentContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentName, context);
+                using HttpMessage message = _registryEnvironmentContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MachineLearningEnvironmentContainerData> response = default;
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registryEnvironmentContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentName, context);
+                using HttpMessage message = _registryEnvironmentContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MachineLearningEnvironmentContainerData> response = default;
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registryEnvironmentContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentName, context);
+                using HttpMessage message = _registryEnvironmentContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MachineLearningEnvironmentContainerData> response = default;
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registryEnvironmentContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentName, context);
+                using HttpMessage message = _registryEnvironmentContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MachineLearningEnvironmentContainerData> response = default;

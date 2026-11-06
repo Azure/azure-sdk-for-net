@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<KubernetesConfigurationPrivateLinkResourceData> response = Response.FromValue(KubernetesConfigurationPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<KubernetesConfigurationPrivateLinkResourceData> response = Response.FromValue(KubernetesConfigurationPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)

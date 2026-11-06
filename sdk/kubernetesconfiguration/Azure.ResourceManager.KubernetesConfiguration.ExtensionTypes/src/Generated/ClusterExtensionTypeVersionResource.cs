@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionTypeInterfaceRestClient.CreateClusterGetVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.ResourceType.Type, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _extensionTypeInterfaceRestClient.CreateClusterGetVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.ResourceType.Type, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<KubernetesConfigurationExtensionTypeVersionForReleaseTrainData> response = Response.FromValue(KubernetesConfigurationExtensionTypeVersionForReleaseTrainData.FromResponse(result), result);
                 if (response.Value == null)
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionTypeInterfaceRestClient.CreateClusterGetVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.ResourceType.Type, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _extensionTypeInterfaceRestClient.CreateClusterGetVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.ResourceType.Type, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<KubernetesConfigurationExtensionTypeVersionForReleaseTrainData> response = Response.FromValue(KubernetesConfigurationExtensionTypeVersionForReleaseTrainData.FromResponse(result), result);
                 if (response.Value == null)

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, MaintenanceConfigurationData.ToRequestContent(data), context);
+                using HttpMessage message = _maintenanceConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, MaintenanceConfigurationData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, MaintenanceConfigurationData.ToRequestContent(data), context);
+                using HttpMessage message = _maintenanceConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, MaintenanceConfigurationData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                using HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                using HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                using HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MaintenanceConfigurationData> response = default;
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                using HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MaintenanceConfigurationData> response = default;
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                using HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MaintenanceConfigurationData> response = default;
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                using HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MaintenanceConfigurationData> response = default;

@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceConfigurationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MaintenanceConfigurationData.ToRequestContent(data), context);
+                using HttpMessage message = _maintenanceConfigurationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MaintenanceConfigurationData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceConfigurationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MaintenanceConfigurationData.ToRequestContent(data), context);
+                using HttpMessage message = _maintenanceConfigurationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MaintenanceConfigurationData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Maintenance
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
                     return Response.FromValue(new MaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Maintenance
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
                     return Response.FromValue(new MaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Maintenance
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
                     return Response.FromValue(new MaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.Maintenance
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
                     return Response.FromValue(new MaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.Maintenance
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
                     return Response.FromValue(new MaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.Maintenance
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
                     return Response.FromValue(new MaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());

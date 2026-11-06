@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ManagedApplications
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationDefinitionsRestClient.CreateCreateOrUpdateByIdRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, ApplicationDefinitionData.ToRequestContent(data), context);
+                using HttpMessage message = _applicationDefinitionsRestClient.CreateCreateOrUpdateByIdRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, ApplicationDefinitionData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApplicationDefinitionData> response = Response.FromValue(ApplicationDefinitionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ManagedApplications
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationDefinitionsRestClient.CreateCreateOrUpdateByIdRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, ApplicationDefinitionData.ToRequestContent(data), context);
+                using HttpMessage message = _applicationDefinitionsRestClient.CreateCreateOrUpdateByIdRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, ApplicationDefinitionData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApplicationDefinitionData> response = Response.FromValue(ApplicationDefinitionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ManagedApplications
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationDefinitionsRestClient.CreateGetByIdRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, context);
+                using HttpMessage message = _applicationDefinitionsRestClient.CreateGetByIdRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApplicationDefinitionData> response = Response.FromValue(ApplicationDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.ManagedApplications
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationDefinitionsRestClient.CreateGetByIdRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, context);
+                using HttpMessage message = _applicationDefinitionsRestClient.CreateGetByIdRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApplicationDefinitionData> response = Response.FromValue(ApplicationDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.ManagedApplications
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationDefinitionsRestClient.CreateUpdateByIdRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, ApplicationDefinitionPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _applicationDefinitionsRestClient.CreateUpdateByIdRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, ApplicationDefinitionPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApplicationDefinitionData> response = Response.FromValue(ApplicationDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.ManagedApplications
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationDefinitionsRestClient.CreateUpdateByIdRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, ApplicationDefinitionPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _applicationDefinitionsRestClient.CreateUpdateByIdRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, ApplicationDefinitionPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApplicationDefinitionData> response = Response.FromValue(ApplicationDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.ManagedApplications
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationDefinitionsRestClient.CreateDeleteByIdRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, context);
+                using HttpMessage message = _applicationDefinitionsRestClient.CreateDeleteByIdRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.ManagedApplications
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationDefinitionsRestClient.CreateDeleteByIdRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, context);
+                using HttpMessage message = _applicationDefinitionsRestClient.CreateDeleteByIdRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationDefinitionName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());

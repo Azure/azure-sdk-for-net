@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<KustoClusterData> response = Response.FromValue(KustoClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<KustoClusterData> response = Response.FromValue(KustoClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, KustoClusterPatch.ToRequestContent(patch), ifMatch, context);
+                using HttpMessage message = _clustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, KustoClusterPatch.ToRequestContent(patch), ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 KustoArmOperation<KustoClusterResource> operation = new KustoArmOperation<KustoClusterResource>(
                     new KustoClusterResourceOperationSource(Client),
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, KustoClusterPatch.ToRequestContent(patch), ifMatch, context);
+                using HttpMessage message = _clustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, KustoClusterPatch.ToRequestContent(patch), ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 KustoArmOperation<KustoClusterResource> operation = new KustoArmOperation<KustoClusterResource>(
                     new KustoClusterResourceOperationSource(Client),
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _clustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 KustoArmOperation operation = new KustoArmOperation(_clustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _clustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 KustoArmOperation operation = new KustoArmOperation(_clustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateAddCalloutPoliciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, CalloutPoliciesList.ToRequestContent(calloutPolicies), context);
+                using HttpMessage message = _clustersRestClient.CreateAddCalloutPoliciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, CalloutPoliciesList.ToRequestContent(calloutPolicies), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 KustoArmOperation operation = new KustoArmOperation(_clustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateAddCalloutPoliciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, CalloutPoliciesList.ToRequestContent(calloutPolicies), context);
+                using HttpMessage message = _clustersRestClient.CreateAddCalloutPoliciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, CalloutPoliciesList.ToRequestContent(calloutPolicies), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 KustoArmOperation operation = new KustoArmOperation(_clustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateAddLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, KustoLanguageExtensionList.ToRequestContent(languageExtensionsToAdd), context);
+                using HttpMessage message = _clustersRestClient.CreateAddLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, KustoLanguageExtensionList.ToRequestContent(languageExtensionsToAdd), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 KustoArmOperation operation = new KustoArmOperation(_clustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateAddLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, KustoLanguageExtensionList.ToRequestContent(languageExtensionsToAdd), context);
+                using HttpMessage message = _clustersRestClient.CreateAddLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, KustoLanguageExtensionList.ToRequestContent(languageExtensionsToAdd), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 KustoArmOperation operation = new KustoArmOperation(_clustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -683,7 +683,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attachedDatabaseConfigurationsRestClient.CreateCheckKustoAttachedDatabaseConfigurationNameAvailabilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, KustoAttachedDatabaseConfigurationNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = _attachedDatabaseConfigurationsRestClient.CreateCheckKustoAttachedDatabaseConfigurationNameAvailabilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, KustoAttachedDatabaseConfigurationNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<KustoNameAvailabilityResult> response = Response.FromValue(KustoNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -735,7 +735,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attachedDatabaseConfigurationsRestClient.CreateCheckKustoAttachedDatabaseConfigurationNameAvailabilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, KustoAttachedDatabaseConfigurationNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = _attachedDatabaseConfigurationsRestClient.CreateCheckKustoAttachedDatabaseConfigurationNameAvailabilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, KustoAttachedDatabaseConfigurationNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<KustoNameAvailabilityResult> response = Response.FromValue(KustoNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -787,7 +787,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clusterPrincipalAssignmentsRestClient.CreateCheckKustoClusterPrincipalAssignmentNameAvailabilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, KustoClusterPrincipalAssignmentNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = _clusterPrincipalAssignmentsRestClient.CreateCheckKustoClusterPrincipalAssignmentNameAvailabilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, KustoClusterPrincipalAssignmentNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<KustoNameAvailabilityResult> response = Response.FromValue(KustoNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -839,7 +839,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clusterPrincipalAssignmentsRestClient.CreateCheckKustoClusterPrincipalAssignmentNameAvailabilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, KustoClusterPrincipalAssignmentNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = _clusterPrincipalAssignmentsRestClient.CreateCheckKustoClusterPrincipalAssignmentNameAvailabilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, KustoClusterPrincipalAssignmentNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<KustoNameAvailabilityResult> response = Response.FromValue(KustoNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -891,7 +891,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateCheckKustoDatabaseNameAvailabilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, KustoDatabaseNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = _databasesRestClient.CreateCheckKustoDatabaseNameAvailabilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, KustoDatabaseNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<KustoNameAvailabilityResult> response = Response.FromValue(KustoNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -943,7 +943,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databasesRestClient.CreateCheckKustoDatabaseNameAvailabilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, KustoDatabaseNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = _databasesRestClient.CreateCheckKustoDatabaseNameAvailabilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, KustoDatabaseNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<KustoNameAvailabilityResult> response = Response.FromValue(KustoNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -996,7 +996,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateDetachFollowerDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, KustoFollowerDatabaseDefinition.ToRequestContent(followerDatabaseToRemove), context);
+                using HttpMessage message = _clustersRestClient.CreateDetachFollowerDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, KustoFollowerDatabaseDefinition.ToRequestContent(followerDatabaseToRemove), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 KustoArmOperation operation = new KustoArmOperation(_clustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1049,7 +1049,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateDetachFollowerDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, KustoFollowerDatabaseDefinition.ToRequestContent(followerDatabaseToRemove), context);
+                using HttpMessage message = _clustersRestClient.CreateDetachFollowerDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, KustoFollowerDatabaseDefinition.ToRequestContent(followerDatabaseToRemove), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 KustoArmOperation operation = new KustoArmOperation(_clustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1098,7 +1098,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateDiagnoseVirtualNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _clustersRestClient.CreateDiagnoseVirtualNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 KustoArmOperation<DiagnoseVirtualNetworkResult> operation = new KustoArmOperation<DiagnoseVirtualNetworkResult>(
                     new DiagnoseVirtualNetworkResultOperationSource(),
@@ -1153,7 +1153,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateDiagnoseVirtualNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _clustersRestClient.CreateDiagnoseVirtualNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 KustoArmOperation<DiagnoseVirtualNetworkResult> operation = new KustoArmOperation<DiagnoseVirtualNetworkResult>(
                     new DiagnoseVirtualNetworkResultOperationSource(),
@@ -1667,7 +1667,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedPrivateEndpointsRestClient.CreateCheckKustoManagedPrivateEndpointNameAvailabilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, KustoManagedPrivateEndpointNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = _managedPrivateEndpointsRestClient.CreateCheckKustoManagedPrivateEndpointNameAvailabilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, KustoManagedPrivateEndpointNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<KustoNameAvailabilityResult> response = Response.FromValue(KustoNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1719,7 +1719,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedPrivateEndpointsRestClient.CreateCheckKustoManagedPrivateEndpointNameAvailabilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, KustoManagedPrivateEndpointNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = _managedPrivateEndpointsRestClient.CreateCheckKustoManagedPrivateEndpointNameAvailabilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, KustoManagedPrivateEndpointNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<KustoNameAvailabilityResult> response = Response.FromValue(KustoNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1772,7 +1772,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateMigrateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ClusterMigrateContent.ToRequestContent(content), context);
+                using HttpMessage message = _clustersRestClient.CreateMigrateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ClusterMigrateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 KustoArmOperation operation = new KustoArmOperation(_clustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1825,7 +1825,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateMigrateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ClusterMigrateContent.ToRequestContent(content), context);
+                using HttpMessage message = _clustersRestClient.CreateMigrateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ClusterMigrateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 KustoArmOperation operation = new KustoArmOperation(_clustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1878,7 +1878,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateRemoveCalloutPolicyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, CalloutPolicyToRemove.ToRequestContent(calloutPolicy), context);
+                using HttpMessage message = _clustersRestClient.CreateRemoveCalloutPolicyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, CalloutPolicyToRemove.ToRequestContent(calloutPolicy), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 KustoArmOperation operation = new KustoArmOperation(_clustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1931,7 +1931,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateRemoveCalloutPolicyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, CalloutPolicyToRemove.ToRequestContent(calloutPolicy), context);
+                using HttpMessage message = _clustersRestClient.CreateRemoveCalloutPolicyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, CalloutPolicyToRemove.ToRequestContent(calloutPolicy), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 KustoArmOperation operation = new KustoArmOperation(_clustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1984,7 +1984,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateRemoveLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, KustoLanguageExtensionList.ToRequestContent(languageExtensionsToRemove), context);
+                using HttpMessage message = _clustersRestClient.CreateRemoveLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, KustoLanguageExtensionList.ToRequestContent(languageExtensionsToRemove), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 KustoArmOperation operation = new KustoArmOperation(_clustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2037,7 +2037,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateRemoveLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, KustoLanguageExtensionList.ToRequestContent(languageExtensionsToRemove), context);
+                using HttpMessage message = _clustersRestClient.CreateRemoveLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, KustoLanguageExtensionList.ToRequestContent(languageExtensionsToRemove), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 KustoArmOperation operation = new KustoArmOperation(_clustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2089,7 +2089,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sandboxCustomImagesRestClient.CreateCheckNameAvailabilitySandboxCustomImageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SandboxCustomImagesCheckNameContent.ToRequestContent(content), context);
+                using HttpMessage message = _sandboxCustomImagesRestClient.CreateCheckNameAvailabilitySandboxCustomImageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SandboxCustomImagesCheckNameContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<KustoNameAvailabilityResult> response = Response.FromValue(KustoNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -2141,7 +2141,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sandboxCustomImagesRestClient.CreateCheckNameAvailabilitySandboxCustomImageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SandboxCustomImagesCheckNameContent.ToRequestContent(content), context);
+                using HttpMessage message = _sandboxCustomImagesRestClient.CreateCheckNameAvailabilitySandboxCustomImageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SandboxCustomImagesCheckNameContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<KustoNameAvailabilityResult> response = Response.FromValue(KustoNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -2190,7 +2190,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _clustersRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 KustoArmOperation operation = new KustoArmOperation(_clustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2239,7 +2239,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _clustersRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 KustoArmOperation operation = new KustoArmOperation(_clustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2288,7 +2288,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _clustersRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 KustoArmOperation operation = new KustoArmOperation(_clustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2337,7 +2337,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _clustersRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 KustoArmOperation operation = new KustoArmOperation(_clustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2376,7 +2376,7 @@ namespace Azure.ResourceManager.Kusto
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<KustoClusterData> response = Response.FromValue(KustoClusterData.FromResponse(result), result);
                     return Response.FromValue(new KustoClusterResource(Client, response.Value), response.GetRawResponse());
@@ -2424,7 +2424,7 @@ namespace Azure.ResourceManager.Kusto
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<KustoClusterData> response = Response.FromValue(KustoClusterData.FromResponse(result), result);
                     return Response.FromValue(new KustoClusterResource(Client, response.Value), response.GetRawResponse());
@@ -2470,7 +2470,7 @@ namespace Azure.ResourceManager.Kusto
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<KustoClusterData> response = Response.FromValue(KustoClusterData.FromResponse(result), result);
                     return Response.FromValue(new KustoClusterResource(Client, response.Value), response.GetRawResponse());
@@ -2512,7 +2512,7 @@ namespace Azure.ResourceManager.Kusto
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<KustoClusterData> response = Response.FromValue(KustoClusterData.FromResponse(result), result);
                     return Response.FromValue(new KustoClusterResource(Client, response.Value), response.GetRawResponse());
@@ -2554,7 +2554,7 @@ namespace Azure.ResourceManager.Kusto
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<KustoClusterData> response = Response.FromValue(KustoClusterData.FromResponse(result), result);
                     return Response.FromValue(new KustoClusterResource(Client, response.Value), response.GetRawResponse());
@@ -2600,7 +2600,7 @@ namespace Azure.ResourceManager.Kusto
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<KustoClusterData> response = Response.FromValue(KustoClusterData.FromResponse(result), result);
                     return Response.FromValue(new KustoClusterResource(Client, response.Value), response.GetRawResponse());

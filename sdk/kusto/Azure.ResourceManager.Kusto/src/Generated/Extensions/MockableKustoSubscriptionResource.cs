@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Kusto.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ClustersRestClient.CreateCheckKustoClusterNameAvailabilityRequest(Id.SubscriptionId, location, KustoClusterNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = ClustersRestClient.CreateCheckKustoClusterNameAvailabilityRequest(Id.SubscriptionId, location, KustoClusterNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<KustoNameAvailabilityResult> response = Response.FromValue(KustoNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Kusto.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ClustersRestClient.CreateCheckKustoClusterNameAvailabilityRequest(Id.SubscriptionId, location, KustoClusterNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = ClustersRestClient.CreateCheckKustoClusterNameAvailabilityRequest(Id.SubscriptionId, location, KustoClusterNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<KustoNameAvailabilityResult> response = Response.FromValue(KustoNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Kusto.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OperationsResultsRestClient.CreateGetRequest(Id.SubscriptionId, location, operationId, context);
+                using HttpMessage message = OperationsResultsRestClient.CreateGetRequest(Id.SubscriptionId, location, operationId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OperationResult> response = Response.FromValue(OperationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Kusto.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OperationsResultsRestClient.CreateGetRequest(Id.SubscriptionId, location, operationId, context);
+                using HttpMessage message = OperationsResultsRestClient.CreateGetRequest(Id.SubscriptionId, location, operationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OperationResult> response = Response.FromValue(OperationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.Kusto.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OperationsResultsLocationRestClient.CreateGetOperationResultLocationRequest(Id.SubscriptionId, location, operationId, context);
+                using HttpMessage message = OperationsResultsLocationRestClient.CreateGetOperationResultLocationRequest(Id.SubscriptionId, location, operationId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.Kusto.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OperationsResultsLocationRestClient.CreateGetOperationResultLocationRequest(Id.SubscriptionId, location, operationId, context);
+                using HttpMessage message = OperationsResultsLocationRestClient.CreateGetOperationResultLocationRequest(Id.SubscriptionId, location, operationId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }

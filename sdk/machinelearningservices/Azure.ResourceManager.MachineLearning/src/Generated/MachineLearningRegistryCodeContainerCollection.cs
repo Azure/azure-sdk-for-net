@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registryCodeContainersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, codeName, MachineLearningCodeContainerData.ToRequestContent(data), context);
+                using HttpMessage message = _registryCodeContainersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, codeName, MachineLearningCodeContainerData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MachineLearningArmOperation<MachineLearningRegistryCodeContainerResource> operation = new MachineLearningArmOperation<MachineLearningRegistryCodeContainerResource>(
                     new MachineLearningRegistryCodeContainerResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registryCodeContainersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, codeName, MachineLearningCodeContainerData.ToRequestContent(data), context);
+                using HttpMessage message = _registryCodeContainersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, codeName, MachineLearningCodeContainerData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MachineLearningArmOperation<MachineLearningRegistryCodeContainerResource> operation = new MachineLearningArmOperation<MachineLearningRegistryCodeContainerResource>(
                     new MachineLearningRegistryCodeContainerResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registryCodeContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, codeName, context);
+                using HttpMessage message = _registryCodeContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, codeName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MachineLearningCodeContainerData> response = Response.FromValue(MachineLearningCodeContainerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registryCodeContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, codeName, context);
+                using HttpMessage message = _registryCodeContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, codeName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MachineLearningCodeContainerData> response = Response.FromValue(MachineLearningCodeContainerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registryCodeContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, codeName, context);
+                using HttpMessage message = _registryCodeContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, codeName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MachineLearningCodeContainerData> response = default;
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registryCodeContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, codeName, context);
+                using HttpMessage message = _registryCodeContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, codeName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MachineLearningCodeContainerData> response = default;
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registryCodeContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, codeName, context);
+                using HttpMessage message = _registryCodeContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, codeName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MachineLearningCodeContainerData> response = default;
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registryCodeContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, codeName, context);
+                using HttpMessage message = _registryCodeContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, codeName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MachineLearningCodeContainerData> response = default;

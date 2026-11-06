@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sandboxCustomImagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sandboxCustomImageName, SandboxCustomImageData.ToRequestContent(data), context);
+                using HttpMessage message = _sandboxCustomImagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sandboxCustomImageName, SandboxCustomImageData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 KustoArmOperation<SandboxCustomImageResource> operation = new KustoArmOperation<SandboxCustomImageResource>(
                     new SandboxCustomImageResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sandboxCustomImagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sandboxCustomImageName, SandboxCustomImageData.ToRequestContent(data), context);
+                using HttpMessage message = _sandboxCustomImagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sandboxCustomImageName, SandboxCustomImageData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 KustoArmOperation<SandboxCustomImageResource> operation = new KustoArmOperation<SandboxCustomImageResource>(
                     new SandboxCustomImageResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sandboxCustomImagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sandboxCustomImageName, context);
+                using HttpMessage message = _sandboxCustomImagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sandboxCustomImageName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SandboxCustomImageData> response = Response.FromValue(SandboxCustomImageData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sandboxCustomImagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sandboxCustomImageName, context);
+                using HttpMessage message = _sandboxCustomImagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sandboxCustomImageName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SandboxCustomImageData> response = Response.FromValue(SandboxCustomImageData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sandboxCustomImagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sandboxCustomImageName, context);
+                using HttpMessage message = _sandboxCustomImagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sandboxCustomImageName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SandboxCustomImageData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sandboxCustomImagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sandboxCustomImageName, context);
+                using HttpMessage message = _sandboxCustomImagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sandboxCustomImageName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SandboxCustomImageData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sandboxCustomImagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sandboxCustomImageName, context);
+                using HttpMessage message = _sandboxCustomImagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sandboxCustomImageName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SandboxCustomImageData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sandboxCustomImagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sandboxCustomImageName, context);
+                using HttpMessage message = _sandboxCustomImagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sandboxCustomImageName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SandboxCustomImageData> response = default;
