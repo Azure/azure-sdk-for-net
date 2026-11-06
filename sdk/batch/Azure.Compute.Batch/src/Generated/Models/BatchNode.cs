@@ -34,6 +34,8 @@ namespace Azure.Compute.Batch
         /// <param name="allocationTime"> The time at which this Compute Node was allocated to the Pool. This is the time when the Compute Node was initially allocated and doesn't change once set. It is not updated when the Compute Node is service healed or preempted. </param>
         /// <param name="ipAddress"> The IP address that other Nodes can use to communicate with this Compute Node. Every Compute Node that is added to a Pool is assigned a unique IP address. Whenever a Compute Node is removed from a Pool, all of its local files are deleted, and the IP address is reclaimed and could be reused for new Compute Nodes. </param>
         /// <param name="ipv6Address"> The IPv6 address that other Nodes can use to communicate with this Compute Node. Every Compute Node that is added to a Pool is assigned a unique IP address. Whenever a Compute Node is removed from a Pool, all of its local files are deleted, and the IP address is reclaimed and could be reused for new Compute Nodes. This property will not be present if the Pool is not configured for IPv6. </param>
+        /// <param name="publicIPAddress"> The public IPv4 address (load balancer front-end VIP) used to reach this Compute Node from outside the virtual network. For Pools that use the Batch-managed or User-managed public load balancer, this is the load balancer's front-end public IPv4 address. The value is present regardless of whether SSH or RDP remote access is enabled, so callers can perform IP-based validation even when remote login is disabled. The property is omitted when the Pool is configured with no public IP addresses (for example, private link or BYO VNet with NoPublicIPAddresses). </param>
+        /// <param name="publicIPv6Address"> The public IPv6 address (load balancer front-end VIP) used to reach this Compute Node from outside the virtual network. Populated only when the Pool is configured for IPv6 / dual-stack public networking. The property is omitted otherwise. </param>
         /// <param name="affinityId"> An identifier which can be passed when adding a Task to request that the Task be scheduled on this Compute Node. Note that this is just a soft affinity. If the target Compute Node is busy or unavailable at the time the Task is scheduled, then the Task will be scheduled elsewhere. </param>
         /// <param name="vmSize"> The size of the virtual machine hosting the Compute Node. For information about available sizes of virtual machines in Pools, see Choose a VM size for Compute Nodes in an Azure Batch Pool (https://learn.microsoft.com/azure/batch/batch-pool-vm-sizes). </param>
         /// <param name="totalTasksRun"> The total number of Job Tasks completed on the Compute Node. This includes Job Manager Tasks and normal Tasks, but not Job Preparation, Job Release or Start Tasks. </param>
@@ -49,7 +51,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeAgentInfo"> Information about the Compute Node agent version and the time the Compute Node upgraded to a new version. </param>
         /// <param name="virtualMachineInfo"> Info about the current state of the virtual machine. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchNode(string id, Uri uri, BatchNodeState state, SchedulingState? schedulingState, DateTimeOffset stateTransitionTime, DateTimeOffset lastBootTime, DateTimeOffset allocationTime, IPAddress ipAddress, IPAddress ipv6Address, string affinityId, string vmSize, int totalTasksRun, int? runningTasksCount, int? runningTaskSlotsCount, int? totalTasksSucceeded, IReadOnlyList<BatchTaskInfo> recentTasks, BatchStartTask startTask, BatchStartTaskInfo startTaskInfo, IReadOnlyList<BatchNodeError> errors, bool? isDedicated, BatchNodeEndpointConfiguration endpointConfiguration, BatchNodeAgentInfo nodeAgentInfo, VirtualMachineInfo virtualMachineInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchNode(string id, Uri uri, BatchNodeState state, SchedulingState? schedulingState, DateTimeOffset stateTransitionTime, DateTimeOffset lastBootTime, DateTimeOffset allocationTime, IPAddress ipAddress, IPAddress ipv6Address, string publicIPAddress, string publicIPv6Address, string affinityId, string vmSize, int totalTasksRun, int? runningTasksCount, int? runningTaskSlotsCount, int? totalTasksSucceeded, IReadOnlyList<BatchTaskInfo> recentTasks, BatchStartTask startTask, BatchStartTaskInfo startTaskInfo, IReadOnlyList<BatchNodeError> errors, bool? isDedicated, BatchNodeEndpointConfiguration endpointConfiguration, BatchNodeAgentInfo nodeAgentInfo, VirtualMachineInfo virtualMachineInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Uri = uri;
@@ -60,6 +62,8 @@ namespace Azure.Compute.Batch
             AllocationTime = allocationTime;
             IpAddress = ipAddress;
             Ipv6Address = ipv6Address;
+            PublicIPAddress = publicIPAddress;
+            PublicIPv6Address = publicIPv6Address;
             AffinityId = affinityId;
             VmSize = vmSize;
             TotalTasksRun = totalTasksRun;
@@ -103,6 +107,12 @@ namespace Azure.Compute.Batch
 
         /// <summary> The IPv6 address that other Nodes can use to communicate with this Compute Node. Every Compute Node that is added to a Pool is assigned a unique IP address. Whenever a Compute Node is removed from a Pool, all of its local files are deleted, and the IP address is reclaimed and could be reused for new Compute Nodes. This property will not be present if the Pool is not configured for IPv6. </summary>
         public IPAddress Ipv6Address { get; }
+
+        /// <summary> The public IPv4 address (load balancer front-end VIP) used to reach this Compute Node from outside the virtual network. For Pools that use the Batch-managed or User-managed public load balancer, this is the load balancer's front-end public IPv4 address. The value is present regardless of whether SSH or RDP remote access is enabled, so callers can perform IP-based validation even when remote login is disabled. The property is omitted when the Pool is configured with no public IP addresses (for example, private link or BYO VNet with NoPublicIPAddresses). </summary>
+        public string PublicIPAddress { get; }
+
+        /// <summary> The public IPv6 address (load balancer front-end VIP) used to reach this Compute Node from outside the virtual network. Populated only when the Pool is configured for IPv6 / dual-stack public networking. The property is omitted otherwise. </summary>
+        public string PublicIPv6Address { get; }
 
         /// <summary> An identifier which can be passed when adding a Task to request that the Task be scheduled on this Compute Node. Note that this is just a soft affinity. If the target Compute Node is busy or unavailable at the time the Task is scheduled, then the Task will be scheduled elsewhere. </summary>
         public string AffinityId { get; }

@@ -141,6 +141,11 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("virtualMachineConfiguration"u8);
                 writer.WriteObjectValue(VirtualMachineConfiguration, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(VmSkuProfile))
+            {
+                writer.WritePropertyName("vmSkuProfile"u8);
+                writer.WriteObjectValue(VmSkuProfile, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(ResizeTimeout))
             {
                 writer.WritePropertyName("resizeTimeout"u8);
@@ -330,6 +335,7 @@ namespace Azure.Compute.Batch
             DateTimeOffset? allocationStateTransitionTime = default;
             string vmSize = default;
             VirtualMachineConfiguration virtualMachineConfiguration = default;
+            VirtualMachineSkuProfile vmSkuProfile = default;
             TimeSpan? resizeTimeout = default;
             IReadOnlyList<ResizeError> resizeErrors = default;
             int currentDedicatedNodes = default;
@@ -425,6 +431,15 @@ namespace Azure.Compute.Batch
                         continue;
                     }
                     virtualMachineConfiguration = VirtualMachineConfiguration.DeserializeVirtualMachineConfiguration(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("vmSkuProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vmSkuProfile = VirtualMachineSkuProfile.DeserializeVirtualMachineSkuProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("resizeTimeout"u8))
@@ -656,6 +671,7 @@ namespace Azure.Compute.Batch
                 allocationStateTransitionTime,
                 vmSize,
                 virtualMachineConfiguration,
+                vmSkuProfile,
                 resizeTimeout,
                 resizeErrors ?? new ChangeTrackingList<ResizeError>(),
                 currentDedicatedNodes,
