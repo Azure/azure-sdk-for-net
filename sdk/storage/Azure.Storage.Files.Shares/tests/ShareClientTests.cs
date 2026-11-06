@@ -797,6 +797,39 @@ namespace Azure.Storage.Files.Shares.Tests
             }
         }
 
+        [RecordedTest]
+        [TestCase(true)]
+        [TestCase(false)]
+        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2027_05_07)]
+        public async Task CreateAsync_ScaleMode(bool scale)
+        {
+            // Arrange
+            var shareName = GetNewShareName();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_PremiumFile();
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+            ShareScaleMode scaleMode = scale ? ShareScaleMode.Scale : ShareScaleMode.Compatibility;
+            ShareCreateOptions options = new ShareCreateOptions
+            {
+                // Scale mode is only supported for NFS shares.
+                Protocols = ShareProtocols.Nfs,
+                ScaleMode = scaleMode
+            };
+
+            try
+            {
+                // Act
+                await share.CreateAsync(options);
+
+                // Assert
+                Response<ShareProperties> response = await share.GetPropertiesAsync();
+                Assert.AreEqual(scaleMode, response.Value.ScaleMode);
+            }
+            finally
+            {
+                await share.DeleteIfExistsAsync();
+            }
+        }
+
         //[RecordedTest]
         //[TestCase(null)]
         //[TestCase(true)]

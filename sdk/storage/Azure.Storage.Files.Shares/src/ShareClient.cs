@@ -606,6 +606,7 @@ namespace Azure.Storage.Files.Shares
                 options?.ProvisionedMaxBandwidthMibps,
                 options?.EnableChangeFeed,
                 options?.ChangeFeedRetentionInDays,
+                options?.ScaleMode,
                 //options?.EnableDirectoryLease,
                 async: false,
                 cancellationToken)
@@ -654,6 +655,7 @@ namespace Azure.Storage.Files.Shares
                 options?.ProvisionedMaxBandwidthMibps,
                 options?.EnableChangeFeed,
                 options?.ChangeFeedRetentionInDays,
+                options?.ScaleMode,
                 //options?.EnableDirectoryLease,
                 async: true,
                 cancellationToken)
@@ -707,6 +709,7 @@ namespace Azure.Storage.Files.Shares
                 provisionedMaxBandwidthMibps: default,
                 enableChangeFeed: default,
                 changeFeedRetentionInDays: default,
+                scaleMode: default,
                 //enableDirectoryLease: default,
                 async: false,
                 cancellationToken)
@@ -760,6 +763,7 @@ namespace Azure.Storage.Files.Shares
                 provisionedMaxBandwidthMibps: default,
                 enableChangeFeed: default,
                 changeFeedRetentionInDays: default,
+                scaleMode: default,
                 //enableDirectoryLease: default,
                 async: true,
                 cancellationToken)
@@ -820,6 +824,10 @@ namespace Azure.Storage.Files.Shares
         /// Optional. Supported in version 2026-06-06 and above.
         /// Specifies the number of days that change feed records are retained on the share.  Valid values are between 1 and 365.
         /// </param>
+        /// <param name="scaleMode">
+        /// Optional. Supported in version 2027-05-07 and above.
+        /// Specifies the scale mode of the share.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -854,6 +862,7 @@ namespace Azure.Storage.Files.Shares
             long? provisionedMaxBandwidthMibps,
             bool? enableChangeFeed,
             int? changeFeedRetentionInDays,
+            ShareScaleMode? scaleMode,
             //bool? enableDirectoryLease,
             bool async,
             CancellationToken cancellationToken,
@@ -891,6 +900,7 @@ namespace Azure.Storage.Files.Shares
                             shareProvisionedBandwidthMibps: provisionedMaxBandwidthMibps,
                             enableChangeFeed: enableChangeFeed,
                             changeFeedRetentionInDays: changeFeedRetentionInDays,
+                            scaleMode: scaleMode,
                             //enableSmbDirectoryLease: enableDirectoryLease,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -911,6 +921,7 @@ namespace Azure.Storage.Files.Shares
                             shareProvisionedBandwidthMibps: provisionedMaxBandwidthMibps,
                             enableChangeFeed: enableChangeFeed,
                             changeFeedRetentionInDays: changeFeedRetentionInDays,
+                            scaleMode: scaleMode,
                             //enableSmbDirectoryLease: enableDirectoryLease,
                             cancellationToken: cancellationToken);
                     }
@@ -978,6 +989,7 @@ namespace Azure.Storage.Files.Shares
                 options?.ProvisionedMaxBandwidthMibps,
                 options?.EnableChangeFeed,
                 options?.ChangeFeedRetentionInDays,
+                options?.ScaleMode,
                 //options?.EnableDirectoryLease,
                 async: false,
                 cancellationToken).EnsureCompleted();
@@ -1025,6 +1037,7 @@ namespace Azure.Storage.Files.Shares
                 options?.ProvisionedMaxBandwidthMibps,
                 options?.EnableChangeFeed,
                 options?.ChangeFeedRetentionInDays,
+                options?.ScaleMode,
                 //options?.EnableDirectoryLease,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
@@ -1079,6 +1092,7 @@ namespace Azure.Storage.Files.Shares
                 provisionedMaxBandwidthMibps: default,
                 enableChangeFeed: default,
                 changeFeedRetentionInDays: default,
+                scaleMode: default,
                 //enableDirectoryLease: default,
                 async: false,
                 cancellationToken).EnsureCompleted();
@@ -1134,6 +1148,7 @@ namespace Azure.Storage.Files.Shares
                 provisionedMaxBandwidthMibps: default,
                 enableChangeFeed: default,
                 changeFeedRetentionInDays: default,
+                scaleMode: default,
                 //enableDirectoryLease: default,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
@@ -1193,6 +1208,10 @@ namespace Azure.Storage.Files.Shares
         /// Optional. Supported in version 2026-06-06 and above.
         /// Specifies the number of days that change feed records are retained on the share.  Valid values are between 1 and 365.
         /// </param>
+        /// <param name="scaleMode">
+        /// Optional. Supported in version 2027-05-07 and above.
+        /// Specifies the scale mode of the share.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1224,6 +1243,7 @@ namespace Azure.Storage.Files.Shares
             long? provisionedMaxBandwidthMibps,
             bool? enableChangeFeed,
             int? changeFeedRetentionInDays,
+            ShareScaleMode? scaleMode,
             //bool? enableDirectoryLease,
             bool async,
             CancellationToken cancellationToken)
@@ -1252,6 +1272,7 @@ namespace Azure.Storage.Files.Shares
                         provisionedMaxBandwidthMibps,
                         enableChangeFeed,
                         changeFeedRetentionInDays,
+                        scaleMode,
                         //enableDirectoryLease,
                         async,
                         cancellationToken,

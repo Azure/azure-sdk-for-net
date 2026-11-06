@@ -71,16 +71,17 @@ namespace Azure.Storage.Files.Shares
         /// <param name="enableSmbDirectoryLease"> Optional. Used to enable SMB directory lease. </param>
         /// <param name="enableChangeFeed"> Optional. Boolean. Default if not specified is false. This property enables change feed on the share. </param>
         /// <param name="changeFeedRetentionInDays"> Optional. Integer. Specifies the number of days that change feed records are retained, between 1 and 365. Default if not specified is 7 days. </param>
+        /// <param name="scaleMode"> Optional. Specifies the scale mode of the share. Scale mode is currently only supported for NFS shares. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Create(int? timeout, IDictionary<string, string> metadata, int? quota, string accessTier, string enabledProtocols, string rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? paidBurstingEnabled, long? paidBurstingMaxIops, long? paidBurstingMaxBandwidthMibps, long? shareProvisionedIops, long? shareProvisionedBandwidthMibps, bool? enableSmbDirectoryLease, bool? enableChangeFeed, int? changeFeedRetentionInDays, RequestContext context)
+        public virtual Response Create(int? timeout, IDictionary<string, string> metadata, int? quota, string accessTier, string enabledProtocols, string rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? paidBurstingEnabled, long? paidBurstingMaxIops, long? paidBurstingMaxBandwidthMibps, long? shareProvisionedIops, long? shareProvisionedBandwidthMibps, bool? enableSmbDirectoryLease, bool? enableChangeFeed, int? changeFeedRetentionInDays, string scaleMode, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.Create");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRequest(timeout, metadata, quota, accessTier, enabledProtocols, rootSquash, enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxIops, paidBurstingMaxBandwidthMibps, shareProvisionedIops, shareProvisionedBandwidthMibps, enableSmbDirectoryLease, enableChangeFeed, changeFeedRetentionInDays, context);
+                using HttpMessage message = CreateCreateRequest(timeout, metadata, quota, accessTier, enabledProtocols, rootSquash, enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxIops, paidBurstingMaxBandwidthMibps, shareProvisionedIops, shareProvisionedBandwidthMibps, enableSmbDirectoryLease, enableChangeFeed, changeFeedRetentionInDays, scaleMode, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -113,16 +114,17 @@ namespace Azure.Storage.Files.Shares
         /// <param name="enableSmbDirectoryLease"> Optional. Used to enable SMB directory lease. </param>
         /// <param name="enableChangeFeed"> Optional. Boolean. Default if not specified is false. This property enables change feed on the share. </param>
         /// <param name="changeFeedRetentionInDays"> Optional. Integer. Specifies the number of days that change feed records are retained, between 1 and 365. Default if not specified is 7 days. </param>
+        /// <param name="scaleMode"> Optional. Specifies the scale mode of the share. Scale mode is currently only supported for NFS shares. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateAsync(int? timeout, IDictionary<string, string> metadata, int? quota, string accessTier, string enabledProtocols, string rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? paidBurstingEnabled, long? paidBurstingMaxIops, long? paidBurstingMaxBandwidthMibps, long? shareProvisionedIops, long? shareProvisionedBandwidthMibps, bool? enableSmbDirectoryLease, bool? enableChangeFeed, int? changeFeedRetentionInDays, RequestContext context)
+        public virtual async Task<Response> CreateAsync(int? timeout, IDictionary<string, string> metadata, int? quota, string accessTier, string enabledProtocols, string rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? paidBurstingEnabled, long? paidBurstingMaxIops, long? paidBurstingMaxBandwidthMibps, long? shareProvisionedIops, long? shareProvisionedBandwidthMibps, bool? enableSmbDirectoryLease, bool? enableChangeFeed, int? changeFeedRetentionInDays, string scaleMode, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.Create");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRequest(timeout, metadata, quota, accessTier, enabledProtocols, rootSquash, enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxIops, paidBurstingMaxBandwidthMibps, shareProvisionedIops, shareProvisionedBandwidthMibps, enableSmbDirectoryLease, enableChangeFeed, changeFeedRetentionInDays, context);
+                using HttpMessage message = CreateCreateRequest(timeout, metadata, quota, accessTier, enabledProtocols, rootSquash, enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxIops, paidBurstingMaxBandwidthMibps, shareProvisionedIops, shareProvisionedBandwidthMibps, enableSmbDirectoryLease, enableChangeFeed, changeFeedRetentionInDays, scaleMode, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -148,11 +150,12 @@ namespace Azure.Storage.Files.Shares
         /// <param name="enableSmbDirectoryLease"> Optional. Used to enable SMB directory lease. </param>
         /// <param name="enableChangeFeed"> Optional. Boolean. Default if not specified is false. This property enables change feed on the share. </param>
         /// <param name="changeFeedRetentionInDays"> Optional. Integer. Specifies the number of days that change feed records are retained, between 1 and 365. Default if not specified is 7 days. </param>
+        /// <param name="scaleMode"> Optional. Specifies the scale mode of the share. Scale mode is currently only supported for NFS shares. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Create(int? timeout = default, IDictionary<string, string> metadata = default, int? quota = default, ShareAccessTier? accessTier = default, string enabledProtocols = default, ShareRootSquash? rootSquash = default, bool? enableSnapshotVirtualDirectoryAccess = default, bool? paidBurstingEnabled = default, long? paidBurstingMaxIops = default, long? paidBurstingMaxBandwidthMibps = default, long? shareProvisionedIops = default, long? shareProvisionedBandwidthMibps = default, bool? enableSmbDirectoryLease = default, bool? enableChangeFeed = default, int? changeFeedRetentionInDays = default, CancellationToken cancellationToken = default)
+        public virtual Response Create(int? timeout = default, IDictionary<string, string> metadata = default, int? quota = default, ShareAccessTier? accessTier = default, string enabledProtocols = default, ShareRootSquash? rootSquash = default, bool? enableSnapshotVirtualDirectoryAccess = default, bool? paidBurstingEnabled = default, long? paidBurstingMaxIops = default, long? paidBurstingMaxBandwidthMibps = default, long? shareProvisionedIops = default, long? shareProvisionedBandwidthMibps = default, bool? enableSmbDirectoryLease = default, bool? enableChangeFeed = default, int? changeFeedRetentionInDays = default, ShareScaleMode? scaleMode = default, CancellationToken cancellationToken = default)
         {
-            return Create(timeout, metadata, quota, accessTier?.ToString(), enabledProtocols, rootSquash?.ToSerialString(), enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxIops, paidBurstingMaxBandwidthMibps, shareProvisionedIops, shareProvisionedBandwidthMibps, enableSmbDirectoryLease, enableChangeFeed, changeFeedRetentionInDays, cancellationToken.ToRequestContext());
+            return Create(timeout, metadata, quota, accessTier?.ToString(), enabledProtocols, rootSquash?.ToSerialString(), enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxIops, paidBurstingMaxBandwidthMibps, shareProvisionedIops, shareProvisionedBandwidthMibps, enableSmbDirectoryLease, enableChangeFeed, changeFeedRetentionInDays, scaleMode?.ToString(), cancellationToken.ToRequestContext());
         }
 
         /// <summary> Creates a new share under the specified account. If the share with the same name already exists, the operation fails. </summary>
@@ -171,11 +174,12 @@ namespace Azure.Storage.Files.Shares
         /// <param name="enableSmbDirectoryLease"> Optional. Used to enable SMB directory lease. </param>
         /// <param name="enableChangeFeed"> Optional. Boolean. Default if not specified is false. This property enables change feed on the share. </param>
         /// <param name="changeFeedRetentionInDays"> Optional. Integer. Specifies the number of days that change feed records are retained, between 1 and 365. Default if not specified is 7 days. </param>
+        /// <param name="scaleMode"> Optional. Specifies the scale mode of the share. Scale mode is currently only supported for NFS shares. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> CreateAsync(int? timeout = default, IDictionary<string, string> metadata = default, int? quota = default, ShareAccessTier? accessTier = default, string enabledProtocols = default, ShareRootSquash? rootSquash = default, bool? enableSnapshotVirtualDirectoryAccess = default, bool? paidBurstingEnabled = default, long? paidBurstingMaxIops = default, long? paidBurstingMaxBandwidthMibps = default, long? shareProvisionedIops = default, long? shareProvisionedBandwidthMibps = default, bool? enableSmbDirectoryLease = default, bool? enableChangeFeed = default, int? changeFeedRetentionInDays = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CreateAsync(int? timeout = default, IDictionary<string, string> metadata = default, int? quota = default, ShareAccessTier? accessTier = default, string enabledProtocols = default, ShareRootSquash? rootSquash = default, bool? enableSnapshotVirtualDirectoryAccess = default, bool? paidBurstingEnabled = default, long? paidBurstingMaxIops = default, long? paidBurstingMaxBandwidthMibps = default, long? shareProvisionedIops = default, long? shareProvisionedBandwidthMibps = default, bool? enableSmbDirectoryLease = default, bool? enableChangeFeed = default, int? changeFeedRetentionInDays = default, ShareScaleMode? scaleMode = default, CancellationToken cancellationToken = default)
         {
-            return await CreateAsync(timeout, metadata, quota, accessTier?.ToString(), enabledProtocols, rootSquash?.ToSerialString(), enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxIops, paidBurstingMaxBandwidthMibps, shareProvisionedIops, shareProvisionedBandwidthMibps, enableSmbDirectoryLease, enableChangeFeed, changeFeedRetentionInDays, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await CreateAsync(timeout, metadata, quota, accessTier?.ToString(), enabledProtocols, rootSquash?.ToSerialString(), enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxIops, paidBurstingMaxBandwidthMibps, shareProvisionedIops, shareProvisionedBandwidthMibps, enableSmbDirectoryLease, enableChangeFeed, changeFeedRetentionInDays, scaleMode?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
