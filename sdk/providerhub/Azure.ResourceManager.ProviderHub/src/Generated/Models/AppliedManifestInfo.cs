@@ -26,13 +26,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="manifestAppliedOn"> Time at which the manifest was applied. </param>
         /// <param name="previousCommitId"> Commit id of previous manifest. </param>
         /// <param name="appliedCommitId"> Commit id of manifest being applied. </param>
+        /// <param name="rootProviderNamespace"> The root resource provider namespace. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppliedManifestInfo(string region, DateTimeOffset? manifestAppliedOn, string previousCommitId, string appliedCommitId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppliedManifestInfo(string region, DateTimeOffset? manifestAppliedOn, string previousCommitId, string appliedCommitId, string rootProviderNamespace, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Region = region;
             ManifestAppliedOn = manifestAppliedOn;
             PreviousCommitId = previousCommitId;
             AppliedCommitId = appliedCommitId;
+            RootProviderNamespace = rootProviderNamespace;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -47,5 +49,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Commit id of manifest being applied. </summary>
         public string AppliedCommitId { get; set; }
+
+        /// <summary> The root resource provider namespace. </summary>
+        public string RootProviderNamespace { get; }
     }
 }

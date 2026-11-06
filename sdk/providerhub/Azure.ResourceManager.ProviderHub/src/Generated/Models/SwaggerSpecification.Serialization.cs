@@ -94,6 +94,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("swaggerSpecFolderUri"u8);
                 writer.WriteStringValue(SwaggerSpecFolderUri.AbsoluteUri);
             }
+            if (Optional.IsDefined(LifecycleInfo))
+            {
+                writer.WritePropertyName("lifecycleInfo"u8);
+                writer.WriteObjectValue(LifecycleInfo, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -138,6 +143,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             IList<string> apiVersions = default;
             Uri swaggerSpecFolderUri = default;
+            SwaggerSpecificationLifecycleInfo lifecycleInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -171,12 +177,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     swaggerSpecFolderUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
+                if (prop.NameEquals("lifecycleInfo"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lifecycleInfo = SwaggerSpecificationLifecycleInfo.DeserializeSwaggerSpecificationLifecycleInfo(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SwaggerSpecification(apiVersions ?? new ChangeTrackingList<string>(), swaggerSpecFolderUri, additionalBinaryDataProperties);
+            return new SwaggerSpecification(apiVersions ?? new ChangeTrackingList<string>(), swaggerSpecFolderUri, lifecycleInfo, additionalBinaryDataProperties);
         }
     }
 }
