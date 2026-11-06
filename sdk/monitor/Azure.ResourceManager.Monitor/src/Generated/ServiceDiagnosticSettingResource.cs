@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), ServiceDiagnosticSettingData.ToRequestContent(data), context);
+                using HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), ServiceDiagnosticSettingData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceDiagnosticSettingData> response = Response.FromValue(ServiceDiagnosticSettingData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), ServiceDiagnosticSettingData.ToRequestContent(data), context);
+                using HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), ServiceDiagnosticSettingData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceDiagnosticSettingData> response = Response.FromValue(ServiceDiagnosticSettingData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateGetRequest(Id.Parent.ToString(), context);
+                using HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateGetRequest(Id.Parent.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceDiagnosticSettingData> response = Response.FromValue(ServiceDiagnosticSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateGetRequest(Id.Parent.ToString(), context);
+                using HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateGetRequest(Id.Parent.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceDiagnosticSettingData> response = Response.FromValue(ServiceDiagnosticSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateUpdateRequest(Id.Parent.ToString(), ServiceDiagnosticSettingPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateUpdateRequest(Id.Parent.ToString(), ServiceDiagnosticSettingPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceDiagnosticSettingData> response = Response.FromValue(ServiceDiagnosticSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateUpdateRequest(Id.Parent.ToString(), ServiceDiagnosticSettingPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateUpdateRequest(Id.Parent.ToString(), ServiceDiagnosticSettingPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceDiagnosticSettingData> response = Response.FromValue(ServiceDiagnosticSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateGetRequest(Id.Parent.ToString(), context);
+                    using HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateGetRequest(Id.Parent.ToString(), context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ServiceDiagnosticSettingData> response = Response.FromValue(ServiceDiagnosticSettingData.FromResponse(result), result);
                     return Response.FromValue(new ServiceDiagnosticSettingResource(Client, response.Value), response.GetRawResponse());
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateGetRequest(Id.Parent.ToString(), context);
+                    using HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateGetRequest(Id.Parent.ToString(), context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ServiceDiagnosticSettingData> response = Response.FromValue(ServiceDiagnosticSettingData.FromResponse(result), result);
                     return Response.FromValue(new ServiceDiagnosticSettingResource(Client, response.Value), response.GetRawResponse());
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateGetRequest(Id.Parent.ToString(), context);
+                    using HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateGetRequest(Id.Parent.ToString(), context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ServiceDiagnosticSettingData> response = Response.FromValue(ServiceDiagnosticSettingData.FromResponse(result), result);
                     return Response.FromValue(new ServiceDiagnosticSettingResource(Client, response.Value), response.GetRawResponse());
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateGetRequest(Id.Parent.ToString(), context);
+                    using HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateGetRequest(Id.Parent.ToString(), context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ServiceDiagnosticSettingData> response = Response.FromValue(ServiceDiagnosticSettingData.FromResponse(result), result);
                     return Response.FromValue(new ServiceDiagnosticSettingResource(Client, response.Value), response.GetRawResponse());
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateGetRequest(Id.Parent.ToString(), context);
+                    using HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateGetRequest(Id.Parent.ToString(), context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ServiceDiagnosticSettingData> response = Response.FromValue(ServiceDiagnosticSettingData.FromResponse(result), result);
                     return Response.FromValue(new ServiceDiagnosticSettingResource(Client, response.Value), response.GetRawResponse());
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateGetRequest(Id.Parent.ToString(), context);
+                    using HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateGetRequest(Id.Parent.ToString(), context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ServiceDiagnosticSettingData> response = Response.FromValue(ServiceDiagnosticSettingData.FromResponse(result), result);
                     return Response.FromValue(new ServiceDiagnosticSettingResource(Client, response.Value), response.GetRawResponse());

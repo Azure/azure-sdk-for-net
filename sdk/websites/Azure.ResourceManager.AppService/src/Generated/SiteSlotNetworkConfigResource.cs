@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _swiftVirtualNetworkOperationGroupRestClient.CreateCreateOrUpdateSwiftVirtualNetworkConnectionWithCheckSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, SwiftVirtualNetworkData.ToRequestContent(data), context);
+                using HttpMessage message = _swiftVirtualNetworkOperationGroupRestClient.CreateCreateOrUpdateSwiftVirtualNetworkConnectionWithCheckSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, SwiftVirtualNetworkData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SwiftVirtualNetworkData> response = Response.FromValue(SwiftVirtualNetworkData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _swiftVirtualNetworkOperationGroupRestClient.CreateCreateOrUpdateSwiftVirtualNetworkConnectionWithCheckSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, SwiftVirtualNetworkData.ToRequestContent(data), context);
+                using HttpMessage message = _swiftVirtualNetworkOperationGroupRestClient.CreateCreateOrUpdateSwiftVirtualNetworkConnectionWithCheckSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, SwiftVirtualNetworkData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SwiftVirtualNetworkData> response = Response.FromValue(SwiftVirtualNetworkData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _swiftVirtualNetworkOperationGroupRestClient.CreateGetSwiftVirtualNetworkConnectionSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                using HttpMessage message = _swiftVirtualNetworkOperationGroupRestClient.CreateGetSwiftVirtualNetworkConnectionSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SwiftVirtualNetworkData> response = Response.FromValue(SwiftVirtualNetworkData.FromResponse(result), result);
                 if (response.Value == null)
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _swiftVirtualNetworkOperationGroupRestClient.CreateGetSwiftVirtualNetworkConnectionSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                using HttpMessage message = _swiftVirtualNetworkOperationGroupRestClient.CreateGetSwiftVirtualNetworkConnectionSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SwiftVirtualNetworkData> response = Response.FromValue(SwiftVirtualNetworkData.FromResponse(result), result);
                 if (response.Value == null)
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _swiftVirtualNetworkOperationGroupRestClient.CreateUpdateSwiftVirtualNetworkConnectionWithCheckSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, SwiftVirtualNetworkData.ToRequestContent(data), context);
+                using HttpMessage message = _swiftVirtualNetworkOperationGroupRestClient.CreateUpdateSwiftVirtualNetworkConnectionWithCheckSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, SwiftVirtualNetworkData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SwiftVirtualNetworkData> response = Response.FromValue(SwiftVirtualNetworkData.FromResponse(result), result);
                 if (response.Value == null)
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _swiftVirtualNetworkOperationGroupRestClient.CreateUpdateSwiftVirtualNetworkConnectionWithCheckSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, SwiftVirtualNetworkData.ToRequestContent(data), context);
+                using HttpMessage message = _swiftVirtualNetworkOperationGroupRestClient.CreateUpdateSwiftVirtualNetworkConnectionWithCheckSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, SwiftVirtualNetworkData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SwiftVirtualNetworkData> response = Response.FromValue(SwiftVirtualNetworkData.FromResponse(result), result);
                 if (response.Value == null)
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _swiftVirtualNetworkOperationGroupRestClient.CreateDeleteSwiftVirtualNetworkSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                using HttpMessage message = _swiftVirtualNetworkOperationGroupRestClient.CreateDeleteSwiftVirtualNetworkSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _swiftVirtualNetworkOperationGroupRestClient.CreateDeleteSwiftVirtualNetworkSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                using HttpMessage message = _swiftVirtualNetworkOperationGroupRestClient.CreateDeleteSwiftVirtualNetworkSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());

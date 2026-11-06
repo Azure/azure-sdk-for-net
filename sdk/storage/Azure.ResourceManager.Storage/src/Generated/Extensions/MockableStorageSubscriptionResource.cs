@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Storage.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = StorageAccountsRestClient.CreateCheckStorageAccountNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), StorageAccountNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = StorageAccountsRestClient.CreateCheckStorageAccountNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), StorageAccountNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<StorageAccountNameAvailabilityResult> response = Response.FromValue(StorageAccountNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Storage.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = StorageAccountsRestClient.CreateCheckStorageAccountNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), StorageAccountNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = StorageAccountsRestClient.CreateCheckStorageAccountNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), StorageAccountNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<StorageAccountNameAvailabilityResult> response = Response.FromValue(StorageAccountNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Storage.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ContextCachesRestClient.CreateCheckContextCacheNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ContextCacheNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = ContextCachesRestClient.CreateCheckContextCacheNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ContextCacheNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContextCacheNameAvailabilityResult> response = Response.FromValue(ContextCacheNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.Storage.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ContextCachesRestClient.CreateCheckContextCacheNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ContextCacheNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = ContextCachesRestClient.CreateCheckContextCacheNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ContextCacheNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContextCacheNameAvailabilityResult> response = Response.FromValue(ContextCacheNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

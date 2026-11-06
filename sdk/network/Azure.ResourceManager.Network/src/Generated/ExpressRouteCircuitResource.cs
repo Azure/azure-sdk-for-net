@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCircuitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _expressRouteCircuitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExpressRouteCircuitData> response = Response.FromValue(ExpressRouteCircuitData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCircuitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _expressRouteCircuitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExpressRouteCircuitData> response = Response.FromValue(ExpressRouteCircuitData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCircuitsRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTagsObject.ToRequestContent(networkTagsObject), context);
+                using HttpMessage message = _expressRouteCircuitsRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTagsObject.ToRequestContent(networkTagsObject), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExpressRouteCircuitData> response = Response.FromValue(ExpressRouteCircuitData.FromResponse(result), result);
                 if (response.Value == null)
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCircuitsRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTagsObject.ToRequestContent(networkTagsObject), context);
+                using HttpMessage message = _expressRouteCircuitsRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTagsObject.ToRequestContent(networkTagsObject), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExpressRouteCircuitData> response = Response.FromValue(ExpressRouteCircuitData.FromResponse(result), result);
                 if (response.Value == null)
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCircuitsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _expressRouteCircuitsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation operation = new NetworkArmOperation(_expressRouteCircuitsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCircuitsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _expressRouteCircuitsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation operation = new NetworkArmOperation(_expressRouteCircuitsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCircuitsRestClient.CreateGetCircuitLinkFailoverAllTestsDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, failoverTestType, fetchLatest, context);
+                using HttpMessage message = _expressRouteCircuitsRestClient.CreateGetCircuitLinkFailoverAllTestsDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, failoverTestType, fetchLatest, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<IList<ExpressRouteLinkFailoverAllTestsDetails>> operation = new NetworkArmOperation<IList<ExpressRouteLinkFailoverAllTestsDetails>>(
                     new IListOfExpressRouteLinkFailoverAllTestsDetailsOperationSource(),
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCircuitsRestClient.CreateGetCircuitLinkFailoverAllTestsDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, failoverTestType, fetchLatest, context);
+                using HttpMessage message = _expressRouteCircuitsRestClient.CreateGetCircuitLinkFailoverAllTestsDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, failoverTestType, fetchLatest, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<IList<ExpressRouteLinkFailoverAllTestsDetails>> operation = new NetworkArmOperation<IList<ExpressRouteLinkFailoverAllTestsDetails>>(
                     new IListOfExpressRouteLinkFailoverAllTestsDetailsOperationSource(),
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCircuitsRestClient.CreateGetCircuitLinkFailoverSingleTestDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkType, circuitTestCategory, failoverTestId, context);
+                using HttpMessage message = _expressRouteCircuitsRestClient.CreateGetCircuitLinkFailoverSingleTestDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkType, circuitTestCategory, failoverTestId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<IList<ExpressRouteLinkFailoverSingleTestDetails>> operation = new NetworkArmOperation<IList<ExpressRouteLinkFailoverSingleTestDetails>>(
                     new IListOfExpressRouteLinkFailoverSingleTestDetailsOperationSource(),
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCircuitsRestClient.CreateGetCircuitLinkFailoverSingleTestDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkType, circuitTestCategory, failoverTestId, context);
+                using HttpMessage message = _expressRouteCircuitsRestClient.CreateGetCircuitLinkFailoverSingleTestDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkType, circuitTestCategory, failoverTestId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<IList<ExpressRouteLinkFailoverSingleTestDetails>> operation = new NetworkArmOperation<IList<ExpressRouteLinkFailoverSingleTestDetails>>(
                     new IListOfExpressRouteLinkFailoverSingleTestDetailsOperationSource(),
@@ -665,7 +665,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCircuitsRestClient.CreateGetStatsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _expressRouteCircuitsRestClient.CreateGetStatsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExpressRouteCircuitStats> response = Response.FromValue(ExpressRouteCircuitStats.FromResponse(result), result);
                 if (response.Value == null)
@@ -713,7 +713,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCircuitsRestClient.CreateGetStatsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _expressRouteCircuitsRestClient.CreateGetStatsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExpressRouteCircuitStats> response = Response.FromValue(ExpressRouteCircuitStats.FromResponse(result), result);
                 if (response.Value == null)
@@ -769,7 +769,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCircuitsRestClient.CreateStartCircuitLinkFailoverTestRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkType, circuitTestCategory, context);
+                using HttpMessage message = _expressRouteCircuitsRestClient.CreateStartCircuitLinkFailoverTestRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkType, circuitTestCategory, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<string> operation = new NetworkArmOperation<string>(
                     new StringOperationSource(),
@@ -831,7 +831,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCircuitsRestClient.CreateStartCircuitLinkFailoverTestRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkType, circuitTestCategory, context);
+                using HttpMessage message = _expressRouteCircuitsRestClient.CreateStartCircuitLinkFailoverTestRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkType, circuitTestCategory, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<string> operation = new NetworkArmOperation<string>(
                     new StringOperationSource(),
@@ -890,7 +890,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCircuitsRestClient.CreateStopCircuitLinkFailoverTestRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, null, context);
+                using HttpMessage message = _expressRouteCircuitsRestClient.CreateStopCircuitLinkFailoverTestRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, null, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<string> operation = new NetworkArmOperation<string>(
                     new StringOperationSource(),
@@ -949,7 +949,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCircuitsRestClient.CreateStopCircuitLinkFailoverTestRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, null, context);
+                using HttpMessage message = _expressRouteCircuitsRestClient.CreateStopCircuitLinkFailoverTestRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, null, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<string> operation = new NetworkArmOperation<string>(
                     new StringOperationSource(),
@@ -994,7 +994,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _expressRouteCircuitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _expressRouteCircuitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ExpressRouteCircuitData> response = Response.FromValue(ExpressRouteCircuitData.FromResponse(result), result);
                     return Response.FromValue(new ExpressRouteCircuitResource(Client, response.Value), response.GetRawResponse());
@@ -1042,7 +1042,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _expressRouteCircuitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _expressRouteCircuitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ExpressRouteCircuitData> response = Response.FromValue(ExpressRouteCircuitData.FromResponse(result), result);
                     return Response.FromValue(new ExpressRouteCircuitResource(Client, response.Value), response.GetRawResponse());
@@ -1088,7 +1088,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _expressRouteCircuitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _expressRouteCircuitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ExpressRouteCircuitData> response = Response.FromValue(ExpressRouteCircuitData.FromResponse(result), result);
                     return Response.FromValue(new ExpressRouteCircuitResource(Client, response.Value), response.GetRawResponse());
@@ -1130,7 +1130,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _expressRouteCircuitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _expressRouteCircuitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ExpressRouteCircuitData> response = Response.FromValue(ExpressRouteCircuitData.FromResponse(result), result);
                     return Response.FromValue(new ExpressRouteCircuitResource(Client, response.Value), response.GetRawResponse());
@@ -1172,7 +1172,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _expressRouteCircuitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _expressRouteCircuitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ExpressRouteCircuitData> response = Response.FromValue(ExpressRouteCircuitData.FromResponse(result), result);
                     return Response.FromValue(new ExpressRouteCircuitResource(Client, response.Value), response.GetRawResponse());
@@ -1218,7 +1218,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _expressRouteCircuitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _expressRouteCircuitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ExpressRouteCircuitData> response = Response.FromValue(ExpressRouteCircuitData.FromResponse(result), result);
                     return Response.FromValue(new ExpressRouteCircuitResource(Client, response.Value), response.GetRawResponse());

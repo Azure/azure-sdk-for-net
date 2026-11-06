@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appSettingKeyVaultReferenceSlotRestClient.CreateGetAppSettingKeyVaultReferenceSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Name, context);
+                using HttpMessage message = _appSettingKeyVaultReferenceSlotRestClient.CreateGetAppSettingKeyVaultReferenceSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiKeyVaultReferenceData> response = Response.FromValue(ApiKeyVaultReferenceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appSettingKeyVaultReferenceSlotRestClient.CreateGetAppSettingKeyVaultReferenceSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Name, context);
+                using HttpMessage message = _appSettingKeyVaultReferenceSlotRestClient.CreateGetAppSettingKeyVaultReferenceSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiKeyVaultReferenceData> response = Response.FromValue(ApiKeyVaultReferenceData.FromResponse(result), result);
                 if (response.Value == null)

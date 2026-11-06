@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _detectorResponsesRestClient.CreateGetHostingEnvironmentDetectorResponseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, startTime, endTime, timeGrain, context);
+                using HttpMessage message = _detectorResponsesRestClient.CreateGetHostingEnvironmentDetectorResponseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, startTime, endTime, timeGrain, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceDetectorData> response = Response.FromValue(AppServiceDetectorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _detectorResponsesRestClient.CreateGetHostingEnvironmentDetectorResponseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, startTime, endTime, timeGrain, context);
+                using HttpMessage message = _detectorResponsesRestClient.CreateGetHostingEnvironmentDetectorResponseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, startTime, endTime, timeGrain, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceDetectorData> response = Response.FromValue(AppServiceDetectorData.FromResponse(result), result);
                 if (response.Value == null)

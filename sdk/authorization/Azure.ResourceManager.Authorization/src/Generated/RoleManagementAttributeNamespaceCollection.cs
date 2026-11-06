@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attributeNamespacesRestClient.CreateGetRequest(attributeNamespace, context);
+                using HttpMessage message = _attributeNamespacesRestClient.CreateGetRequest(attributeNamespace, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RoleManagementAttributeNamespaceData> response = Response.FromValue(RoleManagementAttributeNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attributeNamespacesRestClient.CreateGetRequest(attributeNamespace, context);
+                using HttpMessage message = _attributeNamespacesRestClient.CreateGetRequest(attributeNamespace, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RoleManagementAttributeNamespaceData> response = Response.FromValue(RoleManagementAttributeNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attributeNamespacesRestClient.CreateGetRequest(attributeNamespace, context);
+                using HttpMessage message = _attributeNamespacesRestClient.CreateGetRequest(attributeNamespace, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RoleManagementAttributeNamespaceData> response = default;
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attributeNamespacesRestClient.CreateGetRequest(attributeNamespace, context);
+                using HttpMessage message = _attributeNamespacesRestClient.CreateGetRequest(attributeNamespace, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RoleManagementAttributeNamespaceData> response = default;
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attributeNamespacesRestClient.CreateGetRequest(attributeNamespace, context);
+                using HttpMessage message = _attributeNamespacesRestClient.CreateGetRequest(attributeNamespace, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RoleManagementAttributeNamespaceData> response = default;
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attributeNamespacesRestClient.CreateGetRequest(attributeNamespace, context);
+                using HttpMessage message = _attributeNamespacesRestClient.CreateGetRequest(attributeNamespace, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RoleManagementAttributeNamespaceData> response = default;

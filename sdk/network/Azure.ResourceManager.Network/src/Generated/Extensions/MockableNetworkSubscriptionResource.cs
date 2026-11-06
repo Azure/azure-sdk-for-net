@@ -3779,7 +3779,7 @@ namespace Azure.ResourceManager.Network.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LoadBalancersRestClient.CreateSwapPublicIpAddressesRequest(Guid.Parse(Id.SubscriptionId), location, LoadBalancerVipSwapContent.ToRequestContent(content), context);
+                using HttpMessage message = LoadBalancersRestClient.CreateSwapPublicIpAddressesRequest(Guid.Parse(Id.SubscriptionId), location, LoadBalancerVipSwapContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation operation = new NetworkArmOperation(LoadBalancersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -3829,7 +3829,7 @@ namespace Azure.ResourceManager.Network.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LoadBalancersRestClient.CreateSwapPublicIpAddressesRequest(Guid.Parse(Id.SubscriptionId), location, LoadBalancerVipSwapContent.ToRequestContent(content), context);
+                using HttpMessage message = LoadBalancersRestClient.CreateSwapPublicIpAddressesRequest(Guid.Parse(Id.SubscriptionId), location, LoadBalancerVipSwapContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation operation = new NetworkArmOperation(LoadBalancersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -3879,7 +3879,7 @@ namespace Azure.ResourceManager.Network.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityRequest(Guid.Parse(Id.SubscriptionId), location, CheckPrivateLinkServiceVisibilityRequest.ToRequestContent(content), context);
+                using HttpMessage message = PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityRequest(Guid.Parse(Id.SubscriptionId), location, CheckPrivateLinkServiceVisibilityRequest.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<PrivateLinkServiceVisibility> operation = new NetworkArmOperation<PrivateLinkServiceVisibility>(
                     new PrivateLinkServiceVisibilityOperationSource(),
@@ -3935,7 +3935,7 @@ namespace Azure.ResourceManager.Network.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityRequest(Guid.Parse(Id.SubscriptionId), location, CheckPrivateLinkServiceVisibilityRequest.ToRequestContent(content), context);
+                using HttpMessage message = PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityRequest(Guid.Parse(Id.SubscriptionId), location, CheckPrivateLinkServiceVisibilityRequest.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<PrivateLinkServiceVisibility> operation = new NetworkArmOperation<PrivateLinkServiceVisibility>(
                     new PrivateLinkServiceVisibilityOperationSource(),
@@ -4049,7 +4049,7 @@ namespace Azure.ResourceManager.Network.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CheckDnsNameAvailabilityRestClient.CreateCheckDnsNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, domainNameLabel, context);
+                using HttpMessage message = CheckDnsNameAvailabilityRestClient.CreateCheckDnsNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, domainNameLabel, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DnsNameAvailabilityResult> response = Response.FromValue(DnsNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -4099,7 +4099,7 @@ namespace Azure.ResourceManager.Network.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CheckDnsNameAvailabilityRestClient.CreateCheckDnsNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, domainNameLabel, context);
+                using HttpMessage message = CheckDnsNameAvailabilityRestClient.CreateCheckDnsNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, domainNameLabel, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DnsNameAvailabilityResult> response = Response.FromValue(DnsNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -4660,7 +4660,7 @@ namespace Azure.ResourceManager.Network.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ServiceTagsRestClient.CreateGetServiceTagRequest(Guid.Parse(Id.SubscriptionId), location, context);
+                using HttpMessage message = ServiceTagsRestClient.CreateGetServiceTagRequest(Guid.Parse(Id.SubscriptionId), location, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceTagsListResult> response = Response.FromValue(ServiceTagsListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -4705,7 +4705,7 @@ namespace Azure.ResourceManager.Network.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ServiceTagsRestClient.CreateGetServiceTagRequest(Guid.Parse(Id.SubscriptionId), location, context);
+                using HttpMessage message = ServiceTagsRestClient.CreateGetServiceTagRequest(Guid.Parse(Id.SubscriptionId), location, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceTagsListResult> response = Response.FromValue(ServiceTagsListResult.FromResponse(result), result);
                 if (response.Value == null)

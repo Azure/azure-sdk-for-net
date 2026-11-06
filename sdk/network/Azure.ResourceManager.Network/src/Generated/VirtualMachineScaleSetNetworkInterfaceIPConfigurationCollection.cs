@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetNetworkInterfaceIPConfigurationsRestClient.CreateGetVirtualMachineScaleSetIpConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ipConfigurationName, expand, context);
+                using HttpMessage message = _virtualMachineScaleSetNetworkInterfaceIPConfigurationsRestClient.CreateGetVirtualMachineScaleSetIpConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ipConfigurationName, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkInterfaceIPConfigurationData> response = Response.FromValue(NetworkInterfaceIPConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetNetworkInterfaceIPConfigurationsRestClient.CreateGetVirtualMachineScaleSetIpConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ipConfigurationName, expand, context);
+                using HttpMessage message = _virtualMachineScaleSetNetworkInterfaceIPConfigurationsRestClient.CreateGetVirtualMachineScaleSetIpConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ipConfigurationName, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkInterfaceIPConfigurationData> response = Response.FromValue(NetworkInterfaceIPConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetNetworkInterfaceIPConfigurationsRestClient.CreateGetVirtualMachineScaleSetIpConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ipConfigurationName, expand, context);
+                using HttpMessage message = _virtualMachineScaleSetNetworkInterfaceIPConfigurationsRestClient.CreateGetVirtualMachineScaleSetIpConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ipConfigurationName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkInterfaceIPConfigurationData> response = default;
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetNetworkInterfaceIPConfigurationsRestClient.CreateGetVirtualMachineScaleSetIpConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ipConfigurationName, expand, context);
+                using HttpMessage message = _virtualMachineScaleSetNetworkInterfaceIPConfigurationsRestClient.CreateGetVirtualMachineScaleSetIpConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ipConfigurationName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkInterfaceIPConfigurationData> response = default;
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetNetworkInterfaceIPConfigurationsRestClient.CreateGetVirtualMachineScaleSetIpConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ipConfigurationName, expand, context);
+                using HttpMessage message = _virtualMachineScaleSetNetworkInterfaceIPConfigurationsRestClient.CreateGetVirtualMachineScaleSetIpConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ipConfigurationName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkInterfaceIPConfigurationData> response = default;
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetNetworkInterfaceIPConfigurationsRestClient.CreateGetVirtualMachineScaleSetIpConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ipConfigurationName, expand, context);
+                using HttpMessage message = _virtualMachineScaleSetNetworkInterfaceIPConfigurationsRestClient.CreateGetVirtualMachineScaleSetIpConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ipConfigurationName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkInterfaceIPConfigurationData> response = default;

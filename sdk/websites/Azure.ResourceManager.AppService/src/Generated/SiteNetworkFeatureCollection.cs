@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFeaturesOperationGroupRestClient.CreateGetNetworkFeaturesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, view, context);
+                using HttpMessage message = _networkFeaturesOperationGroupRestClient.CreateGetNetworkFeaturesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, view, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkFeatureData> response = Response.FromValue(NetworkFeatureData.FromResponse(result), result);
                 if (response.Value == null)
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFeaturesOperationGroupRestClient.CreateGetNetworkFeaturesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, view, context);
+                using HttpMessage message = _networkFeaturesOperationGroupRestClient.CreateGetNetworkFeaturesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, view, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkFeatureData> response = Response.FromValue(NetworkFeatureData.FromResponse(result), result);
                 if (response.Value == null)
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFeaturesOperationGroupRestClient.CreateGetNetworkFeaturesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, view, context);
+                using HttpMessage message = _networkFeaturesOperationGroupRestClient.CreateGetNetworkFeaturesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, view, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkFeatureData> response = default;
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFeaturesOperationGroupRestClient.CreateGetNetworkFeaturesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, view, context);
+                using HttpMessage message = _networkFeaturesOperationGroupRestClient.CreateGetNetworkFeaturesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, view, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkFeatureData> response = default;
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFeaturesOperationGroupRestClient.CreateGetNetworkFeaturesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, view, context);
+                using HttpMessage message = _networkFeaturesOperationGroupRestClient.CreateGetNetworkFeaturesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, view, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkFeatureData> response = default;
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFeaturesOperationGroupRestClient.CreateGetNetworkFeaturesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, view, context);
+                using HttpMessage message = _networkFeaturesOperationGroupRestClient.CreateGetNetworkFeaturesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, view, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkFeatureData> response = default;

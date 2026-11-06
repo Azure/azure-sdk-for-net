@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = VaultsOperationGroupRestClient.CreateCheckKeyVaultNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), KeyVaultNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = VaultsOperationGroupRestClient.CreateCheckKeyVaultNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), KeyVaultNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<KeyVaultNameAvailabilityResult> response = Response.FromValue(KeyVaultNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = VaultsOperationGroupRestClient.CreateCheckKeyVaultNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), KeyVaultNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = VaultsOperationGroupRestClient.CreateCheckKeyVaultNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), KeyVaultNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<KeyVaultNameAvailabilityResult> response = Response.FromValue(KeyVaultNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ManagedHsmsOperationGroupRestClient.CreateCheckManagedHsmNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ManagedHsmNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = ManagedHsmsOperationGroupRestClient.CreateCheckManagedHsmNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ManagedHsmNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ManagedHsmNameAvailabilityResult> response = Response.FromValue(ManagedHsmNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ManagedHsmsOperationGroupRestClient.CreateCheckManagedHsmNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ManagedHsmNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = ManagedHsmsOperationGroupRestClient.CreateCheckManagedHsmNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ManagedHsmNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ManagedHsmNameAvailabilityResult> response = Response.FromValue(ManagedHsmNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

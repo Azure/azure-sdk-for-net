@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sourceControlsRestClient.CreateUpdateSourceControlRequest(sourceControlType, AppServiceSourceControlData.ToRequestContent(data), context);
+                using HttpMessage message = _sourceControlsRestClient.CreateUpdateSourceControlRequest(sourceControlType, AppServiceSourceControlData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceSourceControlData> response = Response.FromValue(AppServiceSourceControlData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sourceControlsRestClient.CreateUpdateSourceControlRequest(sourceControlType, AppServiceSourceControlData.ToRequestContent(data), context);
+                using HttpMessage message = _sourceControlsRestClient.CreateUpdateSourceControlRequest(sourceControlType, AppServiceSourceControlData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceSourceControlData> response = Response.FromValue(AppServiceSourceControlData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sourceControlsRestClient.CreateGetSourceControlRequest(sourceControlType, context);
+                using HttpMessage message = _sourceControlsRestClient.CreateGetSourceControlRequest(sourceControlType, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceSourceControlData> response = Response.FromValue(AppServiceSourceControlData.FromResponse(result), result);
                 if (response.Value == null)
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sourceControlsRestClient.CreateGetSourceControlRequest(sourceControlType, context);
+                using HttpMessage message = _sourceControlsRestClient.CreateGetSourceControlRequest(sourceControlType, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceSourceControlData> response = Response.FromValue(AppServiceSourceControlData.FromResponse(result), result);
                 if (response.Value == null)
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sourceControlsRestClient.CreateGetSourceControlRequest(sourceControlType, context);
+                using HttpMessage message = _sourceControlsRestClient.CreateGetSourceControlRequest(sourceControlType, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AppServiceSourceControlData> response = default;
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sourceControlsRestClient.CreateGetSourceControlRequest(sourceControlType, context);
+                using HttpMessage message = _sourceControlsRestClient.CreateGetSourceControlRequest(sourceControlType, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AppServiceSourceControlData> response = default;
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sourceControlsRestClient.CreateGetSourceControlRequest(sourceControlType, context);
+                using HttpMessage message = _sourceControlsRestClient.CreateGetSourceControlRequest(sourceControlType, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AppServiceSourceControlData> response = default;
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sourceControlsRestClient.CreateGetSourceControlRequest(sourceControlType, context);
+                using HttpMessage message = _sourceControlsRestClient.CreateGetSourceControlRequest(sourceControlType, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AppServiceSourceControlData> response = default;

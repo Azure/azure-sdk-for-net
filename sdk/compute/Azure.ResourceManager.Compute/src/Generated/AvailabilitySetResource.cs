@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _availabilitySetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _availabilitySetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AvailabilitySetData> response = Response.FromValue(AvailabilitySetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _availabilitySetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _availabilitySetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AvailabilitySetData> response = Response.FromValue(AvailabilitySetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _availabilitySetsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, AvailabilitySetPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _availabilitySetsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, AvailabilitySetPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AvailabilitySetData> response = Response.FromValue(AvailabilitySetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _availabilitySetsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, AvailabilitySetPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _availabilitySetsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, AvailabilitySetPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AvailabilitySetData> response = Response.FromValue(AvailabilitySetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _availabilitySetsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _availabilitySetsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _availabilitySetsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _availabilitySetsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _availabilitySetsRestClient.CreateCancelMigrationToVirtualMachineScaleSetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _availabilitySetsRestClient.CreateCancelMigrationToVirtualMachineScaleSetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _availabilitySetsRestClient.CreateCancelMigrationToVirtualMachineScaleSetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _availabilitySetsRestClient.CreateCancelMigrationToVirtualMachineScaleSetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _availabilitySetsRestClient.CreateConvertToVirtualMachineScaleSetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ConvertToVirtualMachineScaleSetContent.ToRequestContent(content), context);
+                using HttpMessage message = _availabilitySetsRestClient.CreateConvertToVirtualMachineScaleSetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ConvertToVirtualMachineScaleSetContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation operation = new ComputeArmOperation(_availabilitySetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _availabilitySetsRestClient.CreateConvertToVirtualMachineScaleSetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ConvertToVirtualMachineScaleSetContent.ToRequestContent(content), context);
+                using HttpMessage message = _availabilitySetsRestClient.CreateConvertToVirtualMachineScaleSetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ConvertToVirtualMachineScaleSetContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation operation = new ComputeArmOperation(_availabilitySetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -693,7 +693,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _availabilitySetsRestClient.CreateStartMigrationToVirtualMachineScaleSetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MigrateToVirtualMachineScaleSetInput.ToRequestContent(content), context);
+                using HttpMessage message = _availabilitySetsRestClient.CreateStartMigrationToVirtualMachineScaleSetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MigrateToVirtualMachineScaleSetInput.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -740,7 +740,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _availabilitySetsRestClient.CreateStartMigrationToVirtualMachineScaleSetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MigrateToVirtualMachineScaleSetInput.ToRequestContent(content), context);
+                using HttpMessage message = _availabilitySetsRestClient.CreateStartMigrationToVirtualMachineScaleSetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MigrateToVirtualMachineScaleSetInput.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -787,7 +787,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _availabilitySetsRestClient.CreateValidateMigrationToVirtualMachineScaleSetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MigrateToVirtualMachineScaleSetInput.ToRequestContent(content), context);
+                using HttpMessage message = _availabilitySetsRestClient.CreateValidateMigrationToVirtualMachineScaleSetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MigrateToVirtualMachineScaleSetInput.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -834,7 +834,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _availabilitySetsRestClient.CreateValidateMigrationToVirtualMachineScaleSetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MigrateToVirtualMachineScaleSetInput.ToRequestContent(content), context);
+                using HttpMessage message = _availabilitySetsRestClient.CreateValidateMigrationToVirtualMachineScaleSetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MigrateToVirtualMachineScaleSetInput.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -868,7 +868,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _availabilitySetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _availabilitySetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<AvailabilitySetData> response = Response.FromValue(AvailabilitySetData.FromResponse(result), result);
                     return Response.FromValue(new AvailabilitySetResource(Client, response.Value), response.GetRawResponse());
@@ -916,7 +916,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _availabilitySetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _availabilitySetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<AvailabilitySetData> response = Response.FromValue(AvailabilitySetData.FromResponse(result), result);
                     return Response.FromValue(new AvailabilitySetResource(Client, response.Value), response.GetRawResponse());
@@ -962,7 +962,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _availabilitySetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _availabilitySetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<AvailabilitySetData> response = Response.FromValue(AvailabilitySetData.FromResponse(result), result);
                     return Response.FromValue(new AvailabilitySetResource(Client, response.Value), response.GetRawResponse());
@@ -1004,7 +1004,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _availabilitySetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _availabilitySetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<AvailabilitySetData> response = Response.FromValue(AvailabilitySetData.FromResponse(result), result);
                     return Response.FromValue(new AvailabilitySetResource(Client, response.Value), response.GetRawResponse());
@@ -1046,7 +1046,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _availabilitySetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _availabilitySetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<AvailabilitySetData> response = Response.FromValue(AvailabilitySetData.FromResponse(result), result);
                     return Response.FromValue(new AvailabilitySetResource(Client, response.Value), response.GetRawResponse());
@@ -1092,7 +1092,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _availabilitySetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _availabilitySetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<AvailabilitySetData> response = Response.FromValue(AvailabilitySetData.FromResponse(result), result);
                     return Response.FromValue(new AvailabilitySetResource(Client, response.Value), response.GetRawResponse());

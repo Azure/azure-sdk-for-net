@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vnetInfoResourcesRestClient.CreateGetVnetFromServerFarmRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _vnetInfoResourcesRestClient.CreateGetVnetFromServerFarmRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceVirtualNetworkData> response = Response.FromValue(AppServiceVirtualNetworkData.FromResponse(result), result);
                 if (response.Value == null)
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vnetInfoResourcesRestClient.CreateGetVnetFromServerFarmRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _vnetInfoResourcesRestClient.CreateGetVnetFromServerFarmRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceVirtualNetworkData> response = Response.FromValue(AppServiceVirtualNetworkData.FromResponse(result), result);
                 if (response.Value == null)
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vnetRoutesRestClient.CreateCreateOrUpdateVnetRouteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, AppServiceVirtualNetworkRoute.ToRequestContent(route), context);
+                using HttpMessage message = _vnetRoutesRestClient.CreateCreateOrUpdateVnetRouteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, AppServiceVirtualNetworkRoute.ToRequestContent(route), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceVirtualNetworkRoute> response = Response.FromValue(AppServiceVirtualNetworkRoute.FromResponse(result), result);
                 if (response.Value == null)
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vnetRoutesRestClient.CreateCreateOrUpdateVnetRouteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, AppServiceVirtualNetworkRoute.ToRequestContent(route), context);
+                using HttpMessage message = _vnetRoutesRestClient.CreateCreateOrUpdateVnetRouteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, AppServiceVirtualNetworkRoute.ToRequestContent(route), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceVirtualNetworkRoute> response = Response.FromValue(AppServiceVirtualNetworkRoute.FromResponse(result), result);
                 if (response.Value == null)
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vnetRoutesRestClient.CreateDeleteVnetRouteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, context);
+                using HttpMessage message = _vnetRoutesRestClient.CreateDeleteVnetRouteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vnetRoutesRestClient.CreateDeleteVnetRouteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, context);
+                using HttpMessage message = _vnetRoutesRestClient.CreateDeleteVnetRouteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vnetRoutesRestClient.CreateUpdateVnetRouteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, AppServiceVirtualNetworkRoute.ToRequestContent(route), context);
+                using HttpMessage message = _vnetRoutesRestClient.CreateUpdateVnetRouteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, AppServiceVirtualNetworkRoute.ToRequestContent(route), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceVirtualNetworkRoute> response = Response.FromValue(AppServiceVirtualNetworkRoute.FromResponse(result), result);
                 if (response.Value == null)
@@ -660,7 +660,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vnetRoutesRestClient.CreateUpdateVnetRouteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, AppServiceVirtualNetworkRoute.ToRequestContent(route), context);
+                using HttpMessage message = _vnetRoutesRestClient.CreateUpdateVnetRouteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeName, AppServiceVirtualNetworkRoute.ToRequestContent(route), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceVirtualNetworkRoute> response = Response.FromValue(AppServiceVirtualNetworkRoute.FromResponse(result), result);
                 if (response.Value == null)

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceWindowsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, maintenanceWindowName, ContainerServiceManagedMaintenanceWindowData.ToRequestContent(data), context);
+                using HttpMessage message = _maintenanceWindowsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, maintenanceWindowName, ContainerServiceManagedMaintenanceWindowData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceArmOperation<ContainerServiceManagedMaintenanceWindowResource> operation = new ContainerServiceArmOperation<ContainerServiceManagedMaintenanceWindowResource>(
                     new ContainerServiceManagedMaintenanceWindowResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceWindowsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, maintenanceWindowName, ContainerServiceManagedMaintenanceWindowData.ToRequestContent(data), context);
+                using HttpMessage message = _maintenanceWindowsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, maintenanceWindowName, ContainerServiceManagedMaintenanceWindowData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceArmOperation<ContainerServiceManagedMaintenanceWindowResource> operation = new ContainerServiceArmOperation<ContainerServiceManagedMaintenanceWindowResource>(
                     new ContainerServiceManagedMaintenanceWindowResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceWindowsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, maintenanceWindowName, context);
+                using HttpMessage message = _maintenanceWindowsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, maintenanceWindowName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerServiceManagedMaintenanceWindowData> response = Response.FromValue(ContainerServiceManagedMaintenanceWindowData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceWindowsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, maintenanceWindowName, context);
+                using HttpMessage message = _maintenanceWindowsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, maintenanceWindowName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerServiceManagedMaintenanceWindowData> response = Response.FromValue(ContainerServiceManagedMaintenanceWindowData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceWindowsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, maintenanceWindowName, context);
+                using HttpMessage message = _maintenanceWindowsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, maintenanceWindowName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ContainerServiceManagedMaintenanceWindowData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceWindowsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, maintenanceWindowName, context);
+                using HttpMessage message = _maintenanceWindowsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, maintenanceWindowName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ContainerServiceManagedMaintenanceWindowData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceWindowsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, maintenanceWindowName, context);
+                using HttpMessage message = _maintenanceWindowsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, maintenanceWindowName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ContainerServiceManagedMaintenanceWindowData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceWindowsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, maintenanceWindowName, context);
+                using HttpMessage message = _maintenanceWindowsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, maintenanceWindowName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ContainerServiceManagedMaintenanceWindowData> response = default;

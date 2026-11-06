@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateAccessOperationGroupRestClient.CreatePutPrivateAccessVnetSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, PrivateAccessData.ToRequestContent(data), context);
+                using HttpMessage message = _privateAccessOperationGroupRestClient.CreatePutPrivateAccessVnetSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, PrivateAccessData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PrivateAccessData> response = Response.FromValue(PrivateAccessData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateAccessOperationGroupRestClient.CreatePutPrivateAccessVnetSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, PrivateAccessData.ToRequestContent(data), context);
+                using HttpMessage message = _privateAccessOperationGroupRestClient.CreatePutPrivateAccessVnetSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, PrivateAccessData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PrivateAccessData> response = Response.FromValue(PrivateAccessData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateAccessOperationGroupRestClient.CreateGetPrivateAccessSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                using HttpMessage message = _privateAccessOperationGroupRestClient.CreateGetPrivateAccessSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PrivateAccessData> response = Response.FromValue(PrivateAccessData.FromResponse(result), result);
                 if (response.Value == null)
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateAccessOperationGroupRestClient.CreateGetPrivateAccessSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                using HttpMessage message = _privateAccessOperationGroupRestClient.CreateGetPrivateAccessSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PrivateAccessData> response = Response.FromValue(PrivateAccessData.FromResponse(result), result);
                 if (response.Value == null)

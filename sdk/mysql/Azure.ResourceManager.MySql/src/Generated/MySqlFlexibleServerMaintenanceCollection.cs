@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenancesRestClient.CreateReadRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, maintenanceName, context);
+                using HttpMessage message = _maintenancesRestClient.CreateReadRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, maintenanceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MySqlFlexibleServerMaintenanceData> response = Response.FromValue(MySqlFlexibleServerMaintenanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenancesRestClient.CreateReadRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, maintenanceName, context);
+                using HttpMessage message = _maintenancesRestClient.CreateReadRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, maintenanceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MySqlFlexibleServerMaintenanceData> response = Response.FromValue(MySqlFlexibleServerMaintenanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenancesRestClient.CreateReadRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, maintenanceName, context);
+                using HttpMessage message = _maintenancesRestClient.CreateReadRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, maintenanceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MySqlFlexibleServerMaintenanceData> response = default;
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenancesRestClient.CreateReadRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, maintenanceName, context);
+                using HttpMessage message = _maintenancesRestClient.CreateReadRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, maintenanceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MySqlFlexibleServerMaintenanceData> response = default;
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenancesRestClient.CreateReadRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, maintenanceName, context);
+                using HttpMessage message = _maintenancesRestClient.CreateReadRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, maintenanceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MySqlFlexibleServerMaintenanceData> response = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenancesRestClient.CreateReadRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, maintenanceName, context);
+                using HttpMessage message = _maintenancesRestClient.CreateReadRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, maintenanceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MySqlFlexibleServerMaintenanceData> response = default;

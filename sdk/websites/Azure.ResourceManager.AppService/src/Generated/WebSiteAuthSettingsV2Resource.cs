@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteAuthSettingsV2sRestClient.CreateUpdateAuthSettingsV2Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, SiteAuthSettingsV2Data.ToRequestContent(data), context);
+                using HttpMessage message = _siteAuthSettingsV2sRestClient.CreateUpdateAuthSettingsV2Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, SiteAuthSettingsV2Data.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SiteAuthSettingsV2Data> response = Response.FromValue(SiteAuthSettingsV2Data.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteAuthSettingsV2sRestClient.CreateUpdateAuthSettingsV2Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, SiteAuthSettingsV2Data.ToRequestContent(data), context);
+                using HttpMessage message = _siteAuthSettingsV2sRestClient.CreateUpdateAuthSettingsV2Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, SiteAuthSettingsV2Data.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SiteAuthSettingsV2Data> response = Response.FromValue(SiteAuthSettingsV2Data.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteAuthSettingsV2sRestClient.CreateGetAuthSettingsV2WithoutSecretsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _siteAuthSettingsV2sRestClient.CreateGetAuthSettingsV2WithoutSecretsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SiteAuthSettingsV2Data> response = Response.FromValue(SiteAuthSettingsV2Data.FromResponse(result), result);
                 if (response.Value == null)
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteAuthSettingsV2sRestClient.CreateGetAuthSettingsV2WithoutSecretsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _siteAuthSettingsV2sRestClient.CreateGetAuthSettingsV2WithoutSecretsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SiteAuthSettingsV2Data> response = Response.FromValue(SiteAuthSettingsV2Data.FromResponse(result), result);
                 if (response.Value == null)
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteAuthSettingsV2sRestClient.CreateGetAuthSettingsV2Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _siteAuthSettingsV2sRestClient.CreateGetAuthSettingsV2Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SiteAuthSettingsV2Data> response = Response.FromValue(SiteAuthSettingsV2Data.FromResponse(result), result);
                 if (response.Value == null)
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteAuthSettingsV2sRestClient.CreateGetAuthSettingsV2Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _siteAuthSettingsV2sRestClient.CreateGetAuthSettingsV2Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SiteAuthSettingsV2Data> response = Response.FromValue(SiteAuthSettingsV2Data.FromResponse(result), result);
                 if (response.Value == null)

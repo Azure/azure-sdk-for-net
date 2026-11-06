@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleAssignmentsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, tenantId, context);
+                using HttpMessage message = _roleAssignmentsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, tenantId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RoleAssignmentData> response = Response.FromValue(RoleAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleAssignmentsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, tenantId, context);
+                using HttpMessage message = _roleAssignmentsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, tenantId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RoleAssignmentData> response = Response.FromValue(RoleAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleAssignmentsRestClient.CreateCreateRequest(Id.Parent.ToString(), Id.Name, RoleAssignmentCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _roleAssignmentsRestClient.CreateCreateRequest(Id.Parent.ToString(), Id.Name, RoleAssignmentCreateOrUpdateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RoleAssignmentData> response = Response.FromValue(RoleAssignmentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleAssignmentsRestClient.CreateCreateRequest(Id.Parent.ToString(), Id.Name, RoleAssignmentCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _roleAssignmentsRestClient.CreateCreateRequest(Id.Parent.ToString(), Id.Name, RoleAssignmentCreateOrUpdateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RoleAssignmentData> response = Response.FromValue(RoleAssignmentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

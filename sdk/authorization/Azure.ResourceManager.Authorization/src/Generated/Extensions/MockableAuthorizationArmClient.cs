@@ -1189,7 +1189,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AlertsRestClient.CreateRefreshAllRequest(scope.ToString(), context);
+                using HttpMessage message = AlertsRestClient.CreateRefreshAllRequest(scope.ToString(), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AuthorizationArmOperation<RoleManagementAlertOperationResult> operation = new AuthorizationArmOperation<RoleManagementAlertOperationResult>(
                     new RoleManagementAlertOperationResultOperationSource(),
@@ -1244,7 +1244,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AlertsRestClient.CreateRefreshAllRequest(scope.ToString(), context);
+                using HttpMessage message = AlertsRestClient.CreateRefreshAllRequest(scope.ToString(), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AuthorizationArmOperation<RoleManagementAlertOperationResult> operation = new AuthorizationArmOperation<RoleManagementAlertOperationResult>(
                     new RoleManagementAlertOperationResultOperationSource(),
@@ -1367,7 +1367,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AlertOperationRestClient.CreateGetAlertOperationRequest(scope.ToString(), operationId, context);
+                using HttpMessage message = AlertOperationRestClient.CreateGetAlertOperationRequest(scope.ToString(), operationId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RoleManagementAlertOperationResult> response = Response.FromValue(RoleManagementAlertOperationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1418,7 +1418,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AlertOperationRestClient.CreateGetAlertOperationRequest(scope.ToString(), operationId, context);
+                using HttpMessage message = AlertOperationRestClient.CreateGetAlertOperationRequest(scope.ToString(), operationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RoleManagementAlertOperationResult> response = Response.FromValue(RoleManagementAlertOperationResult.FromResponse(result), result);
                 if (response.Value == null)

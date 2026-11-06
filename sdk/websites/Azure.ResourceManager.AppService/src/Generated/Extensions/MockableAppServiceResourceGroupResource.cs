@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = WebClientRestClient.CreateValidateRequest(Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), AppServiceValidateContent.ToRequestContent(content), context);
+                using HttpMessage message = WebClientRestClient.CreateValidateRequest(Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), AppServiceValidateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceValidateResult> response = Response.FromValue(AppServiceValidateResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -581,7 +581,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = WebClientRestClient.CreateValidateRequest(Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), AppServiceValidateContent.ToRequestContent(content), context);
+                using HttpMessage message = WebClientRestClient.CreateValidateRequest(Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), AppServiceValidateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceValidateResult> response = Response.FromValue(AppServiceValidateResult.FromResponse(result), result);
                 if (response.Value == null)

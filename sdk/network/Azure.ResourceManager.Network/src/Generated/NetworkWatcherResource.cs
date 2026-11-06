@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkWatchersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkWatchersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkWatcherData> response = Response.FromValue(NetworkWatcherData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkWatchersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkWatchersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkWatcherData> response = Response.FromValue(NetworkWatcherData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkWatchersRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTagsObject.ToRequestContent(networkTagsObject), context);
+                using HttpMessage message = _networkWatchersRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTagsObject.ToRequestContent(networkTagsObject), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkWatcherData> response = Response.FromValue(NetworkWatcherData.FromResponse(result), result);
                 if (response.Value == null)
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkWatchersRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTagsObject.ToRequestContent(networkTagsObject), context);
+                using HttpMessage message = _networkWatchersRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTagsObject.ToRequestContent(networkTagsObject), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkWatcherData> response = Response.FromValue(NetworkWatcherData.FromResponse(result), result);
                 if (response.Value == null)
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkWatchersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkWatchersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation operation = new NetworkArmOperation(_networkWatchersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkWatchersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkWatchersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation operation = new NetworkArmOperation(_networkWatchersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkWatchersRestClient.CreateCheckConnectivityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ConnectivityContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkWatchersRestClient.CreateCheckConnectivityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ConnectivityContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<ConnectivityInformation> operation = new NetworkArmOperation<ConnectivityInformation>(
                     new ConnectivityInformationOperationSource(),
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkWatchersRestClient.CreateCheckConnectivityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ConnectivityContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkWatchersRestClient.CreateCheckConnectivityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ConnectivityContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<ConnectivityInformation> operation = new NetworkArmOperation<ConnectivityInformation>(
                     new ConnectivityInformationOperationSource(),
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkWatchersRestClient.CreateGetAzureReachabilityReportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AzureReachabilityReportContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkWatchersRestClient.CreateGetAzureReachabilityReportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AzureReachabilityReportContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<AzureReachabilityReport> operation = new NetworkArmOperation<AzureReachabilityReport>(
                     new AzureReachabilityReportOperationSource(),
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkWatchersRestClient.CreateGetAzureReachabilityReportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AzureReachabilityReportContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkWatchersRestClient.CreateGetAzureReachabilityReportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AzureReachabilityReportContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<AzureReachabilityReport> operation = new NetworkArmOperation<AzureReachabilityReport>(
                     new AzureReachabilityReportOperationSource(),
@@ -664,7 +664,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkWatchersRestClient.CreateGetFlowLogStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FlowLogStatusContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkWatchersRestClient.CreateGetFlowLogStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FlowLogStatusContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<FlowLogInformation> operation = new NetworkArmOperation<FlowLogInformation>(
                     new FlowLogInformationOperationSource(),
@@ -723,7 +723,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkWatchersRestClient.CreateGetFlowLogStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FlowLogStatusContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkWatchersRestClient.CreateGetFlowLogStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FlowLogStatusContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<FlowLogInformation> operation = new NetworkArmOperation<FlowLogInformation>(
                     new FlowLogInformationOperationSource(),
@@ -782,7 +782,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkWatchersRestClient.CreateGetNetworkConfigurationDiagnosticRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkConfigurationDiagnosticContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkWatchersRestClient.CreateGetNetworkConfigurationDiagnosticRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkConfigurationDiagnosticContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<NetworkConfigurationDiagnosticResponse> operation = new NetworkArmOperation<NetworkConfigurationDiagnosticResponse>(
                     new NetworkConfigurationDiagnosticResponseOperationSource(),
@@ -841,7 +841,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkWatchersRestClient.CreateGetNetworkConfigurationDiagnosticRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkConfigurationDiagnosticContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkWatchersRestClient.CreateGetNetworkConfigurationDiagnosticRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkConfigurationDiagnosticContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<NetworkConfigurationDiagnosticResponse> operation = new NetworkArmOperation<NetworkConfigurationDiagnosticResponse>(
                     new NetworkConfigurationDiagnosticResponseOperationSource(),
@@ -900,7 +900,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkWatchersRestClient.CreateGetNextHopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NextHopContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkWatchersRestClient.CreateGetNextHopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NextHopContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<NextHopResult> operation = new NetworkArmOperation<NextHopResult>(
                     new NextHopResultOperationSource(),
@@ -959,7 +959,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkWatchersRestClient.CreateGetNextHopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NextHopContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkWatchersRestClient.CreateGetNextHopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NextHopContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<NextHopResult> operation = new NetworkArmOperation<NextHopResult>(
                     new NextHopResultOperationSource(),
@@ -1017,7 +1017,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkWatchersRestClient.CreateGetTopologyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TopologyContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkWatchersRestClient.CreateGetTopologyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TopologyContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkTopology> response = Response.FromValue(NetworkTopology.FromResponse(result), result);
                 if (response.Value == null)
@@ -1069,7 +1069,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkWatchersRestClient.CreateGetTopologyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TopologyContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkWatchersRestClient.CreateGetTopologyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TopologyContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkTopology> response = Response.FromValue(NetworkTopology.FromResponse(result), result);
                 if (response.Value == null)
@@ -1122,7 +1122,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkWatchersRestClient.CreateGetTroubleshootingRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TroubleshootingContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkWatchersRestClient.CreateGetTroubleshootingRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TroubleshootingContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<TroubleshootingResult> operation = new NetworkArmOperation<TroubleshootingResult>(
                     new TroubleshootingResultOperationSource(),
@@ -1181,7 +1181,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkWatchersRestClient.CreateGetTroubleshootingRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TroubleshootingContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkWatchersRestClient.CreateGetTroubleshootingRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TroubleshootingContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<TroubleshootingResult> operation = new NetworkArmOperation<TroubleshootingResult>(
                     new TroubleshootingResultOperationSource(),
@@ -1240,7 +1240,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkWatchersRestClient.CreateGetTroubleshootingResultRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, QueryTroubleshootingContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkWatchersRestClient.CreateGetTroubleshootingResultRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, QueryTroubleshootingContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<TroubleshootingResult> operation = new NetworkArmOperation<TroubleshootingResult>(
                     new TroubleshootingResultOperationSource(),
@@ -1299,7 +1299,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkWatchersRestClient.CreateGetTroubleshootingResultRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, QueryTroubleshootingContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkWatchersRestClient.CreateGetTroubleshootingResultRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, QueryTroubleshootingContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<TroubleshootingResult> operation = new NetworkArmOperation<TroubleshootingResult>(
                     new TroubleshootingResultOperationSource(),
@@ -1358,7 +1358,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkWatchersRestClient.CreateGetVmSecurityRulesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SecurityGroupViewContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkWatchersRestClient.CreateGetVmSecurityRulesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SecurityGroupViewContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<SecurityGroupViewResult> operation = new NetworkArmOperation<SecurityGroupViewResult>(
                     new SecurityGroupViewResultOperationSource(),
@@ -1417,7 +1417,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkWatchersRestClient.CreateGetVmSecurityRulesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SecurityGroupViewContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkWatchersRestClient.CreateGetVmSecurityRulesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SecurityGroupViewContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<SecurityGroupViewResult> operation = new NetworkArmOperation<SecurityGroupViewResult>(
                     new SecurityGroupViewResultOperationSource(),
@@ -1476,7 +1476,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkWatchersRestClient.CreateGetAvailableProvidersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AvailableProvidersListContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkWatchersRestClient.CreateGetAvailableProvidersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AvailableProvidersListContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<AvailableProvidersList> operation = new NetworkArmOperation<AvailableProvidersList>(
                     new AvailableProvidersListOperationSource(),
@@ -1535,7 +1535,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkWatchersRestClient.CreateGetAvailableProvidersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AvailableProvidersListContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkWatchersRestClient.CreateGetAvailableProvidersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AvailableProvidersListContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<AvailableProvidersList> operation = new NetworkArmOperation<AvailableProvidersList>(
                     new AvailableProvidersListOperationSource(),
@@ -1594,7 +1594,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkWatchersRestClient.CreateSetFlowLogConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FlowLogInformation.ToRequestContent(flowLogInformation), context);
+                using HttpMessage message = _networkWatchersRestClient.CreateSetFlowLogConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FlowLogInformation.ToRequestContent(flowLogInformation), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<FlowLogInformation> operation = new NetworkArmOperation<FlowLogInformation>(
                     new FlowLogInformationOperationSource(),
@@ -1653,7 +1653,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkWatchersRestClient.CreateSetFlowLogConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FlowLogInformation.ToRequestContent(flowLogInformation), context);
+                using HttpMessage message = _networkWatchersRestClient.CreateSetFlowLogConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FlowLogInformation.ToRequestContent(flowLogInformation), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<FlowLogInformation> operation = new NetworkArmOperation<FlowLogInformation>(
                     new FlowLogInformationOperationSource(),
@@ -1712,7 +1712,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkWatchersRestClient.CreateVerifyIPFlowRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VerificationIPFlowContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkWatchersRestClient.CreateVerifyIPFlowRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VerificationIPFlowContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<VerificationIPFlowResult> operation = new NetworkArmOperation<VerificationIPFlowResult>(
                     new VerificationIPFlowResultOperationSource(),
@@ -1771,7 +1771,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkWatchersRestClient.CreateVerifyIPFlowRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VerificationIPFlowContent.ToRequestContent(content), context);
+                using HttpMessage message = _networkWatchersRestClient.CreateVerifyIPFlowRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VerificationIPFlowContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<VerificationIPFlowResult> operation = new NetworkArmOperation<VerificationIPFlowResult>(
                     new VerificationIPFlowResultOperationSource(),
@@ -1816,7 +1816,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _networkWatchersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _networkWatchersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NetworkWatcherData> response = Response.FromValue(NetworkWatcherData.FromResponse(result), result);
                     return Response.FromValue(new NetworkWatcherResource(Client, response.Value), response.GetRawResponse());
@@ -1864,7 +1864,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _networkWatchersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _networkWatchersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NetworkWatcherData> response = Response.FromValue(NetworkWatcherData.FromResponse(result), result);
                     return Response.FromValue(new NetworkWatcherResource(Client, response.Value), response.GetRawResponse());
@@ -1910,7 +1910,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _networkWatchersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _networkWatchersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NetworkWatcherData> response = Response.FromValue(NetworkWatcherData.FromResponse(result), result);
                     return Response.FromValue(new NetworkWatcherResource(Client, response.Value), response.GetRawResponse());
@@ -1952,7 +1952,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _networkWatchersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _networkWatchersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NetworkWatcherData> response = Response.FromValue(NetworkWatcherData.FromResponse(result), result);
                     return Response.FromValue(new NetworkWatcherResource(Client, response.Value), response.GetRawResponse());
@@ -1994,7 +1994,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _networkWatchersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _networkWatchersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NetworkWatcherData> response = Response.FromValue(NetworkWatcherData.FromResponse(result), result);
                     return Response.FromValue(new NetworkWatcherResource(Client, response.Value), response.GetRawResponse());
@@ -2040,7 +2040,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _networkWatchersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _networkWatchersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NetworkWatcherData> response = Response.FromValue(NetworkWatcherData.FromResponse(result), result);
                     return Response.FromValue(new NetworkWatcherResource(Client, response.Value), response.GetRawResponse());

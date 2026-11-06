@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _trustedAccessRoleBindingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, trustedAccessRoleBindingName, ContainerServiceTrustedAccessRoleBindingData.ToRequestContent(data), context);
+                using HttpMessage message = _trustedAccessRoleBindingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, trustedAccessRoleBindingName, ContainerServiceTrustedAccessRoleBindingData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceArmOperation<ContainerServiceTrustedAccessRoleBindingResource> operation = new ContainerServiceArmOperation<ContainerServiceTrustedAccessRoleBindingResource>(
                     new ContainerServiceTrustedAccessRoleBindingResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _trustedAccessRoleBindingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, trustedAccessRoleBindingName, ContainerServiceTrustedAccessRoleBindingData.ToRequestContent(data), context);
+                using HttpMessage message = _trustedAccessRoleBindingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, trustedAccessRoleBindingName, ContainerServiceTrustedAccessRoleBindingData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceArmOperation<ContainerServiceTrustedAccessRoleBindingResource> operation = new ContainerServiceArmOperation<ContainerServiceTrustedAccessRoleBindingResource>(
                     new ContainerServiceTrustedAccessRoleBindingResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _trustedAccessRoleBindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, trustedAccessRoleBindingName, context);
+                using HttpMessage message = _trustedAccessRoleBindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, trustedAccessRoleBindingName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerServiceTrustedAccessRoleBindingData> response = Response.FromValue(ContainerServiceTrustedAccessRoleBindingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _trustedAccessRoleBindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, trustedAccessRoleBindingName, context);
+                using HttpMessage message = _trustedAccessRoleBindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, trustedAccessRoleBindingName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerServiceTrustedAccessRoleBindingData> response = Response.FromValue(ContainerServiceTrustedAccessRoleBindingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _trustedAccessRoleBindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, trustedAccessRoleBindingName, context);
+                using HttpMessage message = _trustedAccessRoleBindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, trustedAccessRoleBindingName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ContainerServiceTrustedAccessRoleBindingData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _trustedAccessRoleBindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, trustedAccessRoleBindingName, context);
+                using HttpMessage message = _trustedAccessRoleBindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, trustedAccessRoleBindingName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ContainerServiceTrustedAccessRoleBindingData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _trustedAccessRoleBindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, trustedAccessRoleBindingName, context);
+                using HttpMessage message = _trustedAccessRoleBindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, trustedAccessRoleBindingName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ContainerServiceTrustedAccessRoleBindingData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _trustedAccessRoleBindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, trustedAccessRoleBindingName, context);
+                using HttpMessage message = _trustedAccessRoleBindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, trustedAccessRoleBindingName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ContainerServiceTrustedAccessRoleBindingData> response = default;

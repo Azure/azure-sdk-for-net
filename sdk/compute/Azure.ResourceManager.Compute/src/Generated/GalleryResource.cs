@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _galleriesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, @select?.ToString(), expand?.ToString(), context);
+                using HttpMessage message = _galleriesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, @select?.ToString(), expand?.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GalleryData> response = Response.FromValue(GalleryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _galleriesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, @select?.ToString(), expand?.ToString(), context);
+                using HttpMessage message = _galleriesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, @select?.ToString(), expand?.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GalleryData> response = Response.FromValue(GalleryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _galleriesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, GalleryPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _galleriesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, GalleryPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation<GalleryResource> operation = new ComputeArmOperation<GalleryResource>(
                     new GalleryResourceOperationSource(Client),
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _galleriesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, GalleryPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _galleriesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, GalleryPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation<GalleryResource> operation = new ComputeArmOperation<GalleryResource>(
                     new GalleryResourceOperationSource(Client),
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _galleriesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _galleriesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation operation = new ComputeArmOperation(_galleriesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _galleriesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _galleriesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation operation = new ComputeArmOperation(_galleriesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _galleriesRestClient.CreateUpdateSharingProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SharingUpdate.ToRequestContent(sharingUpdate), context);
+                using HttpMessage message = _galleriesRestClient.CreateUpdateSharingProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SharingUpdate.ToRequestContent(sharingUpdate), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation<SharingUpdate> operation = new ComputeArmOperation<SharingUpdate>(
                     new SharingUpdateOperationSource(),
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _galleriesRestClient.CreateUpdateSharingProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SharingUpdate.ToRequestContent(sharingUpdate), context);
+                using HttpMessage message = _galleriesRestClient.CreateUpdateSharingProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SharingUpdate.ToRequestContent(sharingUpdate), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation<SharingUpdate> operation = new ComputeArmOperation<SharingUpdate>(
                     new SharingUpdateOperationSource(),
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _galleriesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, default, context);
+                    using HttpMessage message = _galleriesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<GalleryData> response = Response.FromValue(GalleryData.FromResponse(result), result);
                     return Response.FromValue(new GalleryResource(Client, response.Value), response.GetRawResponse());
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _galleriesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, default, context);
+                    using HttpMessage message = _galleriesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<GalleryData> response = Response.FromValue(GalleryData.FromResponse(result), result);
                     return Response.FromValue(new GalleryResource(Client, response.Value), response.GetRawResponse());
@@ -738,7 +738,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _galleriesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, default, context);
+                    using HttpMessage message = _galleriesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<GalleryData> response = Response.FromValue(GalleryData.FromResponse(result), result);
                     return Response.FromValue(new GalleryResource(Client, response.Value), response.GetRawResponse());
@@ -780,7 +780,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _galleriesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, default, context);
+                    using HttpMessage message = _galleriesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<GalleryData> response = Response.FromValue(GalleryData.FromResponse(result), result);
                     return Response.FromValue(new GalleryResource(Client, response.Value), response.GetRawResponse());
@@ -822,7 +822,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _galleriesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, default, context);
+                    using HttpMessage message = _galleriesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<GalleryData> response = Response.FromValue(GalleryData.FromResponse(result), result);
                     return Response.FromValue(new GalleryResource(Client, response.Value), response.GetRawResponse());
@@ -868,7 +868,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _galleriesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, default, context);
+                    using HttpMessage message = _galleriesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<GalleryData> response = Response.FromValue(GalleryData.FromResponse(result), result);
                     return Response.FromValue(new GalleryResource(Client, response.Value), response.GetRawResponse());
