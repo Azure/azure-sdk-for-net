@@ -142,7 +142,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("item"u8))
                 {
-                    item = LiveDecisionInputItemParam.DeserializeLiveDecisionInputItemParam(prop.Value, options);
+                    item = LiveDecisionInputItemParam.DeserializeLiveDecisionInputItemParam(prop.Value, prop.Value.GetUtf8Bytes(), options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -136,7 +136,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("item"u8))
                 {
-                    item = LiveDecisionStoredInputItemParam.DeserializeLiveDecisionStoredInputItemParam(prop.Value, options);
+                    item = LiveDecisionStoredInputItemParam.DeserializeLiveDecisionStoredInputItemParam(prop.Value, prop.Value.GetUtf8Bytes(), options);
                     continue;
                 }
                 if (options.Format != "W")

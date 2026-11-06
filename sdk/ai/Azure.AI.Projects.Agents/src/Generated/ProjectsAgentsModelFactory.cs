@@ -6007,7 +6007,7 @@ namespace Azure.AI.Projects.Agents
         [Experimental("AAIP001")]
         public static LiveDecisionInputItemParam LiveDecisionInputItemParam(string @type = default)
         {
-            return new UnknownLiveDecisionInputItemParam(new LiveDecisionInputItemParamType(@type), additionalBinaryDataProperties: null);
+            return new UnknownLiveDecisionInputItemParam(new LiveDecisionInputItemParamType(@type), default);
         }
 
         /// <summary> The LiveDecisionInputItemParamMessage. </summary>
@@ -6015,7 +6015,7 @@ namespace Azure.AI.Projects.Agents
         [Experimental("AAIP001")]
         public static LiveDecisionInputItemParamMessage LiveDecisionInputItemParamMessage()
         {
-            return new LiveDecisionInputItemParamMessage(LiveDecisionInputItemParamType.Message, additionalBinaryDataProperties: null);
+            return new LiveDecisionInputItemParamMessage(LiveDecisionInputItemParamType.Message, default);
         }
 
         /// <summary> The LiveDecisionFunctionCallParam. </summary>
@@ -6031,7 +6031,7 @@ namespace Azure.AI.Projects.Agents
         {
             return new LiveDecisionFunctionCallParam(
                 LiveDecisionInputItemParamType.FunctionCall,
-                additionalBinaryDataProperties: null,
+                default,
                 id,
                 callId,
                 status,
@@ -6051,7 +6051,7 @@ namespace Azure.AI.Projects.Agents
         {
             return new LiveDecisionFunctionCallOutputParam(
                 LiveDecisionInputItemParamType.FunctionCallOutput,
-                additionalBinaryDataProperties: null,
+                default,
                 id,
                 callId,
                 status,
@@ -6071,7 +6071,7 @@ namespace Azure.AI.Projects.Agents
         {
             return new LiveDecisionCustomToolCallParam(
                 LiveDecisionInputItemParamType.CustomToolCall,
-                additionalBinaryDataProperties: null,
+                default,
                 id,
                 callId,
                 status,
@@ -6091,7 +6091,7 @@ namespace Azure.AI.Projects.Agents
         {
             return new LiveDecisionCustomToolCallOutputParam(
                 LiveDecisionInputItemParamType.CustomToolCallOutput,
-                additionalBinaryDataProperties: null,
+                default,
                 id,
                 callId,
                 status,
@@ -6587,7 +6587,7 @@ namespace Azure.AI.Projects.Agents
         [Experimental("AAIP001")]
         public static LiveDecisionStoredInputItemParam LiveDecisionStoredInputItemParam(string @type = default)
         {
-            return new UnknownLiveDecisionStoredInputItemParam(new LiveDecisionStoredInputItemParamType(@type), additionalBinaryDataProperties: null);
+            return new UnknownLiveDecisionStoredInputItemParam(new LiveDecisionStoredInputItemParamType(@type), default);
         }
 
         /// <summary> The LiveDecisionStoredInputItemParamMessage. </summary>
@@ -6595,7 +6595,7 @@ namespace Azure.AI.Projects.Agents
         [Experimental("AAIP001")]
         public static LiveDecisionStoredInputItemParamMessage LiveDecisionStoredInputItemParamMessage()
         {
-            return new LiveDecisionStoredInputItemParamMessage(LiveDecisionStoredInputItemParamType.Message, additionalBinaryDataProperties: null);
+            return new LiveDecisionStoredInputItemParamMessage(LiveDecisionStoredInputItemParamType.Message, default);
         }
 
         /// <summary> The LiveDecisionStoredFunctionCallParam. </summary>
@@ -6611,7 +6611,7 @@ namespace Azure.AI.Projects.Agents
         {
             return new LiveDecisionStoredFunctionCallParam(
                 LiveDecisionStoredInputItemParamType.FunctionCall,
-                additionalBinaryDataProperties: null,
+                default,
                 id,
                 callId,
                 status,
@@ -6631,7 +6631,7 @@ namespace Azure.AI.Projects.Agents
         {
             return new LiveDecisionStoredFunctionCallOutputParam(
                 LiveDecisionStoredInputItemParamType.FunctionCallOutput,
-                additionalBinaryDataProperties: null,
+                default,
                 id,
                 callId,
                 status,
@@ -6651,7 +6651,7 @@ namespace Azure.AI.Projects.Agents
         {
             return new LiveDecisionStoredCustomToolCallParam(
                 LiveDecisionStoredInputItemParamType.CustomToolCall,
-                additionalBinaryDataProperties: null,
+                default,
                 id,
                 callId,
                 status,
@@ -6671,7 +6671,7 @@ namespace Azure.AI.Projects.Agents
         {
             return new LiveDecisionStoredCustomToolCallOutputParam(
                 LiveDecisionStoredInputItemParamType.CustomToolCallOutput,
-                additionalBinaryDataProperties: null,
+                default,
                 id,
                 callId,
                 status,

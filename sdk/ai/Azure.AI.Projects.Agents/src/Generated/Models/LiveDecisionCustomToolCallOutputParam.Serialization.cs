@@ -4,7 +4,7 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
@@ -61,6 +61,14 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LiveDecisionCustomToolCallOutputParam>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+            if (Patch.Contains("$"u8))
+            {
+                writer.WriteRawValue(Patch.GetJson("$"u8));
+                return;
+            }
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
@@ -76,7 +84,8 @@ namespace Azure.AI.Projects.Agents
                 throw new FormatException($"The model {nameof(LiveDecisionCustomToolCallOutputParam)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Id, _idIsDefined))
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+            if (Optional.IsDefined(Id, _idIsDefined) && !Patch.Contains("$.id"u8))
             {
                 if (Id != null)
                 {
@@ -88,9 +97,12 @@ namespace Azure.AI.Projects.Agents
                     writer.WriteNull("id"u8);
                 }
             }
-            writer.WritePropertyName("call_id"u8);
-            writer.WriteStringValue(CallId);
-            if (Optional.IsDefined(Status, _statusIsDefined))
+            if (!Patch.Contains("$.call_id"u8))
+            {
+                writer.WritePropertyName("call_id"u8);
+                writer.WriteStringValue(CallId);
+            }
+            if (Optional.IsDefined(Status, _statusIsDefined) && !Patch.Contains("$.status"u8))
             {
                 if (Status != null)
                 {
@@ -102,15 +114,21 @@ namespace Azure.AI.Projects.Agents
                     writer.WriteNull("status"u8);
                 }
             }
-            writer.WritePropertyName("output"u8);
-#if NET6_0_OR_GREATER
-            writer.WriteRawValue(Output);
-#else
-            using (JsonDocument document = JsonDocument.Parse(Output))
+            if (!Patch.Contains("$.output"u8))
             {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
+                writer.WritePropertyName("output"u8);
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(Output);
+#else
+                using (JsonDocument document = JsonDocument.Parse(Output))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
+            }
+
+            Patch.WriteTo(writer);
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -139,7 +157,7 @@ namespace Azure.AI.Projects.Agents
                 return null;
             }
             LiveDecisionInputItemParamType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            JsonPatch patch = default;
             bool idIsDefined = false;
             string id = default;
             string callId = default;
@@ -185,14 +203,11 @@ namespace Azure.AI.Projects.Agents
                     output = prop.Value.GetUtf8Bytes();
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
-                }
+                patch.Set([.. "$."u8, .. Encoding.UTF8.GetBytes(prop.Name)], prop.Value.GetUtf8Bytes());
             }
             return new LiveDecisionCustomToolCallOutputParam(
                 @type,
-                additionalBinaryDataProperties,
+                patch,
                 id,
                 callId,
                 status,

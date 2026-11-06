@@ -2,9 +2,10 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
+using System.ClientModel.Primitives;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -15,8 +16,8 @@ namespace Azure.AI.Projects.Agents
     [Experimental("AAIP001")]
     public abstract partial class LiveDecisionStoredInputItemParam
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        [Experimental("SCME0001")]
+        private JsonPatch _patch;
 
         /// <summary> Initializes a new instance of <see cref="LiveDecisionStoredInputItemParam"/>. </summary>
         /// <param name="type"></param>
@@ -27,12 +28,20 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of <see cref="LiveDecisionStoredInputItemParam"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LiveDecisionStoredInputItemParam(LiveDecisionStoredInputItemParamType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="patch"></param>
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+        internal LiveDecisionStoredInputItemParam(LiveDecisionStoredInputItemParamType @type, in JsonPatch patch)
         {
             Type = @type;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _patch = patch;
         }
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+
+        /// <summary> Gets the Patch. </summary>
+        [JsonIgnore]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Experimental("SCME0001")]
+        public ref JsonPatch Patch => ref _patch;
 
         /// <summary> Gets or sets the Type. </summary>
         internal LiveDecisionStoredInputItemParamType Type { get; set; }

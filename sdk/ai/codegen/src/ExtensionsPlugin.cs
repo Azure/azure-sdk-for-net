@@ -66,6 +66,9 @@ namespace Extensions.Plugin
                 "BrowserAutomationToolCallOutput",
                 "FabricDataAgentToolCall",
                 "FabricDataAgentToolCallOutput",
+                // Dynamic roots keep inherited constructors and message payload serialization consistent.
+                "LiveDecisionInputItemParam",
+                "LiveDecisionStoredInputItemParam",
                 "MemoryCommandToolCall",
                 "MemoryCommandToolCallOutput",
                 "MemorySearchToolCall",

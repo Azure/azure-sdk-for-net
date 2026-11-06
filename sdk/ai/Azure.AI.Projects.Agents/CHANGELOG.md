@@ -26,6 +26,7 @@
 - `VoiceRecordingChannelLayout.Left` and `Right` now use the extensible `VoiceAudioRole` type instead of `string`. Their wire values remain `user` and `agent`.
 
 ### Bugs Fixed
+- Fixed Live Decision input and stored-message payloads to expose public patch access and preserve message fields during wire serialization.
 - Fixed typed persisted Realtime response status and output-modality serialization to use the external OpenAI enum values rather than treating them as ModelReaderWriter models.
 - Fixed semantic VAD eagerness serialization and deserialization to preserve the external OpenAI string values.
 - Fixed the Realtime model factory to preserve newly added fields, including `Soundscape` and `PostCall`, without changing the order of its existing parameters.
