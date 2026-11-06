@@ -50,12 +50,7 @@ namespace Azure.ResourceManager.PlatformValidation.Tests
 
         private async Task ExerciseLifecycleAsync(bool execute)
         {
-            string source = execute ? TestEnvironment.SourceVhdUri : null;
-            if (execute)
-            {
-                Assert.That(Uri.TryCreate(source, UriKind.Absolute, out Uri image) && image.Scheme == "https",
-                    Is.True, "An approved HTTPS source VHD is required.");
-            }
+            string source = execute ? RequireCredentialFreeVhd(TestEnvironment.SourceVhdUri) : null;
 
             string cvName = Recording.GenerateAssetName("dotnetcv").ToLowerInvariant();
             string groupName = Recording.GenerateAssetName("dotnetpv").ToLowerInvariant();
@@ -70,7 +65,7 @@ namespace Azure.ResourceManager.PlatformValidation.Tests
             using CancellationTokenSource timeout = new(TimeSpan.FromMinutes(30));
             CancellationToken token = timeout.Token;
             Assert.That((await groups.ExistsAsync(groupName, token)).Value, Is.False);
-            ResourceGroupData groupData = new(AzureLocation.EastUS)
+            ResourceGroupData groupData = new(new AzureLocation(TestEnvironment.ValidationLocation))
             {
                 Tags = { ["sdk-test"] = cvName }
             };
@@ -171,7 +166,7 @@ namespace Azure.ResourceManager.PlatformValidation.Tests
                 Properties = new ValidationExecutionPlanProperties
                 {
                     Description = "SDK boot plan",
-                    PlanConfigurationJson = CreateConfiguration(owned.PlanName, source)
+                    PlanConfigurationJson = CreateConfiguration(owned.PlanName, source, subscription.Id.SubscriptionId)
                 }
             };
             ValidationExecutionPlanResource plan = await CompleteMutationAsync(owned,
@@ -212,12 +207,14 @@ namespace Azure.ResourceManager.PlatformValidation.Tests
             };
             ExecutionPlanRunResource run = await CompleteMutationAsync(owned,
                 () => runs.CreateOrUpdateAsync(WaitUntil.Started, owned.RunName, runData, token), token);
+            owned.MutationInProgress = true;
             for (int attempt = 0; !IsTerminal(run.Data.Properties.Status?.ToString()) && attempt < 180; attempt++)
             {
                 Assert.That(run.Data.Properties.ProvisioningState?.ToString(), Is.Not.EqualTo("Failed"));
                 await PauseAsync(TimeSpan.FromSeconds(10), token);
                 run = (await run.GetAsync(token)).Value;
             }
+            owned.MutationInProgress = !IsTerminal(run.Data.Properties.Status?.ToString());
             Assert.That(run.Data.Properties.Status, Is.EqualTo(ExecutionPlanRunStatus.Succeeded),
                 "The workload did not finish successfully; nonterminal resources are retained.");
             Assert.That(run.Data.Properties.ProvisioningState, Is.EqualTo(ExecutionPlanRunProvisioningState.Succeeded));
@@ -246,7 +243,7 @@ namespace Azure.ResourceManager.PlatformValidation.Tests
             Assert.That(test.Data.Properties.PassDetails, Is.Not.Empty);
             Assert.That(test.Data.Properties.FailureDetails, Is.Empty);
             Assert.That(test.Data.Properties.TestId.ToString(),
-                Is.EqualTo("/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test"));
+                Is.EqualTo($"/subscriptions/{subscription.Id.SubscriptionId}/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test").IgnoreCase);
         }
 
         private async Task CleanupAsync(OwnedResources owned, SubscriptionResource subscription, CancellationToken token)
@@ -369,7 +366,18 @@ namespace Azure.ResourceManager.PlatformValidation.Tests
             return values;
         }
 
-        private static string CreateConfiguration(string name, string source) => JsonSerializer.Serialize(new
+        internal static string RequireCredentialFreeVhd(string source)
+        {
+            if (!Uri.TryCreate(source, UriKind.Absolute, out Uri uri) || uri.Scheme != "https" ||
+                !string.IsNullOrEmpty(uri.UserInfo) || !string.IsNullOrEmpty(uri.Query) ||
+                !string.IsNullOrEmpty(uri.Fragment) || !uri.AbsolutePath.EndsWith(".vhd", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException("An approved credential-free HTTPS VHD is required.", nameof(source));
+            }
+            return source;
+        }
+
+        internal static string CreateConfiguration(string name, string source, string subscription) => JsonSerializer.Serialize(new
         {
             apiVersion = "microsoft.validate/executionPlan.v0",
             kind = "ExecutionPlan",
@@ -398,7 +406,7 @@ namespace Azure.ResourceManager.PlatformValidation.Tests
                     {
                         name = "vm-boot-test",
                         type = "test",
-                        testRef = "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test"
+                        testRef = $"/subscriptions/{subscription}/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test"
                     }
                 }
             }

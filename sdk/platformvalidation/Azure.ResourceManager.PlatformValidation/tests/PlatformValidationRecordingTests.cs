@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using NUnit.Framework;
@@ -9,6 +10,31 @@ namespace Azure.ResourceManager.PlatformValidation.Tests
 {
     public class PlatformValidationRecordingTests
     {
+        [TestCase("https://example.invalid/image.vhd?sig=example-secret")]
+        [TestCase("https://example-secret@example.invalid/image.vhd")]
+        [TestCase("https://example.invalid/image.vhd#example-secret")]
+        [TestCase("http://example.invalid/image.vhd")]
+        [TestCase("https://[invalid/image.vhd")]
+        public void RejectCredentialBearingImageWithoutEchoingInput(string source)
+        {
+            ArgumentException error = Assert.Throws<ArgumentException>(
+                () => PlatformValidationLifecycleTests.RequireCredentialFreeVhd(source));
+            Assert.That(error.Message, Does.Not.Contain("example-secret"));
+        }
+
+        [Test]
+        public void PlainImageConfigurationReferencesSubscriptionScopedTest()
+        {
+            const string source = "https://example.invalid/image.vhd";
+            Assert.That(PlatformValidationLifecycleTests.RequireCredentialFreeVhd(source), Is.EqualTo(source));
+            using JsonDocument document = JsonDocument.Parse(
+                PlatformValidationLifecycleTests.CreateConfiguration("plan", source, "requested"));
+            string testRef = document.RootElement.GetProperty("authoring").GetProperty("steps")[0]
+                .GetProperty("testRef").GetString();
+            Assert.That(testRef, Is.EqualTo(
+                "/subscriptions/requested/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test"));
+        }
+
         [Test]
         public void SanitizeVhdInEmbeddedDocuments(
             [Values(0, 1, 2)] int depth,
