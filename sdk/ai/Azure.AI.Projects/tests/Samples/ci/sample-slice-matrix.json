@@ -1,0 +1,34 @@
+{
+  "displayNames": {
+    "/p:UseProjectReferenceToAzureClients=false": "PackageRef"
+  },
+  "matrix": {
+    "Agent": {
+      "Ubuntu-24.04_NET10.0": {
+        "OSVmImage": "env:LINUXVMIMAGE",
+        "Pool": "env:LINUXPOOL",
+        "TestTargetFramework": "net10.0"
+      }
+    },
+    "BuildConfiguration": [
+      "Debug"
+    ],
+    "AdditionalTestArguments": [
+      "/p:UseProjectReferenceToAzureClients=false"
+    ],
+    "SampleSelector": {
+      "ProjectsClassicAgents": {
+        "SampleQueueName": "q1",
+        "SampleSliceFilter": "((FullyQualifiedName~Azure.AI.Projects.Tests.Samples.Sample_AIAgents & Name=AgentsBasics & FullyQualifiedName~False))"
+      },
+      "AgentsVersionSelection": {
+        "SampleQueueName": "q2",
+        "SampleSliceFilter": "((FullyQualifiedName~Azure.AI.Projects.Agents.Tests.Samples.Sample_agents_CRUD & Name=VersionSelection & Name!=AgentCRUDAsync & Name!=AgentCRUD & Name!=ErrorHandling & FullyQualifiedName~False))"
+      },
+      "OpenAIResponseBasic": {
+        "SampleQueueName": "q3",
+        "SampleSliceFilter": "((FullyQualifiedName~Azure.AI.Extensions.OpenAI.Tests.Samples.Sample_ResponseBasic & Name=AgentResponseSync & FullyQualifiedName~False))"
+      }
+    }
+  }
+}

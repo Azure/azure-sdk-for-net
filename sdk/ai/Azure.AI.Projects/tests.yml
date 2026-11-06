@@ -1,0 +1,225 @@
+# cspell:ignore pscore
+trigger: none
+pr: none
+
+parameters:
+  - name: selectionKind
+    displayName: 'Selection type'
+    type: string
+    default: test-id
+    values:
+      - sample-path
+      - test-id
+  - name: selection
+    displayName: 'Selection value (; separated)'
+    type: string
+    default: '((FullyQualifiedName~Azure.AI.Projects.Tests.Samples.Sample_AIAgents & Name=AgentsBasics)|(FullyQualifiedName~Azure.AI.Projects.Agents.Tests.Samples.Sample_agents_CRUD & Name=VersionSelection)|(FullyQualifiedName~Azure.AI.Extensions.OpenAI.Tests.Samples.Sample_ResponseBasic & Name=AgentResponseSync))'
+  - name: testQueueCount
+    displayName: 'Maximum parallel live test workers'
+    type: number
+    default: 4
+    values:
+      - 1
+      - 2
+      - 3
+      - 4
+  - name: identityResourceGroup
+    displayName: 'Existing resource group with the Python pipeline shared identities'
+    type: string
+  - name: modelName
+    displayName: 'Model deployment name'
+    type: string
+    default: gpt-4.1
+  - name: modelVersion
+    displayName: 'Model version'
+    type: string
+    default: '2025-04-14'
+  - name: modelSku
+    displayName: 'Model SKU'
+    type: string
+    default: GlobalStandard
+    values:
+      - GlobalStandard
+      - Standard
+  - name: modelCapacity
+    displayName: 'Model capacity (TPM units)'
+    type: number
+    default: 40
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
+  parameters:
+    ServiceDirectory: ai
+    SupportedClouds: 'Public'
+    CloudConfig:
+      Public:
+        ServiceConnection: azure-sdk-tests
+        UseAzureCliForTests: true
+    Location: 'East US'
+    MaxParallel: ${{ parameters.testQueueCount }}
+    TimeoutInMinutes: 120
+    DeployTestResources: false
+    UseFederatedAuth: true
+    IgnoreTestFailures: false
+    EnvVars:
+      CLIENTMODEL_TEST_MODE: Live
+      FOUNDRY_PROJECT_ENDPOINT: $(FOUNDRY_PROJECT_ENDPOINT)
+      FOUNDRY_MODEL_NAME: $(FOUNDRY_MODEL_NAME)
+      FOUNDRY_AGENT_NAME: $(FOUNDRY_AGENT_NAME)
+      AZURE_SUBSCRIPTION_ID: $(AZURE_SUBSCRIPTION_ID)
+      AZURE_TENANT_ID: $(AZURE_TENANT_ID)
+    MatrixConfigs:
+      - Name: ai_projects_samples_single_run
+        Path: sdk/ai/Azure.AI.Projects/tests/Samples/ci/sample-slice-matrix.json
+        Selection: sparse
+        GenerateVMJobs: true
+    MatrixFilters:
+      - AdditionalTestArguments=^(?!.*UseProjectReferenceToAzureClients=true)
+      - TestTargetFramework=^net10.0$
+      - BuildConfiguration=^Debug$
+      - SampleSliceFilter=^\(\(FullyQualifiedName~Azure\.AI\.(Projects\.Tests\.Samples|Projects\.Agents\.Tests\.Samples|Extensions\.OpenAI\.Tests\.Samples).*$
+    PreSteps:
+      - pwsh: |
+          $selectionKind = $env:SAMPLE_SELECTION_KIND
+          $selection = $env:SAMPLE_SELECTION
+
+          if ([string]::IsNullOrWhiteSpace($selection)) {
+            throw 'selection must not be empty.'
+          }
+
+          $items = @($selection -split ';' | ForEach-Object { $_.Trim() } | Where-Object { -not [string]::IsNullOrWhiteSpace($_) })
+          if ($items.Count -eq 0) {
+            throw 'selection did not produce any valid value.'
+          }
+
+          if ($selectionKind -eq 'sample-path') {
+            $filters = New-Object System.Collections.Generic.List[string]
+            foreach ($item in $items) {
+              if ($item -like 'Azure.AI.Projects/tests/Samples*') {
+                $filters.Add('FullyQualifiedName~Azure.AI.Projects.Tests.Samples')
+              }
+              elseif ($item -like 'Azure.AI.Projects.Agents/tests/Samples*') {
+                $filters.Add('FullyQualifiedName~Azure.AI.Projects.Agents.Tests.Samples')
+              }
+              elseif ($item -like 'Azure.AI.Extensions.OpenAI/tests/Samples*') {
+                $filters.Add('FullyQualifiedName~Azure.AI.Extensions.OpenAI.Tests.Samples')
+              }
+              else {
+                throw "Unsupported sample path selection: $item"
+              }
+            }
+
+            $uniqueFilters = @($filters | Select-Object -Unique)
+            $additionalTestFilters = '(' + ($uniqueFilters -join '|') + ')'
+          }
+          elseif ($selectionKind -eq 'test-id') {
+            $additionalTestFilters = '(' + ($items -join '|') + ')'
+          }
+          else {
+            throw "Unsupported selectionKind: $selectionKind"
+          }
+
+          if ([string]::IsNullOrWhiteSpace($env:SAMPLE_SLICE_FILTER)) {
+            throw 'The worker matrix must provide a sample slice filter.'
+          }
+          $additionalTestFilters = "($additionalTestFilters)&($env:SAMPLE_SLICE_FILTER)"
+
+          Write-Host "Using AdditionalTestFilters: $additionalTestFilters"
+          Write-Host "##vso[task.setvariable variable=AdditionalTestFilters]$additionalTestFilters"
+        displayName: 'Prepare sample test filter and deployment parameters'
+        env:
+          SAMPLE_SELECTION_KIND: ${{ parameters.selectionKind }}
+          SAMPLE_SELECTION: ${{ parameters.selection }}
+          SAMPLE_SLICE_FILTER: $(SampleSliceFilter)
+      - task: AzureCLI@2
+        displayName: 'Provision Standard Foundry and model with shared identities'
+        inputs:
+          azureSubscription: azure-sdk-tests
+          scriptType: pscore
+          scriptLocation: inlineScript
+          inlineScript: |
+            & './sdk/ai/Azure.AI.Projects/tests/Samples/ci/Invoke-StandardProvisioning.ps1' `
+              -OutputDirectory $env:STANDARD_FOUNDRY_DIRECTORY `
+              -IdentityResourceGroup $env:SAMPLE_IDENTITY_RESOURCE_GROUP -QueueName $env:SAMPLE_QUEUE_NAME `
+              -ModelName $env:SAMPLE_MODEL_NAME -ModelVersion $env:SAMPLE_MODEL_VERSION `
+              -ModelSku $env:SAMPLE_MODEL_SKU -ModelCapacity ([int] $env:SAMPLE_MODEL_CAPACITY) -ConfirmProvisioning
+        env:
+          STANDARD_FOUNDRY_DIRECTORY: $(Build.ArtifactStagingDirectory)/standard-foundry
+          AZURE_SUBSCRIPTION_ID: $(AZURE_SUBSCRIPTION_ID)
+          AZURE_TENANT_ID: $(AZURE_TENANT_ID)
+          SAMPLE_QUEUE_NAME: $(SampleQueueName)
+          SAMPLE_IDENTITY_RESOURCE_GROUP: ${{ parameters.identityResourceGroup }}
+          SAMPLE_MODEL_NAME: ${{ parameters.modelName }}
+          SAMPLE_MODEL_VERSION: ${{ parameters.modelVersion }}
+          SAMPLE_MODEL_SKU: ${{ parameters.modelSku }}
+          SAMPLE_MODEL_CAPACITY: ${{ parameters.modelCapacity }}
+    PostSteps:
+      - task: AzureCLI@2
+        displayName: 'Clean up this worker Standard Foundry resources'
+        condition: always()
+        inputs:
+          azureSubscription: azure-sdk-tests
+          scriptType: pscore
+          scriptLocation: inlineScript
+          inlineScript: |
+            & './sdk/ai/Azure.AI.Projects/tests/Samples/ci/Remove-SampleResources.ps1' `
+              -StatePath (Join-Path $env:STANDARD_FOUNDRY_DIRECTORY 'deployment-state.json') `
+              -QueueName $env:SAMPLE_QUEUE_NAME -ConfirmCleanup
+        env:
+          STANDARD_FOUNDRY_DIRECTORY: $(Build.ArtifactStagingDirectory)/standard-foundry
+          AZURE_SUBSCRIPTION_ID: $(AZURE_SUBSCRIPTION_ID)
+          AZURE_TENANT_ID: $(AZURE_TENANT_ID)
+          SAMPLE_QUEUE_NAME: $(SampleQueueName)
+      - pwsh: |
+          New-Item -ItemType Directory -Force -Path '$(Build.ArtifactStagingDirectory)/standard-foundry' | Out-Null
+          $artifactDir = Join-Path '$(Build.ArtifactStagingDirectory)' 'sample-console-output'
+          New-Item -ItemType Directory -Force -Path $artifactDir | Out-Null
+
+          $combinedOutput = Join-Path $artifactDir 'console-output.txt'
+          $trxFiles = Get-ChildItem -Path '$(Build.SourcesDirectory)' -Recurse -Filter *.trx -ErrorAction SilentlyContinue
+
+          if (-not $trxFiles) {
+            Set-Content -Path $combinedOutput -Value 'No TRX files were found.'
+            exit 0
+          }
+
+          foreach ($trx in $trxFiles) {
+            try {
+              [xml]$doc = Get-Content -LiteralPath $trx.FullName
+              $ns = New-Object System.Xml.XmlNamespaceManager($doc.NameTable)
+              $ns.AddNamespace('x', 'http://microsoft.com/schemas/VisualStudio/TeamTest/2010')
+
+              $results = $doc.SelectNodes('//x:UnitTestResult', $ns)
+              foreach ($result in $results) {
+                $stdOut = $result.SelectSingleNode('x:Output/x:StdOut', $ns)
+                if ($null -ne $stdOut -and -not [string]::IsNullOrWhiteSpace($stdOut.InnerText)) {
+                  Add-Content -Path $combinedOutput -Value "[$($trx.Name)] $($result.testName)"
+                  Add-Content -Path $combinedOutput -Value $stdOut.InnerText
+                  Add-Content -Path $combinedOutput -Value ''
+                }
+              }
+            }
+            catch {
+              Add-Content -Path $combinedOutput -Value "Failed to parse TRX $($trx.FullName): $($_.Exception.Message)"
+            }
+          }
+
+          if (-not (Test-Path $combinedOutput)) {
+            Set-Content -Path $combinedOutput -Value 'No StdOut entries were captured from TRX files.'
+          }
+        displayName: 'Collect sample Console.WriteLine output'
+        condition: always()
+
+      - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
+        parameters:
+          CustomCondition: always()
+          ArtifactPath: '$(Build.ArtifactStagingDirectory)/standard-foundry'
+          ArtifactName: 'standard-foundry-$(Agent.JobName)-$(System.JobAttempt)'
+          SbomEnabled: false
+
+      - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
+        parameters:
+          CustomCondition: always()
+          ArtifactPath: '$(Build.ArtifactStagingDirectory)/sample-console-output'
+          ArtifactName: 'sample-console-output-$(Agent.JobName)'
+          SbomEnabled: false
