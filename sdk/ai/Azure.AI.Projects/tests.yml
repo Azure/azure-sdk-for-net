@@ -29,11 +29,11 @@ parameters:
   - name: modelName
     displayName: 'Model deployment name'
     type: string
-    default: gpt-5.5
+    default: gpt-4.1
   - name: modelVersion
     displayName: 'Model version'
     type: string
-    default: '2026-04-24'
+    default: '2025-04-14'
   - name: modelSku
     displayName: 'Model SKU'
     type: string

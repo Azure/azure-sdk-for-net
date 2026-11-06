@@ -80,6 +80,16 @@ Describe 'Standard Foundry provisioning contract' {
 }
 
 Describe 'Pipeline sample selection contract' {
+    It 'defaults to a model compatible with the classic Agents sample' {
+        $pipeline = Get-Content -LiteralPath (Join-Path $PSScriptRoot '../../../../tests.yml') -Raw
+        $modelNameParameter = [regex]::Match(
+            $pipeline, '(?ms)^  - name: modelName\r?\n.*?(?=^  - name:|\z)').Value
+        $modelVersionParameter = [regex]::Match(
+            $pipeline, '(?ms)^  - name: modelVersion\r?\n.*?(?=^  - name:|\z)').Value
+        $modelNameParameter | Should Match '(?m)^    default: gpt-4\.1\r?$'
+        $modelVersionParameter | Should Match "(?m)^    default: '2025-04-14'\r?$"
+    }
+
     It 'keeps the writable test filter out of the read-only matrix' {
         $matrix = Get-Content -LiteralPath (Join-Path $PSScriptRoot '../sample-slice-matrix.json') -Raw | ConvertFrom-Json -AsHashtable
         $matrix.matrix.ContainsKey('AdditionalTestFilters') | Should Be $false

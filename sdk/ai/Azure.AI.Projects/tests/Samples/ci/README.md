@@ -71,7 +71,11 @@ capacity across parallel workers.
 - Each worker uses PowerShell 7.2+ and Azure CLI under the service connection
   to resolve identities, check eligibility, provision Standard Foundry and the
   selected model, and publish its new endpoint/model/agent bindings to tests.
-- Model name, version, SKU, and capacity remain run parameters.
+- Model name, version, SKU, and capacity remain run parameters. The default is
+  `gpt-4.1` (`2025-04-14`) for both classic Agents and Responses samples.
+  Overrides must support the selected APIs: reasoning models can reject
+  sampling defaults used internally by the classic Agents service even when
+  the sample does not set sampling parameters.
 - Build and live tests use the same service connection through the existing
   federated-auth .NET template. In Azure Pipelines, all three test environments
   explicitly use `AzurePipelinesCredential` with the task's service-connection
