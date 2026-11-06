@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ProgramEnrollment
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eduEnrollmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, enrollmentName, EduEnrollmentData.ToRequestContent(data), context);
+                using HttpMessage message = _eduEnrollmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, enrollmentName, EduEnrollmentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ProgramEnrollmentArmOperation<EduEnrollmentResource> operation = new ProgramEnrollmentArmOperation<EduEnrollmentResource>(
                     new EduEnrollmentResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ProgramEnrollment
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eduEnrollmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, enrollmentName, EduEnrollmentData.ToRequestContent(data), context);
+                using HttpMessage message = _eduEnrollmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, enrollmentName, EduEnrollmentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ProgramEnrollmentArmOperation<EduEnrollmentResource> operation = new ProgramEnrollmentArmOperation<EduEnrollmentResource>(
                     new EduEnrollmentResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ProgramEnrollment
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eduEnrollmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, enrollmentName, context);
+                using HttpMessage message = _eduEnrollmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, enrollmentName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EduEnrollmentData> response = Response.FromValue(EduEnrollmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ProgramEnrollment
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eduEnrollmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, enrollmentName, context);
+                using HttpMessage message = _eduEnrollmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, enrollmentName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EduEnrollmentData> response = Response.FromValue(EduEnrollmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.ProgramEnrollment
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eduEnrollmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, enrollmentName, context);
+                using HttpMessage message = _eduEnrollmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, enrollmentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EduEnrollmentData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.ProgramEnrollment
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eduEnrollmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, enrollmentName, context);
+                using HttpMessage message = _eduEnrollmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, enrollmentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EduEnrollmentData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.ProgramEnrollment
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eduEnrollmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, enrollmentName, context);
+                using HttpMessage message = _eduEnrollmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, enrollmentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EduEnrollmentData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.ProgramEnrollment
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eduEnrollmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, enrollmentName, context);
+                using HttpMessage message = _eduEnrollmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, enrollmentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EduEnrollmentData> response = default;

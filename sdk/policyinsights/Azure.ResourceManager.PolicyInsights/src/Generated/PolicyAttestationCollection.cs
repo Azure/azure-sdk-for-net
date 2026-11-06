@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attestationsRestClient.CreateCreateOrUpdateAtResourceRequest(Id.ToString(), attestationName, PolicyAttestationData.ToRequestContent(data), context);
+                using HttpMessage message = _attestationsRestClient.CreateCreateOrUpdateAtResourceRequest(Id.ToString(), attestationName, PolicyAttestationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PolicyInsightsArmOperation<PolicyAttestationResource> operation = new PolicyInsightsArmOperation<PolicyAttestationResource>(
                     new PolicyAttestationResourceOperationSource(Client),
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attestationsRestClient.CreateCreateOrUpdateAtResourceRequest(Id.ToString(), attestationName, PolicyAttestationData.ToRequestContent(data), context);
+                using HttpMessage message = _attestationsRestClient.CreateCreateOrUpdateAtResourceRequest(Id.ToString(), attestationName, PolicyAttestationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PolicyInsightsArmOperation<PolicyAttestationResource> operation = new PolicyInsightsArmOperation<PolicyAttestationResource>(
                     new PolicyAttestationResourceOperationSource(Client),
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attestationsRestClient.CreateGetAtResourceRequest(Id.ToString(), attestationName, context);
+                using HttpMessage message = _attestationsRestClient.CreateGetAtResourceRequest(Id.ToString(), attestationName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PolicyAttestationData> response = Response.FromValue(PolicyAttestationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attestationsRestClient.CreateGetAtResourceRequest(Id.ToString(), attestationName, context);
+                using HttpMessage message = _attestationsRestClient.CreateGetAtResourceRequest(Id.ToString(), attestationName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PolicyAttestationData> response = Response.FromValue(PolicyAttestationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attestationsRestClient.CreateGetAtResourceRequest(Id.ToString(), attestationName, context);
+                using HttpMessage message = _attestationsRestClient.CreateGetAtResourceRequest(Id.ToString(), attestationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PolicyAttestationData> response = default;
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attestationsRestClient.CreateGetAtResourceRequest(Id.ToString(), attestationName, context);
+                using HttpMessage message = _attestationsRestClient.CreateGetAtResourceRequest(Id.ToString(), attestationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PolicyAttestationData> response = default;
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attestationsRestClient.CreateGetAtResourceRequest(Id.ToString(), attestationName, context);
+                using HttpMessage message = _attestationsRestClient.CreateGetAtResourceRequest(Id.ToString(), attestationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PolicyAttestationData> response = default;
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attestationsRestClient.CreateGetAtResourceRequest(Id.ToString(), attestationName, context);
+                using HttpMessage message = _attestationsRestClient.CreateGetAtResourceRequest(Id.ToString(), attestationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PolicyAttestationData> response = default;

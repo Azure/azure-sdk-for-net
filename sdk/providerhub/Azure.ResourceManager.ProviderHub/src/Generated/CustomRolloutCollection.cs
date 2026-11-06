@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customRolloutsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, rolloutName, CustomRolloutData.ToRequestContent(data), context);
+                using HttpMessage message = _customRolloutsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, rolloutName, CustomRolloutData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ProviderHubArmOperation<CustomRolloutResource> operation = new ProviderHubArmOperation<CustomRolloutResource>(
                     new CustomRolloutResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customRolloutsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, rolloutName, CustomRolloutData.ToRequestContent(data), context);
+                using HttpMessage message = _customRolloutsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, rolloutName, CustomRolloutData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ProviderHubArmOperation<CustomRolloutResource> operation = new ProviderHubArmOperation<CustomRolloutResource>(
                     new CustomRolloutResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customRolloutsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, rolloutName, context);
+                using HttpMessage message = _customRolloutsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, rolloutName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CustomRolloutData> response = Response.FromValue(CustomRolloutData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customRolloutsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, rolloutName, context);
+                using HttpMessage message = _customRolloutsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, rolloutName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CustomRolloutData> response = Response.FromValue(CustomRolloutData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customRolloutsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, rolloutName, context);
+                using HttpMessage message = _customRolloutsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, rolloutName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CustomRolloutData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customRolloutsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, rolloutName, context);
+                using HttpMessage message = _customRolloutsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, rolloutName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CustomRolloutData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customRolloutsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, rolloutName, context);
+                using HttpMessage message = _customRolloutsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, rolloutName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CustomRolloutData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customRolloutsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, rolloutName, context);
+                using HttpMessage message = _customRolloutsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, rolloutName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CustomRolloutData> response = default;

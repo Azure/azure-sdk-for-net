@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Playwright.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PlaywrightWorkspacesRestClient.CreateCheckPlaywrightNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), PlaywrightNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = PlaywrightWorkspacesRestClient.CreateCheckPlaywrightNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), PlaywrightNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PlaywrightNameAvailabilityResult> response = Response.FromValue(PlaywrightNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Playwright.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PlaywrightWorkspacesRestClient.CreateCheckPlaywrightNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), PlaywrightNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = PlaywrightWorkspacesRestClient.CreateCheckPlaywrightNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), PlaywrightNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PlaywrightNameAvailabilityResult> response = Response.FromValue(PlaywrightNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
