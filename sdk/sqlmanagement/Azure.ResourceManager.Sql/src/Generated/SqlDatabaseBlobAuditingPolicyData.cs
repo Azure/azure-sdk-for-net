@@ -213,6 +213,25 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        /// <summary>
+        /// Specifies the required fields to include in audit events (optional).
+        /// Each item must be a valid audit_event field name.
+        /// Can only be specified when isAzureMonitorTargetEnabled is true.
+        /// For the complete list of valid field names, see the audit_event table schema documentation.
+        /// </summary>
+        [WirePath("properties.requiredFields")]
+        public IList<string> RequiredFields
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseBlobAuditingPolicyProperties();
+                }
+                return Properties.RequiredFields;
+            }
+        }
+
         /// <summary> Specifies the state of the audit. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required. </summary>
         [WirePath("properties.state")]
         public BlobAuditingPolicyState? State

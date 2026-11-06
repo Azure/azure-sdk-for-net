@@ -12,8 +12,10 @@ namespace Azure.AI.Projects.Agents
     /// <summary> An automatically provisioned container environment for a shell tool stored in a toolbox. </summary>
     public partial class ToolboxShellContainerAutoEnvironment : ToolboxShellEnvironment
     {
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         [Experimental("AAIP002")]
         private ContainerMemoryLimit? _memoryLimit;
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
         private bool _memoryLimitIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ToolboxShellContainerAutoEnvironment"/>. </summary>

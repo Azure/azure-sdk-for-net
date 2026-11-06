@@ -1,0 +1,12 @@
+{
+  "name": "@azure-sdk/csharp-playground-bundles",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/*.unit.test.mjs",
+    "test:browser": "node --test test/browser.test.mjs"
+  },
+  "dependencies": {
+    "@typespec/bundler": "0.6.1"
+  }
+}

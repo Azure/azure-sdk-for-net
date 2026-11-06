@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable
+
 using Microsoft.TypeSpec.Generator.Customizations;
 
 // TypeSpec orders these values differently; preserve the shipped numeric values.
