@@ -153,6 +153,7 @@ async function checkPullRequest(url, evalStartedAt, includePreexisting, getPullR
 
 export async function cleanupLiveEval({
   resultsDir, azsdk, typeSpecProject,
+  now = Date.now(),
   runCli = runAzSdk, queryPlans = findProjectPlans, getPullRequest = githubRequest,
 }) {
   const candidates = typeSpecProject
@@ -164,12 +165,19 @@ export async function cleanupLiveEval({
   );
 
   const verifiedPlans = new Map();
+  const ageErrors = [];
   for (const candidate of candidates.plans) {
     try {
       const response = runCli(azsdk, ["release-plan", "get", ...planIdentifierArgs(candidate)]);
       const details = requireTestReleasePlan(response, candidate);
       if (typeSpecProject && getCaseInsensitiveProperty(details, "apiSpecProjectPath") !== typeSpecProject) {
         throw new Error(`Refusing to clean a plan for a different TypeSpec project: ${candidate.id}.`);
+      }
+      if (typeSpecProject) {
+        const createdAt = Date.parse(getCaseInsensitiveProperty(details, "createdDate"));
+        if (!Number.isFinite(createdAt) || now - createdAt < 2 * 60 * 60 * 1000) {
+          ageErrors.push(`Refusing pre-cleanup of test plan ${candidate.id}: creation time must be verified and at least two hours old.`);
+        }
       }
 
       const workItemId = Number(getCaseInsensitiveProperty(details, "workItemId"));
@@ -188,6 +196,10 @@ export async function cleanupLiveEval({
     } catch (error) {
       errors.push(error.message);
     }
+  }
+
+  if (ageErrors.length > 0) {
+    throw new Error(`Pre-cleanup stopped before any mutation:\n- ${ageErrors.join("\n- ")}`);
   }
 
   for (const [workItemId, plan] of verifiedPlans) {
