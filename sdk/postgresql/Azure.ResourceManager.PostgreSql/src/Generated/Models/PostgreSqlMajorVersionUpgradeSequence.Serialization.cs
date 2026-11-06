@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             if (Optional.IsDefined(SourceVersion))
             {
                 writer.WritePropertyName("sourceVersion"u8);
-                writer.WriteStringValue(SourceVersion.Value.ToString());
+                writer.WriteStringValue(SourceVersion);
             }
             if (Optional.IsDefined(TargetVersion))
             {
                 writer.WritePropertyName("targetVersion"u8);
-                writer.WriteStringValue(TargetVersion.Value.ToString());
+                writer.WriteStringValue(TargetVersion);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,27 +127,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            PostgreSqlFlexibleServerVersion? sourceVersion = default;
-            PostgreSqlFlexibleServerVersion? targetVersion = default;
+            string sourceVersion = default;
+            string targetVersion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("sourceVersion"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sourceVersion = new PostgreSqlFlexibleServerVersion(prop.Value.GetString());
+                    sourceVersion = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("targetVersion"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    targetVersion = new PostgreSqlFlexibleServerVersion(prop.Value.GetString());
+                    targetVersion = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             if (Optional.IsDefined(TargetVersion))
             {
                 writer.WritePropertyName("targetVersion"u8);
-                writer.WriteStringValue(TargetVersion.Value.ToString());
+                writer.WriteStringValue(TargetVersion);
             }
             if (Optional.IsCollectionDefined(PolicyDetails))
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             DateTimeOffset? createOn = default;
             MajorVersionUpgradePrecheckStatus? status = default;
             MajorVersionUpgradePrecheckResult precheckResult = default;
-            PostgreSqlFlexibleServerVersion? targetVersion = default;
+            string targetVersion = default;
             IList<MajorVersionUpgradePrecheckPolicyDetail> policyDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -184,11 +184,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 if (prop.NameEquals("targetVersion"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    targetVersion = new PostgreSqlFlexibleServerVersion(prop.Value.GetString());
+                    targetVersion = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("policyDetails"u8))
