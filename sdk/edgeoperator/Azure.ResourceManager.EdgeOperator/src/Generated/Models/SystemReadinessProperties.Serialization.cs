@@ -156,10 +156,10 @@ namespace Azure.ResourceManager.EdgeOperator.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SystemReadinessProperties(isSystemReady, categories, additionalBinaryDataProperties);
+            return new SystemReadinessProperties(isSystemReady, categories ?? new ChangeTrackingList<SystemReadinessCategory>(), additionalBinaryDataProperties);
         }
     }
 }
