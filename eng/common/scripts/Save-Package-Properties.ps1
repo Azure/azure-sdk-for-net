@@ -12,7 +12,9 @@ builds.
 
 In cases of collisions where track 2 packages (IsNewSdk = true) have the same
 filename as track 1 packages (e.g. same artifact name or package name), the
-track 2 package properties will be written.
+track 2 package properties will be written. Collision winners are selected before
+writing any metadata so existing release metadata remains available for
+dev-version updates.
 
 .PARAMETER serviceDirectory
 Service directory in which to search for packages.
@@ -108,7 +110,7 @@ function GetRelativePath($path)
   return $relativePath
 }
 
-$exportedPaths = @{}
+$selectedPackages = @{}
 
 $allPackageProperties = @()
 
@@ -174,6 +176,8 @@ if ($artifactList)
   }
 }
 
+# Select collision winners before writing so a losing package cannot overwrite
+# release metadata needed by the selected package's dev-version update.
 foreach ($pkg in $allPackageProperties)
 {
   if ($pkg.Name)
@@ -207,17 +211,20 @@ foreach ($pkg in $allPackageProperties)
       New-Item -ItemType Directory -Path $outDir | Out-Null
     }
 
-    # If package properties for a track 2 (IsNewSdk = true) package has
-    # already been written, skip writing to that same path.
-    if ($exportedPaths.ContainsKey($outputPath) -and $exportedPaths[$outputPath].IsNewSdk -eq $true)
+    # Keep the first track 2 (IsNewSdk = true) package selected for each path.
+    if ($selectedPackages.ContainsKey($outputPath) -and $selectedPackages[$outputPath].IsNewSdk -eq $true)
     {
-      Write-Host "Track 2 package info with file name $($outputPath) already exported. Skipping export."
+      Write-Host "Track 2 package info with file name $($outputPath) already selected. Skipping package."
       continue
     }
 
-    $exportedPaths[$outputPath] = $pkg
-    SetOutput $outputPath $pkg
+    $selectedPackages[$outputPath] = $pkg
   }
+}
+
+foreach ($outputPath in $selectedPackages.Keys)
+{
+  SetOutput $outputPath $selectedPackages[$outputPath]
 }
 
 $fileNames = (Get-ChildItem -Path $outDirectory).Name
