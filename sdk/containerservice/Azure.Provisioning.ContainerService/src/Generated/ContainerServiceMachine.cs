@@ -21,7 +21,7 @@ namespace Azure.Provisioning.ContainerService
         private SystemData _systemData;
         private ContainerServiceMachineProperties _properties;
         private BicepList<string> _zones;
-        private ResourceReference<ContainerServiceAgentPool> _parent;
+        private ProvisioningResourceReference<ContainerServiceAgentPool> _parent;
 
         /// <summary> Creates a new ContainerServiceMachine. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -109,7 +109,7 @@ namespace Azure.Provisioning.ContainerService
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ContainerServiceMachineProperties>(nameof(Properties), new string[] { "properties" });
             _zones = DefineListProperty<string>(nameof(Zones), new string[] { "zones" }, isOutput: true);
-            _parent = DefineResource<ContainerServiceAgentPool>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<ContainerServiceAgentPool>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

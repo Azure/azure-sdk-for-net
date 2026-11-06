@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mixedSubscriptionOperationsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), subscriptionResourceName, SubscriptionResourceData.ToRequestContent(data), context);
+                using HttpMessage message = _mixedSubscriptionOperationsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), subscriptionResourceName, SubscriptionResourceData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SubscriptionResourceData> response = Response.FromValue(SubscriptionResourceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mixedSubscriptionOperationsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), subscriptionResourceName, SubscriptionResourceData.ToRequestContent(data), context);
+                using HttpMessage message = _mixedSubscriptionOperationsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), subscriptionResourceName, SubscriptionResourceData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SubscriptionResourceData> response = Response.FromValue(SubscriptionResourceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mixedSubscriptionOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), subscriptionResourceName, context);
+                using HttpMessage message = _mixedSubscriptionOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), subscriptionResourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SubscriptionResourceData> response = Response.FromValue(SubscriptionResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mixedSubscriptionOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), subscriptionResourceName, context);
+                using HttpMessage message = _mixedSubscriptionOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), subscriptionResourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SubscriptionResourceData> response = Response.FromValue(SubscriptionResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mixedSubscriptionOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), subscriptionResourceName, context);
+                using HttpMessage message = _mixedSubscriptionOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), subscriptionResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SubscriptionResourceData> response = default;
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mixedSubscriptionOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), subscriptionResourceName, context);
+                using HttpMessage message = _mixedSubscriptionOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), subscriptionResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SubscriptionResourceData> response = default;
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mixedSubscriptionOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), subscriptionResourceName, context);
+                using HttpMessage message = _mixedSubscriptionOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), subscriptionResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SubscriptionResourceData> response = default;
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.MethodSubscriptionId
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mixedSubscriptionOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), subscriptionResourceName, context);
+                using HttpMessage message = _mixedSubscriptionOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), subscriptionResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SubscriptionResourceData> response = default;

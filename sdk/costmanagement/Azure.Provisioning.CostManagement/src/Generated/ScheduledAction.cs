@@ -22,7 +22,7 @@ namespace Azure.Provisioning.CostManagement
         private ScheduledActionProperties _properties;
         private BicepValue<ETag> _eTag;
         private BicepValue<ScheduledActionKind> _kind;
-        private ResourceReference<ProvisionableResource> _scope;
+        private ProvisioningResourceReference<ProvisionableResource> _scope;
 
         /// <summary> Creates a new ScheduledAction. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -240,7 +240,7 @@ namespace Azure.Provisioning.CostManagement
             _properties = DefineModelProperty<ScheduledActionProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "eTag" });
             _kind = DefineProperty<ScheduledActionKind>(nameof(Kind), new string[] { "kind" });
-            _scope = DefineResource<ProvisionableResource>(nameof(Scope), new string[] { "scope" });
+            _scope = new ProvisioningResourceReference<ProvisionableResource>(DefineProperty<string>(nameof(Scope), new string[] { "scope" }));
             DefineAdditionalProperties();
         }
 

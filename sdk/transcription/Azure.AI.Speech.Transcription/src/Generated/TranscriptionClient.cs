@@ -167,9 +167,9 @@ namespace Azure.AI.Speech.Transcription
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         [Experimental("SCME0004")]
-        internal virtual ClientResult<TranscriptionResult> Transcribe(TranscriptionContent body, CancellationToken cancellationToken = default)
+        internal virtual ClientResult<TranscriptionResult> Transcribe(TranscriptionRequest body, CancellationToken cancellationToken = default)
         {
-            using MultiPartFormContent content = body.ToMultipartFormContent(new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create, "W"));
+            using MultiPartFormContent content = body.ToMultipartFormContent();
             ClientResult result = Transcribe(content, content.MediaType, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((TranscriptionResult)result, result.GetRawResponse());
         }
@@ -179,9 +179,9 @@ namespace Azure.AI.Speech.Transcription
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         [Experimental("SCME0004")]
-        internal virtual async Task<ClientResult<TranscriptionResult>> TranscribeAsync(TranscriptionContent body, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult<TranscriptionResult>> TranscribeAsync(TranscriptionRequest body, CancellationToken cancellationToken = default)
         {
-            using MultiPartFormContent content = body.ToMultipartFormContent(new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create, "W"));
+            using MultiPartFormContent content = body.ToMultipartFormContent();
             ClientResult result = await TranscribeAsync(content, content.MediaType, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((TranscriptionResult)result, result.GetRawResponse());
         }

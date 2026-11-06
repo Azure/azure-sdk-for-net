@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable
+
 namespace Azure.Provisioning.Storage;
 
 // Provisioning generation omits the listKeys action result, including this shipped permission enum.

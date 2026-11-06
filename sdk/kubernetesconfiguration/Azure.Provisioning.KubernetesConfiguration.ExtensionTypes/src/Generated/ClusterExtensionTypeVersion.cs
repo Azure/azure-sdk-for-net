@@ -20,7 +20,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
         private BicepValue<string> _name;
         private SystemData _systemData;
         private KubernetesConfigurationExtensionTypeVersionForReleaseTrainProperties _properties;
-        private ResourceReference<ClusterExtensionType> _parent;
+        private ProvisioningResourceReference<ClusterExtensionType> _parent;
 
         /// <summary> Creates a new ClusterExtensionTypeVersion. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -97,7 +97,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<KubernetesConfigurationExtensionTypeVersionForReleaseTrainProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ClusterExtensionType>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<ClusterExtensionType>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

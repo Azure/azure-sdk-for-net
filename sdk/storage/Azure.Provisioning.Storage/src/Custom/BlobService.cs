@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -72,7 +74,7 @@ public partial class BlobService
     {
         yield return new ProvisioningOutput($"{BicepIdentifier}_endpoint", typeof(string))
         {
-            Value = Parent!.PrimaryEndpoints.Value!.BlobUri
+            Value = Parent.PrimaryEndpoints.Value.BlobUri
         };
     }
 
@@ -91,13 +93,13 @@ public partial class BlobService
     /// <see cref="BlobService"/> resource.
     /// </returns>
     BlobServiceClient IClientCreator<BlobServiceClient, BlobClientOptions>.CreateClient(
-        IReadOnlyDictionary<string, object?> deploymentOutputs,
+        IReadOnlyDictionary<string, object> deploymentOutputs,
         TokenCredential credential,
-        BlobClientOptions? options)
+        BlobClientOptions options)
     {
         // TODO: Move into a shared helper off ProvCtx's namescoping
         string qualifiedName = $"{BicepIdentifier}_endpoint";
-        string endpoint = (deploymentOutputs.TryGetValue(qualifiedName, out object? raw) && raw is string value) ?
+        string endpoint = (deploymentOutputs.TryGetValue(qualifiedName, out object raw) && raw is string value) ?
             value :
             throw new InvalidOperationException($"Could not find output value {qualifiedName} to construct {GetType().Name} resource {BicepIdentifier}.");
         return new BlobServiceClient(new Uri(endpoint), credential, options);

@@ -109,11 +109,8 @@ namespace Azure.AI.Projects
                 }
                 writer.WriteEndObject();
             }
-            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create))
-            {
-                writer.WritePropertyName("definition"u8);
-                writer.WriteObjectValue(Definition, options);
-            }
+            writer.WritePropertyName("definition"u8);
+            writer.WriteObjectValue(Definition, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

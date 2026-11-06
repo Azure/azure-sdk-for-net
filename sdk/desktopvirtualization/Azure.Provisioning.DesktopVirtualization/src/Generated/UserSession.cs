@@ -22,7 +22,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         private BicepValue<string> _name;
         private SystemData _systemData;
         private UserSessionProperties _properties;
-        private ResourceReference<SessionHost> _parent;
+        private ProvisioningResourceReference<SessionHost> _parent;
 
         /// <summary> Creates a new UserSession. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -153,7 +153,7 @@ namespace Azure.Provisioning.DesktopVirtualization
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<UserSessionProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<SessionHost>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<SessionHost>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

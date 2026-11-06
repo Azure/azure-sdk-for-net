@@ -22,7 +22,7 @@ namespace Azure.Provisioning.Sql
         private SystemData _systemData;
         private SyncMemberProperties _properties;
         private DataSyncParticipantIdentity _identity;
-        private ResourceReference<SyncGroup> _parent;
+        private ProvisioningResourceReference<SyncGroup> _parent;
 
         /// <summary> Creates a new SyncMember. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -316,7 +316,7 @@ namespace Azure.Provisioning.Sql
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<SyncMemberProperties>(nameof(Properties), new string[] { "properties" });
             _identity = DefineModelProperty<DataSyncParticipantIdentity>(nameof(Identity), new string[] { "identity" });
-            _parent = DefineResource<SyncGroup>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<SyncGroup>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

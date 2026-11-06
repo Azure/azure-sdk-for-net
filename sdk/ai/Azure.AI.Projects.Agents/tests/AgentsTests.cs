@@ -524,7 +524,7 @@ public class AgentsTests : AgentsTestBase
                 Responses = new()
             }
         };
-        SkillInlineContent content = new(
+        SkillInlineRequest content = new(
             description: "Calculates the sum of two numbers.",
             instructions: """
                 To calculate the sum  run
@@ -865,7 +865,7 @@ public class AgentsTests : AgentsTestBase
                 await skillsClient.DeleteSkillAsync(skill1.Name);
             }
         }
-        SkillInlineContent content = new(
+        SkillInlineRequest content = new(
             description: "Calculates the sum of two numbers.",
             instructions: """
                 To calculate the sum run
@@ -945,7 +945,7 @@ public class AgentsTests : AgentsTestBase
         AgentAdministrationClient agentsClient = GetTestClient();
         ProjectAgentSkills skillsClient = agentsClient.GetAgentSkills();
         int initialCount = (await skillsClient.GetSkillsAsync(limit: PAGE_SIZE, order: AgentListOrder.Ascending).ToListAsync()).Count;
-        SkillInlineContent contrent = new(
+        SkillInlineRequest contrent = new(
             description: "Calculates the sum of two numbers.",
             instructions: """
                 To calculate the sum  run
