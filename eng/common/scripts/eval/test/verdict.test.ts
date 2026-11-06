@@ -18,11 +18,12 @@ describe("eval template authentication source contract", () => {
   const invoke = load("../../../pipelines/templates/steps/eval-invoke.yml");
   const branches = invoke.split(/(?=^  - \$\{\{ )/m).slice(1);
 
-  it("keeps authentication opt-in without forwarding a service-connection parameter", () => {
+  it("keeps authentication opt-in with an empty connection default in every shared layer", () => {
     for (const template of [invoke,
       load("../../../pipelines/templates/jobs/eval-shard.yml"),
       load("../../../pipelines/templates/stages/archetype-eval.yml")]) {
-      assert.doesNotMatch(template, /^  - name: azureSubscription\r?$|parameters\.azureSubscription/m);
+      assert.match(template, /^  - name: azureSubscription\r?\n(?:    #[^\r\n]*\r?\n)*    type: string\r?\n    default: ''\r?$/m);
+      assert.doesNotMatch(template, /EvalAzureSubscription|opensource-api-connection|azuresdkqabot-dev/);
       assert.match(template, /^  - name: UseAzSdkAuthentication\r?\n(?:    #[^\r\n]*\r?\n)*    type: boolean\r?\n    default: false\r?$/m);
     }
   });
@@ -31,27 +32,25 @@ describe("eval template authentication source contract", () => {
     assert.equal(branches.length, 3);
     const configuration = branches[0];
     assert.equal(configuration.split(/\r?\n/, 1)[0],
-      "  - ${{ if and(parameters.UseAzSdkAuthentication, eq(trim(coalesce(variables.EvalAzureSubscription, ' ')), '')) }}:");
+      "  - ${{ if and(parameters.UseAzSdkAuthentication, eq(trim(parameters.azureSubscription), '')) }}:");
     assert.equal(configuration.match(/^    - /gm)?.length, 1);
     assert.match(configuration, /^    - script: \|\r?$/m);
     assert.doesNotMatch(configuration, /^\s*- task:/m);
-    assert.match(configuration, /##vso\[task\.logissue type=error\].*EvalAzureSubscription.*UseAzSdkAuthentication/);
+    assert.match(configuration, /##vso\[task\.logissue type=error\].*azureSubscription.*UseAzSdkAuthentication/);
     assert.match(configuration, /^        exit 1\r?$/m);
   });
 
-  it("requires a configured YAML connection only when authentication is enabled", () => {
+  it("uses only the explicit connection parameter when authentication is enabled", () => {
     const condition = branches[0].split(/\r?\n/, 1)[0].match(/if (.+) \}\}:$/)?.[1];
     assert.ok(condition);
     for (const enabled of [false, true]) {
-      for (const connection of [undefined, null, "", " \t ", "repo-owned-connection"]) {
+      for (const connection of ["", " \t ", "repo-owned-connection"]) {
         const missingConnection = runInNewContext(condition, {
-          parameters: { UseAzSdkAuthentication: enabled },
-          variables: { EvalAzureSubscription: connection },
+          parameters: { UseAzSdkAuthentication: enabled, azureSubscription: connection },
+          variables: { EvalAzureSubscription: "unrelated-outer-variable" },
           and: (...values: boolean[]) => values.every(Boolean),
           eq: (left: string, right: string) => left === right,
           trim: (value: string) => value.trim(),
-          coalesce: (...values: (string | null | undefined)[]) =>
-            values.find(value => value !== undefined && value !== null && value !== ""),
         });
         assert.equal(missingConnection, enabled && !connection?.trim(),
           `authentication=${enabled}, connection=${JSON.stringify(connection)}`);
@@ -64,7 +63,7 @@ describe("eval template authentication source contract", () => {
     assert.equal(authenticated.split(/\r?\n/, 1)[0], "  - ${{ elseif parameters.UseAzSdkAuthentication }}:");
     assert.equal(authenticated.match(/^    - /gm)?.length, 1);
     assert.match(authenticated, /^    - task: AzureCLI@2\r?$/m);
-    assert.match(authenticated, /^        azureSubscription: \$\{\{ variables\.EvalAzureSubscription \}\}\r?$/m);
+    assert.match(authenticated, /^        azureSubscription: \$\{\{ parameters\.azureSubscription \}\}\r?$/m);
     const unauthenticated = branches[2];
     assert.equal(unauthenticated.split(/\r?\n/, 1)[0], "  - ${{ else }}:");
     assert.equal(unauthenticated.match(/^    - /gm)?.length, 1);
@@ -78,22 +77,22 @@ describe("eval template authentication source contract", () => {
     }
   });
 
-  it("lets the live entrypoint inherit repo configuration without passing a connection", () => {
+  it("resolves the live connection at the entrypoint and forwards it through stage and job parameters", () => {
     const live = load("../../../pipelines/live-eval.yml");
     assert.match(live, /^    UseAzSdkAuthentication: true\r?$/m);
     assert.match(live, /^  - template: \/eng\/pipelines\/templates\/variables\/globals\.yml\r?$/m);
-    assert.doesNotMatch(live, /^\s*azureSubscription:|variables\/eval\.yml/m);
-    assert.doesNotMatch(live, /opensource-api-connection/);
+    assert.match(live, /^    azureSubscription: \$\{\{ variables\.EvalAzureSubscription \}\}\r?$/m);
+    assert.doesNotMatch(live, /^  - name: azureSubscription\r?$|parameters\.azureSubscription|opensource-api-connection|azuresdkqabot-dev/m);
     const stage = load("../../../pipelines/templates/stages/archetype-eval.yml");
     const evalStage = stage.split(/^      - stage: /m).find(section => section.split(/\r?\n/, 1)[0] === "Eval");
     assert.ok(evalStage);
     assert.match(evalStage, /^          - template: \/eng\/common\/pipelines\/templates\/jobs\/eval-shard\.yml\r?$/m);
-    assert.doesNotMatch(evalStage, /^\s*azureSubscription:/m);
+    assert.match(evalStage, /^              azureSubscription: \$\{\{ parameters\.azureSubscription \}\}\r?$/m);
     const shard = load("../../../pipelines/templates/jobs/eval-shard.yml");
     const invokeStep = shard.split(/^      - template: /m).find(section =>
       section.split(/\r?\n/, 1)[0] === "${{ parameters.evalInvokeTemplate }}");
     assert.ok(invokeStep);
-    assert.doesNotMatch(invokeStep, /^\s*azureSubscription:/m);
+    assert.match(invokeStep, /^          \$\{\{ if ne\(parameters\.azureSubscription, ''\) \}\}:\r?\n            azureSubscription: \$\{\{ parameters\.azureSubscription \}\}\r?$/m);
   });
 
   it("preflights common shard arguments before setup and forwards the gate to both jobs", () => {

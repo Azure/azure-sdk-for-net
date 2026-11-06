@@ -22,6 +22,10 @@ parameters:
     # Forwarded to the invoke template: true runs the shard under AzureCLI@2.
     type: boolean
     default: false
+  - name: azureSubscription
+    # Explicit caller-owned connection; no shared deployment fallback.
+    type: string
+    default: ''
   - name: threshold
     # Pass-rate gate forwarded to the invoke template (`vally eval --threshold` + shard verdict).
     type: number
@@ -133,6 +137,9 @@ jobs:
         parameters:
           vallyRoot: ${{ parameters.vallyRoot }}
           UseAzSdkAuthentication: ${{ parameters.UseAzSdkAuthentication }}
+          # Custom invoke templates receive this only when explicitly configured.
+          ${{ if ne(parameters.azureSubscription, '') }}:
+            azureSubscription: ${{ parameters.azureSubscription }}
           threshold: ${{ parameters.threshold }}
           # Existing custom templates keep their contract unless opting into the argument list.
           ${{ if ne(length(parameters.vallyArguments), 0) }}:
