@@ -18,13 +18,18 @@ describe("eval template authentication source contract", () => {
   const invoke = load("../../../pipelines/templates/steps/eval-invoke.yml");
   const branches = invoke.split(/(?=^  - \$\{\{ )/m).slice(1);
 
-  it("keeps authentication opt-in with an empty connection default in every shared layer", () => {
+  it("preserves the invoke connection default and leaves upstream overrides optional", () => {
+    assert.match(invoke, /^  - name: azureSubscription\r?\n    type: string\r?\n    default: opensource-api-connection\r?$/m);
     for (const template of [invoke,
+      load("../../../pipelines/templates/jobs/eval-shard.yml"),
+      load("../../../pipelines/templates/stages/archetype-eval.yml")]) {
+      assert.match(template, /^  - name: UseAzSdkAuthentication\r?\n(?:    #[^\r\n]*\r?\n)*    type: boolean\r?\n    default: false\r?$/m);
+    }
+    for (const template of [
       load("../../../pipelines/templates/jobs/eval-shard.yml"),
       load("../../../pipelines/templates/stages/archetype-eval.yml")]) {
       assert.match(template, /^  - name: azureSubscription\r?\n(?:    #[^\r\n]*\r?\n)*    type: string\r?\n    default: ''\r?$/m);
       assert.doesNotMatch(template, /EvalAzureSubscription|opensource-api-connection|azuresdkqabot-dev/);
-      assert.match(template, /^  - name: UseAzSdkAuthentication\r?\n(?:    #[^\r\n]*\r?\n)*    type: boolean\r?\n    default: false\r?$/m);
     }
   });
 
@@ -40,20 +45,28 @@ describe("eval template authentication source contract", () => {
     assert.match(configuration, /^        exit 1\r?$/m);
   });
 
-  it("uses only the explicit connection parameter when authentication is enabled", () => {
+  it("uses the default when omitted and the caller's override when provided", () => {
+    const defaultConnection = invoke.match(/^    default: (opensource-api-connection)\r?$/m)?.[1];
+    assert.ok(defaultConnection);
     const condition = branches[0].split(/\r?\n/, 1)[0].match(/if (.+) \}\}:$/)?.[1];
+    const input = branches[1].match(/azureSubscription: \$\{\{ (.+) \}\}/)?.[1];
     assert.ok(condition);
+    assert.ok(input);
     for (const enabled of [false, true]) {
-      for (const connection of ["", " \t ", "repo-owned-connection"]) {
+      for (const connection of [undefined, "", " \t ", "repo-owned-connection"]) {
+        const parameters = { UseAzSdkAuthentication: enabled, azureSubscription: connection ?? defaultConnection };
         const missingConnection = runInNewContext(condition, {
-          parameters: { UseAzSdkAuthentication: enabled, azureSubscription: connection },
+          parameters,
           variables: { EvalAzureSubscription: "unrelated-outer-variable" },
           and: (...values: boolean[]) => values.every(Boolean),
           eq: (left: string, right: string) => left === right,
           trim: (value: string) => value.trim(),
         });
-        assert.equal(missingConnection, enabled && !connection?.trim(),
+        assert.equal(missingConnection, enabled && !(connection ?? defaultConnection).trim(),
           `authentication=${enabled}, connection=${JSON.stringify(connection)}`);
+        if (enabled && !missingConnection) {
+          assert.equal(runInNewContext(input, { parameters }), connection ?? defaultConnection);
+        }
       }
     }
   });
