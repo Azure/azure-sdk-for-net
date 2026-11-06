@@ -302,8 +302,7 @@ namespace Azure.AI.Projects.Agents.Telemetry
                     byte[] readBuffer = new byte[Math.Max(btBoundary.Length, 1000)];
                     List<byte> arJson = [];
                     memoryStream.Position = 0;
-                    int offset = 0;
-                    int read = memoryStream.Read(readBuffer, offset, readBuffer.Length);
+                    int read = memoryStream.Read(readBuffer, 0, readBuffer.Length);
                     bool withinBoundaries = false, badContentType=false, withinContentType=false, doneReading=false;
                     LinkedList<byte> window = new();
                     byte symbolBeforeWindow = (byte)'\n'; // At the begin of stream, assume that the last symbol is LF.
@@ -364,8 +363,7 @@ namespace Azure.AI.Projects.Agents.Telemetry
                         {
                             break;
                         }
-                        offset += read;
-                        read = memoryStream.Read(readBuffer, offset, readBuffer.Length);
+                        read = memoryStream.Read(readBuffer, 0, readBuffer.Length);
                     }
                     string jsonPart = Encoding.UTF8.GetString([..arJson]);
                     int jsonStart = jsonPart.IndexOf('{');

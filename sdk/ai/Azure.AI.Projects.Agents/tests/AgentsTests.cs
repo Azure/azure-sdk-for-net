@@ -1148,18 +1148,19 @@ public class AgentsTests : AgentsTestBase
     }
 
     [Test]
-    [TestCase(true, null)]
-    [TestCase(false, null)]
-    [TestCase(false, "foo bar")]
-    [TestCase(false, "foo } bar")]
-    [TestCase(false, "foo } bar")]
-    [TestCase(false, "} -- {")]
-    [TestCase(true, null)]
-    [TestCase(true, "foo bar")]
-    [TestCase(true, "foo } bar")]
-    [TestCase(true, "foo } bar")]
-    [TestCase(true, "} -- {")]
-    public void TestScopeWithMultipartData(bool metaFirst, string malformedJson)
+    [TestCase(false, null, false)]
+    [TestCase(false, null, true)]
+    [TestCase(false, "foo bar", false)]
+    [TestCase(false, "foo } bar", false)]
+    [TestCase(false, "foo } bar", false)]
+    [TestCase(false, "} -- {", false)]
+    [TestCase(true, null, false)]
+    [TestCase(true, null, true)]
+    [TestCase(true, "foo bar", false)]
+    [TestCase(true, "foo } bar", false)]
+    [TestCase(true, "foo } bar", false)]
+    [TestCase(true, "} -- {", false)]
+    public void TestScopeWithMultipartData(bool metaFirst, string malformedJson, bool longInput)
     {
         BinaryData dataZip = default;
         // Create the metadata.
@@ -1176,7 +1177,15 @@ public class AgentsTests : AgentsTestBase
         Directory.CreateDirectory(tempDirectory);
         try
         {
-            File.WriteAllText(Path.Combine(tempDirectory, Path.GetRandomFileName()), "E = m * c ^ 2");
+            if (longInput)
+            {
+                IEnumerable<byte> longStr = Enumerable.Repeat((byte)'c', 1436);
+                File.WriteAllBytes(Path.Combine(tempDirectory, Path.GetRandomFileName()), [..longStr]);
+            }
+            else
+            {
+                File.WriteAllText(Path.Combine(tempDirectory, Path.GetRandomFileName()), "E = m * c ^ 2");
+            }
             dataZip = FileHelper.CreateAndReadZipFileFromDirectory(tempDirectory);
         }
         finally
