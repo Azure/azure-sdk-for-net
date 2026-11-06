@@ -28,6 +28,7 @@
 
   <ItemGroup>
     <Compile Include="..\..\tests-shared\AiTestEnvironmentBootstrap.cs" Link="Shared\AiTestEnvironmentBootstrap.cs" />
+    <Compile Include="..\..\tests-shared\SampleConsoleOutputAttribute.cs" Link="Shared\SampleConsoleOutputAttribute.cs" />
   </ItemGroup>
 
 	<ItemGroup>

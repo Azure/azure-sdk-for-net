@@ -87,8 +87,12 @@ capacity across parallel workers.
 - An always-run step calls the existing ownership-checked cleanup script.
   It deletes only the fresh run-owned RG and its subscription deployment record,
   never the permanent identities or another worker's RG.
-- Test results remain in the pipeline's Tests tab. Console output is published
-  separately. Plans and provisioning/cleanup state are published in each
+- Each executed sample attaches its captured console output as `console-output.txt`
+  to its individual test result, including on failure. Download it from the
+  pipeline's Tests tab, under the test result's Attachments. An empty file is
+  attached when a sample writes no output. Normal console logging is unchanged.
+  Combined console output is also published as a separate pipeline artifact.
+  Plans and provisioning/cleanup state are published in each
   worker's `standard-foundry` artifact, including on failure.
 
 No GitHub PAT or validation endpoint is required for these slices. Samples
