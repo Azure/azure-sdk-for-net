@@ -98,6 +98,8 @@ capacity across parallel workers.
   to its individual test result, including on failure. Download it from the
   pipeline's Tests tab, under the test result's Attachments. An empty file is
   attached when a sample writes no output. Normal console logging is unchanged.
+  The output hook lives in the already-linked shared test bootstrap source;
+  no sample-source or test-project file changes are required.
   Combined console output is also published as a separate pipeline artifact.
   Plans and provisioning/cleanup state are published in each
   worker's `standard-foundry` artifact, including on failure.

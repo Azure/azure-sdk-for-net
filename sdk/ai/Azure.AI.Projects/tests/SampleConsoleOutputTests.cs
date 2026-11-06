@@ -4,16 +4,26 @@
 using System;
 using System.IO;
 using System.Linq;
-using Azure.AI.Tests.Shared;
 using Moq;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;
 
+using SampleConsoleOutputAttribute = Azure.AI.Tests.Shared.AiTestEnvironmentBootstrap.SampleConsoleOutputAttribute;
+
 namespace Azure.AI.Projects.Tests
 {
     public class SampleConsoleOutputTests
     {
+        [Test]
+        public void SharedBootstrapRegistersTheOutputHook()
+        {
+            var attributes = Attribute.GetCustomAttributes(
+                typeof(SampleConsoleOutputTests).Assembly, typeof(SampleConsoleOutputAttribute));
+
+            Assert.That(attributes, Has.Length.EqualTo(1));
+        }
+
         [TestCase("Azure.AI.Projects.Tests.Samples.Sample_AIAgents")]
         [TestCase("Azure.AI.Projects.Agents.Tests.Samples.Sample_agents_CRUD")]
         [TestCase("Azure.AI.Extensions.OpenAI.Tests.Samples.Sample_ResponseBasic")]
