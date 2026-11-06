@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
@@ -24,16 +25,11 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TemplateEvaluationResultItem"/>. </summary>
-        /// <param name="templateId">
-        /// The template ID that was evaluated. Optional because the underlying BE field may
-        /// be null for legacy evaluations created before template-centric persistence landed;
-        /// the GW falls back to `scenarioName` in that case (`scenario.Id == templateId` by BE
-        /// convention), so ARM responses are typically populated in practice.
-        /// </param>
-        /// <param name="templateName"> The template name that was evaluated. Optional for the same reason as `templateId`. </param>
+        /// <param name="templateId"> The canonical ARM ID of the evaluated scenario-template version. Scenario IDs and versionless template aliases are not valid substitutes. </param>
+        /// <param name="templateName"> The stable catalog name of the evaluated scenario template, not a localized display name. </param>
         /// <param name="evaluationResult"> The evaluation result for this template. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TemplateEvaluationResultItem(string templateId, string templateName, RecommendationStatus evaluationResult, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TemplateEvaluationResultItem(ResourceIdentifier templateId, string templateName, RecommendationStatus evaluationResult, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TemplateId = templateId;
             TemplateName = templateName;
@@ -41,15 +37,10 @@ namespace Azure.ResourceManager.Chaos.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// The template ID that was evaluated. Optional because the underlying BE field may
-        /// be null for legacy evaluations created before template-centric persistence landed;
-        /// the GW falls back to `scenarioName` in that case (`scenario.Id == templateId` by BE
-        /// convention), so ARM responses are typically populated in practice.
-        /// </summary>
-        public string TemplateId { get; }
+        /// <summary> The canonical ARM ID of the evaluated scenario-template version. Scenario IDs and versionless template aliases are not valid substitutes. </summary>
+        public ResourceIdentifier TemplateId { get; }
 
-        /// <summary> The template name that was evaluated. Optional for the same reason as `templateId`. </summary>
+        /// <summary> The stable catalog name of the evaluated scenario template, not a localized display name. </summary>
         public string TemplateName { get; }
 
         /// <summary> The evaluation result for this template. </summary>

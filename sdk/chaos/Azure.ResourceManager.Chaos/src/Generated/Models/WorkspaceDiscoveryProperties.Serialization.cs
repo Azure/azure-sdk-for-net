@@ -110,6 +110,36 @@ namespace Azure.ResourceManager.Chaos.Models
                 writer.WritePropertyName("resourceSnapshotId"u8);
                 writer.WriteStringValue(ResourceSnapshotId);
             }
+            if (options.Format != "W" && Optional.IsDefined(Completeness))
+            {
+                writer.WritePropertyName("completeness"u8);
+                writer.WriteStringValue(Completeness.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(CoverageSummary))
+            {
+                writer.WritePropertyName("coverageSummary"u8);
+                writer.WriteObjectValue(CoverageSummary, options);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Warnings))
+            {
+                writer.WritePropertyName("warnings"u8);
+                writer.WriteStartArray();
+                foreach (WorkspaceDiscoveryWarning item in Warnings)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(WarningsTotalCount))
+            {
+                writer.WritePropertyName("warningsTotalCount"u8);
+                writer.WriteNumberValue(WarningsTotalCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(WarningsTruncated))
+            {
+                writer.WritePropertyName("warningsTruncated"u8);
+                writer.WriteBooleanValue(WarningsTruncated.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -158,6 +188,11 @@ namespace Azure.ResourceManager.Chaos.Models
             IReadOnlyList<ChaosOperationError> errors = default;
             ResourceIdentifier workspaceId = default;
             string resourceSnapshotId = default;
+            WorkspaceDiscoveryCompleteness? completeness = default;
+            WorkspaceDiscoveryCoverageSummary coverageSummary = default;
+            IReadOnlyList<WorkspaceDiscoveryWarning> warnings = default;
+            long? warningsTotalCount = default;
+            bool? warningsTruncated = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -208,6 +243,56 @@ namespace Azure.ResourceManager.Chaos.Models
                     resourceSnapshotId = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("completeness"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    completeness = new WorkspaceDiscoveryCompleteness(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("coverageSummary"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    coverageSummary = WorkspaceDiscoveryCoverageSummary.DeserializeWorkspaceDiscoveryCoverageSummary(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("warnings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<WorkspaceDiscoveryWarning> array = new List<WorkspaceDiscoveryWarning>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(WorkspaceDiscoveryWarning.DeserializeWorkspaceDiscoveryWarning(item, options));
+                    }
+                    warnings = array;
+                    continue;
+                }
+                if (prop.NameEquals("warningsTotalCount"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    warningsTotalCount = prop.Value.GetInt64();
+                    continue;
+                }
+                if (prop.NameEquals("warningsTruncated"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    warningsTruncated = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -220,6 +305,11 @@ namespace Azure.ResourceManager.Chaos.Models
                 errors ?? new ChangeTrackingList<ChaosOperationError>(),
                 workspaceId,
                 resourceSnapshotId,
+                completeness,
+                coverageSummary,
+                warnings ?? new ChangeTrackingList<WorkspaceDiscoveryWarning>(),
+                warningsTotalCount,
+                warningsTruncated,
                 additionalBinaryDataProperties);
         }
     }

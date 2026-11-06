@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.Chaos.Models
         private const string CanceledValue = "Canceled";
         /// <summary> The scenario run has completed successfully. </summary>
         private const string SucceededValue = "Succeeded";
+        /// <summary>
+        /// The scenario run completed, but one or more actions failed and every one of those
+        /// failures was suppressed by the effective `failureBehavior`.
+        /// </summary>
+        private const string PartiallySucceededValue = "PartiallySucceeded";
         /// <summary> The scenario run has failed. </summary>
         private const string FailedValue = "Failed";
 
@@ -87,6 +92,12 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> The scenario run has completed successfully. </summary>
         public static ScenarioRunState Succeeded { get; } = new ScenarioRunState(SucceededValue);
+
+        /// <summary>
+        /// The scenario run completed, but one or more actions failed and every one of those
+        /// failures was suppressed by the effective `failureBehavior`.
+        /// </summary>
+        public static ScenarioRunState PartiallySucceeded { get; } = new ScenarioRunState(PartiallySucceededValue);
 
         /// <summary> The scenario run has failed. </summary>
         public static ScenarioRunState Failed { get; } = new ScenarioRunState(FailedValue);

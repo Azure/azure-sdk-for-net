@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.Chaos.Models
             ActionId = actionId;
             Duration = duration;
             Parameters = new ChangeTrackingList<ChaosKeyValuePair>();
+            Selectors = new ChangeTrackingList<ScenarioActionSelector>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ScenarioAction"/>. </summary>
@@ -41,22 +42,35 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="description"> Human-readable description of what this action does. </param>
         /// <param name="duration"> ISO 8601 duration for how long the action runs (e.g., PT30M for 30 minutes). Supports template macro syntax (%%\{parameters.\&lt;name\&gt;\}%%). </param>
         /// <param name="parameters"> Action-specific parameter values. </param>
+        /// <param name="selectors">
+        /// Action-specific target selectors evaluated during execution. When provided,
+        /// the collection must contain either `logicalZone` and `location`, or `physicalZone`.
+        /// Selector names must be unique, the two modes cannot be combined, and the service
+        /// enforces the cross-item combination at runtime.
+        /// </param>
         /// <param name="runAfter"> Action dependencies that control when this action starts. </param>
         /// <param name="waitBefore"> ISO 8601 duration to wait before action starts (e.g., PT30S for 30 seconds). Supports template macro syntax. </param>
         /// <param name="timeout"> ISO 8601 duration for maximum action execution time. Supports template macro syntax. </param>
         /// <param name="externalResource"> External resource reference for the action. </param>
+        /// <param name="failureBehavior">
+        /// Per-action override for how the scenario run reacts when this action fails. When omitted,
+        /// the action inherits the scenario-level `failureBehavior`; when neither is supplied the
+        /// effective behavior is `Stop`.
+        /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScenarioAction(string name, string actionId, string description, string duration, IList<ChaosKeyValuePair> parameters, RunAfter runAfter, string waitBefore, string timeout, ExternalResource externalResource, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScenarioAction(string name, string actionId, string description, string duration, IList<ChaosKeyValuePair> parameters, IList<ScenarioActionSelector> selectors, RunAfter runAfter, string waitBefore, string timeout, ExternalResource externalResource, FailureBehavior? failureBehavior, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             ActionId = actionId;
             Description = description;
             Duration = duration;
             Parameters = parameters;
+            Selectors = selectors;
             RunAfter = runAfter;
             WaitBefore = waitBefore;
             Timeout = timeout;
             ExternalResource = externalResource;
+            FailureBehavior = failureBehavior;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -75,6 +89,14 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <summary> Action-specific parameter values. </summary>
         public IList<ChaosKeyValuePair> Parameters { get; }
 
+        /// <summary>
+        /// Action-specific target selectors evaluated during execution. When provided,
+        /// the collection must contain either `logicalZone` and `location`, or `physicalZone`.
+        /// Selector names must be unique, the two modes cannot be combined, and the service
+        /// enforces the cross-item combination at runtime.
+        /// </summary>
+        public IList<ScenarioActionSelector> Selectors { get; }
+
         /// <summary> Action dependencies that control when this action starts. </summary>
         public RunAfter RunAfter { get; set; }
 
@@ -86,6 +108,13 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> External resource reference for the action. </summary>
         internal ExternalResource ExternalResource { get; set; }
+
+        /// <summary>
+        /// Per-action override for how the scenario run reacts when this action fails. When omitted,
+        /// the action inherits the scenario-level `failureBehavior`; when neither is supplied the
+        /// effective behavior is `Stop`.
+        /// </summary>
+        public FailureBehavior? FailureBehavior { get; set; }
 
         /// <summary> The resource ID of the external resource. </summary>
         public ResourceIdentifier ResourceId

@@ -38,6 +38,12 @@ namespace Azure.ResourceManager.Chaos
             return subscriptionResource.GetCachedClient(client => new MockableChaosSubscriptionResource(client, subscriptionResource.Id));
         }
 
+        /// <param name="tenantResource"></param>
+        private static MockableChaosTenantResource GetMockableChaosTenantResource(TenantResource tenantResource)
+        {
+            return tenantResource.GetCachedClient(client => new MockableChaosTenantResource(client, tenantResource.Id));
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="ChaosCapabilityResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
@@ -245,42 +251,6 @@ namespace Azure.ResourceManager.Chaos
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ChaosPrivateAccessResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableChaosArmClient.GetChaosPrivateAccessResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ChaosPrivateAccessResource"/> object. </returns>
-        public static ChaosPrivateAccessResource GetChaosPrivateAccessResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableChaosArmClient(client).GetChaosPrivateAccessResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableChaosArmClient.GetPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource"/> object. </returns>
-        public static PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableChaosArmClient(client).GetPrivateEndpointConnectionResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="ChaosActionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -353,6 +323,42 @@ namespace Azure.ResourceManager.Chaos
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="WorkspaceDiscoveryResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableChaosArmClient.GetWorkspaceDiscoveryResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="WorkspaceDiscoveryResource"/> object. </returns>
+        public static WorkspaceDiscoveryResource GetWorkspaceDiscoveryResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableChaosArmClient(client).GetWorkspaceDiscoveryResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ChaosWorkspaceTemplateEvaluationDataResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableChaosArmClient.GetChaosWorkspaceTemplateEvaluationDataResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ChaosWorkspaceTemplateEvaluationDataResource"/> object. </returns>
+        public static ChaosWorkspaceTemplateEvaluationDataResource GetChaosWorkspaceTemplateEvaluationDataResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableChaosArmClient(client).GetChaosWorkspaceTemplateEvaluationDataResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ChaosDiscoveredResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -386,6 +392,42 @@ namespace Azure.ResourceManager.Chaos
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableChaosArmClient(client).GetChaosScenarioResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ChaosScenarioTemplateResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableChaosArmClient.GetChaosScenarioTemplateResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ChaosScenarioTemplateResource"/> object. </returns>
+        public static ChaosScenarioTemplateResource GetChaosScenarioTemplateResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableChaosArmClient(client).GetChaosScenarioTemplateResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ChaosScenarioTemplateVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableChaosArmClient.GetChaosScenarioTemplateVersionResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ChaosScenarioTemplateVersionResource"/> object. </returns>
+        public static ChaosScenarioTemplateVersionResource GetChaosScenarioTemplateVersionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableChaosArmClient(client).GetChaosScenarioTemplateVersionResource(id);
         }
 
         /// <summary>
@@ -495,61 +537,6 @@ namespace Azure.ResourceManager.Chaos
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableChaosResourceGroupResource(resourceGroupResource).GetChaosExperiment(experimentName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of ChaosPrivateAccesses in the <see cref="ResourceGroupResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableChaosResourceGroupResource.GetChaosPrivateAccesses()"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of ChaosPrivateAccesses and their operations over a ChaosPrivateAccessResource. </returns>
-        public static ChaosPrivateAccessCollection GetChaosPrivateAccesses(this ResourceGroupResource resourceGroupResource)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableChaosResourceGroupResource(resourceGroupResource).GetChaosPrivateAccesses();
-        }
-
-        /// <summary>
-        /// Get a private access resource
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableChaosResourceGroupResource.GetChaosPrivateAccessAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="privateAccessName"> The name of the private access resource that is being created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<ChaosPrivateAccessResource>> GetChaosPrivateAccessAsync(this ResourceGroupResource resourceGroupResource, string privateAccessName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableChaosResourceGroupResource(resourceGroupResource).GetChaosPrivateAccessAsync(privateAccessName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a private access resource
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableChaosResourceGroupResource.GetChaosPrivateAccess(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="privateAccessName"> The name of the private access resource that is being created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<ChaosPrivateAccessResource> GetChaosPrivateAccess(this ResourceGroupResource resourceGroupResource, string privateAccessName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableChaosResourceGroupResource(resourceGroupResource).GetChaosPrivateAccess(privateAccessName, cancellationToken);
         }
 
         /// <summary>
@@ -724,44 +711,6 @@ namespace Azure.ResourceManager.Chaos
         }
 
         /// <summary>
-        /// Get a list of private access resources in a subscription.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableChaosSubscriptionResource.GetPrivateAccessesAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="continuationToken"> String that sets the continuation token. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ChaosPrivateAccessResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ChaosPrivateAccessResource> GetPrivateAccessesAsync(this SubscriptionResource subscriptionResource, string continuationToken = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableChaosSubscriptionResource(subscriptionResource).GetPrivateAccessesAsync(continuationToken, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get a list of private access resources in a subscription.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableChaosSubscriptionResource.GetPrivateAccesses(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="continuationToken"> String that sets the continuation token. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ChaosPrivateAccessResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ChaosPrivateAccessResource> GetPrivateAccesses(this SubscriptionResource subscriptionResource, string continuationToken = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableChaosSubscriptionResource(subscriptionResource).GetPrivateAccesses(continuationToken, cancellationToken);
-        }
-
-        /// <summary>
         /// Get a list of all Workspace resources in a subscription.
         /// <item>
         /// <term> Mocking. </term>
@@ -835,6 +784,61 @@ namespace Azure.ResourceManager.Chaos
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableChaosSubscriptionResource(subscriptionResource).Get(location, operationId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of ChaosScenarioTemplates in the <see cref="TenantResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableChaosTenantResource.GetChaosScenarioTemplates()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> An object representing collection of ChaosScenarioTemplates and their operations over a ChaosScenarioTemplateResource. </returns>
+        public static ChaosScenarioTemplateCollection GetChaosScenarioTemplates(this TenantResource tenantResource)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableChaosTenantResource(tenantResource).GetChaosScenarioTemplates();
+        }
+
+        /// <summary>
+        /// Get a scenario template, described by its newest published version.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableChaosTenantResource.GetChaosScenarioTemplateAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="scenarioTemplateName"> Name of the scenario template. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ChaosScenarioTemplateResource>> GetChaosScenarioTemplateAsync(this TenantResource tenantResource, string scenarioTemplateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableChaosTenantResource(tenantResource).GetChaosScenarioTemplateAsync(scenarioTemplateName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a scenario template, described by its newest published version.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableChaosTenantResource.GetChaosScenarioTemplate(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="scenarioTemplateName"> Name of the scenario template. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ChaosScenarioTemplateResource> GetChaosScenarioTemplate(this TenantResource tenantResource, string scenarioTemplateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableChaosTenantResource(tenantResource).GetChaosScenarioTemplate(scenarioTemplateName, cancellationToken);
         }
     }
 }
