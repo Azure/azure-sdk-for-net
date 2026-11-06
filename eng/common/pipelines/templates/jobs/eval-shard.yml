@@ -23,7 +23,7 @@ parameters:
     type: boolean
     default: false
   - name: azureSubscription
-    # Explicit caller-owned connection; no shared deployment fallback.
+    # Leave blank to preserve the invoke template's default connection.
     type: string
     default: ''
   - name: threshold

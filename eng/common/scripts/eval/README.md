@@ -24,7 +24,7 @@ Repo-local adapters can customize it without copying that infrastructure:
 | --- | --- |
 | `preEvalTemplate` / `postEvalTemplate` | Existing parameter-free setup/teardown step templates. |
 | `evalInvokeTemplate` | Existing invocation template accepting `vallyRoot`, `UseAzSdkAuthentication` and `threshold`. |
-| `azureSubscription` | Optional service-connection name, default `''`. Required by the common invoke template when `UseAzSdkAuthentication: true`; explicitly forwarded through stages and jobs. |
+| `azureSubscription` | Optional service-connection override. Stage/job templates default to `''` and omit an empty override; the common invoke template retains its `opensource-api-connection` default. |
 | `vallyArguments` | Optional array of supplementary Vally option/value pairs. Strings are required except that trial/worker counts also accept numbers. Available through the stage, shard job and common invoke template. Defaults to `[]`. |
 
 Supported supplementary options are `--tag`, `--runs`, `--workers` and `--timeout`.
@@ -64,10 +64,10 @@ Zero-match evals are not treated as successful skips; a zero-trial shard still f
 the verdict/completeness checks even with `failOnFailedTests: false`.
 
 Use the existing pre/post-eval and MCP setup hooks for repository-specific work.
-Authenticated callers pass `azureSubscription` explicitly to the stage or shard
-template. The parameter is forwarded to the common invoke step; shared templates
-default to `''` and have no deployment-specific fallback.
-An absent, empty or whitespace-only value fails with
+Authenticated callers can pass `azureSubscription` explicitly to the stage or shard
+template. Nonempty overrides are forwarded to the common invoke step; otherwise
+the invoke template retains its existing `opensource-api-connection` default.
+An explicitly empty or whitespace-only value passed directly to the invoke template fails with
 a configuration error without creating an `AzureCLI@2` task. Unauthenticated runs
 do not need the parameter. Custom invoke templates receive it only when nonempty
 and must declare their own `azureSubscription` parameter to opt in.
@@ -133,11 +133,11 @@ explicit bootstrap, without changing dependency checks or the frozen lock.
 
 | Control | Current use |
 | --- | --- |
-| `publishDashboardResults` | The only checkbox; defaults to `true` in the three standard tools entrypoints and the author benchmark. Set `false` to disable both upload and Azure Storage egress |
+| `publishDashboardResults` | The only checkbox; defaults to `true` in the three standard tools entrypoints. Set `false` to disable both upload and Azure Storage egress |
 | `EvalStorageAccountName` | Pipeline-owner configuration. Upload is skipped when absent; set it to `evaltestsummary` for this dashboard |
 | `EvalDashboardRefreshUrl` | Pipeline-owner configuration: `https://azsdk-eval-bue6a7dwanatgpb3.westus3-01.azurewebsites.net/api/refresh` |
 | `EvalDashboardResource` | Pipeline-owner configuration: `api://258998df-81ec-460c-bdd7-56a9bdde1e48` (resource URI, not a `/.default` scope) |
-| `createDashboardBundle` | Shared-template artifact-only mode; enabled for the three standard tools entrypoints and the author benchmark |
+| `createDashboardBundle` | Shared-template artifact-only mode; enabled for the three standard tools entrypoints |
 
 The pipeline owner must set **`EvalStorageAccountName=evaltestsummary`** and the two
 dashboard variables above in each onboarded DevOps pipeline, with **queue-time

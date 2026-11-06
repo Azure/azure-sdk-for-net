@@ -44,7 +44,7 @@ parameters:
     type: boolean
     default: false
   - name: azureSubscription
-    # Required by authenticated callers; configured outside eng/common.
+    # Optional override; blank preserves the invoke template's default connection.
     type: string
     default: ''
   - name: vallyArguments
