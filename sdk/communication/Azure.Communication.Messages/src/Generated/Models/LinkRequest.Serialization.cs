@@ -12,57 +12,57 @@ using System.Text.Json;
 
 namespace Azure.Communication.Messages
 {
-    /// <summary> The message content of type image information. </summary>
-    public partial class ImageMessageContent : MessageContent, IJsonModel<ImageMessageContent>
+    /// <summary> The message content of type Url information. </summary>
+    public partial class LinkRequest : MessageRequest, IJsonModel<LinkRequest>
     {
-        /// <summary> Initializes a new instance of <see cref="ImageMessageContent"/> for deserialization. </summary>
-        internal ImageMessageContent()
+        /// <summary> Initializes a new instance of <see cref="LinkRequest"/> for deserialization. </summary>
+        internal LinkRequest()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override MessageContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override MessageRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ImageMessageContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LinkRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeImageMessageContent(document.RootElement, options);
+                        return DeserializeLinkRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImageMessageContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkRequest)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ImageMessageContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LinkRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureCommunicationMessagesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ImageMessageContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ImageMessageContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<LinkRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ImageMessageContent IPersistableModel<ImageMessageContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (ImageMessageContent)PersistableModelCreateCore(data, options);
+        LinkRequest IPersistableModel<LinkRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => (LinkRequest)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ImageMessageContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<LinkRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ImageMessageContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<LinkRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -73,36 +73,38 @@ namespace Azure.Communication.Messages
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ImageMessageContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LinkRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageMessageContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkRequest)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("mediaUri"u8);
-            writer.WriteStringValue(MediaUri.AbsoluteUri);
+            writer.WritePropertyName("title"u8);
+            writer.WriteStringValue(Title);
+            writer.WritePropertyName("url"u8);
+            writer.WriteStringValue(Uri.AbsoluteUri);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ImageMessageContent IJsonModel<ImageMessageContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ImageMessageContent)JsonModelCreateCore(ref reader, options);
+        LinkRequest IJsonModel<LinkRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (LinkRequest)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override MessageContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override MessageRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ImageMessageContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LinkRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageMessageContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkRequest)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeImageMessageContent(document.RootElement, options);
+            return DeserializeLinkRequest(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ImageMessageContent DeserializeImageMessageContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static LinkRequest DeserializeLinkRequest(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -110,7 +112,8 @@ namespace Azure.Communication.Messages
             }
             MessageContentKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            Uri mediaUri = default;
+            string title = default;
+            Uri uri = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
@@ -118,9 +121,14 @@ namespace Azure.Communication.Messages
                     kind = new MessageContentKind(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("mediaUri"u8))
+                if (prop.NameEquals("title"u8))
                 {
-                    mediaUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    title = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("url"u8))
+                {
+                    uri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")
@@ -128,7 +136,7 @@ namespace Azure.Communication.Messages
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ImageMessageContent(kind, additionalBinaryDataProperties, mediaUri);
+            return new LinkRequest(kind, additionalBinaryDataProperties, title, uri);
         }
     }
 }

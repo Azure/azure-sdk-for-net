@@ -12,11 +12,11 @@ using System.Text.Json;
 
 namespace Azure.Communication.Messages
 {
-    /// <summary> A request to send an Interactive message notification. </summary>
-    public partial class InteractiveNotificationContent : NotificationContent, IJsonModel<InteractiveNotificationContent>
+    /// <summary> A request to send a Sticker notification. </summary>
+    public partial class StickerNotificationRequest : NotificationContent, IJsonModel<StickerNotificationRequest>
     {
-        /// <summary> Initializes a new instance of <see cref="InteractiveNotificationContent"/> for deserialization. </summary>
-        internal InteractiveNotificationContent()
+        /// <summary> Initializes a new instance of <see cref="StickerNotificationRequest"/> for deserialization. </summary>
+        internal StickerNotificationRequest()
         {
         }
 
@@ -24,45 +24,45 @@ namespace Azure.Communication.Messages
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override NotificationContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InteractiveNotificationContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StickerNotificationRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeInteractiveNotificationContent(document.RootElement, options);
+                        return DeserializeStickerNotificationRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InteractiveNotificationContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StickerNotificationRequest)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InteractiveNotificationContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StickerNotificationRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureCommunicationMessagesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(InteractiveNotificationContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StickerNotificationRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InteractiveNotificationContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<StickerNotificationRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InteractiveNotificationContent IPersistableModel<InteractiveNotificationContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (InteractiveNotificationContent)PersistableModelCreateCore(data, options);
+        StickerNotificationRequest IPersistableModel<StickerNotificationRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => (StickerNotificationRequest)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InteractiveNotificationContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<StickerNotificationRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<InteractiveNotificationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<StickerNotificationRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -73,36 +73,36 @@ namespace Azure.Communication.Messages
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InteractiveNotificationContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StickerNotificationRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InteractiveNotificationContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(StickerNotificationRequest)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("interactiveMessage"u8);
-            writer.WriteObjectValue(InteractiveMessage, options);
+            writer.WritePropertyName("mediaUri"u8);
+            writer.WriteStringValue(MediaUri.AbsoluteUri);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InteractiveNotificationContent IJsonModel<InteractiveNotificationContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (InteractiveNotificationContent)JsonModelCreateCore(ref reader, options);
+        StickerNotificationRequest IJsonModel<StickerNotificationRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (StickerNotificationRequest)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override NotificationContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InteractiveNotificationContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StickerNotificationRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InteractiveNotificationContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(StickerNotificationRequest)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInteractiveNotificationContent(document.RootElement, options);
+            return DeserializeStickerNotificationRequest(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static InteractiveNotificationContent DeserializeInteractiveNotificationContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static StickerNotificationRequest DeserializeStickerNotificationRequest(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -112,7 +112,7 @@ namespace Azure.Communication.Messages
             IList<string> to = default;
             CommunicationMessageKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            InteractiveMessage interactiveMessage = default;
+            Uri mediaUri = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("channelRegistrationId"u8))
@@ -142,9 +142,9 @@ namespace Azure.Communication.Messages
                     kind = new CommunicationMessageKind(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("interactiveMessage"u8))
+                if (prop.NameEquals("mediaUri"u8))
                 {
-                    interactiveMessage = InteractiveMessage.DeserializeInteractiveMessage(prop.Value, options);
+                    mediaUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")
@@ -152,7 +152,7 @@ namespace Azure.Communication.Messages
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new InteractiveNotificationContent(channelRegistrationId, to ?? new ChangeTrackingList<string>(), kind, additionalBinaryDataProperties, interactiveMessage);
+            return new StickerNotificationRequest(channelRegistrationId, to ?? new ChangeTrackingList<string>(), kind, additionalBinaryDataProperties, mediaUri);
         }
     }
 }

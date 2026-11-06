@@ -10,24 +10,24 @@ using System.Collections.Generic;
 
 namespace Azure.Communication.Messages
 {
-    /// <summary> The message content of type document information. </summary>
-    public partial class DocumentMessageContent : MessageContent
+    /// <summary> The message content of type image information. </summary>
+    public partial class ImageMessageRequest : MessageRequest
     {
-        /// <summary> Initializes a new instance of <see cref="DocumentMessageContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageMessageRequest"/>. </summary>
         /// <param name="mediaUri"> MediaUri of the media content. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mediaUri"/> is null. </exception>
-        public DocumentMessageContent(Uri mediaUri) : base(MessageContentKind.Document)
+        public ImageMessageRequest(Uri mediaUri) : base(MessageContentKind.Image)
         {
             Argument.AssertNotNull(mediaUri, nameof(mediaUri));
 
             MediaUri = mediaUri;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentMessageContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageMessageRequest"/>. </summary>
         /// <param name="kind"> Kind of MessageContent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="mediaUri"> MediaUri of the media content. </param>
-        internal DocumentMessageContent(MessageContentKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri mediaUri) : base(kind, additionalBinaryDataProperties)
+        internal ImageMessageRequest(MessageContentKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri mediaUri) : base(kind, additionalBinaryDataProperties)
         {
             MediaUri = mediaUri;
         }
