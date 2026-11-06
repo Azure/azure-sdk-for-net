@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -90,6 +90,13 @@ namespace Azure.Storage.Files.Shares.Models
         /// Valid values are between 1 and 365. If not specified, the default is 7 days.
         /// </summary>
         public int? ChangeFeedRetentionInDays { get; set; }
+
+        /// <summary>
+        /// Optional. Supported in version 2027-05-07 and above.
+        /// Specifies the scale mode of the share.
+        /// Scale mode is currently only supported for NFS shares.
+        /// </summary>
+        public ShareScaleMode? ScaleMode { get; set; }
 
         ///// <summary>
         ///// Optional, default value is true.  Ony applicable to SMB shares.

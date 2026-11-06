@@ -264,6 +264,12 @@ namespace Azure.Storage.Files.Shares.Models
                 writer.WriteStringValue(CreatedOn.Value, "R");
                 writer.WriteEndElement();
             }
+            if (Optional.IsDefined(ScaleMode))
+            {
+                writer.WriteStartElement("ScaleMode");
+                writer.WriteValue(ScaleMode.Value.ToString());
+                writer.WriteEndElement();
+            }
         }
 
         /// <param name="element"> The xml element to deserialize. </param>
@@ -303,6 +309,7 @@ namespace Azure.Storage.Files.Shares.Models
             DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeOn = default;
             bool? enableSmbDirectoryLease = default;
             DateTimeOffset? createdOn = default;
+            ShareScaleMode? scaleMode = default;
 
             foreach (var child in element.Elements())
             {
@@ -447,6 +454,11 @@ namespace Azure.Storage.Files.Shares.Models
                     createdOn = child.GetDateTimeOffset("R");
                     continue;
                 }
+                if (localName == "ScaleMode")
+                {
+                    scaleMode = new ShareScaleMode((string)child);
+                    continue;
+                }
             }
             return new SharePropertiesInternal(
                 lastModified,
@@ -476,7 +488,8 @@ namespace Azure.Storage.Files.Shares.Models
                 nextAllowedProvisionedIopsDowngradeOn,
                 nextAllowedProvisionedBandwidthDowngradeOn,
                 enableSmbDirectoryLease,
-                createdOn);
+                createdOn,
+                scaleMode);
         }
 
         /// <param name="writer"> The XML writer. </param>

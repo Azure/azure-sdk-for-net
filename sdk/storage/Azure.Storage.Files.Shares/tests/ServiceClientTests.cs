@@ -637,6 +637,39 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task ListSharesSegmentAsync_ScaleMode(bool scale)
+        {
+            // Arrange
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_PremiumFile();
+            string shareName = GetNewShareName();
+            ShareScaleMode scaleMode = scale ? ShareScaleMode.Scale : ShareScaleMode.Compatibility;
+            ShareCreateOptions options = new ShareCreateOptions
+            {
+                // Scale mode is only supported for NFS shares.
+                Protocols = ShareProtocols.Nfs,
+                ScaleMode = scaleMode
+            };
+            ShareClient share = (await service.CreateShareAsync(shareName, options)).Value;
+
+            try
+            {
+                // Act
+                IList<ShareItem> shares = await service.GetSharesAsync().ToListAsync();
+
+                // Assert
+                ShareItem shareItem = shares.Where(s => s.Name == shareName).FirstOrDefault();
+                Assert.IsNotNull(shareItem);
+                Assert.AreEqual(scaleMode, shareItem.Properties.ScaleMode);
+            }
+            finally
+            {
+                await share.DeleteIfExistsAsync();
+            }
+        }
+
+        [RecordedTest]
         public async Task CreateShareAsync()
         {
             var name = GetNewShareName();

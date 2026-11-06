@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -191,6 +191,12 @@ namespace Azure.Storage.Files.Shares.Models
         /// CreatedTime.
         /// </summary>
         public DateTimeOffset? CreatedOn { get; internal set; }
+
+        /// <summary>
+        /// Optional. Supported in version 2027-05-07 and above.
+        /// The scale mode of the share. Scale mode is currently only supported for NFS shares.
+        /// </summary>
+        public ShareScaleMode? ScaleMode { get; internal set; }
 
         /// <summary>
         /// Internal constructor.
