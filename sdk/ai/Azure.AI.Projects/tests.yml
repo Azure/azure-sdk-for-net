@@ -76,7 +76,7 @@ extends:
       - AdditionalTestArguments=^(?!.*UseProjectReferenceToAzureClients=true)
       - TestTargetFramework=^net10.0$
       - BuildConfiguration=^Debug$
-      - AdditionalTestFilters=^\(\(FullyQualifiedName~Azure\.AI\.(Projects\.Tests\.Samples|Projects\.Agents\.Tests\.Samples|Extensions\.OpenAI\.Tests\.Samples).*$
+      - SampleSliceFilter=^\(\(FullyQualifiedName~Azure\.AI\.(Projects\.Tests\.Samples|Projects\.Agents\.Tests\.Samples|Extensions\.OpenAI\.Tests\.Samples).*$
     PreSteps:
       - pwsh: |
           $selectionKind = $env:SAMPLE_SELECTION_KIND
@@ -129,7 +129,7 @@ extends:
         env:
           SAMPLE_SELECTION_KIND: ${{ parameters.selectionKind }}
           SAMPLE_SELECTION: ${{ parameters.selection }}
-          SAMPLE_SLICE_FILTER: $(AdditionalTestFilters)
+          SAMPLE_SLICE_FILTER: $(SampleSliceFilter)
       - task: AzureCLI@2
         displayName: 'Provision Standard Foundry and model with shared identities'
         inputs:

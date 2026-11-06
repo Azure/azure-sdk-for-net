@@ -65,6 +65,9 @@ capacity across parallel workers.
   tests outside that matrix. A `test-id` selection is a .NET test-filter
   expression; semicolon-separated expressions are ORed. Semicolon-separated
   sample paths select their package's sample namespace.
+- Matrix values are read-only. Each worker reads its `SampleSliceFilter` and
+  combines it with the requested selection into the separate runtime variable
+  `AdditionalTestFilters`; it never overwrites a matrix variable.
 - Each worker uses PowerShell 7.2+ and Azure CLI under the service connection
   to resolve identities, check eligibility, provision Standard Foundry and the
   selected model, and publish its new endpoint/model/agent bindings to tests.

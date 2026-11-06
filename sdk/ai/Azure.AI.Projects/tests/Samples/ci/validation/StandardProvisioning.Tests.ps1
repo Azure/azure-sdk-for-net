@@ -20,6 +20,7 @@ Describe 'Standard Foundry provisioning contract' {
             BuildId = $(if ($env:BUILD_BUILDID) { $env:BUILD_BUILDID } else { '12345' })
             JobAttempt = '1'
         }
+
         $script:provisionArguments = @{
             OutputDirectory = $script:outputDirectory
             QueueName = 'q1'
@@ -75,5 +76,42 @@ Describe 'Standard Foundry provisioning contract' {
                 Should Throw 'earlier attempt'
         }
         (Get-Content -LiteralPath $statePath -Raw).Trim() | Should BeExactly 'previous-attempt'
+    }
+}
+
+Describe 'Pipeline sample selection contract' {
+    It 'keeps the writable test filter out of the read-only matrix' {
+        $matrix = Get-Content -LiteralPath (Join-Path $PSScriptRoot '../sample-slice-matrix.json') -Raw | ConvertFrom-Json -AsHashtable
+        $matrix.matrix.ContainsKey('AdditionalTestFilters') | Should Be $false
+        $matrix.matrix.SampleSelector.Count | Should Be 3
+        foreach ($slice in $matrix.matrix.SampleSelector.Values) {
+            $slice.ContainsKey('AdditionalTestFilters') | Should Be $false
+            [string]::IsNullOrWhiteSpace($slice.SampleSliceFilter) | Should Be $false
+        }
+        $pipeline = Get-Content -LiteralPath (Join-Path $PSScriptRoot '../../../../tests.yml') -Raw
+        $pipeline | Should Match 'SAMPLE_SLICE_FILTER: \$\(SampleSliceFilter\)'
+        $pipeline | Should Match '(?m)^      - SampleSliceFilter='
+    }
+
+    It 'combines the run selection and slice without overwriting the slice' {
+        $originalKind = $env:SAMPLE_SELECTION_KIND
+        $originalSelection = $env:SAMPLE_SELECTION
+        $originalSlice = $env:SAMPLE_SLICE_FILTER
+        try {
+            $env:SAMPLE_SELECTION_KIND = 'test-id'
+            $env:SAMPLE_SELECTION = 'Name=AgentsBasics;Name=AgentResponseSync'
+            $env:SAMPLE_SLICE_FILTER = '((FullyQualifiedName~Azure.AI.Projects.Tests.Samples.Sample_AIAgents & Name=AgentsBasics))'
+            $pipeline = Get-Content -LiteralPath (Join-Path $PSScriptRoot '../../../../tests.yml') -Raw
+            $step = [regex]::Match($pipeline, '(?ms)^      - pwsh: \|\r?\n(?<script>.*?)^        displayName: ''Prepare sample')
+            $step.Success | Should Be $true
+            $output = & ([scriptblock]::Create($step.Groups['script'].Value)) 6>&1 | Out-String
+            $expected = '((Name=AgentsBasics|Name=AgentResponseSync))&(' + $env:SAMPLE_SLICE_FILTER + ')'
+            $output | Should Match ([regex]::Escape("##vso[task.setvariable variable=AdditionalTestFilters]$expected"))
+            $output | Should Not Match 'task.setvariable variable=SampleSliceFilter'
+        } finally {
+            $env:SAMPLE_SELECTION_KIND = $originalKind
+            $env:SAMPLE_SELECTION = $originalSelection
+            $env:SAMPLE_SLICE_FILTER = $originalSlice
+        }
     }
 }
