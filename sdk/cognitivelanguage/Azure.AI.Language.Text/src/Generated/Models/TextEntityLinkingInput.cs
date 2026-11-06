@@ -23,7 +23,7 @@ namespace Azure.AI.Language.Text
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="textInput"> Contains the analysis input to be handled by the service. </param>
         /// <param name="actionContent"> Task parameters. </param>
-        internal TextEntityLinkingInput(AnalyzeTextInputKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, MultiLanguageTextInput textInput, EntityLinkingActionContent actionContent) : base(kind, additionalBinaryDataProperties)
+        internal TextEntityLinkingInput(AnalyzeTextInputKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, MultiLanguageTextInput textInput, EntityLinkingActionRequest actionContent) : base(kind, additionalBinaryDataProperties)
         {
             TextInput = textInput;
             ActionContent = actionContent;
@@ -33,6 +33,6 @@ namespace Azure.AI.Language.Text
         public MultiLanguageTextInput TextInput { get; set; }
 
         /// <summary> Task parameters. </summary>
-        public EntityLinkingActionContent ActionContent { get; set; }
+        public EntityLinkingActionRequest ActionContent { get; set; }
     }
 }
