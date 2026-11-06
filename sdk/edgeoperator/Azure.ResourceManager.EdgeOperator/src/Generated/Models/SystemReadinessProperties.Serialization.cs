@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.EdgeOperator.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("systemReady"u8);
-                writer.WriteBooleanValue(SystemReady);
+                writer.WriteBooleanValue(IsSystemReady);
             }
             if (options.Format != "W")
             {
@@ -134,14 +134,14 @@ namespace Azure.ResourceManager.EdgeOperator.Models
             {
                 return null;
             }
-            bool systemReady = default;
+            bool isSystemReady = default;
             IReadOnlyList<SystemReadinessCategory> categories = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("systemReady"u8))
                 {
-                    systemReady = prop.Value.GetBoolean();
+                    isSystemReady = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("categories"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.EdgeOperator.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SystemReadinessProperties(systemReady, categories, additionalBinaryDataProperties);
+            return new SystemReadinessProperties(isSystemReady, categories, additionalBinaryDataProperties);
         }
     }
 }

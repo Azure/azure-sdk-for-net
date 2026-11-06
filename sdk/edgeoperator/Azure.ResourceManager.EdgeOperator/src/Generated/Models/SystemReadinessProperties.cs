@@ -27,18 +27,18 @@ namespace Azure.ResourceManager.EdgeOperator.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SystemReadinessProperties"/>. </summary>
-        /// <param name="systemReady"> Indicates whether the system is ready. `true` when every readiness category has reported 100 percent. </param>
+        /// <param name="isSystemReady"> Indicates whether the system is ready. `true` when every readiness category has reported 100 percent. </param>
         /// <param name="categories"> The readiness state reported for each provider-defined category. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SystemReadinessProperties(bool systemReady, IReadOnlyList<SystemReadinessCategory> categories, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SystemReadinessProperties(bool isSystemReady, IReadOnlyList<SystemReadinessCategory> categories, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SystemReady = systemReady;
+            IsSystemReady = isSystemReady;
             Categories = categories;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Indicates whether the system is ready. `true` when every readiness category has reported 100 percent. </summary>
-        public bool SystemReady { get; }
+        public bool IsSystemReady { get; }
 
         /// <summary> The readiness state reported for each provider-defined category. </summary>
         public IReadOnlyList<SystemReadinessCategory> Categories { get; }

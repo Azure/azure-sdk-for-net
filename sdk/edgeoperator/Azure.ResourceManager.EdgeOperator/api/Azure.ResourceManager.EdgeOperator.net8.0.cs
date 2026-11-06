@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.EdgeOperator.Models
     {
         public static Azure.ResourceManager.EdgeOperator.Models.SystemReadinessCategory SystemReadinessCategory(string categoryName = null, int readinessPercentage = 0, System.Collections.Generic.IEnumerable<string> errorMessageDetails = null) { throw null; }
         public static Azure.ResourceManager.EdgeOperator.SystemReadinessData SystemReadinessData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.EdgeOperator.Models.SystemReadinessProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.EdgeOperator.Models.SystemReadinessProperties SystemReadinessProperties(bool systemReady = false, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EdgeOperator.Models.SystemReadinessCategory> categories = null) { throw null; }
+        public static Azure.ResourceManager.EdgeOperator.Models.SystemReadinessProperties SystemReadinessProperties(bool isSystemReady = false, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EdgeOperator.Models.SystemReadinessCategory> categories = null) { throw null; }
     }
     public partial class SystemReadinessCategory : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EdgeOperator.Models.SystemReadinessCategory>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeOperator.Models.SystemReadinessCategory>
     {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.EdgeOperator.Models
     {
         internal SystemReadinessProperties() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOperator.Models.SystemReadinessCategory> Categories { get { throw null; } }
-        public bool SystemReady { get { throw null; } }
+        public bool IsSystemReady { get { throw null; } }
         protected virtual Azure.ResourceManager.EdgeOperator.Models.SystemReadinessProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.EdgeOperator.Models.SystemReadinessProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

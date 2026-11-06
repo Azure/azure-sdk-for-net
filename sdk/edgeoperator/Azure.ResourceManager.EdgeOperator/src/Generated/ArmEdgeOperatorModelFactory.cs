@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.EdgeOperator.Models
         /// The readiness state of the Azure Local Disconnected Operations (ALDO) system.
         /// All fields are computed by the resource provider and are read-only.
         /// </summary>
-        /// <param name="systemReady"> Indicates whether the system is ready. `true` when every readiness category has reported 100 percent. </param>
+        /// <param name="isSystemReady"> Indicates whether the system is ready. `true` when every readiness category has reported 100 percent. </param>
         /// <param name="categories"> The readiness state reported for each provider-defined category. </param>
         /// <returns> A new <see cref="Models.SystemReadinessProperties"/> instance for mocking. </returns>
-        public static SystemReadinessProperties SystemReadinessProperties(bool systemReady = default, IEnumerable<SystemReadinessCategory> categories = default)
+        public static SystemReadinessProperties SystemReadinessProperties(bool isSystemReady = default, IEnumerable<SystemReadinessCategory> categories = default)
         {
             categories ??= new ChangeTrackingList<SystemReadinessCategory>();
 
-            return new SystemReadinessProperties(systemReady, (categories ?? new ChangeTrackingList<SystemReadinessCategory>()).ToList(), default);
+            return new SystemReadinessProperties(isSystemReady, (categories ?? new ChangeTrackingList<SystemReadinessCategory>()).ToList(), default);
         }
 
         /// <summary> The readiness state reported for a single provider-defined category. </summary>
