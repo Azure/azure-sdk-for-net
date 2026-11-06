@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("retentionDays"u8);
                 writer.WriteNumberValue(RetentionDays.Value);
             }
-            if (Optional.IsDefined(LockImmutability))
+            if (Optional.IsDefined(ShouldLockImmutability))
             {
                 writer.WritePropertyName("lockImmutability"u8);
-                writer.WriteBooleanValue(LockImmutability.Value);
+                writer.WriteBooleanValue(ShouldLockImmutability.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ImmutabilityStatus))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             int? retentionDays = default;
-            bool? lockImmutability = default;
+            bool? shouldLockImmutability = default;
             ImmutabilityStatus? immutabilityStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    lockImmutability = prop.Value.GetBoolean();
+                    shouldLockImmutability = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("immutabilityStatus"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Sql.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ManagedBackupShortTermRetentionPolicyProperties(retentionDays, lockImmutability, immutabilityStatus, additionalBinaryDataProperties);
+            return new ManagedBackupShortTermRetentionPolicyProperties(retentionDays, shouldLockImmutability, immutabilityStatus, additionalBinaryDataProperties);
         }
     }
 }

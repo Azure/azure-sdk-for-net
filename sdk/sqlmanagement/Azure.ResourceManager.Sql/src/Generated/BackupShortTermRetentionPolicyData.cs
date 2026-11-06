@@ -79,11 +79,11 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Whether to lock the immutability of the backups governed by this short term retention policy. </summary>
         [WirePath("properties.lockImmutability")]
-        public bool? LockImmutability
+        public bool? ShouldLockImmutability
         {
             get
             {
-                return Properties is null ? default : Properties.LockImmutability;
+                return Properties is null ? default : Properties.ShouldLockImmutability;
             }
             set
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     Properties = new BackupShortTermRetentionPolicyProperties();
                 }
-                Properties.LockImmutability = value;
+                Properties.ShouldLockImmutability = value;
             }
         }
 

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="retentionDays"> The backup retention period in days. This is how many days Point-in-Time Restore will be supported. </param>
         /// <param name="diffBackupIntervalInHours"> The differential backup interval in hours. This is how many interval hours between each differential backup will be supported. This is only applicable to live databases but not dropped databases. </param>
-        /// <param name="lockImmutability"> Whether to lock the immutability of the backups governed by this short term retention policy. </param>
+        /// <param name="shouldLockImmutability"> Whether to lock the immutability of the backups governed by this short term retention policy. </param>
         /// <param name="immutabilityStatus"> The immutability status of the backups governed by this short term retention policy. </param>
         /// <returns> A new <see cref="Sql.BackupShortTermRetentionPolicyData"/> instance for mocking. </returns>
-        public static BackupShortTermRetentionPolicyData BackupShortTermRetentionPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? retentionDays = default, DiffBackupIntervalInHours? diffBackupIntervalInHours = default, bool? lockImmutability = default, ImmutabilityStatus? immutabilityStatus = default)
+        public static BackupShortTermRetentionPolicyData BackupShortTermRetentionPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? retentionDays = default, DiffBackupIntervalInHours? diffBackupIntervalInHours = default, bool? shouldLockImmutability = default, ImmutabilityStatus? immutabilityStatus = default)
         {
             return new BackupShortTermRetentionPolicyData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                retentionDays is null && diffBackupIntervalInHours is null && lockImmutability is null && immutabilityStatus is null ? default : new BackupShortTermRetentionPolicyProperties(retentionDays, diffBackupIntervalInHours, lockImmutability, immutabilityStatus, default),
+                retentionDays is null && diffBackupIntervalInHours is null && shouldLockImmutability is null && immutabilityStatus is null ? default : new BackupShortTermRetentionPolicyProperties(retentionDays, diffBackupIntervalInHours, shouldLockImmutability, immutabilityStatus, default),
                 default);
         }
 
@@ -2048,19 +2048,19 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="failoverMode"> The link failover mode - can be Manual if intended to be used for two-way failover with a supported SQL Server, or None for one-way failover to Azure. </param>
         /// <param name="seedingMode"> Database seeding mode – can be Automatic (default), or Manual for supported scenarios. </param>
         /// <param name="linkMode"> Specifies whether the link operates in single-database or multi-database mode. </param>
-        /// <param name="mostRecentError"> Most recent error code for the distributed availability group. </param>
+        /// <param name="mostRecentErrorCode"> Most recent error code for the distributed availability group. </param>
         /// <param name="mostRecentErrorOn"> Time of the most recent error for the distributed availability group. </param>
         /// <param name="mostRecentErrorMessage"> Most recent error message for the distributed availability group. </param>
         /// <param name="databases"> Databases in the distributed availability group. </param>
         /// <returns> A new <see cref="Sql.SqlDistributedAvailabilityGroupData"/> instance for mocking. </returns>
-        public static SqlDistributedAvailabilityGroupData SqlDistributedAvailabilityGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string distributedAvailabilityGroupName = default, Guid? distributedAvailabilityGroupId = default, SqlReplicationModeType? replicationMode = default, SqlServerSideLinkRole? partnerLinkRole = default, string partnerAvailabilityGroupName = default, string partnerEndpoint = default, SqlServerSideLinkRole? instanceLinkRole = default, string instanceAvailabilityGroupName = default, SqlServerFailoverModeType? failoverMode = default, SeedingModeType? seedingMode = default, LinkModeType? linkMode = default, string mostRecentError = default, DateTimeOffset? mostRecentErrorOn = default, string mostRecentErrorMessage = default, IEnumerable<DistributedAvailabilityGroupDatabase> databases = default)
+        public static SqlDistributedAvailabilityGroupData SqlDistributedAvailabilityGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string distributedAvailabilityGroupName = default, Guid? distributedAvailabilityGroupId = default, SqlReplicationModeType? replicationMode = default, SqlServerSideLinkRole? partnerLinkRole = default, string partnerAvailabilityGroupName = default, string partnerEndpoint = default, SqlServerSideLinkRole? instanceLinkRole = default, string instanceAvailabilityGroupName = default, SqlServerFailoverModeType? failoverMode = default, SeedingModeType? seedingMode = default, LinkModeType? linkMode = default, string mostRecentErrorCode = default, DateTimeOffset? mostRecentErrorOn = default, string mostRecentErrorMessage = default, IEnumerable<DistributedAvailabilityGroupDatabase> databases = default)
         {
             return new SqlDistributedAvailabilityGroupData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                distributedAvailabilityGroupName is null && distributedAvailabilityGroupId is null && replicationMode is null && partnerLinkRole is null && partnerAvailabilityGroupName is null && partnerEndpoint is null && instanceLinkRole is null && instanceAvailabilityGroupName is null && failoverMode is null && seedingMode is null && linkMode is null && mostRecentError is null && mostRecentErrorOn is null && mostRecentErrorMessage is null && databases is null ? default : new DistributedAvailabilityGroupProperties(
+                distributedAvailabilityGroupName is null && distributedAvailabilityGroupId is null && replicationMode is null && partnerLinkRole is null && partnerAvailabilityGroupName is null && partnerEndpoint is null && instanceLinkRole is null && instanceAvailabilityGroupName is null && failoverMode is null && seedingMode is null && linkMode is null && mostRecentErrorCode is null && mostRecentErrorOn is null && mostRecentErrorMessage is null && databases is null ? default : new DistributedAvailabilityGroupProperties(
                     distributedAvailabilityGroupName,
                     distributedAvailabilityGroupId,
                     replicationMode,
@@ -2072,7 +2072,7 @@ namespace Azure.ResourceManager.Sql.Models
                     failoverMode,
                     seedingMode,
                     linkMode,
-                    mostRecentError,
+                    mostRecentErrorCode,
                     mostRecentErrorOn,
                     mostRecentErrorMessage,
                     (databases ?? new ChangeTrackingList<DistributedAvailabilityGroupDatabase>()).ToList(),
@@ -3695,17 +3695,17 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="retentionDays"> The backup retention period in days. This is how many days Point-in-Time Restore will be supported. </param>
-        /// <param name="lockImmutability"> Whether to lock the immutability of the backups governed by this short term retention policy. </param>
+        /// <param name="shouldLockImmutability"> Whether to lock the immutability of the backups governed by this short term retention policy. </param>
         /// <param name="immutabilityStatus"> The immutability status of the backups governed by this short term retention policy. </param>
         /// <returns> A new <see cref="Sql.ManagedBackupShortTermRetentionPolicyData"/> instance for mocking. </returns>
-        public static ManagedBackupShortTermRetentionPolicyData ManagedBackupShortTermRetentionPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? retentionDays = default, bool? lockImmutability = default, ImmutabilityStatus? immutabilityStatus = default)
+        public static ManagedBackupShortTermRetentionPolicyData ManagedBackupShortTermRetentionPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? retentionDays = default, bool? shouldLockImmutability = default, ImmutabilityStatus? immutabilityStatus = default)
         {
             return new ManagedBackupShortTermRetentionPolicyData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                retentionDays is null && lockImmutability is null && immutabilityStatus is null ? default : new ManagedBackupShortTermRetentionPolicyProperties(retentionDays, lockImmutability, immutabilityStatus, default),
+                retentionDays is null && shouldLockImmutability is null && immutabilityStatus is null ? default : new ManagedBackupShortTermRetentionPolicyProperties(retentionDays, shouldLockImmutability, immutabilityStatus, default),
                 default);
         }
 
@@ -3907,7 +3907,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="backupStorageAccessTier"> The BackupStorageAccessTier for the LTR backups. </param>
         /// <param name="timeBasedImmutability"> The setting for whether to enable time-based immutability for future backups. When set, future backups will have TimeBasedImmutability enabled. </param>
-        /// <param name="timeBasedImmutabilityMode"> The setting for time-based immutability mode for future backup (Value can be either Locked or UnLocked. Only effective if TimeBasedImmutability is enabled). Caution: Immutability of LTR backup cannot be removed if TimeBasedImmutabilityMode is Locked. </param>
+        /// <param name="timeBasedImmutabilityMode"> The setting for time-based immutability mode for future backup (Value can be either Locked or Unlocked. Only effective if TimeBasedImmutability is enabled). Caution: Immutability of LTR backup cannot be removed if TimeBasedImmutabilityMode is Locked. </param>
         /// <param name="weeklyRetention"> The weekly retention policy for an LTR backup in an ISO 8601 format. </param>
         /// <param name="monthlyRetention"> The monthly retention policy for an LTR backup in an ISO 8601 format. </param>
         /// <param name="yearlyRetention"> The yearly retention policy for an LTR backup in an ISO 8601 format. </param>

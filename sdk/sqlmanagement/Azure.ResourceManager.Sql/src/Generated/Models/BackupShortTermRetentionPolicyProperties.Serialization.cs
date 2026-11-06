@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("diffBackupIntervalInHours"u8);
                 writer.WriteNumberValue(DiffBackupIntervalInHours.Value.ToSerialInt32());
             }
-            if (Optional.IsDefined(LockImmutability))
+            if (Optional.IsDefined(ShouldLockImmutability))
             {
                 writer.WritePropertyName("lockImmutability"u8);
-                writer.WriteBooleanValue(LockImmutability.Value);
+                writer.WriteBooleanValue(ShouldLockImmutability.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ImmutabilityStatus))
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
             int? retentionDays = default;
             DiffBackupIntervalInHours? diffBackupIntervalInHours = default;
-            bool? lockImmutability = default;
+            bool? shouldLockImmutability = default;
             ImmutabilityStatus? immutabilityStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    lockImmutability = prop.Value.GetBoolean();
+                    shouldLockImmutability = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("immutabilityStatus"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Sql.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BackupShortTermRetentionPolicyProperties(retentionDays, diffBackupIntervalInHours, lockImmutability, immutabilityStatus, additionalBinaryDataProperties);
+            return new BackupShortTermRetentionPolicyProperties(retentionDays, diffBackupIntervalInHours, shouldLockImmutability, immutabilityStatus, additionalBinaryDataProperties);
         }
     }
 }

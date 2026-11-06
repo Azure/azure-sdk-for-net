@@ -129,10 +129,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("linkMode"u8);
                 writer.WriteStringValue(LinkMode.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(MostRecentError))
+            if (options.Format != "W" && Optional.IsDefined(MostRecentErrorCode))
             {
                 writer.WritePropertyName("mostRecentError"u8);
-                writer.WriteStringValue(MostRecentError);
+                writer.WriteStringValue(MostRecentErrorCode);
             }
             if (options.Format != "W" && Optional.IsDefined(MostRecentErrorOn))
             {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Sql.Models
             SqlServerFailoverModeType? failoverMode = default;
             SeedingModeType? seedingMode = default;
             LinkModeType? linkMode = default;
-            string mostRecentError = default;
+            string mostRecentErrorCode = default;
             DateTimeOffset? mostRecentErrorOn = default;
             string mostRecentErrorMessage = default;
             IList<DistributedAvailabilityGroupDatabase> databases = default;
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (prop.NameEquals("mostRecentError"u8))
                 {
-                    mostRecentError = prop.Value.GetString();
+                    mostRecentErrorCode = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("mostRecentErrorTime"u8))
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Sql.Models
                 failoverMode,
                 seedingMode,
                 linkMode,
-                mostRecentError,
+                mostRecentErrorCode,
                 mostRecentErrorOn,
                 mostRecentErrorMessage,
                 databases ?? new ChangeTrackingList<DistributedAvailabilityGroupDatabase>(),

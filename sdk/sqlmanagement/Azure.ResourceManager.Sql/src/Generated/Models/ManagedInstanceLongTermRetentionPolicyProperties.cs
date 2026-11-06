@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of <see cref="ManagedInstanceLongTermRetentionPolicyProperties"/>. </summary>
         /// <param name="backupStorageAccessTier"> The BackupStorageAccessTier for the LTR backups. </param>
         /// <param name="timeBasedImmutability"> The setting for whether to enable time-based immutability for future backups. When set, future backups will have TimeBasedImmutability enabled. </param>
-        /// <param name="timeBasedImmutabilityMode"> The setting for time-based immutability mode for future backup (Value can be either Locked or UnLocked. Only effective if TimeBasedImmutability is enabled). Caution: Immutability of LTR backup cannot be removed if TimeBasedImmutabilityMode is Locked. </param>
+        /// <param name="timeBasedImmutabilityMode"> The setting for time-based immutability mode for future backup (Value can be either Locked or Unlocked. Only effective if TimeBasedImmutability is enabled). Caution: Immutability of LTR backup cannot be removed if TimeBasedImmutabilityMode is Locked. </param>
         /// <param name="weeklyRetention"> The weekly retention policy for an LTR backup in an ISO 8601 format. </param>
         /// <param name="monthlyRetention"> The monthly retention policy for an LTR backup in an ISO 8601 format. </param>
         /// <param name="yearlyRetention"> The yearly retention policy for an LTR backup in an ISO 8601 format. </param>
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql.Models
         [WirePath("timeBasedImmutability")]
         public TimeBasedImmutability? TimeBasedImmutability { get; set; }
 
-        /// <summary> The setting for time-based immutability mode for future backup (Value can be either Locked or UnLocked. Only effective if TimeBasedImmutability is enabled). Caution: Immutability of LTR backup cannot be removed if TimeBasedImmutabilityMode is Locked. </summary>
+        /// <summary> The setting for time-based immutability mode for future backup (Value can be either Locked or Unlocked. Only effective if TimeBasedImmutability is enabled). Caution: Immutability of LTR backup cannot be removed if TimeBasedImmutabilityMode is Locked. </summary>
         [WirePath("timeBasedImmutabilityMode")]
         public TimeBasedImmutabilityMode? TimeBasedImmutabilityMode { get; set; }
 

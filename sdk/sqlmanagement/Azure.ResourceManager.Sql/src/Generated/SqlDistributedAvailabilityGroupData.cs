@@ -217,11 +217,11 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Most recent error code for the distributed availability group. </summary>
         [WirePath("properties.mostRecentError")]
-        public string MostRecentError
+        public string MostRecentErrorCode
         {
             get
             {
-                return Properties is null ? default : Properties.MostRecentError;
+                return Properties is null ? default : Properties.MostRecentErrorCode;
             }
         }
 
