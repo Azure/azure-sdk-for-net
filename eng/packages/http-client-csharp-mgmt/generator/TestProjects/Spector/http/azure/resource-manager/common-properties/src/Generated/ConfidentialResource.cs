@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CommonProperties
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _errorRestClient.CreateGetForPredefinedErrorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _errorRestClient.CreateGetForPredefinedErrorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConfidentialResourceData> response = Response.FromValue(ConfidentialResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.CommonProperties
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _errorRestClient.CreateGetForPredefinedErrorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _errorRestClient.CreateGetForPredefinedErrorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConfidentialResourceData> response = Response.FromValue(ConfidentialResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.CommonProperties
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _errorRestClient.CreateCreateForUserDefinedErrorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ConfidentialResourceData.ToRequestContent(data), context);
+                using HttpMessage message = _errorRestClient.CreateCreateForUserDefinedErrorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ConfidentialResourceData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConfidentialResourceData> response = Response.FromValue(ConfidentialResourceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.CommonProperties
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _errorRestClient.CreateCreateForUserDefinedErrorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ConfidentialResourceData.ToRequestContent(data), context);
+                using HttpMessage message = _errorRestClient.CreateCreateForUserDefinedErrorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ConfidentialResourceData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConfidentialResourceData> response = Response.FromValue(ConfidentialResourceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.CommonProperties
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _errorRestClient.CreateGetForPredefinedErrorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _errorRestClient.CreateGetForPredefinedErrorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ConfidentialResourceData> response = Response.FromValue(ConfidentialResourceData.FromResponse(result), result);
                     return Response.FromValue(new ConfidentialResource(Client, response.Value), response.GetRawResponse());
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.CommonProperties
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _errorRestClient.CreateGetForPredefinedErrorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _errorRestClient.CreateGetForPredefinedErrorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ConfidentialResourceData> response = Response.FromValue(ConfidentialResourceData.FromResponse(result), result);
                     return Response.FromValue(new ConfidentialResource(Client, response.Value), response.GetRawResponse());
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.CommonProperties
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _errorRestClient.CreateGetForPredefinedErrorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _errorRestClient.CreateGetForPredefinedErrorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ConfidentialResourceData> response = Response.FromValue(ConfidentialResourceData.FromResponse(result), result);
                     return Response.FromValue(new ConfidentialResource(Client, response.Value), response.GetRawResponse());
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.CommonProperties
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _errorRestClient.CreateGetForPredefinedErrorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _errorRestClient.CreateGetForPredefinedErrorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ConfidentialResourceData> response = Response.FromValue(ConfidentialResourceData.FromResponse(result), result);
                     return Response.FromValue(new ConfidentialResource(Client, response.Value), response.GetRawResponse());
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.CommonProperties
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _errorRestClient.CreateGetForPredefinedErrorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _errorRestClient.CreateGetForPredefinedErrorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ConfidentialResourceData> response = Response.FromValue(ConfidentialResourceData.FromResponse(result), result);
                     return Response.FromValue(new ConfidentialResource(Client, response.Value), response.GetRawResponse());
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.CommonProperties
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _errorRestClient.CreateGetForPredefinedErrorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _errorRestClient.CreateGetForPredefinedErrorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ConfidentialResourceData> response = Response.FromValue(ConfidentialResourceData.FromResponse(result), result);
                     return Response.FromValue(new ConfidentialResource(Client, response.Value), response.GetRawResponse());

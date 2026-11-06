@@ -74,7 +74,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = MultiServiceClientRestClient.CreateCheckAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, CheckAvailabilityRequest.ToRequestContent(content), context);
+                using HttpMessage message = MultiServiceClientRestClient.CreateCheckAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, CheckAvailabilityRequest.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CheckAvailabilityResult> response = Response.FromValue(CheckAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -124,7 +124,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = MultiServiceClientRestClient.CreateCheckAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, CheckAvailabilityRequest.ToRequestContent(content), context);
+                using HttpMessage message = MultiServiceClientRestClient.CreateCheckAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, CheckAvailabilityRequest.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CheckAvailabilityResult> response = Response.FromValue(CheckAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

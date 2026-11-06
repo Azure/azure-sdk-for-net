@@ -88,7 +88,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetRequest(Id.Parent.Name, Guid.Parse(Id.Name), groupQuotaName, resourceProviderName, location, context);
+                using HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetRequest(Id.Parent.Name, Guid.Parse(Id.Name), groupQuotaName, resourceProviderName, location, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SubscriptionQuotaAllocationsListData> response = Response.FromValue(SubscriptionQuotaAllocationsListData.FromResponse(result), result);
                 if (response.Value == null)
@@ -140,7 +140,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetRequest(Id.Parent.Name, Guid.Parse(Id.Name), groupQuotaName, resourceProviderName, location, context);
+                using HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetRequest(Id.Parent.Name, Guid.Parse(Id.Name), groupQuotaName, resourceProviderName, location, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SubscriptionQuotaAllocationsListData> response = Response.FromValue(SubscriptionQuotaAllocationsListData.FromResponse(result), result);
                 if (response.Value == null)
@@ -192,7 +192,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetRequest(Id.Parent.Name, Guid.Parse(Id.Name), groupQuotaName, resourceProviderName, location, context);
+                using HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetRequest(Id.Parent.Name, Guid.Parse(Id.Name), groupQuotaName, resourceProviderName, location, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SubscriptionQuotaAllocationsListData> response = default;
@@ -252,7 +252,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetRequest(Id.Parent.Name, Guid.Parse(Id.Name), groupQuotaName, resourceProviderName, location, context);
+                using HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetRequest(Id.Parent.Name, Guid.Parse(Id.Name), groupQuotaName, resourceProviderName, location, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SubscriptionQuotaAllocationsListData> response = default;
@@ -312,7 +312,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetRequest(Id.Parent.Name, Guid.Parse(Id.Name), groupQuotaName, resourceProviderName, location, context);
+                using HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetRequest(Id.Parent.Name, Guid.Parse(Id.Name), groupQuotaName, resourceProviderName, location, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SubscriptionQuotaAllocationsListData> response = default;
@@ -376,7 +376,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetRequest(Id.Parent.Name, Guid.Parse(Id.Name), groupQuotaName, resourceProviderName, location, context);
+                using HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetRequest(Id.Parent.Name, Guid.Parse(Id.Name), groupQuotaName, resourceProviderName, location, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SubscriptionQuotaAllocationsListData> response = default;

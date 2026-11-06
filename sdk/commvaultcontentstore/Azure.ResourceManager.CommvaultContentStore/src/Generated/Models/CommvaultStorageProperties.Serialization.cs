@@ -93,6 +93,11 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(ComplianceLockStatus))
+            {
+                writer.WritePropertyName("complianceLockStatus"u8);
+                writer.WriteStringValue(ComplianceLockStatus.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -140,6 +145,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             CommvaultVendor vendor = default;
             CommvaultStorageClassType @class = default;
             ResourceProvisioningState? provisioningState = default;
+            ComplianceLockStatus? complianceLockStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -172,6 +178,15 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     provisioningState = new ResourceProvisioningState(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("complianceLockStatus"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    complianceLockStatus = new ComplianceLockStatus(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -183,6 +198,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 vendor,
                 @class,
                 provisioningState,
+                complianceLockStatus,
                 additionalBinaryDataProperties);
         }
     }
