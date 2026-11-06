@@ -73,7 +73,13 @@ capacity across parallel workers.
   selected model, and publish its new endpoint/model/agent bindings to tests.
 - Model name, version, SKU, and capacity remain run parameters.
 - Build and live tests use the same service connection through the existing
-  federated-auth .NET template. Failed tests fail the job.
+  federated-auth .NET template. In Azure Pipelines, all three test environments
+  explicitly use `AzurePipelinesCredential` with the task's service-connection
+  tenant/client/connection IDs and the runtime `SYSTEM_ACCESSTOKEN`. Missing
+  metadata or a mismatched target tenant fails without falling back to the
+  agent's managed identity. Tokens are not written to state or artifacts.
+  Local developer runs still use `DefaultAzureCredential`. Failed tests fail
+  the job.
 - An always-run step calls the existing ownership-checked cleanup script.
   It deletes only the fresh run-owned RG and its subscription deployment record,
   never the permanent identities or another worker's RG.

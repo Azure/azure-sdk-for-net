@@ -6,7 +6,6 @@ using System.ClientModel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.AI.Tests.Shared;
-using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 
 namespace Azure.AI.Projects.Agents.Tests
@@ -78,19 +77,8 @@ namespace Azure.AI.Projects.Agents.Tests
 
         public override AuthenticationTokenProvider Credential => Mode switch
         {
-            RecordedTestMode.Live or RecordedTestMode.Record => CreateCredential(),
+            RecordedTestMode.Live or RecordedTestMode.Record => AiTestEnvironmentBootstrap.CreateCredential(),
             _ => base.Credential
         };
-
-        private static AuthenticationTokenProvider CreateCredential()
-        {
-            string tenantId = Environment.GetEnvironmentVariable("AZURE_TENANT_ID");
-            if (!string.IsNullOrWhiteSpace(tenantId))
-            {
-                return new DefaultAzureCredential(new DefaultAzureCredentialOptions { TenantId = tenantId });
-            }
-
-            return new DefaultAzureCredential();
-        }
     }
 }

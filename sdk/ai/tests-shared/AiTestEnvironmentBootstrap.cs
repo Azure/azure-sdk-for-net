@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text.Json;
+using Azure.Core;
+using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 
 namespace Azure.AI.Tests.Shared
@@ -27,6 +29,42 @@ namespace Azure.AI.Tests.Shared
         // is version-robust: older package versions expose TestEnvironment.DisableBootstrapping as
         // internal, so this switch is the only cross-version way to opt out of bootstrapping.
         private const string DisableBootstrappingSwitch = "CLIENTMODEL_DISABLE_BOOTSTRAPPING";
+
+        public static TokenCredential CreateCredential()
+        {
+            string tenantId = Environment.GetEnvironmentVariable("AZURE_TENANT_ID");
+            if (string.Equals(Environment.GetEnvironmentVariable("TF_BUILD"), "true", StringComparison.OrdinalIgnoreCase))
+            {
+                string pipelineTenantId = GetRequiredPipelineVariable("AZURESUBSCRIPTION_TENANT_ID");
+                if (!string.IsNullOrWhiteSpace(tenantId) &&
+                    !string.Equals(tenantId, pipelineTenantId, StringComparison.OrdinalIgnoreCase))
+                {
+                    throw new InvalidOperationException("The Azure Pipelines service connection tenant does not match AZURE_TENANT_ID.");
+                }
+
+                // DefaultAzureCredential can select the agent's managed identity instead of the service connection.
+                return new AzurePipelinesCredential(
+                    pipelineTenantId,
+                    GetRequiredPipelineVariable("AZURESUBSCRIPTION_CLIENT_ID"),
+                    GetRequiredPipelineVariable("AZURESUBSCRIPTION_SERVICE_CONNECTION_ID"),
+                    GetRequiredPipelineVariable("SYSTEM_ACCESSTOKEN"));
+            }
+
+            return string.IsNullOrWhiteSpace(tenantId)
+                ? new DefaultAzureCredential()
+                : new DefaultAzureCredential(new DefaultAzureCredentialOptions { TenantId = tenantId });
+        }
+
+        private static string GetRequiredPipelineVariable(string name)
+        {
+            string value = Environment.GetEnvironmentVariable(name);
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                throw new InvalidOperationException($"Azure Pipelines live tests require {name} from an authorized AzureCLI or AzurePowerShell task.");
+            }
+
+            return value;
+        }
 
         /// <summary>
         /// Disables the automatic resource bootstrapping script so that a missing variable causes the
