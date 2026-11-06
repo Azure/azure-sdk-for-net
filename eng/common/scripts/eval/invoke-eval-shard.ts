@@ -4,11 +4,49 @@
 import { spawnSync } from "node:child_process";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { getVallyShardVerdict } from "./lib/verdict.ts";
+import { assertSupportedEvalGate, getVallyShardVerdict, parseFailedTestsGate } from "./lib/verdict.ts";
 
-// The pinned Vally CLI is installed next to this script (package.json + node_modules live here),
-// so the npm --prefix is just this file's own directory.
+// Invoke the pinned CLI with Node directly so arguments never pass through a shell.
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
+const VALLY_CLI = path.join(SCRIPT_DIR, "node_modules", "@microsoft", "vally-cli", "dist", "index.js");
+
+export function validateVallyArguments(value, { failOnFailedTests = false } = {}) {
+  if (!Array.isArray(value) || value.some((arg) =>
+    (typeof arg !== "string" && typeof arg !== "number") ||
+    (typeof arg === "string" && arg.includes("\0")))) {
+    throw new Error("Vally arguments must be an array of strings or numeric count values without null characters.");
+  }
+  // Deliberately exclude eval selection, plugins, output, JUnit and verdict overrides.
+  const allowed = new Set(["--tag", "--runs", "--workers", "--timeout"]);
+  const args = [];
+  for (let index = 0; index < value.length; index += 2) {
+    const option = value[index];
+    if (!allowed.has(option)) {
+      throw new Error(`Unsupported supplementary Vally option: ${option}`);
+    }
+    let argument = value[index + 1];
+    const isCount = option === "--runs" || option === "--workers";
+    // Azure template expansion can serialize even format('{0}', number) as a JSON number.
+    if (typeof argument === "number") {
+      if (!isCount || !Number.isSafeInteger(argument) || argument < 1) {
+        throw new Error("Numeric values are supported only for positive integer --runs and --workers counts.");
+      }
+      argument = String(argument);
+    }
+    if (!argument || argument.startsWith("-")) {
+      throw new Error(`Missing value for ${option}`);
+    }
+    if (isCount &&
+      (!/^[1-9]\d*$/.test(argument) || !Number.isSafeInteger(Number(argument)))) {
+      throw new Error(`${option} must be a positive integer.`);
+    }
+    if (option === "--runs") {
+      assertSupportedEvalGate({ runs: Number(argument), failOnFailedTests });
+    }
+    args.push(option, argument);
+  }
+  return args;
+}
 
 /**
  * Executes the shard and returns the process exit code (0 pass, 1 fail). Side effects
@@ -19,11 +57,14 @@ const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
  * @param {string} options.shardName Shard name (log messages + result folder).
  * @param {string} options.outputDir `--output-dir` Vally writes results into.
  * @param {number} [options.threshold] Pass-rate gate forwarded to `vally eval --threshold`.
+ * @param {(string | number)[]} [options.vallyArguments] Allowlisted arguments; numeric trial/worker counts are normalized.
  * @returns {number} 0 when the shard verdict passes, 1 otherwise.
  */
-export function runShard({ evalArgs, shardName, outputDir, threshold = 0.8 }) {
+export function runShard({ evalArgs, shardName, outputDir, threshold = 0.8, vallyArguments = [] },
+  { spawn = spawnSync } = {}) {
   const evalArgList = evalArgs.split(/\s+/).filter(Boolean);
   const thresholdArg = String(threshold);
+  const supplementaryArgs = validateVallyArguments(vallyArguments);
 
   console.log(
     `Running: vally eval ${evalArgs} --junit --threshold ${thresholdArg} --output-dir "${outputDir}"`
@@ -33,25 +74,22 @@ export function runShard({ evalArgs, shardName, outputDir, threshold = 0.8 }) {
   // Uses spawnSync (not the vendored execFile helper) on purpose: the shard needs vally's output
   // streamed live to the log (stdio: "inherit") and must keep going on a non-zero exit, whereas
   // the exec helper captures output and rejects on failure.
-  const proc = spawnSync(
-    "npm",
+  const proc = spawn(
+    process.execPath,
     [
-      "exec",
-      "--no",
-      "--prefix",
-      SCRIPT_DIR,
-      "--",
-      "vally",
+      VALLY_CLI,
       "eval",
       ...evalArgList,
+      ...supplementaryArgs,
       "--junit",
       "--threshold",
       thresholdArg,
       "--output-dir",
       outputDir,
     ],
-    { stdio: "inherit", shell: process.platform === "win32" }
+    { stdio: "inherit", shell: false }
   );
+  if (proc.error) throw proc.error;
   const vallyExit = proc.status ?? 1;
 
   const verdict = getVallyShardVerdict({ resultsDir: outputDir, threshold });
@@ -91,11 +129,18 @@ export function runShard({ evalArgs, shardName, outputDir, threshold = 0.8 }) {
 
 // ----- CLI -----
 
-function parseArgs(argv) {
-  const options = { threshold: 0.8 };
+export function parseArgs(argv, env = process.env) {
+  const options = {
+    threshold: 0.8,
+    vallyArguments: validateVallyArguments(JSON.parse(env.VALLY_ARGUMENTS_JSON ?? "[]"),
+      { failOnFailedTests: parseFailedTestsGate(env.EVAL_FAIL_ON_FAILED_TESTS) }),
+  };
   for (let i = 0; i < argv.length; i++) {
     const next = () => argv[++i];
     switch (argv[i]) {
+      case "--validate-only":
+        options.validateOnly = true;
+        break;
       case "--eval-args":
         options.evalArgs = next();
         break;
@@ -112,9 +157,11 @@ function parseArgs(argv) {
         throw new Error(`Unknown argument: ${argv[i]}`);
     }
   }
-  for (const required of ["evalArgs", "shardName", "outputDir"]) {
-    if (!options[required]) {
-      throw new Error(`Missing required argument for ${required}.`);
+  if (!options.validateOnly) {
+    for (const required of ["evalArgs", "shardName", "outputDir"]) {
+      if (!options[required]) {
+        throw new Error(`Missing required argument for ${required}.`);
+      }
     }
   }
   return options;
@@ -122,7 +169,12 @@ function parseArgs(argv) {
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   try {
-    process.exit(runShard(parseArgs(process.argv.slice(2))));
+    const options = parseArgs(process.argv.slice(2));
+    if (options.validateOnly) {
+      console.log("Eval run configuration is supported.");
+    } else {
+      process.exit(runShard(options));
+    }
   } catch (error) {
     console.error(error.message);
     process.exit(1);

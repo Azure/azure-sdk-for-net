@@ -70,7 +70,8 @@ function runSummary(root, shards, options = {}) {
     const child = runCli("build-eval-summary.ts", [
         "--results-root", path.join(root, "download"), "--selected-root", path.join(root, "selected"),
         "--output-path", output,
-    ], { TF_BUILD: "true", EVAL_EXPECTED_MATRIX: matrix });
+    ], { TF_BUILD: "true", EVAL_EXPECTED_MATRIX: matrix,
+        EVAL_FAIL_ON_FAILED_TESTS: "false", ...options.env });
     return {
         child, markdown: fs.readFileSync(output, "utf8"),
         result: readJson(path.join(root, "summary", "eval-summary.json")),
@@ -86,6 +87,102 @@ test("expected shards come from the full Prepare matrix, not arrived artifacts o
         { a: { shardName: "" } }, { a: { shardName: "x".repeat(201) } }, { a: { shardName: "same" }, b: { shardName: "same" } }]) {
         assert.throws(() => expectedShardsFromMatrix(invalid));
     }
+});
+
+test("Summary renders threshold verdicts, including 4/5 passes, without inferring configuration support", (t) => {
+    for (const [runs, passed] of [[1, 1], [5, 4], [5, 5]]) {
+        for (const gate of ["true", "false"]) {
+            const root = setup(t);
+            const shard = "area_runs";
+            const output = artifact(root, shard, 1);
+            const records = Array.from({ length: runs }, (_, index) => ({
+                type: "trial-result", status: index < passed ? "success" : "error", itemId: "example",
+            }));
+            fs.writeFileSync(path.join(output, "results.jsonl"),
+                [...records, { type: "run-summary", evals: [{ name: "example", passed: true }] }]
+                    .map(record => JSON.stringify(record)).join("\n") + "\n");
+            const metadata = readJson(path.join(output, "shard.json"));
+            metadata.trials = runs;
+            fs.writeFileSync(path.join(output, "shard.json"), JSON.stringify(metadata));
+            const xml = '<testsuite><properties><property name="threshold" value="0.8"/></properties>' +
+                Array.from({ length: runs }, (_, index) => `<testcase name="example (trial ${index + 1})">${
+                    index < passed ? "" : '<failure message="failed trial"/>'}</testcase>`).join("") + "</testsuite>";
+            const junit = path.join(output, "junit", "0.junit.xml");
+            fs.writeFileSync(junit, xml);
+            const result = runSummary(root, [shard], { env: { EVAL_FAIL_ON_FAILED_TESTS: gate } });
+            assert.equal(result.child.status, 0, result.child.stderr);
+            assert.equal(result.result.complete, true);
+            assert.equal(result.result.totals.failed, 0);
+            assert.equal(fs.readFileSync(junit, "utf8"), xml);
+            assert.equal(fs.readFileSync(path.join(root, "selected", `eval-result-${shard}-1`, "junit", "0.junit.xml"), "utf8"), xml);
+            assert.match(result.child.stdout, /variable=EvalSummaryComplete]true/);
+        }
+    }
+});
+
+test("Summary does not reject distinct single-run evals with the same stimulus name", (t) => {
+    const root = setup(t);
+    const shard = "area_same_names";
+    const output = artifact(root, shard, 1);
+    const evals = ["first", "second"];
+    fs.writeFileSync(path.join(output, "results.jsonl"),
+        [...evals.map(name => ({ type: "trial-result", status: "success", itemId: name })),
+            { type: "run-summary", evals: evals.map(name => ({ name, passed: true })) }]
+            .map(record => JSON.stringify(record)).join("\n") + "\n");
+    const metadata = readJson(path.join(output, "shard.json"));
+    metadata.trials = evals.length;
+    fs.writeFileSync(path.join(output, "shard.json"), JSON.stringify(metadata));
+    fs.writeFileSync(path.join(output, "junit", "0.junit.xml"),
+        `<testsuites>${evals.map(name => `<testsuite name="${name}"><properties>
+            <property name="evalName" value="${name}"/><property name="evalFilePath" value="${name}.eval.yaml"/>
+            <property name="runs" value="1"/></properties><testcase name="smoke" classname="${name}"/>
+            </testsuite>`).join("")}</testsuites>`);
+    const result = runSummary(root, [shard], { env: { EVAL_FAIL_ON_FAILED_TESTS: "true" } });
+    assert.equal(result.child.status, 0, result.child.stderr);
+    assert.equal(result.result.complete, true);
+    assert.equal(result.result.totals.failed, 0);
+    assert.match(result.child.stdout, /variable=EvalSummaryComplete]true/);
+});
+
+test("single-run gating does not bypass missing-result completeness failures", (t) => {
+    const root = setup(t);
+    artifact(root, "area_present", 1);
+    const result = runSummary(root, ["area_present", "area_missing"], { env: { EVAL_FAIL_ON_FAILED_TESTS: "true" } });
+    assert.equal(result.child.status, 1);
+    assert.equal(result.result.complete, false);
+});
+
+test("shard job artifact names preserve hyphenated shard identities through Summary selection", (t) => {
+    const load = name => fs.readFileSync(new URL(`../../../pipelines/templates/jobs/${name}.yml`, import.meta.url), "utf8");
+    const shardTemplate = load("eval-shard");
+    const resultName = shardTemplate.match(/^          artifactName: '(eval-result-[^'\r\n]+)'\r?$/m);
+    assert.ok(resultName);
+    const root = setup(t);
+    const shard = "extra-area_same";
+    for (const attempt of [1, 2]) {
+        const name = resultName[1].replace("$(shardName)", shard).replace("$(System.JobAttempt)", String(attempt));
+        stageShardResults({ resultsRoot: invocation(root, `source-${attempt}`),
+            outputDirectory: path.join(root, "download", name), shardName: shard, attempt });
+    }
+    fs.writeFileSync(path.join(root, "job-attempts.json"), JSON.stringify({
+        schemaVersion: 1, valid: true, attempts: { [shard]: { attempt: 2, complete: true } },
+    }));
+    const result = runSummary(root, [shard]);
+    assert.equal(result.child.status, 0, result.child.stderr);
+    assert.equal(result.result.complete, true);
+    assert.deepEqual(result.index.attempts, [{ shard, attempt: 2, directory: `eval-result-${shard}-2` }]);
+});
+
+test("Summary downloads only build-wide result data", () => {
+    const summary = fs.readFileSync(new URL("../../../pipelines/templates/jobs/eval-summarize.yml", import.meta.url), "utf8");
+    const download = summary.split(/^      - task: /m).find(section =>
+        section.split(/\r?\n/, 1)[0] === "DownloadPipelineArtifact@2");
+    assert.ok(download);
+    const block = download.match(/^          itemPattern: \|\r?\n((?: {12}[^\r\n]+\r?\n)+)/m);
+    assert.ok(block);
+    const patterns = block[1].trim().split(/\r?\n/).map(line => line.trim());
+    const files = ["results.jsonl", "shard.json", "**/*.junit.xml"];
+    assert.deepEqual(patterns, files.map(file => `eval-result-*/${file}`));
 });
 
 test("completed failing evaluations stage exact raw bytes and all JUnit, but no unrelated files", (t) => {
@@ -484,7 +581,8 @@ const timelineEnv = { SYSTEM_COLLECTIONURI: "https://dev.azure.com/azure-sdk/", 
 const timelineRecord = { type: "Job", identifier: "Eval.RunShard.a", attempt: 1, state: "completed", result: "failed" };
 
 test("timeline uses matrix identifiers, highest attempts and completed state, rejecting ambiguous attempts", () => {
-    const matrix = { a: { shardName: "a" } }, records = [timelineRecord, { ...timelineRecord, attempt: 2 }];
+    const matrix = { a: { shardName: "a" } }, records = [timelineRecord, { ...timelineRecord, attempt: 2 },
+        { ...timelineRecord, identifier: "OtherEval.RunShard.a", attempt: 3 }];
     assert.deepEqual(latestShardAttempts({ records }, matrix).attempts.a, { attempt: 2, complete: true });
     records[1].result = "canceled";
     assert.equal(latestShardAttempts({ records }, matrix).attempts.a.complete, false);

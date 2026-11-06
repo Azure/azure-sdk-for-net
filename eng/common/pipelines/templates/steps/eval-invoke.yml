@@ -2,6 +2,7 @@
 # node script directly. UseAzSdkAuthentication=true wraps the same run in AzureCLI@2 so a live
 # MCP's Azure DevOps calls inherit the service-connection identity.
 # The shard's login-to-copilot template supplies the executor and prompt-judge token.
+# Callers may override the existing service connection through azureSubscription.
 
 parameters:
   - name: vallyRoot
@@ -16,9 +17,21 @@ parameters:
   - name: azureSubscription
     type: string
     default: opensource-api-connection
+  - name: vallyArguments
+    # Supplementary --tag/--runs/--workers/--timeout argument pairs, not shell text.
+    # --tag does not filter the matrix; callers must keep every planned eval non-empty.
+    # JSON-escape dollar signs below so agent macros cannot rewrite argument data.
+    type: object
+    default: []
 
 steps:
-  - ${{ if parameters.UseAzSdkAuthentication }}:
+  - ${{ if and(parameters.UseAzSdkAuthentication, eq(trim(parameters.azureSubscription), '')) }}:
+    - script: |
+        echo "##vso[task.logissue type=error]azureSubscription must be provided when UseAzSdkAuthentication is true."
+        exit 1
+      displayName: 'Validate authenticated eval service connection'
+
+  - ${{ elseif parameters.UseAzSdkAuthentication }}:
     - task: AzureCLI@2
       displayName: 'vally eval $(shardName) (authenticated)'
       inputs:
@@ -34,6 +47,7 @@ steps:
             --threshold ${{ parameters.threshold }}
       env:
         COPILOT_GITHUB_TOKEN: $(COPILOT_GITHUB_TOKEN)
+        VALLY_ARGUMENTS_JSON: ${{ replace(convertToJson(parameters.vallyArguments), '$', '\u0024') }}
 
   - ${{ else }}:
     - script: |
@@ -46,3 +60,4 @@ steps:
       workingDirectory: ${{ parameters.vallyRoot }}
       env:
         COPILOT_GITHUB_TOKEN: $(COPILOT_GITHUB_TOKEN)
+        VALLY_ARGUMENTS_JSON: ${{ replace(convertToJson(parameters.vallyArguments), '$', '\u0024') }}
