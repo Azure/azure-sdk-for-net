@@ -14,66 +14,66 @@ using Azure.Core;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> A request body used to export an asset. </summary>
-    public partial class AssetsExportRequestContent : IJsonModel<AssetsExportRequestContent>
+    public partial class AssetsExportRequestRequest : IJsonModel<AssetsExportRequestRequest>
     {
-        /// <summary> Initializes a new instance of <see cref="AssetsExportRequestContent"/> for deserialization. </summary>
-        internal AssetsExportRequestContent()
+        /// <summary> Initializes a new instance of <see cref="AssetsExportRequestRequest"/> for deserialization. </summary>
+        internal AssetsExportRequestRequest()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AssetsExportRequestContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AssetsExportRequestRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AssetsExportRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AssetsExportRequestRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAssetsExportRequestContent(document.RootElement, options);
+                        return DeserializeAssetsExportRequestRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AssetsExportRequestContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssetsExportRequestRequest)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AssetsExportRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AssetsExportRequestRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAnalyticsDefenderEasmContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AssetsExportRequestContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssetsExportRequestRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AssetsExportRequestContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AssetsExportRequestRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AssetsExportRequestContent IPersistableModel<AssetsExportRequestContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AssetsExportRequestRequest IPersistableModel<AssetsExportRequestRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AssetsExportRequestContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AssetsExportRequestRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="assetsExportRequestContent"> The <see cref="AssetsExportRequestContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(AssetsExportRequestContent assetsExportRequestContent)
+        /// <param name="assetsExportRequestRequest"> The <see cref="AssetsExportRequestRequest"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(AssetsExportRequestRequest assetsExportRequestRequest)
         {
-            if (assetsExportRequestContent == null)
+            if (assetsExportRequestRequest == null)
             {
                 return null;
             }
-            return RequestContent.Create(assetsExportRequestContent, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(assetsExportRequestRequest, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AssetsExportRequestContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AssetsExportRequestRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -84,10 +84,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AssetsExportRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AssetsExportRequestRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssetsExportRequestContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AssetsExportRequestRequest)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("fileName"u8);
             writer.WriteStringValue(FileName);
@@ -122,24 +122,24 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AssetsExportRequestContent IJsonModel<AssetsExportRequestContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AssetsExportRequestRequest IJsonModel<AssetsExportRequestRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AssetsExportRequestContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AssetsExportRequestRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AssetsExportRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AssetsExportRequestRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssetsExportRequestContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AssetsExportRequestRequest)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAssetsExportRequestContent(document.RootElement, options);
+            return DeserializeAssetsExportRequestRequest(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AssetsExportRequestContent DeserializeAssetsExportRequestContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static AssetsExportRequestRequest DeserializeAssetsExportRequestRequest(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -177,7 +177,7 @@ namespace Azure.Analytics.Defender.Easm
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AssetsExportRequestContent(fileName, columns ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new AssetsExportRequestRequest(fileName, columns ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }
