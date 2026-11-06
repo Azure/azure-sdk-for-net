@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DurableTask
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schedulersRestClient.CreateGetPrivateLinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _schedulersRestClient.CreateGetPrivateLinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DurableTaskSchedulerPrivateLinkResourceData> response = Response.FromValue(DurableTaskSchedulerPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DurableTask
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _schedulersRestClient.CreateGetPrivateLinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _schedulersRestClient.CreateGetPrivateLinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DurableTaskSchedulerPrivateLinkResourceData> response = Response.FromValue(DurableTaskSchedulerPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)

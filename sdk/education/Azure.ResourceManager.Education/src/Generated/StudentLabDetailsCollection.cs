@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Education
     /// <summary>
     /// A class representing a collection of <see cref="StudentLabDetailsResource"/> and their operations.
     /// Each <see cref="StudentLabDetailsResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
-    /// To get a <see cref="StudentLabDetailsCollection"/> instance call the GetStudentLabDetails method from an instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="StudentLabDetailsCollection"/> instance call the GetAllStudentLabDetails method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class StudentLabDetailsCollection : ArmCollection, IEnumerable<StudentLabDetailsResource>, IAsyncEnumerable<StudentLabDetailsResource>
     {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _studentLabsRestClient.CreateGetRequest(studentLabName, context);
+                using HttpMessage message = _studentLabsRestClient.CreateGetRequest(studentLabName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<StudentLabDetailsData> response = Response.FromValue(StudentLabDetailsData.FromResponse(result), result);
                 if (response.Value == null)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _studentLabsRestClient.CreateGetRequest(studentLabName, context);
+                using HttpMessage message = _studentLabsRestClient.CreateGetRequest(studentLabName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<StudentLabDetailsData> response = Response.FromValue(StudentLabDetailsData.FromResponse(result), result);
                 if (response.Value == null)
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _studentLabsRestClient.CreateGetRequest(studentLabName, context);
+                using HttpMessage message = _studentLabsRestClient.CreateGetRequest(studentLabName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<StudentLabDetailsData> response = default;
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _studentLabsRestClient.CreateGetRequest(studentLabName, context);
+                using HttpMessage message = _studentLabsRestClient.CreateGetRequest(studentLabName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<StudentLabDetailsData> response = default;
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _studentLabsRestClient.CreateGetRequest(studentLabName, context);
+                using HttpMessage message = _studentLabsRestClient.CreateGetRequest(studentLabName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<StudentLabDetailsData> response = default;
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _studentLabsRestClient.CreateGetRequest(studentLabName, context);
+                using HttpMessage message = _studentLabsRestClient.CreateGetRequest(studentLabName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<StudentLabDetailsData> response = default;

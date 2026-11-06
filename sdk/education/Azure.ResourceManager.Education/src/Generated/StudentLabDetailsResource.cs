@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _studentLabsRestClient.CreateGetRequest(Id.Name, context);
+                using HttpMessage message = _studentLabsRestClient.CreateGetRequest(Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<StudentLabDetailsData> response = Response.FromValue(StudentLabDetailsData.FromResponse(result), result);
                 if (response.Value == null)
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _studentLabsRestClient.CreateGetRequest(Id.Name, context);
+                using HttpMessage message = _studentLabsRestClient.CreateGetRequest(Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<StudentLabDetailsData> response = Response.FromValue(StudentLabDetailsData.FromResponse(result), result);
                 if (response.Value == null)

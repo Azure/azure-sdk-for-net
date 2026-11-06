@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Dns.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = DnsResourceReferenceRestClient.CreateGetDnsResourceReferencesByTargetResourcesRequest(Id.SubscriptionId, DnsResourceReferenceContent.ToRequestContent(content), context);
+                using HttpMessage message = DnsResourceReferenceRestClient.CreateGetDnsResourceReferencesByTargetResourcesRequest(Id.SubscriptionId, DnsResourceReferenceContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DnsResourceReferenceResult> response = Response.FromValue(DnsResourceReferenceResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Dns.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = DnsResourceReferenceRestClient.CreateGetDnsResourceReferencesByTargetResourcesRequest(Id.SubscriptionId, DnsResourceReferenceContent.ToRequestContent(content), context);
+                using HttpMessage message = DnsResourceReferenceRestClient.CreateGetDnsResourceReferencesByTargetResourcesRequest(Id.SubscriptionId, DnsResourceReferenceContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DnsResourceReferenceResult> response = Response.FromValue(DnsResourceReferenceResult.FromResponse(result), result);
                 if (response.Value == null)

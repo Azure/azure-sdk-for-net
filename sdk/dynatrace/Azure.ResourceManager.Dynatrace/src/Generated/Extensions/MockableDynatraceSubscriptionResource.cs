@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Dynatrace.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = MonitorsRestClient.CreateGetMarketplaceSaaSResourceDetailsResultRequest(Guid.Parse(Id.SubscriptionId), MarketplaceSaaSResourceDetailsContent.ToRequestContent(content), context);
+                using HttpMessage message = MonitorsRestClient.CreateGetMarketplaceSaaSResourceDetailsResultRequest(Guid.Parse(Id.SubscriptionId), MarketplaceSaaSResourceDetailsContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MarketplaceSaaSResourceDetailsResult> response = Response.FromValue(MarketplaceSaaSResourceDetailsResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Dynatrace.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = MonitorsRestClient.CreateGetMarketplaceSaaSResourceDetailsResultRequest(Guid.Parse(Id.SubscriptionId), MarketplaceSaaSResourceDetailsContent.ToRequestContent(content), context);
+                using HttpMessage message = MonitorsRestClient.CreateGetMarketplaceSaaSResourceDetailsResultRequest(Guid.Parse(Id.SubscriptionId), MarketplaceSaaSResourceDetailsContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MarketplaceSaaSResourceDetailsResult> response = Response.FromValue(MarketplaceSaaSResourceDetailsResult.FromResponse(result), result);
                 if (response.Value == null)
