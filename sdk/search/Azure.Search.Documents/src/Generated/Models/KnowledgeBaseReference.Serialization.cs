@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary>
     /// Base type for references.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBaseAzureBlobReference"/>, <see cref="KnowledgeBaseFabricDataAgentReference"/>, <see cref="KnowledgeBaseFabricOntologyReference"/>, <see cref="KnowledgeBaseFileReference"/>, <see cref="KnowledgeBaseIndexedOneLakeReference"/>, <see cref="KnowledgeBaseIndexedSharePointReference"/>, <see cref="KnowledgeBaseIndexedSqlReference"/>, <see cref="KnowledgeBaseMcpServerReference"/>, <see cref="KnowledgeBaseRemoteSharePointReference"/>, <see cref="KnowledgeBaseSearchIndexReference"/>, <see cref="KnowledgeBaseWebReference"/>, and <see cref="KnowledgeBaseWorkIQReference"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBaseAzureBlobReference"/>, <see cref="KnowledgeBaseFabricDataAgentReference"/>, <see cref="KnowledgeBaseFabricOntologyReference"/>, <see cref="KnowledgeBaseFileReference"/>, <see cref="KnowledgeBaseGraphSearchReference"/>, <see cref="KnowledgeBaseIndexedOneLakeReference"/>, <see cref="KnowledgeBaseIndexedSharePointReference"/>, <see cref="KnowledgeBaseIndexedSqlReference"/>, <see cref="KnowledgeBaseMcpServerReference"/>, <see cref="KnowledgeBaseRemoteSharePointReference"/>, <see cref="KnowledgeBaseSearchIndexReference"/>, <see cref="KnowledgeBaseWebReference"/>, and <see cref="KnowledgeBaseWorkIQReference"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownKnowledgeBaseReference))]
     public abstract partial class KnowledgeBaseReference : IJsonModel<KnowledgeBaseReference>
@@ -170,6 +170,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                         return KnowledgeBaseFabricOntologyReference.DeserializeKnowledgeBaseFabricOntologyReference(element, options);
                     case "file":
                         return KnowledgeBaseFileReference.DeserializeKnowledgeBaseFileReference(element, options);
+                    case "graphSearch":
+                        return KnowledgeBaseGraphSearchReference.DeserializeKnowledgeBaseGraphSearchReference(element, options);
                     case "indexedOneLake":
                         return KnowledgeBaseIndexedOneLakeReference.DeserializeKnowledgeBaseIndexedOneLakeReference(element, options);
                     case "indexedSharePoint":

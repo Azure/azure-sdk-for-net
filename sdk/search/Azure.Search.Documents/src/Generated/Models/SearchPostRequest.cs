@@ -38,8 +38,10 @@ namespace Azure.Search.Documents.Models
         /// <param name="highlightPostTag"> A string tag that is appended to hit highlights. Must be set with highlightPreTag. Default is &lt;/em&gt;. </param>
         /// <param name="highlightPreTag"> A string tag that is prepended to hit highlights. Must be set with highlightPostTag. Default is &lt;em&gt;. </param>
         /// <param name="minimumCoverage"> A number between 0 and 100 indicating the percentage of the index that must be covered by a search query in order for the query to be reported as a success. This parameter can be useful for ensuring search availability even for services with only one replica. The default is 100. </param>
+        /// <param name="moreLikeThis"> The key of the document to use as the basis for finding similar documents. This parameter cannot be used together with search text. </param>
         /// <param name="orderBy"> The comma-separated list of OData $orderby expressions by which to sort the results. Each expression can be either a field name or a call to either the geo.distance() or the search.score() functions. Each expression can be followed by asc to indicate ascending, or desc to indicate descending. The default is ascending order. Ties will be broken by the match scores of documents. If no $orderby is specified, the default sort order is descending by document match score. There can be at most 32 $orderby clauses. </param>
         /// <param name="queryType"> A value that specifies the syntax of the search query. The default is 'simple'. Use 'full' if your query uses the Lucene query syntax. </param>
+        /// <param name="agenticOptions"> Request-scoped runtime options when queryType is set to 'agentic'. Not supported with other query modes. Use the existing debug selector for diagnostics. </param>
         /// <param name="scoringStatistics"> A value that specifies whether we want to calculate scoring statistics (such as document frequency) globally for more consistent scoring, or locally, for lower latency. The default is 'local'. Use 'global' to aggregate scoring statistics globally before scoring. Using global scoring statistics can increase latency of search queries. </param>
         /// <param name="sessionId"> A value to be used to create a sticky session, which can help getting more consistent results. As long as the same sessionId is used, a best-effort attempt will be made to target the same replica set. Be wary that reusing the same sessionID values repeatedly can interfere with the load balancing of the requests across replicas and adversely affect the performance of the search service. The value used as sessionId cannot start with a '_' character. </param>
         /// <param name="scoringParameters"> The list of parameter values to be used in scoring functions (for example, referencePointParameter) using the format name-values. For example, if the scoring profile defines a function with a parameter called 'mylocation' the parameter string would be "mylocation--122.2,44.8" (without the quotes). </param>
@@ -65,7 +67,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="vectorFilterMode"> Determines whether or not filters are applied before or after the vector search is performed. Default is 'preFilter' for new indexes. </param>
         /// <param name="hybridSearch"> The query parameters to configure hybrid search behaviors. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchPostRequest(bool? includeTotalCount, IList<string> facets, string filter, IList<string> highlightFields, string highlightPostTag, string highlightPreTag, double? minimumCoverage, IList<string> orderBy, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IList<string> scoringParameters, string scoringProfile, QueryDebugMode? debug, string searchText, IList<string> searchFields, SearchMode? searchMode, QueryLanguage? queryLanguage, QuerySpellerType? querySpeller, IList<string> @select, int? skip, int? top, string semanticConfigurationName, SemanticErrorMode? semanticErrorHandling, int? semanticMaxWaitInMilliseconds, string semanticQuery, QueryAnswerType? answers, QueryCaptionType? captions, QueryRewritesType? queryRewrites, IList<string> semanticFields, IList<VectorQuery> vectorQueries, VectorFilterMode? vectorFilterMode, HybridSearch hybridSearch, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchPostRequest(bool? includeTotalCount, IList<string> facets, string filter, IList<string> highlightFields, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string moreLikeThis, IList<string> orderBy, SearchQueryType? queryType, AgenticSearchOptions agenticOptions, ScoringStatistics? scoringStatistics, string sessionId, IList<string> scoringParameters, string scoringProfile, QueryDebugMode? debug, string searchText, IList<string> searchFields, SearchMode? searchMode, QueryLanguage? queryLanguage, QuerySpellerType? querySpeller, IList<string> @select, int? skip, int? top, string semanticConfigurationName, SemanticErrorMode? semanticErrorHandling, int? semanticMaxWaitInMilliseconds, string semanticQuery, QueryAnswerType? answers, QueryCaptionType? captions, QueryRewritesType? queryRewrites, IList<string> semanticFields, IList<VectorQuery> vectorQueries, VectorFilterMode? vectorFilterMode, HybridSearch hybridSearch, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IncludeTotalCount = includeTotalCount;
             Facets = facets;
@@ -74,8 +76,10 @@ namespace Azure.Search.Documents.Models
             HighlightPostTag = highlightPostTag;
             HighlightPreTag = highlightPreTag;
             MinimumCoverage = minimumCoverage;
+            MoreLikeThis = moreLikeThis;
             OrderBy = orderBy;
             QueryType = queryType;
+            AgenticOptions = agenticOptions;
             ScoringStatistics = scoringStatistics;
             SessionId = sessionId;
             ScoringParameters = scoringParameters;
@@ -124,11 +128,17 @@ namespace Azure.Search.Documents.Models
         /// <summary> A number between 0 and 100 indicating the percentage of the index that must be covered by a search query in order for the query to be reported as a success. This parameter can be useful for ensuring search availability even for services with only one replica. The default is 100. </summary>
         public double? MinimumCoverage { get; }
 
+        /// <summary> The key of the document to use as the basis for finding similar documents. This parameter cannot be used together with search text. </summary>
+        public string MoreLikeThis { get; }
+
         /// <summary> The comma-separated list of OData $orderby expressions by which to sort the results. Each expression can be either a field name or a call to either the geo.distance() or the search.score() functions. Each expression can be followed by asc to indicate ascending, or desc to indicate descending. The default is ascending order. Ties will be broken by the match scores of documents. If no $orderby is specified, the default sort order is descending by document match score. There can be at most 32 $orderby clauses. </summary>
         public IList<string> OrderBy { get; }
 
         /// <summary> A value that specifies the syntax of the search query. The default is 'simple'. Use 'full' if your query uses the Lucene query syntax. </summary>
         public SearchQueryType? QueryType { get; }
+
+        /// <summary> Request-scoped runtime options when queryType is set to 'agentic'. Not supported with other query modes. Use the existing debug selector for diagnostics. </summary>
+        public AgenticSearchOptions AgenticOptions { get; }
 
         /// <summary> A value that specifies whether we want to calculate scoring statistics (such as document frequency) globally for more consistent scoring, or locally, for lower latency. The default is 'local'. Use 'global' to aggregate scoring statistics globally before scoring. Using global scoring statistics can increase latency of search queries. </summary>
         public ScoringStatistics? ScoringStatistics { get; }

@@ -80,6 +80,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new FormatException($"The model {nameof(DistanceScoringFunction)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("boost"u8);
+            writer.WriteNumberValue(Boost);
+            writer.WritePropertyName("fieldName"u8);
+            writer.WriteStringValue(FieldName);
             writer.WritePropertyName("distance"u8);
             writer.WriteObjectValue(Parameters, options);
         }
@@ -109,24 +113,14 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            string fieldName = default;
-            double boost = default;
             ScoringFunctionInterpolation? interpolation = default;
             string @type = "distance";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            double boost = default;
+            string fieldName = default;
             DistanceScoringParameters parameters = default;
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("fieldName"u8))
-                {
-                    fieldName = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("boost"u8))
-                {
-                    boost = prop.Value.GetDouble();
-                    continue;
-                }
                 if (prop.NameEquals("interpolation"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -141,6 +135,16 @@ namespace Azure.Search.Documents.Indexes.Models
                     @type = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("boost"u8))
+                {
+                    boost = prop.Value.GetDouble();
+                    continue;
+                }
+                if (prop.NameEquals("fieldName"u8))
+                {
+                    fieldName = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("distance"u8))
                 {
                     parameters = DistanceScoringParameters.DeserializeDistanceScoringParameters(prop.Value, options);
@@ -152,11 +156,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new DistanceScoringFunction(
-                fieldName,
-                boost,
                 interpolation,
                 @type,
                 additionalBinaryDataProperties,
+                boost,
+                fieldName,
                 parameters);
         }
     }

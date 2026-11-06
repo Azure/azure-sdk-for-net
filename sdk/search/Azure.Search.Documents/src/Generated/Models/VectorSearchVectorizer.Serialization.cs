@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary>
     /// Specifies the vectorization method to be used during query time.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AIServicesVisionVectorizer"/>, <see cref="AzureMachineLearningVectorizer"/>, <see cref="AzureOpenAIVectorizer"/>, and <see cref="WebApiVectorizer"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AIServicesVisionVectorizer"/>, <see cref="AzureMachineLearningVectorizer"/>, <see cref="AzureOpenAIVectorizer"/>, <see cref="OpenAICompatibleVectorizer"/>, and <see cref="WebApiVectorizer"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownVectorSearchVectorizer))]
     public abstract partial class VectorSearchVectorizer : IJsonModel<VectorSearchVectorizer>
@@ -138,6 +138,8 @@ namespace Azure.Search.Documents.Indexes.Models
                         return AzureMachineLearningVectorizer.DeserializeAzureMachineLearningVectorizer(element, options);
                     case "azureOpenAI":
                         return AzureOpenAIVectorizer.DeserializeAzureOpenAIVectorizer(element, options);
+                    case "openAICompatible":
+                        return OpenAICompatibleVectorizer.DeserializeOpenAICompatibleVectorizer(element, options);
                     case "customWebApi":
                         return WebApiVectorizer.DeserializeWebApiVectorizer(element, options);
                 }

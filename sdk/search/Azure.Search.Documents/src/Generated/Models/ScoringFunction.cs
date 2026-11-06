@@ -13,7 +13,7 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary>
     /// Base type for functions that can modify document scores during ranking.
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="DistanceScoringFunction"/>, <see cref="FreshnessScoringFunction"/>, <see cref="MagnitudeScoringFunction"/>, and <see cref="TagScoringFunction"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="DistanceScoringFunction"/>, <see cref="FreshnessScoringFunction"/>, <see cref="MagnitudeScoringFunction"/>, <see cref="RandomScoringFunction"/>, and <see cref="TagScoringFunction"/>.
     /// </summary>
     public partial class ScoringFunction
     {
@@ -21,40 +21,25 @@ namespace Azure.Search.Documents.Indexes.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ScoringFunction"/>. </summary>
-        /// <param name="fieldName"> The name of the field used as input to the scoring function. </param>
-        /// <param name="boost"> A multiplier for the raw score. Must be a positive number not equal to 1.0. </param>
         /// <param name="type"> Type of ScoringFunction. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fieldName"/> or <paramref name="type"/> is null. </exception>
-        public ScoringFunction(string fieldName, double boost, string @type)
+        /// <exception cref="ArgumentNullException"> <paramref name="type"/> is null. </exception>
+        public ScoringFunction(string @type)
         {
-            Argument.AssertNotNull(fieldName, nameof(fieldName));
             Argument.AssertNotNull(@type, nameof(@type));
 
-            FieldName = fieldName;
-            Boost = boost;
             Type = @type;
         }
 
         /// <summary> Initializes a new instance of <see cref="ScoringFunction"/>. </summary>
-        /// <param name="fieldName"> The name of the field used as input to the scoring function. </param>
-        /// <param name="boost"> A multiplier for the raw score. Must be a positive number not equal to 1.0. </param>
         /// <param name="interpolation"> A value indicating how boosting will be interpolated across document scores; defaults to "Linear". </param>
         /// <param name="type"> Type of ScoringFunction. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScoringFunction(string fieldName, double boost, ScoringFunctionInterpolation? interpolation, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScoringFunction(ScoringFunctionInterpolation? interpolation, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            FieldName = fieldName;
-            Boost = boost;
             Interpolation = interpolation;
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The name of the field used as input to the scoring function. </summary>
-        public string FieldName { get; set; }
-
-        /// <summary> A multiplier for the raw score. Must be a positive number not equal to 1.0. </summary>
-        public double Boost { get; set; }
 
         /// <summary> A value indicating how boosting will be interpolated across document scores; defaults to "Linear". </summary>
         public ScoringFunctionInterpolation? Interpolation { get; set; }

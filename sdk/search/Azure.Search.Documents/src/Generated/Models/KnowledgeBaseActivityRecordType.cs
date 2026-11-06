@@ -15,6 +15,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     public readonly partial struct KnowledgeBaseActivityRecordType : IEquatable<KnowledgeBaseActivityRecordType>
     {
         private readonly string _value;
+        /// <summary> Graph retrieval over a graph-enabled knowledge source. </summary>
+        private const string GraphSearchValue = "graphSearch";
         /// <summary> Search index retrieval activity. </summary>
         private const string SearchIndexValue = "searchIndex";
         /// <summary> Azure Blob retrieval activity. </summary>
@@ -57,6 +59,9 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
             _value = value;
         }
+
+        /// <summary> Graph retrieval over a graph-enabled knowledge source. </summary>
+        public static KnowledgeBaseActivityRecordType GraphSearch { get; } = new KnowledgeBaseActivityRecordType(GraphSearchValue);
 
         /// <summary> Search index retrieval activity. </summary>
         public static KnowledgeBaseActivityRecordType SearchIndex { get; } = new KnowledgeBaseActivityRecordType(SearchIndexValue);

@@ -105,11 +105,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 writer.WritePropertyName("indexedSqlArguments"u8);
                 writer.WriteObjectValue(IndexedSqlArguments, options);
             }
-            if (Optional.IsDefined(QueryHintProcessing))
-            {
-                writer.WritePropertyName("queryHintProcessing"u8);
-                writer.WriteObjectValue(QueryHintProcessing, options);
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -150,7 +145,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             int? count = default;
             ImageServingStatistics imageServing = default;
             KnowledgeBaseIndexedSqlActivityArguments indexedSqlArguments = default;
-            KnowledgeBaseQueryHintProcessing queryHintProcessing = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -245,15 +239,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     indexedSqlArguments = KnowledgeBaseIndexedSqlActivityArguments.DeserializeKnowledgeBaseIndexedSqlActivityArguments(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("queryHintProcessing"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    queryHintProcessing = KnowledgeBaseQueryHintProcessing.DeserializeKnowledgeBaseQueryHintProcessing(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -272,8 +257,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 queryOn,
                 count,
                 imageServing,
-                indexedSqlArguments,
-                queryHintProcessing);
+                indexedSqlArguments);
         }
     }
 }

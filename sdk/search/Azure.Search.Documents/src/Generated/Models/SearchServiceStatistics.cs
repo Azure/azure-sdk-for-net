@@ -19,12 +19,10 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="SearchServiceStatistics"/>. </summary>
         /// <param name="counters"> Service level resource counters. </param>
         /// <param name="limits"> Service level general limits. </param>
-        /// <param name="indexersRuntime"> Service level indexer runtime consumption. </param>
-        internal SearchServiceStatistics(SearchServiceCounters counters, SearchServiceLimits limits, ServiceIndexersRuntime indexersRuntime)
+        internal SearchServiceStatistics(SearchServiceCounters counters, SearchServiceLimits limits)
         {
             Counters = counters;
             Limits = limits;
-            IndexersRuntime = indexersRuntime;
         }
 
         /// <summary> Initializes a new instance of <see cref="SearchServiceStatistics"/>. </summary>

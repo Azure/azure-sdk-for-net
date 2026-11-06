@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -14,14 +15,31 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class FreshnessScoringFunction : ScoringFunction
     {
         /// <summary> Initializes a new instance of <see cref="FreshnessScoringFunction"/>. </summary>
-        /// <param name="fieldName"> The name of the field used as input to the scoring function. </param>
         /// <param name="boost"> A multiplier for the raw score. Must be a positive number not equal to 1.0. </param>
+        /// <param name="fieldName"> The name of the field used as input to the scoring function. </param>
+        /// <param name="parameters"> Parameter values for the freshness scoring function. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fieldName"/> or <paramref name="parameters"/> is null. </exception>
+        public FreshnessScoringFunction(double boost, string fieldName, FreshnessScoringParameters parameters) : base("freshness")
+        {
+            Argument.AssertNotNull(fieldName, nameof(fieldName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
+
+            Boost = boost;
+            FieldName = fieldName;
+            Parameters = parameters;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FreshnessScoringFunction"/>. </summary>
         /// <param name="interpolation"> A value indicating how boosting will be interpolated across document scores; defaults to "Linear". </param>
         /// <param name="type"> Type of ScoringFunction. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="boost"> A multiplier for the raw score. Must be a positive number not equal to 1.0. </param>
+        /// <param name="fieldName"> The name of the field used as input to the scoring function. </param>
         /// <param name="parameters"> Parameter values for the freshness scoring function. </param>
-        internal FreshnessScoringFunction(string fieldName, double boost, ScoringFunctionInterpolation? interpolation, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, FreshnessScoringParameters parameters) : base(fieldName, boost, interpolation, @type, additionalBinaryDataProperties)
+        internal FreshnessScoringFunction(ScoringFunctionInterpolation? interpolation, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, double boost, string fieldName, FreshnessScoringParameters parameters) : base(interpolation, @type, additionalBinaryDataProperties)
         {
+            Boost = boost;
+            FieldName = fieldName;
             Parameters = parameters;
         }
 

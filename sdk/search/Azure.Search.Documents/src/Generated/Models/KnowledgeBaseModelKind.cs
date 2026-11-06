@@ -17,6 +17,10 @@ namespace Azure.Search.Documents.Indexes.Models
         private readonly string _value;
         /// <summary> Use Azure Open AI models for query planning. </summary>
         private const string AzureOpenAIValue = "azureOpenAI";
+        /// <summary> Use a customer-controlled OpenAI-compatible endpoint for knowledge base retrieval or knowledge source image verbalization. </summary>
+        private const string OpenAICompatibleValue = "openAICompatible";
+        /// <summary> Use Microsoft Retriever 1 for query planning and retrieval. </summary>
+        private const string MicrosoftRetriever1Value = "microsoftRetriever1";
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseModelKind"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -30,6 +34,12 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Use Azure Open AI models for query planning. </summary>
         public static KnowledgeBaseModelKind AzureOpenAI { get; } = new KnowledgeBaseModelKind(AzureOpenAIValue);
+
+        /// <summary> Use a customer-controlled OpenAI-compatible endpoint for knowledge base retrieval or knowledge source image verbalization. </summary>
+        public static KnowledgeBaseModelKind OpenAICompatible { get; } = new KnowledgeBaseModelKind(OpenAICompatibleValue);
+
+        /// <summary> Use Microsoft Retriever 1 for query planning and retrieval. </summary>
+        public static KnowledgeBaseModelKind MicrosoftRetriever1 { get; } = new KnowledgeBaseModelKind(MicrosoftRetriever1Value);
 
         /// <summary> Determines if two <see cref="KnowledgeBaseModelKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

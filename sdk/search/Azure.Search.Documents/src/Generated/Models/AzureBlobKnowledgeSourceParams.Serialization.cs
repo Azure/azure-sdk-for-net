@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes.Models;
+using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
@@ -81,10 +82,15 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 throw new FormatException($"The model {nameof(AzureBlobKnowledgeSourceParams)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(QueryHintOverrides))
+            if (Optional.IsDefined(GraphParameters))
             {
-                writer.WritePropertyName("queryHintOverrides"u8);
-                writer.WriteObjectValue(QueryHintOverrides, options);
+                writer.WritePropertyName("graphParameters"u8);
+                writer.WriteObjectValue(GraphParameters, options);
+            }
+            if (Optional.IsDefined(TopicGraph))
+            {
+                writer.WritePropertyName("topicGraph"u8);
+                writer.WriteObjectValue(TopicGraph, options);
             }
         }
 
@@ -125,7 +131,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             KnowledgeSourceKind kind = default;
             bool? enableImageServing = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            SearchIndexKnowledgeSourceQueryHints queryHintOverrides = default;
+            AgentRuntimeGraphParams graphParameters = default;
+            VectorQueryTopicGraph topicGraph = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("knowledgeSourceName"u8))
@@ -219,13 +226,22 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     enableImageServing = prop.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("queryHintOverrides"u8))
+                if (prop.NameEquals("graphParameters"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    queryHintOverrides = SearchIndexKnowledgeSourceQueryHints.DeserializeSearchIndexKnowledgeSourceQueryHints(prop.Value, options);
+                    graphParameters = AgentRuntimeGraphParams.DeserializeAgentRuntimeGraphParams(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("topicGraph"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    topicGraph = VectorQueryTopicGraph.DeserializeVectorQueryTopicGraph(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -246,7 +262,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 kind,
                 enableImageServing,
                 additionalBinaryDataProperties,
-                queryHintOverrides);
+                graphParameters,
+                topicGraph);
         }
     }
 }

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes.Models;
+using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
@@ -91,6 +92,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 writer.WritePropertyName("queryHintOverrides"u8);
                 writer.WriteObjectValue(QueryHintOverrides, options);
             }
+            if (Optional.IsDefined(TopicGraph))
+            {
+                writer.WritePropertyName("topicGraph"u8);
+                writer.WriteObjectValue(TopicGraph, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -132,6 +138,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string filterAddOn = default;
             SearchIndexKnowledgeSourceQueryHints queryHintOverrides = default;
+            VectorQueryTopicGraph topicGraph = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("knowledgeSourceName"u8))
@@ -239,6 +246,15 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     queryHintOverrides = SearchIndexKnowledgeSourceQueryHints.DeserializeSearchIndexKnowledgeSourceQueryHints(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("topicGraph"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    topicGraph = VectorQueryTopicGraph.DeserializeVectorQueryTopicGraph(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -258,7 +274,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 enableImageServing,
                 additionalBinaryDataProperties,
                 filterAddOn,
-                queryHintOverrides);
+                queryHintOverrides,
+                topicGraph);
         }
     }
 }
