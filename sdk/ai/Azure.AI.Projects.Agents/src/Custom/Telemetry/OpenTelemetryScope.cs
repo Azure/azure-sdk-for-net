@@ -11,6 +11,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -296,16 +297,87 @@ namespace Azure.AI.Projects.Agents.Telemetry
                 {
                     // We cannot just parse MultipartFormDataContent, because its parts cannot be deserialized
                     // to stream in sync manner due to netstandard2.0 limitation.
-                    string[] parts  = binaryData.ToString().Split(separator: [$"--{boundary}"], options: StringSplitOptions.RemoveEmptyEntries);
-                    binaryData = null;
-                    foreach (string part in parts)
+                    byte[] btBoundary = Encoding.UTF8.GetBytes($"--{boundary}");
+                    string strContent = "Content-Type: application/json";
+                    byte[] readBuffer = new byte[Math.Max(btBoundary.Length, 1000)];
+                    List<byte> arJson = [];
+                    memoryStream.Position = 0;
+                    int offset = 0;
+                    int read = memoryStream.Read(readBuffer, offset, readBuffer.Length);
+                    bool withinBoundaries = false, badContentType=false, withinContentType=false, doneReading=false;
+                    LinkedList<byte> window = new();
+                    byte symbolBeforeWindow = (byte)'\n'; // At the begin of stream, assume that the last symbol is LF.
+                    while (read > 0)
                     {
-                        if (part.Trim().StartsWith("Content-Type: application/json", StringComparison.InvariantCultureIgnoreCase) && part.Contains('{'))
+                        for (int i = 0; i < read; i++)
                         {
-                            // Only copy JSON part to the binary data.
-                            binaryData = BinaryData.FromString(part.Substring(part.IndexOf('{')));
+                            window.AddLast(readBuffer[i]);
+                            if (window.Count > btBoundary.Length)
+                            {
+                                symbolBeforeWindow = window.First();
+                                window.RemoveFirst();
+                            }
+                            // If we see the boundary, reset or exit;
+                            if (window.Count == btBoundary.Length)
+                            {
+                                if (Enumerable.SequenceEqual(window, btBoundary) && symbolBeforeWindow == (byte)'\n')
+                                {
+                                    if (withinContentType && !badContentType)
+                                    {
+                                        // We have already found the json.
+                                        doneReading = true;
+                                        break;
+                                    }
+                                    withinBoundaries = true;
+                                    withinContentType = false;
+                                    badContentType = false;
+                                    window.Clear();
+                                }
+                            }
+                            // If we are within boundary, search for "Content-Type:" and check if it is application/json.
+                            // If it is not, wait for other boundary.
+                            if (withinBoundaries && !withinContentType && window.Count > strContent.Length)
+                            {
+                                string testContent = Encoding.UTF8.GetString([..window]);
+                                int contentTypeIndex = testContent.IndexOf("Content-Type: ");
+                                if (contentTypeIndex >=0 && testContent.Length - contentTypeIndex > strContent.Length)
+                                {
+                                    withinContentType = true;
+                                    badContentType = !testContent.Contains(strContent);
+                                    if (!badContentType)
+                                    {
+                                        for (int j = contentTypeIndex + strContent.Length; j < window.Count; j++)
+                                        {
+                                            arJson.Add(window.ElementAt(j));
+                                        }
+                                    }
+                                    window.Clear();
+                                }
+                            }
+                            // The application/json was found; keep recording json.
+                            else if (withinContentType && !badContentType)
+                            {
+                                arJson.Add(readBuffer[i]);
+                            }
+                        }
+                        if (doneReading)
+                        {
                             break;
                         }
+                        offset += read;
+                        read = memoryStream.Read(readBuffer, offset, readBuffer.Length);
+                    }
+                    string jsonPart = Encoding.UTF8.GetString([..arJson]);
+                    int jsonStart = jsonPart.IndexOf('{');
+                    int jsonEnd = jsonPart.LastIndexOf('}');
+                    if (jsonStart > 0 && jsonStart < jsonEnd)
+                    {
+                        binaryData = BinaryData.FromString(jsonPart.Substring(jsonStart, jsonEnd - jsonStart + 1));
+                    }
+                    else
+                    {
+                        // Invalid json.
+                        return null;
                     }
                 }
                 if (binaryData == null)
