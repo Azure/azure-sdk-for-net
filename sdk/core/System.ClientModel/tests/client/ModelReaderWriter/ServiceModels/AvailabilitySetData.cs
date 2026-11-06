@@ -17,6 +17,8 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
     /// </summary>
     public partial class AvailabilitySetData : TrackedResourceData
     {
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         internal AvailabilitySetData() { }
 
         public static implicit operator BinaryContent(AvailabilitySetData availabilitySetData)
@@ -59,7 +61,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
         /// <param name="proximityPlacementGroup"> Specifies information about the proximity placement group that the availability set should be assigned to. Minimum api-version: 2018-04-01. </param>
         /// <param name="statuses"> The resource status information. </param>
 #pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
-        internal AvailabilitySetData(string id, string name, string resourceType, SystemData systemData, IDictionary<string, string> tags, string location, ComputeSku sku, int? platformUpdateDomainCount, int? platformFaultDomainCount, IList<WritableSubResource> virtualMachines, WritableSubResource proximityPlacementGroup, IReadOnlyList<InstanceViewStatus> statuses, in JsonPatch jsonPatch) : base(id, name, resourceType, systemData, tags, location, jsonPatch)
+        internal AvailabilitySetData(string id, string name, string resourceType, SystemData systemData, IDictionary<string, string> tags, string location, ComputeSku sku, int? platformUpdateDomainCount, int? platformFaultDomainCount, IList<WritableSubResource> virtualMachines, WritableSubResource proximityPlacementGroup, IReadOnlyList<InstanceViewStatus> statuses, IDictionary<string, BinaryData> serializedRawData, in JsonPatch jsonPatch) : base(id, name, resourceType, systemData, tags, location, jsonPatch)
         {
             Sku = sku;
             PlatformUpdateDomainCount = platformUpdateDomainCount;
@@ -68,8 +70,9 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
             ProximityPlacementGroup = proximityPlacementGroup;
             Statuses = statuses;
             Patch.SetPropagators(PropagateSet, PropagateGet);
-#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+            _serializedAdditionalRawData = serializedRawData;
         }
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 
         /// <summary> Sku of the availability set, only name is required to be set. See AvailabilitySetSkuTypes for possible set of values. Use 'Aligned' for virtual machines with managed disks and 'Classic' for virtual machines with unmanaged disks. Default value is 'Classic'. </summary>
         public ComputeSku Sku { get; set; }

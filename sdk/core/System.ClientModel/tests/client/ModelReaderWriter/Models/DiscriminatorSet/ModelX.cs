@@ -53,7 +53,8 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         public static explicit operator ModelX(ClientResult result)
         {
-            if (result is null) throw new ArgumentNullException(nameof(result));
+            if (result is null)
+                throw new ArgumentNullException(nameof(result));
 
             using JsonDocument jsonDocument = JsonDocument.Parse(result.GetRawResponse().Content);
             return DeserializeModelX(jsonDocument.RootElement, ModelReaderWriterHelper.WireOptions);

@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using ClientModel.Tests.ClientShared;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using ClientModel.Tests.ClientShared;
 
 #if SOURCE_GENERATOR
 namespace System.ClientModel.SourceGeneration.Tests
@@ -29,7 +29,8 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         public static explicit operator BaseModel(ClientResult result)
         {
-            if (result is null) throw new ArgumentNullException(nameof(result));
+            if (result is null)
+                throw new ArgumentNullException(nameof(result));
 
             using JsonDocument jsonDocument = JsonDocument.Parse(result.GetRawResponse().Content);
             return DeserializeBaseModel(jsonDocument.RootElement, ModelReaderWriterHelper.WireOptions);
