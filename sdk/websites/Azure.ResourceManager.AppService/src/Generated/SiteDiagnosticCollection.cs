@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _diagnosticCategoriesRestClient.CreateGetSiteDiagnosticCategoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diagnosticCategory, context);
+                using HttpMessage message = _diagnosticCategoriesRestClient.CreateGetSiteDiagnosticCategoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diagnosticCategory, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DiagnosticCategoryData> response = Response.FromValue(DiagnosticCategoryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _diagnosticCategoriesRestClient.CreateGetSiteDiagnosticCategoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diagnosticCategory, context);
+                using HttpMessage message = _diagnosticCategoriesRestClient.CreateGetSiteDiagnosticCategoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diagnosticCategory, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DiagnosticCategoryData> response = Response.FromValue(DiagnosticCategoryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _diagnosticCategoriesRestClient.CreateGetSiteDiagnosticCategoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diagnosticCategory, context);
+                using HttpMessage message = _diagnosticCategoriesRestClient.CreateGetSiteDiagnosticCategoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diagnosticCategory, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DiagnosticCategoryData> response = default;
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _diagnosticCategoriesRestClient.CreateGetSiteDiagnosticCategoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diagnosticCategory, context);
+                using HttpMessage message = _diagnosticCategoriesRestClient.CreateGetSiteDiagnosticCategoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diagnosticCategory, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DiagnosticCategoryData> response = default;
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _diagnosticCategoriesRestClient.CreateGetSiteDiagnosticCategoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diagnosticCategory, context);
+                using HttpMessage message = _diagnosticCategoriesRestClient.CreateGetSiteDiagnosticCategoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diagnosticCategory, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DiagnosticCategoryData> response = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _diagnosticCategoriesRestClient.CreateGetSiteDiagnosticCategoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diagnosticCategory, context);
+                using HttpMessage message = _diagnosticCategoriesRestClient.CreateGetSiteDiagnosticCategoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, diagnosticCategory, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DiagnosticCategoryData> response = default;

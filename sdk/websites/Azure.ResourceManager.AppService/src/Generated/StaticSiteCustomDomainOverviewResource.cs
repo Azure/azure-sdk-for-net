@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteCustomDomainOverviewARMResourcesRestClient.CreateGetStaticSiteCustomDomainRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _staticSiteCustomDomainOverviewARMResourcesRestClient.CreateGetStaticSiteCustomDomainRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<StaticSiteCustomDomainOverviewData> response = Response.FromValue(StaticSiteCustomDomainOverviewData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteCustomDomainOverviewARMResourcesRestClient.CreateGetStaticSiteCustomDomainRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _staticSiteCustomDomainOverviewARMResourcesRestClient.CreateGetStaticSiteCustomDomainRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<StaticSiteCustomDomainOverviewData> response = Response.FromValue(StaticSiteCustomDomainOverviewData.FromResponse(result), result);
                 if (response.Value == null)
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteCustomDomainOverviewARMResourcesRestClient.CreateDeleteStaticSiteCustomDomainRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _staticSiteCustomDomainOverviewARMResourcesRestClient.CreateDeleteStaticSiteCustomDomainRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppServiceArmOperation operation = new AppServiceArmOperation(_staticSiteCustomDomainOverviewARMResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteCustomDomainOverviewARMResourcesRestClient.CreateDeleteStaticSiteCustomDomainRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _staticSiteCustomDomainOverviewARMResourcesRestClient.CreateDeleteStaticSiteCustomDomainRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppServiceArmOperation operation = new AppServiceArmOperation(_staticSiteCustomDomainOverviewARMResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteCustomDomainOverviewARMResourcesRestClient.CreateValidateCustomDomainCanBeAddedToStaticSiteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StaticSiteCustomDomainContent.ToRequestContent(content), context);
+                using HttpMessage message = _staticSiteCustomDomainOverviewARMResourcesRestClient.CreateValidateCustomDomainCanBeAddedToStaticSiteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StaticSiteCustomDomainContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppServiceArmOperation operation = new AppServiceArmOperation(_staticSiteCustomDomainOverviewARMResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteCustomDomainOverviewARMResourcesRestClient.CreateValidateCustomDomainCanBeAddedToStaticSiteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StaticSiteCustomDomainContent.ToRequestContent(content), context);
+                using HttpMessage message = _staticSiteCustomDomainOverviewARMResourcesRestClient.CreateValidateCustomDomainCanBeAddedToStaticSiteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StaticSiteCustomDomainContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppServiceArmOperation operation = new AppServiceArmOperation(_staticSiteCustomDomainOverviewARMResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteCustomDomainOverviewARMResourcesRestClient.CreateCreateOrUpdateStaticSiteCustomDomainRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StaticSiteCustomDomainContent.ToRequestContent(content), context);
+                using HttpMessage message = _staticSiteCustomDomainOverviewARMResourcesRestClient.CreateCreateOrUpdateStaticSiteCustomDomainRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StaticSiteCustomDomainContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppServiceArmOperation<StaticSiteCustomDomainOverviewResource> operation = new AppServiceArmOperation<StaticSiteCustomDomainOverviewResource>(
                     new StaticSiteCustomDomainOverviewResourceOperationSource(Client),
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteCustomDomainOverviewARMResourcesRestClient.CreateCreateOrUpdateStaticSiteCustomDomainRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StaticSiteCustomDomainContent.ToRequestContent(content), context);
+                using HttpMessage message = _staticSiteCustomDomainOverviewARMResourcesRestClient.CreateCreateOrUpdateStaticSiteCustomDomainRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StaticSiteCustomDomainContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppServiceArmOperation<StaticSiteCustomDomainOverviewResource> operation = new AppServiceArmOperation<StaticSiteCustomDomainOverviewResource>(
                     new StaticSiteCustomDomainOverviewResourceOperationSource(Client),

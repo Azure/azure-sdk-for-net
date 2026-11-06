@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workerPoolResourcesRestClient.CreateCreateOrUpdateMultiRolePoolRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, AppServiceWorkerPoolData.ToRequestContent(data), context);
+                using HttpMessage message = _workerPoolResourcesRestClient.CreateCreateOrUpdateMultiRolePoolRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, AppServiceWorkerPoolData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppServiceArmOperation<HostingEnvironmentMultiRolePoolResource> operation = new AppServiceArmOperation<HostingEnvironmentMultiRolePoolResource>(
                     new HostingEnvironmentMultiRolePoolResourceOperationSource(Client),
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workerPoolResourcesRestClient.CreateCreateOrUpdateMultiRolePoolRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, AppServiceWorkerPoolData.ToRequestContent(data), context);
+                using HttpMessage message = _workerPoolResourcesRestClient.CreateCreateOrUpdateMultiRolePoolRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, AppServiceWorkerPoolData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppServiceArmOperation<HostingEnvironmentMultiRolePoolResource> operation = new AppServiceArmOperation<HostingEnvironmentMultiRolePoolResource>(
                     new HostingEnvironmentMultiRolePoolResourceOperationSource(Client),
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workerPoolResourcesRestClient.CreateGetMultiRolePoolRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _workerPoolResourcesRestClient.CreateGetMultiRolePoolRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceWorkerPoolData> response = Response.FromValue(AppServiceWorkerPoolData.FromResponse(result), result);
                 if (response.Value == null)
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workerPoolResourcesRestClient.CreateGetMultiRolePoolRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _workerPoolResourcesRestClient.CreateGetMultiRolePoolRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceWorkerPoolData> response = Response.FromValue(AppServiceWorkerPoolData.FromResponse(result), result);
                 if (response.Value == null)
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workerPoolResourcesRestClient.CreateUpdateMultiRolePoolRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, AppServiceWorkerPoolData.ToRequestContent(data), context);
+                using HttpMessage message = _workerPoolResourcesRestClient.CreateUpdateMultiRolePoolRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, AppServiceWorkerPoolData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceWorkerPoolData> response = Response.FromValue(AppServiceWorkerPoolData.FromResponse(result), result);
                 if (response.Value == null)
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workerPoolResourcesRestClient.CreateUpdateMultiRolePoolRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, AppServiceWorkerPoolData.ToRequestContent(data), context);
+                using HttpMessage message = _workerPoolResourcesRestClient.CreateUpdateMultiRolePoolRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, AppServiceWorkerPoolData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceWorkerPoolData> response = Response.FromValue(AppServiceWorkerPoolData.FromResponse(result), result);
                 if (response.Value == null)

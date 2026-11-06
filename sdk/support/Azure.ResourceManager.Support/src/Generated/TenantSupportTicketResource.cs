@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantSupportTicketRestClient.CreateGetRequest(Id.Name, context);
+                using HttpMessage message = _tenantSupportTicketRestClient.CreateGetRequest(Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SupportTicketData> response = Response.FromValue(SupportTicketData.FromResponse(result), result);
                 if (response.Value == null)
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantSupportTicketRestClient.CreateGetRequest(Id.Name, context);
+                using HttpMessage message = _tenantSupportTicketRestClient.CreateGetRequest(Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SupportTicketData> response = Response.FromValue(SupportTicketData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantSupportTicketRestClient.CreateUpdateRequest(Id.Name, UpdateSupportTicket.ToRequestContent(updateSupportTicket), context);
+                using HttpMessage message = _tenantSupportTicketRestClient.CreateUpdateRequest(Id.Name, UpdateSupportTicket.ToRequestContent(updateSupportTicket), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SupportTicketData> response = Response.FromValue(SupportTicketData.FromResponse(result), result);
                 if (response.Value == null)
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantSupportTicketRestClient.CreateUpdateRequest(Id.Name, UpdateSupportTicket.ToRequestContent(updateSupportTicket), context);
+                using HttpMessage message = _tenantSupportTicketRestClient.CreateUpdateRequest(Id.Name, UpdateSupportTicket.ToRequestContent(updateSupportTicket), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SupportTicketData> response = Response.FromValue(SupportTicketData.FromResponse(result), result);
                 if (response.Value == null)
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _supportTicketNoSubCommunicationRestClient.CreateCheckNameAvailabilityCommunicationsNoSubscriptionRequest(Id.Name, SupportNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = _supportTicketNoSubCommunicationRestClient.CreateCheckNameAvailabilityCommunicationsNoSubscriptionRequest(Id.Name, SupportNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SupportNameAvailabilityResult> response = Response.FromValue(SupportNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _supportTicketNoSubCommunicationRestClient.CreateCheckNameAvailabilityCommunicationsNoSubscriptionRequest(Id.Name, SupportNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = _supportTicketNoSubCommunicationRestClient.CreateCheckNameAvailabilityCommunicationsNoSubscriptionRequest(Id.Name, SupportNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SupportNameAvailabilityResult> response = Response.FromValue(SupportNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

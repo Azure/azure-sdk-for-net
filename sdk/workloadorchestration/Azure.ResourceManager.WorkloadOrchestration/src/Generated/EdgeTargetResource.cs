@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EdgeTargetData> response = Response.FromValue(EdgeTargetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EdgeTargetData> response = Response.FromValue(EdgeTargetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeTargetPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _targetsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeTargetPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation<EdgeTargetResource> operation = new WorkloadOrchestrationArmOperation<EdgeTargetResource>(
                     new EdgeTargetResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeTargetPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _targetsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeTargetPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation<EdgeTargetResource> operation = new WorkloadOrchestrationArmOperation<EdgeTargetResource>(
                     new EdgeTargetResourceOperationSource(Client),
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, forceDelete, context);
+                using HttpMessage message = _targetsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, forceDelete, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation operation = new WorkloadOrchestrationArmOperation(_targetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, forceDelete, context);
+                using HttpMessage message = _targetsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, forceDelete, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation operation = new WorkloadOrchestrationArmOperation(_targetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetsRestClient.CreateInstallSolutionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, InstallSolutionContent.ToRequestContent(content), context);
+                using HttpMessage message = _targetsRestClient.CreateInstallSolutionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, InstallSolutionContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation operation = new WorkloadOrchestrationArmOperation(_targetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetsRestClient.CreateInstallSolutionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, InstallSolutionContent.ToRequestContent(content), context);
+                using HttpMessage message = _targetsRestClient.CreateInstallSolutionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, InstallSolutionContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation operation = new WorkloadOrchestrationArmOperation(_targetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetsRestClient.CreatePublishSolutionVersionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeSolutionVersionContent.ToRequestContent(content), context);
+                using HttpMessage message = _targetsRestClient.CreatePublishSolutionVersionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeSolutionVersionContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource> operation = new WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource>(
                     new EdgeSolutionVersionResourceOperationSource(Client),
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetsRestClient.CreatePublishSolutionVersionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeSolutionVersionContent.ToRequestContent(content), context);
+                using HttpMessage message = _targetsRestClient.CreatePublishSolutionVersionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeSolutionVersionContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource> operation = new WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource>(
                     new EdgeSolutionVersionResourceOperationSource(Client),
@@ -668,7 +668,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetsRestClient.CreateRemoveRevisionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RemoveRevisionContent.ToRequestContent(content), context);
+                using HttpMessage message = _targetsRestClient.CreateRemoveRevisionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RemoveRevisionContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation operation = new WorkloadOrchestrationArmOperation(_targetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -721,7 +721,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetsRestClient.CreateRemoveRevisionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RemoveRevisionContent.ToRequestContent(content), context);
+                using HttpMessage message = _targetsRestClient.CreateRemoveRevisionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RemoveRevisionContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation operation = new WorkloadOrchestrationArmOperation(_targetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -774,7 +774,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetsRestClient.CreateResolveConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeSolutionTemplateContent.ToRequestContent(content), context);
+                using HttpMessage message = _targetsRestClient.CreateResolveConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeSolutionTemplateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation<ResolvedConfiguration> operation = new WorkloadOrchestrationArmOperation<ResolvedConfiguration>(
                     new ResolvedConfigurationOperationSource(),
@@ -833,7 +833,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetsRestClient.CreateResolveConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeSolutionTemplateContent.ToRequestContent(content), context);
+                using HttpMessage message = _targetsRestClient.CreateResolveConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeSolutionTemplateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation<ResolvedConfiguration> operation = new WorkloadOrchestrationArmOperation<ResolvedConfiguration>(
                     new ResolvedConfigurationOperationSource(),
@@ -892,7 +892,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetsRestClient.CreateReviewSolutionVersionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeSolutionTemplateContent.ToRequestContent(content), context);
+                using HttpMessage message = _targetsRestClient.CreateReviewSolutionVersionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeSolutionTemplateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource> operation = new WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource>(
                     new EdgeSolutionVersionResourceOperationSource(Client),
@@ -951,7 +951,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetsRestClient.CreateReviewSolutionVersionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeSolutionTemplateContent.ToRequestContent(content), context);
+                using HttpMessage message = _targetsRestClient.CreateReviewSolutionVersionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeSolutionTemplateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource> operation = new WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource>(
                     new EdgeSolutionVersionResourceOperationSource(Client),
@@ -1010,7 +1010,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetsRestClient.CreateUninstallSolutionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UninstallSolutionContent.ToRequestContent(content), context);
+                using HttpMessage message = _targetsRestClient.CreateUninstallSolutionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UninstallSolutionContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation operation = new WorkloadOrchestrationArmOperation(_targetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1063,7 +1063,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetsRestClient.CreateUninstallSolutionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UninstallSolutionContent.ToRequestContent(content), context);
+                using HttpMessage message = _targetsRestClient.CreateUninstallSolutionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UninstallSolutionContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation operation = new WorkloadOrchestrationArmOperation(_targetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1116,7 +1116,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetsRestClient.CreateUpdateExternalValidationStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UpdateExternalValidationStatusContent.ToRequestContent(content), context);
+                using HttpMessage message = _targetsRestClient.CreateUpdateExternalValidationStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UpdateExternalValidationStatusContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource> operation = new WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource>(
                     new EdgeSolutionVersionResourceOperationSource(Client),
@@ -1175,7 +1175,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _targetsRestClient.CreateUpdateExternalValidationStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UpdateExternalValidationStatusContent.ToRequestContent(content), context);
+                using HttpMessage message = _targetsRestClient.CreateUpdateExternalValidationStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UpdateExternalValidationStatusContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource> operation = new WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource>(
                     new EdgeSolutionVersionResourceOperationSource(Client),
@@ -1220,7 +1220,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<EdgeTargetData> response = Response.FromValue(EdgeTargetData.FromResponse(result), result);
                     return Response.FromValue(new EdgeTargetResource(Client, response.Value), response.GetRawResponse());
@@ -1268,7 +1268,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<EdgeTargetData> response = Response.FromValue(EdgeTargetData.FromResponse(result), result);
                     return Response.FromValue(new EdgeTargetResource(Client, response.Value), response.GetRawResponse());
@@ -1314,7 +1314,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<EdgeTargetData> response = Response.FromValue(EdgeTargetData.FromResponse(result), result);
                     return Response.FromValue(new EdgeTargetResource(Client, response.Value), response.GetRawResponse());
@@ -1356,7 +1356,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<EdgeTargetData> response = Response.FromValue(EdgeTargetData.FromResponse(result), result);
                     return Response.FromValue(new EdgeTargetResource(Client, response.Value), response.GetRawResponse());
@@ -1398,7 +1398,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<EdgeTargetData> response = Response.FromValue(EdgeTargetData.FromResponse(result), result);
                     return Response.FromValue(new EdgeTargetResource(Client, response.Value), response.GetRawResponse());
@@ -1444,7 +1444,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<EdgeTargetData> response = Response.FromValue(EdgeTargetData.FromResponse(result), result);
                     return Response.FromValue(new EdgeTargetResource(Client, response.Value), response.GetRawResponse());

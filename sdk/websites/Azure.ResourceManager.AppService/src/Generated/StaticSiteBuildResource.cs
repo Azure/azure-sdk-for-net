@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteBuildARMResourcesRestClient.CreateGetStaticSiteBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _staticSiteBuildARMResourcesRestClient.CreateGetStaticSiteBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<StaticSiteBuildData> response = Response.FromValue(StaticSiteBuildData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteBuildARMResourcesRestClient.CreateGetStaticSiteBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _staticSiteBuildARMResourcesRestClient.CreateGetStaticSiteBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<StaticSiteBuildData> response = Response.FromValue(StaticSiteBuildData.FromResponse(result), result);
                 if (response.Value == null)
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteBuildARMResourcesRestClient.CreateDeleteStaticSiteBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _staticSiteBuildARMResourcesRestClient.CreateDeleteStaticSiteBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppServiceArmOperation operation = new AppServiceArmOperation(_staticSiteBuildARMResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteBuildARMResourcesRestClient.CreateDeleteStaticSiteBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _staticSiteBuildARMResourcesRestClient.CreateDeleteStaticSiteBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppServiceArmOperation operation = new AppServiceArmOperation(_staticSiteBuildARMResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteBuildARMResourcesRestClient.CreateCreateOrUpdateAppSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AppServiceConfigurationDictionary.ToRequestContent(appSettings), context);
+                using HttpMessage message = _staticSiteBuildARMResourcesRestClient.CreateCreateOrUpdateAppSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AppServiceConfigurationDictionary.ToRequestContent(appSettings), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceConfigurationDictionary> response = Response.FromValue(AppServiceConfigurationDictionary.FromResponse(result), result);
                 if (response.Value == null)
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteBuildARMResourcesRestClient.CreateCreateOrUpdateAppSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AppServiceConfigurationDictionary.ToRequestContent(appSettings), context);
+                using HttpMessage message = _staticSiteBuildARMResourcesRestClient.CreateCreateOrUpdateAppSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AppServiceConfigurationDictionary.ToRequestContent(appSettings), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceConfigurationDictionary> response = Response.FromValue(AppServiceConfigurationDictionary.FromResponse(result), result);
                 if (response.Value == null)
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteBuildARMResourcesRestClient.CreateCreateOrUpdateFunctionAppSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AppServiceConfigurationDictionary.ToRequestContent(appSettings), context);
+                using HttpMessage message = _staticSiteBuildARMResourcesRestClient.CreateCreateOrUpdateFunctionAppSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AppServiceConfigurationDictionary.ToRequestContent(appSettings), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceConfigurationDictionary> response = Response.FromValue(AppServiceConfigurationDictionary.FromResponse(result), result);
                 if (response.Value == null)
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteBuildARMResourcesRestClient.CreateCreateOrUpdateFunctionAppSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AppServiceConfigurationDictionary.ToRequestContent(appSettings), context);
+                using HttpMessage message = _staticSiteBuildARMResourcesRestClient.CreateCreateOrUpdateFunctionAppSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AppServiceConfigurationDictionary.ToRequestContent(appSettings), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceConfigurationDictionary> response = Response.FromValue(AppServiceConfigurationDictionary.FromResponse(result), result);
                 if (response.Value == null)
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteBuildARMResourcesRestClient.CreateCreateZipDeploymentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StaticSiteZipDeployment.ToRequestContent(staticSiteZipDeploymentEnvelope), context);
+                using HttpMessage message = _staticSiteBuildARMResourcesRestClient.CreateCreateZipDeploymentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StaticSiteZipDeployment.ToRequestContent(staticSiteZipDeploymentEnvelope), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppServiceArmOperation operation = new AppServiceArmOperation(_staticSiteBuildARMResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteBuildARMResourcesRestClient.CreateCreateZipDeploymentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StaticSiteZipDeployment.ToRequestContent(staticSiteZipDeploymentEnvelope), context);
+                using HttpMessage message = _staticSiteBuildARMResourcesRestClient.CreateCreateZipDeploymentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StaticSiteZipDeployment.ToRequestContent(staticSiteZipDeploymentEnvelope), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppServiceArmOperation operation = new AppServiceArmOperation(_staticSiteBuildARMResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -710,7 +710,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteBuildARMResourcesRestClient.CreateGetStaticSiteBuildAppSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _staticSiteBuildARMResourcesRestClient.CreateGetStaticSiteBuildAppSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceConfigurationDictionary> response = Response.FromValue(AppServiceConfigurationDictionary.FromResponse(result), result);
                 if (response.Value == null)
@@ -758,7 +758,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteBuildARMResourcesRestClient.CreateGetStaticSiteBuildAppSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _staticSiteBuildARMResourcesRestClient.CreateGetStaticSiteBuildAppSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceConfigurationDictionary> response = Response.FromValue(AppServiceConfigurationDictionary.FromResponse(result), result);
                 if (response.Value == null)
@@ -806,7 +806,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteBuildARMResourcesRestClient.CreateGetFunctionAppSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _staticSiteBuildARMResourcesRestClient.CreateGetFunctionAppSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceConfigurationDictionary> response = Response.FromValue(AppServiceConfigurationDictionary.FromResponse(result), result);
                 if (response.Value == null)
@@ -854,7 +854,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSiteBuildARMResourcesRestClient.CreateGetFunctionAppSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _staticSiteBuildARMResourcesRestClient.CreateGetFunctionAppSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceConfigurationDictionary> response = Response.FromValue(AppServiceConfigurationDictionary.FromResponse(result), result);
                 if (response.Value == null)

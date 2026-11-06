@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionAliasResponsesRestClient.CreateCreateRequest(aliasName, SubscriptionAliasCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _subscriptionAliasResponsesRestClient.CreateCreateRequest(aliasName, SubscriptionAliasCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SubscriptionArmOperation<SubscriptionAliasResource> operation = new SubscriptionArmOperation<SubscriptionAliasResource>(
                     new SubscriptionAliasResourceOperationSource(Client),
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionAliasResponsesRestClient.CreateCreateRequest(aliasName, SubscriptionAliasCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _subscriptionAliasResponsesRestClient.CreateCreateRequest(aliasName, SubscriptionAliasCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SubscriptionArmOperation<SubscriptionAliasResource> operation = new SubscriptionArmOperation<SubscriptionAliasResource>(
                     new SubscriptionAliasResourceOperationSource(Client),
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionAliasResponsesRestClient.CreateGetRequest(aliasName, context);
+                using HttpMessage message = _subscriptionAliasResponsesRestClient.CreateGetRequest(aliasName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SubscriptionAliasData> response = Response.FromValue(SubscriptionAliasData.FromResponse(result), result);
                 if (response.Value == null)
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionAliasResponsesRestClient.CreateGetRequest(aliasName, context);
+                using HttpMessage message = _subscriptionAliasResponsesRestClient.CreateGetRequest(aliasName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SubscriptionAliasData> response = Response.FromValue(SubscriptionAliasData.FromResponse(result), result);
                 if (response.Value == null)
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionAliasResponsesRestClient.CreateGetRequest(aliasName, context);
+                using HttpMessage message = _subscriptionAliasResponsesRestClient.CreateGetRequest(aliasName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SubscriptionAliasData> response = default;
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionAliasResponsesRestClient.CreateGetRequest(aliasName, context);
+                using HttpMessage message = _subscriptionAliasResponsesRestClient.CreateGetRequest(aliasName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SubscriptionAliasData> response = default;
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionAliasResponsesRestClient.CreateGetRequest(aliasName, context);
+                using HttpMessage message = _subscriptionAliasResponsesRestClient.CreateGetRequest(aliasName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SubscriptionAliasData> response = default;
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionAliasResponsesRestClient.CreateGetRequest(aliasName, context);
+                using HttpMessage message = _subscriptionAliasResponsesRestClient.CreateGetRequest(aliasName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SubscriptionAliasData> response = default;

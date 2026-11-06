@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = WebPubSubOperationGroupRestClient.CreateCheckWebPubSubNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, WebPubSubNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = WebPubSubOperationGroupRestClient.CreateCheckWebPubSubNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, WebPubSubNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WebPubSubNameAvailability> response = Response.FromValue(WebPubSubNameAvailability.FromResponse(result), result);
                 if (response.Value == null)
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = WebPubSubOperationGroupRestClient.CreateCheckWebPubSubNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, WebPubSubNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = WebPubSubOperationGroupRestClient.CreateCheckWebPubSubNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, WebPubSubNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WebPubSubNameAvailability> response = Response.FromValue(WebPubSubNameAvailability.FromResponse(result), result);
                 if (response.Value == null)

@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customDnsSuffixConfigurationsRestClient.CreateUpdateAseCustomDnsSuffixConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, CustomDnsSuffixConfigurationData.ToRequestContent(data), context);
+                using HttpMessage message = _customDnsSuffixConfigurationsRestClient.CreateUpdateAseCustomDnsSuffixConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, CustomDnsSuffixConfigurationData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CustomDnsSuffixConfigurationData> response = Response.FromValue(CustomDnsSuffixConfigurationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customDnsSuffixConfigurationsRestClient.CreateUpdateAseCustomDnsSuffixConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, CustomDnsSuffixConfigurationData.ToRequestContent(data), context);
+                using HttpMessage message = _customDnsSuffixConfigurationsRestClient.CreateUpdateAseCustomDnsSuffixConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, CustomDnsSuffixConfigurationData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CustomDnsSuffixConfigurationData> response = Response.FromValue(CustomDnsSuffixConfigurationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customDnsSuffixConfigurationsRestClient.CreateGetAseCustomDnsSuffixConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _customDnsSuffixConfigurationsRestClient.CreateGetAseCustomDnsSuffixConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CustomDnsSuffixConfigurationData> response = Response.FromValue(CustomDnsSuffixConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customDnsSuffixConfigurationsRestClient.CreateGetAseCustomDnsSuffixConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _customDnsSuffixConfigurationsRestClient.CreateGetAseCustomDnsSuffixConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CustomDnsSuffixConfigurationData> response = Response.FromValue(CustomDnsSuffixConfigurationData.FromResponse(result), result);
                 if (response.Value == null)

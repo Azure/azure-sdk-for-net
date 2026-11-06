@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _supportTicketChatTranscriptRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, chatTranscriptName, context);
+                using HttpMessage message = _supportTicketChatTranscriptRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, chatTranscriptName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ChatTranscriptDetailData> response = Response.FromValue(ChatTranscriptDetailData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _supportTicketChatTranscriptRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, chatTranscriptName, context);
+                using HttpMessage message = _supportTicketChatTranscriptRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, chatTranscriptName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ChatTranscriptDetailData> response = Response.FromValue(ChatTranscriptDetailData.FromResponse(result), result);
                 if (response.Value == null)
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _supportTicketChatTranscriptRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, chatTranscriptName, context);
+                using HttpMessage message = _supportTicketChatTranscriptRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, chatTranscriptName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ChatTranscriptDetailData> response = default;
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _supportTicketChatTranscriptRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, chatTranscriptName, context);
+                using HttpMessage message = _supportTicketChatTranscriptRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, chatTranscriptName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ChatTranscriptDetailData> response = default;
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _supportTicketChatTranscriptRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, chatTranscriptName, context);
+                using HttpMessage message = _supportTicketChatTranscriptRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, chatTranscriptName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ChatTranscriptDetailData> response = default;
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _supportTicketChatTranscriptRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, chatTranscriptName, context);
+                using HttpMessage message = _supportTicketChatTranscriptRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, chatTranscriptName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ChatTranscriptDetailData> response = default;

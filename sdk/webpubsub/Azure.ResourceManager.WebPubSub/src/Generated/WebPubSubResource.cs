@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webPubSubResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _webPubSubResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WebPubSubData> response = Response.FromValue(WebPubSubData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webPubSubResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _webPubSubResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WebPubSubData> response = Response.FromValue(WebPubSubData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webPubSubResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WebPubSubData.ToRequestContent(data), context);
+                using HttpMessage message = _webPubSubResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WebPubSubData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WebPubSubArmOperation<WebPubSubResource> operation = new WebPubSubArmOperation<WebPubSubResource>(
                     new WebPubSubResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webPubSubResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WebPubSubData.ToRequestContent(data), context);
+                using HttpMessage message = _webPubSubResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WebPubSubData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WebPubSubArmOperation<WebPubSubResource> operation = new WebPubSubArmOperation<WebPubSubResource>(
                     new WebPubSubResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webPubSubResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _webPubSubResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WebPubSubArmOperation operation = new WebPubSubArmOperation(_webPubSubResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webPubSubResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _webPubSubResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WebPubSubArmOperation operation = new WebPubSubArmOperation(_webPubSubResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webPubSubResourcesRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _webPubSubResourcesRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WebPubSubKeys> response = Response.FromValue(WebPubSubKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webPubSubResourcesRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _webPubSubResourcesRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WebPubSubKeys> response = Response.FromValue(WebPubSubKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -690,7 +690,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webPubSubResourcesRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WebPubSubRegenerateKeyContent.ToRequestContent(content), context);
+                using HttpMessage message = _webPubSubResourcesRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WebPubSubRegenerateKeyContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WebPubSubArmOperation<WebPubSubKeys> operation = new WebPubSubArmOperation<WebPubSubKeys>(
                     new WebPubSubKeysOperationSource(),
@@ -749,7 +749,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webPubSubResourcesRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WebPubSubRegenerateKeyContent.ToRequestContent(content), context);
+                using HttpMessage message = _webPubSubResourcesRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WebPubSubRegenerateKeyContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WebPubSubArmOperation<WebPubSubKeys> operation = new WebPubSubArmOperation<WebPubSubKeys>(
                     new WebPubSubKeysOperationSource(),
@@ -804,7 +804,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webPubSubResourcesRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _webPubSubResourcesRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WebPubSubArmOperation operation = new WebPubSubArmOperation(_webPubSubResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -853,7 +853,7 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webPubSubResourcesRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _webPubSubResourcesRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WebPubSubArmOperation operation = new WebPubSubArmOperation(_webPubSubResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -892,7 +892,7 @@ namespace Azure.ResourceManager.WebPubSub
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _webPubSubResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _webPubSubResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<WebPubSubData> response = Response.FromValue(WebPubSubData.FromResponse(result), result);
                     return Response.FromValue(new WebPubSubResource(Client, response.Value), response.GetRawResponse());
@@ -940,7 +940,7 @@ namespace Azure.ResourceManager.WebPubSub
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _webPubSubResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _webPubSubResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<WebPubSubData> response = Response.FromValue(WebPubSubData.FromResponse(result), result);
                     return Response.FromValue(new WebPubSubResource(Client, response.Value), response.GetRawResponse());
@@ -986,7 +986,7 @@ namespace Azure.ResourceManager.WebPubSub
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _webPubSubResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _webPubSubResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<WebPubSubData> response = Response.FromValue(WebPubSubData.FromResponse(result), result);
                     return Response.FromValue(new WebPubSubResource(Client, response.Value), response.GetRawResponse());
@@ -1028,7 +1028,7 @@ namespace Azure.ResourceManager.WebPubSub
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _webPubSubResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _webPubSubResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<WebPubSubData> response = Response.FromValue(WebPubSubData.FromResponse(result), result);
                     return Response.FromValue(new WebPubSubResource(Client, response.Value), response.GetRawResponse());
@@ -1070,7 +1070,7 @@ namespace Azure.ResourceManager.WebPubSub
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _webPubSubResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _webPubSubResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<WebPubSubData> response = Response.FromValue(WebPubSubData.FromResponse(result), result);
                     return Response.FromValue(new WebPubSubResource(Client, response.Value), response.GetRawResponse());
@@ -1116,7 +1116,7 @@ namespace Azure.ResourceManager.WebPubSub
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _webPubSubResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _webPubSubResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<WebPubSubData> response = Response.FromValue(WebPubSubData.FromResponse(result), result);
                     return Response.FromValue(new WebPubSubResource(Client, response.Value), response.GetRawResponse());

@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TrafficManagerProfileData> response = Response.FromValue(TrafficManagerProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TrafficManagerProfileData> response = Response.FromValue(TrafficManagerProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _profilesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TrafficManagerProfileData.ToRequestContent(data), context);
+                using HttpMessage message = _profilesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TrafficManagerProfileData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TrafficManagerProfileData> response = Response.FromValue(TrafficManagerProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _profilesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TrafficManagerProfileData.ToRequestContent(data), context);
+                using HttpMessage message = _profilesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TrafficManagerProfileData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TrafficManagerProfileData> response = Response.FromValue(TrafficManagerProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.TrafficManager
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<TrafficManagerProfileData> response = Response.FromValue(TrafficManagerProfileData.FromResponse(result), result);
                     return Response.FromValue(new TrafficManagerProfileResource(Client, response.Value), response.GetRawResponse());
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.TrafficManager
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<TrafficManagerProfileData> response = Response.FromValue(TrafficManagerProfileData.FromResponse(result), result);
                     return Response.FromValue(new TrafficManagerProfileResource(Client, response.Value), response.GetRawResponse());
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.TrafficManager
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<TrafficManagerProfileData> response = Response.FromValue(TrafficManagerProfileData.FromResponse(result), result);
                     return Response.FromValue(new TrafficManagerProfileResource(Client, response.Value), response.GetRawResponse());
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.TrafficManager
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<TrafficManagerProfileData> response = Response.FromValue(TrafficManagerProfileData.FromResponse(result), result);
                     return Response.FromValue(new TrafficManagerProfileResource(Client, response.Value), response.GetRawResponse());
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.TrafficManager
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<TrafficManagerProfileData> response = Response.FromValue(TrafficManagerProfileData.FromResponse(result), result);
                     return Response.FromValue(new TrafficManagerProfileResource(Client, response.Value), response.GetRawResponse());
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.TrafficManager
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<TrafficManagerProfileData> response = Response.FromValue(TrafficManagerProfileData.FromResponse(result), result);
                     return Response.FromValue(new TrafficManagerProfileResource(Client, response.Value), response.GetRawResponse());

@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteSourceControlOperationGroupRestClient.CreateCreateOrUpdateSourceControlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, SiteSourceControlData.ToRequestContent(data), context);
+                using HttpMessage message = _siteSourceControlOperationGroupRestClient.CreateCreateOrUpdateSourceControlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, SiteSourceControlData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppServiceArmOperation<WebSiteSourceControlResource> operation = new AppServiceArmOperation<WebSiteSourceControlResource>(
                     new WebSiteSourceControlResourceOperationSource(Client),
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteSourceControlOperationGroupRestClient.CreateCreateOrUpdateSourceControlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, SiteSourceControlData.ToRequestContent(data), context);
+                using HttpMessage message = _siteSourceControlOperationGroupRestClient.CreateCreateOrUpdateSourceControlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, SiteSourceControlData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppServiceArmOperation<WebSiteSourceControlResource> operation = new AppServiceArmOperation<WebSiteSourceControlResource>(
                     new WebSiteSourceControlResourceOperationSource(Client),
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteSourceControlOperationGroupRestClient.CreateGetSourceControlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _siteSourceControlOperationGroupRestClient.CreateGetSourceControlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SiteSourceControlData> response = Response.FromValue(SiteSourceControlData.FromResponse(result), result);
                 if (response.Value == null)
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteSourceControlOperationGroupRestClient.CreateGetSourceControlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _siteSourceControlOperationGroupRestClient.CreateGetSourceControlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SiteSourceControlData> response = Response.FromValue(SiteSourceControlData.FromResponse(result), result);
                 if (response.Value == null)
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteSourceControlOperationGroupRestClient.CreateUpdateSourceControlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, SiteSourceControlData.ToRequestContent(data), context);
+                using HttpMessage message = _siteSourceControlOperationGroupRestClient.CreateUpdateSourceControlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, SiteSourceControlData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SiteSourceControlData> response = Response.FromValue(SiteSourceControlData.FromResponse(result), result);
                 if (response.Value == null)
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteSourceControlOperationGroupRestClient.CreateUpdateSourceControlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, SiteSourceControlData.ToRequestContent(data), context);
+                using HttpMessage message = _siteSourceControlOperationGroupRestClient.CreateUpdateSourceControlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, SiteSourceControlData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SiteSourceControlData> response = Response.FromValue(SiteSourceControlData.FromResponse(result), result);
                 if (response.Value == null)
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteSourceControlOperationGroupRestClient.CreateDeleteSourceControlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, additionalFlags, context);
+                using HttpMessage message = _siteSourceControlOperationGroupRestClient.CreateDeleteSourceControlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, additionalFlags, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteSourceControlOperationGroupRestClient.CreateDeleteSourceControlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, additionalFlags, context);
+                using HttpMessage message = _siteSourceControlOperationGroupRestClient.CreateDeleteSourceControlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, additionalFlags, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());

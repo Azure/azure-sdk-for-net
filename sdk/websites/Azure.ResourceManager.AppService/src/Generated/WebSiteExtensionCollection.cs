@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteExtensionInfosRestClient.CreateInstallSiteExtensionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, siteExtensionId, context);
+                using HttpMessage message = _siteExtensionInfosRestClient.CreateInstallSiteExtensionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, siteExtensionId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppServiceArmOperation<WebSiteExtensionResource> operation = new AppServiceArmOperation<WebSiteExtensionResource>(
                     new WebSiteExtensionResourceOperationSource(Client),
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteExtensionInfosRestClient.CreateInstallSiteExtensionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, siteExtensionId, context);
+                using HttpMessage message = _siteExtensionInfosRestClient.CreateInstallSiteExtensionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, siteExtensionId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppServiceArmOperation<WebSiteExtensionResource> operation = new AppServiceArmOperation<WebSiteExtensionResource>(
                     new WebSiteExtensionResourceOperationSource(Client),
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteExtensionInfosRestClient.CreateGetSiteExtensionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, siteExtensionId, context);
+                using HttpMessage message = _siteExtensionInfosRestClient.CreateGetSiteExtensionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, siteExtensionId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SiteExtensionInfoData> response = Response.FromValue(SiteExtensionInfoData.FromResponse(result), result);
                 if (response.Value == null)
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteExtensionInfosRestClient.CreateGetSiteExtensionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, siteExtensionId, context);
+                using HttpMessage message = _siteExtensionInfosRestClient.CreateGetSiteExtensionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, siteExtensionId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SiteExtensionInfoData> response = Response.FromValue(SiteExtensionInfoData.FromResponse(result), result);
                 if (response.Value == null)
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteExtensionInfosRestClient.CreateGetSiteExtensionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, siteExtensionId, context);
+                using HttpMessage message = _siteExtensionInfosRestClient.CreateGetSiteExtensionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, siteExtensionId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SiteExtensionInfoData> response = default;
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteExtensionInfosRestClient.CreateGetSiteExtensionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, siteExtensionId, context);
+                using HttpMessage message = _siteExtensionInfosRestClient.CreateGetSiteExtensionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, siteExtensionId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SiteExtensionInfoData> response = default;
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteExtensionInfosRestClient.CreateGetSiteExtensionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, siteExtensionId, context);
+                using HttpMessage message = _siteExtensionInfosRestClient.CreateGetSiteExtensionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, siteExtensionId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SiteExtensionInfoData> response = default;
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteExtensionInfosRestClient.CreateGetSiteExtensionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, siteExtensionId, context);
+                using HttpMessage message = _siteExtensionInfosRestClient.CreateGetSiteExtensionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, siteExtensionId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SiteExtensionInfoData> response = default;

@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Terraform.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = TerraformInterfaceRestClient.CreateExportTerraformRequest(Guid.Parse(Id.SubscriptionId), CommonExportProperties.ToRequestContent(body), context);
+                using HttpMessage message = TerraformInterfaceRestClient.CreateExportTerraformRequest(Guid.Parse(Id.SubscriptionId), CommonExportProperties.ToRequestContent(body), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TerraformArmOperation<TerraformOperationStatus> operation = new TerraformArmOperation<TerraformOperationStatus>(
                     new TerraformOperationStatusOperationSource(),
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Terraform.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = TerraformInterfaceRestClient.CreateExportTerraformRequest(Guid.Parse(Id.SubscriptionId), CommonExportProperties.ToRequestContent(body), context);
+                using HttpMessage message = TerraformInterfaceRestClient.CreateExportTerraformRequest(Guid.Parse(Id.SubscriptionId), CommonExportProperties.ToRequestContent(body), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TerraformArmOperation<TerraformOperationStatus> operation = new TerraformArmOperation<TerraformOperationStatus>(
                     new TerraformOperationStatusOperationSource(),
