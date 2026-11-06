@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
             uri.AppendPath(managedInstanceName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Sql/managedInstances") ?? "2025-08-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Sql/managedInstances") ?? "2026-08-01-preview", true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
             uri.AppendPath(managedInstanceName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Sql/managedInstances") ?? "2025-08-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Sql/managedInstances") ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
             uri.AppendPath(managedInstanceName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Sql/managedInstances") ?? "2025-08-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Sql/managedInstances") ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
             uri.AppendPath(managedInstanceName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Sql/managedInstances") ?? "2025-08-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Sql/managedInstances") ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Sql/managedInstances", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Sql/managedInstances") ?? "2025-08-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Sql/managedInstances") ?? "2026-08-01-preview", true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Sql
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Sql/managedInstances") ?? "2025-08-01-preview");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Sql/managedInstances") ?? "2026-08-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Sql/managedInstances", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Sql/managedInstances") ?? "2025-08-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Sql/managedInstances") ?? "2026-08-01-preview", true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Sql
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Sql/managedInstances") ?? "2025-08-01-preview");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Sql/managedInstances") ?? "2026-08-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
             uri.AppendPath(managedInstanceName, true);
             uri.AppendPath("/failover", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Sql/managedInstances") ?? "2025-08-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Sql/managedInstances") ?? "2026-08-01-preview", true);
             if (replicaType != null)
             {
                 uri.AppendQuery("replicaType", replicaType, true);
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
             uri.AppendPath(managedInstanceName, true);
             uri.AppendPath("/outboundNetworkDependenciesEndpoints", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Sql/managedInstances") ?? "2025-08-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Sql/managedInstances") ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Sql
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Sql/managedInstances") ?? "2025-08-01-preview");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Sql/managedInstances") ?? "2026-08-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
             uri.AppendPath(managedInstanceName, true);
             uri.AppendPath("/reevaluateInaccessibleDatabaseState", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Sql/managedInstances") ?? "2025-08-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Sql/managedInstances") ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
             uri.AppendPath(managedInstanceName, true);
             uri.AppendPath("/refreshExternalGovernanceStatus", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Sql/managedInstances") ?? "2025-08-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Sql/managedInstances") ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
             uri.AppendPath(managedInstanceName, true);
             uri.AppendPath("/start", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Sql/managedInstances") ?? "2025-08-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Sql/managedInstances") ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
             uri.AppendPath(managedInstanceName, true);
             uri.AppendPath("/stop", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Sql/managedInstances") ?? "2025-08-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Sql/managedInstances") ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
             uri.AppendPath(managedInstanceName, true);
             uri.AppendPath("/topqueries", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Sql/managedInstances") ?? "2025-08-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Sql/managedInstances") ?? "2026-08-01-preview", true);
             if (numberOfQueries != null)
             {
                 uri.AppendQuery("numberOfQueries", TypeFormatters.ConvertToString(numberOfQueries), true);
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Sql
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Sql/managedInstances") ?? "2025-08-01-preview");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Sql/managedInstances") ?? "2026-08-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
             uri.AppendPath(managedInstanceName, true);
             uri.AppendPath("/validateAzureKeyVaultEncryptionKey", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Sql/managedInstances") ?? "2025-08-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Sql/managedInstances") ?? "2026-08-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/providers/Microsoft.Sql/instancePools/", false);
             uri.AppendPath(instancePoolName, true);
             uri.AppendPath("/managedInstances", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Sql/instancePools") ?? "2025-08-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Sql/instancePools") ?? "2026-08-01-preview", true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.Sql
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Sql/instancePools") ?? "2025-08-01-preview");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Sql/instancePools") ?? "2026-08-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
