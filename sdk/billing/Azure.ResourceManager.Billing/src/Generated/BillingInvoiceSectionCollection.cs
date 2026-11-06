@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _invoiceSectionsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, invoiceSectionName, BillingInvoiceSectionData.ToRequestContent(data), context);
+                using HttpMessage message = _invoiceSectionsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, invoiceSectionName, BillingInvoiceSectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingInvoiceSectionResource> operation = new BillingArmOperation<BillingInvoiceSectionResource>(
                     new BillingInvoiceSectionResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _invoiceSectionsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, invoiceSectionName, BillingInvoiceSectionData.ToRequestContent(data), context);
+                using HttpMessage message = _invoiceSectionsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, invoiceSectionName, BillingInvoiceSectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingInvoiceSectionResource> operation = new BillingArmOperation<BillingInvoiceSectionResource>(
                     new BillingInvoiceSectionResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _invoiceSectionsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, invoiceSectionName, context);
+                using HttpMessage message = _invoiceSectionsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, invoiceSectionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingInvoiceSectionData> response = Response.FromValue(BillingInvoiceSectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _invoiceSectionsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, invoiceSectionName, context);
+                using HttpMessage message = _invoiceSectionsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, invoiceSectionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingInvoiceSectionData> response = Response.FromValue(BillingInvoiceSectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _invoiceSectionsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, invoiceSectionName, context);
+                using HttpMessage message = _invoiceSectionsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, invoiceSectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BillingInvoiceSectionData> response = default;
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _invoiceSectionsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, invoiceSectionName, context);
+                using HttpMessage message = _invoiceSectionsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, invoiceSectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BillingInvoiceSectionData> response = default;
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _invoiceSectionsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, invoiceSectionName, context);
+                using HttpMessage message = _invoiceSectionsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, invoiceSectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BillingInvoiceSectionData> response = default;
@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _invoiceSectionsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, invoiceSectionName, context);
+                using HttpMessage message = _invoiceSectionsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, invoiceSectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BillingInvoiceSectionData> response = default;

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CognitiveServices
     /// <summary>
     /// A class representing a collection of <see cref="CognitiveServicesManagedNetworkSettingsResource"/> and their operations.
     /// Each <see cref="CognitiveServicesManagedNetworkSettingsResource"/> in the collection will belong to the same instance of <see cref="CognitiveServicesAccountResource"/>.
-    /// To get a <see cref="CognitiveServicesManagedNetworkSettingsCollection"/> instance call the GetCognitiveServicesManagedNetworkSettings method from an instance of <see cref="CognitiveServicesAccountResource"/>.
+    /// To get a <see cref="CognitiveServicesManagedNetworkSettingsCollection"/> instance call the GetAllCognitiveServicesManagedNetworkSettings method from an instance of <see cref="CognitiveServicesAccountResource"/>.
     /// </summary>
     public partial class CognitiveServicesManagedNetworkSettingsCollection : ArmCollection, IEnumerable<CognitiveServicesManagedNetworkSettingsResource>, IAsyncEnumerable<CognitiveServicesManagedNetworkSettingsResource>
     {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkName, CognitiveServicesManagedNetworkSettingsData.ToRequestContent(data), context);
+                using HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkName, CognitiveServicesManagedNetworkSettingsData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CognitiveServicesArmOperation<CognitiveServicesManagedNetworkSettingsResource> operation = new CognitiveServicesArmOperation<CognitiveServicesManagedNetworkSettingsResource>(
                     new CognitiveServicesManagedNetworkSettingsResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkName, CognitiveServicesManagedNetworkSettingsData.ToRequestContent(data), context);
+                using HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkName, CognitiveServicesManagedNetworkSettingsData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CognitiveServicesArmOperation<CognitiveServicesManagedNetworkSettingsResource> operation = new CognitiveServicesArmOperation<CognitiveServicesManagedNetworkSettingsResource>(
                     new CognitiveServicesManagedNetworkSettingsResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkName, context);
+                using HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CognitiveServicesManagedNetworkSettingsData> response = Response.FromValue(CognitiveServicesManagedNetworkSettingsData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkName, context);
+                using HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CognitiveServicesManagedNetworkSettingsData> response = Response.FromValue(CognitiveServicesManagedNetworkSettingsData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkName, context);
+                using HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CognitiveServicesManagedNetworkSettingsData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkName, context);
+                using HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CognitiveServicesManagedNetworkSettingsData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkName, context);
+                using HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CognitiveServicesManagedNetworkSettingsData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkName, context);
+                using HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CognitiveServicesManagedNetworkSettingsData> response = default;

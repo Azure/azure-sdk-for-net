@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _encryptionScopesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, CognitiveServicesEncryptionScopeData.ToRequestContent(data), context);
+                using HttpMessage message = _encryptionScopesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, CognitiveServicesEncryptionScopeData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CognitiveServicesEncryptionScopeData> response = Response.FromValue(CognitiveServicesEncryptionScopeData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _encryptionScopesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, CognitiveServicesEncryptionScopeData.ToRequestContent(data), context);
+                using HttpMessage message = _encryptionScopesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, CognitiveServicesEncryptionScopeData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CognitiveServicesEncryptionScopeData> response = Response.FromValue(CognitiveServicesEncryptionScopeData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _encryptionScopesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, context);
+                using HttpMessage message = _encryptionScopesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CognitiveServicesEncryptionScopeData> response = Response.FromValue(CognitiveServicesEncryptionScopeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _encryptionScopesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, context);
+                using HttpMessage message = _encryptionScopesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CognitiveServicesEncryptionScopeData> response = Response.FromValue(CognitiveServicesEncryptionScopeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _encryptionScopesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, context);
+                using HttpMessage message = _encryptionScopesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CognitiveServicesEncryptionScopeData> response = default;
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _encryptionScopesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, context);
+                using HttpMessage message = _encryptionScopesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CognitiveServicesEncryptionScopeData> response = default;
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _encryptionScopesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, context);
+                using HttpMessage message = _encryptionScopesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CognitiveServicesEncryptionScopeData> response = default;
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _encryptionScopesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, context);
+                using HttpMessage message = _encryptionScopesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionScopeName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CognitiveServicesEncryptionScopeData> response = default;

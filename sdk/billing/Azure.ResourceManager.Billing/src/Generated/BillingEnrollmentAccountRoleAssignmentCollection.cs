@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRoleAssignmentsRestClient.CreateCreateOrUpdateByEnrollmentAccountRequest(Id.Parent.Name, Id.Name, billingRoleAssignmentName, BillingRoleAssignmentData.ToRequestContent(data), context);
+                using HttpMessage message = _billingRoleAssignmentsRestClient.CreateCreateOrUpdateByEnrollmentAccountRequest(Id.Parent.Name, Id.Name, billingRoleAssignmentName, BillingRoleAssignmentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingEnrollmentAccountRoleAssignmentResource> operation = new BillingArmOperation<BillingEnrollmentAccountRoleAssignmentResource>(
                     new BillingEnrollmentAccountRoleAssignmentResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRoleAssignmentsRestClient.CreateCreateOrUpdateByEnrollmentAccountRequest(Id.Parent.Name, Id.Name, billingRoleAssignmentName, BillingRoleAssignmentData.ToRequestContent(data), context);
+                using HttpMessage message = _billingRoleAssignmentsRestClient.CreateCreateOrUpdateByEnrollmentAccountRequest(Id.Parent.Name, Id.Name, billingRoleAssignmentName, BillingRoleAssignmentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingEnrollmentAccountRoleAssignmentResource> operation = new BillingArmOperation<BillingEnrollmentAccountRoleAssignmentResource>(
                     new BillingEnrollmentAccountRoleAssignmentResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRoleAssignmentsRestClient.CreateGetByEnrollmentAccountRequest(Id.Parent.Name, Id.Name, billingRoleAssignmentName, context);
+                using HttpMessage message = _billingRoleAssignmentsRestClient.CreateGetByEnrollmentAccountRequest(Id.Parent.Name, Id.Name, billingRoleAssignmentName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingRoleAssignmentData> response = Response.FromValue(BillingRoleAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRoleAssignmentsRestClient.CreateGetByEnrollmentAccountRequest(Id.Parent.Name, Id.Name, billingRoleAssignmentName, context);
+                using HttpMessage message = _billingRoleAssignmentsRestClient.CreateGetByEnrollmentAccountRequest(Id.Parent.Name, Id.Name, billingRoleAssignmentName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingRoleAssignmentData> response = Response.FromValue(BillingRoleAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRoleAssignmentsRestClient.CreateGetByEnrollmentAccountRequest(Id.Parent.Name, Id.Name, billingRoleAssignmentName, context);
+                using HttpMessage message = _billingRoleAssignmentsRestClient.CreateGetByEnrollmentAccountRequest(Id.Parent.Name, Id.Name, billingRoleAssignmentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BillingRoleAssignmentData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRoleAssignmentsRestClient.CreateGetByEnrollmentAccountRequest(Id.Parent.Name, Id.Name, billingRoleAssignmentName, context);
+                using HttpMessage message = _billingRoleAssignmentsRestClient.CreateGetByEnrollmentAccountRequest(Id.Parent.Name, Id.Name, billingRoleAssignmentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BillingRoleAssignmentData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRoleAssignmentsRestClient.CreateGetByEnrollmentAccountRequest(Id.Parent.Name, Id.Name, billingRoleAssignmentName, context);
+                using HttpMessage message = _billingRoleAssignmentsRestClient.CreateGetByEnrollmentAccountRequest(Id.Parent.Name, Id.Name, billingRoleAssignmentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BillingRoleAssignmentData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRoleAssignmentsRestClient.CreateGetByEnrollmentAccountRequest(Id.Parent.Name, Id.Name, billingRoleAssignmentName, context);
+                using HttpMessage message = _billingRoleAssignmentsRestClient.CreateGetByEnrollmentAccountRequest(Id.Parent.Name, Id.Name, billingRoleAssignmentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BillingRoleAssignmentData> response = default;

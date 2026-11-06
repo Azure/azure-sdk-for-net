@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.BotService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                using HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BotServiceNetworkSecurityPerimeterConfigurationData> response = Response.FromValue(BotServiceNetworkSecurityPerimeterConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.BotService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                using HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BotServiceNetworkSecurityPerimeterConfigurationData> response = Response.FromValue(BotServiceNetworkSecurityPerimeterConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.BotService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                using HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BotServiceNetworkSecurityPerimeterConfigurationData> response = default;
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.BotService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                using HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BotServiceNetworkSecurityPerimeterConfigurationData> response = default;
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.BotService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                using HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BotServiceNetworkSecurityPerimeterConfigurationData> response = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.BotService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                using HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BotServiceNetworkSecurityPerimeterConfigurationData> response = default;

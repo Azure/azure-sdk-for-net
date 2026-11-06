@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.BotService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = QnAMakerEndpointKeysOperationGroupRestClient.CreateGetBotServiceQnAMakerEndpointKeyRequest(Id.SubscriptionId, GetBotServiceQnAMakerEndpointKeyContent.ToRequestContent(content), context);
+                using HttpMessage message = QnAMakerEndpointKeysOperationGroupRestClient.CreateGetBotServiceQnAMakerEndpointKeyRequest(Id.SubscriptionId, GetBotServiceQnAMakerEndpointKeyContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GetBotServiceQnAMakerEndpointKeyResult> response = Response.FromValue(GetBotServiceQnAMakerEndpointKeyResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.BotService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = QnAMakerEndpointKeysOperationGroupRestClient.CreateGetBotServiceQnAMakerEndpointKeyRequest(Id.SubscriptionId, GetBotServiceQnAMakerEndpointKeyContent.ToRequestContent(content), context);
+                using HttpMessage message = QnAMakerEndpointKeysOperationGroupRestClient.CreateGetBotServiceQnAMakerEndpointKeyRequest(Id.SubscriptionId, GetBotServiceQnAMakerEndpointKeyContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GetBotServiceQnAMakerEndpointKeyResult> response = Response.FromValue(GetBotServiceQnAMakerEndpointKeyResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.BotService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = HostSettingsOperationGroupRestClient.CreateGetBotServiceHostSettingsRequest(Id.SubscriptionId, context);
+                using HttpMessage message = HostSettingsOperationGroupRestClient.CreateGetBotServiceHostSettingsRequest(Id.SubscriptionId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BotServiceHostSettingsResult> response = Response.FromValue(BotServiceHostSettingsResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.BotService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = HostSettingsOperationGroupRestClient.CreateGetBotServiceHostSettingsRequest(Id.SubscriptionId, context);
+                using HttpMessage message = HostSettingsOperationGroupRestClient.CreateGetBotServiceHostSettingsRequest(Id.SubscriptionId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BotServiceHostSettingsResult> response = Response.FromValue(BotServiceHostSettingsResult.FromResponse(result), result);
                 if (response.Value == null)

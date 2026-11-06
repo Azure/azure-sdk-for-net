@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CertificateRegistration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceCertificateOrdersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, AppServiceCertificateOrderData.ToRequestContent(data), context);
+                using HttpMessage message = _appServiceCertificateOrdersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, AppServiceCertificateOrderData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CertificateRegistrationArmOperation<AppServiceCertificateOrderResource> operation = new CertificateRegistrationArmOperation<AppServiceCertificateOrderResource>(
                     new AppServiceCertificateOrderResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.CertificateRegistration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceCertificateOrdersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, AppServiceCertificateOrderData.ToRequestContent(data), context);
+                using HttpMessage message = _appServiceCertificateOrdersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, AppServiceCertificateOrderData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CertificateRegistrationArmOperation<AppServiceCertificateOrderResource> operation = new CertificateRegistrationArmOperation<AppServiceCertificateOrderResource>(
                     new AppServiceCertificateOrderResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.CertificateRegistration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceCertificateOrdersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, context);
+                using HttpMessage message = _appServiceCertificateOrdersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceCertificateOrderData> response = Response.FromValue(AppServiceCertificateOrderData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.CertificateRegistration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceCertificateOrdersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, context);
+                using HttpMessage message = _appServiceCertificateOrdersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceCertificateOrderData> response = Response.FromValue(AppServiceCertificateOrderData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.CertificateRegistration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceCertificateOrdersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, context);
+                using HttpMessage message = _appServiceCertificateOrdersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AppServiceCertificateOrderData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.CertificateRegistration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceCertificateOrdersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, context);
+                using HttpMessage message = _appServiceCertificateOrdersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AppServiceCertificateOrderData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.CertificateRegistration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceCertificateOrdersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, context);
+                using HttpMessage message = _appServiceCertificateOrdersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AppServiceCertificateOrderData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.CertificateRegistration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceCertificateOrdersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, context);
+                using HttpMessage message = _appServiceCertificateOrdersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AppServiceCertificateOrderData> response = default;

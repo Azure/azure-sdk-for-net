@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CertificateRegistration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateOrdersDiagnosticsRestClient.CreateGetAppServiceCertificateOrderDetectorResponseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, startOn, endOn, timeGrain, context);
+                using HttpMessage message = _certificateOrdersDiagnosticsRestClient.CreateGetAppServiceCertificateOrderDetectorResponseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, startOn, endOn, timeGrain, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceDetectorData> response = Response.FromValue(AppServiceDetectorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.CertificateRegistration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateOrdersDiagnosticsRestClient.CreateGetAppServiceCertificateOrderDetectorResponseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, startOn, endOn, timeGrain, context);
+                using HttpMessage message = _certificateOrdersDiagnosticsRestClient.CreateGetAppServiceCertificateOrderDetectorResponseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, startOn, endOn, timeGrain, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceDetectorData> response = Response.FromValue(AppServiceDetectorData.FromResponse(result), result);
                 if (response.Value == null)

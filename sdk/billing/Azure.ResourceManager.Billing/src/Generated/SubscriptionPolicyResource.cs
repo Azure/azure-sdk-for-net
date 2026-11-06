@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policiesRestClient.CreateGetBySubscriptionRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = _policiesRestClient.CreateGetBySubscriptionRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SubscriptionPolicyData> response = Response.FromValue(SubscriptionPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policiesRestClient.CreateGetBySubscriptionRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = _policiesRestClient.CreateGetBySubscriptionRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SubscriptionPolicyData> response = Response.FromValue(SubscriptionPolicyData.FromResponse(result), result);
                 if (response.Value == null)

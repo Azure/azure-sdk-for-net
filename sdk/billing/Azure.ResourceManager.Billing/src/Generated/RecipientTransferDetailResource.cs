@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recipientTransfersRestClient.CreateGetRequest(Id.Name, context);
+                using HttpMessage message = _recipientTransfersRestClient.CreateGetRequest(Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RecipientTransferDetailData> response = Response.FromValue(RecipientTransferDetailData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recipientTransfersRestClient.CreateGetRequest(Id.Name, context);
+                using HttpMessage message = _recipientTransfersRestClient.CreateGetRequest(Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RecipientTransferDetailData> response = Response.FromValue(RecipientTransferDetailData.FromResponse(result), result);
                 if (response.Value == null)
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recipientTransfersRestClient.CreateAcceptRequest(Id.Name, AcceptTransferContent.ToRequestContent(content), context);
+                using HttpMessage message = _recipientTransfersRestClient.CreateAcceptRequest(Id.Name, AcceptTransferContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RecipientTransferDetailData> response = Response.FromValue(RecipientTransferDetailData.FromResponse(result), result);
                 if (response.Value == null)
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recipientTransfersRestClient.CreateAcceptRequest(Id.Name, AcceptTransferContent.ToRequestContent(content), context);
+                using HttpMessage message = _recipientTransfersRestClient.CreateAcceptRequest(Id.Name, AcceptTransferContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RecipientTransferDetailData> response = Response.FromValue(RecipientTransferDetailData.FromResponse(result), result);
                 if (response.Value == null)
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recipientTransfersRestClient.CreateDeclineRequest(Id.Name, context);
+                using HttpMessage message = _recipientTransfersRestClient.CreateDeclineRequest(Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RecipientTransferDetailData> response = Response.FromValue(RecipientTransferDetailData.FromResponse(result), result);
                 if (response.Value == null)
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recipientTransfersRestClient.CreateDeclineRequest(Id.Name, context);
+                using HttpMessage message = _recipientTransfersRestClient.CreateDeclineRequest(Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RecipientTransferDetailData> response = Response.FromValue(RecipientTransferDetailData.FromResponse(result), result);
                 if (response.Value == null)

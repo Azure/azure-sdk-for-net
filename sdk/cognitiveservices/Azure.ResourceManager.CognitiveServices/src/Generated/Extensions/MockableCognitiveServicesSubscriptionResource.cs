@@ -662,7 +662,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CognitiveServicesClientRestClient.CreateCheckDomainAvailabilityRequest(Id.SubscriptionId, CognitiveServicesDomainAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = CognitiveServicesClientRestClient.CreateCheckDomainAvailabilityRequest(Id.SubscriptionId, CognitiveServicesDomainAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CognitiveServicesDomainAvailabilityList> response = Response.FromValue(CognitiveServicesDomainAvailabilityList.FromResponse(result), result);
                 if (response.Value == null)
@@ -710,7 +710,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CognitiveServicesClientRestClient.CreateCheckDomainAvailabilityRequest(Id.SubscriptionId, CognitiveServicesDomainAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = CognitiveServicesClientRestClient.CreateCheckDomainAvailabilityRequest(Id.SubscriptionId, CognitiveServicesDomainAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CognitiveServicesDomainAvailabilityList> response = Response.FromValue(CognitiveServicesDomainAvailabilityList.FromResponse(result), result);
                 if (response.Value == null)
@@ -758,7 +758,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CognitiveServicesClientRestClient.CreateCalculateModelCapacityRequest(Id.SubscriptionId, CalculateModelCapacityContent.ToRequestContent(content), context);
+                using HttpMessage message = CognitiveServicesClientRestClient.CreateCalculateModelCapacityRequest(Id.SubscriptionId, CalculateModelCapacityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CalculateModelCapacityResult> response = Response.FromValue(CalculateModelCapacityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -806,7 +806,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CognitiveServicesClientRestClient.CreateCalculateModelCapacityRequest(Id.SubscriptionId, CalculateModelCapacityContent.ToRequestContent(content), context);
+                using HttpMessage message = CognitiveServicesClientRestClient.CreateCalculateModelCapacityRequest(Id.SubscriptionId, CalculateModelCapacityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CalculateModelCapacityResult> response = Response.FromValue(CalculateModelCapacityResult.FromResponse(result), result);
                 if (response.Value == null)

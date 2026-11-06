@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _savingsPlanOrderAliasRestClient.CreateCreateRequest(savingsPlanOrderAliasName, BillingBenefitsSavingsPlanOrderAliasData.ToRequestContent(data), context);
+                using HttpMessage message = _savingsPlanOrderAliasRestClient.CreateCreateRequest(savingsPlanOrderAliasName, BillingBenefitsSavingsPlanOrderAliasData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingBenefitsArmOperation<BillingBenefitsSavingsPlanOrderAliasResource> operation = new BillingBenefitsArmOperation<BillingBenefitsSavingsPlanOrderAliasResource>(
                     new BillingBenefitsSavingsPlanOrderAliasResourceOperationSource(Client),
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _savingsPlanOrderAliasRestClient.CreateCreateRequest(savingsPlanOrderAliasName, BillingBenefitsSavingsPlanOrderAliasData.ToRequestContent(data), context);
+                using HttpMessage message = _savingsPlanOrderAliasRestClient.CreateCreateRequest(savingsPlanOrderAliasName, BillingBenefitsSavingsPlanOrderAliasData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingBenefitsArmOperation<BillingBenefitsSavingsPlanOrderAliasResource> operation = new BillingBenefitsArmOperation<BillingBenefitsSavingsPlanOrderAliasResource>(
                     new BillingBenefitsSavingsPlanOrderAliasResourceOperationSource(Client),
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _savingsPlanOrderAliasRestClient.CreateGetRequest(savingsPlanOrderAliasName, context);
+                using HttpMessage message = _savingsPlanOrderAliasRestClient.CreateGetRequest(savingsPlanOrderAliasName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingBenefitsSavingsPlanOrderAliasData> response = Response.FromValue(BillingBenefitsSavingsPlanOrderAliasData.FromResponse(result), result);
                 if (response.Value == null)
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _savingsPlanOrderAliasRestClient.CreateGetRequest(savingsPlanOrderAliasName, context);
+                using HttpMessage message = _savingsPlanOrderAliasRestClient.CreateGetRequest(savingsPlanOrderAliasName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingBenefitsSavingsPlanOrderAliasData> response = Response.FromValue(BillingBenefitsSavingsPlanOrderAliasData.FromResponse(result), result);
                 if (response.Value == null)
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _savingsPlanOrderAliasRestClient.CreateGetRequest(savingsPlanOrderAliasName, context);
+                using HttpMessage message = _savingsPlanOrderAliasRestClient.CreateGetRequest(savingsPlanOrderAliasName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BillingBenefitsSavingsPlanOrderAliasData> response = default;
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _savingsPlanOrderAliasRestClient.CreateGetRequest(savingsPlanOrderAliasName, context);
+                using HttpMessage message = _savingsPlanOrderAliasRestClient.CreateGetRequest(savingsPlanOrderAliasName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BillingBenefitsSavingsPlanOrderAliasData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _savingsPlanOrderAliasRestClient.CreateGetRequest(savingsPlanOrderAliasName, context);
+                using HttpMessage message = _savingsPlanOrderAliasRestClient.CreateGetRequest(savingsPlanOrderAliasName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BillingBenefitsSavingsPlanOrderAliasData> response = default;
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _savingsPlanOrderAliasRestClient.CreateGetRequest(savingsPlanOrderAliasName, context);
+                using HttpMessage message = _savingsPlanOrderAliasRestClient.CreateGetRequest(savingsPlanOrderAliasName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BillingBenefitsSavingsPlanOrderAliasData> response = default;

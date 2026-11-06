@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingPropertyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), includeBillingCountry, includeTransitionStatus, context);
+                using HttpMessage message = _billingPropertyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), includeBillingCountry, includeTransitionStatus, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingPropertyData> response = Response.FromValue(BillingPropertyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingPropertyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), includeBillingCountry, includeTransitionStatus, context);
+                using HttpMessage message = _billingPropertyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), includeBillingCountry, includeTransitionStatus, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingPropertyData> response = Response.FromValue(BillingPropertyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingPropertyRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), BillingPropertyData.ToRequestContent(data), context);
+                using HttpMessage message = _billingPropertyRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), BillingPropertyData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingPropertyData> response = Response.FromValue(BillingPropertyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingPropertyRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), BillingPropertyData.ToRequestContent(data), context);
+                using HttpMessage message = _billingPropertyRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), BillingPropertyData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingPropertyData> response = Response.FromValue(BillingPropertyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _billingPropertyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), default, default, context);
+                    using HttpMessage message = _billingPropertyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), default, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<BillingPropertyData> response = Response.FromValue(BillingPropertyData.FromResponse(result), result);
                     return Response.FromValue(new BillingPropertyResource(Client, response.Value), response.GetRawResponse());
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _billingPropertyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), default, default, context);
+                    using HttpMessage message = _billingPropertyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), default, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<BillingPropertyData> response = Response.FromValue(BillingPropertyData.FromResponse(result), result);
                     return Response.FromValue(new BillingPropertyResource(Client, response.Value), response.GetRawResponse());
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _billingPropertyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), default, default, context);
+                    using HttpMessage message = _billingPropertyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), default, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<BillingPropertyData> response = Response.FromValue(BillingPropertyData.FromResponse(result), result);
                     return Response.FromValue(new BillingPropertyResource(Client, response.Value), response.GetRawResponse());
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _billingPropertyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), default, default, context);
+                    using HttpMessage message = _billingPropertyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), default, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<BillingPropertyData> response = Response.FromValue(BillingPropertyData.FromResponse(result), result);
                     return Response.FromValue(new BillingPropertyResource(Client, response.Value), response.GetRawResponse());
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _billingPropertyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), default, default, context);
+                    using HttpMessage message = _billingPropertyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), default, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<BillingPropertyData> response = Response.FromValue(BillingPropertyData.FromResponse(result), result);
                     return Response.FromValue(new BillingPropertyResource(Client, response.Value), response.GetRawResponse());
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _billingPropertyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), default, default, context);
+                    using HttpMessage message = _billingPropertyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), default, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<BillingPropertyData> response = Response.FromValue(BillingPropertyData.FromResponse(result), result);
                     return Response.FromValue(new BillingPropertyResource(Client, response.Value), response.GetRawResponse());

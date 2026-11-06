@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _conditionalCreditsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, conditionalCreditName, ConditionalCreditData.ToRequestContent(data), context);
+                using HttpMessage message = _conditionalCreditsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, conditionalCreditName, ConditionalCreditData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingBenefitsArmOperation<ConditionalCreditResource> operation = new BillingBenefitsArmOperation<ConditionalCreditResource>(
                     new ConditionalCreditResourceOperationSource(Client),
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _conditionalCreditsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, conditionalCreditName, ConditionalCreditData.ToRequestContent(data), context);
+                using HttpMessage message = _conditionalCreditsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, conditionalCreditName, ConditionalCreditData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingBenefitsArmOperation<ConditionalCreditResource> operation = new BillingBenefitsArmOperation<ConditionalCreditResource>(
                     new ConditionalCreditResourceOperationSource(Client),
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _conditionalCreditsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, conditionalCreditName, context);
+                using HttpMessage message = _conditionalCreditsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, conditionalCreditName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConditionalCreditData> response = Response.FromValue(ConditionalCreditData.FromResponse(result), result);
                 if (response.Value == null)
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _conditionalCreditsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, conditionalCreditName, context);
+                using HttpMessage message = _conditionalCreditsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, conditionalCreditName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConditionalCreditData> response = Response.FromValue(ConditionalCreditData.FromResponse(result), result);
                 if (response.Value == null)
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _conditionalCreditsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, conditionalCreditName, context);
+                using HttpMessage message = _conditionalCreditsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, conditionalCreditName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ConditionalCreditData> response = default;
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _conditionalCreditsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, conditionalCreditName, context);
+                using HttpMessage message = _conditionalCreditsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, conditionalCreditName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ConditionalCreditData> response = default;
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _conditionalCreditsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, conditionalCreditName, context);
+                using HttpMessage message = _conditionalCreditsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, conditionalCreditName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ConditionalCreditData> response = default;
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _conditionalCreditsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, conditionalCreditName, context);
+                using HttpMessage message = _conditionalCreditsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, conditionalCreditName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ConditionalCreditData> response = default;

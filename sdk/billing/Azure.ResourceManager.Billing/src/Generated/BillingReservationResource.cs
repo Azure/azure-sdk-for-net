@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationsRestClient.CreateGetByReservationOrderRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, context);
+                using HttpMessage message = _reservationsRestClient.CreateGetByReservationOrderRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingReservationData> response = Response.FromValue(BillingReservationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationsRestClient.CreateGetByReservationOrderRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, context);
+                using HttpMessage message = _reservationsRestClient.CreateGetByReservationOrderRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingReservationData> response = Response.FromValue(BillingReservationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationsRestClient.CreateUpdateByBillingAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BillingReservationPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _reservationsRestClient.CreateUpdateByBillingAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BillingReservationPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingReservationResource> operation = new BillingArmOperation<BillingReservationResource>(
                     new BillingReservationResourceOperationSource(Client),
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationsRestClient.CreateUpdateByBillingAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BillingReservationPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _reservationsRestClient.CreateUpdateByBillingAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BillingReservationPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingReservationResource> operation = new BillingArmOperation<BillingReservationResource>(
                     new BillingReservationResourceOperationSource(Client),
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _reservationsRestClient.CreateGetByReservationOrderRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, default, context);
+                    using HttpMessage message = _reservationsRestClient.CreateGetByReservationOrderRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<BillingReservationData> response = Response.FromValue(BillingReservationData.FromResponse(result), result);
                     return Response.FromValue(new BillingReservationResource(Client, response.Value), response.GetRawResponse());
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _reservationsRestClient.CreateGetByReservationOrderRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, default, context);
+                    using HttpMessage message = _reservationsRestClient.CreateGetByReservationOrderRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<BillingReservationData> response = Response.FromValue(BillingReservationData.FromResponse(result), result);
                     return Response.FromValue(new BillingReservationResource(Client, response.Value), response.GetRawResponse());
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _reservationsRestClient.CreateGetByReservationOrderRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, default, context);
+                    using HttpMessage message = _reservationsRestClient.CreateGetByReservationOrderRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<BillingReservationData> response = Response.FromValue(BillingReservationData.FromResponse(result), result);
                     return Response.FromValue(new BillingReservationResource(Client, response.Value), response.GetRawResponse());
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _reservationsRestClient.CreateGetByReservationOrderRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, default, context);
+                    using HttpMessage message = _reservationsRestClient.CreateGetByReservationOrderRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<BillingReservationData> response = Response.FromValue(BillingReservationData.FromResponse(result), result);
                     return Response.FromValue(new BillingReservationResource(Client, response.Value), response.GetRawResponse());
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _reservationsRestClient.CreateGetByReservationOrderRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, default, context);
+                    using HttpMessage message = _reservationsRestClient.CreateGetByReservationOrderRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<BillingReservationData> response = Response.FromValue(BillingReservationData.FromResponse(result), result);
                     return Response.FromValue(new BillingReservationResource(Client, response.Value), response.GetRawResponse());
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _reservationsRestClient.CreateGetByReservationOrderRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, default, context);
+                    using HttpMessage message = _reservationsRestClient.CreateGetByReservationOrderRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<BillingReservationData> response = Response.FromValue(BillingReservationData.FromResponse(result), result);
                     return Response.FromValue(new BillingReservationResource(Client, response.Value), response.GetRawResponse());

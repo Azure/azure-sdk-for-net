@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Communication.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CommunicationServicesRestClient.CreateCheckCommunicationNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), CommunicationServiceNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = CommunicationServicesRestClient.CreateCheckCommunicationNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), CommunicationServiceNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CommunicationNameAvailabilityResult> response = Response.FromValue(CommunicationNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Communication.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CommunicationServicesRestClient.CreateCheckCommunicationNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), CommunicationServiceNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = CommunicationServicesRestClient.CreateCheckCommunicationNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), CommunicationServiceNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CommunicationNameAvailabilityResult> response = Response.FromValue(CommunicationNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

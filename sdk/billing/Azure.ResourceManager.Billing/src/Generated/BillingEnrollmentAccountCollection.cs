@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _enrollmentAccountsRestClient.CreateGetRequest(Id.Name, enrollmentAccountName, context);
+                using HttpMessage message = _enrollmentAccountsRestClient.CreateGetRequest(Id.Name, enrollmentAccountName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingEnrollmentAccountData> response = Response.FromValue(BillingEnrollmentAccountData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _enrollmentAccountsRestClient.CreateGetRequest(Id.Name, enrollmentAccountName, context);
+                using HttpMessage message = _enrollmentAccountsRestClient.CreateGetRequest(Id.Name, enrollmentAccountName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingEnrollmentAccountData> response = Response.FromValue(BillingEnrollmentAccountData.FromResponse(result), result);
                 if (response.Value == null)
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _enrollmentAccountsRestClient.CreateGetRequest(Id.Name, enrollmentAccountName, context);
+                using HttpMessage message = _enrollmentAccountsRestClient.CreateGetRequest(Id.Name, enrollmentAccountName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BillingEnrollmentAccountData> response = default;
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _enrollmentAccountsRestClient.CreateGetRequest(Id.Name, enrollmentAccountName, context);
+                using HttpMessage message = _enrollmentAccountsRestClient.CreateGetRequest(Id.Name, enrollmentAccountName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BillingEnrollmentAccountData> response = default;
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _enrollmentAccountsRestClient.CreateGetRequest(Id.Name, enrollmentAccountName, context);
+                using HttpMessage message = _enrollmentAccountsRestClient.CreateGetRequest(Id.Name, enrollmentAccountName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BillingEnrollmentAccountData> response = default;
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _enrollmentAccountsRestClient.CreateGetRequest(Id.Name, enrollmentAccountName, context);
+                using HttpMessage message = _enrollmentAccountsRestClient.CreateGetRequest(Id.Name, enrollmentAccountName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BillingEnrollmentAccountData> response = default;

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CarbonServiceRestClient.CreateQueryCarbonEmissionReportsRequest(CarbonEmissionQueryFilter.ToRequestContent(queryParameters), context);
+                using HttpMessage message = CarbonServiceRestClient.CreateQueryCarbonEmissionReportsRequest(CarbonEmissionQueryFilter.ToRequestContent(queryParameters), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CarbonEmissionListResult> response = Response.FromValue(CarbonEmissionListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CarbonServiceRestClient.CreateQueryCarbonEmissionReportsRequest(CarbonEmissionQueryFilter.ToRequestContent(queryParameters), context);
+                using HttpMessage message = CarbonServiceRestClient.CreateQueryCarbonEmissionReportsRequest(CarbonEmissionQueryFilter.ToRequestContent(queryParameters), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CarbonEmissionListResult> response = Response.FromValue(CarbonEmissionListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CarbonServiceRestClient.CreateQueryCarbonEmissionAvailableDateRangeRequest(context);
+                using HttpMessage message = CarbonServiceRestClient.CreateQueryCarbonEmissionAvailableDateRangeRequest(context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CarbonEmissionAvailableDateRange> response = Response.FromValue(CarbonEmissionAvailableDateRange.FromResponse(result), result);
                 if (response.Value == null)
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CarbonServiceRestClient.CreateQueryCarbonEmissionAvailableDateRangeRequest(context);
+                using HttpMessage message = CarbonServiceRestClient.CreateQueryCarbonEmissionAvailableDateRangeRequest(context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CarbonEmissionAvailableDateRange> response = Response.FromValue(CarbonEmissionAvailableDateRange.FromResponse(result), result);
                 if (response.Value == null)

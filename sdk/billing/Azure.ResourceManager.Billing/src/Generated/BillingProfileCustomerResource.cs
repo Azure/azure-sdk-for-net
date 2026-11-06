@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customersRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _customersRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingCustomerData> response = Response.FromValue(BillingCustomerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customersRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _customersRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingCustomerData> response = Response.FromValue(BillingCustomerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRoleAssignmentsRestClient.CreateCreateByCustomerBillingRoleAssignmentRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BillingRoleAssignmentProperties.ToRequestContent(billingRoleAssignmentProperties), context);
+                using HttpMessage message = _billingRoleAssignmentsRestClient.CreateCreateByCustomerBillingRoleAssignmentRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BillingRoleAssignmentProperties.ToRequestContent(billingRoleAssignmentProperties), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingRoleAssignmentData> operation = new BillingArmOperation<BillingRoleAssignmentData>(
                     new BillingRoleAssignmentDataOperationSource(),
@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRoleAssignmentsRestClient.CreateCreateByCustomerBillingRoleAssignmentRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BillingRoleAssignmentProperties.ToRequestContent(billingRoleAssignmentProperties), context);
+                using HttpMessage message = _billingRoleAssignmentsRestClient.CreateCreateByCustomerBillingRoleAssignmentRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BillingRoleAssignmentProperties.ToRequestContent(billingRoleAssignmentProperties), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingRoleAssignmentData> operation = new BillingArmOperation<BillingRoleAssignmentData>(
                     new BillingRoleAssignmentDataOperationSource(),
@@ -656,7 +656,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policiesRestClient.CreateCreateOrUpdateByCustomerPolicyRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BillingCustomerPolicyData.ToRequestContent(data), context);
+                using HttpMessage message = _policiesRestClient.CreateCreateOrUpdateByCustomerPolicyRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BillingCustomerPolicyData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingCustomerPolicyData> operation = new BillingArmOperation<BillingCustomerPolicyData>(
                     new BillingCustomerPolicyDataOperationSource(),
@@ -715,7 +715,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policiesRestClient.CreateCreateOrUpdateByCustomerPolicyRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BillingCustomerPolicyData.ToRequestContent(data), context);
+                using HttpMessage message = _policiesRestClient.CreateCreateOrUpdateByCustomerPolicyRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BillingCustomerPolicyData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingCustomerPolicyData> operation = new BillingArmOperation<BillingCustomerPolicyData>(
                     new BillingCustomerPolicyDataOperationSource(),
@@ -848,7 +848,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRoleAssignmentsRestClient.CreateResolveByCustomerBillingRoleAssignmentRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, resolveScopeDisplayNames, filter, context);
+                using HttpMessage message = _billingRoleAssignmentsRestClient.CreateResolveByCustomerBillingRoleAssignmentRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, resolveScopeDisplayNames, filter, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingRoleAssignmentListResult> operation = new BillingArmOperation<BillingRoleAssignmentListResult>(
                     new BillingRoleAssignmentListResultOperationSource(),
@@ -905,7 +905,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRoleAssignmentsRestClient.CreateResolveByCustomerBillingRoleAssignmentRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, resolveScopeDisplayNames, filter, context);
+                using HttpMessage message = _billingRoleAssignmentsRestClient.CreateResolveByCustomerBillingRoleAssignmentRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, resolveScopeDisplayNames, filter, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingRoleAssignmentListResult> operation = new BillingArmOperation<BillingRoleAssignmentListResult>(
                     new BillingRoleAssignmentListResultOperationSource(),
