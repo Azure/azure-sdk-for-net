@@ -249,11 +249,11 @@ Describe 'Compiled re-review publication guard' {
         }
     }
 
-    It 'checks out the guard from the workflow commit without persisting credentials' {
+    It 'checks out the guard from the trusted PR base without persisting credentials' {
         $checkout = Get-Step 'Checkout trusted re-review publication guard'
         Get-StepProperty $checkout 'uses' | Should -BeExactly 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1'
         $with = Get-StepMapping $checkout 'with'
-        $with['ref'] | Should -BeExactly '${{ github.sha }}'
+        $with['ref'] | Should -BeExactly '${{ github.event.pull_request.base.sha }}'
         $with['persist-credentials'] | Should -BeExactly 'false'
         $with['sparse-checkout'] | Should -BeExactly '.github/workflows/pr-re-review'
     }
