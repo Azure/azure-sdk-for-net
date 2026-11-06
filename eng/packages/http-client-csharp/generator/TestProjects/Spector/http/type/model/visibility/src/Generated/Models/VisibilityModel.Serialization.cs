@@ -15,6 +15,8 @@ namespace _Type.Model.Visibility
 {
     public partial class VisibilityModel : IJsonModel<VisibilityModel>
     {
+        internal VisibilityModel() => throw null;
+
         protected virtual VisibilityModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;

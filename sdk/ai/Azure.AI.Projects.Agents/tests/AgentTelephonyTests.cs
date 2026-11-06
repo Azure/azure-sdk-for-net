@@ -62,7 +62,7 @@ public class AgentTelephonyTests : AgentsTestBase
             }
         }
 
-        CreateTwilioTelephonyBindingContent content = new(
+        CreateTwilioTelephonyBindingRequest content = new(
             connectionName: "cs-e2e-tests-twilio-connection",
             phoneNumber: "+15551234567")
         {

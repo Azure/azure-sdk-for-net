@@ -23,7 +23,7 @@ namespace Azure.Provisioning.Maps
         private BicepDictionary<string> _tags;
         private BicepValue<AzureLocation> _location;
         private MapsCreatorProperties _properties;
-        private ResourceReference<MapsAccount> _parent;
+        private ProvisioningResourceReference<MapsAccount> _parent;
 
         /// <summary> Creates a new MapsCreator. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -137,7 +137,7 @@ namespace Azure.Provisioning.Maps
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<MapsCreatorProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
-            _parent = DefineResource<MapsAccount>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<MapsAccount>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

@@ -20,7 +20,7 @@ namespace Azure.Provisioning.Storage
         private BicepValue<string> _name;
         private SystemData _systemData;
         private TableProperties _tableProperties;
-        private ResourceReference<TableService> _parent;
+        private ProvisioningResourceReference<TableService> _parent;
 
         /// <summary> Creates a new StorageTable. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -132,7 +132,7 @@ namespace Azure.Provisioning.Storage
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _tableProperties = DefineModelProperty<TableProperties>(nameof(TableProperties), new string[] { "properties" });
-            _parent = DefineResource<TableService>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<TableService>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

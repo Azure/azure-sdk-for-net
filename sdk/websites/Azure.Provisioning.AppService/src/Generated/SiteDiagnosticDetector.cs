@@ -20,7 +20,7 @@ namespace Azure.Provisioning.AppService
         private SystemData _systemData;
         private DetectorDefinition _properties;
         private BicepValue<string> _kind;
-        private ResourceReference<SiteDiagnostic> _parent;
+        private ProvisioningResourceReference<SiteDiagnostic> _parent;
 
         /// <summary> Creates a new SiteDiagnosticDetector. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -144,7 +144,7 @@ namespace Azure.Provisioning.AppService
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<DetectorDefinition>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
-            _parent = DefineResource<SiteDiagnostic>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<SiteDiagnostic>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

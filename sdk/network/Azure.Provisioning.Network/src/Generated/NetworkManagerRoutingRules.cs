@@ -23,7 +23,7 @@ namespace Azure.Provisioning.Network
         private SystemData _systemData;
         private RoutingRuleCollectionPropertiesFormat _properties;
         private BicepValue<ETag> _eTag;
-        private ResourceReference<NetworkManagerRoutingConfiguration> _parent;
+        private ProvisioningResourceReference<NetworkManagerRoutingConfiguration> _parent;
 
         /// <summary> Creates a new NetworkManagerRoutingRules. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -193,7 +193,7 @@ namespace Azure.Provisioning.Network
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<RoutingRuleCollectionPropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _parent = DefineResource<NetworkManagerRoutingConfiguration>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<NetworkManagerRoutingConfiguration>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 
