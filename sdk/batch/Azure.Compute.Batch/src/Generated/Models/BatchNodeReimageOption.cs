@@ -20,7 +20,6 @@ namespace Azure.Compute.Batch
         private const string TerminateValue = "terminate";
         /// <summary> Allow currently running Tasks to complete. Schedule no new Tasks while waiting. Reimage the Compute Node when all Tasks have completed. </summary>
         private const string TaskCompletionValue = "taskcompletion";
-        /// <summary> Deprecated, we encourage you to upload task data to Azure Storage in your task and use `TaskCompletion` instead. Allow currently running Tasks to complete, then wait for all Task data retention periods to expire. Schedule no new Tasks while waiting. Reimage the Compute Node when all Task retention periods have expired. </summary>
         private const string RetainedDataValue = "retaineddata";
 
         /// <summary> Initializes a new instance of <see cref="BatchNodeReimageOption"/>. </summary>
@@ -42,7 +41,7 @@ namespace Azure.Compute.Batch
         /// <summary> Allow currently running Tasks to complete. Schedule no new Tasks while waiting. Reimage the Compute Node when all Tasks have completed. </summary>
         public static BatchNodeReimageOption TaskCompletion { get; } = new BatchNodeReimageOption(TaskCompletionValue);
 
-        /// <summary> Deprecated, we encourage you to upload task data to Azure Storage in your task and use `TaskCompletion` instead. Allow currently running Tasks to complete, then wait for all Task data retention periods to expire. Schedule no new Tasks while waiting. Reimage the Compute Node when all Task retention periods have expired. </summary>
+        /// <summary> Gets the RetainedData. </summary>
         public static BatchNodeReimageOption RetainedData { get; } = new BatchNodeReimageOption(RetainedDataValue);
 
         /// <summary> Determines if two <see cref="BatchNodeReimageOption"/> values are the same. </summary>

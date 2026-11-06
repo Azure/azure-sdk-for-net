@@ -15,7 +15,7 @@ namespace Azure.Compute.Batch
     /// <summary> Client options for <see cref="BatchClient"/>. </summary>
     public partial class BatchClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2025_06_01;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2026_10_01;
 
         /// <summary> Initializes a new instance of BatchClientOptions. </summary>
         /// <param name="version"> The service version. </param>
@@ -24,6 +24,7 @@ namespace Azure.Compute.Batch
             Version = version switch
             {
                 ServiceVersion.V2025_06_01 => "2025-06-01",
+                ServiceVersion.V2026_10_01 => "2026-10-01",
                 _ => throw new NotSupportedException()
             };
             ConfigureLogging();
@@ -34,7 +35,7 @@ namespace Azure.Compute.Batch
         [Experimental("SCME0002")]
         internal BatchClientOptions(IConfigurationSection section) : base(section, null)
         {
-            Version = "2025-06-01";
+            Version = "2026-10-01";
             if (section is null || !section.Exists())
             {
                 return;
@@ -56,7 +57,9 @@ namespace Azure.Compute.Batch
         public enum ServiceVersion
         {
             /// <summary> API Version 2025-06-01. </summary>
-            V2025_06_01 = 1
+            V2025_06_01 = 1,
+            /// <summary> API Version 2026-10-01. </summary>
+            V2026_10_01 = 2
         }
     }
 }

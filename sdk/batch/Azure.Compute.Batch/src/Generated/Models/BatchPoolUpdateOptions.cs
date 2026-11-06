@@ -33,6 +33,7 @@ namespace Azure.Compute.Batch
         /// <param name="applicationPackageReferences"> A list of Packages to be installed on each Compute Node in the Pool. Changes to Package references affect all new Nodes joining the Pool, but do not affect Compute Nodes that are already in the Pool until they are rebooted or reimaged. If this element is present, it replaces any existing Package references. If you specify an empty collection, then all Package references are removed from the Pool. If omitted, any existing Package references are left unchanged. </param>
         /// <param name="metadata"> A list of name-value pairs associated with the Pool as metadata. If this element is present, it replaces any existing metadata configured on the Pool. If you specify an empty collection, any metadata is removed from the Pool. If omitted, any existing metadata is left unchanged. </param>
         /// <param name="virtualMachineConfiguration"> The virtual machine configuration for the Pool. This property must be specified.&lt;br /&gt;&lt;br /&gt;This field can be updated only when the pool is empty. </param>
+        /// <param name="vmSkuProfile"> Specifies the profile of VM sizes and the allocation strategy used to allocate Compute Nodes for an Instance Mix Pool. When specified, vmSize must be 'Mix'.&lt;br /&gt;&lt;br /&gt;This field can be updated only when the pool is empty. </param>
         /// <param name="taskSlotsPerNode"> The number of task slots that can be used to run concurrent tasks on a single compute node in the pool. The default value is 1. The maximum value is the smaller of 4 times the number of cores of the vmSize of the pool or 256.&lt;br /&gt;&lt;br /&gt;This field can be updated only when the pool is empty. </param>
         /// <param name="taskSchedulingPolicy"> How Tasks are distributed across Compute Nodes in a Pool. If not specified, the default is spread.&lt;br /&gt;&lt;br /&gt;This field can be updated only when the pool is empty. </param>
         /// <param name="networkConfiguration"> The network configuration for the Pool. This field can be updated only when the pool is empty. </param>
@@ -40,7 +41,7 @@ namespace Azure.Compute.Batch
         /// <param name="mountConfiguration"> Mount storage using specified file system for the entire lifetime of the pool. Mount the storage using Azure fileshare, NFS, CIFS or Blobfuse based file system.&lt;br /&gt;&lt;br /&gt;This field can be updated only when the pool is empty. </param>
         /// <param name="upgradePolicy"> The upgrade policy for the Pool. Describes an upgrade policy - automatic, manual, or rolling.&lt;br /&gt;&lt;br /&gt;This field can be updated only when the pool is empty. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchPoolUpdateOptions(string displayName, string vmSize, bool? enableInterNodeCommunication, BatchStartTask startTask, IList<BatchApplicationPackageReference> applicationPackageReferences, IList<BatchMetadataItem> metadata, VirtualMachineConfiguration virtualMachineConfiguration, int? taskSlotsPerNode, BatchTaskSchedulingPolicy taskSchedulingPolicy, NetworkConfiguration networkConfiguration, IList<UserAccount> userAccounts, IList<MountConfiguration> mountConfiguration, UpgradePolicy upgradePolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchPoolUpdateOptions(string displayName, string vmSize, bool? enableInterNodeCommunication, BatchStartTask startTask, IList<BatchApplicationPackageReference> applicationPackageReferences, IList<BatchMetadataItem> metadata, VirtualMachineConfiguration virtualMachineConfiguration, VirtualMachineSkuProfile vmSkuProfile, int? taskSlotsPerNode, BatchTaskSchedulingPolicy taskSchedulingPolicy, NetworkConfiguration networkConfiguration, IList<UserAccount> userAccounts, IList<MountConfiguration> mountConfiguration, UpgradePolicy upgradePolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             VmSize = vmSize;
@@ -49,6 +50,7 @@ namespace Azure.Compute.Batch
             ApplicationPackageReferences = applicationPackageReferences;
             Metadata = metadata;
             VirtualMachineConfiguration = virtualMachineConfiguration;
+            VmSkuProfile = vmSkuProfile;
             TaskSlotsPerNode = taskSlotsPerNode;
             TaskSchedulingPolicy = taskSchedulingPolicy;
             NetworkConfiguration = networkConfiguration;
@@ -78,6 +80,9 @@ namespace Azure.Compute.Batch
 
         /// <summary> The virtual machine configuration for the Pool. This property must be specified.&lt;br /&gt;&lt;br /&gt;This field can be updated only when the pool is empty. </summary>
         public VirtualMachineConfiguration VirtualMachineConfiguration { get; set; }
+
+        /// <summary> Specifies the profile of VM sizes and the allocation strategy used to allocate Compute Nodes for an Instance Mix Pool. When specified, vmSize must be 'Mix'.&lt;br /&gt;&lt;br /&gt;This field can be updated only when the pool is empty. </summary>
+        public VirtualMachineSkuProfile VmSkuProfile { get; set; }
 
         /// <summary> The number of task slots that can be used to run concurrent tasks on a single compute node in the pool. The default value is 1. The maximum value is the smaller of 4 times the number of cores of the vmSize of the pool or 256.&lt;br /&gt;&lt;br /&gt;This field can be updated only when the pool is empty. </summary>
         public int? TaskSlotsPerNode { get; set; }
