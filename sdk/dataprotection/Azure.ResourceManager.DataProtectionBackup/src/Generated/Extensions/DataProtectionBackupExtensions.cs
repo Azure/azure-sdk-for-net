@@ -111,39 +111,39 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataProtectionBackupRecoveryPointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="AzureBackupRecoveryPointResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupArmClient.GetDataProtectionBackupRecoveryPointResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupArmClient.GetAzureBackupRecoveryPointResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DataProtectionBackupRecoveryPointResource"/> object. </returns>
-        public static DataProtectionBackupRecoveryPointResource GetDataProtectionBackupRecoveryPointResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AzureBackupRecoveryPointResource"/> object. </returns>
+        public static AzureBackupRecoveryPointResource GetAzureBackupRecoveryPointResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDataProtectionBackupArmClient(client).GetDataProtectionBackupRecoveryPointResource(id);
+            return GetMockableDataProtectionBackupArmClient(client).GetAzureBackupRecoveryPointResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataProtectionBackupJobResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="AzureBackupJobResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupArmClient.GetDataProtectionBackupJobResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupArmClient.GetAzureBackupJobResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DataProtectionBackupJobResource"/> object. </returns>
-        public static DataProtectionBackupJobResource GetDataProtectionBackupJobResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AzureBackupJobResource"/> object. </returns>
+        public static AzureBackupJobResource GetAzureBackupJobResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDataProtectionBackupArmClient(client).GetDataProtectionBackupJobResource(id);
+            return GetMockableDataProtectionBackupArmClient(client).GetAzureBackupJobResource(id);
         }
 
         /// <summary>
@@ -198,6 +198,78 @@ namespace Azure.ResourceManager.DataProtectionBackup
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDataProtectionBackupArmClient(client).GetResourceGuardProxyBaseResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="CrossTenantVaultMappingResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupArmClient.GetCrossTenantVaultMappingResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CrossTenantVaultMappingResource"/> object. </returns>
+        public static CrossTenantVaultMappingResource GetCrossTenantVaultMappingResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableDataProtectionBackupArmClient(client).GetCrossTenantVaultMappingResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="CrossTenantBackupInstanceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupArmClient.GetCrossTenantBackupInstanceResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CrossTenantBackupInstanceResource"/> object. </returns>
+        public static CrossTenantBackupInstanceResource GetCrossTenantBackupInstanceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableDataProtectionBackupArmClient(client).GetCrossTenantBackupInstanceResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="RecoveryPointFromDppCrossTenantVaultResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupArmClient.GetRecoveryPointFromDppCrossTenantVaultResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="RecoveryPointFromDppCrossTenantVaultResource"/> object. </returns>
+        public static RecoveryPointFromDppCrossTenantVaultResource GetRecoveryPointFromDppCrossTenantVaultResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableDataProtectionBackupArmClient(client).GetRecoveryPointFromDppCrossTenantVaultResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="JobFromDppCrossTenantVaultResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupArmClient.GetJobFromDppCrossTenantVaultResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="JobFromDppCrossTenantVaultResource"/> object. </returns>
+        public static JobFromDppCrossTenantVaultResource GetJobFromDppCrossTenantVaultResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableDataProtectionBackupArmClient(client).GetJobFromDppCrossTenantVaultResource(id);
         }
 
         /// <summary>
@@ -480,8 +552,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="skipToken"> skipToken Filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DataProtectionBackupRecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DataProtectionBackupRecoveryPointResource> GetSecondaryRecoveryPointsAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, FetchSecondaryRPsRequestContent content, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataProtectionBackupRecoveryPointData"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DataProtectionBackupRecoveryPointData> GetSecondaryRecoveryPointsAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, FetchSecondaryRPsRequestContent content, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -502,8 +574,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="skipToken"> skipToken Filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DataProtectionBackupRecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DataProtectionBackupRecoveryPointResource> GetSecondaryRecoveryPoints(this ResourceGroupResource resourceGroupResource, AzureLocation location, FetchSecondaryRPsRequestContent content, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataProtectionBackupRecoveryPointData"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DataProtectionBackupRecoveryPointData> GetSecondaryRecoveryPoints(this ResourceGroupResource resourceGroupResource, AzureLocation location, FetchSecondaryRPsRequestContent content, string filter = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -522,7 +594,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="content"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<DataProtectionBackupJobResource>> GetCrossRegionRestoreJobAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, CrossRegionRestoreJobContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<DataProtectionBackupJobData>> GetCrossRegionRestoreJobAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, CrossRegionRestoreJobContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -541,7 +613,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="content"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<DataProtectionBackupJobResource> GetCrossRegionRestoreJob(this ResourceGroupResource resourceGroupResource, AzureLocation location, CrossRegionRestoreJobContent content, CancellationToken cancellationToken = default)
+        public static Response<DataProtectionBackupJobData> GetCrossRegionRestoreJob(this ResourceGroupResource resourceGroupResource, AzureLocation location, CrossRegionRestoreJobContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -561,8 +633,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DataProtectionBackupJobResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DataProtectionBackupJobResource> GetCrossRegionRestoreJobsAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, CrossRegionRestoreJobsContent content, string filter = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataProtectionBackupJobData"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DataProtectionBackupJobData> GetCrossRegionRestoreJobsAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, CrossRegionRestoreJobsContent content, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -582,8 +654,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DataProtectionBackupJobResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DataProtectionBackupJobResource> GetCrossRegionRestoreJobs(this ResourceGroupResource resourceGroupResource, AzureLocation location, CrossRegionRestoreJobsContent content, string filter = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataProtectionBackupJobData"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DataProtectionBackupJobData> GetCrossRegionRestoreJobs(this ResourceGroupResource resourceGroupResource, AzureLocation location, CrossRegionRestoreJobsContent content, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
