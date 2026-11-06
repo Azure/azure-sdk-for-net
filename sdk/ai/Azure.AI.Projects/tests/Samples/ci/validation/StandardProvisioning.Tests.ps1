@@ -80,6 +80,31 @@ Describe 'Standard Foundry provisioning contract' {
 }
 
 Describe 'Pipeline sample selection contract' {
+    It 'selects only the sync fixture without changing sample attributes' {
+        $matrix = Get-Content -LiteralPath (Join-Path $PSScriptRoot '../sample-slice-matrix.json') -Raw | ConvertFrom-Json -AsHashtable
+        $matrix.matrix.SampleSelector.Count | Should Be 3
+        foreach ($slice in $matrix.matrix.SampleSelector.Values) {
+            $slice.SampleSliceFilter | Should Match 'FullyQualifiedName~False'
+        }
+    }
+
+    It 'opts into task-scoped CLI authentication while retaining the default test tasks' {
+        $pipeline = Get-Content -LiteralPath (Join-Path $PSScriptRoot '../../../../tests.yml') -Raw
+        $pipeline | Should Match 'UseAzureCliForTests: true'
+        $template = Get-Content -LiteralPath (
+            Join-Path $PSScriptRoot '../../../../../../../eng/pipelines/templates/jobs/live.tests.yml') -Raw
+        $cliBranch = [regex]::Match(
+            $template,
+            '(?ms)^      - \$\{\{ if eq\(parameters.CloudConfig.UseAzureCliForTests, true\) \}\}:(?<step>.*?)^      - \$\{\{ elseif')
+        $cliBranch.Success | Should Be $true
+        $cliBranch.Groups['step'].Value | Should Match 'task: AzureCLI@2'
+        $cliBranch.Groups['step'].Value | Should Match '\$env:AZURE_TOKEN_CREDENTIALS = ''AzureCliCredential'''
+        $cliBranch.Groups['step'].Value | Should Match 'dotnet test eng/service.proj'
+        $cliBranch.Groups['step'].Value | Should Match 'SYSTEM_ACCESSTOKEN: \$\(System.AccessToken\)'
+        $template | Should Match 'elseif eq\(''true'', parameters.UseFederatedAuth\)'
+        $template | Should Match 'task: AzurePowerShell@5'
+    }
+
     It 'defaults to a model compatible with the classic Agents sample' {
         $pipeline = Get-Content -LiteralPath (Join-Path $PSScriptRoot '../../../../tests.yml') -Raw
         $modelNameParameter = [regex]::Match(

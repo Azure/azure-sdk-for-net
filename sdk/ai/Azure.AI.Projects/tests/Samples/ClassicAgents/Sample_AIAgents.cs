@@ -25,13 +25,11 @@ public class Sample_AIAgents : SamplesBase
 #if SNIPPET
         var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
-        var tokenProvider = new DefaultAzureCredential();
 #else
         var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
-        var tokenProvider = TestEnvironment.Credential;
 #endif
-        AIProjectClient projectClient = new(new Uri(endpoint), tokenProvider);
+        AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
         PersistentAgentsClient agentsClient = projectClient.GetPersistentAgentsClient();
 
         // Step 1: Create an agent
@@ -108,13 +106,11 @@ public class Sample_AIAgents : SamplesBase
 #if SNIPPET
         var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
-        var tokenProvider = new DefaultAzureCredential();
 #else
         var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
-        var tokenProvider = TestEnvironment.Credential;
 #endif
-        AIProjectClient projectClient = new(new Uri(endpoint), tokenProvider);
+        AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
         PersistentAgentsClient agentsClient = projectClient.GetPersistentAgentsClient();
         #endregion
 

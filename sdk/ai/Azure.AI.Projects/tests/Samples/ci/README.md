@@ -61,8 +61,8 @@ capacity across parallel workers.
 - The existing matrix has three disjoint sample slices, one framework
   (`net10.0`), Debug, and one package-reference configuration. The maximum
   parallel worker count defaults to four; it does not repeat the samples.
-  The selected samples use `SyncOnly`: NUnit discovers both sync and async
-  fixtures, but only the sync fixture executes; the async variant is skipped.
+  The slice filters select the `False` (sync) NUnit fixture, so each sample
+  executes once without editing the samples or adding skipped async variants.
 - `selectionKind`/`selection` restrict the existing slices; they do not add
   tests outside that matrix. A `test-id` selection is a .NET test-filter
   expression; semicolon-separated expressions are ORed. Semicolon-separated
@@ -78,9 +78,14 @@ capacity across parallel workers.
   Overrides must support the selected APIs: reasoning models can reject
   sampling defaults used internally by the classic Agents service even when
   the sample does not set sampling parameters.
-- Build and live tests use the same service connection through the existing
-  federated-auth .NET template. In Azure Pipelines, all three test environments
-  explicitly use `AzurePipelinesCredential` with the task's service-connection
+- Build and live tests opt into the shared template's Azure CLI task through
+  `CloudConfig.Public.UseAzureCliForTests`. The task authenticates the same
+  service connection and sets `AZURE_TOKEN_CREDENTIALS=AzureCliCredential`,
+  restricting the samples' unmodified `DefaultAzureCredential` to that scoped
+  CLI session rather than the agent's managed identity. This selector requires
+  Azure.Identity 1.15.0 or later. Other pipelines keep their existing test task
+  unless they opt in.
+  The three test environments still use `AzurePipelinesCredential` with the task's service-connection
   tenant/client/connection IDs and the runtime `SYSTEM_ACCESSTOKEN`. Missing
   metadata or a mismatched target tenant fails without falling back to the
   agent's managed identity. Tokens are not written to state or artifacts.

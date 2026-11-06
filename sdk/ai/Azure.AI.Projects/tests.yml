@@ -54,6 +54,7 @@ extends:
     CloudConfig:
       Public:
         ServiceConnection: azure-sdk-tests
+        UseAzureCliForTests: true
     Location: 'East US'
     MaxParallel: ${{ parameters.testQueueCount }}
     TimeoutInMinutes: 120

@@ -19,15 +19,15 @@
     "SampleSelector": {
       "ProjectsClassicAgents": {
         "SampleQueueName": "q1",
-        "SampleSliceFilter": "((FullyQualifiedName~Azure.AI.Projects.Tests.Samples.Sample_AIAgents & Name=AgentsBasics))"
+        "SampleSliceFilter": "((FullyQualifiedName~Azure.AI.Projects.Tests.Samples.Sample_AIAgents & Name=AgentsBasics & FullyQualifiedName~False))"
       },
       "AgentsVersionSelection": {
         "SampleQueueName": "q2",
-        "SampleSliceFilter": "((FullyQualifiedName~Azure.AI.Projects.Agents.Tests.Samples.Sample_agents_CRUD & Name=VersionSelection & Name!=AgentCRUDAsync & Name!=AgentCRUD & Name!=ErrorHandling))"
+        "SampleSliceFilter": "((FullyQualifiedName~Azure.AI.Projects.Agents.Tests.Samples.Sample_agents_CRUD & Name=VersionSelection & Name!=AgentCRUDAsync & Name!=AgentCRUD & Name!=ErrorHandling & FullyQualifiedName~False))"
       },
       "OpenAIResponseBasic": {
         "SampleQueueName": "q3",
-        "SampleSliceFilter": "((FullyQualifiedName~Azure.AI.Extensions.OpenAI.Tests.Samples.Sample_ResponseBasic & Name=AgentResponseSync))"
+        "SampleSliceFilter": "((FullyQualifiedName~Azure.AI.Extensions.OpenAI.Tests.Samples.Sample_ResponseBasic & Name=AgentResponseSync & FullyQualifiedName~False))"
       }
     }
   }
