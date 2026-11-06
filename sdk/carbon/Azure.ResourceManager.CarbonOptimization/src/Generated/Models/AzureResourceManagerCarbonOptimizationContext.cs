@@ -15,6 +15,12 @@ namespace Azure.ResourceManager.CarbonOptimization
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(BillingAccountItemDetailsReportQueryFilter))]
+    [ModelReaderWriterBuildable(typeof(BillingAccountMonthlySummaryReportQueryFilter))]
+    [ModelReaderWriterBuildable(typeof(BillingAccountOverallSummaryReportQueryFilter))]
+    [ModelReaderWriterBuildable(typeof(BillingAccountQueryFilter))]
+    [ModelReaderWriterBuildable(typeof(BillingAccountTopItemsMonthlySummaryReportQueryFilter))]
+    [ModelReaderWriterBuildable(typeof(BillingAccountTopItemsSummaryReportQueryFilter))]
     [ModelReaderWriterBuildable(typeof(CarbonEmission))]
     [ModelReaderWriterBuildable(typeof(CarbonEmissionAvailableDateRange))]
     [ModelReaderWriterBuildable(typeof(CarbonEmissionItemDetail))]
