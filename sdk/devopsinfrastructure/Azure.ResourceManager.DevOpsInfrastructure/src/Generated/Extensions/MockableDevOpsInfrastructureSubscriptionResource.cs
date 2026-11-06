@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PoolsRestClient.CreateCheckDevOpsPoolNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), CheckNameAvailability.ToRequestContent(body), context);
+                using HttpMessage message = PoolsRestClient.CreateCheckDevOpsPoolNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), CheckNameAvailability.ToRequestContent(body), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevOpsCheckNameAvailabilityResult> response = Response.FromValue(DevOpsCheckNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PoolsRestClient.CreateCheckDevOpsPoolNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), CheckNameAvailability.ToRequestContent(body), context);
+                using HttpMessage message = PoolsRestClient.CreateCheckDevOpsPoolNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), CheckNameAvailability.ToRequestContent(body), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevOpsCheckNameAvailabilityResult> response = Response.FromValue(DevOpsCheckNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

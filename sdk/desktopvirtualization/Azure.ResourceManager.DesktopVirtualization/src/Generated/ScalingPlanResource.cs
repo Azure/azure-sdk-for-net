@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scalingPlansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _scalingPlansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ScalingPlanData> response = Response.FromValue(ScalingPlanData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scalingPlansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _scalingPlansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ScalingPlanData> response = Response.FromValue(ScalingPlanData.FromResponse(result), result);
                 if (response.Value == null)
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scalingPlansRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ScalingPlanPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _scalingPlansRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ScalingPlanPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ScalingPlanData> response = Response.FromValue(ScalingPlanData.FromResponse(result), result);
                 if (response.Value == null)
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scalingPlansRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ScalingPlanPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _scalingPlansRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ScalingPlanPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ScalingPlanData> response = Response.FromValue(ScalingPlanData.FromResponse(result), result);
                 if (response.Value == null)
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scalingPlansRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _scalingPlansRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scalingPlansRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _scalingPlansRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _scalingPlansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _scalingPlansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ScalingPlanData> response = Response.FromValue(ScalingPlanData.FromResponse(result), result);
                     return Response.FromValue(new ScalingPlanResource(Client, response.Value), response.GetRawResponse());
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _scalingPlansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _scalingPlansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ScalingPlanData> response = Response.FromValue(ScalingPlanData.FromResponse(result), result);
                     return Response.FromValue(new ScalingPlanResource(Client, response.Value), response.GetRawResponse());
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _scalingPlansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _scalingPlansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ScalingPlanData> response = Response.FromValue(ScalingPlanData.FromResponse(result), result);
                     return Response.FromValue(new ScalingPlanResource(Client, response.Value), response.GetRawResponse());
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _scalingPlansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _scalingPlansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ScalingPlanData> response = Response.FromValue(ScalingPlanData.FromResponse(result), result);
                     return Response.FromValue(new ScalingPlanResource(Client, response.Value), response.GetRawResponse());
@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _scalingPlansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _scalingPlansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ScalingPlanData> response = Response.FromValue(ScalingPlanData.FromResponse(result), result);
                     return Response.FromValue(new ScalingPlanResource(Client, response.Value), response.GetRawResponse());
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _scalingPlansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _scalingPlansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ScalingPlanData> response = Response.FromValue(ScalingPlanData.FromResponse(result), result);
                     return Response.FromValue(new ScalingPlanResource(Client, response.Value), response.GetRawResponse());

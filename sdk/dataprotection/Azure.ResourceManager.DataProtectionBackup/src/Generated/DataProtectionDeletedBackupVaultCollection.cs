@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedBackupVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, deletedVaultName, context);
+                using HttpMessage message = _deletedBackupVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, deletedVaultName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataProtectionDeletedBackupVaultData> response = Response.FromValue(DataProtectionDeletedBackupVaultData.FromResponse(result), result);
                 if (response.Value == null)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedBackupVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, deletedVaultName, context);
+                using HttpMessage message = _deletedBackupVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, deletedVaultName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataProtectionDeletedBackupVaultData> response = Response.FromValue(DataProtectionDeletedBackupVaultData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedBackupVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, deletedVaultName, context);
+                using HttpMessage message = _deletedBackupVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, deletedVaultName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DataProtectionDeletedBackupVaultData> response = default;
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedBackupVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, deletedVaultName, context);
+                using HttpMessage message = _deletedBackupVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, deletedVaultName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DataProtectionDeletedBackupVaultData> response = default;
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedBackupVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, deletedVaultName, context);
+                using HttpMessage message = _deletedBackupVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, deletedVaultName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DataProtectionDeletedBackupVaultData> response = default;
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deletedBackupVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, deletedVaultName, context);
+                using HttpMessage message = _deletedBackupVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, deletedVaultName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DataProtectionDeletedBackupVaultData> response = default;

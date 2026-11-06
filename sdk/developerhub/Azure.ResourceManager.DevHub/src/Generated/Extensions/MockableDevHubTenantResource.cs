@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DevHub.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OperationsRestClient.CreateGetAllRequest(context);
+                using HttpMessage message = OperationsRestClient.CreateGetAllRequest(context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevHubOperationListResult> response = Response.FromValue(DevHubOperationListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DevHub.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OperationsRestClient.CreateGetAllRequest(context);
+                using HttpMessage message = OperationsRestClient.CreateGetAllRequest(context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevHubOperationListResult> response = Response.FromValue(DevHubOperationListResult.FromResponse(result), result);
                 if (response.Value == null)

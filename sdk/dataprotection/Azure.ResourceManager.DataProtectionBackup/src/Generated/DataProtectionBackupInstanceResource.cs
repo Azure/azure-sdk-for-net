@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupInstanceResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _backupInstanceResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataProtectionBackupInstanceData> response = Response.FromValue(DataProtectionBackupInstanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupInstanceResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _backupInstanceResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataProtectionBackupInstanceData> response = Response.FromValue(DataProtectionBackupInstanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupInstanceResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, xMsAuthorizationAuxiliary, context);
+                using HttpMessage message = _backupInstanceResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, xMsAuthorizationAuxiliary, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataProtectionBackupArmOperation operation = new DataProtectionBackupArmOperation(_backupInstanceResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupInstanceResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, xMsAuthorizationAuxiliary, context);
+                using HttpMessage message = _backupInstanceResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, xMsAuthorizationAuxiliary, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataProtectionBackupArmOperation operation = new DataProtectionBackupArmOperation(_backupInstanceResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupInstanceResourcesRestClient.CreateTriggerAdhocBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AdhocBackupTriggerContent.ToRequestContent(content), context);
+                using HttpMessage message = _backupInstanceResourcesRestClient.CreateTriggerAdhocBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AdhocBackupTriggerContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo> operation = new DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo>(
                     new DataProtectionOperationJobExtendedInfoOperationSource(),
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupInstanceResourcesRestClient.CreateTriggerAdhocBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AdhocBackupTriggerContent.ToRequestContent(content), context);
+                using HttpMessage message = _backupInstanceResourcesRestClient.CreateTriggerAdhocBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AdhocBackupTriggerContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo> operation = new DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo>(
                     new DataProtectionOperationJobExtendedInfoOperationSource(),
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupInstanceResourcesRestClient.CreateFindRestorableTimeRangeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackupFindRestorableTimeRangeContent.ToRequestContent(content), context);
+                using HttpMessage message = _backupInstanceResourcesRestClient.CreateFindRestorableTimeRangeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackupFindRestorableTimeRangeContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BackupFindRestorableTimeRangeResult> response = Response.FromValue(BackupFindRestorableTimeRangeResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupInstanceResourcesRestClient.CreateFindRestorableTimeRangeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackupFindRestorableTimeRangeContent.ToRequestContent(content), context);
+                using HttpMessage message = _backupInstanceResourcesRestClient.CreateFindRestorableTimeRangeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackupFindRestorableTimeRangeContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BackupFindRestorableTimeRangeResult> response = Response.FromValue(BackupFindRestorableTimeRangeResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupInstanceResourcesRestClient.CreateResumeBackupsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _backupInstanceResourcesRestClient.CreateResumeBackupsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataProtectionBackupArmOperation operation = new DataProtectionBackupArmOperation(_backupInstanceResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupInstanceResourcesRestClient.CreateResumeBackupsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _backupInstanceResourcesRestClient.CreateResumeBackupsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataProtectionBackupArmOperation operation = new DataProtectionBackupArmOperation(_backupInstanceResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupInstanceResourcesRestClient.CreateResumeProtectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _backupInstanceResourcesRestClient.CreateResumeProtectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataProtectionBackupArmOperation operation = new DataProtectionBackupArmOperation(_backupInstanceResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -693,7 +693,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupInstanceResourcesRestClient.CreateResumeProtectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _backupInstanceResourcesRestClient.CreateResumeProtectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataProtectionBackupArmOperation operation = new DataProtectionBackupArmOperation(_backupInstanceResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -744,7 +744,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupInstanceResourcesRestClient.CreateStopProtectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StopProtectionContent.ToRequestContent(content), xMsAuthorizationAuxiliary, context);
+                using HttpMessage message = _backupInstanceResourcesRestClient.CreateStopProtectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StopProtectionContent.ToRequestContent(content), xMsAuthorizationAuxiliary, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataProtectionBackupArmOperation operation = new DataProtectionBackupArmOperation(_backupInstanceResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -795,7 +795,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupInstanceResourcesRestClient.CreateStopProtectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StopProtectionContent.ToRequestContent(content), xMsAuthorizationAuxiliary, context);
+                using HttpMessage message = _backupInstanceResourcesRestClient.CreateStopProtectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StopProtectionContent.ToRequestContent(content), xMsAuthorizationAuxiliary, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataProtectionBackupArmOperation operation = new DataProtectionBackupArmOperation(_backupInstanceResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -846,7 +846,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupInstanceResourcesRestClient.CreateSuspendBackupsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SuspendBackupContent.ToRequestContent(content), xMsAuthorizationAuxiliary, context);
+                using HttpMessage message = _backupInstanceResourcesRestClient.CreateSuspendBackupsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SuspendBackupContent.ToRequestContent(content), xMsAuthorizationAuxiliary, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataProtectionBackupArmOperation operation = new DataProtectionBackupArmOperation(_backupInstanceResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -897,7 +897,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupInstanceResourcesRestClient.CreateSuspendBackupsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SuspendBackupContent.ToRequestContent(content), xMsAuthorizationAuxiliary, context);
+                using HttpMessage message = _backupInstanceResourcesRestClient.CreateSuspendBackupsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SuspendBackupContent.ToRequestContent(content), xMsAuthorizationAuxiliary, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataProtectionBackupArmOperation operation = new DataProtectionBackupArmOperation(_backupInstanceResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -951,7 +951,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupInstanceResourcesRestClient.CreateSyncBackupInstanceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackupInstanceSyncContent.ToRequestContent(content), context);
+                using HttpMessage message = _backupInstanceResourcesRestClient.CreateSyncBackupInstanceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackupInstanceSyncContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataProtectionBackupArmOperation operation = new DataProtectionBackupArmOperation(_backupInstanceResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1005,7 +1005,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupInstanceResourcesRestClient.CreateSyncBackupInstanceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackupInstanceSyncContent.ToRequestContent(content), context);
+                using HttpMessage message = _backupInstanceResourcesRestClient.CreateSyncBackupInstanceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackupInstanceSyncContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataProtectionBackupArmOperation operation = new DataProtectionBackupArmOperation(_backupInstanceResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1058,7 +1058,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupInstanceResourcesRestClient.CreateTriggerRehydrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackupRehydrationContent.ToRequestContent(content), context);
+                using HttpMessage message = _backupInstanceResourcesRestClient.CreateTriggerRehydrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackupRehydrationContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataProtectionBackupArmOperation operation = new DataProtectionBackupArmOperation(_backupInstanceResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1111,7 +1111,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupInstanceResourcesRestClient.CreateTriggerRehydrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackupRehydrationContent.ToRequestContent(content), context);
+                using HttpMessage message = _backupInstanceResourcesRestClient.CreateTriggerRehydrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackupRehydrationContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataProtectionBackupArmOperation operation = new DataProtectionBackupArmOperation(_backupInstanceResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1165,7 +1165,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupInstanceResourcesRestClient.CreateTriggerRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackupRestoreContent.ToRequestContent(content), xMsAuthorizationAuxiliary, context);
+                using HttpMessage message = _backupInstanceResourcesRestClient.CreateTriggerRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackupRestoreContent.ToRequestContent(content), xMsAuthorizationAuxiliary, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo> operation = new DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo>(
                     new DataProtectionOperationJobExtendedInfoOperationSource(),
@@ -1225,7 +1225,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupInstanceResourcesRestClient.CreateTriggerRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackupRestoreContent.ToRequestContent(content), xMsAuthorizationAuxiliary, context);
+                using HttpMessage message = _backupInstanceResourcesRestClient.CreateTriggerRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackupRestoreContent.ToRequestContent(content), xMsAuthorizationAuxiliary, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo> operation = new DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo>(
                     new DataProtectionOperationJobExtendedInfoOperationSource(),
@@ -1284,7 +1284,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupInstanceResourcesRestClient.CreateValidateForModifyBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ValidateForModifyBackupContent.ToRequestContent(content), context);
+                using HttpMessage message = _backupInstanceResourcesRestClient.CreateValidateForModifyBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ValidateForModifyBackupContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataProtectionBackupArmOperation operation = new DataProtectionBackupArmOperation(_backupInstanceResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1337,7 +1337,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupInstanceResourcesRestClient.CreateValidateForModifyBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ValidateForModifyBackupContent.ToRequestContent(content), context);
+                using HttpMessage message = _backupInstanceResourcesRestClient.CreateValidateForModifyBackupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ValidateForModifyBackupContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataProtectionBackupArmOperation operation = new DataProtectionBackupArmOperation(_backupInstanceResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1390,7 +1390,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupInstanceResourcesRestClient.CreateValidateRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackupValidateRestoreContent.ToRequestContent(content), context);
+                using HttpMessage message = _backupInstanceResourcesRestClient.CreateValidateRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackupValidateRestoreContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo> operation = new DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo>(
                     new DataProtectionOperationJobExtendedInfoOperationSource(),
@@ -1449,7 +1449,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupInstanceResourcesRestClient.CreateValidateRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackupValidateRestoreContent.ToRequestContent(content), context);
+                using HttpMessage message = _backupInstanceResourcesRestClient.CreateValidateRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BackupValidateRestoreContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo> operation = new DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo>(
                     new DataProtectionOperationJobExtendedInfoOperationSource(),
@@ -1509,7 +1509,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupInstanceResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataProtectionBackupInstanceData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
+                using HttpMessage message = _backupInstanceResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataProtectionBackupInstanceData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataProtectionBackupArmOperation<DataProtectionBackupInstanceResource> operation = new DataProtectionBackupArmOperation<DataProtectionBackupInstanceResource>(
                     new DataProtectionBackupInstanceResourceOperationSource(Client),
@@ -1569,7 +1569,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupInstanceResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataProtectionBackupInstanceData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
+                using HttpMessage message = _backupInstanceResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataProtectionBackupInstanceData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataProtectionBackupArmOperation<DataProtectionBackupInstanceResource> operation = new DataProtectionBackupArmOperation<DataProtectionBackupInstanceResource>(
                     new DataProtectionBackupInstanceResourceOperationSource(Client),
@@ -1614,7 +1614,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _backupInstanceResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _backupInstanceResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DataProtectionBackupInstanceData> response = Response.FromValue(DataProtectionBackupInstanceData.FromResponse(result), result);
                     return Response.FromValue(new DataProtectionBackupInstanceResource(Client, response.Value), response.GetRawResponse());
@@ -1657,7 +1657,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _backupInstanceResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _backupInstanceResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DataProtectionBackupInstanceData> response = Response.FromValue(DataProtectionBackupInstanceData.FromResponse(result), result);
                     return Response.FromValue(new DataProtectionBackupInstanceResource(Client, response.Value), response.GetRawResponse());
@@ -1698,7 +1698,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _backupInstanceResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _backupInstanceResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DataProtectionBackupInstanceData> response = Response.FromValue(DataProtectionBackupInstanceData.FromResponse(result), result);
                     return Response.FromValue(new DataProtectionBackupInstanceResource(Client, response.Value), response.GetRawResponse());
@@ -1739,7 +1739,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _backupInstanceResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _backupInstanceResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DataProtectionBackupInstanceData> response = Response.FromValue(DataProtectionBackupInstanceData.FromResponse(result), result);
                     return Response.FromValue(new DataProtectionBackupInstanceResource(Client, response.Value), response.GetRawResponse());
@@ -1780,7 +1780,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _backupInstanceResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _backupInstanceResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DataProtectionBackupInstanceData> response = Response.FromValue(DataProtectionBackupInstanceData.FromResponse(result), result);
                     return Response.FromValue(new DataProtectionBackupInstanceResource(Client, response.Value), response.GetRawResponse());
@@ -1821,7 +1821,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _backupInstanceResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _backupInstanceResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DataProtectionBackupInstanceData> response = Response.FromValue(DataProtectionBackupInstanceData.FromResponse(result), result);
                     return Response.FromValue(new DataProtectionBackupInstanceResource(Client, response.Value), response.GetRawResponse());

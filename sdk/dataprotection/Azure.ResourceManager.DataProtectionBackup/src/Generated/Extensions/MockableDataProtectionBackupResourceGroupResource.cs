@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = BackupVaultsOperationGroupRestClient.CreateCheckDataProtectionBackupVaultNameAvailabilityRequest(Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), location, DataProtectionBackupNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = BackupVaultsOperationGroupRestClient.CreateCheckDataProtectionBackupVaultNameAvailabilityRequest(Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), location, DataProtectionBackupNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataProtectionBackupNameAvailabilityResult> response = Response.FromValue(DataProtectionBackupNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = BackupVaultsOperationGroupRestClient.CreateCheckDataProtectionBackupVaultNameAvailabilityRequest(Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), location, DataProtectionBackupNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = BackupVaultsOperationGroupRestClient.CreateCheckDataProtectionBackupVaultNameAvailabilityRequest(Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), location, DataProtectionBackupNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataProtectionBackupNameAvailabilityResult> response = Response.FromValue(DataProtectionBackupNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = BackupInstancesOperationGroupRestClient.CreateTriggerCrossRegionRestoreBackupInstanceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, CrossRegionRestoreRequestObject.ToRequestContent(crossRegionRestoreRequestObject), context);
+                using HttpMessage message = BackupInstancesOperationGroupRestClient.CreateTriggerCrossRegionRestoreBackupInstanceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, CrossRegionRestoreRequestObject.ToRequestContent(crossRegionRestoreRequestObject), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo> operation = new DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo>(
                     new DataProtectionOperationJobExtendedInfoOperationSource(),
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = BackupInstancesOperationGroupRestClient.CreateTriggerCrossRegionRestoreBackupInstanceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, CrossRegionRestoreRequestObject.ToRequestContent(crossRegionRestoreRequestObject), context);
+                using HttpMessage message = BackupInstancesOperationGroupRestClient.CreateTriggerCrossRegionRestoreBackupInstanceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, CrossRegionRestoreRequestObject.ToRequestContent(crossRegionRestoreRequestObject), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo> operation = new DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo>(
                     new DataProtectionOperationJobExtendedInfoOperationSource(),
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = BackupInstancesOperationGroupRestClient.CreateValidateCrossRegionRestoreBackupInstanceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, ValidateCrossRegionRestoreRequestObject.ToRequestContent(validateCrossRegionRestoreRequestObject), context);
+                using HttpMessage message = BackupInstancesOperationGroupRestClient.CreateValidateCrossRegionRestoreBackupInstanceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, ValidateCrossRegionRestoreRequestObject.ToRequestContent(validateCrossRegionRestoreRequestObject), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo> operation = new DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo>(
                     new DataProtectionOperationJobExtendedInfoOperationSource(),
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = BackupInstancesOperationGroupRestClient.CreateValidateCrossRegionRestoreBackupInstanceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, ValidateCrossRegionRestoreRequestObject.ToRequestContent(validateCrossRegionRestoreRequestObject), context);
+                using HttpMessage message = BackupInstancesOperationGroupRestClient.CreateValidateCrossRegionRestoreBackupInstanceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, ValidateCrossRegionRestoreRequestObject.ToRequestContent(validateCrossRegionRestoreRequestObject), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo> operation = new DataProtectionBackupArmOperation<DataProtectionOperationJobExtendedInfo>(
                     new DataProtectionOperationJobExtendedInfoOperationSource(),
@@ -637,7 +637,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = FetchCrossRegionRestoreJobOperationGroupRestClient.CreateGetCrossRegionRestoreJobRequest(Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), location, CrossRegionRestoreJobContent.ToRequestContent(content), context);
+                using HttpMessage message = FetchCrossRegionRestoreJobOperationGroupRestClient.CreateGetCrossRegionRestoreJobRequest(Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), location, CrossRegionRestoreJobContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataProtectionBackupJobData> response = Response.FromValue(DataProtectionBackupJobData.FromResponse(result), result);
                 if (response.Value == null)
@@ -686,7 +686,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = FetchCrossRegionRestoreJobOperationGroupRestClient.CreateGetCrossRegionRestoreJobRequest(Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), location, CrossRegionRestoreJobContent.ToRequestContent(content), context);
+                using HttpMessage message = FetchCrossRegionRestoreJobOperationGroupRestClient.CreateGetCrossRegionRestoreJobRequest(Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), location, CrossRegionRestoreJobContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataProtectionBackupJobData> response = Response.FromValue(DataProtectionBackupJobData.FromResponse(result), result);
                 if (response.Value == null)

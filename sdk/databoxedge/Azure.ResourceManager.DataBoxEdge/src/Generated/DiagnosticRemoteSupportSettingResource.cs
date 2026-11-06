@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _diagnosticSettingsRestClient.CreateUpdateDiagnosticRemoteSupportSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, DiagnosticRemoteSupportSettingData.ToRequestContent(data), context);
+                using HttpMessage message = _diagnosticSettingsRestClient.CreateUpdateDiagnosticRemoteSupportSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, DiagnosticRemoteSupportSettingData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataBoxEdgeArmOperation<DiagnosticRemoteSupportSettingResource> operation = new DataBoxEdgeArmOperation<DiagnosticRemoteSupportSettingResource>(
                     new DiagnosticRemoteSupportSettingResourceOperationSource(Client),
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _diagnosticSettingsRestClient.CreateUpdateDiagnosticRemoteSupportSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, DiagnosticRemoteSupportSettingData.ToRequestContent(data), context);
+                using HttpMessage message = _diagnosticSettingsRestClient.CreateUpdateDiagnosticRemoteSupportSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, DiagnosticRemoteSupportSettingData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataBoxEdgeArmOperation<DiagnosticRemoteSupportSettingResource> operation = new DataBoxEdgeArmOperation<DiagnosticRemoteSupportSettingResource>(
                     new DiagnosticRemoteSupportSettingResourceOperationSource(Client),
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _diagnosticSettingsRestClient.CreateGetDiagnosticRemoteSupportSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _diagnosticSettingsRestClient.CreateGetDiagnosticRemoteSupportSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DiagnosticRemoteSupportSettingData> response = Response.FromValue(DiagnosticRemoteSupportSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _diagnosticSettingsRestClient.CreateGetDiagnosticRemoteSupportSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _diagnosticSettingsRestClient.CreateGetDiagnosticRemoteSupportSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DiagnosticRemoteSupportSettingData> response = Response.FromValue(DiagnosticRemoteSupportSettingData.FromResponse(result), result);
                 if (response.Value == null)

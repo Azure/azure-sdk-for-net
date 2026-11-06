@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataMigration
         /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="sqlDBInstanceName"> The sqlDbInstanceName. </param>
-        /// <param name="targetDBName"> The targetDbName. </param>
+        /// <param name="sqlDBInstanceName"> The sqlDBInstanceName. </param>
+        /// <param name="targetDBName"> The targetDBName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string sqlDBInstanceName, string targetDBName)
         {
             string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDBInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDBName}";
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseMigrationsSqlDBRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, migrationOperationId, expand, context);
+                using HttpMessage message = _databaseMigrationsSqlDBRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, migrationOperationId, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DatabaseMigrationSqlDBData> response = Response.FromValue(DatabaseMigrationSqlDBData.FromResponse(result), result);
                 if (response.Value == null)
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseMigrationsSqlDBRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, migrationOperationId, expand, context);
+                using HttpMessage message = _databaseMigrationsSqlDBRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, migrationOperationId, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DatabaseMigrationSqlDBData> response = Response.FromValue(DatabaseMigrationSqlDBData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseMigrationsSqlDBRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, force, context);
+                using HttpMessage message = _databaseMigrationsSqlDBRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, force, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataMigrationArmOperation operation = new DataMigrationArmOperation(_databaseMigrationsSqlDBClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseMigrationsSqlDBRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, force, context);
+                using HttpMessage message = _databaseMigrationsSqlDBRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, force, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataMigrationArmOperation operation = new DataMigrationArmOperation(_databaseMigrationsSqlDBClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseMigrationsSqlDBRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MigrationOperationInput.ToRequestContent(input), context);
+                using HttpMessage message = _databaseMigrationsSqlDBRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MigrationOperationInput.ToRequestContent(input), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataMigrationArmOperation operation = new DataMigrationArmOperation(_databaseMigrationsSqlDBClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseMigrationsSqlDBRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MigrationOperationInput.ToRequestContent(input), context);
+                using HttpMessage message = _databaseMigrationsSqlDBRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MigrationOperationInput.ToRequestContent(input), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataMigrationArmOperation operation = new DataMigrationArmOperation(_databaseMigrationsSqlDBClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseMigrationsSqlDBRestClient.CreateRetryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MigrationOperationInput.ToRequestContent(input), context);
+                using HttpMessage message = _databaseMigrationsSqlDBRestClient.CreateRetryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MigrationOperationInput.ToRequestContent(input), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataMigrationArmOperation<DatabaseMigrationSqlDBResource> operation = new DataMigrationArmOperation<DatabaseMigrationSqlDBResource>(
                     new DatabaseMigrationSqlDBResourceOperationSource(Client),
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseMigrationsSqlDBRestClient.CreateRetryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MigrationOperationInput.ToRequestContent(input), context);
+                using HttpMessage message = _databaseMigrationsSqlDBRestClient.CreateRetryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MigrationOperationInput.ToRequestContent(input), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataMigrationArmOperation<DatabaseMigrationSqlDBResource> operation = new DataMigrationArmOperation<DatabaseMigrationSqlDBResource>(
                     new DatabaseMigrationSqlDBResourceOperationSource(Client),
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseMigrationsSqlDBRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DatabaseMigrationSqlDBData.ToRequestContent(data), context);
+                using HttpMessage message = _databaseMigrationsSqlDBRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DatabaseMigrationSqlDBData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataMigrationArmOperation<DatabaseMigrationSqlDBResource> operation = new DataMigrationArmOperation<DatabaseMigrationSqlDBResource>(
                     new DatabaseMigrationSqlDBResourceOperationSource(Client),
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseMigrationsSqlDBRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DatabaseMigrationSqlDBData.ToRequestContent(data), context);
+                using HttpMessage message = _databaseMigrationsSqlDBRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DatabaseMigrationSqlDBData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataMigrationArmOperation<DatabaseMigrationSqlDBResource> operation = new DataMigrationArmOperation<DatabaseMigrationSqlDBResource>(
                     new DatabaseMigrationSqlDBResourceOperationSource(Client),

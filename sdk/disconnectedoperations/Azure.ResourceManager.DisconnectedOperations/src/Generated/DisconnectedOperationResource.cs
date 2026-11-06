@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _disconnectedRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _disconnectedRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DisconnectedOperationData> response = Response.FromValue(DisconnectedOperationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _disconnectedRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _disconnectedRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DisconnectedOperationData> response = Response.FromValue(DisconnectedOperationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _disconnectedRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DisconnectedOperationPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _disconnectedRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DisconnectedOperationPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DisconnectedOperationData> response = Response.FromValue(DisconnectedOperationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _disconnectedRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DisconnectedOperationPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _disconnectedRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DisconnectedOperationPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DisconnectedOperationData> response = Response.FromValue(DisconnectedOperationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _disconnectedRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _disconnectedRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DisconnectedOperationsArmOperation operation = new DisconnectedOperationsArmOperation(_disconnectedClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _disconnectedRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _disconnectedRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DisconnectedOperationsArmOperation operation = new DisconnectedOperationsArmOperation(_disconnectedClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _disconnectedRestClient.CreateGetDeploymentManifestRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _disconnectedRestClient.CreateGetDeploymentManifestRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DisconnectedOperationDeploymentManifest> response = Response.FromValue(DisconnectedOperationDeploymentManifest.FromResponse(result), result);
                 if (response.Value == null)
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _disconnectedRestClient.CreateGetDeploymentManifestRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _disconnectedRestClient.CreateGetDeploymentManifestRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DisconnectedOperationDeploymentManifest> response = Response.FromValue(DisconnectedOperationDeploymentManifest.FromResponse(result), result);
                 if (response.Value == null)
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _disconnectedRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _disconnectedRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DisconnectedOperationData> response = Response.FromValue(DisconnectedOperationData.FromResponse(result), result);
                     return Response.FromValue(new DisconnectedOperationResource(Client, response.Value), response.GetRawResponse());
@@ -558,7 +558,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _disconnectedRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _disconnectedRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DisconnectedOperationData> response = Response.FromValue(DisconnectedOperationData.FromResponse(result), result);
                     return Response.FromValue(new DisconnectedOperationResource(Client, response.Value), response.GetRawResponse());
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _disconnectedRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _disconnectedRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DisconnectedOperationData> response = Response.FromValue(DisconnectedOperationData.FromResponse(result), result);
                     return Response.FromValue(new DisconnectedOperationResource(Client, response.Value), response.GetRawResponse());
@@ -646,7 +646,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _disconnectedRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _disconnectedRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DisconnectedOperationData> response = Response.FromValue(DisconnectedOperationData.FromResponse(result), result);
                     return Response.FromValue(new DisconnectedOperationResource(Client, response.Value), response.GetRawResponse());
@@ -688,7 +688,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _disconnectedRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _disconnectedRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DisconnectedOperationData> response = Response.FromValue(DisconnectedOperationData.FromResponse(result), result);
                     return Response.FromValue(new DisconnectedOperationResource(Client, response.Value), response.GetRawResponse());
@@ -734,7 +734,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _disconnectedRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _disconnectedRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DisconnectedOperationData> response = Response.FromValue(DisconnectedOperationData.FromResponse(result), result);
                     return Response.FromValue(new DisconnectedOperationResource(Client, response.Value), response.GetRawResponse());

@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sessionHostConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, SessionHostConfigurationData.ToRequestContent(data), context);
+                using HttpMessage message = _sessionHostConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, SessionHostConfigurationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DesktopVirtualizationArmOperation<SessionHostConfigurationResource> operation = new DesktopVirtualizationArmOperation<SessionHostConfigurationResource>(
                     new SessionHostConfigurationResourceOperationSource(Client),
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sessionHostConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, SessionHostConfigurationData.ToRequestContent(data), context);
+                using HttpMessage message = _sessionHostConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, SessionHostConfigurationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DesktopVirtualizationArmOperation<SessionHostConfigurationResource> operation = new DesktopVirtualizationArmOperation<SessionHostConfigurationResource>(
                     new SessionHostConfigurationResourceOperationSource(Client),
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sessionHostConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _sessionHostConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SessionHostConfigurationData> response = Response.FromValue(SessionHostConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sessionHostConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _sessionHostConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SessionHostConfigurationData> response = Response.FromValue(SessionHostConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sessionHostConfigurationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, SessionHostConfigurationPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _sessionHostConfigurationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, SessionHostConfigurationPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DesktopVirtualizationArmOperation<SessionHostConfigurationResource> operation = new DesktopVirtualizationArmOperation<SessionHostConfigurationResource>(
                     new SessionHostConfigurationResourceOperationSource(Client),
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sessionHostConfigurationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, SessionHostConfigurationPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _sessionHostConfigurationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, SessionHostConfigurationPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DesktopVirtualizationArmOperation<SessionHostConfigurationResource> operation = new DesktopVirtualizationArmOperation<SessionHostConfigurationResource>(
                     new SessionHostConfigurationResourceOperationSource(Client),

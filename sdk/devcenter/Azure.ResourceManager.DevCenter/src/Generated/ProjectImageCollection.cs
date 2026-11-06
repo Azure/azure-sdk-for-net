@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _imageOperationGroupRestClient.CreateGetByProjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, imageName, context);
+                using HttpMessage message = _imageOperationGroupRestClient.CreateGetByProjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, imageName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevCenterImageData> response = Response.FromValue(DevCenterImageData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _imageOperationGroupRestClient.CreateGetByProjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, imageName, context);
+                using HttpMessage message = _imageOperationGroupRestClient.CreateGetByProjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, imageName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevCenterImageData> response = Response.FromValue(DevCenterImageData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _imageOperationGroupRestClient.CreateGetByProjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, imageName, context);
+                using HttpMessage message = _imageOperationGroupRestClient.CreateGetByProjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, imageName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DevCenterImageData> response = default;
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _imageOperationGroupRestClient.CreateGetByProjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, imageName, context);
+                using HttpMessage message = _imageOperationGroupRestClient.CreateGetByProjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, imageName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DevCenterImageData> response = default;
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _imageOperationGroupRestClient.CreateGetByProjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, imageName, context);
+                using HttpMessage message = _imageOperationGroupRestClient.CreateGetByProjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, imageName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DevCenterImageData> response = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _imageOperationGroupRestClient.CreateGetByProjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, imageName, context);
+                using HttpMessage message = _imageOperationGroupRestClient.CreateGetByProjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, imageName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DevCenterImageData> response = default;

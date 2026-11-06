@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ServicesRestClient.CreateCheckDataMigrationNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, DataMigrationServiceNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = ServicesRestClient.CreateCheckDataMigrationNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, DataMigrationServiceNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataMigrationServiceNameAvailabilityResult> response = Response.FromValue(DataMigrationServiceNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ServicesRestClient.CreateCheckDataMigrationNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, DataMigrationServiceNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = ServicesRestClient.CreateCheckDataMigrationNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, DataMigrationServiceNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataMigrationServiceNameAvailabilityResult> response = Response.FromValue(DataMigrationServiceNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
