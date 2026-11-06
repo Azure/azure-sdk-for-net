@@ -185,6 +185,75 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new PaloAltoNetworksMonitorDcrLog(dcrId, logIngestionEndpoint, dcrImmutableId, streamName, default);
         }
 
+        /// <summary> The Strata Cloud Manager link code to resolve. </summary>
+        /// <param name="scmLinkCode"> The Strata Cloud Manager link code supplied by the customer. </param>
+        /// <returns> A new <see cref="Models.ScmLinkCodeContent"/> instance for mocking. </returns>
+        public static ScmLinkCodeContent ScmLinkCodeContent(string scmLinkCode = default)
+        {
+            return new ScmLinkCodeContent(scmLinkCode, default);
+        }
+
+        /// <summary> The Strata Cloud Manager instance a link code is bound to. </summary>
+        /// <param name="cloudManagerTenantName">
+        /// The resolved Strata Cloud Manager instance name. This value feeds
+        /// properties.strataCloudManagerConfig.cloudManagerName on the firewall create payload.
+        /// </param>
+        /// <returns> A new <see cref="Models.StrataCloudManagerInstance"/> instance for mocking. </returns>
+        public static StrataCloudManagerInstance StrataCloudManagerInstance(string cloudManagerTenantName = default)
+        {
+            return new StrataCloudManagerInstance(cloudManagerTenantName, default);
+        }
+
+        /// <summary>
+        /// A single Marketplace offer and the plans it exposes to the caller. The entry carries the standard
+        /// Azure Resource Manager proxy-resource identity.
+        /// </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Ngfw.OfferPlanGroupData"/> instance for mocking. </returns>
+        public static OfferPlanGroupData OfferPlanGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OfferPlanGroupProperties properties = default)
+        {
+            return new OfferPlanGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> The plans belonging to a single Marketplace offer. </summary>
+        /// <param name="publisherId"> The Marketplace publisher identifier. </param>
+        /// <param name="offerId"> The Marketplace offer identifier. </param>
+        /// <param name="plans"> The plans visible to the caller for this offer. The list may be empty. </param>
+        /// <returns> A new <see cref="Models.OfferPlanGroupProperties"/> instance for mocking. </returns>
+        public static OfferPlanGroupProperties OfferPlanGroupProperties(string publisherId = default, string offerId = default, IEnumerable<MarketplacePlanInfo> plans = default)
+        {
+            plans ??= new ChangeTrackingList<MarketplacePlanInfo>();
+
+            return new OfferPlanGroupProperties(publisherId, offerId, (plans ?? new ChangeTrackingList<MarketplacePlanInfo>()).ToList(), default);
+        }
+
+        /// <summary> A single Marketplace plan, enriched with the firewall mode it provisions. </summary>
+        /// <param name="planId"> The Marketplace plan identifier. </param>
+        /// <param name="displayName">
+        /// The plan display name shown to the customer. The property is omitted when the Marketplace
+        /// catalogue does not publish a display name for the plan.
+        /// </param>
+        /// <param name="description"> The plan description. </param>
+        /// <param name="firewallMode">
+        /// The firewall mode this plan provisions. The property is omitted when the plan cannot be
+        /// classified into exactly one mode, in which case the mode is left out rather than guessed.
+        /// </param>
+        /// <returns> A new <see cref="Models.MarketplacePlanInfo"/> instance for mocking. </returns>
+        public static MarketplacePlanInfo MarketplacePlanInfo(string planId = default, string displayName = default, string description = default, FirewallMode? firewallMode = default)
+        {
+            return new MarketplacePlanInfo(planId, displayName, description, firewallMode, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -683,20 +752,27 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="panETag"> panEtag info. </param>
         /// <param name="firewallSku"> Firewall SKU type, Default will be STANDARD. </param>
+        /// <param name="sessionDrainTimeoutInMinutes"> Time in minutes to keep serving existing traffic during scale-in or upgrade events before removing a firewall instance. Can only be set on PUT, not updatable via PATCH, Default will be 15. </param>
         /// <param name="networkProfile"> Network settings. </param>
         /// <param name="isPanoramaManaged"> Panorama Managed: Default is False. Default will be CloudSec managed. </param>
         /// <param name="isStrataCloudManaged"> Strata Cloud Managed: Default is False. Default will be CloudSec managed. </param>
         /// <param name="panoramaConfig"> Panorama Configuration. </param>
+        /// <param name="strataCloudManagerConfig"> Strata Cloud Manager Configuration, only applicable if Strata Cloud Manager is selected. </param>
+        /// <param name="firewallMode">
+        /// The firewall mode this resource provisions, derived by the service from the Marketplace plan.
+        /// This property is read-only: any caller-supplied value is discarded and replaced with the mode
+        /// derived from the plan. It is absent on firewalls stored before this property was introduced,
+        /// and a reader must treat an absent value as CNGFW.
+        /// </param>
         /// <param name="associatedRulestack"> Associated Rulestack. </param>
         /// <param name="dnsSettings"> DNS settings for Firewall. </param>
         /// <param name="frontEndSettings"> Frontend settings for Firewall. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="planData"> Billing plan information. </param>
         /// <param name="marketplaceDetails"> Marketplace details. </param>
-        /// <param name="cloudManagerName"> Strata Cloud Manager name which is intended to manage the policy for this firewall. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Ngfw.PaloAltoNetworksFirewallData"/> instance for mocking. </returns>
-        public static PaloAltoNetworksFirewallData PaloAltoNetworksFirewallData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? panETag, string firewallSku, FirewallNetworkProfile networkProfile, FirewallBooleanType? isPanoramaManaged, FirewallBooleanType? isStrataCloudManaged, FirewallPanoramaConfiguration panoramaConfig, RulestackDetails associatedRulestack, FirewallDnsSettings dnsSettings, IEnumerable<FirewallFrontendSetting> frontEndSettings, FirewallProvisioningState? provisioningState, FirewallBillingPlanInfo planData, PanFirewallMarketplaceDetails marketplaceDetails, string cloudManagerName = default, ManagedServiceIdentity identity = default)
+        public static PaloAltoNetworksFirewallData PaloAltoNetworksFirewallData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? panETag, string firewallSku, int? sessionDrainTimeoutInMinutes, FirewallNetworkProfile networkProfile, FirewallBooleanType? isPanoramaManaged, FirewallBooleanType? isStrataCloudManaged, FirewallPanoramaConfiguration panoramaConfig, StrataCloudManagerConfig strataCloudManagerConfig, FirewallMode? firewallMode, RulestackDetails associatedRulestack, FirewallDnsSettings dnsSettings, IEnumerable<FirewallFrontendSetting> frontEndSettings, FirewallProvisioningState? provisioningState = default, FirewallBillingPlanInfo planData = default, PanFirewallMarketplaceDetails marketplaceDetails = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -707,14 +783,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                panETag is null && firewallSku is null && networkProfile is null && isPanoramaManaged is null && isStrataCloudManaged is null && panoramaConfig is null && cloudManagerName is null && associatedRulestack is null && dnsSettings is null && frontEndSettings is null && provisioningState is null && planData is null && marketplaceDetails is null ? default : new FirewallDeploymentProperties(
+                panETag is null && firewallSku is null && sessionDrainTimeoutInMinutes is null && networkProfile is null && isPanoramaManaged is null && isStrataCloudManaged is null && panoramaConfig is null && strataCloudManagerConfig is null && firewallMode is null && associatedRulestack is null && dnsSettings is null && frontEndSettings is null && provisioningState is null && planData is null && marketplaceDetails is null ? default : new FirewallDeploymentProperties(
                     panETag,
                     firewallSku,
+                    sessionDrainTimeoutInMinutes,
                     networkProfile,
                     isPanoramaManaged,
                     isStrataCloudManaged,
                     panoramaConfig,
-                    cloudManagerName is null ? default : new StrataCloudManagerConfig(cloudManagerName, default),
+                    strataCloudManagerConfig,
+                    firewallMode,
                     associatedRulestack,
                     dnsSettings,
                     (frontEndSettings ?? new ChangeTrackingList<FirewallFrontendSetting>()).ToList(),
@@ -735,8 +813,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="egressNatIP"> Egress nat IP to use. </param>
         /// <param name="trustedRanges"> Non-RFC 1918 address. </param>
         /// <param name="privateSourceNatRulesDestination"> Array of ipv4 destination address for which source NAT is to be performed. </param>
+        /// <param name="outboundIdleTimeoutInMinutes"> Time in minutes an outbound source NAT session can stay inactive before termination, Default will be 4. </param>
+        /// <param name="outboundTcpReset"> Send a TCP reset when an inactive outbound source NAT session is terminated, Default will be Enabled. </param>
         /// <returns> A new <see cref="Models.FirewallNetworkProfile"/> instance for mocking. </returns>
-        public static FirewallNetworkProfile FirewallNetworkProfile(FirewallVnetConfiguration vnetConfiguration = default, FirewallVwanConfiguration vwanConfiguration = default, FirewallNetworkType networkType = default, IEnumerable<IPAddressInfo> publicIPs = default, AllowEgressNatType enableEgressNat = default, IEnumerable<IPAddressInfo> egressNatIP = default, IEnumerable<string> trustedRanges = default, IEnumerable<string> privateSourceNatRulesDestination = default)
+        public static FirewallNetworkProfile FirewallNetworkProfile(FirewallVnetConfiguration vnetConfiguration = default, FirewallVwanConfiguration vwanConfiguration = default, FirewallNetworkType networkType = default, IEnumerable<IPAddressInfo> publicIPs = default, AllowEgressNatType enableEgressNat = default, IEnumerable<IPAddressInfo> egressNatIP = default, IEnumerable<string> trustedRanges = default, IEnumerable<string> privateSourceNatRulesDestination = default, int? outboundIdleTimeoutInMinutes = default, FirewallTcpReset? outboundTcpReset = default)
         {
             publicIPs ??= new ChangeTrackingList<IPAddressInfo>();
             egressNatIP ??= new ChangeTrackingList<IPAddressInfo>();
@@ -752,6 +832,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 (egressNatIP ?? new ChangeTrackingList<IPAddressInfo>()).ToList(),
                 (trustedRanges ?? new ChangeTrackingList<string>()).ToList(),
                 (privateSourceNatRulesDestination ?? new ChangeTrackingList<string>()).ToList(),
+                outboundIdleTimeoutInMinutes,
+                outboundTcpReset,
                 default);
         }
 
@@ -826,6 +908,18 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 default);
         }
 
+        /// <summary> This field is only present if Strata Cloud Manager is managing the policy for this firewall. </summary>
+        /// <param name="cloudManagerName"> Strata Cloud Manager name which is intended to manage the policy for this firewall. </param>
+        /// <param name="scmLinkCode">
+        /// The Strata Cloud Manager link code supplied by the customer and validated through the
+        /// resolveStrataCloudManager provider action.
+        /// </param>
+        /// <returns> A new <see cref="Models.StrataCloudManagerConfig"/> instance for mocking. </returns>
+        public static StrataCloudManagerConfig StrataCloudManagerConfig(string cloudManagerName = default, string scmLinkCode = default)
+        {
+            return new StrataCloudManagerConfig(cloudManagerName, scmLinkCode, default);
+        }
+
         /// <summary> Associated rulestack details. </summary>
         /// <param name="resourceId"> Resource Id. </param>
         /// <param name="rulestackId"> Associated rulestack Id. </param>
@@ -853,10 +947,21 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="protocol"> Protocol Type. </param>
         /// <param name="frontendConfiguration"> Frontend configurations. </param>
         /// <param name="backendConfiguration"> Backend configurations. </param>
+        /// <param name="idleTimeoutInMinutes"> Time in minutes an inbound session can stay inactive before termination, Default will be 4. </param>
+        /// <param name="tcpReset"> Send a TCP reset when an inactive inbound session is terminated, Default will be Disabled. </param>
+        /// <param name="loadDistribution"> Hash algorithm used to distribute inbound traffic, Default will be a five-tuple hash. </param>
         /// <returns> A new <see cref="Models.FirewallFrontendSetting"/> instance for mocking. </returns>
-        public static FirewallFrontendSetting FirewallFrontendSetting(string name = default, FirewallProtocolType protocol = default, FirewallEndpointConfiguration frontendConfiguration = default, FirewallEndpointConfiguration backendConfiguration = default)
+        public static FirewallFrontendSetting FirewallFrontendSetting(string name = default, FirewallProtocolType protocol = default, FirewallEndpointConfiguration frontendConfiguration = default, FirewallEndpointConfiguration backendConfiguration = default, int? idleTimeoutInMinutes = default, FirewallTcpReset? tcpReset = default, FirewallLoadDistribution? loadDistribution = default)
         {
-            return new FirewallFrontendSetting(name, protocol, frontendConfiguration, backendConfiguration, default);
+            return new FirewallFrontendSetting(
+                name,
+                protocol,
+                frontendConfiguration,
+                backendConfiguration,
+                idleTimeoutInMinutes,
+                tcpReset,
+                loadDistribution,
+                default);
         }
 
         /// <summary> Endpoint Configuration for frontend and backend. </summary>
@@ -902,19 +1007,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new PaloAltoNetworksFirewallPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
+        /// <summary> The updatable properties of the FirewallResource. </summary>
         /// <param name="panETag"> panEtag info. </param>
         /// <param name="networkProfile"> Network settings. </param>
         /// <param name="isPanoramaManaged"> Panorama Managed: Default is False. Default will be CloudSec managed. </param>
         /// <param name="isStrataCloudManaged"> Strata Cloud Managed: Default is False. Default will be CloudSec managed. </param>
         /// <param name="panoramaConfig"> Panorama Configuration. </param>
-        /// <param name="cloudManagerName"> Strata Cloud Manager name which is intended to manage the policy for this firewall. </param>
+        /// <param name="strataCloudManagerConfig"> Strata Cloud Manager Configuration, only applicable if Strata Cloud Manager is selected. </param>
         /// <param name="associatedRulestack"> Associated Rulestack. </param>
         /// <param name="dnsSettings"> DNS settings for Firewall. </param>
         /// <param name="frontEndSettings"> Frontend settings for Firewall. </param>
         /// <param name="planData"> Billing plan information. </param>
         /// <param name="marketplaceDetails"> Marketplace details. </param>
         /// <returns> A new <see cref="Models.FirewallUpdateProperties"/> instance for mocking. </returns>
-        public static FirewallUpdateProperties FirewallUpdateProperties(ETag? panETag = default, FirewallNetworkProfile networkProfile = default, FirewallBooleanType? isPanoramaManaged = default, FirewallBooleanType? isStrataCloudManaged = default, FirewallPanoramaConfiguration panoramaConfig = default, string cloudManagerName = default, RulestackDetails associatedRulestack = default, FirewallDnsSettings dnsSettings = default, IEnumerable<FirewallFrontendSetting> frontEndSettings = default, FirewallBillingPlanInfo planData = default, PanFirewallMarketplaceDetails marketplaceDetails = default)
+        public static FirewallUpdateProperties FirewallUpdateProperties(ETag? panETag = default, FirewallNetworkProfile networkProfile = default, FirewallBooleanType? isPanoramaManaged = default, FirewallBooleanType? isStrataCloudManaged = default, FirewallPanoramaConfiguration panoramaConfig = default, StrataCloudManagerConfig strataCloudManagerConfig = default, RulestackDetails associatedRulestack = default, FirewallDnsSettings dnsSettings = default, IEnumerable<FirewallFrontendSetting> frontEndSettings = default, FirewallBillingPlanInfo planData = default, PanFirewallMarketplaceDetails marketplaceDetails = default)
         {
             frontEndSettings ??= new ChangeTrackingList<FirewallFrontendSetting>();
 
@@ -924,7 +1030,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 isPanoramaManaged,
                 isStrataCloudManaged,
                 panoramaConfig,
-                cloudManagerName is null ? default : new StrataCloudManagerConfig(cloudManagerName, default),
+                strataCloudManagerConfig,
                 associatedRulestack,
                 dnsSettings,
                 (frontEndSettings ?? new ChangeTrackingList<FirewallFrontendSetting>()).ToList(),
@@ -1386,11 +1492,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 panETag is null && networkProfile is null && isPanoramaManaged is null && isStrataCloudManaged is null && panoramaConfig is null && cloudManagerName is null && associatedRulestack is null && dnsSettings is null && frontEndSettings is null && provisioningState is null && planData is null && marketplaceDetails is null ? default : new FirewallDeploymentProperties(
                     panETag,
                     default,
+                    default,
                     networkProfile,
                     isPanoramaManaged,
                     isStrataCloudManaged,
                     panoramaConfig,
-                    cloudManagerName is null ? default : new StrataCloudManagerConfig(cloudManagerName, default),
+                    cloudManagerName is null ? default : new StrataCloudManagerConfig(cloudManagerName, default, default),
+                    default,
                     associatedRulestack,
                     dnsSettings,
                     (frontEndSettings ?? new ChangeTrackingList<FirewallFrontendSetting>()).ToList(),
@@ -1399,6 +1507,84 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     marketplaceDetails,
                     default),
                 identity,
+                default);
+        }
+
+        /// <summary> Network settings for Firewall. </summary>
+        /// <param name="vnetConfiguration"> Vnet configurations. </param>
+        /// <param name="vwanConfiguration"> Vwan configurations. </param>
+        /// <param name="networkType"> vnet or vwan, cannot be updated. </param>
+        /// <param name="publicIPs"> List of IPs associated with the Firewall. </param>
+        /// <param name="enableEgressNat"> Enable egress NAT, enabled by default. </param>
+        /// <param name="egressNatIP"> Egress nat IP to use. </param>
+        /// <param name="trustedRanges"> Non-RFC 1918 address. </param>
+        /// <param name="privateSourceNatRulesDestination"> Array of ipv4 destination address for which source NAT is to be performed. </param>
+        /// <returns> A new <see cref="Models.FirewallNetworkProfile"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FirewallNetworkProfile FirewallNetworkProfile(FirewallVnetConfiguration vnetConfiguration, FirewallVwanConfiguration vwanConfiguration, FirewallNetworkType networkType, IEnumerable<IPAddressInfo> publicIPs, AllowEgressNatType enableEgressNat, IEnumerable<IPAddressInfo> egressNatIP, IEnumerable<string> trustedRanges, IEnumerable<string> privateSourceNatRulesDestination)
+        {
+            return new FirewallNetworkProfile(
+                vnetConfiguration,
+                vwanConfiguration,
+                networkType,
+                (publicIPs ?? new ChangeTrackingList<IPAddressInfo>()).ToList(),
+                enableEgressNat,
+                (egressNatIP ?? new ChangeTrackingList<IPAddressInfo>()).ToList(),
+                (trustedRanges ?? new ChangeTrackingList<string>()).ToList(),
+                (privateSourceNatRulesDestination ?? new ChangeTrackingList<string>()).ToList(),
+                default,
+                default,
+                default);
+        }
+
+        /// <summary> Frontend setting for Firewall. </summary>
+        /// <param name="name"> Settings name. </param>
+        /// <param name="protocol"> Protocol Type. </param>
+        /// <param name="frontendConfiguration"> Frontend configurations. </param>
+        /// <param name="backendConfiguration"> Backend configurations. </param>
+        /// <returns> A new <see cref="Models.FirewallFrontendSetting"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FirewallFrontendSetting FirewallFrontendSetting(string name, FirewallProtocolType protocol, FirewallEndpointConfiguration frontendConfiguration, FirewallEndpointConfiguration backendConfiguration)
+        {
+            return new FirewallFrontendSetting(
+                name,
+                protocol,
+                frontendConfiguration,
+                backendConfiguration,
+                default,
+                default,
+                default,
+                default);
+        }
+
+        /// <summary> The updatable properties of the FirewallResource. </summary>
+        /// <param name="panETag"> panEtag info. </param>
+        /// <param name="networkProfile"> Network settings. </param>
+        /// <param name="isPanoramaManaged"> Panorama Managed: Default is False. Default will be CloudSec managed. </param>
+        /// <param name="isStrataCloudManaged"> Strata Cloud Managed: Default is False. Default will be CloudSec managed. </param>
+        /// <param name="panoramaConfig"> Panorama Configuration. </param>
+        /// <param name="cloudManagerName"> Strata Cloud Manager name which is intended to manage the policy for this firewall. </param>
+        /// <param name="associatedRulestack"> Associated Rulestack. </param>
+        /// <param name="dnsSettings"> DNS settings for Firewall. </param>
+        /// <param name="frontEndSettings"> Frontend settings for Firewall. </param>
+        /// <param name="planData"> Billing plan information. </param>
+        /// <param name="marketplaceDetails"> Marketplace details. </param>
+        /// <returns> A new <see cref="Models.FirewallUpdateProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FirewallUpdateProperties FirewallUpdateProperties(ETag? panETag, FirewallNetworkProfile networkProfile, FirewallBooleanType? isPanoramaManaged, FirewallBooleanType? isStrataCloudManaged, FirewallPanoramaConfiguration panoramaConfig, string cloudManagerName, RulestackDetails associatedRulestack, FirewallDnsSettings dnsSettings, IEnumerable<FirewallFrontendSetting> frontEndSettings, FirewallBillingPlanInfo planData, PanFirewallMarketplaceDetails marketplaceDetails)
+        {
+            return new FirewallUpdateProperties(
+                panETag,
+                networkProfile,
+                isPanoramaManaged,
+                isStrataCloudManaged,
+                panoramaConfig,
+                cloudManagerName is null ? default : new StrataCloudManagerConfig(cloudManagerName, default, default),
+                associatedRulestack,
+                dnsSettings,
+                (frontEndSettings ?? new ChangeTrackingList<FirewallFrontendSetting>()).ToList(),
+                planData,
+                marketplaceDetails,
                 default);
         }
     }

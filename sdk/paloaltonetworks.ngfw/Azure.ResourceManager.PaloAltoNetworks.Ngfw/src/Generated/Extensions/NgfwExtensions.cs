@@ -81,6 +81,24 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="OfferPlanGroupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwArmClient.GetOfferPlanGroupResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="OfferPlanGroupResource"/> object. </returns>
+        public static OfferPlanGroupResource GetOfferPlanGroupResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockablePaloAltoNetworksNgfwArmClient(client).GetOfferPlanGroupResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="GlobalRulestackResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -443,6 +461,61 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
+        /// Gets a collection of OfferPlanGroups in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwSubscriptionResource.GetOfferPlanGroups()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of OfferPlanGroups and their operations over a OfferPlanGroupResource. </returns>
+        public static OfferPlanGroupCollection GetOfferPlanGroups(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockablePaloAltoNetworksNgfwSubscriptionResource(subscriptionResource).GetOfferPlanGroups();
+        }
+
+        /// <summary>
+        /// Get a single Marketplace offer and the plans visible to the subscription.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwSubscriptionResource.GetOfferPlanGroupAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="offerName"> The Marketplace offer identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<OfferPlanGroupResource>> GetOfferPlanGroupAsync(this SubscriptionResource subscriptionResource, string offerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockablePaloAltoNetworksNgfwSubscriptionResource(subscriptionResource).GetOfferPlanGroupAsync(offerName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a single Marketplace offer and the plans visible to the subscription.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwSubscriptionResource.GetOfferPlanGroup(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="offerName"> The Marketplace offer identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<OfferPlanGroupResource> GetOfferPlanGroup(this SubscriptionResource subscriptionResource, string offerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockablePaloAltoNetworksNgfwSubscriptionResource(subscriptionResource).GetOfferPlanGroup(offerName, cancellationToken);
+        }
+
+        /// <summary>
         /// List FirewallResource resources by subscription ID
         /// <item>
         /// <term> Mocking. </term>
@@ -512,6 +585,44 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockablePaloAltoNetworksNgfwSubscriptionResource(subscriptionResource).GetLocalRulestacks(cancellationToken);
+        }
+
+        /// <summary>
+        /// Resolve a Strata Cloud Manager link code into the Strata Cloud Manager instance it is bound to,
+        /// so the instance can be shown to the customer before it is committed onto a firewall.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwSubscriptionResource.ResolveStrataCloudManagerAsync(ScmLinkCodeContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static async Task<Response<StrataCloudManagerInstance>> ResolveStrataCloudManagerAsync(this SubscriptionResource subscriptionResource, ScmLinkCodeContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockablePaloAltoNetworksNgfwSubscriptionResource(subscriptionResource).ResolveStrataCloudManagerAsync(content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Resolve a Strata Cloud Manager link code into the Strata Cloud Manager instance it is bound to,
+        /// so the instance can be shown to the customer before it is committed onto a firewall.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwSubscriptionResource.ResolveStrataCloudManager(ScmLinkCodeContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static Response<StrataCloudManagerInstance> ResolveStrataCloudManager(this SubscriptionResource subscriptionResource, ScmLinkCodeContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockablePaloAltoNetworksNgfwSubscriptionResource(subscriptionResource).ResolveStrataCloudManager(content, cancellationToken);
         }
 
         /// <summary>

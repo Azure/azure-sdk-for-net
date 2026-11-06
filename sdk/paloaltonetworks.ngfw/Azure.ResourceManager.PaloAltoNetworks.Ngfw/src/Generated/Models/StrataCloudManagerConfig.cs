@@ -12,7 +12,7 @@ using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     /// <summary> This field is only present if Strata Cloud Manager is managing the policy for this firewall. </summary>
-    internal partial class StrataCloudManagerConfig
+    public partial class StrataCloudManagerConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -29,14 +29,25 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 
         /// <summary> Initializes a new instance of <see cref="StrataCloudManagerConfig"/>. </summary>
         /// <param name="cloudManagerName"> Strata Cloud Manager name which is intended to manage the policy for this firewall. </param>
+        /// <param name="scmLinkCode">
+        /// The Strata Cloud Manager link code supplied by the customer and validated through the
+        /// resolveStrataCloudManager provider action.
+        /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StrataCloudManagerConfig(string cloudManagerName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StrataCloudManagerConfig(string cloudManagerName, string scmLinkCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CloudManagerName = cloudManagerName;
+            ScmLinkCode = scmLinkCode;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Strata Cloud Manager name which is intended to manage the policy for this firewall. </summary>
         public string CloudManagerName { get; set; }
+
+        /// <summary>
+        /// The Strata Cloud Manager link code supplied by the customer and validated through the
+        /// resolveStrataCloudManager provider action.
+        /// </summary>
+        public string ScmLinkCode { get; set; }
     }
 }

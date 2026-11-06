@@ -44,8 +44,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="egressNatIP"> Egress nat IP to use. </param>
         /// <param name="trustedRanges"> Non-RFC 1918 address. </param>
         /// <param name="privateSourceNatRulesDestination"> Array of ipv4 destination address for which source NAT is to be performed. </param>
+        /// <param name="outboundIdleTimeoutInMinutes"> Time in minutes an outbound source NAT session can stay inactive before termination, Default will be 4. </param>
+        /// <param name="outboundTcpReset"> Send a TCP reset when an inactive outbound source NAT session is terminated, Default will be Enabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FirewallNetworkProfile(FirewallVnetConfiguration vnetConfiguration, FirewallVwanConfiguration vwanConfiguration, FirewallNetworkType networkType, IList<IPAddressInfo> publicIPs, AllowEgressNatType enableEgressNat, IList<IPAddressInfo> egressNatIP, IList<string> trustedRanges, IList<string> privateSourceNatRulesDestination, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FirewallNetworkProfile(FirewallVnetConfiguration vnetConfiguration, FirewallVwanConfiguration vwanConfiguration, FirewallNetworkType networkType, IList<IPAddressInfo> publicIPs, AllowEgressNatType enableEgressNat, IList<IPAddressInfo> egressNatIP, IList<string> trustedRanges, IList<string> privateSourceNatRulesDestination, int? outboundIdleTimeoutInMinutes, FirewallTcpReset? outboundTcpReset, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VnetConfiguration = vnetConfiguration;
             VwanConfiguration = vwanConfiguration;
@@ -55,6 +57,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             EgressNatIP = egressNatIP;
             TrustedRanges = trustedRanges;
             PrivateSourceNatRulesDestination = privateSourceNatRulesDestination;
+            OutboundIdleTimeoutInMinutes = outboundIdleTimeoutInMinutes;
+            OutboundTcpReset = outboundTcpReset;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -81,5 +85,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 
         /// <summary> Array of ipv4 destination address for which source NAT is to be performed. </summary>
         public IList<string> PrivateSourceNatRulesDestination { get; }
+
+        /// <summary> Time in minutes an outbound source NAT session can stay inactive before termination, Default will be 4. </summary>
+        public int? OutboundIdleTimeoutInMinutes { get; set; }
+
+        /// <summary> Send a TCP reset when an inactive outbound source NAT session is terminated, Default will be Enabled. </summary>
+        public FirewallTcpReset? OutboundTcpReset { get; set; }
     }
 }

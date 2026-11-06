@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         internal PaloAltoNetworksFirewallResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _firewallsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", ResourceType.Namespace, Diagnostics);
-            _firewallsRestClient = new Firewalls(_firewallsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("PaloAltoNetworks.Cloudngfw/firewalls", out string firewallsApiVersionOverride) ? firewallsApiVersionOverride : "2026-07-29-preview");
+            _firewallsRestClient = new Firewalls(_firewallsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("PaloAltoNetworks.Cloudngfw/firewalls", out string firewallsApiVersionOverride) ? firewallsApiVersionOverride : "2026-09-25-preview");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-29-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-29-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-29-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-29-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-29-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-29-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-29-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-29-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-29-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-29-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-29-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -645,7 +645,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-29-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -694,7 +694,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-29-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -738,7 +738,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-29-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

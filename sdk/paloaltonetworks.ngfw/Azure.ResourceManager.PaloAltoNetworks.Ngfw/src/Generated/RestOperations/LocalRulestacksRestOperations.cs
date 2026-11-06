@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/", false);
             uri.AppendPath(localRulestackName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-29-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-09-25-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/", false);
             uri.AppendPath(localRulestackName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-29-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-09-25-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/", false);
             uri.AppendPath(localRulestackName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-29-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-09-25-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/", false);
             uri.AppendPath(localRulestackName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-29-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-09-25-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/localRulestacks", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-29-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-09-25-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-07-29-preview");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-09-25-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/localRulestacks", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-29-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-09-25-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-07-29-preview");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-09-25-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/", false);
             uri.AppendPath(localRulestackName, true);
             uri.AppendPath("/commit", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-29-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-09-25-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/", false);
             uri.AppendPath(localRulestackName, true);
             uri.AppendPath("/getChangeLog", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-29-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-09-25-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/", false);
             uri.AppendPath(localRulestackName, true);
             uri.AppendPath("/getSupportInfo", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-29-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-09-25-preview", true);
             if (email != null)
             {
                 uri.AppendQuery("email", email, true);
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/", false);
             uri.AppendPath(localRulestackName, true);
             uri.AppendPath("/listAdvancedSecurityObjects", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-29-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-09-25-preview", true);
             if (skip != null)
             {
                 uri.AppendQuery("skip", skip, true);
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/", false);
             uri.AppendPath(localRulestackName, true);
             uri.AppendPath("/listAppIds", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-29-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-09-25-preview", true);
             if (appIdVersion != null)
             {
                 uri.AppendQuery("appIdVersion", appIdVersion, true);
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-07-29-preview");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-09-25-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/", false);
             uri.AppendPath(localRulestackName, true);
             uri.AppendPath("/listCountries", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-29-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-09-25-preview", true);
             if (skip != null)
             {
                 uri.AppendQuery("skip", skip, true);
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-07-29-preview");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-09-25-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/", false);
             uri.AppendPath(localRulestackName, true);
             uri.AppendPath("/listFirewalls", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-29-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-09-25-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/", false);
             uri.AppendPath(localRulestackName, true);
             uri.AppendPath("/listPredefinedUrlCategories", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-29-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-09-25-preview", true);
             if (skip != null)
             {
                 uri.AppendQuery("skip", skip, true);
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-07-29-preview");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-09-25-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/", false);
             uri.AppendPath(localRulestackName, true);
             uri.AppendPath("/listSecurityServices", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-29-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-09-25-preview", true);
             if (skip != null)
             {
                 uri.AppendQuery("skip", skip, true);
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/", false);
             uri.AppendPath(localRulestackName, true);
             uri.AppendPath("/revert", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-29-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-09-25-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
