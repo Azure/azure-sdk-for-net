@@ -114,6 +114,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             BackupPolicyType backupPolicyType = default;
             BackupPolicyMigrationState migrationState = default;
+            DateTimeOffset? backupRetentionLockExpiresOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,12 +132,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     migrationState = BackupPolicyMigrationState.DeserializeBackupPolicyMigrationState(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("backupRetentionLockExpirationTimestamp"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    backupRetentionLockExpiresOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new UnknownBackupPolicy(backupPolicyType, migrationState, additionalBinaryDataProperties);
+            return new UnknownBackupPolicy(backupPolicyType, migrationState, backupRetentionLockExpiresOn, additionalBinaryDataProperties);
         }
     }
 }

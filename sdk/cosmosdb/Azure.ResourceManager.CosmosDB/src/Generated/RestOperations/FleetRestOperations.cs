@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DocumentDB/fleets/", false);
             uri.AppendPath(fleetName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DocumentDB/fleets/", false);
             uri.AppendPath(fleetName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DocumentDB/fleets/", false);
             uri.AppendPath(fleetName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DocumentDB/fleets/", false);
             uri.AppendPath(fleetName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DocumentDB/fleets", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-04-01-preview");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-07-15");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.DocumentDB/fleets", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-04-01-preview");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-07-15");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

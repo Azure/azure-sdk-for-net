@@ -17,8 +17,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         private readonly string _value;
         private const string Continuous7DaysValue = "Continuous7Days";
         private const string Continuous30DaysValue = "Continuous30Days";
-        /// <summary> Continuous 35 Days backup tier. </summary>
-        private const string Continuous35DaysValue = "Continuous35Days";
 
         /// <summary> Initializes a new instance of <see cref="ContinuousTier"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -35,9 +33,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Gets the Continuous30Days. </summary>
         public static ContinuousTier Continuous30Days { get; } = new ContinuousTier(Continuous30DaysValue);
-
-        /// <summary> Continuous 35 Days backup tier. </summary>
-        public static ContinuousTier Continuous35Days { get; } = new ContinuousTier(Continuous35DaysValue);
 
         /// <summary> Determines if two <see cref="ContinuousTier"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
