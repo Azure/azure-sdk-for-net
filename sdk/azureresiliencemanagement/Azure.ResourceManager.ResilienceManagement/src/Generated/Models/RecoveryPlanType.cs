@@ -19,6 +19,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         private const string RegionalValue = "Regional";
         /// <summary> A recovery orchestration plan for zonal resiliency. </summary>
         private const string ZonalValue = "Zonal";
+        /// <summary> A recovery orchestration plan for cyber recovery into a clean-room environment. </summary>
+        private const string CyberRecoveryValue = "CyberRecovery";
 
         /// <summary> Initializes a new instance of <see cref="RecoveryPlanType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -35,6 +37,9 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> A recovery orchestration plan for zonal resiliency. </summary>
         public static RecoveryPlanType Zonal { get; } = new RecoveryPlanType(ZonalValue);
+
+        /// <summary> A recovery orchestration plan for cyber recovery into a clean-room environment. </summary>
+        public static RecoveryPlanType CyberRecovery { get; } = new RecoveryPlanType(CyberRecoveryValue);
 
         /// <summary> Determines if two <see cref="RecoveryPlanType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

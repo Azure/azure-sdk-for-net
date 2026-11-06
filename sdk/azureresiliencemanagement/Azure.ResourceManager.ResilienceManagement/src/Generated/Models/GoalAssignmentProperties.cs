@@ -28,13 +28,17 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="GoalAssignmentProperties"/>. </summary>
         /// <param name="isZonalResiliencyRequired"> Whether zonal resiliency is required for this goal assignment. </param>
+        /// <param name="requireRegionalResiliency"> Whether regional resiliency is required for this goal assignment. </param>
+        /// <param name="regionalObjectives"> Recovery objectives targeted for regional resiliency. </param>
         /// <param name="serviceLevelResources"> List of service level resources. </param>
         /// <param name="provisioningState"> The provisioning state of the goal assignment. </param>
         /// <param name="errorDetails"> Details of any errors encountered during the operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GoalAssignmentProperties(bool isZonalResiliencyRequired, IList<ServiceLevelTarget> serviceLevelResources, ResilienceManagementProvisioningState? provisioningState, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GoalAssignmentProperties(bool isZonalResiliencyRequired, bool? requireRegionalResiliency, RegionalObjectives regionalObjectives, IList<ServiceLevelTarget> serviceLevelResources, ResilienceManagementProvisioningState? provisioningState, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsZonalResiliencyRequired = isZonalResiliencyRequired;
+            RequireRegionalResiliency = requireRegionalResiliency;
+            RegionalObjectives = regionalObjectives;
             ServiceLevelResources = serviceLevelResources;
             ProvisioningState = provisioningState;
             ErrorDetails = errorDetails;
@@ -43,6 +47,12 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Whether zonal resiliency is required for this goal assignment. </summary>
         public bool IsZonalResiliencyRequired { get; set; }
+
+        /// <summary> Whether regional resiliency is required for this goal assignment. </summary>
+        public bool? RequireRegionalResiliency { get; set; }
+
+        /// <summary> Recovery objectives targeted for regional resiliency. </summary>
+        public RegionalObjectives RegionalObjectives { get; set; }
 
         /// <summary> List of service level resources. </summary>
         public IList<ServiceLevelTarget> ServiceLevelResources { get; }

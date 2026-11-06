@@ -40,14 +40,16 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="description"> A description of the recovery orchestration group. </param>
         /// <param name="preActions"> Pre-actions for the recovery orchestration group. </param>
         /// <param name="postActions"> Post-actions for the recovery orchestration group. </param>
+        /// <param name="resiliencyGroupProperties"> Resiliency-specific properties for the recovery orchestration group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecoveryGroupProperties(string groupUniqueId, int orderId, string description, IList<RecoveryGroupBaseAction> preActions, IList<RecoveryGroupBaseAction> postActions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecoveryGroupProperties(string groupUniqueId, int orderId, string description, IList<RecoveryGroupBaseAction> preActions, IList<RecoveryGroupBaseAction> postActions, RecoveryGroupResiliencyProperties resiliencyGroupProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             GroupUniqueId = groupUniqueId;
             OrderId = orderId;
             Description = description;
             PreActions = preActions;
             PostActions = postActions;
+            ResiliencyGroupProperties = resiliencyGroupProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -65,5 +67,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Post-actions for the recovery orchestration group. </summary>
         public IList<RecoveryGroupBaseAction> PostActions { get; }
+
+        /// <summary> Resiliency-specific properties for the recovery orchestration group. </summary>
+        public RecoveryGroupResiliencyProperties ResiliencyGroupProperties { get; set; }
     }
 }
