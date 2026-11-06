@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Policies = policies;
             InterventionPoints = interventionPoints;
             Tools = new ChangeTrackingDictionary<string, RaiAcsTool>();
+            Annotators = new ChangeTrackingDictionary<string, RaiAcsAnnotatorConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RaiAcsManifest"/>. </summary>
@@ -49,9 +50,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// tool selector is configured. A tool selector requires a non-empty catalog, and an unknown
         /// selected key fails closed.
         /// </param>
-        /// <param name="annotators"> Standard Agent Control Specification annotator dispatch is disabled; when present, this object must be empty. </param>
+        /// <param name="annotators"> Optional annotator declarations keyed by name. Omitted or empty maps request no annotator declarations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RaiAcsManifest(string agentControlSpecificationVersion, IDictionary<string, BinaryData> metadata, IDictionary<string, RaiAcsRegoPolicy> policies, RaiAcsInterventionPoints interventionPoints, IDictionary<string, RaiAcsTool> tools, RaiAcsEmptyObject annotators, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RaiAcsManifest(string agentControlSpecificationVersion, IDictionary<string, BinaryData> metadata, IDictionary<string, RaiAcsRegoPolicy> policies, RaiAcsInterventionPoints interventionPoints, IDictionary<string, RaiAcsTool> tools, IDictionary<string, RaiAcsAnnotatorConfiguration> annotators, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AgentControlSpecificationVersion = agentControlSpecificationVersion;
             Metadata = metadata;
@@ -111,8 +112,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         [WirePath("tools")]
         public IDictionary<string, RaiAcsTool> Tools { get; }
 
-        /// <summary> Standard Agent Control Specification annotator dispatch is disabled; when present, this object must be empty. </summary>
+        /// <summary> Optional annotator declarations keyed by name. Omitted or empty maps request no annotator declarations. </summary>
         [WirePath("annotators")]
-        public RaiAcsEmptyObject Annotators { get; set; }
+        public IDictionary<string, RaiAcsAnnotatorConfiguration> Annotators { get; }
     }
 }
