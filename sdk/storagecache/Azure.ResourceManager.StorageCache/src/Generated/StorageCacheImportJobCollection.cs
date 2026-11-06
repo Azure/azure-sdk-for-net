@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _importJobsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importJobName, StorageCacheImportJobData.ToRequestContent(data), context);
+                using HttpMessage message = _importJobsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importJobName, StorageCacheImportJobData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageCacheArmOperation<StorageCacheImportJobResource> operation = new StorageCacheArmOperation<StorageCacheImportJobResource>(
                     new StorageCacheImportJobResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _importJobsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importJobName, StorageCacheImportJobData.ToRequestContent(data), context);
+                using HttpMessage message = _importJobsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importJobName, StorageCacheImportJobData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageCacheArmOperation<StorageCacheImportJobResource> operation = new StorageCacheArmOperation<StorageCacheImportJobResource>(
                     new StorageCacheImportJobResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _importJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importJobName, context);
+                using HttpMessage message = _importJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importJobName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<StorageCacheImportJobData> response = Response.FromValue(StorageCacheImportJobData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _importJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importJobName, context);
+                using HttpMessage message = _importJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importJobName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<StorageCacheImportJobData> response = Response.FromValue(StorageCacheImportJobData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _importJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importJobName, context);
+                using HttpMessage message = _importJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importJobName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<StorageCacheImportJobData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _importJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importJobName, context);
+                using HttpMessage message = _importJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importJobName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<StorageCacheImportJobData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _importJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importJobName, context);
+                using HttpMessage message = _importJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importJobName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<StorageCacheImportJobData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _importJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importJobName, context);
+                using HttpMessage message = _importJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, importJobName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<StorageCacheImportJobData> response = default;

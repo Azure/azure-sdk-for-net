@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentSpacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _agentSpacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AgentSpaceData> response = Response.FromValue(AgentSpaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentSpacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _agentSpacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AgentSpaceData> response = Response.FromValue(AgentSpaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentSpacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AgentSpacePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _agentSpacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AgentSpacePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SreAgentArmOperation<AgentSpaceResource> operation = new SreAgentArmOperation<AgentSpaceResource>(
                     new AgentSpaceResourceOperationSource(Client),
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentSpacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AgentSpacePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _agentSpacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AgentSpacePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SreAgentArmOperation<AgentSpaceResource> operation = new SreAgentArmOperation<AgentSpaceResource>(
                     new AgentSpaceResourceOperationSource(Client),
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentSpacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _agentSpacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SreAgentArmOperation operation = new SreAgentArmOperation(_agentSpacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentSpacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _agentSpacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SreAgentArmOperation operation = new SreAgentArmOperation(_agentSpacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentSpacesConnectorsRestClient.CreateGetAllSecretsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _agentSpacesConnectorsRestClient.CreateGetAllSecretsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AgentSpaceConnectorList> response = Response.FromValue(AgentSpaceConnectorList.FromResponse(result), result);
                 if (response.Value == null)
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentSpacesConnectorsRestClient.CreateGetAllSecretsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _agentSpacesConnectorsRestClient.CreateGetAllSecretsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AgentSpaceConnectorList> response = Response.FromValue(AgentSpaceConnectorList.FromResponse(result), result);
                 if (response.Value == null)
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _agentSpacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _agentSpacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<AgentSpaceData> response = Response.FromValue(AgentSpaceData.FromResponse(result), result);
                     return Response.FromValue(new AgentSpaceResource(Client, response.Value), response.GetRawResponse());
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _agentSpacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _agentSpacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<AgentSpaceData> response = Response.FromValue(AgentSpaceData.FromResponse(result), result);
                     return Response.FromValue(new AgentSpaceResource(Client, response.Value), response.GetRawResponse());
@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _agentSpacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _agentSpacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<AgentSpaceData> response = Response.FromValue(AgentSpaceData.FromResponse(result), result);
                     return Response.FromValue(new AgentSpaceResource(Client, response.Value), response.GetRawResponse());
@@ -665,7 +665,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _agentSpacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _agentSpacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<AgentSpaceData> response = Response.FromValue(AgentSpaceData.FromResponse(result), result);
                     return Response.FromValue(new AgentSpaceResource(Client, response.Value), response.GetRawResponse());
@@ -707,7 +707,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _agentSpacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _agentSpacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<AgentSpaceData> response = Response.FromValue(AgentSpaceData.FromResponse(result), result);
                     return Response.FromValue(new AgentSpaceResource(Client, response.Value), response.GetRawResponse());
@@ -753,7 +753,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _agentSpacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _agentSpacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<AgentSpaceData> response = Response.FromValue(AgentSpaceData.FromResponse(result), result);
                     return Response.FromValue(new AgentSpaceResource(Client, response.Value), response.GetRawResponse());

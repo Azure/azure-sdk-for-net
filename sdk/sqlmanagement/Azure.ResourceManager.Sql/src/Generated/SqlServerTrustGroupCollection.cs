@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverTrustGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, serverTrustGroupName, SqlServerTrustGroupData.ToRequestContent(data), context);
+                using HttpMessage message = _serverTrustGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, serverTrustGroupName, SqlServerTrustGroupData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation<SqlServerTrustGroupResource> operation = new SqlArmOperation<SqlServerTrustGroupResource>(
                     new SqlServerTrustGroupResourceOperationSource(Client),
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverTrustGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, serverTrustGroupName, SqlServerTrustGroupData.ToRequestContent(data), context);
+                using HttpMessage message = _serverTrustGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, serverTrustGroupName, SqlServerTrustGroupData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation<SqlServerTrustGroupResource> operation = new SqlArmOperation<SqlServerTrustGroupResource>(
                     new SqlServerTrustGroupResourceOperationSource(Client),
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverTrustGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, serverTrustGroupName, context);
+                using HttpMessage message = _serverTrustGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, serverTrustGroupName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SqlServerTrustGroupData> response = Response.FromValue(SqlServerTrustGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverTrustGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, serverTrustGroupName, context);
+                using HttpMessage message = _serverTrustGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, serverTrustGroupName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SqlServerTrustGroupData> response = Response.FromValue(SqlServerTrustGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverTrustGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, serverTrustGroupName, context);
+                using HttpMessage message = _serverTrustGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, serverTrustGroupName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SqlServerTrustGroupData> response = default;
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverTrustGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, serverTrustGroupName, context);
+                using HttpMessage message = _serverTrustGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, serverTrustGroupName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SqlServerTrustGroupData> response = default;
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverTrustGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, serverTrustGroupName, context);
+                using HttpMessage message = _serverTrustGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, serverTrustGroupName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SqlServerTrustGroupData> response = default;
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverTrustGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, serverTrustGroupName, context);
+                using HttpMessage message = _serverTrustGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, serverTrustGroupName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SqlServerTrustGroupData> response = default;

@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _amlFilesystemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _amlFilesystemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AmlFileSystemData> response = Response.FromValue(AmlFileSystemData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _amlFilesystemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _amlFilesystemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AmlFileSystemData> response = Response.FromValue(AmlFileSystemData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _amlFilesystemsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, AmlFileSystemPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _amlFilesystemsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, AmlFileSystemPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageCacheArmOperation<AmlFileSystemResource> operation = new StorageCacheArmOperation<AmlFileSystemResource>(
                     new AmlFileSystemResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _amlFilesystemsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, AmlFileSystemPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _amlFilesystemsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, AmlFileSystemPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageCacheArmOperation<AmlFileSystemResource> operation = new StorageCacheArmOperation<AmlFileSystemResource>(
                     new AmlFileSystemResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _amlFilesystemsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _amlFilesystemsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageCacheArmOperation operation = new StorageCacheArmOperation(_amlFilesystemsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _amlFilesystemsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _amlFilesystemsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageCacheArmOperation operation = new StorageCacheArmOperation(_amlFilesystemsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _amlFilesystemsRestClient.CreateArchiveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, AmlFileSystemArchiveContent.ToRequestContent(content), context);
+                using HttpMessage message = _amlFilesystemsRestClient.CreateArchiveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, AmlFileSystemArchiveContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _amlFilesystemsRestClient.CreateArchiveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, AmlFileSystemArchiveContent.ToRequestContent(content), context);
+                using HttpMessage message = _amlFilesystemsRestClient.CreateArchiveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, AmlFileSystemArchiveContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _amlFilesystemsRestClient.CreateCancelArchiveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _amlFilesystemsRestClient.CreateCancelArchiveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _amlFilesystemsRestClient.CreateCancelArchiveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _amlFilesystemsRestClient.CreateCancelArchiveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.StorageCache
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _amlFilesystemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _amlFilesystemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<AmlFileSystemData> response = Response.FromValue(AmlFileSystemData.FromResponse(result), result);
                     return Response.FromValue(new AmlFileSystemResource(Client, response.Value), response.GetRawResponse());
@@ -650,7 +650,7 @@ namespace Azure.ResourceManager.StorageCache
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _amlFilesystemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _amlFilesystemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<AmlFileSystemData> response = Response.FromValue(AmlFileSystemData.FromResponse(result), result);
                     return Response.FromValue(new AmlFileSystemResource(Client, response.Value), response.GetRawResponse());
@@ -696,7 +696,7 @@ namespace Azure.ResourceManager.StorageCache
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _amlFilesystemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _amlFilesystemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<AmlFileSystemData> response = Response.FromValue(AmlFileSystemData.FromResponse(result), result);
                     return Response.FromValue(new AmlFileSystemResource(Client, response.Value), response.GetRawResponse());
@@ -738,7 +738,7 @@ namespace Azure.ResourceManager.StorageCache
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _amlFilesystemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _amlFilesystemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<AmlFileSystemData> response = Response.FromValue(AmlFileSystemData.FromResponse(result), result);
                     return Response.FromValue(new AmlFileSystemResource(Client, response.Value), response.GetRawResponse());
@@ -780,7 +780,7 @@ namespace Azure.ResourceManager.StorageCache
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _amlFilesystemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _amlFilesystemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<AmlFileSystemData> response = Response.FromValue(AmlFileSystemData.FromResponse(result), result);
                     return Response.FromValue(new AmlFileSystemResource(Client, response.Value), response.GetRawResponse());
@@ -826,7 +826,7 @@ namespace Azure.ResourceManager.StorageCache
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _amlFilesystemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _amlFilesystemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<AmlFileSystemData> response = Response.FromValue(AmlFileSystemData.FromResponse(result), result);
                     return Response.FromValue(new AmlFileSystemResource(Client, response.Value), response.GetRawResponse());

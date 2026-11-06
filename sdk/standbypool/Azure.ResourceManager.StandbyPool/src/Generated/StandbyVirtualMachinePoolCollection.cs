@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.StandbyPool
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _standbyVirtualMachinePoolsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyVirtualMachinePoolName, StandbyVirtualMachinePoolData.ToRequestContent(data), context);
+                using HttpMessage message = _standbyVirtualMachinePoolsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyVirtualMachinePoolName, StandbyVirtualMachinePoolData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StandbyPoolArmOperation<StandbyVirtualMachinePoolResource> operation = new StandbyPoolArmOperation<StandbyVirtualMachinePoolResource>(
                     new StandbyVirtualMachinePoolResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.StandbyPool
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _standbyVirtualMachinePoolsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyVirtualMachinePoolName, StandbyVirtualMachinePoolData.ToRequestContent(data), context);
+                using HttpMessage message = _standbyVirtualMachinePoolsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyVirtualMachinePoolName, StandbyVirtualMachinePoolData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StandbyPoolArmOperation<StandbyVirtualMachinePoolResource> operation = new StandbyPoolArmOperation<StandbyVirtualMachinePoolResource>(
                     new StandbyVirtualMachinePoolResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.StandbyPool
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _standbyVirtualMachinePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyVirtualMachinePoolName, context);
+                using HttpMessage message = _standbyVirtualMachinePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyVirtualMachinePoolName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<StandbyVirtualMachinePoolData> response = Response.FromValue(StandbyVirtualMachinePoolData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.StandbyPool
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _standbyVirtualMachinePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyVirtualMachinePoolName, context);
+                using HttpMessage message = _standbyVirtualMachinePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyVirtualMachinePoolName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<StandbyVirtualMachinePoolData> response = Response.FromValue(StandbyVirtualMachinePoolData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.StandbyPool
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _standbyVirtualMachinePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyVirtualMachinePoolName, context);
+                using HttpMessage message = _standbyVirtualMachinePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyVirtualMachinePoolName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<StandbyVirtualMachinePoolData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.StandbyPool
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _standbyVirtualMachinePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyVirtualMachinePoolName, context);
+                using HttpMessage message = _standbyVirtualMachinePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyVirtualMachinePoolName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<StandbyVirtualMachinePoolData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.StandbyPool
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _standbyVirtualMachinePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyVirtualMachinePoolName, context);
+                using HttpMessage message = _standbyVirtualMachinePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyVirtualMachinePoolName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<StandbyVirtualMachinePoolData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.StandbyPool
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _standbyVirtualMachinePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyVirtualMachinePoolName, context);
+                using HttpMessage message = _standbyVirtualMachinePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyVirtualMachinePoolName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<StandbyVirtualMachinePoolData> response = default;

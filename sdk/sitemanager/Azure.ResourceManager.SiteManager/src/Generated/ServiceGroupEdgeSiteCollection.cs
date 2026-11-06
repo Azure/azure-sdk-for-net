@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGroupEdgeSiteRestClient.CreateCreateOrUpdateRequest(Id.Name, siteName, EdgeSiteData.ToRequestContent(data), context);
+                using HttpMessage message = _serviceGroupEdgeSiteRestClient.CreateCreateOrUpdateRequest(Id.Name, siteName, EdgeSiteData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SiteManagerArmOperation<ServiceGroupEdgeSiteResource> operation = new SiteManagerArmOperation<ServiceGroupEdgeSiteResource>(
                     new ServiceGroupEdgeSiteResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGroupEdgeSiteRestClient.CreateCreateOrUpdateRequest(Id.Name, siteName, EdgeSiteData.ToRequestContent(data), context);
+                using HttpMessage message = _serviceGroupEdgeSiteRestClient.CreateCreateOrUpdateRequest(Id.Name, siteName, EdgeSiteData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SiteManagerArmOperation<ServiceGroupEdgeSiteResource> operation = new SiteManagerArmOperation<ServiceGroupEdgeSiteResource>(
                     new ServiceGroupEdgeSiteResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGroupEdgeSiteRestClient.CreateGetRequest(Id.Name, siteName, context);
+                using HttpMessage message = _serviceGroupEdgeSiteRestClient.CreateGetRequest(Id.Name, siteName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EdgeSiteData> response = Response.FromValue(EdgeSiteData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGroupEdgeSiteRestClient.CreateGetRequest(Id.Name, siteName, context);
+                using HttpMessage message = _serviceGroupEdgeSiteRestClient.CreateGetRequest(Id.Name, siteName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EdgeSiteData> response = Response.FromValue(EdgeSiteData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGroupEdgeSiteRestClient.CreateGetRequest(Id.Name, siteName, context);
+                using HttpMessage message = _serviceGroupEdgeSiteRestClient.CreateGetRequest(Id.Name, siteName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EdgeSiteData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGroupEdgeSiteRestClient.CreateGetRequest(Id.Name, siteName, context);
+                using HttpMessage message = _serviceGroupEdgeSiteRestClient.CreateGetRequest(Id.Name, siteName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EdgeSiteData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGroupEdgeSiteRestClient.CreateGetRequest(Id.Name, siteName, context);
+                using HttpMessage message = _serviceGroupEdgeSiteRestClient.CreateGetRequest(Id.Name, siteName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EdgeSiteData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.SiteManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGroupEdgeSiteRestClient.CreateGetRequest(Id.Name, siteName, context);
+                using HttpMessage message = _serviceGroupEdgeSiteRestClient.CreateGetRequest(Id.Name, siteName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EdgeSiteData> response = default;

@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _longTermRetentionManagedInstanceBackupsRestClient.CreateGetByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, _managedInstanceName, _databaseName, backupName, context);
+                using HttpMessage message = _longTermRetentionManagedInstanceBackupsRestClient.CreateGetByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, _managedInstanceName, _databaseName, backupName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ManagedInstanceLongTermRetentionBackupData> response = Response.FromValue(ManagedInstanceLongTermRetentionBackupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _longTermRetentionManagedInstanceBackupsRestClient.CreateGetByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, _managedInstanceName, _databaseName, backupName, context);
+                using HttpMessage message = _longTermRetentionManagedInstanceBackupsRestClient.CreateGetByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, _managedInstanceName, _databaseName, backupName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ManagedInstanceLongTermRetentionBackupData> response = Response.FromValue(ManagedInstanceLongTermRetentionBackupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _longTermRetentionManagedInstanceBackupsRestClient.CreateGetByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, _managedInstanceName, _databaseName, backupName, context);
+                using HttpMessage message = _longTermRetentionManagedInstanceBackupsRestClient.CreateGetByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, _managedInstanceName, _databaseName, backupName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ManagedInstanceLongTermRetentionBackupData> response = default;
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _longTermRetentionManagedInstanceBackupsRestClient.CreateGetByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, _managedInstanceName, _databaseName, backupName, context);
+                using HttpMessage message = _longTermRetentionManagedInstanceBackupsRestClient.CreateGetByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, _managedInstanceName, _databaseName, backupName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ManagedInstanceLongTermRetentionBackupData> response = default;
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _longTermRetentionManagedInstanceBackupsRestClient.CreateGetByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, _managedInstanceName, _databaseName, backupName, context);
+                using HttpMessage message = _longTermRetentionManagedInstanceBackupsRestClient.CreateGetByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, _managedInstanceName, _databaseName, backupName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ManagedInstanceLongTermRetentionBackupData> response = default;
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _longTermRetentionManagedInstanceBackupsRestClient.CreateGetByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, _managedInstanceName, _databaseName, backupName, context);
+                using HttpMessage message = _longTermRetentionManagedInstanceBackupsRestClient.CreateGetByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, _managedInstanceName, _databaseName, backupName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ManagedInstanceLongTermRetentionBackupData> response = default;

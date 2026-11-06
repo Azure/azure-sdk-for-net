@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _instanceFailoverGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, failoverGroupName, InstanceFailoverGroupData.ToRequestContent(data), context);
+                using HttpMessage message = _instanceFailoverGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, failoverGroupName, InstanceFailoverGroupData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation<InstanceFailoverGroupResource> operation = new SqlArmOperation<InstanceFailoverGroupResource>(
                     new InstanceFailoverGroupResourceOperationSource(Client),
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _instanceFailoverGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, failoverGroupName, InstanceFailoverGroupData.ToRequestContent(data), context);
+                using HttpMessage message = _instanceFailoverGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, failoverGroupName, InstanceFailoverGroupData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation<InstanceFailoverGroupResource> operation = new SqlArmOperation<InstanceFailoverGroupResource>(
                     new InstanceFailoverGroupResourceOperationSource(Client),
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _instanceFailoverGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, failoverGroupName, context);
+                using HttpMessage message = _instanceFailoverGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, failoverGroupName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<InstanceFailoverGroupData> response = Response.FromValue(InstanceFailoverGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _instanceFailoverGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, failoverGroupName, context);
+                using HttpMessage message = _instanceFailoverGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, failoverGroupName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<InstanceFailoverGroupData> response = Response.FromValue(InstanceFailoverGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _instanceFailoverGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, failoverGroupName, context);
+                using HttpMessage message = _instanceFailoverGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, failoverGroupName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<InstanceFailoverGroupData> response = default;
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _instanceFailoverGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, failoverGroupName, context);
+                using HttpMessage message = _instanceFailoverGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, failoverGroupName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<InstanceFailoverGroupData> response = default;
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _instanceFailoverGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, failoverGroupName, context);
+                using HttpMessage message = _instanceFailoverGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, failoverGroupName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<InstanceFailoverGroupData> response = default;
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _instanceFailoverGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, failoverGroupName, context);
+                using HttpMessage message = _instanceFailoverGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _locationName, failoverGroupName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<InstanceFailoverGroupData> response = default;

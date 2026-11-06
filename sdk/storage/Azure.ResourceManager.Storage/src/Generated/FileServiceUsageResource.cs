@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fileServicesRestClient.CreateGetServiceUsageRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, context);
+                using HttpMessage message = _fileServicesRestClient.CreateGetServiceUsageRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FileServiceUsageData> response = Response.FromValue(FileServiceUsageData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fileServicesRestClient.CreateGetServiceUsageRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, context);
+                using HttpMessage message = _fileServicesRestClient.CreateGetServiceUsageRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FileServiceUsageData> response = Response.FromValue(FileServiceUsageData.FromResponse(result), result);
                 if (response.Value == null)

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedDatabaseSecurityAlertPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityAlertPolicyName.ToString(), ManagedDatabaseSecurityAlertPolicyData.ToRequestContent(data), context);
+                using HttpMessage message = _managedDatabaseSecurityAlertPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityAlertPolicyName.ToString(), ManagedDatabaseSecurityAlertPolicyData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ManagedDatabaseSecurityAlertPolicyData> response = Response.FromValue(ManagedDatabaseSecurityAlertPolicyData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedDatabaseSecurityAlertPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityAlertPolicyName.ToString(), ManagedDatabaseSecurityAlertPolicyData.ToRequestContent(data), context);
+                using HttpMessage message = _managedDatabaseSecurityAlertPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityAlertPolicyName.ToString(), ManagedDatabaseSecurityAlertPolicyData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ManagedDatabaseSecurityAlertPolicyData> response = Response.FromValue(ManagedDatabaseSecurityAlertPolicyData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedDatabaseSecurityAlertPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityAlertPolicyName.ToString(), context);
+                using HttpMessage message = _managedDatabaseSecurityAlertPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityAlertPolicyName.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ManagedDatabaseSecurityAlertPolicyData> response = Response.FromValue(ManagedDatabaseSecurityAlertPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedDatabaseSecurityAlertPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityAlertPolicyName.ToString(), context);
+                using HttpMessage message = _managedDatabaseSecurityAlertPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityAlertPolicyName.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ManagedDatabaseSecurityAlertPolicyData> response = Response.FromValue(ManagedDatabaseSecurityAlertPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedDatabaseSecurityAlertPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityAlertPolicyName.ToString(), context);
+                using HttpMessage message = _managedDatabaseSecurityAlertPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityAlertPolicyName.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ManagedDatabaseSecurityAlertPolicyData> response = default;
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedDatabaseSecurityAlertPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityAlertPolicyName.ToString(), context);
+                using HttpMessage message = _managedDatabaseSecurityAlertPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityAlertPolicyName.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ManagedDatabaseSecurityAlertPolicyData> response = default;
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedDatabaseSecurityAlertPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityAlertPolicyName.ToString(), context);
+                using HttpMessage message = _managedDatabaseSecurityAlertPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityAlertPolicyName.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ManagedDatabaseSecurityAlertPolicyData> response = default;
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedDatabaseSecurityAlertPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityAlertPolicyName.ToString(), context);
+                using HttpMessage message = _managedDatabaseSecurityAlertPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityAlertPolicyName.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ManagedDatabaseSecurityAlertPolicyData> response = default;

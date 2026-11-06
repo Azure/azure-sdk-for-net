@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.StandbyPool
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _standbyContainerGroupPoolsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyContainerGroupPoolName, StandbyContainerGroupPoolData.ToRequestContent(data), context);
+                using HttpMessage message = _standbyContainerGroupPoolsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyContainerGroupPoolName, StandbyContainerGroupPoolData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StandbyPoolArmOperation<StandbyContainerGroupPoolResource> operation = new StandbyPoolArmOperation<StandbyContainerGroupPoolResource>(
                     new StandbyContainerGroupPoolResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.StandbyPool
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _standbyContainerGroupPoolsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyContainerGroupPoolName, StandbyContainerGroupPoolData.ToRequestContent(data), context);
+                using HttpMessage message = _standbyContainerGroupPoolsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyContainerGroupPoolName, StandbyContainerGroupPoolData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StandbyPoolArmOperation<StandbyContainerGroupPoolResource> operation = new StandbyPoolArmOperation<StandbyContainerGroupPoolResource>(
                     new StandbyContainerGroupPoolResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.StandbyPool
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _standbyContainerGroupPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyContainerGroupPoolName, context);
+                using HttpMessage message = _standbyContainerGroupPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyContainerGroupPoolName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<StandbyContainerGroupPoolData> response = Response.FromValue(StandbyContainerGroupPoolData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.StandbyPool
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _standbyContainerGroupPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyContainerGroupPoolName, context);
+                using HttpMessage message = _standbyContainerGroupPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyContainerGroupPoolName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<StandbyContainerGroupPoolData> response = Response.FromValue(StandbyContainerGroupPoolData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.StandbyPool
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _standbyContainerGroupPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyContainerGroupPoolName, context);
+                using HttpMessage message = _standbyContainerGroupPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyContainerGroupPoolName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<StandbyContainerGroupPoolData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.StandbyPool
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _standbyContainerGroupPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyContainerGroupPoolName, context);
+                using HttpMessage message = _standbyContainerGroupPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyContainerGroupPoolName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<StandbyContainerGroupPoolData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.StandbyPool
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _standbyContainerGroupPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyContainerGroupPoolName, context);
+                using HttpMessage message = _standbyContainerGroupPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyContainerGroupPoolName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<StandbyContainerGroupPoolData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.StandbyPool
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _standbyContainerGroupPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyContainerGroupPoolName, context);
+                using HttpMessage message = _standbyContainerGroupPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyContainerGroupPoolName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<StandbyContainerGroupPoolData> response = default;

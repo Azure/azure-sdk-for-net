@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _restorableDroppedDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, context);
+                using HttpMessage message = _restorableDroppedDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RestorableDroppedDatabaseData> response = Response.FromValue(RestorableDroppedDatabaseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _restorableDroppedDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, context);
+                using HttpMessage message = _restorableDroppedDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RestorableDroppedDatabaseData> response = Response.FromValue(RestorableDroppedDatabaseData.FromResponse(result), result);
                 if (response.Value == null)

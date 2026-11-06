@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.Sql.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ServersRestClient.CreateCheckSqlServerNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), SqlNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = ServersRestClient.CreateCheckSqlServerNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), SqlNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SqlNameAvailabilityResponse> response = Response.FromValue(SqlNameAvailabilityResponse.FromResponse(result), result);
                 if (response.Value == null)
@@ -756,7 +756,7 @@ namespace Azure.ResourceManager.Sql.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ServersRestClient.CreateCheckSqlServerNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), SqlNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = ServersRestClient.CreateCheckSqlServerNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), SqlNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SqlNameAvailabilityResponse> response = Response.FromValue(SqlNameAvailabilityResponse.FromResponse(result), result);
                 if (response.Value == null)
@@ -1272,7 +1272,7 @@ namespace Azure.ResourceManager.Sql.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CapabilitiesRestClient.CreateGetCapabilitiesByLocationRequest(Guid.Parse(Id.SubscriptionId), locationName, include?.ToString(), context);
+                using HttpMessage message = CapabilitiesRestClient.CreateGetCapabilitiesByLocationRequest(Guid.Parse(Id.SubscriptionId), locationName, include?.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SqlLocationCapabilities> response = Response.FromValue(SqlLocationCapabilities.FromResponse(result), result);
                 if (response.Value == null)
@@ -1318,7 +1318,7 @@ namespace Azure.ResourceManager.Sql.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CapabilitiesRestClient.CreateGetCapabilitiesByLocationRequest(Guid.Parse(Id.SubscriptionId), locationName, include?.ToString(), context);
+                using HttpMessage message = CapabilitiesRestClient.CreateGetCapabilitiesByLocationRequest(Guid.Parse(Id.SubscriptionId), locationName, include?.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SqlLocationCapabilities> response = Response.FromValue(SqlLocationCapabilities.FromResponse(result), result);
                 if (response.Value == null)

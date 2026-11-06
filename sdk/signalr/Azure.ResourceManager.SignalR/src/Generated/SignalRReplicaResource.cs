@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _replicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SignalRReplicaData> response = Response.FromValue(SignalRReplicaData.FromResponse(result), result);
                 if (response.Value == null)
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _replicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SignalRReplicaData> response = Response.FromValue(SignalRReplicaData.FromResponse(result), result);
                 if (response.Value == null)
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicasRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SignalRReplicaData.ToRequestContent(data), context);
+                using HttpMessage message = _replicasRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SignalRReplicaData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SignalRArmOperation<SignalRReplicaResource> operation = new SignalRArmOperation<SignalRReplicaResource>(
                     new SignalRReplicaResourceOperationSource(Client),
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicasRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SignalRReplicaData.ToRequestContent(data), context);
+                using HttpMessage message = _replicasRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SignalRReplicaData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SignalRArmOperation<SignalRReplicaResource> operation = new SignalRArmOperation<SignalRReplicaResource>(
                     new SignalRReplicaResourceOperationSource(Client),
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicasRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _replicasRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicasRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _replicasRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicasRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _replicasRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SignalRArmOperation operation = new SignalRArmOperation(_replicasClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.SignalR
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicasRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _replicasRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SignalRArmOperation operation = new SignalRArmOperation(_replicasClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.SignalR
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _replicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _replicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<SignalRReplicaData> response = Response.FromValue(SignalRReplicaData.FromResponse(result), result);
                     return Response.FromValue(new SignalRReplicaResource(Client, response.Value), response.GetRawResponse());
@@ -658,7 +658,7 @@ namespace Azure.ResourceManager.SignalR
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _replicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _replicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<SignalRReplicaData> response = Response.FromValue(SignalRReplicaData.FromResponse(result), result);
                     return Response.FromValue(new SignalRReplicaResource(Client, response.Value), response.GetRawResponse());
@@ -704,7 +704,7 @@ namespace Azure.ResourceManager.SignalR
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _replicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _replicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<SignalRReplicaData> response = Response.FromValue(SignalRReplicaData.FromResponse(result), result);
                     return Response.FromValue(new SignalRReplicaResource(Client, response.Value), response.GetRawResponse());
@@ -746,7 +746,7 @@ namespace Azure.ResourceManager.SignalR
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _replicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _replicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<SignalRReplicaData> response = Response.FromValue(SignalRReplicaData.FromResponse(result), result);
                     return Response.FromValue(new SignalRReplicaResource(Client, response.Value), response.GetRawResponse());
@@ -788,7 +788,7 @@ namespace Azure.ResourceManager.SignalR
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _replicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _replicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<SignalRReplicaData> response = Response.FromValue(SignalRReplicaData.FromResponse(result), result);
                     return Response.FromValue(new SignalRReplicaResource(Client, response.Value), response.GetRawResponse());
@@ -834,7 +834,7 @@ namespace Azure.ResourceManager.SignalR
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _replicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _replicasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<SignalRReplicaData> response = Response.FromValue(SignalRReplicaData.FromResponse(result), result);
                     return Response.FromValue(new SignalRReplicaResource(Client, response.Value), response.GetRawResponse());
