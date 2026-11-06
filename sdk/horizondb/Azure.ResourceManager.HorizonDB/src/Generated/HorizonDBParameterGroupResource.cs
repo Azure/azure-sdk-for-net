@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HorizonDB
         internal HorizonDBParameterGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _horizonDBParameterGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", ResourceType.Namespace, Diagnostics);
-            _horizonDBParameterGroupsRestClient = new HorizonDBParameterGroups(_horizonDBParameterGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HorizonDb/parameterGroups", out string horizonDBParameterGroupsApiVersionOverride) ? horizonDBParameterGroupsApiVersionOverride : "2026-05-01-preview");
+            _horizonDBParameterGroupsRestClient = new HorizonDBParameterGroups(_horizonDBParameterGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HorizonDb/parameterGroups", out string horizonDBParameterGroupsApiVersionOverride) ? horizonDBParameterGroupsApiVersionOverride : "2026-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -102,11 +102,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbParameterGroups_Get. </description>
+        /// <description> ParameterGroups_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -150,11 +150,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbParameterGroups_Get. </description>
+        /// <description> ParameterGroups_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Updates an existing HorizonDB parameter group.
+        /// Updates an existing HorizonDB parameter group. Each connected pool's applyMethod setting controls whether dynamic parameter changes become effective immediately or remain pending until a customer-initiated pool Restart. Static parameter changes always remain pending until a customer-initiated pool Restart. Stop followed by Start and scheduled maintenance do not apply pending changes. The operation fails with a conflict while a previous update to this parameter group is still being processed.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -198,11 +198,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbParameterGroups_Update. </description>
+        /// <description> ParameterGroups_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Updates an existing HorizonDB parameter group.
+        /// Updates an existing HorizonDB parameter group. Each connected pool's applyMethod setting controls whether dynamic parameter changes become effective immediately or remain pending until a customer-initiated pool Restart. Static parameter changes always remain pending until a customer-initiated pool Restart. Stop followed by Start and scheduled maintenance do not apply pending changes. The operation fails with a conflict while a previous update to this parameter group is still being processed.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -257,11 +257,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbParameterGroups_Update. </description>
+        /// <description> ParameterGroups_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Deletes a HorizonDB parameter group.
+        /// Deletes a HorizonDB parameter group. Deletion fails with a conflict when the parameter group is associated with one or more pools.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -316,11 +316,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbParameterGroups_Delete. </description>
+        /// <description> ParameterGroups_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Deletes a HorizonDB parameter group.
+        /// Deletes a HorizonDB parameter group. Deletion fails with a conflict when the parameter group is associated with one or more pools.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -365,11 +365,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbParameterGroups_Delete. </description>
+        /// <description> ParameterGroups_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -414,11 +414,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbParameterGroups_ListConnections. </description>
+        /// <description> ParameterGroups_ListConnections. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -452,11 +452,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbParameterGroups_ListConnections. </description>
+        /// <description> ParameterGroups_ListConnections. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -479,86 +479,6 @@ namespace Azure.ResourceManager.HorizonDB
                 Id.Name,
                 context,
                 "HorizonDBParameterGroupResource.GetConnections");
-        }
-
-        /// <summary>
-        /// Lists parameter groups filtered by version number.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/parameterGroups/{parameterGroupName}/versions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> HorizonDbParameterGroups_ListVersions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="HorizonDBParameterGroupResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="version"> The version number to filter by. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HorizonDBParameterGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<HorizonDBParameterGroupResource> GetVersionsAsync(int? version = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<HorizonDBParameterGroupData, HorizonDBParameterGroupResource>(new HorizonDBParameterGroupDataAsync1CollectionResultOfT(
-                _horizonDBParameterGroupsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                version,
-                context,
-                "HorizonDBParameterGroupResource.GetVersions"), data => new HorizonDBParameterGroupResource(Client, data));
-        }
-
-        /// <summary>
-        /// Lists parameter groups filtered by version number.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/parameterGroups/{parameterGroupName}/versions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> HorizonDbParameterGroups_ListVersions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="HorizonDBParameterGroupResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="version"> The version number to filter by. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HorizonDBParameterGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<HorizonDBParameterGroupResource> GetVersions(int? version = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<HorizonDBParameterGroupData, HorizonDBParameterGroupResource>(new HorizonDBParameterGroupData1CollectionResultOfT(
-                _horizonDBParameterGroupsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                version,
-                context,
-                "HorizonDBParameterGroupResource.GetVersions"), data => new HorizonDBParameterGroupResource(Client, data));
         }
 
         /// <summary> Add a tag to the current resource. </summary>

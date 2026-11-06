@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HorizonDB
         internal HorizonDBParameterGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _horizonDBParameterGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", HorizonDBParameterGroupResource.ResourceType.Namespace, Diagnostics);
-            _horizonDBParameterGroupsRestClient = new HorizonDBParameterGroups(_horizonDBParameterGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HorizonDb/parameterGroups", out string horizonDBParameterGroupsApiVersionOverride) ? horizonDBParameterGroupsApiVersionOverride : "2026-05-01-preview");
+            _horizonDBParameterGroupsRestClient = new HorizonDBParameterGroups(_horizonDBParameterGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HorizonDb/parameterGroups", out string horizonDBParameterGroupsApiVersionOverride) ? horizonDBParameterGroupsApiVersionOverride : "2026-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Creates a new HorizonDB parameter group or updates an existing parameter group.
+        /// Creates a new HorizonDB parameter group or replaces an existing parameter group.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbParameterGroups_CreateOrUpdate. </description>
+        /// <description> ParameterGroups_CreateOrReplace. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBParameterGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, parameterGroupName, HorizonDBParameterGroupData.ToRequestContent(data), context);
+                HttpMessage message = _horizonDBParameterGroupsRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, parameterGroupName, HorizonDBParameterGroupData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HorizonDBArmOperation<HorizonDBParameterGroupResource> operation = new HorizonDBArmOperation<HorizonDBParameterGroupResource>(
                     new HorizonDBParameterGroupResourceOperationSource(Client),
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Creates a new HorizonDB parameter group or updates an existing parameter group.
+        /// Creates a new HorizonDB parameter group or replaces an existing parameter group.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -121,11 +121,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbParameterGroups_CreateOrUpdate. </description>
+        /// <description> ParameterGroups_CreateOrReplace. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBParameterGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, parameterGroupName, HorizonDBParameterGroupData.ToRequestContent(data), context);
+                HttpMessage message = _horizonDBParameterGroupsRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, parameterGroupName, HorizonDBParameterGroupData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HorizonDBArmOperation<HorizonDBParameterGroupResource> operation = new HorizonDBArmOperation<HorizonDBParameterGroupResource>(
                     new HorizonDBParameterGroupResourceOperationSource(Client),
@@ -179,11 +179,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbParameterGroups_Get. </description>
+        /// <description> ParameterGroups_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -228,11 +228,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbParameterGroups_Get. </description>
+        /// <description> ParameterGroups_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -277,11 +277,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbParameterGroups_ListByResourceGroup. </description>
+        /// <description> ParameterGroups_ListByResourceGroup. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -305,11 +305,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbParameterGroups_ListByResourceGroup. </description>
+        /// <description> ParameterGroups_ListByResourceGroup. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -333,11 +333,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbParameterGroups_Get. </description>
+        /// <description> ParameterGroups_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -390,11 +390,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbParameterGroups_Get. </description>
+        /// <description> ParameterGroups_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -447,11 +447,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbParameterGroups_Get. </description>
+        /// <description> ParameterGroups_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -508,11 +508,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbParameterGroups_Get. </description>
+        /// <description> ParameterGroups_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

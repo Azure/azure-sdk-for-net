@@ -23,25 +23,15 @@ namespace Azure.ResourceManager.HorizonDB.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HorizonDBParameterGroupConnectionProperties"/>. </summary>
-        /// <param name="name"> The name of the connected resource. </param>
-        /// <param name="id"> The resource ID of the connected resource. </param>
-        /// <param name="type"> The type of the resource. </param>
+        /// <param name="poolResourceId"> The Azure resource ID of the connected HorizonDB pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDBParameterGroupConnectionProperties(string name, ResourceIdentifier id, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBParameterGroupConnectionProperties(ResourceIdentifier poolResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Name = name;
-            Id = id;
-            Type = @type;
+            PoolResourceId = poolResourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The name of the connected resource. </summary>
-        public string Name { get; }
-
-        /// <summary> The resource ID of the connected resource. </summary>
-        public ResourceIdentifier Id { get; }
-
-        /// <summary> The type of the resource. </summary>
-        public string Type { get; }
+        /// <summary> The Azure resource ID of the connected HorizonDB pool. </summary>
+        public ResourceIdentifier PoolResourceId { get; }
     }
 }

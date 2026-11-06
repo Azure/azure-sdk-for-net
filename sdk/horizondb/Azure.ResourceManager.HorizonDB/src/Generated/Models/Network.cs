@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.HorizonDB.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Network"/>. </summary>
-        /// <param name="publicNetworkAccess"> The flag indicating whether public ip is requested. </param>
+        /// <param name="publicAccess"> Specifies whether public access is enabled for the cluster. The service defaults to Disabled when this property is omitted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Network(HorizonDBPublicNetworkAccessState? publicNetworkAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal Network(HorizonDBPublicNetworkAccessState? publicAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            PublicNetworkAccess = publicNetworkAccess;
+            PublicAccess = publicAccess;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The flag indicating whether public ip is requested. </summary>
-        public HorizonDBPublicNetworkAccessState? PublicNetworkAccess { get; }
+        /// <summary> Specifies whether public access is enabled for the cluster. The service defaults to Disabled when this property is omitted. </summary>
+        public HorizonDBPublicNetworkAccessState? PublicAccess { get; set; }
     }
 }

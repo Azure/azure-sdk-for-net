@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HorizonDB
         {
             TryGetApiVersion(HorizonDBPrivateLinkResource.ResourceType, out string horizonDBPrivateLinkResourceApiVersion);
             _horizonDBPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", HorizonDBPrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            _horizonDBPrivateLinkResourcesRestClient = new HorizonDBPrivateLinkResources(_horizonDBPrivateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, horizonDBPrivateLinkResourceApiVersion ?? "2026-05-01-preview");
+            _horizonDBPrivateLinkResourcesRestClient = new HorizonDBPrivateLinkResources(_horizonDBPrivateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, horizonDBPrivateLinkResourceApiVersion ?? "2026-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbPrivateLinkResources_Get. </description>
+        /// <description> PrivateLinkResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbPrivateLinkResources_Get. </description>
+        /// <description> PrivateLinkResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -161,11 +161,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbPrivateLinkResources_List. </description>
+        /// <description> PrivateLinkResources_List. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,11 +195,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbPrivateLinkResources_List. </description>
+        /// <description> PrivateLinkResources_List. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -229,11 +229,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbPrivateLinkResources_Get. </description>
+        /// <description> PrivateLinkResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -286,11 +286,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbPrivateLinkResources_Get. </description>
+        /// <description> PrivateLinkResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -343,11 +343,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbPrivateLinkResources_Get. </description>
+        /// <description> PrivateLinkResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -404,11 +404,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> HorizonDbPrivateLinkResources_Get. </description>
+        /// <description> PrivateLinkResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

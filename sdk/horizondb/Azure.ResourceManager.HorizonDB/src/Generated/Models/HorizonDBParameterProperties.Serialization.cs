@@ -13,7 +13,7 @@ using Azure.ResourceManager.HorizonDB;
 
 namespace Azure.ResourceManager.HorizonDB.Models
 {
-    /// <summary> Properties of a HorizonDB parameters. </summary>
+    /// <summary> Properties of a HorizonDB parameter. </summary>
     public partial class HorizonDBParameterProperties : IJsonModel<HorizonDBParameterProperties>
     {
         /// <param name="data"> The data to parse. </param>
@@ -88,6 +88,16 @@ namespace Azure.ResourceManager.HorizonDB.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DefaultValue))
+            {
+                writer.WritePropertyName("defaultValue"u8);
+                writer.WriteStringValue(DefaultValue);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ValueSource))
+            {
+                writer.WritePropertyName("valueSource"u8);
+                writer.WriteStringValue(ValueSource.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(DataType))
             {
@@ -164,6 +174,8 @@ namespace Azure.ResourceManager.HorizonDB.Models
             string name = default;
             string description = default;
             string value = default;
+            string defaultValue = default;
+            ParameterValueSource? valueSource = default;
             string dataType = default;
             string allowedValues = default;
             bool? isDynamic = default;
@@ -186,6 +198,20 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 if (prop.NameEquals("value"u8))
                 {
                     value = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("defaultValue"u8))
+                {
+                    defaultValue = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("valueSource"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    valueSource = new ParameterValueSource(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("dataType"u8))
@@ -239,6 +265,8 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 name,
                 description,
                 value,
+                defaultValue,
+                valueSource,
                 dataType,
                 allowedValues,
                 isDynamic,
