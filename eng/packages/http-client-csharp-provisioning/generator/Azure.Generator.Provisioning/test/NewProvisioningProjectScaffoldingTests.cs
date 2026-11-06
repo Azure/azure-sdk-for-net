@@ -59,8 +59,7 @@ namespace Azure.Generator.Provisioning.Tests
                 Assert.That(properties.Element("GenerateDocumentationFile")?.Value, Is.EqualTo("true"));
                 Assert.That(project.Descendants("PackageReference").Select(p => p.Attribute("Include")?.Value),
                     Is.EquivalentTo(new[] { "Azure.Provisioning" }));
-                Assert.That(project.Descendants("Compile").Select(p => p.Attribute("Include")?.Value),
-                    Is.EquivalentTo(new[] { "$(AzureCoreSharedSources)ExperimentalAttribute.cs" }));
+                Assert.That(project.Descendants("Compile"), Is.Empty);
             });
         }
 
@@ -91,6 +90,7 @@ namespace Azure.Generator.Provisioning.Tests
                     Is.EquivalentTo(new[] { "NUnit", "NUnit3TestAdapter", "Microsoft.NET.Test.Sdk", "Moq" }));
                 Assert.That(project.Descendants("PackageReference").First().Parent!.Attribute("Condition")?.Value,
                     Is.EqualTo("'$(IsMgmtLibrary)' != 'true' and '$(IsStorageTest)' != 'true'"));
+                Assert.That(project.Descendants("Nullable").Single().Value, Is.EqualTo("enable"));
             });
         }
 
@@ -113,7 +113,7 @@ namespace Azure.Generator.Provisioning.Tests
                 Assert.That(readme, Does.Not.Contain("{packageName}").And.Not.Contain("management client"));
                 Assert.That(changelog, Does.Contain("## 1.0.0-beta.1 (Unreleased)"));
                 Assert.That(props.Descendants(ns + "IsMgmtLibrary").Single().Value, Is.EqualTo("true"));
-                Assert.That(props.Descendants(ns + "Nullable").Single().Value, Is.EqualTo("enable"));
+                Assert.That(props.Descendants(ns + "Nullable"), Is.Empty);
                 Assert.That(props.Descendants(ns + "Import").Single().Attribute("Project")?.Value, Does.Contain("GetDirectoryNameOfFileAbove"));
                 Assert.That(File.ReadAllText(Path.Combine(outputDir, "tests", $"{PackageName}.Tests.csproj")),
                     Is.EqualTo(scaffolding.TestProjectContent()));
@@ -122,8 +122,30 @@ namespace Azure.Generator.Provisioning.Tests
             });
         }
 
+        [TestCase("sdk")]
+        [TestCase("eng")]
+        public async Task DirectoryBuildPropsUseNormalizedTemplate(string directory)
+        {
+            string outputDir = LoadGenerator(directory);
+            await new TestableScaffolding().WriteFilesAsync();
+
+            string content = File.ReadAllText(Path.Combine(outputDir, "Directory.Build.props"));
+            var props = XDocument.Parse(content);
+            XNamespace ns = props.Root!.Name.Namespace;
+            Assert.Multiple(() =>
+            {
+                Assert.That(content, Is.EqualTo(ExpectedDirectoryBuildProps));
+                Assert.That(props.Descendants(ns + "PropertyGroup").SelectMany(g => g.Elements())
+                    .Select(p => p.Name.LocalName), Is.EquivalentTo(new[] { "TargetFrameworks", "IsMgmtLibrary", "NoWarn" }));
+                Assert.That(props.Descendants(ns + "Compile").Single().Attribute("Include")?.Value,
+                    Is.EqualTo("$(AzureCoreSharedSources)ExperimentalAttribute.cs"));
+                Assert.That(props.Descendants(ns + "PackageReference").Single().Attribute("Include")?.Value,
+                    Is.EqualTo("Azure.Core"));
+            });
+        }
+
         [Test]
-        public async Task ExistingFilesArePreserved()
+        public async Task ExistingSdkFilesArePreserved()
         {
             string outputDir = LoadGenerator("sdk");
             string[] paths = ["README.md", "CHANGELOG.md", "Directory.Build.props", $"tests/{PackageName}.Tests.csproj"];
@@ -142,7 +164,19 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
-        public async Task AdditionalFilesAreNotCreatedOutsideSdk()
+        public async Task FixtureBuildPropsAreRegenerated()
+        {
+            string outputDir = LoadGenerator("eng");
+            string propsPath = Path.Combine(outputDir, "Directory.Build.props");
+            File.WriteAllText(propsPath, "old fixture properties");
+
+            await new TestableScaffolding().WriteFilesAsync();
+
+            Assert.That(File.ReadAllText(propsPath), Is.EqualTo(ExpectedDirectoryBuildProps));
+        }
+
+        [Test]
+        public async Task OnlyBuildPropsAreCreatedOutsideSdk()
         {
             string outputDir = LoadGenerator("eng");
             await new TestableScaffolding().WriteFilesAsync();
@@ -151,7 +185,7 @@ namespace Azure.Generator.Provisioning.Tests
             {
                 Assert.That(File.Exists(Path.Combine(outputDir, "README.md")), Is.False);
                 Assert.That(File.Exists(Path.Combine(outputDir, "CHANGELOG.md")), Is.False);
-                Assert.That(File.Exists(Path.Combine(outputDir, "Directory.Build.props")), Is.False);
+                Assert.That(File.Exists(Path.Combine(outputDir, "Directory.Build.props")), Is.True);
                 Assert.That(Directory.Exists(Path.Combine(outputDir, "tests")), Is.False);
             });
         }
@@ -170,6 +204,46 @@ namespace Azure.Generator.Provisioning.Tests
 
         private static string ResolveTestPath(string outputDir, string path)
             => Path.GetFullPath(Path.Combine(outputDir, "tests", path.Replace("$(MSBuildThisFileDirectory)", "", StringComparison.Ordinal)));
+
+        private const string ExpectedDirectoryBuildProps = """
+            <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+              <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
+
+              <PropertyGroup>
+                <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+                <IsMgmtLibrary>true</IsMgmtLibrary>
+              </PropertyGroup>
+
+              <!--
+                Temporarily disable warnings from new analyzers:
+                  AZC0034: Typename is already used in another library.
+                  AZC0035: Missing model factory method
+
+                  Tracked by # 51311
+              -->
+              <PropertyGroup>
+                <NoWarn>
+                  $(NoWarn);
+                  AZC0034;
+                  AZC0035;
+                </NoWarn>
+              </PropertyGroup>
+
+              <ItemGroup>
+                <Compile Include="$(AzureCoreSharedSources)ExperimentalAttribute.cs" LinkBase="Shared\Core" />
+              </ItemGroup>
+              <ItemGroup>
+                <!--
+                Azure.Core isn't being found on builds with
+                dotnet build .\Azure.Provisioning.sln /p:UseProjectReferenceToAzureClients=true
+                for some reason.  Temporarily adding an explicit Azure.Core reference so
+                it's correctly replaced in all projects for those build targets.
+                -->
+                <PackageReference Include="Azure.Core" Condition="$(UseProjectReferenceToAzureClients) == 'true'" />
+              </ItemGroup>
+
+            </Project>
+            """ + "\n";
 
         private class TestableScaffolding : NewProvisioningProjectScaffolding
         {

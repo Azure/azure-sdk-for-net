@@ -33,7 +33,7 @@ namespace Azure.Generator.Provisioning.Primitives
         }
 
         protected override IReadOnlyList<CSharpProjectCompileInclude> BuildCompileIncludes()
-            => [new(GetCompileInclude("ExperimentalAttribute.cs"), "Shared/Core")];
+            => [];
 
         protected override string GetSolutionFileContent()
         {
@@ -83,13 +83,15 @@ namespace Azure.Generator.Provisioning.Primitives
         protected override async Task WriteAdditionalFiles()
         {
             await base.WriteAdditionalFiles();
+            string outputDir = ProvisioningGenerator.Instance.Configuration.OutputDirectory;
+            string packageName = ProvisioningGenerator.Instance.Configuration.PackageName;
             if (!IsUnderSdkDirectory())
             {
+                Directory.CreateDirectory(outputDir);
+                File.WriteAllText(Path.Combine(outputDir, "Directory.Build.props"), GetDirectoryBuildPropsContent(packageName));
                 return;
             }
 
-            string outputDir = ProvisioningGenerator.Instance.Configuration.OutputDirectory;
-            string packageName = ProvisioningGenerator.Instance.Configuration.PackageName;
             string testProjectPath = Path.Combine(outputDir, "tests", $"{packageName}.Tests.csproj");
             if (!File.Exists(testProjectPath))
             {
@@ -115,18 +117,42 @@ namespace Azure.Generator.Provisioning.Primitives
             return """
                 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
                   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
+
                   <PropertyGroup>
-                    <ExperimentalProvisioning Condition="'$(ExperimentalProvisioning)' == ''">false</ExperimentalProvisioning>
-                    <DefineConstants Condition="'$(ExperimentalProvisioning)' == 'true'">EXPERIMENTAL_PROVISIONING;$(DefineConstants)</DefineConstants>
                     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
                     <IsMgmtLibrary>true</IsMgmtLibrary>
-                    <Nullable>enable</Nullable>
                   </PropertyGroup>
+
+                  <!--
+                    Temporarily disable warnings from new analyzers:
+                      AZC0034: Typename is already used in another library.
+                      AZC0035: Missing model factory method
+
+                      Tracked by # 51311
+                  -->
+                  <PropertyGroup>
+                    <NoWarn>
+                      $(NoWarn);
+                      AZC0034;
+                      AZC0035;
+                    </NoWarn>
+                  </PropertyGroup>
+
                   <ItemGroup>
-                    <PackageReference Include="Azure.Core" Condition="'$(UseProjectReferenceToAzureClients)' == 'true'" />
+                    <Compile Include="$(AzureCoreSharedSources)ExperimentalAttribute.cs" LinkBase="Shared\Core" />
                   </ItemGroup>
+                  <ItemGroup>
+                    <!--
+                    Azure.Core isn't being found on builds with
+                    dotnet build .\Azure.Provisioning.sln /p:UseProjectReferenceToAzureClients=true
+                    for some reason.  Temporarily adding an explicit Azure.Core reference so
+                    it's correctly replaced in all projects for those build targets.
+                    -->
+                    <PackageReference Include="Azure.Core" Condition="$(UseProjectReferenceToAzureClients) == 'true'" />
+                  </ItemGroup>
+
                 </Project>
-                """;
+                """ + "\n";
         }
 
         private static bool IsUnderSdkDirectory()
