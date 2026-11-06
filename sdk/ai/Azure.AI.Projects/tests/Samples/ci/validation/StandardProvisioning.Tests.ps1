@@ -91,6 +91,9 @@ Describe 'Pipeline sample selection contract' {
     It 'opts into task-scoped CLI authentication while retaining the default test tasks' {
         $pipeline = Get-Content -LiteralPath (Join-Path $PSScriptRoot '../../../../tests.yml') -Raw
         $pipeline | Should Match 'UseAzureCliForTests: true'
+        $stages = Get-Content -LiteralPath (
+            Join-Path $PSScriptRoot '../../../../../../../eng/pipelines/templates/stages/archetype-sdk-tests.yml') -Raw
+        $stages | Should Match 'UseAzureCliForTests: \$\{\{ coalesce\(cloud.value.UseAzureCliForTests, false\) \}\}'
         $template = Get-Content -LiteralPath (
             Join-Path $PSScriptRoot '../../../../../../../eng/pipelines/templates/jobs/live.tests.yml') -Raw
         $cliBranch = [regex]::Match(

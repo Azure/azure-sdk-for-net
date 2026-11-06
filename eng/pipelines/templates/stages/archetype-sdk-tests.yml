@@ -166,6 +166,7 @@ extends:
                     CloudConfig:
                       SubscriptionConfiguration: ${{ cloud.value.SubscriptionConfiguration }}
                       ServiceConnection: ${{ coalesce(cloud.value.ServiceConnection, lower(format('azure-sdk-tests-{0}', cloud.key))) }}
+                      UseAzureCliForTests: ${{ coalesce(cloud.value.UseAzureCliForTests, false) }}
                       SubscriptionConfigurationFilePaths: ${{ cloud.value.SubscriptionConfigurationFilePaths }}
                       SubscriptionConfigurations: ${{ cloud.value.SubscriptionConfigurations }}
                       Location: ${{ coalesce(cloud.value.Location, parameters.Location) }}
