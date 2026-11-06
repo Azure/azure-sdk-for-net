@@ -312,13 +312,13 @@
 # ServiceOwners: @Kishp01 @rajeshka @shankarsama
 
 # PRLabel: %Event Hubs
-/sdk/eventhub/    @axisc @hmlam @j7nw4r @sagar0207 @sjkwak @SwayGom
+/sdk/eventhub/    @axisc @hmlam @j7nw4r @ayush1252 @sagar0207 @sjkwak @SwayGom
 
 # PRLabel: %Event Hubs %Functions
-/sdk/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs/    @axisc @hmlam @j7nw4r @sagar0207 @sjkwak @SwayGom
+/sdk/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs/    @axisc @hmlam @j7nw4r @ayush1252 @sagar0207 @sjkwak @SwayGom
 
 # ServiceLabel: %Event Hubs
-# ServiceOwners: @axisc @hmlam @j7nw4r @sagar0207 @sjkwak @SwayGom
+# ServiceOwners: @axisc @hmlam @j7nw4r @ayush1252 @sagar0207 @sjkwak @SwayGom
 
 # PRLabel: %Functions %Service Bus
 /sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/    @EldertGrootenboer @j7nw4r @sagar0207 @skarri-microsoft @SwayGom @pranz1996
