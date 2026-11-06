@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _graphResourcesRestClient.CreateCreateUpdateGraphRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, graphName, CosmosDBGraphCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _graphResourcesRestClient.CreateCreateUpdateGraphRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, graphName, CosmosDBGraphCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<CosmosDBGraphResource> operation = new CosmosDBArmOperation<CosmosDBGraphResource>(
                     new CosmosDBGraphResourceOperationSource(Client),
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _graphResourcesRestClient.CreateCreateUpdateGraphRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, graphName, CosmosDBGraphCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _graphResourcesRestClient.CreateCreateUpdateGraphRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, graphName, CosmosDBGraphCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<CosmosDBGraphResource> operation = new CosmosDBArmOperation<CosmosDBGraphResource>(
                     new CosmosDBGraphResourceOperationSource(Client),
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _graphResourcesRestClient.CreateGetGraphRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, graphName, context);
+                using HttpMessage message = _graphResourcesRestClient.CreateGetGraphRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, graphName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CosmosDBGraphData> response = Response.FromValue(CosmosDBGraphData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _graphResourcesRestClient.CreateGetGraphRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, graphName, context);
+                using HttpMessage message = _graphResourcesRestClient.CreateGetGraphRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, graphName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CosmosDBGraphData> response = Response.FromValue(CosmosDBGraphData.FromResponse(result), result);
                 if (response.Value == null)
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _graphResourcesRestClient.CreateGetGraphRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, graphName, context);
+                using HttpMessage message = _graphResourcesRestClient.CreateGetGraphRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, graphName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CosmosDBGraphData> response = default;
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _graphResourcesRestClient.CreateGetGraphRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, graphName, context);
+                using HttpMessage message = _graphResourcesRestClient.CreateGetGraphRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, graphName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CosmosDBGraphData> response = default;
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _graphResourcesRestClient.CreateGetGraphRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, graphName, context);
+                using HttpMessage message = _graphResourcesRestClient.CreateGetGraphRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, graphName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CosmosDBGraphData> response = default;
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _graphResourcesRestClient.CreateGetGraphRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, graphName, context);
+                using HttpMessage message = _graphResourcesRestClient.CreateGetGraphRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, graphName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CosmosDBGraphData> response = default;

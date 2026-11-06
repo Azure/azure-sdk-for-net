@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costAllocationRulesRestClient.CreateCreateOrUpdateRequest(Id.Name, ruleName, CostAllocationRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _costAllocationRulesRestClient.CreateCreateOrUpdateRequest(Id.Name, ruleName, CostAllocationRuleData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CostAllocationRuleData> response = Response.FromValue(CostAllocationRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costAllocationRulesRestClient.CreateCreateOrUpdateRequest(Id.Name, ruleName, CostAllocationRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _costAllocationRulesRestClient.CreateCreateOrUpdateRequest(Id.Name, ruleName, CostAllocationRuleData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CostAllocationRuleData> response = Response.FromValue(CostAllocationRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costAllocationRulesRestClient.CreateGetRequest(Id.Name, ruleName, context);
+                using HttpMessage message = _costAllocationRulesRestClient.CreateGetRequest(Id.Name, ruleName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CostAllocationRuleData> response = Response.FromValue(CostAllocationRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costAllocationRulesRestClient.CreateGetRequest(Id.Name, ruleName, context);
+                using HttpMessage message = _costAllocationRulesRestClient.CreateGetRequest(Id.Name, ruleName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CostAllocationRuleData> response = Response.FromValue(CostAllocationRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costAllocationRulesRestClient.CreateGetRequest(Id.Name, ruleName, context);
+                using HttpMessage message = _costAllocationRulesRestClient.CreateGetRequest(Id.Name, ruleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CostAllocationRuleData> response = default;
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costAllocationRulesRestClient.CreateGetRequest(Id.Name, ruleName, context);
+                using HttpMessage message = _costAllocationRulesRestClient.CreateGetRequest(Id.Name, ruleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CostAllocationRuleData> response = default;
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costAllocationRulesRestClient.CreateGetRequest(Id.Name, ruleName, context);
+                using HttpMessage message = _costAllocationRulesRestClient.CreateGetRequest(Id.Name, ruleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CostAllocationRuleData> response = default;
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costAllocationRulesRestClient.CreateGetRequest(Id.Name, ruleName, context);
+                using HttpMessage message = _costAllocationRulesRestClient.CreateGetRequest(Id.Name, ruleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CostAllocationRuleData> response = default;

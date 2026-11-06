@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bgpPeersRestClient.CreateCreateOrUpdateRequest(Id.ToString(), bgpPeerName, ConnectedClusterBgpPeerData.ToRequestContent(data), context);
+                using HttpMessage message = _bgpPeersRestClient.CreateCreateOrUpdateRequest(Id.ToString(), bgpPeerName, ConnectedClusterBgpPeerData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerOrchestratorRuntimeArmOperation<ConnectedClusterBgpPeerResource> operation = new ContainerOrchestratorRuntimeArmOperation<ConnectedClusterBgpPeerResource>(
                     new ConnectedClusterBgpPeerResourceOperationSource(Client),
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bgpPeersRestClient.CreateCreateOrUpdateRequest(Id.ToString(), bgpPeerName, ConnectedClusterBgpPeerData.ToRequestContent(data), context);
+                using HttpMessage message = _bgpPeersRestClient.CreateCreateOrUpdateRequest(Id.ToString(), bgpPeerName, ConnectedClusterBgpPeerData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerOrchestratorRuntimeArmOperation<ConnectedClusterBgpPeerResource> operation = new ContainerOrchestratorRuntimeArmOperation<ConnectedClusterBgpPeerResource>(
                     new ConnectedClusterBgpPeerResourceOperationSource(Client),
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bgpPeersRestClient.CreateGetRequest(Id.ToString(), bgpPeerName, context);
+                using HttpMessage message = _bgpPeersRestClient.CreateGetRequest(Id.ToString(), bgpPeerName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConnectedClusterBgpPeerData> response = Response.FromValue(ConnectedClusterBgpPeerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bgpPeersRestClient.CreateGetRequest(Id.ToString(), bgpPeerName, context);
+                using HttpMessage message = _bgpPeersRestClient.CreateGetRequest(Id.ToString(), bgpPeerName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConnectedClusterBgpPeerData> response = Response.FromValue(ConnectedClusterBgpPeerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bgpPeersRestClient.CreateGetRequest(Id.ToString(), bgpPeerName, context);
+                using HttpMessage message = _bgpPeersRestClient.CreateGetRequest(Id.ToString(), bgpPeerName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ConnectedClusterBgpPeerData> response = default;
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bgpPeersRestClient.CreateGetRequest(Id.ToString(), bgpPeerName, context);
+                using HttpMessage message = _bgpPeersRestClient.CreateGetRequest(Id.ToString(), bgpPeerName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ConnectedClusterBgpPeerData> response = default;
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bgpPeersRestClient.CreateGetRequest(Id.ToString(), bgpPeerName, context);
+                using HttpMessage message = _bgpPeersRestClient.CreateGetRequest(Id.ToString(), bgpPeerName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ConnectedClusterBgpPeerData> response = default;
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bgpPeersRestClient.CreateGetRequest(Id.ToString(), bgpPeerName, context);
+                using HttpMessage message = _bgpPeersRestClient.CreateGetRequest(Id.ToString(), bgpPeerName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ConnectedClusterBgpPeerData> response = default;

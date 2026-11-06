@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ManagedClustersOperationGroupRestClient.CreateGetManagedClusterKubernetesVersionsRequest(Guid.Parse(Id.SubscriptionId), location, context);
+                using HttpMessage message = ManagedClustersOperationGroupRestClient.CreateGetManagedClusterKubernetesVersionsRequest(Guid.Parse(Id.SubscriptionId), location, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<KubernetesVersionListResult> response = Response.FromValue(KubernetesVersionListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ManagedClustersOperationGroupRestClient.CreateGetManagedClusterKubernetesVersionsRequest(Guid.Parse(Id.SubscriptionId), location, context);
+                using HttpMessage message = ManagedClustersOperationGroupRestClient.CreateGetManagedClusterKubernetesVersionsRequest(Guid.Parse(Id.SubscriptionId), location, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<KubernetesVersionListResult> response = Response.FromValue(KubernetesVersionListResult.FromResponse(result), result);
                 if (response.Value == null)
