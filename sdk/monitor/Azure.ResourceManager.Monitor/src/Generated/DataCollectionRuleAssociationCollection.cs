@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataCollectionRuleAssociationsRestClient.CreateCreateRequest(Id.ToString(), associationName, DataCollectionRuleAssociationData.ToRequestContent(data), context);
+                using HttpMessage message = _dataCollectionRuleAssociationsRestClient.CreateCreateRequest(Id.ToString(), associationName, DataCollectionRuleAssociationData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataCollectionRuleAssociationData> response = Response.FromValue(DataCollectionRuleAssociationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataCollectionRuleAssociationsRestClient.CreateCreateRequest(Id.ToString(), associationName, DataCollectionRuleAssociationData.ToRequestContent(data), context);
+                using HttpMessage message = _dataCollectionRuleAssociationsRestClient.CreateCreateRequest(Id.ToString(), associationName, DataCollectionRuleAssociationData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataCollectionRuleAssociationData> response = Response.FromValue(DataCollectionRuleAssociationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataCollectionRuleAssociationsRestClient.CreateGetRequest(Id.ToString(), associationName, context);
+                using HttpMessage message = _dataCollectionRuleAssociationsRestClient.CreateGetRequest(Id.ToString(), associationName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataCollectionRuleAssociationData> response = Response.FromValue(DataCollectionRuleAssociationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataCollectionRuleAssociationsRestClient.CreateGetRequest(Id.ToString(), associationName, context);
+                using HttpMessage message = _dataCollectionRuleAssociationsRestClient.CreateGetRequest(Id.ToString(), associationName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataCollectionRuleAssociationData> response = Response.FromValue(DataCollectionRuleAssociationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataCollectionRuleAssociationsRestClient.CreateGetRequest(Id.ToString(), associationName, context);
+                using HttpMessage message = _dataCollectionRuleAssociationsRestClient.CreateGetRequest(Id.ToString(), associationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DataCollectionRuleAssociationData> response = default;
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataCollectionRuleAssociationsRestClient.CreateGetRequest(Id.ToString(), associationName, context);
+                using HttpMessage message = _dataCollectionRuleAssociationsRestClient.CreateGetRequest(Id.ToString(), associationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DataCollectionRuleAssociationData> response = default;
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataCollectionRuleAssociationsRestClient.CreateGetRequest(Id.ToString(), associationName, context);
+                using HttpMessage message = _dataCollectionRuleAssociationsRestClient.CreateGetRequest(Id.ToString(), associationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DataCollectionRuleAssociationData> response = default;
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataCollectionRuleAssociationsRestClient.CreateGetRequest(Id.ToString(), associationName, context);
+                using HttpMessage message = _dataCollectionRuleAssociationsRestClient.CreateGetRequest(Id.ToString(), associationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DataCollectionRuleAssociationData> response = default;

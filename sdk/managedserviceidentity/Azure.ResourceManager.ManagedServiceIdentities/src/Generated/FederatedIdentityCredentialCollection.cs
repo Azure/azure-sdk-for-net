@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _federatedIdentityCredentialsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, federatedIdentityCredentialResourceName, FederatedIdentityCredentialData.ToRequestContent(data), context);
+                using HttpMessage message = _federatedIdentityCredentialsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, federatedIdentityCredentialResourceName, FederatedIdentityCredentialData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FederatedIdentityCredentialData> response = Response.FromValue(FederatedIdentityCredentialData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _federatedIdentityCredentialsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, federatedIdentityCredentialResourceName, FederatedIdentityCredentialData.ToRequestContent(data), context);
+                using HttpMessage message = _federatedIdentityCredentialsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, federatedIdentityCredentialResourceName, FederatedIdentityCredentialData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FederatedIdentityCredentialData> response = Response.FromValue(FederatedIdentityCredentialData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _federatedIdentityCredentialsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, federatedIdentityCredentialResourceName, context);
+                using HttpMessage message = _federatedIdentityCredentialsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, federatedIdentityCredentialResourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FederatedIdentityCredentialData> response = Response.FromValue(FederatedIdentityCredentialData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _federatedIdentityCredentialsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, federatedIdentityCredentialResourceName, context);
+                using HttpMessage message = _federatedIdentityCredentialsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, federatedIdentityCredentialResourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FederatedIdentityCredentialData> response = Response.FromValue(FederatedIdentityCredentialData.FromResponse(result), result);
                 if (response.Value == null)
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _federatedIdentityCredentialsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, federatedIdentityCredentialResourceName, context);
+                using HttpMessage message = _federatedIdentityCredentialsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, federatedIdentityCredentialResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<FederatedIdentityCredentialData> response = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _federatedIdentityCredentialsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, federatedIdentityCredentialResourceName, context);
+                using HttpMessage message = _federatedIdentityCredentialsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, federatedIdentityCredentialResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<FederatedIdentityCredentialData> response = default;
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _federatedIdentityCredentialsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, federatedIdentityCredentialResourceName, context);
+                using HttpMessage message = _federatedIdentityCredentialsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, federatedIdentityCredentialResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<FederatedIdentityCredentialData> response = default;
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _federatedIdentityCredentialsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, federatedIdentityCredentialResourceName, context);
+                using HttpMessage message = _federatedIdentityCredentialsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, federatedIdentityCredentialResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<FederatedIdentityCredentialData> response = default;
