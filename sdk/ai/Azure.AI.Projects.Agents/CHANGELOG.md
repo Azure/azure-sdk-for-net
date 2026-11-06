@@ -3,12 +3,39 @@
 ## 3.0.0-beta.7 (Unreleased)
 
 ### Features Added
+- Added trace-driven skill optimization, skill candidate results, and evaluation context models.
+- Added experimental Live voice agent definitions, native client/server event models, and `BetaVoiceAgentsLiveConversations` for stored Live history and recordings.
+- Added typed `VoiceAgentLiveSessionResource` snapshots, `VoiceAgentLiveDelegation` configuration, and `VoiceAgentLiveDelegationItem` metadata, including `foundry_managed_agent` ownership with the pinned agent name and resolved version.
+- Added typed Realtime/Live definition dispatch and stored Live history pagination.
+- Added experimental Live Decision, delegation configuration, and transport event models aligned with OpenAI TypeSpec 1.34.1.
+- Live models, enums, value types, and model-factory methods require the `AAIP001` experimental opt-in.
+- Added experimental inline voice subagents with handoff conditions, policies, and per-subagent voice configuration.
+- Added experimental language-detection, digit-recognition, transfer, SMS, and DTMF system-tool configuration, including execution timeouts.
+- Added experimental SIP telephony binding models and allowed-caller configuration.
+- Added experimental telephony campaign configuration, schedules, operation-bound completion reads, pagination, and validation-error APIs.
+- Added the public `FoundryOpenAIError` data model for typed campaign failure details while keeping exception-formatting helpers internal.
 
 ### Breaking Changes
+- `VoiceAgentTransferRouting.RingTimeoutSeconds` now uses `TimeSpan?` instead of `int?`; JSON continues to use seconds.
+- Agent optimization jobs and their list filters now use `AgentOptimizationJobStatus`, including the terminal `Skipped` state, instead of `AgentsJobStatus`.
+- Realtime voice definitions now emit the required `sub_protocol` discriminator with the value `realtime`.
+- `VoiceAgentSubagentConfig` is now an abstract base class. Use `VoiceAgentDelegateSubagentConfig` for referenced agents or `VoiceAgentInlineSubagentConfig` for inline handoff graphs.
+- Telephony binding creation now accepts `TelephonyBinding` provider-specific models instead of the removed create-content models. Binding status fields and the binding-list status filter were removed.
+- Telephony transfer and outbound addresses now use the `TelephonyAddress` hierarchy with the `type` discriminator. Use `PhoneNumber`, `TeamsAddress`, or `SipAddress` instead of the removed destination models.
+- Outbound call-job creation now accepts `TelephonyCallJobCreate`, including a typed source address, and uses the `telephony_call_jobs` route.
+- `VoiceRecordingChannelLayout.Left` and `Right` now use the extensible `VoiceAudioRole` type instead of `string`. Their wire values remain `user` and `agent`.
 
 ### Bugs Fixed
+- Fixed Live Decision input and stored-message payloads to expose public patch access and preserve message fields during wire serialization.
+- Fixed typed persisted Realtime response status and output-modality serialization to use the external OpenAI enum values rather than treating them as ModelReaderWriter models.
+- Fixed semantic VAD eagerness serialization and deserialization to preserve the external OpenAI string values.
+- Fixed the Realtime model factory to preserve newly added fields, including `Soundscape` and `PostCall`, without changing the order of its existing parameters.
+- Preserved the audio-output model factory's existing parameter order when introducing shared voice configuration.
+- Preserved typed deserialization of existing delegate configurations that omit `subagent_type`.
+- Fixed telephony call-history pagination to stop on terminal pages and use the correct cursor when paging backward.
 
 ### Other Changes
+- Regenerated from `feature/foundry-release` at [`768c3a412129295692b60788fa76fc27b6d484ff`](https://github.com/Azure/azure-rest-api-specs/tree/768c3a412129295692b60788fa76fc27b6d484ff), using OpenAI TypeSpec 1.34.1.
 
 ## 3.0.0-beta.6 (2026-10-30)
 

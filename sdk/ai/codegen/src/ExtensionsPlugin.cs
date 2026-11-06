@@ -21,6 +21,10 @@ namespace Extensions.Plugin
         /// <inheritdoc />
         public override void Apply(CodeModelGenerator generator)
         {
+            VoiceAgentLiveVisitor.Configure(generator.InputLibrary.InputNamespace);
+            generator.AddVisitor(new VoiceAgentLiveVisitor());
+            generator.AddVisitor(new VoiceAgentTelephonyPaginationVisitor());
+            generator.AddVisitor(new TelephonyCampaignOperationVisitor());
             generator.AddVisitor(new SerializationOverrideVisitor());
             // ExperimentalAttributeVisitor runs first so our intentional AAIP001 marking (driven by the
             // typespec x-ms-foundry-meta CSV tables) wins for any declaration that is experimental both because
@@ -62,6 +66,9 @@ namespace Extensions.Plugin
                 "BrowserAutomationToolCallOutput",
                 "FabricDataAgentToolCall",
                 "FabricDataAgentToolCallOutput",
+                // Dynamic roots keep inherited constructors and message payload serialization consistent.
+                "LiveDecisionInputItemParam",
+                "LiveDecisionStoredInputItemParam",
                 "MemoryCommandToolCall",
                 "MemoryCommandToolCallOutput",
                 "MemorySearchToolCall",

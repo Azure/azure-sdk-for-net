@@ -105,14 +105,14 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            string @type = "template";
+            VoiceAgentGreetingMode @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string text = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    @type = new VoiceAgentGreetingMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("text"u8))

@@ -64,6 +64,8 @@ public partial class AgentAdministrationClient
     private BetaVoiceAgentsConversations _cachedAgentEndpointConversations;
     [Experimental("AAIP001")]
     private BetaVoiceAgentsTelephony _cachedAgentTelephony;
+    [Experimental("AAIP001")]
+    private TelephonyCampaigns _cachedAgentTelephonyCampaigns;
     private AgentOptimizationJobCandidates _cachedAgentOptimizationJobCandidates;
     /// <summary>
     /// Initializes a new <see cref="AgentAdministrationClient"/> with the specified
@@ -90,7 +92,7 @@ public partial class AgentAdministrationClient
         Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] {
             new UserAgentPolicy(typeof(InternalProjectsClient).Assembly),
             new BearerTokenPolicy(tokenProvider, _flows),
-            new FoundryFeaturesPolicy("MemoryStores=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview,Insights=V1Preview,DataGenerationJobs=V1Preview,Models=V1Preview,Routines=V2Preview,ExternalAgents=V1Preview,DraftAgents=V1Preview,VoiceAgents=V1Preview,ModelRouterControls=V1Preview,AgentInsights=V1Preview,DigitalWorker=V1Preview,GitHubCopilot=V1Preview,FineTuningSessions=V1Preview,MicrosoftCopilot=V1Preview"),
+            new FoundryFeaturesPolicy("MemoryStores=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview,Insights=V1Preview,DataGenerationJobs=V1Preview,Models=V1Preview,Routines=V2Preview,ExternalAgents=V1Preview,DraftAgents=V1Preview,VoiceAgents=V1Preview,ModelRouterControls=V1Preview,DigitalWorker=V1Preview,GitHubCopilot=V1Preview,FineTuningSessions=V1Preview,MicrosoftCopilot=V1Preview"),
         }, Array.Empty<PipelinePolicy>());
         _apiVersion = options.Version;
         ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -1134,6 +1136,13 @@ public partial class AgentAdministrationClient
     public virtual BetaVoiceAgentsTelephony GetBetaVoiceAgentTelephony()
     {
         return Volatile.Read(ref _cachedAgentTelephony) ?? Interlocked.CompareExchange(ref _cachedAgentTelephony, new BetaVoiceAgentsTelephony(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentTelephony;
+    }
+
+    /// <summary> Gets the client for telephony campaigns owned by voice agents. </summary>
+    [Experimental("AAIP001")]
+    public virtual TelephonyCampaigns GetBetaVoiceAgentTelephonyCampaigns()
+    {
+        return Volatile.Read(ref _cachedAgentTelephonyCampaigns) ?? Interlocked.CompareExchange(ref _cachedAgentTelephonyCampaigns, new TelephonyCampaigns(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentTelephonyCampaigns;
     }
 
     /// <summary>

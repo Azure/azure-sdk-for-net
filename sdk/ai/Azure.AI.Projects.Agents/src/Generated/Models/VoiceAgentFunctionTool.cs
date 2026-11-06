@@ -15,7 +15,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="VoiceAgentFunctionTool"/>. </summary>
         /// <param name="name"> The function name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public VoiceAgentFunctionTool(string name) : base("function")
+        public VoiceAgentFunctionTool(string name) : base(VoiceAgentToolType.Function)
         {
             Argument.AssertNotNull(name, nameof(name));
 
@@ -32,7 +32,7 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <param name="parameters"> Parameters of the function in JSON Schema. </param>
         /// <param name="name"> The function name. </param>
-        internal VoiceAgentFunctionTool(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string description, RealtimeFunctionToolParameters parameters, string name) : base(@type, additionalBinaryDataProperties)
+        internal VoiceAgentFunctionTool(VoiceAgentToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string description, RealtimeFunctionToolParameters parameters, string name) : base(@type, additionalBinaryDataProperties)
         {
             Description = description;
             Parameters = parameters;

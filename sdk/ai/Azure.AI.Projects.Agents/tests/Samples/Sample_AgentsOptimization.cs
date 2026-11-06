@@ -165,7 +165,7 @@ public class Sample_AgentsOptimizationCandidates : SamplesBase
         #endregion
         #region Snippet:Sample_GetOptimizationJob_AgentsOptimizationCandidates_Async
         int reportedWarnings = 0;
-        if (submittedJob.Status == AgentsJobStatus.Failed)
+        if (submittedJob.Status != AgentOptimizationJobStatus.Succeeded)
         {
             throw new InvalidOperationException($"The job {submittedJob.Id} has failed.");
         }
@@ -268,7 +268,7 @@ public class Sample_AgentsOptimizationCandidates : SamplesBase
         #endregion
         #region Snippet:Sample_GetOptimizationJob_AgentsOptimizationCandidates_Sync
         int reportedWarnings = 0;
-        if (submittedJob.Status == AgentsJobStatus.Failed)
+        if (submittedJob.Status != AgentOptimizationJobStatus.Succeeded)
         {
             throw new InvalidOperationException($"The job {submittedJob.Id} has failed.");
         }

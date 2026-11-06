@@ -14,25 +14,27 @@ namespace Azure.AI.Projects.Agents
     /// `GET /agents/{agent_name}/endpoint/protocols/voice`. Every create or update produces a new immutable version.
     /// </summary>
     [Experimental("AAIP001")]
-    public partial class VoiceAgentDefinition : ProjectsAgentDefinition
+    public partial class VoiceAgentDefinition : VoiceAgentBaseDefinition
     {
         /// <summary> Initializes a new instance of <see cref="VoiceAgentDefinition"/>. </summary>
-        public VoiceAgentDefinition() : base(ProjectsAgentKind.Voice)
+        public VoiceAgentDefinition() : base(VoiceAgentSubProtocol.Realtime)
         {
             OutputModalities = new ChangeTrackingList<VoiceOutputModality>();
             Include = new ChangeTrackingList<VoiceAgentSessionIncludeOption>();
             Tools = new ChangeTrackingList<VoiceAgentTool>();
-            StructuredInputs = new ChangeTrackingDictionary<string, StructuredInputDefinition>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentDefinition"/>. </summary>
         /// <param name="kind"></param>
         /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="subProtocol"> The voice protocol for this agent version. Null and unknown values are invalid. </param>
+        /// <param name="instructions"> Frontend instructions, templated with structured_inputs. Backend instructions belong in delegation.responses. </param>
+        /// <param name="structuredInputs"> Template inputs for session instructions and supported greetings. </param>
+        /// <param name="store"> Persists conversation content and audio in Foundry, not native Live recordings. Defaults to false. </param>
         /// <param name="modelType"> How the model backing this voice agent is served. Required with `model` for a model-backed voice agent and omitted when `conversation_engine` is provided. This is independent of the architecture (realtime or cascaded), which the service derives from the selected model. </param>
         /// <param name="model"> The model to use for this agent. Required with `model_type` for a model-backed voice agent and omitted when `conversation_engine` is provided. The model must support realtime or cascaded voice. </param>
         /// <param name="conversationEngine"> The engine that owns conversation handling for this voice agent. Exactly one of this property and the model-backed configuration (`model_type` with `model`) must be provided. When this property is provided, `model_type`, `model`, `instructions`, `tools`, and `tool_choice` must be omitted, and `greeting.tool_choice` cannot be `required`, because the engine owns the conversation logic. The initial implementation supports a hosted-agent engine. </param>
-        /// <param name="instructions"> A system (or developer) message inserted into the model's context. Supports template substitution via `structured_inputs`, rendered per session before the live session starts. </param>
         /// <param name="greeting"> Optional session-start greeting. Template mode speaks exact rendered text; LLM-generated mode asks the session model to author the opening response and may use configured tools. </param>
         /// <param name="audio">
         /// The audio configuration, including input and output formats, voice, turn detection, noise reduction, and
@@ -58,23 +60,13 @@ namespace Azure.AI.Projects.Agents
         /// Defaults to `auto`.
         /// </param>
         /// <param name="parallelToolCalls"> Whether the model may call multiple tools in parallel. </param>
-        /// <param name="structuredInputs"> Set of structured inputs that participate in prompt template substitution, rendered per session before the live session starts. </param>
-        /// <param name="subagentConfig"> Optional configuration for sibling Foundry text agents that this voice agent may consult as background specialists. </param>
+        /// <param name="subagentConfig"> Optional subagent configuration. Set `subagent_type` to `delegate` for delegated background specialists or `inline` for inline voice subagents. </param>
         /// <param name="postCall"> Optional post-call delivery configuration. After each session ends, the service notifies the configured destinations. </param>
-        /// <param name="store">
-        /// Whether conversations with this agent are persisted. A single, all-or-nothing persistence switch that defaults to
-        /// `false` (privacy-safe: off by default). When `true`, Foundry persists the full conversation — the transcript/event
-        /// timeline and raw audio. When `false`, nothing is persisted and no conversation is surfaced. There is no separate
-        /// audio-logging control; audio is persisted only as part of this switch. Latency/performance telemetry (e.g.
-        /// time-to-first-audio, inter-token latency, interruption) is observability-only (customer trace / App Insights) and
-        /// is not part of the persisted conversation content.
-        /// </param>
-        internal VoiceAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, VoiceModelType? modelType, string model, VoiceConversationEngine conversationEngine, string instructions, VoiceAgentGreetingConfig greeting, VoiceAgentAudioConfig audio, VoiceAgentSoundscapeConfig soundscape, IList<VoiceOutputModality> outputModalities, BinaryData internalMaxOutputTokens, IList<VoiceAgentSessionIncludeOption> include, VoiceAgentInterimResponseConfig interimResponse, VoiceAgentAvatarConfig avatar, IList<VoiceAgentTool> tools, BinaryData internalToolChoice, bool? parallelToolCalls, IDictionary<string, StructuredInputDefinition> structuredInputs, VoiceAgentSubagentConfig subagentConfig, VoiceAgentPostCallConfig postCall, bool? store) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
+        internal VoiceAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, VoiceAgentSubProtocol subProtocol, string instructions, IDictionary<string, StructuredInputDefinition> structuredInputs, bool? store, VoiceModelType? modelType, string model, VoiceConversationEngine conversationEngine, VoiceAgentGreetingConfig greeting, VoiceAgentAudioConfig audio, VoiceAgentSoundscapeConfig soundscape, IList<VoiceOutputModality> outputModalities, BinaryData internalMaxOutputTokens, IList<VoiceAgentSessionIncludeOption> include, VoiceAgentInterimResponseConfig interimResponse, VoiceAgentAvatarConfig avatar, IList<VoiceAgentTool> tools, BinaryData internalToolChoice, bool? parallelToolCalls, VoiceAgentSubagentConfig subagentConfig, VoiceAgentPostCallConfig postCall) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties, subProtocol, instructions, structuredInputs, store)
         {
             ModelType = modelType;
             Model = model;
             ConversationEngine = conversationEngine;
-            Instructions = instructions;
             Greeting = greeting;
             Audio = audio;
             Soundscape = soundscape;
@@ -86,10 +78,8 @@ namespace Azure.AI.Projects.Agents
             Tools = tools;
             InternalToolChoice = internalToolChoice;
             ParallelToolCalls = parallelToolCalls;
-            StructuredInputs = structuredInputs;
             SubagentConfig = subagentConfig;
             PostCall = postCall;
-            Store = store;
         }
 
         /// <summary> How the model backing this voice agent is served. Required with `model` for a model-backed voice agent and omitted when `conversation_engine` is provided. This is independent of the architecture (realtime or cascaded), which the service derives from the selected model. </summary>
@@ -100,9 +90,6 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> The engine that owns conversation handling for this voice agent. Exactly one of this property and the model-backed configuration (`model_type` with `model`) must be provided. When this property is provided, `model_type`, `model`, `instructions`, `tools`, and `tool_choice` must be omitted, and `greeting.tool_choice` cannot be `required`, because the engine owns the conversation logic. The initial implementation supports a hosted-agent engine. </summary>
         public VoiceConversationEngine ConversationEngine { get; set; }
-
-        /// <summary> A system (or developer) message inserted into the model's context. Supports template substitution via `structured_inputs`, rendered per session before the live session starts. </summary>
-        public string Instructions { get; set; }
 
         /// <summary> Optional session-start greeting. Template mode speaks exact rendered text; LLM-generated mode asks the session model to author the opening response and may use configured tools. </summary>
         public VoiceAgentGreetingConfig Greeting { get; set; }
@@ -141,23 +128,10 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Whether the model may call multiple tools in parallel. </summary>
         public bool? ParallelToolCalls { get; set; }
 
-        /// <summary> Set of structured inputs that participate in prompt template substitution, rendered per session before the live session starts. </summary>
-        public IDictionary<string, StructuredInputDefinition> StructuredInputs { get; }
-
-        /// <summary> Optional configuration for sibling Foundry text agents that this voice agent may consult as background specialists. </summary>
+        /// <summary> Optional subagent configuration. Set `subagent_type` to `delegate` for delegated background specialists or `inline` for inline voice subagents. </summary>
         public VoiceAgentSubagentConfig SubagentConfig { get; set; }
 
         /// <summary> Optional post-call delivery configuration. After each session ends, the service notifies the configured destinations. </summary>
         public VoiceAgentPostCallConfig PostCall { get; set; }
-
-        /// <summary>
-        /// Whether conversations with this agent are persisted. A single, all-or-nothing persistence switch that defaults to
-        /// `false` (privacy-safe: off by default). When `true`, Foundry persists the full conversation — the transcript/event
-        /// timeline and raw audio. When `false`, nothing is persisted and no conversation is surfaced. There is no separate
-        /// audio-logging control; audio is persisted only as part of this switch. Latency/performance telemetry (e.g.
-        /// time-to-first-audio, inter-token latency, interruption) is observability-only (customer trace / App Insights) and
-        /// is not part of the persisted conversation content.
-        /// </summary>
-        public bool? Store { get; set; }
     }
 }

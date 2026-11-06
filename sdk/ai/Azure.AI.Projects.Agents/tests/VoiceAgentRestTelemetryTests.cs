@@ -40,7 +40,7 @@ public class VoiceAgentRestTelemetryTests
           "status": "queued",
           "provider": "twilio",
           "connection_name": "private-connection",
-          "source": "+15555550102",
+          "source": { "type": "phone_number", "value": "+15555550102" },
           "phone_number": "+15555550101",
           "destination": { "type": "phone_number", "value": "+15555550101" },
           "structured_inputs": { "secret": "private-rest-content" },
@@ -749,7 +749,7 @@ public class VoiceAgentRestTelemetryTests
     public async Task ConnectionProviderRetainsExistingSdkAndGenAiScopes(bool isAsync, bool enabled)
     {
         MockPipelineTransport transport = new(message =>
-            message.Request.Uri.AbsolutePath.EndsWith("/call_jobs", StringComparison.Ordinal)
+            message.Request.Uri.AbsolutePath.EndsWith("/telephony_call_jobs", StringComparison.Ordinal)
                 ? new MockPipelineResponse(202).WithContent(ResponseBody)
                 : message.Request.Method == "DELETE"
                     ? new MockPipelineResponse(204)
@@ -1042,7 +1042,7 @@ public class VoiceAgentRestTelemetryTests
             return operation switch
             {
                 "delete" => isAsync ? await conversations.DeleteAgentConversationAsync(AgentName, "conv_123") : conversations.DeleteAgentConversation(AgentName, "conv_123"),
-                "create_binding" => isAsync ? await telephony.CreateTelephonyBindingAsync(AgentName, new CreateTwilioTelephonyBindingContent("private-connection", "+15555550101"), CancellationToken.None) : telephony.CreateTelephonyBinding(AgentName, new CreateTwilioTelephonyBindingContent("private-connection", "+15555550101"), CancellationToken.None),
+                "create_binding" => isAsync ? await telephony.CreateTelephonyBindingAsync(AgentName, new TwilioTelephonyBinding("private-connection", "+15555550101"), CancellationToken.None) : telephony.CreateTelephonyBinding(AgentName, new TwilioTelephonyBinding("private-connection", "+15555550101"), CancellationToken.None),
                 "delete_binding" => isAsync ? await telephony.DeleteTelephonyBindingAsync(AgentName, "binding_123", "*", CancellationToken.None) : telephony.DeleteTelephonyBinding(AgentName, "binding_123", "*", CancellationToken.None),
                 "create_call_job" => isAsync ? await telephony.CreateTelephonyCallJobAsync(AgentName, "private-idempotency", CallJobContent(), CancellationToken.None) : telephony.CreateTelephonyCallJob(AgentName, "private-idempotency", CallJobContent(), CancellationToken.None),
                 "cancel_call_job" => isAsync ? await telephony.CancelTelephonyCallJobAsync(AgentName, "job_123", "*", CancellationToken.None) : telephony.CancelTelephonyCallJob(AgentName, "job_123", "*", CancellationToken.None),
@@ -1054,7 +1054,7 @@ public class VoiceAgentRestTelemetryTests
         }
 
         options ??= new RequestOptions();
-        using BinaryContent content = JsonContent("""{"source":"+15555550102","destination":{"type":"phone_number","value":"+15555550101"},"messages":[{"content":"private-rest-content"}]}""");
+        using BinaryContent content = JsonContent("""{"source":{"type":"phone_number","value":"+15555550102"},"destination":{"type":"phone_number","value":"+15555550101"},"messages":[{"content":"private-rest-content"}]}""");
         return operation switch
         {
             "delete" => isAsync ? await conversations.DeleteAgentConversationAsync(AgentName, "conv_123", options) : conversations.DeleteAgentConversation(AgentName, "conv_123", options),
@@ -1070,9 +1070,9 @@ public class VoiceAgentRestTelemetryTests
         };
     }
 
-    private static CreateTelephonyCallJobContent CallJobContent()
+    private static TelephonyCallJobCreate CallJobContent()
     {
-        CreateTelephonyCallJobContent content = new(new TelephonyOutboundDestination(TelephonyOutboundDestinationType.PhoneNumber, "+15555550101"), "private-connection", "+15555550102") { Purpose = PrivateContent };
+        TelephonyCallJobCreate content = new(new PhoneNumber("+15555550101"), "private-connection", new PhoneNumber("+15555550102")) { Purpose = PrivateContent };
         content.StructuredInputs["secret"] = BinaryData.FromString("\"private-rest-content\"");
         return content;
     }

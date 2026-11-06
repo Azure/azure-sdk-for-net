@@ -23,6 +23,7 @@ public class VoiceAgentCrudTests : AgentsTestBase
 {
     public VoiceAgentCrudTests(bool isAsync) : base(isAsync)
     {
+        ProjectsTestSanitizers.ApplyLegacyRealtimeVoiceRecordingDefaults(this);
     }
 
     [RecordedTest]

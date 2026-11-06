@@ -13,7 +13,7 @@ namespace Azure.AI.Projects.Agents
     public partial class VoiceAgentLlmInterimResponseConfig : VoiceAgentInterimResponseConfig
     {
         /// <summary> Initializes a new instance of <see cref="VoiceAgentLlmInterimResponseConfig"/>. </summary>
-        public VoiceAgentLlmInterimResponseConfig() : base("llm_interim_response")
+        public VoiceAgentLlmInterimResponseConfig() : base(VoiceAgentInterimResponseType.LlmInterimResponse)
         {
         }
 
@@ -25,7 +25,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="model"> The model used to generate interim responses. </param>
         /// <param name="instructions"> Optional instructions for generating interim responses. </param>
         /// <param name="maxCompletionTokens"> The maximum completion-token count for an interim response. </param>
-        internal VoiceAgentLlmInterimResponseConfig(string @type, IList<VoiceAgentInterimResponseTrigger> triggers, TimeSpan? latencyThresholdMs, IDictionary<string, BinaryData> additionalBinaryDataProperties, string model, string instructions, int? maxCompletionTokens) : base(@type, triggers, latencyThresholdMs, additionalBinaryDataProperties)
+        internal VoiceAgentLlmInterimResponseConfig(VoiceAgentInterimResponseType @type, IList<VoiceAgentInterimResponseTrigger> triggers, TimeSpan? latencyThresholdMs, IDictionary<string, BinaryData> additionalBinaryDataProperties, string model, string instructions, int? maxCompletionTokens) : base(@type, triggers, latencyThresholdMs, additionalBinaryDataProperties)
         {
             Model = model;
             Instructions = instructions;

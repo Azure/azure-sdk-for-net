@@ -20,7 +20,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentGreetingConfig"/>. </summary>
         /// <param name="type"> The greeting mode. </param>
-        private protected VoiceAgentGreetingConfig(string @type)
+        private protected VoiceAgentGreetingConfig(VoiceAgentGreetingMode @type)
         {
             Type = @type;
         }
@@ -28,13 +28,13 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="VoiceAgentGreetingConfig"/>. </summary>
         /// <param name="type"> The greeting mode. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceAgentGreetingConfig(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceAgentGreetingConfig(VoiceAgentGreetingMode @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The greeting mode. </summary>
-        internal string Type { get; set; }
+        internal VoiceAgentGreetingMode Type { get; set; }
     }
 }

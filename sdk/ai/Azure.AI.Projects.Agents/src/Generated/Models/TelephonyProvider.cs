@@ -17,6 +17,8 @@ namespace Azure.AI.Projects.Agents
         private const string TeamsPhoneExtensibilityValue = "teams_phone_extensibility";
         /// <summary> Twilio Programmable Voice. </summary>
         private const string TwilioValue = "twilio";
+        /// <summary> Session Initiation Protocol. </summary>
+        private const string SipValue = "sip";
 
         /// <summary> Initializes a new instance of <see cref="TelephonyProvider"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -33,6 +35,9 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Twilio Programmable Voice. </summary>
         public static TelephonyProvider Twilio { get; } = new TelephonyProvider(TwilioValue);
+
+        /// <summary> Session Initiation Protocol. </summary>
+        public static TelephonyProvider Sip { get; } = new TelephonyProvider(SipValue);
 
         /// <summary> Determines if two <see cref="TelephonyProvider"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

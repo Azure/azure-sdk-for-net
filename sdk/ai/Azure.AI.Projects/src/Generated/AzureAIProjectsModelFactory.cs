@@ -18,7 +18,7 @@ namespace Azure.AI.Projects
     public static partial class AzureAIProjectsModelFactory
     {
 
-        /// <summary> An Agent Insights monitor summary returned by list operations. </summary>
+        /// <summary> Monitor list item without the summary. </summary>
         /// <param name="id"> The monitor identifier. </param>
         /// <param name="agentName"> The agent this monitor analyzes. There can be only one monitor per agent. </param>
         /// <param name="enabled"> Whether scheduled insight generation is armed for the monitor. </param>
@@ -27,10 +27,10 @@ namespace Azure.AI.Projects
         /// <param name="nextScheduledRunOn"> The next time a scheduled agent insight run will start. Omitted when scheduled generation is disabled. </param>
         /// <param name="estimatedCost"> Estimated cost accumulated by Agent Insights for this monitor. </param>
         /// <param name="suspension"> Why the system suspended scheduled generation. Null when the monitor is not suspended. </param>
+        /// <param name="priorities"> Analysis priorities. Omitted when not configured. </param>
         /// <param name="updatedOn"> The time when this monitor was last updated. </param>
         /// <returns> A new <see cref="Projects.AgentInsightMonitorListItem"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static AgentInsightMonitorListItem AgentInsightMonitorListItem(string id = default, string agentName = default, bool enabled = default, double runIntervalHours = default, string modelDeploymentName = default, DateTimeOffset? nextScheduledRunOn = default, AgentInsightEstimatedCost estimatedCost = default, AgentInsightSuspension suspension = default, DateTimeOffset updatedOn = default)
+        public static AgentInsightMonitorListItem AgentInsightMonitorListItem(string id = default, string agentName = default, bool enabled = default, double runIntervalHours = default, string modelDeploymentName = default, DateTimeOffset? nextScheduledRunOn = default, AgentInsightEstimatedCost estimatedCost = default, AgentInsightSuspension suspension = default, AgentInsightPrioritiesRead priorities = default, DateTimeOffset updatedOn = default)
         {
             return new AgentInsightMonitorListItem(
                 id,
@@ -41,6 +41,7 @@ namespace Azure.AI.Projects
                 nextScheduledRunOn,
                 estimatedCost,
                 suspension,
+                priorities,
                 updatedOn,
                 additionalBinaryDataProperties: null);
         }
@@ -48,7 +49,6 @@ namespace Azure.AI.Projects
         /// <summary> Estimated Agent Insights cost. </summary>
         /// <param name="amount"> Estimated cost amount. </param>
         /// <returns> A new <see cref="Projects.AgentInsightEstimatedCost"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static AgentInsightEstimatedCost AgentInsightEstimatedCost(double amount = default)
         {
             return new AgentInsightEstimatedCost(amount, "USD", additionalBinaryDataProperties: null);
@@ -60,7 +60,6 @@ namespace Azure.AI.Projects
         /// <param name="occurredOn"> The time when the suspension occurred. </param>
         /// <param name="details"> Additional reason-specific suspension details. </param>
         /// <returns> A new <see cref="Projects.AgentInsightSuspension"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static AgentInsightSuspension AgentInsightSuspension(string code = default, string message = default, DateTimeOffset occurredOn = default, IDictionary<string, BinaryData> details = default)
         {
             details ??= new ChangeTrackingDictionary<string, BinaryData>();
@@ -68,16 +67,26 @@ namespace Azure.AI.Projects
             return new AgentInsightSuspension(code, message, occurredOn, details, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Fields accepted when creating an Agent Insights monitor for an agent. </summary>
-        /// <param name="agentName"> The agent this monitor should analyze. </param>
-        /// <param name="enabled"> Whether scheduled insight generation should be armed. Defaults to false. </param>
-        /// <param name="runIntervalHours"> Interval between scheduled insight runs, in hours. Defaults to 6. </param>
-        /// <param name="modelDeploymentName"> The model deployment to use for analyzing traces. Accepts either the deployment name alone or with the connection name as '{connectionName}/modelDeploymentName'. </param>
-        /// <returns> A new <see cref="Projects.AgentInsightMonitorCreate"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static AgentInsightMonitorCreate AgentInsightMonitorCreate(string agentName = default, bool? enabled = default, double? runIntervalHours = default, string modelDeploymentName = default)
+        /// <summary> Monitor analysis priorities returned by the service. </summary>
+        /// <param name="categories"> Up to 20 distinct normalized category identifiers. Can include legacy names containing commas. Empty uses defaults. </param>
+        /// <param name="instructions"> Analysis guidance. Omitted when unavailable. </param>
+        /// <returns> A new <see cref="Projects.AgentInsightPrioritiesRead"/> instance for mocking. </returns>
+        public static AgentInsightPrioritiesRead AgentInsightPrioritiesRead(IEnumerable<string> categories = default, string instructions = default)
         {
-            return new AgentInsightMonitorCreate(agentName, enabled, runIntervalHours, modelDeploymentName, additionalBinaryDataProperties: null);
+            categories ??= new ChangeTrackingList<string>();
+
+            return new AgentInsightPrioritiesRead(categories.ToList(), instructions, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Monitor analysis priorities. </summary>
+        /// <param name="categories"> Up to 20 distinct normalized category identifiers (128 UTF-8 bytes each). Empty uses defaults. </param>
+        /// <param name="instructions"> Analysis guidance, up to 2,000 UTF-8 bytes after trimming. Null or blank removes guidance. </param>
+        /// <returns> A new <see cref="Projects.AgentInsightPriorities"/> instance for mocking. </returns>
+        public static AgentInsightPriorities AgentInsightPriorities(IEnumerable<string> categories = default, string instructions = default)
+        {
+            categories ??= new ChangeTrackingList<string>();
+
+            return new AgentInsightPriorities(categories.ToList(), instructions, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A per-agent Agent Insights monitor that owns configuration, runs, and discovered insights. </summary>
@@ -89,11 +98,11 @@ namespace Azure.AI.Projects
         /// <param name="nextScheduledRunOn"> The next time a scheduled agent insight run will start. Omitted when scheduled generation is disabled. </param>
         /// <param name="estimatedCost"> Estimated cost accumulated by Agent Insights for this monitor. </param>
         /// <param name="suspension"> Why the system suspended scheduled generation. Null when the monitor is not suspended. </param>
-        /// <param name="overview"> The effective overview, or null before an overview is available. </param>
+        /// <param name="agentSummary"> Generated summary. Omitted when unavailable. </param>
+        /// <param name="priorities"> Analysis priorities. Omitted when not configured. </param>
         /// <param name="updatedOn"> The time when this monitor was last updated. </param>
         /// <returns> A new <see cref="Projects.AgentInsightMonitor"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static AgentInsightMonitor AgentInsightMonitor(string id = default, string agentName = default, bool enabled = default, double runIntervalHours = default, string modelDeploymentName = default, DateTimeOffset? nextScheduledRunOn = default, AgentInsightEstimatedCost estimatedCost = default, AgentInsightSuspension suspension = default, AgentInsightsOverview overview = default, DateTimeOffset updatedOn = default)
+        public static AgentInsightMonitor AgentInsightMonitor(string id = default, string agentName = default, bool enabled = default, double runIntervalHours = default, string modelDeploymentName = default, DateTimeOffset? nextScheduledRunOn = default, AgentInsightEstimatedCost estimatedCost = default, AgentInsightSuspension suspension = default, AgentInsightSummary agentSummary = default, AgentInsightPrioritiesRead priorities = default, DateTimeOffset updatedOn = default)
         {
             return new AgentInsightMonitor(
                 id,
@@ -104,29 +113,26 @@ namespace Azure.AI.Projects
                 nextScheduledRunOn,
                 estimatedCost,
                 suspension,
-                overview,
+                agentSummary,
+                priorities,
                 updatedOn,
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The effective overview for an Agent Insights monitor. </summary>
-        /// <param name="content"> The overview content. </param>
-        /// <param name="source"> Where the effective overview came from. </param>
-        /// <param name="updatedOn"> The time when this overview was last updated. </param>
-        /// <returns> A new <see cref="Projects.AgentInsightsOverview"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static AgentInsightsOverview AgentInsightsOverview(string content = default, AgentInsightOverviewSource source = default, DateTimeOffset updatedOn = default)
+        /// <summary> Service-generated agent summary. </summary>
+        /// <param name="markdown"> Summary in Markdown. </param>
+        /// <returns> A new <see cref="Projects.AgentInsightSummary"/> instance for mocking. </returns>
+        public static AgentInsightSummary AgentInsightSummary(string markdown = default)
         {
-            return new AgentInsightsOverview(content, source, updatedOn, additionalBinaryDataProperties: null);
+            return new AgentInsightSummary(markdown, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Inputs used when creating an agent insight run. </summary>
+        /// <summary> Inputs recorded for an Agent Insights run. </summary>
         /// <param name="lookbackHours"> Optional finite positive number of hours of trace history to analyze, up to 2,160. Defaults to 168. </param>
-        /// <returns> A new <see cref="Projects.AgentInsightRunCreate"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static AgentInsightRunCreate AgentInsightRunCreate(double? lookbackHours = default)
+        /// <returns> A new <see cref="Projects.AgentInsightRunInputs"/> instance for mocking. </returns>
+        public static AgentInsightRunInputs AgentInsightRunInputs(double? lookbackHours = default)
         {
-            return new AgentInsightRunCreate(lookbackHours, additionalBinaryDataProperties: null);
+            return new AgentInsightRunInputs(lookbackHours, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Result statistics produced when an agent insight run succeeds. </summary>
@@ -137,7 +143,6 @@ namespace Azure.AI.Projects
         /// <param name="insightsReopened"> The number of insights reopened by the run. </param>
         /// <param name="tokenUsage"> Token usage for the run's insight-generation analysis. </param>
         /// <returns> A new <see cref="Projects.AgentInsightRunResult"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static AgentInsightRunResult AgentInsightRunResult(int tracesInWindow = default, int tracesAnalyzed = default, int insightsCreated = default, int insightsUpdated = default, int insightsReopened = default, AgentInsightTokenUsage tokenUsage = default)
         {
             return new AgentInsightRunResult(
@@ -156,7 +161,6 @@ namespace Azure.AI.Projects
         /// <param name="cachedTokens"> The number of input tokens served from cache. </param>
         /// <param name="totalTokens"> The total number of tokens used by the run. </param>
         /// <returns> A new <see cref="Projects.AgentInsightTokenUsage"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static AgentInsightTokenUsage AgentInsightTokenUsage(int inputTokens = default, int outputTokens = default, int? cachedTokens = default, int totalTokens = default)
         {
             return new AgentInsightTokenUsage(inputTokens, outputTokens, cachedTokens, totalTokens, additionalBinaryDataProperties: null);
@@ -177,7 +181,6 @@ namespace Azure.AI.Projects
         /// <param name="description"> The root-cause diagnosis for the issue. </param>
         /// <param name="details"> Additional insight details. Omitted unless details are requested. </param>
         /// <returns> A new <see cref="Projects.AgentInsight"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static AgentInsight AgentInsight(string id = default, string monitorId = default, string agentName = default, string agentVersion = default, string title = default, AgentInsightSeverity severity = default, string category = default, AgentInsightStatus status = default, int traceCount = default, DateTimeOffset createdOn = default, DateTimeOffset updatedOn = default, string description = default, AgentInsightDetails details = default)
         {
             return new AgentInsight(
@@ -202,7 +205,6 @@ namespace Azure.AI.Projects
         /// <param name="linkedTraces"> Up to 200 most recent traces linked to this insight as supporting evidence. </param>
         /// <param name="recommendedActions"> The recommended remediation for this insight. </param>
         /// <returns> A new <see cref="Projects.AgentInsightDetails"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static AgentInsightDetails AgentInsightDetails(IEnumerable<AgentInsightHighlightedTrace> highlightedTraces = default, IEnumerable<AgentInsightLinkedTrace> linkedTraces = default, AgentInsightRecommendedAction recommendedActions = default)
         {
             highlightedTraces ??= new ChangeTrackingList<AgentInsightHighlightedTrace>();
@@ -218,7 +220,6 @@ namespace Azure.AI.Projects
         /// <param name="totalTokens"> Aggregate input and output tokens reported across all model inference calls in this trace, including calls to different models. Intended for relative usage comparison, not cost estimation. </param>
         /// <param name="timestamp"> The time when the trace was recorded. </param>
         /// <returns> A new <see cref="Projects.AgentInsightHighlightedTrace"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static AgentInsightHighlightedTrace AgentInsightHighlightedTrace(string traceId = default, string summary = default, TimeSpan durationMs = default, int? totalTokens = default, DateTimeOffset timestamp = default)
         {
             return new AgentInsightHighlightedTrace(
@@ -234,7 +235,6 @@ namespace Azure.AI.Projects
         /// <param name="traceId"> The trace identifier. </param>
         /// <param name="timestamp"> The time when the trace was recorded. </param>
         /// <returns> A new <see cref="Projects.AgentInsightLinkedTrace"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static AgentInsightLinkedTrace AgentInsightLinkedTrace(string traceId = default, DateTimeOffset timestamp = default)
         {
             return new AgentInsightLinkedTrace(traceId, timestamp, additionalBinaryDataProperties: null);
@@ -243,7 +243,6 @@ namespace Azure.AI.Projects
         /// <summary> The recommended remediation for an agent insight. </summary>
         /// <param name="proposedFix"> The single recommended fix for the issue represented by the insight. </param>
         /// <returns> A new <see cref="Projects.AgentInsightRecommendedAction"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static AgentInsightRecommendedAction AgentInsightRecommendedAction(AgentInsightProposedFix proposedFix = default)
         {
             return new AgentInsightRecommendedAction(proposedFix, additionalBinaryDataProperties: null);
@@ -254,7 +253,6 @@ namespace Azure.AI.Projects
         /// <param name="text"> The human-readable remediation guidance. </param>
         /// <param name="changes"> The concrete changes. Omitted for a prose-only fix. </param>
         /// <returns> A new <see cref="Projects.AgentInsightProposedFix"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static AgentInsightProposedFix AgentInsightProposedFix(AgentInsightProposedFixKind kind = default, string text = default, IEnumerable<AgentInsightProposedFixChange> changes = default)
         {
             changes ??= new ChangeTrackingList<AgentInsightProposedFixChange>();
@@ -271,7 +269,6 @@ namespace Azure.AI.Projects
         /// <param name="oldValue"> The bounded Prompt value before the change. Present for Prompt changes, including when null. </param>
         /// <param name="newValue"> The bounded Prompt value after the change. Present for Prompt changes, including when null. </param>
         /// <returns> A new <see cref="Projects.AgentInsightProposedFixChange"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static AgentInsightProposedFixChange AgentInsightProposedFixChange(string path = default, string language = default, string diff = default, AgentInsightPromptSurface? surface = default, string target = default, BinaryData oldValue = default, BinaryData newValue = default)
         {
             return new AgentInsightProposedFixChange(
@@ -1297,20 +1294,20 @@ namespace Azure.AI.Projects
         /// <param name="reference"> Reference to the single Foundry Dataset (one combined JSONL file, version-aligned to `EvaluatorVersion.version`) holding all artifacts produced by the generation pipeline. Each row in the JSONL carries a `kind` field discriminating its content (e.g. `spec`, `tools`, `context`). </param>
         /// <param name="datasetRowKinds"> The kinds of rows present in `dataset`. Always contains `"spec"` (the generated evaluation specification, a Markdown document describing what the evaluator measures). May additionally contain `"tools"` (when the generation pipeline produced or inferred OpenAI tool schemas) and/or `"context"` (when supplementary materials such as file uploads or trace samples were used during generation). </param>
         /// <returns> A new <see cref="Evaluation.EvaluatorGenerationArtifacts"/> instance for mocking. </returns>
-        public static EvaluatorGenerationArtifacts EvaluatorGenerationArtifacts(DatasetReference reference = default, IEnumerable<string> datasetRowKinds = default)
+        public static EvaluatorGenerationArtifacts EvaluatorGenerationArtifacts(VersionedDatasetReference reference = default, IEnumerable<string> datasetRowKinds = default)
         {
             datasetRowKinds ??= new ChangeTrackingList<string>();
 
             return new EvaluatorGenerationArtifacts(reference, datasetRowKinds.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Reference to a versioned Foundry Dataset. </summary>
+        /// <summary> Reference to a Dataset whose concrete version has already been resolved. </summary>
         /// <param name="name"> Dataset name. </param>
-        /// <param name="version"> Dataset version. </param>
-        /// <returns> A new <see cref="Projects.DatasetReference"/> instance for mocking. </returns>
-        public static DatasetReference DatasetReference(string name = default, string version = default)
+        /// <param name="version"> Concrete Dataset version. </param>
+        /// <returns> A new <see cref="Projects.VersionedDatasetReference"/> instance for mocking. </returns>
+        public static VersionedDatasetReference VersionedDatasetReference(string name = default, string version = default)
         {
-            return new DatasetReference(name, version, additionalBinaryDataProperties: null);
+            return new VersionedDatasetReference(name, version, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Request body for getting evaluator credentials. </summary>
@@ -1378,9 +1375,12 @@ namespace Azure.AI.Projects
         /// <param name="agentVersion"> The agent version. If not specified, traces for ALL versions of the agent are included within the time window. </param>
         /// <param name="startsOn"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
         /// <param name="endsOn"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
+        /// <param name="traceIds"> Optional explicit list of trace IDs to include. </param>
         /// <returns> A new <see cref="Projects.TracesEvaluatorGenerationJobSource"/> instance for mocking. </returns>
-        public static TracesEvaluatorGenerationJobSource TracesEvaluatorGenerationJobSource(string description = default, string agentId = default, string agentName = default, string agentVersion = default, DateTimeOffset startsOn = default, DateTimeOffset? endsOn = default)
+        public static TracesEvaluatorGenerationJobSource TracesEvaluatorGenerationJobSource(string description = default, string agentId = default, string agentName = default, string agentVersion = default, DateTimeOffset startsOn = default, DateTimeOffset? endsOn = default, IEnumerable<string> traceIds = default)
         {
+            traceIds ??= new ChangeTrackingList<string>();
+
             return new TracesEvaluatorGenerationJobSource(
                 EvaluatorGenerationJobSourceType.Traces,
                 additionalBinaryDataProperties: null,
@@ -1389,7 +1389,8 @@ namespace Azure.AI.Projects
                 agentName,
                 agentVersion,
                 startsOn,
-                endsOn);
+                endsOn,
+                traceIds.ToList());
         }
 
         /// <summary> Dataset source for evaluator generation jobs — reference to a dataset. </summary>

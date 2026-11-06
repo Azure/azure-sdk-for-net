@@ -17,6 +17,8 @@ public class AgentTelephonyTests : AgentsTestBase
 {
     public AgentTelephonyTests(bool isAsync) : base(isAsync)
     {
+        ProjectsTestSanitizers.ApplyLegacyRealtimeVoiceRecordingDefaults(this);
+        ProjectsTestSanitizers.ApplyLegacyTelephonyCallJobRecordingRoutes(this);
     }
 
     private async Task<string> EnsureTelephonyAgentAsync(AgentAdministrationClient agentsClient)
@@ -62,7 +64,7 @@ public class AgentTelephonyTests : AgentsTestBase
             }
         }
 
-        CreateTwilioTelephonyBindingContent content = new(
+        TwilioTelephonyBinding content = new(
             connectionName: "cs-e2e-tests-twilio-connection",
             phoneNumber: "+15551234567")
         {
@@ -141,12 +143,12 @@ public class AgentTelephonyTests : AgentsTestBase
         TelephonyTransferTarget newTarget = new(
             name: "sales_desk",
             description: "Transfers to the sales desk for pricing questions.",
-            destination: new PSTNTelephonyTransferDestination("+14255550123"));
+            destination: new PhoneNumber("+14255550123"));
 
         TelephonyTransferTargets replaced = await telephonyClient.ReplaceTelephonyTransferTargetsAsync(agentName, "*", [newTarget], CancellationToken.None);
         Assert.That(replaced.TransferTargets, Has.Count.EqualTo(1));
         Assert.That(replaced.TransferTargets[0].Name, Is.EqualTo("sales_desk"));
-        Assert.That(replaced.TransferTargets[0].Destination, Is.InstanceOf<PSTNTelephonyTransferDestination>());
+        Assert.That(replaced.TransferTargets[0].Destination, Is.InstanceOf<PhoneNumber>());
 
         TelephonyTransferTargets confirmed = await telephonyClient.GetTelephonyTransferTargetsAsync(agentName, CancellationToken.None);
         Assert.That(confirmed.TransferTargets, Has.Count.EqualTo(1));

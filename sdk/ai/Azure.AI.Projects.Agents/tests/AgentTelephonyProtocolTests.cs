@@ -4,6 +4,7 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.ClientModel.TestFramework.Mocks;
@@ -53,9 +54,9 @@ public class AgentTelephonyProtocolTests
         ("EndTelephonyCall", c => c.EndTelephonyCallAsync("fake-agent", "fake-call", null, new RequestOptions()), "POST", "/agents/fake-agent/telephony/calls/fake-call:end", null, null),
         ("GetTelephonyTransferTargets", c => c.GetTelephonyTransferTargetsAsync("fake-agent", null, new RequestOptions()), "GET", "/agents/fake-agent/telephony/transfer_targets", null, null),
         ("ReplaceTelephonyTransferTargets", c => c.ReplaceTelephonyTransferTargetsAsync("fake-agent", "*", FakeJsonContent, foundryFeatures: null, options: new RequestOptions()), "PUT", "/agents/fake-agent/telephony/transfer_targets", "*", null),
-        ("CreateTelephonyCallJob", c => c.CreateTelephonyCallJobAsync("fake-agent", "fake-idempotency-key", FakeJsonContent, foundryFeatures: null, options: new RequestOptions()), "POST", "/agents/fake-agent/telephony/call_jobs", null, null),
-        ("GetTelephonyCallJob", c => c.GetTelephonyCallJobAsync("fake-agent", "fake-call-job", null, new RequestOptions()), "GET", "/agents/fake-agent/telephony/call_jobs/fake-call-job", null, null),
-        ("CancelTelephonyCallJob", c => c.CancelTelephonyCallJobAsync("fake-agent", "fake-call-job", "*", null, new RequestOptions()), "POST", "/agents/fake-agent/telephony/call_jobs/fake-call-job:cancel", "*", null),
+        ("CreateTelephonyCallJob", c => c.CreateTelephonyCallJobAsync("fake-agent", "fake-idempotency-key", FakeJsonContent, foundryFeatures: null, options: new RequestOptions()), "POST", "/agents/fake-agent/telephony_call_jobs", null, null),
+        ("GetTelephonyCallJob", c => c.GetTelephonyCallJobAsync("fake-agent", "fake-call-job", null, new RequestOptions()), "GET", "/agents/fake-agent/telephony_call_jobs/fake-call-job", null, null),
+        ("CancelTelephonyCallJob", c => c.CancelTelephonyCallJobAsync("fake-agent", "fake-call-job", "*", null, new RequestOptions()), "POST", "/agents/fake-agent/telephony_call_jobs/fake-call-job:cancel", "*", null),
     };
 
     private static IEnumerable<TestCaseData> Cases()
@@ -64,6 +65,19 @@ public class AgentTelephonyProtocolTests
         {
             yield return new TestCaseData(invoke, expectedMethod, expectedPathSuffix, expectedIfMatch, expectedContentType).SetName($"TelephonyRequestProtocol_{name}");
         }
+    }
+
+    [TestCase("/agents/agent/telephony/call_jobs?api-version=v1", "/agents/agent/telephony_call_jobs?api-version=v1")]
+    [TestCase("/agents/agent/telephony/call_jobs/job:cancel?api-version=v1", "/agents/agent/telephony_call_jobs/job:cancel?api-version=v1")]
+    [TestCase("/agents/agent/telephony_call_jobs/job?api-version=v1", "/agents/agent/telephony_call_jobs/job?api-version=v1")]
+    [TestCase("/agents/agent/telephony/call_jobs_extra", "/agents/agent/telephony/call_jobs_extra")]
+    [TestCase("/files/telephony/call_jobs/job", "/files/telephony/call_jobs/job")]
+    public void LegacyCallJobRecordingRoutesPreserveOtherPaths(string path, string expectedPath)
+    {
+        string normalized = Regex.Replace(path,
+            ProjectsTestSanitizers.LegacyTelephonyCallJobPathPattern,
+            ProjectsTestSanitizers.LegacyTelephonyCallJobPathReplacement);
+        Assert.That(normalized, Is.EqualTo(expectedPath));
     }
 
     [TestCaseSource(nameof(Cases))]

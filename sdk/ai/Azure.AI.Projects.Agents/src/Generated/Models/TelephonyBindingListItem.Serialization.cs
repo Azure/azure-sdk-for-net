@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// A telephony binding returned in a list, including its entity tag.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="TeamsPhoneExtensibilityTelephonyBindingListItem"/> and <see cref="TwilioTelephonyBindingListItem"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SipTelephonyBindingListItem"/>, <see cref="TeamsPhoneExtensibilityTelephonyBindingListItem"/>, and <see cref="TwilioTelephonyBindingListItem"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownTelephonyBindingListItem))]
     public abstract partial class TelephonyBindingListItem : IJsonModel<TelephonyBindingListItem>
@@ -89,8 +89,6 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToString());
             writer.WritePropertyName("incoming_call_url"u8);
             writer.WriteStringValue(IncomingCallUrl.AbsoluteUri);
             if (options.Format != "W")
@@ -144,6 +142,8 @@ namespace Azure.AI.Projects.Agents
             {
                 switch (discriminator.GetString())
                 {
+                    case "sip":
+                        return SipTelephonyBindingListItem.DeserializeSipTelephonyBindingListItem(element, options);
                     case "teams_phone_extensibility":
                         return TeamsPhoneExtensibilityTelephonyBindingListItem.DeserializeTeamsPhoneExtensibilityTelephonyBindingListItem(element, options);
                     case "twilio":

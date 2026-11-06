@@ -15,7 +15,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="VoiceAgentLlmGeneratedGreetingConfig"/>. </summary>
         /// <param name="prompt"> The Handlebars prompt that guides the opening turn. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="prompt"/> is null. </exception>
-        public VoiceAgentLlmGeneratedGreetingConfig(string prompt) : base("llm_generated")
+        public VoiceAgentLlmGeneratedGreetingConfig(string prompt) : base(VoiceAgentGreetingMode.LlmGenerated)
         {
             Argument.AssertNotNull(prompt, nameof(prompt));
 
@@ -27,7 +27,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="prompt"> The Handlebars prompt that guides the opening turn. </param>
         /// <param name="internalToolChoice"> The tool-selection policy for the opening response. Defaults to `none`. </param>
-        internal VoiceAgentLlmGeneratedGreetingConfig(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string prompt, BinaryData internalToolChoice) : base(@type, additionalBinaryDataProperties)
+        internal VoiceAgentLlmGeneratedGreetingConfig(VoiceAgentGreetingMode @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string prompt, BinaryData internalToolChoice) : base(@type, additionalBinaryDataProperties)
         {
             Prompt = prompt;
             InternalToolChoice = internalToolChoice;

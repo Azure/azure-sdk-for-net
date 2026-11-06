@@ -75,7 +75,7 @@ namespace Azure.AI.Projects.Agents
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStartArray();
-                foreach (OptimizationContext item in Context)
+                foreach (SteeringPromptOptimizationContext item in Context)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -110,7 +110,7 @@ namespace Azure.AI.Projects.Agents
             }
             AgentOptimizationConfigurationType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<OptimizationContext> context = default;
+            IList<SteeringPromptOptimizationContext> context = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -124,10 +124,10 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    List<OptimizationContext> array = new List<OptimizationContext>();
+                    List<SteeringPromptOptimizationContext> array = new List<SteeringPromptOptimizationContext>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(OptimizationContext.DeserializeOptimizationContext(item, options));
+                        array.Add(SteeringPromptOptimizationContext.DeserializeSteeringPromptOptimizationContext(item, options));
                     }
                     context = array;
                     continue;
@@ -137,7 +137,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PromptOptimizationConfiguration(@type, additionalBinaryDataProperties, context ?? new ChangeTrackingList<OptimizationContext>());
+            return new PromptOptimizationConfiguration(@type, additionalBinaryDataProperties, context ?? new ChangeTrackingList<SteeringPromptOptimizationContext>());
         }
     }
 }

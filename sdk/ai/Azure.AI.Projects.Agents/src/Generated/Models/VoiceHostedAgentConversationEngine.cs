@@ -15,7 +15,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="VoiceHostedAgentConversationEngine"/>. </summary>
         /// <param name="name"> The non-empty DNS-like name of the target hosted text agent in the same project. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public VoiceHostedAgentConversationEngine(string name) : base("hosted_agent")
+        public VoiceHostedAgentConversationEngine(string name) : base(VoiceConversationEngineType.HostedAgent)
         {
             Argument.AssertNotNull(name, nameof(name));
 
@@ -27,7 +27,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The non-empty DNS-like name of the target hosted text agent in the same project. </param>
         /// <param name="version"> The target agent version. Omit this property to select the latest version when the voice session starts. When supplied, use a positive integer or `draft-{positive-unix-timestamp}` whose numeric component fits in a signed 64-bit integer. </param>
-        internal VoiceHostedAgentConversationEngine(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string version) : base(@type, additionalBinaryDataProperties)
+        internal VoiceHostedAgentConversationEngine(VoiceConversationEngineType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string version) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Version = version;

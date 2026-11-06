@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Regenerated from `feature/foundry-release` at [`768c3a412129295692b60788fa76fc27b6d484ff`](https://github.com/Azure/azure-rest-api-specs/tree/768c3a412129295692b60788fa76fc27b6d484ff), using OpenAI TypeSpec 1.34.1.
+
 ## 3.0.0-beta.6 (2026-10-30)
 
 ### Features Added

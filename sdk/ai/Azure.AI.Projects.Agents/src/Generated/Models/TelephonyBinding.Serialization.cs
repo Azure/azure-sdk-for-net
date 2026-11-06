@@ -11,7 +11,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// A telephony binding owned by a voice agent.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="TeamsPhoneExtensibilityTelephonyBinding"/> and <see cref="TwilioTelephonyBinding"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SipTelephonyBinding"/>, <see cref="TeamsPhoneExtensibilityTelephonyBinding"/>, and <see cref="TwilioTelephonyBinding"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownTelephonyBinding))]
     public abstract partial class TelephonyBinding : IJsonModel<TelephonyBinding>
@@ -61,6 +61,16 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<TelephonyBinding>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+        /// <param name="telephonyBinding"> The <see cref="TelephonyBinding"/> to serialize into <see cref="BinaryContent"/>. </param>
+        public static implicit operator BinaryContent(TelephonyBinding telephonyBinding)
+        {
+            if (telephonyBinding == null)
+            {
+                return null;
+            }
+            return BinaryContent.Create(telephonyBinding, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="TelephonyBinding"/> from. </param>
         public static explicit operator TelephonyBinding(ClientResult result)
         {
@@ -87,8 +97,11 @@ namespace Azure.AI.Projects.Agents
             {
                 throw new FormatException($"The model {nameof(TelephonyBinding)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
             writer.WritePropertyName("provider"u8);
             writer.WriteStringValue(Provider.ToString());
             writer.WritePropertyName("connection_name"u8);
@@ -98,10 +111,11 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToString());
-            writer.WritePropertyName("incoming_call_url"u8);
-            writer.WriteStringValue(IncomingCallUrl.AbsoluteUri);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("incoming_call_url"u8);
+                SerializeIncomingCallUrl(writer, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -148,6 +162,8 @@ namespace Azure.AI.Projects.Agents
             {
                 switch (discriminator.GetString())
                 {
+                    case "sip":
+                        return SipTelephonyBinding.DeserializeSipTelephonyBinding(element, options);
                     case "teams_phone_extensibility":
                         return TeamsPhoneExtensibilityTelephonyBinding.DeserializeTeamsPhoneExtensibilityTelephonyBinding(element, options);
                     case "twilio":

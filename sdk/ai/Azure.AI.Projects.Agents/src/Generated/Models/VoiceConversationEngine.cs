@@ -20,7 +20,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of <see cref="VoiceConversationEngine"/>. </summary>
         /// <param name="type"> The conversation engine type. </param>
-        private protected VoiceConversationEngine(string @type)
+        private protected VoiceConversationEngine(VoiceConversationEngineType @type)
         {
             Type = @type;
         }
@@ -28,13 +28,13 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="VoiceConversationEngine"/>. </summary>
         /// <param name="type"> The conversation engine type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceConversationEngine(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceConversationEngine(VoiceConversationEngineType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The conversation engine type. </summary>
-        internal string Type { get; set; }
+        internal VoiceConversationEngineType Type { get; set; }
     }
 }
