@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadImpactsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, context);
+                using HttpMessage message = _workloadImpactsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WorkloadImpactData> response = Response.FromValue(WorkloadImpactData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadImpactsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, context);
+                using HttpMessage message = _workloadImpactsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WorkloadImpactData> response = Response.FromValue(WorkloadImpactData.FromResponse(result), result);
                 if (response.Value == null)
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadImpactsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.Name, context);
+                using HttpMessage message = _workloadImpactsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadImpactsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.Name, context);
+                using HttpMessage message = _workloadImpactsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadImpactsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.Name, WorkloadImpactData.ToRequestContent(data), context);
+                using HttpMessage message = _workloadImpactsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.Name, WorkloadImpactData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ImpactReportingArmOperation<WorkloadImpactResource> operation = new ImpactReportingArmOperation<WorkloadImpactResource>(
                     new WorkloadImpactResourceOperationSource(Client),
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadImpactsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.Name, WorkloadImpactData.ToRequestContent(data), context);
+                using HttpMessage message = _workloadImpactsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.Name, WorkloadImpactData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ImpactReportingArmOperation<WorkloadImpactResource> operation = new ImpactReportingArmOperation<WorkloadImpactResource>(
                     new WorkloadImpactResourceOperationSource(Client),

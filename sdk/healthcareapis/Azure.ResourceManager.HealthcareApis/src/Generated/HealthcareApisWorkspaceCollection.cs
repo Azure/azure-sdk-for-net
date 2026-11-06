@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _healthcareApisWorkspacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, HealthcareApisWorkspaceData.ToRequestContent(data), context);
+                using HttpMessage message = _healthcareApisWorkspacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, HealthcareApisWorkspaceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HealthcareApisArmOperation<HealthcareApisWorkspaceResource> operation = new HealthcareApisArmOperation<HealthcareApisWorkspaceResource>(
                     new HealthcareApisWorkspaceResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _healthcareApisWorkspacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, HealthcareApisWorkspaceData.ToRequestContent(data), context);
+                using HttpMessage message = _healthcareApisWorkspacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, HealthcareApisWorkspaceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HealthcareApisArmOperation<HealthcareApisWorkspaceResource> operation = new HealthcareApisArmOperation<HealthcareApisWorkspaceResource>(
                     new HealthcareApisWorkspaceResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _healthcareApisWorkspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, context);
+                using HttpMessage message = _healthcareApisWorkspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HealthcareApisWorkspaceData> response = Response.FromValue(HealthcareApisWorkspaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _healthcareApisWorkspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, context);
+                using HttpMessage message = _healthcareApisWorkspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HealthcareApisWorkspaceData> response = Response.FromValue(HealthcareApisWorkspaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _healthcareApisWorkspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, context);
+                using HttpMessage message = _healthcareApisWorkspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HealthcareApisWorkspaceData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _healthcareApisWorkspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, context);
+                using HttpMessage message = _healthcareApisWorkspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HealthcareApisWorkspaceData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _healthcareApisWorkspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, context);
+                using HttpMessage message = _healthcareApisWorkspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HealthcareApisWorkspaceData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _healthcareApisWorkspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, context);
+                using HttpMessage message = _healthcareApisWorkspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HealthcareApisWorkspaceData> response = default;

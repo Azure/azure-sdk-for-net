@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.IotHub.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = IotHubResourceRestClient.CreateCheckIotHubNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), IotHubNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = IotHubResourceRestClient.CreateCheckIotHubNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), IotHubNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<IotHubNameAvailabilityResponse> response = Response.FromValue(IotHubNameAvailabilityResponse.FromResponse(result), result);
                 if (response.Value == null)
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.IotHub.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = IotHubResourceRestClient.CreateCheckIotHubNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), IotHubNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = IotHubResourceRestClient.CreateCheckIotHubNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), IotHubNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<IotHubNameAvailabilityResponse> response = Response.FromValue(IotHubNameAvailabilityResponse.FromResponse(result), result);
                 if (response.Value == null)

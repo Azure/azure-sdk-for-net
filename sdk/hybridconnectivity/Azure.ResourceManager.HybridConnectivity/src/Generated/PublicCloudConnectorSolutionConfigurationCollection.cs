@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.ToString(), solutionConfiguration, PublicCloudConnectorSolutionConfigurationData.ToRequestContent(data), context);
+                using HttpMessage message = _solutionConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.ToString(), solutionConfiguration, PublicCloudConnectorSolutionConfigurationData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PublicCloudConnectorSolutionConfigurationData> response = Response.FromValue(PublicCloudConnectorSolutionConfigurationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.ToString(), solutionConfiguration, PublicCloudConnectorSolutionConfigurationData.ToRequestContent(data), context);
+                using HttpMessage message = _solutionConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.ToString(), solutionConfiguration, PublicCloudConnectorSolutionConfigurationData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PublicCloudConnectorSolutionConfigurationData> response = Response.FromValue(PublicCloudConnectorSolutionConfigurationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionConfigurationsRestClient.CreateGetRequest(Id.ToString(), solutionConfiguration, context);
+                using HttpMessage message = _solutionConfigurationsRestClient.CreateGetRequest(Id.ToString(), solutionConfiguration, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PublicCloudConnectorSolutionConfigurationData> response = Response.FromValue(PublicCloudConnectorSolutionConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionConfigurationsRestClient.CreateGetRequest(Id.ToString(), solutionConfiguration, context);
+                using HttpMessage message = _solutionConfigurationsRestClient.CreateGetRequest(Id.ToString(), solutionConfiguration, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PublicCloudConnectorSolutionConfigurationData> response = Response.FromValue(PublicCloudConnectorSolutionConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionConfigurationsRestClient.CreateGetRequest(Id.ToString(), solutionConfiguration, context);
+                using HttpMessage message = _solutionConfigurationsRestClient.CreateGetRequest(Id.ToString(), solutionConfiguration, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PublicCloudConnectorSolutionConfigurationData> response = default;
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionConfigurationsRestClient.CreateGetRequest(Id.ToString(), solutionConfiguration, context);
+                using HttpMessage message = _solutionConfigurationsRestClient.CreateGetRequest(Id.ToString(), solutionConfiguration, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PublicCloudConnectorSolutionConfigurationData> response = default;
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionConfigurationsRestClient.CreateGetRequest(Id.ToString(), solutionConfiguration, context);
+                using HttpMessage message = _solutionConfigurationsRestClient.CreateGetRequest(Id.ToString(), solutionConfiguration, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PublicCloudConnectorSolutionConfigurationData> response = default;
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionConfigurationsRestClient.CreateGetRequest(Id.ToString(), solutionConfiguration, context);
+                using HttpMessage message = _solutionConfigurationsRestClient.CreateGetRequest(Id.ToString(), solutionConfiguration, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PublicCloudConnectorSolutionConfigurationData> response = default;

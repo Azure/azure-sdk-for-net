@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publishersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, publisherName, PublisherData.ToRequestContent(data), context);
+                using HttpMessage message = _publishersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, publisherName, PublisherData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridNetworkArmOperation<PublisherResource> operation = new HybridNetworkArmOperation<PublisherResource>(
                     new PublisherResourceOperationSource(Client),
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publishersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, publisherName, PublisherData.ToRequestContent(data), context);
+                using HttpMessage message = _publishersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, publisherName, PublisherData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridNetworkArmOperation<PublisherResource> operation = new HybridNetworkArmOperation<PublisherResource>(
                     new PublisherResourceOperationSource(Client),
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publishersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, publisherName, context);
+                using HttpMessage message = _publishersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, publisherName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PublisherData> response = Response.FromValue(PublisherData.FromResponse(result), result);
                 if (response.Value == null)
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publishersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, publisherName, context);
+                using HttpMessage message = _publishersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, publisherName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PublisherData> response = Response.FromValue(PublisherData.FromResponse(result), result);
                 if (response.Value == null)
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publishersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, publisherName, context);
+                using HttpMessage message = _publishersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, publisherName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PublisherData> response = default;
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publishersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, publisherName, context);
+                using HttpMessage message = _publishersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, publisherName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PublisherData> response = default;
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publishersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, publisherName, context);
+                using HttpMessage message = _publishersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, publisherName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PublisherData> response = default;
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publishersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, publisherName, context);
+                using HttpMessage message = _publishersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, publisherName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PublisherData> response = default;

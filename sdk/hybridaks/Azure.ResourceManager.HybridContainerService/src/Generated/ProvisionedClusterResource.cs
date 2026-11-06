@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _provisionedClustersRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), ProvisionedClusterData.ToRequestContent(data), context);
+                using HttpMessage message = _provisionedClustersRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), ProvisionedClusterData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridContainerServiceArmOperation<ProvisionedClusterResource> operation = new HybridContainerServiceArmOperation<ProvisionedClusterResource>(
                     new ProvisionedClusterResourceOperationSource(Client),
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _provisionedClustersRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), ProvisionedClusterData.ToRequestContent(data), context);
+                using HttpMessage message = _provisionedClustersRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), ProvisionedClusterData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridContainerServiceArmOperation<ProvisionedClusterResource> operation = new HybridContainerServiceArmOperation<ProvisionedClusterResource>(
                     new ProvisionedClusterResourceOperationSource(Client),
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _provisionedClustersRestClient.CreateGetRequest(Id.Parent.ToString(), context);
+                using HttpMessage message = _provisionedClustersRestClient.CreateGetRequest(Id.Parent.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ProvisionedClusterData> response = Response.FromValue(ProvisionedClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _provisionedClustersRestClient.CreateGetRequest(Id.Parent.ToString(), context);
+                using HttpMessage message = _provisionedClustersRestClient.CreateGetRequest(Id.Parent.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ProvisionedClusterData> response = Response.FromValue(ProvisionedClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _provisionedClustersRestClient.CreateDeleteRequest(Id.Parent.ToString(), context);
+                using HttpMessage message = _provisionedClustersRestClient.CreateDeleteRequest(Id.Parent.ToString(), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridContainerServiceArmOperation operation = new HybridContainerServiceArmOperation(_provisionedClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _provisionedClustersRestClient.CreateDeleteRequest(Id.Parent.ToString(), context);
+                using HttpMessage message = _provisionedClustersRestClient.CreateDeleteRequest(Id.Parent.ToString(), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridContainerServiceArmOperation operation = new HybridContainerServiceArmOperation(_provisionedClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _provisionedClustersRestClient.CreateGetAdminKubeconfigRequest(Id.Parent.ToString(), context);
+                using HttpMessage message = _provisionedClustersRestClient.CreateGetAdminKubeconfigRequest(Id.Parent.ToString(), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridContainerServiceArmOperation<HybridContainerServiceCredentialListResult> operation = new HybridContainerServiceArmOperation<HybridContainerServiceCredentialListResult>(
                     new HybridContainerServiceCredentialListResultOperationSource(),
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _provisionedClustersRestClient.CreateGetAdminKubeconfigRequest(Id.Parent.ToString(), context);
+                using HttpMessage message = _provisionedClustersRestClient.CreateGetAdminKubeconfigRequest(Id.Parent.ToString(), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridContainerServiceArmOperation<HybridContainerServiceCredentialListResult> operation = new HybridContainerServiceArmOperation<HybridContainerServiceCredentialListResult>(
                     new HybridContainerServiceCredentialListResultOperationSource(),
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _provisionedClustersRestClient.CreateGetUserKubeconfigRequest(Id.Parent.ToString(), context);
+                using HttpMessage message = _provisionedClustersRestClient.CreateGetUserKubeconfigRequest(Id.Parent.ToString(), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridContainerServiceArmOperation<HybridContainerServiceCredentialListResult> operation = new HybridContainerServiceArmOperation<HybridContainerServiceCredentialListResult>(
                     new HybridContainerServiceCredentialListResultOperationSource(),
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _provisionedClustersRestClient.CreateGetUserKubeconfigRequest(Id.Parent.ToString(), context);
+                using HttpMessage message = _provisionedClustersRestClient.CreateGetUserKubeconfigRequest(Id.Parent.ToString(), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridContainerServiceArmOperation<HybridContainerServiceCredentialListResult> operation = new HybridContainerServiceArmOperation<HybridContainerServiceCredentialListResult>(
                     new HybridContainerServiceCredentialListResultOperationSource(),

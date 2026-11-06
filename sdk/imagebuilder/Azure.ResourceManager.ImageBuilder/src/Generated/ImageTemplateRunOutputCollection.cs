@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ImageBuilder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRunOutputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runOutputName, context);
+                using HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRunOutputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runOutputName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ImageTemplateRunOutputData> response = Response.FromValue(ImageTemplateRunOutputData.FromResponse(result), result);
                 if (response.Value == null)
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ImageBuilder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRunOutputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runOutputName, context);
+                using HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRunOutputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runOutputName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ImageTemplateRunOutputData> response = Response.FromValue(ImageTemplateRunOutputData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ImageBuilder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRunOutputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runOutputName, context);
+                using HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRunOutputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runOutputName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ImageTemplateRunOutputData> response = default;
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.ImageBuilder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRunOutputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runOutputName, context);
+                using HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRunOutputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runOutputName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ImageTemplateRunOutputData> response = default;
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.ImageBuilder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRunOutputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runOutputName, context);
+                using HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRunOutputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runOutputName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ImageTemplateRunOutputData> response = default;
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.ImageBuilder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRunOutputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runOutputName, context);
+                using HttpMessage message = _virtualMachineImageTemplatesRestClient.CreateGetRunOutputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runOutputName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ImageTemplateRunOutputData> response = default;

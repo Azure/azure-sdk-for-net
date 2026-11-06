@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverlessRuntimesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverlessRuntimeName, InformaticaServerlessRuntimeData.ToRequestContent(data), context);
+                using HttpMessage message = _serverlessRuntimesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverlessRuntimeName, InformaticaServerlessRuntimeData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 InformaticaDataManagementArmOperation<InformaticaServerlessRuntimeResource> operation = new InformaticaDataManagementArmOperation<InformaticaServerlessRuntimeResource>(
                     new InformaticaServerlessRuntimeResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverlessRuntimesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverlessRuntimeName, InformaticaServerlessRuntimeData.ToRequestContent(data), context);
+                using HttpMessage message = _serverlessRuntimesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverlessRuntimeName, InformaticaServerlessRuntimeData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 InformaticaDataManagementArmOperation<InformaticaServerlessRuntimeResource> operation = new InformaticaDataManagementArmOperation<InformaticaServerlessRuntimeResource>(
                     new InformaticaServerlessRuntimeResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverlessRuntimesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverlessRuntimeName, context);
+                using HttpMessage message = _serverlessRuntimesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverlessRuntimeName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<InformaticaServerlessRuntimeData> response = Response.FromValue(InformaticaServerlessRuntimeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverlessRuntimesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverlessRuntimeName, context);
+                using HttpMessage message = _serverlessRuntimesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverlessRuntimeName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<InformaticaServerlessRuntimeData> response = Response.FromValue(InformaticaServerlessRuntimeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverlessRuntimesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverlessRuntimeName, context);
+                using HttpMessage message = _serverlessRuntimesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverlessRuntimeName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<InformaticaServerlessRuntimeData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverlessRuntimesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverlessRuntimeName, context);
+                using HttpMessage message = _serverlessRuntimesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverlessRuntimeName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<InformaticaServerlessRuntimeData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverlessRuntimesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverlessRuntimeName, context);
+                using HttpMessage message = _serverlessRuntimesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverlessRuntimeName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<InformaticaServerlessRuntimeData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serverlessRuntimesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverlessRuntimeName, context);
+                using HttpMessage message = _serverlessRuntimesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverlessRuntimeName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<InformaticaServerlessRuntimeData> response = default;

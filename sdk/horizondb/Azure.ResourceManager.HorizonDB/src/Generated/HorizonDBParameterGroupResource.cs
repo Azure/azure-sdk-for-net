@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _horizonDBParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HorizonDBParameterGroupData> response = Response.FromValue(HorizonDBParameterGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _horizonDBParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HorizonDBParameterGroupData> response = Response.FromValue(HorizonDBParameterGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBParameterGroupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HorizonDBParameterGroupPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _horizonDBParameterGroupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HorizonDBParameterGroupPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HorizonDBArmOperation<HorizonDBParameterGroupResource> operation = new HorizonDBArmOperation<HorizonDBParameterGroupResource>(
                     new HorizonDBParameterGroupResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBParameterGroupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HorizonDBParameterGroupPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _horizonDBParameterGroupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HorizonDBParameterGroupPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HorizonDBArmOperation<HorizonDBParameterGroupResource> operation = new HorizonDBArmOperation<HorizonDBParameterGroupResource>(
                     new HorizonDBParameterGroupResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBParameterGroupsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _horizonDBParameterGroupsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HorizonDBArmOperation operation = new HorizonDBArmOperation(_horizonDBParameterGroupsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBParameterGroupsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _horizonDBParameterGroupsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HorizonDBArmOperation operation = new HorizonDBArmOperation(_horizonDBParameterGroupsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.HorizonDB
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _horizonDBParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _horizonDBParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<HorizonDBParameterGroupData> response = Response.FromValue(HorizonDBParameterGroupData.FromResponse(result), result);
                     return Response.FromValue(new HorizonDBParameterGroupResource(Client, response.Value), response.GetRawResponse());
@@ -632,7 +632,7 @@ namespace Azure.ResourceManager.HorizonDB
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _horizonDBParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _horizonDBParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<HorizonDBParameterGroupData> response = Response.FromValue(HorizonDBParameterGroupData.FromResponse(result), result);
                     return Response.FromValue(new HorizonDBParameterGroupResource(Client, response.Value), response.GetRawResponse());
@@ -678,7 +678,7 @@ namespace Azure.ResourceManager.HorizonDB
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _horizonDBParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _horizonDBParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<HorizonDBParameterGroupData> response = Response.FromValue(HorizonDBParameterGroupData.FromResponse(result), result);
                     return Response.FromValue(new HorizonDBParameterGroupResource(Client, response.Value), response.GetRawResponse());
@@ -720,7 +720,7 @@ namespace Azure.ResourceManager.HorizonDB
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _horizonDBParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _horizonDBParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<HorizonDBParameterGroupData> response = Response.FromValue(HorizonDBParameterGroupData.FromResponse(result), result);
                     return Response.FromValue(new HorizonDBParameterGroupResource(Client, response.Value), response.GetRawResponse());
@@ -762,7 +762,7 @@ namespace Azure.ResourceManager.HorizonDB
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _horizonDBParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _horizonDBParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<HorizonDBParameterGroupData> response = Response.FromValue(HorizonDBParameterGroupData.FromResponse(result), result);
                     return Response.FromValue(new HorizonDBParameterGroupResource(Client, response.Value), response.GetRawResponse());
@@ -808,7 +808,7 @@ namespace Azure.ResourceManager.HorizonDB
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _horizonDBParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _horizonDBParameterGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<HorizonDBParameterGroupData> response = Response.FromValue(HorizonDBParameterGroupData.FromResponse(result), result);
                     return Response.FromValue(new HorizonDBParameterGroupResource(Client, response.Value), response.GetRawResponse());

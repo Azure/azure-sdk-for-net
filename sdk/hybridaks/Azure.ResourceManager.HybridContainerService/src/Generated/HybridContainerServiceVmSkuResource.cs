@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vmSkuProfilesRestClient.CreateCreateVMSkusRequest(Id.Parent.ToString(), HybridContainerServiceVmSkuData.ToRequestContent(data), context);
+                using HttpMessage message = _vmSkuProfilesRestClient.CreateCreateVMSkusRequest(Id.Parent.ToString(), HybridContainerServiceVmSkuData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridContainerServiceArmOperation<HybridContainerServiceVmSkuResource> operation = new HybridContainerServiceArmOperation<HybridContainerServiceVmSkuResource>(
                     new HybridContainerServiceVmSkuResourceOperationSource(Client),
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vmSkuProfilesRestClient.CreateCreateVMSkusRequest(Id.Parent.ToString(), HybridContainerServiceVmSkuData.ToRequestContent(data), context);
+                using HttpMessage message = _vmSkuProfilesRestClient.CreateCreateVMSkusRequest(Id.Parent.ToString(), HybridContainerServiceVmSkuData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridContainerServiceArmOperation<HybridContainerServiceVmSkuResource> operation = new HybridContainerServiceArmOperation<HybridContainerServiceVmSkuResource>(
                     new HybridContainerServiceVmSkuResourceOperationSource(Client),
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vmSkuProfilesRestClient.CreateGetVMSkusRequest(Id.Parent.ToString(), context);
+                using HttpMessage message = _vmSkuProfilesRestClient.CreateGetVMSkusRequest(Id.Parent.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HybridContainerServiceVmSkuData> response = Response.FromValue(HybridContainerServiceVmSkuData.FromResponse(result), result);
                 if (response.Value == null)
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vmSkuProfilesRestClient.CreateGetVMSkusRequest(Id.Parent.ToString(), context);
+                using HttpMessage message = _vmSkuProfilesRestClient.CreateGetVMSkusRequest(Id.Parent.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HybridContainerServiceVmSkuData> response = Response.FromValue(HybridContainerServiceVmSkuData.FromResponse(result), result);
                 if (response.Value == null)
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vmSkuProfilesRestClient.CreateDeleteVMSkusRequest(Id.Parent.ToString(), context);
+                using HttpMessage message = _vmSkuProfilesRestClient.CreateDeleteVMSkusRequest(Id.Parent.ToString(), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridContainerServiceArmOperation operation = new HybridContainerServiceArmOperation(_vmSkuProfilesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vmSkuProfilesRestClient.CreateDeleteVMSkusRequest(Id.Parent.ToString(), context);
+                using HttpMessage message = _vmSkuProfilesRestClient.CreateDeleteVMSkusRequest(Id.Parent.ToString(), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridContainerServiceArmOperation operation = new HybridContainerServiceArmOperation(_vmSkuProfilesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
