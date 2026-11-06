@@ -4,6 +4,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
@@ -32,12 +33,12 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Creates a fake <see cref="FormRecognizerClient" />.
         /// </summary>
         /// <returns>The fake <see cref="FormRecognizerClient" />.</returns>
-        private FormRecognizerClient CreateClient()
+        private FormRecognizerClient CreateClient(FormRecognizerClientOptions options = null)
         {
             var fakeEndpoint = new Uri("http://notreal.azure.com");
             var fakeCredential = new AzureKeyCredential("fakeKey");
 
-            return new FormRecognizerClient(fakeEndpoint, fakeCredential, new FormRecognizerClientOptions() { Retry = { Delay = TimeSpan.Zero, Mode = RetryMode.Fixed } });
+            return new FormRecognizerClient(fakeEndpoint, fakeCredential, options ?? new FormRecognizerClientOptions() { Retry = { Delay = TimeSpan.Zero, Mode = RetryMode.Fixed } });
         }
 
         /// <summary>
@@ -101,21 +102,31 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(endpoint, keyCredential, null));
         }
 
-        [Test]
-        public async Task FormRecognizerClientThrowsWithNonExistingResourceEndpoint()
+        [TestCase(false)]
+        [TestCase(true)]
+        public void FormRecognizerClientPropagatesEndpointFailures(bool gatewayResponse)
         {
-            var client = CreateInstrumentedClient();
+            var transport = new MockTransport(_ => gatewayResponse
+                ? new MockResponse(502)
+                : throw new RequestFailedException("Endpoint unavailable.", new HttpRequestException("Injected connection failure.")));
+            var client = InstrumentClient(CreateClient(new FormRecognizerClientOptions
+            {
+                Transport = transport,
+                Retry = { Delay = TimeSpan.Zero, Mode = RetryMode.Fixed }
+            }));
 
-            try
+            var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.Form1);
+            if (gatewayResponse)
             {
-                var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.Form1);
-                await client.StartRecognizeContentFromUriAsync(uri);
+                var exception = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeContentFromUriAsync(uri));
+                Assert.That(exception.Status, Is.EqualTo(502));
             }
-            catch (AggregateException ex)
+            else
             {
-                var innerExceptions = ex.InnerExceptions.ToList();
-                Assert.IsTrue(innerExceptions.All(ex => ex is RequestFailedException));
+                var exception = Assert.ThrowsAsync<AggregateException>(async () => await client.StartRecognizeContentFromUriAsync(uri));
+                Assert.That(exception.InnerExceptions, Has.All.TypeOf<RequestFailedException>());
             }
+            Assert.That(transport.Requests, Has.Count.EqualTo(4));
         }
 
         #endregion

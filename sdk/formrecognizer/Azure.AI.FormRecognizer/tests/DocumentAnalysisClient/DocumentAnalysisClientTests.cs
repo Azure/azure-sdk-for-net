@@ -4,6 +4,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -31,12 +32,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         /// Creates a fake <see cref="DocumentAnalysisClient" />.
         /// </summary>
         /// <returns>The fake <see cref="DocumentAnalysisClient" />.</returns>
-        private DocumentAnalysisClient CreateClient()
+        private DocumentAnalysisClient CreateClient(DocumentAnalysisClientOptions options = null)
         {
             var fakeEndpoint = new Uri("http://notreal.azure.com");
             var fakeCredential = new AzureKeyCredential("fakeKey");
 
-            return new DocumentAnalysisClient(fakeEndpoint, fakeCredential, new DocumentAnalysisClientOptions() { Retry = { Delay = TimeSpan.Zero, Mode = RetryMode.Fixed } });
+            return new DocumentAnalysisClient(fakeEndpoint, fakeCredential, options ?? new DocumentAnalysisClientOptions() { Retry = { Delay = TimeSpan.Zero, Mode = RetryMode.Fixed } });
         }
 
         /// <summary>
@@ -87,21 +88,33 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.Throws<ArgumentNullException>(() => new DocumentAnalysisClient(endpoint, default(AzureKeyCredential), new DocumentAnalysisClientOptions()));
         }
 
-        [Test]
-        public async Task DocumentAnalysisClientThrowsWithNonExistingResourceEndpoint()
+        [TestCase(false)]
+        [TestCase(true)]
+        public void DocumentAnalysisClientPropagatesEndpointFailures(bool gatewayResponse)
         {
-            var client = CreateInstrumentedClient();
+            var transport = new MockTransport(_ => gatewayResponse
+                ? new MockResponse(502)
+                : throw new RequestFailedException("Endpoint unavailable.", new HttpRequestException("Injected connection failure.")));
+            var client = InstrumentClient(CreateClient(new DocumentAnalysisClientOptions
+            {
+                Transport = transport,
+                Retry = { Delay = TimeSpan.Zero, Mode = RetryMode.Fixed }
+            }));
 
-            try
+            using var stream = new MemoryStream(Array.Empty<byte>());
+            if (gatewayResponse)
             {
-                using var stream = new MemoryStream(Array.Empty<byte>());
-                await client.AnalyzeDocumentAsync(WaitUntil.Started, "modelId", stream);
+                var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                    await client.AnalyzeDocumentAsync(WaitUntil.Started, "modelId", stream));
+                Assert.That(exception.Status, Is.EqualTo(502));
             }
-            catch (AggregateException ex)
+            else
             {
-                var innerExceptions = ex.InnerExceptions.ToList();
-                Assert.IsTrue(innerExceptions.All(ex => ex is RequestFailedException));
+                var exception = Assert.ThrowsAsync<AggregateException>(async () =>
+                    await client.AnalyzeDocumentAsync(WaitUntil.Started, "modelId", stream));
+                Assert.That(exception.InnerExceptions, Has.All.TypeOf<RequestFailedException>());
             }
+            Assert.That(transport.Requests, Has.Count.EqualTo(4));
         }
 
         #endregion

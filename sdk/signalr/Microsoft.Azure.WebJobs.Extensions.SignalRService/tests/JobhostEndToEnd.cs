@@ -5,11 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.SignalR.Common;
+using Microsoft.Azure.SignalR.Management;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.SignalRService;
 using Microsoft.Azure.WebJobs.Host;
@@ -18,6 +21,8 @@ using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Http;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Moq;
 using SignalRServiceExtension.Tests.Utils;
@@ -193,32 +198,62 @@ namespace SignalRServiceExtension.Tests
 
         private static async Task SimulateSendingMessage(IAsyncCollector<SignalRMessage> signalRMessages)
         {
-            try
-            {
-                await signalRMessages.AddAsync(
-                    new SignalRMessage
-                    {
-                        UserId = DefaultUserId,
-                        GroupName = "",
-                        Target = "newMessage",
-                        Arguments = new[] { "message" }
-                    });
-            }
-            catch (AzureSignalRException ex) when (ex.InnerException is HttpRequestException)
-            {
-                // ignore, since we don't really connect to Azure SignalR Service
-            }
-            catch
-            {
-                throw;
-            }
+            await signalRMessages.AddAsync(
+                new SignalRMessage
+                {
+                    UserId = DefaultUserId,
+                    GroupName = "",
+                    Target = "newMessage",
+                    Arguments = new[] { "message" }
+                });
         }
 
-        private Task CreateTestTask(Type classType, Dictionary<string, string> configuration)
+        private async Task CreateTestTask(Type classType, Dictionary<string, string> configuration)
         {
-            var host = TestHelpers.NewHost(classType, configuration: configuration, loggerProvider: new XunitLoggerProvider(_output));
-            return Task.WhenAll(from method in classType.GetMethods(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance)
-                                select host.GetJobHost().CallAsync($"{classType.Name}.{method.Name}"));
+            using var host = TestHelpers.NewHost(classType, configuration: configuration, loggerProvider: new XunitLoggerProvider(_output));
+            int sentMessages = 0;
+            if (configuration != null)
+            {
+                var store = host.Services.GetRequiredService<IServiceManagerStore>();
+                foreach (string key in new[] { AttrConnStrConfigKey, Constants.AzureSignalRConnectionStringName })
+                {
+                    if (!configuration.ContainsKey(key))
+                    {
+                        continue;
+                    }
+
+                    var context = (ServiceHubContextImpl)await store.GetOrAddByConnectionStringKey(key).GetAsync(DefaultHubName);
+                    var options = context.ServiceProvider.GetRequiredService<IOptionsMonitor<HttpClientFactoryOptions>>();
+                    // The pinned management SDK creates these named clients lazily for message sends.
+                    foreach (string name in new[] { "UserDefault", "MessageResilient" })
+                    {
+                        options.Get(name).HttpMessageHandlerBuilderActions.Add(builder =>
+                            builder.PrimaryHandler = new MessageHandler(() => Interlocked.Increment(ref sentMessages)));
+                    }
+                }
+            }
+
+            var methods = classType.GetMethods(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance);
+            await Task.WhenAll(from method in methods
+                               select host.GetJobHost().CallAsync($"{classType.Name}.{method.Name}"));
+            bool sendsMessages = TestClassTypesForSignalRAttribute.Contains(classType);
+            Assert.Equal(sendsMessages ? methods.Length : 0, sentMessages);
+        }
+
+        private sealed class MessageHandler(Action onSend) : HttpMessageHandler
+        {
+            protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+            {
+                Assert.Equal(HttpMethod.Post, request.Method);
+                Assert.Equal("localhostmakesurenotoneusedxxxxx", request.RequestUri.Host);
+                Assert.Equal("/api/hubs/testhub/users/UserId/:send", request.RequestUri.AbsolutePath);
+                Assert.NotNull(request.Headers.Authorization);
+                string body = await request.Content.ReadAsStringAsync();
+                Assert.Contains("newMessage", body);
+                Assert.Contains("message", body);
+                onSend();
+                return new HttpResponseMessage(HttpStatusCode.Accepted);
+            }
         }
 
         #region SignalRAttributeTests

@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -80,20 +81,30 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.Throws<ArgumentNullException>(() => new DocumentModelAdministrationClient(endpoint, default(AzureKeyCredential), new DocumentAnalysisClientOptions()));
         }
 
-        [Test]
-        public async Task ClientThrowsWithNonExistingResourceEndpoint()
+        [TestCase(false)]
+        [TestCase(true)]
+        public void ClientPropagatesEndpointFailures(bool gatewayResponse)
         {
-            var client = CreateInstrumentedClient();
+            var transport = new MockTransport(_ => gatewayResponse
+                ? new MockResponse(502)
+                : throw new RequestFailedException("Endpoint unavailable.", new HttpRequestException("Injected connection failure.")));
+            var client = CreateInstrumentedClient(new DocumentAnalysisClientOptions
+            {
+                Transport = transport,
+                Retry = { Delay = TimeSpan.Zero, Mode = RetryMode.Fixed }
+            });
 
-            try
+            if (gatewayResponse)
             {
-                await client.GetResourceDetailsAsync();
+                var exception = Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetResourceDetailsAsync());
+                Assert.That(exception.Status, Is.EqualTo(502));
             }
-            catch (AggregateException ex)
+            else
             {
-                var innerExceptions = ex.InnerExceptions.ToList();
-                Assert.IsTrue(innerExceptions.All(ex => ex is RequestFailedException));
+                var exception = Assert.ThrowsAsync<AggregateException>(async () => await client.GetResourceDetailsAsync());
+                Assert.That(exception.InnerExceptions, Has.All.TypeOf<RequestFailedException>());
             }
+            Assert.That(transport.Requests, Has.Count.EqualTo(4));
         }
 
         [Test]
