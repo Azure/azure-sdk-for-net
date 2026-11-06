@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateGetVMGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateGetVMGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WorkloadNetworkVmGroupData> response = Response.FromValue(WorkloadNetworkVmGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateGetVMGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateGetVMGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WorkloadNetworkVmGroupData> response = Response.FromValue(WorkloadNetworkVmGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateUpdateVMGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, WorkloadNetworkVmGroupData.ToRequestContent(data), context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateUpdateVMGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, WorkloadNetworkVmGroupData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation<WorkloadNetworkVmGroupResource> operation = new AvsArmOperation<WorkloadNetworkVmGroupResource>(
                     new WorkloadNetworkVmGroupResourceOperationSource(Client),
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateUpdateVMGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, WorkloadNetworkVmGroupData.ToRequestContent(data), context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateUpdateVMGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, WorkloadNetworkVmGroupData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation<WorkloadNetworkVmGroupResource> operation = new AvsArmOperation<WorkloadNetworkVmGroupResource>(
                     new WorkloadNetworkVmGroupResourceOperationSource(Client),
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateDeleteVMGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, Id.Parent.Parent.Name, context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateDeleteVMGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, Id.Parent.Parent.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation operation = new AvsArmOperation(_workloadNetworksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateDeleteVMGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, Id.Parent.Parent.Name, context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateDeleteVMGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, Id.Parent.Parent.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation operation = new AvsArmOperation(_workloadNetworksClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

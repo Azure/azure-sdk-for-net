@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleDefinitionsRestClient.CreateCreateOrUpdateRequest(Id.ToString(), roleDefinitionId, AuthorizationRoleDefinitionData.ToRequestContent(data), context);
+                using HttpMessage message = _roleDefinitionsRestClient.CreateCreateOrUpdateRequest(Id.ToString(), roleDefinitionId, AuthorizationRoleDefinitionData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AuthorizationRoleDefinitionData> response = Response.FromValue(AuthorizationRoleDefinitionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleDefinitionsRestClient.CreateCreateOrUpdateRequest(Id.ToString(), roleDefinitionId, AuthorizationRoleDefinitionData.ToRequestContent(data), context);
+                using HttpMessage message = _roleDefinitionsRestClient.CreateCreateOrUpdateRequest(Id.ToString(), roleDefinitionId, AuthorizationRoleDefinitionData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AuthorizationRoleDefinitionData> response = Response.FromValue(AuthorizationRoleDefinitionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleDefinitionsRestClient.CreateGetRequest(Id.ToString(), roleDefinitionId, context);
+                using HttpMessage message = _roleDefinitionsRestClient.CreateGetRequest(Id.ToString(), roleDefinitionId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AuthorizationRoleDefinitionData> response = Response.FromValue(AuthorizationRoleDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleDefinitionsRestClient.CreateGetRequest(Id.ToString(), roleDefinitionId, context);
+                using HttpMessage message = _roleDefinitionsRestClient.CreateGetRequest(Id.ToString(), roleDefinitionId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AuthorizationRoleDefinitionData> response = Response.FromValue(AuthorizationRoleDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleDefinitionsRestClient.CreateGetRequest(Id.ToString(), roleDefinitionId, context);
+                using HttpMessage message = _roleDefinitionsRestClient.CreateGetRequest(Id.ToString(), roleDefinitionId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AuthorizationRoleDefinitionData> response = default;
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleDefinitionsRestClient.CreateGetRequest(Id.ToString(), roleDefinitionId, context);
+                using HttpMessage message = _roleDefinitionsRestClient.CreateGetRequest(Id.ToString(), roleDefinitionId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AuthorizationRoleDefinitionData> response = default;
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleDefinitionsRestClient.CreateGetRequest(Id.ToString(), roleDefinitionId, context);
+                using HttpMessage message = _roleDefinitionsRestClient.CreateGetRequest(Id.ToString(), roleDefinitionId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AuthorizationRoleDefinitionData> response = default;
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleDefinitionsRestClient.CreateGetRequest(Id.ToString(), roleDefinitionId, context);
+                using HttpMessage message = _roleDefinitionsRestClient.CreateGetRequest(Id.ToString(), roleDefinitionId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AuthorizationRoleDefinitionData> response = default;

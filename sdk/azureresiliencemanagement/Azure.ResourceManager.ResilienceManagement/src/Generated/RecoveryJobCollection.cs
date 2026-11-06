@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryJobsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, recoveryJobName, context);
+                using HttpMessage message = _recoveryJobsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, recoveryJobName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RecoveryJobData> response = Response.FromValue(RecoveryJobData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryJobsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, recoveryJobName, context);
+                using HttpMessage message = _recoveryJobsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, recoveryJobName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RecoveryJobData> response = Response.FromValue(RecoveryJobData.FromResponse(result), result);
                 if (response.Value == null)
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryJobsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, recoveryJobName, context);
+                using HttpMessage message = _recoveryJobsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, recoveryJobName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RecoveryJobData> response = default;
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryJobsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, recoveryJobName, context);
+                using HttpMessage message = _recoveryJobsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, recoveryJobName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RecoveryJobData> response = default;
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryJobsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, recoveryJobName, context);
+                using HttpMessage message = _recoveryJobsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, recoveryJobName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RecoveryJobData> response = default;
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryJobsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, recoveryJobName, context);
+                using HttpMessage message = _recoveryJobsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, recoveryJobName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RecoveryJobData> response = default;

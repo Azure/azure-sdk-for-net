@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.LargeInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureLargeInstanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _azureLargeInstanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LargeInstanceData> response = Response.FromValue(LargeInstanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.LargeInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureLargeInstanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _azureLargeInstanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LargeInstanceData> response = Response.FromValue(LargeInstanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.LargeInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureLargeInstanceRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, LargeInstancePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _azureLargeInstanceRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, LargeInstancePatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LargeInstanceData> response = Response.FromValue(LargeInstanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.LargeInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureLargeInstanceRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, LargeInstancePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _azureLargeInstanceRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, LargeInstancePatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LargeInstanceData> response = Response.FromValue(LargeInstanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.LargeInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureLargeInstanceRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _azureLargeInstanceRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.LargeInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureLargeInstanceRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _azureLargeInstanceRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.LargeInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureLargeInstanceRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, LargeInstanceForceState.ToRequestContent(forceParameter), context);
+                using HttpMessage message = _azureLargeInstanceRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, LargeInstanceForceState.ToRequestContent(forceParameter), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 LargeInstanceArmOperation operation = new LargeInstanceArmOperation(_azureLargeInstanceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.LargeInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureLargeInstanceRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, LargeInstanceForceState.ToRequestContent(forceParameter), context);
+                using HttpMessage message = _azureLargeInstanceRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, LargeInstanceForceState.ToRequestContent(forceParameter), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 LargeInstanceArmOperation operation = new LargeInstanceArmOperation(_azureLargeInstanceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.LargeInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureLargeInstanceRestClient.CreateShutdownRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _azureLargeInstanceRestClient.CreateShutdownRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 LargeInstanceArmOperation<OperationStatusResult> operation = new LargeInstanceArmOperation<OperationStatusResult>(
                     new OperationStatusResultOperationSource(),
@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.LargeInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureLargeInstanceRestClient.CreateShutdownRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _azureLargeInstanceRestClient.CreateShutdownRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 LargeInstanceArmOperation<OperationStatusResult> operation = new LargeInstanceArmOperation<OperationStatusResult>(
                     new OperationStatusResultOperationSource(),
@@ -645,7 +645,7 @@ namespace Azure.ResourceManager.LargeInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureLargeInstanceRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _azureLargeInstanceRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 LargeInstanceArmOperation<OperationStatusResult> operation = new LargeInstanceArmOperation<OperationStatusResult>(
                     new OperationStatusResultOperationSource(),
@@ -700,7 +700,7 @@ namespace Azure.ResourceManager.LargeInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureLargeInstanceRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _azureLargeInstanceRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 LargeInstanceArmOperation<OperationStatusResult> operation = new LargeInstanceArmOperation<OperationStatusResult>(
                     new OperationStatusResultOperationSource(),
@@ -745,7 +745,7 @@ namespace Azure.ResourceManager.LargeInstance
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _azureLargeInstanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _azureLargeInstanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<LargeInstanceData> response = Response.FromValue(LargeInstanceData.FromResponse(result), result);
                     return Response.FromValue(new LargeInstanceResource(Client, response.Value), response.GetRawResponse());
@@ -793,7 +793,7 @@ namespace Azure.ResourceManager.LargeInstance
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _azureLargeInstanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _azureLargeInstanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<LargeInstanceData> response = Response.FromValue(LargeInstanceData.FromResponse(result), result);
                     return Response.FromValue(new LargeInstanceResource(Client, response.Value), response.GetRawResponse());
@@ -839,7 +839,7 @@ namespace Azure.ResourceManager.LargeInstance
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _azureLargeInstanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _azureLargeInstanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<LargeInstanceData> response = Response.FromValue(LargeInstanceData.FromResponse(result), result);
                     return Response.FromValue(new LargeInstanceResource(Client, response.Value), response.GetRawResponse());
@@ -881,7 +881,7 @@ namespace Azure.ResourceManager.LargeInstance
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _azureLargeInstanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _azureLargeInstanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<LargeInstanceData> response = Response.FromValue(LargeInstanceData.FromResponse(result), result);
                     return Response.FromValue(new LargeInstanceResource(Client, response.Value), response.GetRawResponse());
@@ -923,7 +923,7 @@ namespace Azure.ResourceManager.LargeInstance
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _azureLargeInstanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _azureLargeInstanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<LargeInstanceData> response = Response.FromValue(LargeInstanceData.FromResponse(result), result);
                     return Response.FromValue(new LargeInstanceResource(Client, response.Value), response.GetRawResponse());
@@ -969,7 +969,7 @@ namespace Azure.ResourceManager.LargeInstance
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _azureLargeInstanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _azureLargeInstanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<LargeInstanceData> response = Response.FromValue(LargeInstanceData.FromResponse(result), result);
                     return Response.FromValue(new LargeInstanceResource(Client, response.Value), response.GetRawResponse());

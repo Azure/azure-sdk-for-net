@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sourceControlRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _sourceControlRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AutomationSourceControlData> response = Response.FromValue(AutomationSourceControlData.FromResponse(result), result);
                 if (response.Value == null)
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sourceControlRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _sourceControlRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AutomationSourceControlData> response = Response.FromValue(AutomationSourceControlData.FromResponse(result), result);
                 if (response.Value == null)
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sourceControlRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AutomationSourceControlPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _sourceControlRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AutomationSourceControlPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AutomationSourceControlData> response = Response.FromValue(AutomationSourceControlData.FromResponse(result), result);
                 if (response.Value == null)
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sourceControlRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AutomationSourceControlPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _sourceControlRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AutomationSourceControlPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AutomationSourceControlData> response = Response.FromValue(AutomationSourceControlData.FromResponse(result), result);
                 if (response.Value == null)
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sourceControlRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _sourceControlRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sourceControlRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _sourceControlRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sourceControlSyncJobOperationsRestClient.CreateCreateSourceControlSyncJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sourceControlSyncJobId, SourceControlSyncJobCreateContent.ToRequestContent(content), context);
+                using HttpMessage message = _sourceControlSyncJobOperationsRestClient.CreateCreateSourceControlSyncJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sourceControlSyncJobId, SourceControlSyncJobCreateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SourceControlSyncJob> response = Response.FromValue(SourceControlSyncJob.FromResponse(result), result);
                 if (response.Value == null)
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sourceControlSyncJobOperationsRestClient.CreateCreateSourceControlSyncJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sourceControlSyncJobId, SourceControlSyncJobCreateContent.ToRequestContent(content), context);
+                using HttpMessage message = _sourceControlSyncJobOperationsRestClient.CreateCreateSourceControlSyncJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sourceControlSyncJobId, SourceControlSyncJobCreateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SourceControlSyncJob> response = Response.FromValue(SourceControlSyncJob.FromResponse(result), result);
                 if (response.Value == null)
@@ -627,7 +627,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sourceControlSyncJobOperationsRestClient.CreateGetSourceControlSyncJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sourceControlSyncJobId, context);
+                using HttpMessage message = _sourceControlSyncJobOperationsRestClient.CreateGetSourceControlSyncJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sourceControlSyncJobId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SourceControlSyncJobResult> response = Response.FromValue(SourceControlSyncJobResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -676,7 +676,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sourceControlSyncJobOperationsRestClient.CreateGetSourceControlSyncJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sourceControlSyncJobId, context);
+                using HttpMessage message = _sourceControlSyncJobOperationsRestClient.CreateGetSourceControlSyncJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sourceControlSyncJobId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SourceControlSyncJobResult> response = Response.FromValue(SourceControlSyncJobResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -812,7 +812,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sourceControlSyncJobStreamsRestClient.CreateGetSourceControlSyncJobStreamRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sourceControlSyncJobId, streamId, context);
+                using HttpMessage message = _sourceControlSyncJobStreamsRestClient.CreateGetSourceControlSyncJobStreamRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sourceControlSyncJobId, streamId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SourceControlSyncJobStreamResult> response = Response.FromValue(SourceControlSyncJobStreamResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -866,7 +866,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sourceControlSyncJobStreamsRestClient.CreateGetSourceControlSyncJobStreamRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sourceControlSyncJobId, streamId, context);
+                using HttpMessage message = _sourceControlSyncJobStreamsRestClient.CreateGetSourceControlSyncJobStreamRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sourceControlSyncJobId, streamId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SourceControlSyncJobStreamResult> response = Response.FromValue(SourceControlSyncJobStreamResult.FromResponse(result), result);
                 if (response.Value == null)

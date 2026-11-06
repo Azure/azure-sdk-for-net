@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _maintenancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AvsMaintenanceData> response = Response.FromValue(AvsMaintenanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _maintenancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AvsMaintenanceData> response = Response.FromValue(AvsMaintenanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenancesRestClient.CreateInitiateChecksRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _maintenancesRestClient.CreateInitiateChecksRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AvsMaintenanceData> response = Response.FromValue(AvsMaintenanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenancesRestClient.CreateInitiateChecksRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _maintenancesRestClient.CreateInitiateChecksRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AvsMaintenanceData> response = Response.FromValue(AvsMaintenanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenancesRestClient.CreateRescheduleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AvsMaintenanceReschedule.ToRequestContent(body), context);
+                using HttpMessage message = _maintenancesRestClient.CreateRescheduleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AvsMaintenanceReschedule.ToRequestContent(body), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AvsMaintenanceData> response = Response.FromValue(AvsMaintenanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenancesRestClient.CreateRescheduleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AvsMaintenanceReschedule.ToRequestContent(body), context);
+                using HttpMessage message = _maintenancesRestClient.CreateRescheduleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AvsMaintenanceReschedule.ToRequestContent(body), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AvsMaintenanceData> response = Response.FromValue(AvsMaintenanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenancesRestClient.CreateScheduleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AvsMaintenanceSchedule.ToRequestContent(body), context);
+                using HttpMessage message = _maintenancesRestClient.CreateScheduleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AvsMaintenanceSchedule.ToRequestContent(body), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AvsMaintenanceData> response = Response.FromValue(AvsMaintenanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenancesRestClient.CreateScheduleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AvsMaintenanceSchedule.ToRequestContent(body), context);
+                using HttpMessage message = _maintenancesRestClient.CreateScheduleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AvsMaintenanceSchedule.ToRequestContent(body), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AvsMaintenanceData> response = Response.FromValue(AvsMaintenanceData.FromResponse(result), result);
                 if (response.Value == null)

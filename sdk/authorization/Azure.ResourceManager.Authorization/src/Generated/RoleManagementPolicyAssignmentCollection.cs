@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleManagementPolicyAssignmentsRestClient.CreateCreateRequest(Id.ToString(), roleManagementPolicyAssignmentName, RoleManagementPolicyAssignmentData.ToRequestContent(data), context);
+                using HttpMessage message = _roleManagementPolicyAssignmentsRestClient.CreateCreateRequest(Id.ToString(), roleManagementPolicyAssignmentName, RoleManagementPolicyAssignmentData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RoleManagementPolicyAssignmentData> response = Response.FromValue(RoleManagementPolicyAssignmentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleManagementPolicyAssignmentsRestClient.CreateCreateRequest(Id.ToString(), roleManagementPolicyAssignmentName, RoleManagementPolicyAssignmentData.ToRequestContent(data), context);
+                using HttpMessage message = _roleManagementPolicyAssignmentsRestClient.CreateCreateRequest(Id.ToString(), roleManagementPolicyAssignmentName, RoleManagementPolicyAssignmentData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RoleManagementPolicyAssignmentData> response = Response.FromValue(RoleManagementPolicyAssignmentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleManagementPolicyAssignmentsRestClient.CreateGetRequest(Id.ToString(), roleManagementPolicyAssignmentName, context);
+                using HttpMessage message = _roleManagementPolicyAssignmentsRestClient.CreateGetRequest(Id.ToString(), roleManagementPolicyAssignmentName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RoleManagementPolicyAssignmentData> response = Response.FromValue(RoleManagementPolicyAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleManagementPolicyAssignmentsRestClient.CreateGetRequest(Id.ToString(), roleManagementPolicyAssignmentName, context);
+                using HttpMessage message = _roleManagementPolicyAssignmentsRestClient.CreateGetRequest(Id.ToString(), roleManagementPolicyAssignmentName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RoleManagementPolicyAssignmentData> response = Response.FromValue(RoleManagementPolicyAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleManagementPolicyAssignmentsRestClient.CreateGetRequest(Id.ToString(), roleManagementPolicyAssignmentName, context);
+                using HttpMessage message = _roleManagementPolicyAssignmentsRestClient.CreateGetRequest(Id.ToString(), roleManagementPolicyAssignmentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RoleManagementPolicyAssignmentData> response = default;
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleManagementPolicyAssignmentsRestClient.CreateGetRequest(Id.ToString(), roleManagementPolicyAssignmentName, context);
+                using HttpMessage message = _roleManagementPolicyAssignmentsRestClient.CreateGetRequest(Id.ToString(), roleManagementPolicyAssignmentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RoleManagementPolicyAssignmentData> response = default;
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleManagementPolicyAssignmentsRestClient.CreateGetRequest(Id.ToString(), roleManagementPolicyAssignmentName, context);
+                using HttpMessage message = _roleManagementPolicyAssignmentsRestClient.CreateGetRequest(Id.ToString(), roleManagementPolicyAssignmentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RoleManagementPolicyAssignmentData> response = default;
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleManagementPolicyAssignmentsRestClient.CreateGetRequest(Id.ToString(), roleManagementPolicyAssignmentName, context);
+                using HttpMessage message = _roleManagementPolicyAssignmentsRestClient.CreateGetRequest(Id.ToString(), roleManagementPolicyAssignmentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RoleManagementPolicyAssignmentData> response = default;

@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleAssignmentScheduleRequestsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _roleAssignmentScheduleRequestsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RoleAssignmentScheduleRequestData> response = Response.FromValue(RoleAssignmentScheduleRequestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleAssignmentScheduleRequestsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _roleAssignmentScheduleRequestsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RoleAssignmentScheduleRequestData> response = Response.FromValue(RoleAssignmentScheduleRequestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleAssignmentScheduleRequestsRestClient.CreateCancelRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _roleAssignmentScheduleRequestsRestClient.CreateCancelRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleAssignmentScheduleRequestsRestClient.CreateCancelRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _roleAssignmentScheduleRequestsRestClient.CreateCancelRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleAssignmentScheduleRequestsRestClient.CreateValidateRequest(Id.Parent.ToString(), Id.Name, RoleAssignmentScheduleRequestData.ToRequestContent(data), context);
+                using HttpMessage message = _roleAssignmentScheduleRequestsRestClient.CreateValidateRequest(Id.Parent.ToString(), Id.Name, RoleAssignmentScheduleRequestData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RoleAssignmentScheduleRequestData> response = Response.FromValue(RoleAssignmentScheduleRequestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleAssignmentScheduleRequestsRestClient.CreateValidateRequest(Id.Parent.ToString(), Id.Name, RoleAssignmentScheduleRequestData.ToRequestContent(data), context);
+                using HttpMessage message = _roleAssignmentScheduleRequestsRestClient.CreateValidateRequest(Id.Parent.ToString(), Id.Name, RoleAssignmentScheduleRequestData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RoleAssignmentScheduleRequestData> response = Response.FromValue(RoleAssignmentScheduleRequestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleAssignmentScheduleRequestsRestClient.CreateCreateRequest(Id.Parent.ToString(), Id.Name, RoleAssignmentScheduleRequestData.ToRequestContent(data), context);
+                using HttpMessage message = _roleAssignmentScheduleRequestsRestClient.CreateCreateRequest(Id.Parent.ToString(), Id.Name, RoleAssignmentScheduleRequestData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RoleAssignmentScheduleRequestData> response = Response.FromValue(RoleAssignmentScheduleRequestData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleAssignmentScheduleRequestsRestClient.CreateCreateRequest(Id.Parent.ToString(), Id.Name, RoleAssignmentScheduleRequestData.ToRequestContent(data), context);
+                using HttpMessage message = _roleAssignmentScheduleRequestsRestClient.CreateCreateRequest(Id.Parent.ToString(), Id.Name, RoleAssignmentScheduleRequestData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RoleAssignmentScheduleRequestData> response = Response.FromValue(RoleAssignmentScheduleRequestData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

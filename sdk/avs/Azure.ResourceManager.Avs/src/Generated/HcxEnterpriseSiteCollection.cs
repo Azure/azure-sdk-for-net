@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hcxEnterpriseSitesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hcxEnterpriseSiteName, HcxEnterpriseSiteData.ToRequestContent(data), context);
+                using HttpMessage message = _hcxEnterpriseSitesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hcxEnterpriseSiteName, HcxEnterpriseSiteData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HcxEnterpriseSiteData> response = Response.FromValue(HcxEnterpriseSiteData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hcxEnterpriseSitesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hcxEnterpriseSiteName, HcxEnterpriseSiteData.ToRequestContent(data), context);
+                using HttpMessage message = _hcxEnterpriseSitesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hcxEnterpriseSiteName, HcxEnterpriseSiteData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HcxEnterpriseSiteData> response = Response.FromValue(HcxEnterpriseSiteData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hcxEnterpriseSitesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hcxEnterpriseSiteName, context);
+                using HttpMessage message = _hcxEnterpriseSitesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hcxEnterpriseSiteName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HcxEnterpriseSiteData> response = Response.FromValue(HcxEnterpriseSiteData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hcxEnterpriseSitesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hcxEnterpriseSiteName, context);
+                using HttpMessage message = _hcxEnterpriseSitesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hcxEnterpriseSiteName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HcxEnterpriseSiteData> response = Response.FromValue(HcxEnterpriseSiteData.FromResponse(result), result);
                 if (response.Value == null)
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hcxEnterpriseSitesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hcxEnterpriseSiteName, context);
+                using HttpMessage message = _hcxEnterpriseSitesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hcxEnterpriseSiteName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HcxEnterpriseSiteData> response = default;
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hcxEnterpriseSitesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hcxEnterpriseSiteName, context);
+                using HttpMessage message = _hcxEnterpriseSitesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hcxEnterpriseSiteName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HcxEnterpriseSiteData> response = default;
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hcxEnterpriseSitesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hcxEnterpriseSiteName, context);
+                using HttpMessage message = _hcxEnterpriseSitesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hcxEnterpriseSiteName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HcxEnterpriseSiteData> response = default;
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hcxEnterpriseSitesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hcxEnterpriseSiteName, context);
+                using HttpMessage message = _hcxEnterpriseSitesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hcxEnterpriseSiteName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HcxEnterpriseSiteData> response = default;

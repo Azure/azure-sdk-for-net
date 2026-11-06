@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OperationStatusRestClient.CreateGetRequest(location, operationId, context);
+                using HttpMessage message = OperationStatusRestClient.CreateGetRequest(location, operationId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OperationStatusResult> response = Response.FromValue(ModelReaderWriter.Read<OperationStatusResult>(result.Content, ModelSerializationExtensions.WireOptions, AzureResourceManagerResilienceManagementContext.Default), result);
                 if (response.Value == null)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OperationStatusRestClient.CreateGetRequest(location, operationId, context);
+                using HttpMessage message = OperationStatusRestClient.CreateGetRequest(location, operationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OperationStatusResult> response = Response.FromValue(ModelReaderWriter.Read<OperationStatusResult>(result.Content, ModelSerializationExtensions.WireOptions, AzureResourceManagerResilienceManagementContext.Default), result);
                 if (response.Value == null)

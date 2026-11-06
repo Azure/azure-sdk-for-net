@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _availabilitySetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, availabilitySetResourceName, ScVmmAvailabilitySetData.ToRequestContent(data), context);
+                using HttpMessage message = _availabilitySetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, availabilitySetResourceName, ScVmmAvailabilitySetData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ScVmmArmOperation<ScVmmAvailabilitySetResource> operation = new ScVmmArmOperation<ScVmmAvailabilitySetResource>(
                     new ScVmmAvailabilitySetResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _availabilitySetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, availabilitySetResourceName, ScVmmAvailabilitySetData.ToRequestContent(data), context);
+                using HttpMessage message = _availabilitySetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, availabilitySetResourceName, ScVmmAvailabilitySetData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ScVmmArmOperation<ScVmmAvailabilitySetResource> operation = new ScVmmArmOperation<ScVmmAvailabilitySetResource>(
                     new ScVmmAvailabilitySetResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _availabilitySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, availabilitySetResourceName, context);
+                using HttpMessage message = _availabilitySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, availabilitySetResourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ScVmmAvailabilitySetData> response = Response.FromValue(ScVmmAvailabilitySetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _availabilitySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, availabilitySetResourceName, context);
+                using HttpMessage message = _availabilitySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, availabilitySetResourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ScVmmAvailabilitySetData> response = Response.FromValue(ScVmmAvailabilitySetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _availabilitySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, availabilitySetResourceName, context);
+                using HttpMessage message = _availabilitySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, availabilitySetResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ScVmmAvailabilitySetData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _availabilitySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, availabilitySetResourceName, context);
+                using HttpMessage message = _availabilitySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, availabilitySetResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ScVmmAvailabilitySetData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _availabilitySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, availabilitySetResourceName, context);
+                using HttpMessage message = _availabilitySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, availabilitySetResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ScVmmAvailabilitySetData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _availabilitySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, availabilitySetResourceName, context);
+                using HttpMessage message = _availabilitySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, availabilitySetResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ScVmmAvailabilitySetData> response = default;

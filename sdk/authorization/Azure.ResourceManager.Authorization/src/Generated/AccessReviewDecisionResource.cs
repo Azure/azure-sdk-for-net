@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewInstanceMyDecisionsRestClient.CreateGetByIdRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _accessReviewInstanceMyDecisionsRestClient.CreateGetByIdRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AccessReviewDecisionData> response = Response.FromValue(AccessReviewDecisionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewInstanceMyDecisionsRestClient.CreateGetByIdRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _accessReviewInstanceMyDecisionsRestClient.CreateGetByIdRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AccessReviewDecisionData> response = Response.FromValue(AccessReviewDecisionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewInstanceMyDecisionsRestClient.CreatePatchRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, AccessReviewDecisionPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _accessReviewInstanceMyDecisionsRestClient.CreatePatchRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, AccessReviewDecisionPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AccessReviewDecisionData> response = Response.FromValue(AccessReviewDecisionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewInstanceMyDecisionsRestClient.CreatePatchRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, AccessReviewDecisionPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _accessReviewInstanceMyDecisionsRestClient.CreatePatchRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, AccessReviewDecisionPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AccessReviewDecisionData> response = Response.FromValue(AccessReviewDecisionData.FromResponse(result), result);
                 if (response.Value == null)

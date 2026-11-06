@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleManagementPolicyAssignmentsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _roleManagementPolicyAssignmentsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RoleManagementPolicyAssignmentData> response = Response.FromValue(RoleManagementPolicyAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleManagementPolicyAssignmentsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _roleManagementPolicyAssignmentsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RoleManagementPolicyAssignmentData> response = Response.FromValue(RoleManagementPolicyAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleManagementPolicyAssignmentsRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _roleManagementPolicyAssignmentsRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleManagementPolicyAssignmentsRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _roleManagementPolicyAssignmentsRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleManagementPolicyAssignmentsRestClient.CreateCreateRequest(Id.Parent.ToString(), Id.Name, RoleManagementPolicyAssignmentData.ToRequestContent(data), context);
+                using HttpMessage message = _roleManagementPolicyAssignmentsRestClient.CreateCreateRequest(Id.Parent.ToString(), Id.Name, RoleManagementPolicyAssignmentData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RoleManagementPolicyAssignmentData> response = Response.FromValue(RoleManagementPolicyAssignmentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleManagementPolicyAssignmentsRestClient.CreateCreateRequest(Id.Parent.ToString(), Id.Name, RoleManagementPolicyAssignmentData.ToRequestContent(data), context);
+                using HttpMessage message = _roleManagementPolicyAssignmentsRestClient.CreateCreateRequest(Id.Parent.ToString(), Id.Name, RoleManagementPolicyAssignmentData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RoleManagementPolicyAssignmentData> response = Response.FromValue(RoleManagementPolicyAssignmentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

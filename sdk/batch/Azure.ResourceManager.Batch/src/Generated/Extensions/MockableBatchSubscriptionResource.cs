@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Batch.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LocationRestClient.CreateGetBatchQuotasRequest(Guid.Parse(Id.SubscriptionId), locationName, context);
+                using HttpMessage message = LocationRestClient.CreateGetBatchQuotasRequest(Guid.Parse(Id.SubscriptionId), locationName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BatchLocationQuota> response = Response.FromValue(BatchLocationQuota.FromResponse(result), result);
                 if (response.Value == null)
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Batch.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LocationRestClient.CreateGetBatchQuotasRequest(Guid.Parse(Id.SubscriptionId), locationName, context);
+                using HttpMessage message = LocationRestClient.CreateGetBatchQuotasRequest(Guid.Parse(Id.SubscriptionId), locationName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BatchLocationQuota> response = Response.FromValue(BatchLocationQuota.FromResponse(result), result);
                 if (response.Value == null)
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Batch.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LocationRestClient.CreateCheckBatchNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), locationName, BatchNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = LocationRestClient.CreateCheckBatchNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), locationName, BatchNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BatchNameAvailabilityResult> response = Response.FromValue(BatchNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Batch.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LocationRestClient.CreateCheckBatchNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), locationName, BatchNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = LocationRestClient.CreateCheckBatchNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), locationName, BatchNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BatchNameAvailabilityResult> response = Response.FromValue(BatchNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
