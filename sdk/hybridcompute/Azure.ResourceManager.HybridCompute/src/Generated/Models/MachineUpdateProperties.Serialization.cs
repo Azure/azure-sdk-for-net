@@ -115,6 +115,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("tpmEkCertificate"u8);
                 writer.WriteStringValue(TpmEkCertificate);
             }
+            if (Optional.IsDefined(ClientPublicKey))
+            {
+                writer.WritePropertyName("clientPublicKey"u8);
+                writer.WriteStringValue(ClientPublicKey);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -165,6 +170,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             ResourceIdentifier privateLinkScopeResourceId = default;
             string identityKeyStore = default;
             string tpmEkCertificate = default;
+            string clientPublicKey = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -232,6 +238,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     tpmEkCertificate = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("clientPublicKey"u8))
+                {
+                    clientPublicKey = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -246,6 +257,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 privateLinkScopeResourceId,
                 identityKeyStore,
                 tpmEkCertificate,
+                clientPublicKey,
                 additionalBinaryDataProperties);
         }
     }
