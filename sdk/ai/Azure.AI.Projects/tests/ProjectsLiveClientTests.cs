@@ -17,6 +17,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects.Agents;
+using Azure.AI.Projects.Tests.Samples;
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 
@@ -27,6 +28,31 @@ namespace Azure.AI.Projects.Tests;
 
 public class ProjectsLiveClientTests
 {
+    [TestCase("[thinking]The lookup completed.\n[commentary]The marker is silver meadow.")]
+    [TestCase("[thinking]The lookup completed.\r\n[commentary]The marker is silver meadow.")]
+    [TestCase("[thinking]\nThe lookup completed.\n[commentary]\nThe marker is silver meadow.")]
+    public void ManagedAgentSampleReadsLineDelimitedCommentary(string response)
+    {
+        string commentary = Sample_VoiceAgent_LiveManagedDelegation.ReadManagedCommentary(
+            response, "silver meadow");
+
+        Assert.That(commentary, Is.EqualTo("The marker is silver meadow."));
+    }
+
+    [TestCase("[thinking]The lookup completed. [commentary]The marker is silver meadow.")]
+    [TestCase("[commentary]The marker is silver meadow.\n[thinking]The lookup completed.")]
+    [TestCase("Here is the result:\n[thinking]The lookup completed.\n[commentary]The marker is silver meadow.")]
+    [TestCase("```text\n[thinking]The lookup completed.\n[commentary]The marker is silver meadow.\n```")]
+    [TestCase("[thinking]\n[commentary]The marker is silver meadow.")]
+    [TestCase("[thinking]The lookup completed.\n[commentary]")]
+    [TestCase("[thinking]The marker is silver meadow.\n[commentary]The lookup completed.")]
+    [TestCase("[thinking]The lookup completed.\n[commentary]silver meadow\n[commentary]silver meadow")]
+    public void ManagedAgentSampleRejectsMalformedSections(string response)
+    {
+        Assert.Throws<InvalidOperationException>(() =>
+            Sample_VoiceAgent_LiveManagedDelegation.ReadManagedCommentary(response, "silver meadow"));
+    }
+
     [TestCase("http://127.0.0.1:1/api/projects/project")]
     [TestCase("http://localhost:1/api/projects/project")]
     [TestCase("http://[::1]:1/api/projects/project")]

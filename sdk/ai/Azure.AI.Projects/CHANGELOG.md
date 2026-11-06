@@ -26,6 +26,7 @@
 
 - Added native Live samples for connections, session controls, multi-turn text, audio streaming, function calling, and stored-conversation REST APIs, including synchronous/asynchronous typed/protocol overloads, typed delegation ownership and session updates, persistence finalization polling, speech-item validation, and coordinated audio cleanup and graceful shutdown.
 - Consolidated the Realtime WebSocket transport and saved-conversation samples into one end-to-end example with bounded requests, completed-response validation, and temporary-agent cleanup.
+- Added two focused Voice Agent samples: downloading audio retained after an interruption and delegating native GPT Live work to a Foundry-managed agent.
 
 ### Other Changes
 

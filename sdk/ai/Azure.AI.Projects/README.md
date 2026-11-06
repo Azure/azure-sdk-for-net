@@ -139,6 +139,9 @@ application must handle the peer connection, audio transport, and SDP exchange.
 For runnable examples, see [text and function calls](samples/Sample_VoiceAgent.md),
 [WebSocket transport and saved history](samples/Sample_VoiceAgent_ReadConversation.md),
 and [audio streaming](samples/Sample_VoiceAgent_WebSocketAudio.md).
+Two additional examples cover
+[audio retained after an interruption](samples/Sample_VoiceAgent_DownloadGeneratedAudio.md) and
+[delegation to a Foundry-managed agent](samples/Sample_VoiceAgent_LiveManagedDelegation.md).
 
 ### Performing Agent operations
 
