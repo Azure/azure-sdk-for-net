@@ -33,7 +33,7 @@ public class Sample_ResponseStreaming : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_WriteOutput_ResponseStreaming_Async
-        await foreach (StreamingResponseUpdate streamResponse in responsesClient.CreateResponseStreamingAsync("What is the size of France in square miles?"))
+        await foreach (StreamingResponseUpdate streamResponse in await responsesClient.CreateResponseStreamingAsync("What is the size of France in square miles?"))
         {
             if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
             {
@@ -71,7 +71,7 @@ public class Sample_ResponseStreaming : ProjectsOpenAITestBase
         ProjectResponsesClient responsesClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForModel(modelDeploymentName);
 
         #region Snippet:Sample_WriteOutput_ResponseStreaming_Sync
-        foreach (StreamingResponseUpdate streamResponse in responsesClient.CreateResponseStreaming("What is the size of France in square miles?"))
+        foreach (StreamingResponseUpdate streamResponse in responsesClient.CreateResponseStreamingAsync("What is the size of France in square miles?").Result.ToEnumerable())
         {
             if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
             {

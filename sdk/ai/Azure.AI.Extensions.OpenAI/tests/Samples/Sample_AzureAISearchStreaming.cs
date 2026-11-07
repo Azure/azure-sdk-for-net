@@ -55,7 +55,7 @@ public class Sample_AzureAISearchStreaming : ProjectsOpenAITestBase
 
         string annotation = "";
         string text = "";
-        await foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreamingAsync("What is the temperature rating of the cozynights sleeping bag?"))
+        await foreach (StreamingResponseUpdate streamResponse in await responseClient.CreateResponseStreamingAsync("What is the temperature rating of the cozynights sleeping bag?"))
         {
             if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
             {
@@ -128,7 +128,7 @@ public class Sample_AzureAISearchStreaming : ProjectsOpenAITestBase
 
         string annotation = "";
         string text = "";
-        foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreaming("What is the temperature rating of the cozynights sleeping bag?"))
+        foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreamingAsync("What is the temperature rating of the cozynights sleeping bag?").Result.ToEnumerable())
         {
             if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
             {

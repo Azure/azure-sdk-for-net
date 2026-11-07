@@ -5,6 +5,7 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -31,48 +32,13 @@ namespace Azure.AI.Extensions.OpenAI.Tests
         """;
 
         [Test]
-        [Ignore("Returning Raw pages is nor yet supported.")]
-        public void SyncRawPagesContainHttpResponse()
-        {
-            using var handler = new StreamingHandler();
-            using var http = new HttpClient(handler);
-            var client = CreateClient(http);
-            var pages = new List<ClientResult>();
-            foreach (ClientResult page in client.CreateResponseStreaming(
-                model: "mock", userInputText: "hello").GetRawPages())
-            {
-                pages.Add(page);
-            }
-
-            AssertRawResponse(pages, handler);
-        }
-
-        [Test]
-        [Ignore("Returning Raw pages is nor yet supported.")]
-        public async Task AsyncRawPagesContainHttpResponse()
-        {
-            using var handler = new StreamingHandler();
-            using var http = new HttpClient(handler);
-            var client = CreateClient(http);
-            var pages = new List<ClientResult>();
-            await foreach (ClientResult page in client.CreateResponseStreamingAsync(
-                model: "mock", userInputText: "hello").GetRawPagesAsync())
-            {
-                pages.Add(page);
-            }
-
-            AssertRawResponse(pages, handler);
-        }
-
-        [Test]
         public void SyncTypedStreamingSendsOneRequest()
         {
             using var handler = new StreamingHandler();
             using var http = new HttpClient(handler);
             var client = CreateClient(http);
             int updates = 0;
-            foreach (StreamingResponseUpdate update in client.CreateResponseStreaming(
-                model: "mock", userInputText: "hello"))
+            foreach (StreamingResponseUpdate update in client.CreateResponseStreamingAsync(model: "mock", userInputText: "hello").Result.ToEnumerable())
             {
                 Assert.That(update, Is.Not.Null);
                 updates++;
@@ -88,7 +54,7 @@ namespace Azure.AI.Extensions.OpenAI.Tests
             using var http = new HttpClient(handler);
             var client = CreateClient(http);
             int updates = 0;
-            await foreach (StreamingResponseUpdate update in client.CreateResponseStreamingAsync(
+            await foreach (StreamingResponseUpdate update in await client.CreateResponseStreamingAsync(
                 model: "mock", userInputText: "hello"))
             {
                 Assert.That(update, Is.Not.Null);

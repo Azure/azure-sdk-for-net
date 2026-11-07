@@ -105,7 +105,7 @@ public partial class ResponsesTelemetryTests
             nextResponseOptions.StreamingEnabled = true;
             ResponseResult completedResponse = null;
 
-            await foreach (StreamingResponseUpdate update in client.CreateResponseStreamingAsync(nextResponseOptions))
+            await foreach (StreamingResponseUpdate update in await client.CreateResponseStreamingAsync(nextResponseOptions))
             {
                 if (update is StreamingResponseCompletedUpdate completed)
                 {

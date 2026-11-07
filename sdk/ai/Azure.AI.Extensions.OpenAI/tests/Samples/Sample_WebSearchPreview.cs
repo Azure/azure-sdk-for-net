@@ -49,7 +49,7 @@ public class Sample_WebSearchPreviewStreaming : ProjectsOpenAITestBase
             ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
             InputItems = { ResponseItem.CreateUserMessageItem("Show me the latest London Underground service updates") },
         };
-        await foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreamingAsync(options))
+        await foreach (StreamingResponseUpdate streamResponse in await responseClient.CreateResponseStreamingAsync(options))
         {
             if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
             {
@@ -120,7 +120,7 @@ public class Sample_WebSearchPreviewStreaming : ProjectsOpenAITestBase
             InputItems = { ResponseItem.CreateUserMessageItem("Show me the latest London Underground service updates") },
         };
 
-        foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreaming(options))
+        foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreamingAsync(options).Result.ToEnumerable())
         {
             if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
             {

@@ -35,7 +35,7 @@ public partial class ResponsesTelemetryTests
         };
 
         var deltaTexts = new List<string>();
-        await foreach (StreamingResponseUpdate update in client.CreateResponseStreamingAsync(options))
+        await foreach (StreamingResponseUpdate update in await client.CreateResponseStreamingAsync(options))
         {
             if (update is StreamingResponseOutputTextDeltaUpdate textDelta)
             {
@@ -85,7 +85,7 @@ public partial class ResponsesTelemetryTests
         ProjectResponsesClient client = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForModel(modelDeploymentName);
 
         var deltaTexts = new List<string>();
-        await foreach (StreamingResponseUpdate update in client.CreateResponseStreamingAsync("What is 2+2?"))
+        await foreach (StreamingResponseUpdate update in await client.CreateResponseStreamingAsync("What is 2+2?"))
         {
             if (update is StreamingResponseOutputTextDeltaUpdate textDelta)
             {
@@ -138,7 +138,7 @@ public partial class ResponsesTelemetryTests
         ProjectResponsesClient client = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForModel(modelDeploymentName);
 
         var deltaTexts = new List<string>();
-        await foreach (StreamingResponseUpdate update in client.CreateResponseStreamingAsync("What is 2+2?"))
+        await foreach (StreamingResponseUpdate update in await client.CreateResponseStreamingAsync("What is 2+2?"))
         {
             if (update is StreamingResponseOutputTextDeltaUpdate textDelta)
             {
@@ -179,7 +179,7 @@ public partial class ResponsesTelemetryTests
             ProjectResponsesClient client = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentRef);
 
             var deltaTexts = new List<string>();
-            await foreach (StreamingResponseUpdate update in client.CreateResponseStreamingAsync("Hello agent!"))
+            await foreach (StreamingResponseUpdate update in await client.CreateResponseStreamingAsync("Hello agent!"))
             {
                 if (update is StreamingResponseOutputTextDeltaUpdate textDelta)
                 {

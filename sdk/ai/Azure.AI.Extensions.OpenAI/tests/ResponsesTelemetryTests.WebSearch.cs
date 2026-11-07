@@ -53,7 +53,7 @@ public partial class ResponsesTelemetryTests
     private async Task<ResponseResult> RunWebSearchStreamingAsync(ProjectResponsesClient client)
     {
         ResponseResult completedResponse = null;
-        await foreach (StreamingResponseUpdate update in client.CreateResponseStreamingAsync(WebSearchPrompt))
+        await foreach (StreamingResponseUpdate update in await client.CreateResponseStreamingAsync(WebSearchPrompt))
         {
             if (update is StreamingResponseCompletedUpdate completed)
             {
