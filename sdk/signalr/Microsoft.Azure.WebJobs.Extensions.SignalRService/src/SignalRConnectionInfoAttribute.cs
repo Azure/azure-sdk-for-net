@@ -13,5 +13,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     [Binding]
     public class SignalRConnectionInfoAttribute : NegotiationBaseAttribute
     {
+        /// <summary>
+        /// Gets or sets whether the connection supports authentication refresh.
+        /// </summary>
+        public bool EnableAuthenticationRefresh { get; set; }
+
+        /// <summary>
+        /// Gets or sets the maximum service access-token lifetime in seconds. Values less than one use the one-hour default.
+        /// </summary>
+        public int TokenLifetimeSeconds { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether the connection closes when application authentication expires.
+        /// </summary>
+        public bool CloseOnAuthenticationExpiration { get; set; }
     }
 }

@@ -1,12 +1,15 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Reflection;
 using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.Azure.SignalR;
 using Microsoft.Azure.SignalR.Management;
 using Microsoft.Azure.SignalR.Tests.Common;
@@ -48,6 +51,121 @@ namespace SignalRServiceExtension.Tests
             var claims = new JwtSecurityTokenHandler().ReadJwtToken(connectionInfo.AccessToken).Claims;
             Assert.Equal(expectedName, GetClaimValue(claims, "name"));
             Assert.Equal(expectedIat, GetClaimValue(claims, $"{AzureSignalRClient.AzureSignalRUserPrefix}iat"));
+        }
+
+        [Fact]
+        public async Task GetClientConnectionInfoAsync_AuthenticationRefreshDisabled_UsesOrdinaryNegotiation()
+        {
+            const string expectedUrl = "https://example.test/client";
+            const string expectedAccessToken = "ordinary-access-token";
+            NegotiationOptions capturedOptions = null;
+            var hubContext = new Mock<ServiceHubContext>();
+            hubContext
+                .Setup(c => c.NegotiateAsync(It.IsAny<NegotiationOptions>(), It.IsAny<CancellationToken>()))
+                .Callback<NegotiationOptions, CancellationToken>((options, _) => capturedOptions = options)
+                .Returns(new ValueTask<NegotiationResponse>(new NegotiationResponse
+                {
+                    Url = expectedUrl,
+                    AccessToken = expectedAccessToken,
+                }));
+            var client = new AzureSignalRClient(hubContext.Object);
+
+            var result = await client.GetClientConnectionInfoAsync("user", new List<Claim>(), httpContext: null);
+
+            Assert.False(capturedOptions.EnableAuthenticationRefresh);
+            Assert.Equal(expectedUrl, result.Url);
+            Assert.Equal(expectedAccessToken, result.AccessToken);
+            Assert.Null(result.TokenLifetimeSeconds);
+            hubContext.Verify(
+                c => c.NegotiateAsync(It.IsAny<NegotiationOptions>(), It.IsAny<CancellationToken>()),
+                Times.Once);
+            hubContext.Verify(
+                c => c.NegotiateWithTokenLifetimeAsync(It.IsAny<NegotiationOptions>(), It.IsAny<CancellationToken>()),
+                Times.Never);
+        }
+
+        [Fact]
+        public async Task GetClientConnectionInfoAsync_AuthenticationRefreshEnabled_UsesLifetimeNegotiationAndPropagatesOptions()
+        {
+            const string expectedUrl = "https://example.test/client";
+            const string expectedAccessToken = "refresh-access-token";
+            const int tokenLifetimeSeconds = 300;
+            const int expectedRefreshLifetimeSeconds = 111;
+            var expectedExpiresOn = new DateTimeOffset(2030, 1, 2, 3, 4, 5, TimeSpan.Zero);
+            var negotiationResult = (NegotiationResult)Activator.CreateInstance(
+                typeof(NegotiationResult),
+                BindingFlags.Instance | BindingFlags.NonPublic,
+                binder: null,
+                args: new object[] { expectedUrl, expectedAccessToken, expectedRefreshLifetimeSeconds },
+                culture: null);
+            NegotiationOptions capturedOptions = null;
+            var hubContext = new Mock<ServiceHubContext>();
+            hubContext
+                .Setup(c => c.NegotiateWithTokenLifetimeAsync(It.IsAny<NegotiationOptions>(), It.IsAny<CancellationToken>()))
+                .Callback<NegotiationOptions, CancellationToken>((options, _) => capturedOptions = options)
+                .ReturnsAsync(negotiationResult);
+            var client = new AzureSignalRClient(hubContext.Object);
+
+            var result = await client.GetClientConnectionInfoAsync(
+                userId: "user",
+                idToken: null,
+                claimTypeList: null,
+                httpContext: null,
+                enableAuthenticationRefresh: true,
+                tokenLifetimeSeconds,
+                expectedExpiresOn,
+                closeOnAuthenticationExpiration: true);
+
+            Assert.True(capturedOptions.EnableAuthenticationRefresh);
+            Assert.Equal(expectedExpiresOn, capturedOptions.AuthenticationExpiresOn);
+            Assert.True(capturedOptions.CloseOnAuthenticationExpiration);
+            Assert.Equal(TimeSpan.FromSeconds(tokenLifetimeSeconds), capturedOptions.TokenLifetime);
+            Assert.Equal(expectedUrl, result.Url);
+            Assert.Equal(expectedAccessToken, result.AccessToken);
+            Assert.Equal(expectedRefreshLifetimeSeconds, result.TokenLifetimeSeconds);
+            hubContext.Verify(
+                c => c.NegotiateWithTokenLifetimeAsync(It.IsAny<NegotiationOptions>(), It.IsAny<CancellationToken>()),
+                Times.Once);
+            hubContext.Verify(
+                c => c.NegotiateAsync(It.IsAny<NegotiationOptions>(), It.IsAny<CancellationToken>()),
+                Times.Never);
+        }
+
+        [Fact]
+        public async Task GetClientConnectionInfoAsync_ReservedCustomerClaims_ArePrefixedWithoutRawDuplicates()
+        {
+            var reservedClaimTypes = new[]
+            {
+                "aud", "exp", "iat", "nbf", "iss", "actort", "acr", "azp", "c_hash", "jti", "nonce",
+            };
+            var claims = reservedClaimTypes
+                .Select(type => new Claim(type, $"value-{type}"))
+                .Concat(new[] { new Claim("custom", "custom-value") })
+                .ToList();
+            NegotiationOptions capturedOptions = null;
+            var hubContext = new Mock<ServiceHubContext>();
+            hubContext
+                .Setup(c => c.NegotiateAsync(It.IsAny<NegotiationOptions>(), It.IsAny<CancellationToken>()))
+                .Callback<NegotiationOptions, CancellationToken>((options, _) => capturedOptions = options)
+                .Returns(new ValueTask<NegotiationResponse>(new NegotiationResponse
+                {
+                    Url = "https://example.test/client",
+                    AccessToken = "access-token",
+                }));
+            var client = new AzureSignalRClient(hubContext.Object);
+
+            _ = await client.GetClientConnectionInfoAsync("user", claims, httpContext: null);
+
+            var encodedClaims = capturedOptions.Claims.ToList();
+            foreach (var claimType in reservedClaimTypes)
+            {
+                Assert.Equal($"value-{claimType}", encodedClaims.Single(c => c.Type == $"{AzureSignalRClient.AzureSignalRUserPrefix}{claimType}").Value);
+                Assert.DoesNotContain(encodedClaims, c => c.Type == claimType);
+            }
+            Assert.Equal("value-iss", encodedClaims.Single(c => c.Type == $"{AzureSignalRClient.AzureSignalRUserPrefix}iss").Value);
+            Assert.Equal("value-jti", encodedClaims.Single(c => c.Type == $"{AzureSignalRClient.AzureSignalRUserPrefix}jti").Value);
+            Assert.Equal("value-nonce", encodedClaims.Single(c => c.Type == $"{AzureSignalRClient.AzureSignalRUserPrefix}nonce").Value);
+            Assert.Equal("custom-value", encodedClaims.Single(c => c.Type == "custom").Value);
         }
 
         [Fact]
