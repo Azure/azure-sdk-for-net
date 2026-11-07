@@ -14,18 +14,18 @@ using Azure.ResourceManager.Monitor.Models;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary> A tenant action group resource. </summary>
-    public partial class TenantActionGroupResourceData : TrackedResourceData
+    public partial class TenantActionGroupData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TenantActionGroupResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantActionGroupData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        public TenantActionGroupResourceData(AzureLocation location) : base(location)
+        public TenantActionGroupData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TenantActionGroupResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantActionGroupData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The tenant action groups properties of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TenantActionGroupResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, TenantActionGroup properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal TenantActionGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, TenantActionGroupProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The tenant action groups properties of the resource. </summary>
-        internal TenantActionGroup Properties { get; set; }
+        internal TenantActionGroupProperties Properties { get; set; }
 
         /// <summary> The short name of the action group. This will be used in SMS messages. </summary>
         public string GroupShortName
@@ -54,18 +54,18 @@ namespace Azure.ResourceManager.Monitor
             {
                 if (Properties is null)
                 {
-                    Properties = new TenantActionGroup();
+                    Properties = new TenantActionGroupProperties();
                 }
                 Properties.GroupShortName = value;
             }
         }
 
         /// <summary> Indicates whether this tenant action group is enabled. If a tenant action group is not enabled, then none of its receivers will receive communications. </summary>
-        public bool? Enabled
+        public bool? IsEnabled
         {
             get
             {
-                return Properties is null ? (bool?)default : Properties.Enabled;
+                return Properties is null ? (bool?)default : Properties.IsEnabled;
             }
             set
             {
@@ -73,9 +73,9 @@ namespace Azure.ResourceManager.Monitor
                 {
                     if (Properties is null)
                     {
-                        Properties = new TenantActionGroup();
+                        Properties = new TenantActionGroupProperties();
                     }
-                    Properties.Enabled = value.Value;
+                    Properties.IsEnabled = value.Value;
                 }
             }
         }
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 if (Properties is null)
                 {
-                    Properties = new TenantActionGroup();
+                    Properties = new TenantActionGroupProperties();
                 }
                 return Properties.EmailReceivers;
             }
@@ -100,20 +100,20 @@ namespace Azure.ResourceManager.Monitor
             {
                 if (Properties is null)
                 {
-                    Properties = new TenantActionGroup();
+                    Properties = new TenantActionGroupProperties();
                 }
                 return Properties.SmsReceivers;
             }
         }
 
         /// <summary> The list of webhook receivers that are part of this tenant action group. </summary>
-        public IList<WebhookReceiver> WebhookReceivers
+        public IList<TenantActionGroupWebhookReceiver> WebhookReceivers
         {
             get
             {
                 if (Properties is null)
                 {
-                    Properties = new TenantActionGroup();
+                    Properties = new TenantActionGroupProperties();
                 }
                 return Properties.WebhookReceivers;
             }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 if (Properties is null)
                 {
-                    Properties = new TenantActionGroup();
+                    Properties = new TenantActionGroupProperties();
                 }
                 return Properties.AzureAppPushReceivers;
             }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 if (Properties is null)
                 {
-                    Properties = new TenantActionGroup();
+                    Properties = new TenantActionGroupProperties();
                 }
                 return Properties.VoiceReceivers;
             }

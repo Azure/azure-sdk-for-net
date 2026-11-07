@@ -12,41 +12,41 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> A tenant  action group. </summary>
-    internal partial class TenantActionGroup
+    internal partial class TenantActionGroupProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TenantActionGroup"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantActionGroupProperties"/>. </summary>
         /// <param name="groupShortName"> The short name of the action group. This will be used in SMS messages. </param>
-        /// <param name="enabled"> Indicates whether this tenant action group is enabled. If a tenant action group is not enabled, then none of its receivers will receive communications. </param>
+        /// <param name="isEnabled"> Indicates whether this tenant action group is enabled. If a tenant action group is not enabled, then none of its receivers will receive communications. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupShortName"/> is null. </exception>
-        public TenantActionGroup(string groupShortName, bool enabled)
+        public TenantActionGroupProperties(string groupShortName, bool isEnabled)
         {
             Argument.AssertNotNull(groupShortName, nameof(groupShortName));
 
             GroupShortName = groupShortName;
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             EmailReceivers = new ChangeTrackingList<MonitorEmailReceiver>();
             SmsReceivers = new ChangeTrackingList<MonitorSmsReceiver>();
-            WebhookReceivers = new ChangeTrackingList<WebhookReceiver>();
+            WebhookReceivers = new ChangeTrackingList<TenantActionGroupWebhookReceiver>();
             AzureAppPushReceivers = new ChangeTrackingList<MonitorAzureAppPushReceiver>();
             VoiceReceivers = new ChangeTrackingList<MonitorVoiceReceiver>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TenantActionGroup"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantActionGroupProperties"/>. </summary>
         /// <param name="groupShortName"> The short name of the action group. This will be used in SMS messages. </param>
-        /// <param name="enabled"> Indicates whether this tenant action group is enabled. If a tenant action group is not enabled, then none of its receivers will receive communications. </param>
+        /// <param name="isEnabled"> Indicates whether this tenant action group is enabled. If a tenant action group is not enabled, then none of its receivers will receive communications. </param>
         /// <param name="emailReceivers"> The list of email receivers that are part of this tenant action group. </param>
         /// <param name="smsReceivers"> The list of SMS receivers that are part of this tenant action group. </param>
         /// <param name="webhookReceivers"> The list of webhook receivers that are part of this tenant action group. </param>
         /// <param name="azureAppPushReceivers"> The list of AzureAppPush receivers that are part of this tenant action group. </param>
         /// <param name="voiceReceivers"> The list of voice receivers that are part of this tenant action group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TenantActionGroup(string groupShortName, bool enabled, IList<MonitorEmailReceiver> emailReceivers, IList<MonitorSmsReceiver> smsReceivers, IList<WebhookReceiver> webhookReceivers, IList<MonitorAzureAppPushReceiver> azureAppPushReceivers, IList<MonitorVoiceReceiver> voiceReceivers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TenantActionGroupProperties(string groupShortName, bool isEnabled, IList<MonitorEmailReceiver> emailReceivers, IList<MonitorSmsReceiver> smsReceivers, IList<TenantActionGroupWebhookReceiver> webhookReceivers, IList<MonitorAzureAppPushReceiver> azureAppPushReceivers, IList<MonitorVoiceReceiver> voiceReceivers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             GroupShortName = groupShortName;
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             EmailReceivers = emailReceivers;
             SmsReceivers = smsReceivers;
             WebhookReceivers = webhookReceivers;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public string GroupShortName { get; set; }
 
         /// <summary> Indicates whether this tenant action group is enabled. If a tenant action group is not enabled, then none of its receivers will receive communications. </summary>
-        public bool Enabled { get; set; }
+        public bool IsEnabled { get; set; }
 
         /// <summary> The list of email receivers that are part of this tenant action group. </summary>
         public IList<MonitorEmailReceiver> EmailReceivers { get; } = new ChangeTrackingList<MonitorEmailReceiver>();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public IList<MonitorSmsReceiver> SmsReceivers { get; } = new ChangeTrackingList<MonitorSmsReceiver>();
 
         /// <summary> The list of webhook receivers that are part of this tenant action group. </summary>
-        public IList<WebhookReceiver> WebhookReceivers { get; } = new ChangeTrackingList<WebhookReceiver>();
+        public IList<TenantActionGroupWebhookReceiver> WebhookReceivers { get; } = new ChangeTrackingList<TenantActionGroupWebhookReceiver>();
 
         /// <summary> The list of AzureAppPush receivers that are part of this tenant action group. </summary>
         public IList<MonitorAzureAppPushReceiver> AzureAppPushReceivers { get; } = new ChangeTrackingList<MonitorAzureAppPushReceiver>();

@@ -9,61 +9,72 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> A tenant  action group. </summary>
-    internal partial class TenantActionGroup : IJsonModel<TenantActionGroup>
+    /// <summary> The request body which contain contact detail metadata. </summary>
+    public partial class TenantNotificationContent : IJsonModel<TenantNotificationContent>
     {
-        /// <summary> Initializes a new instance of <see cref="TenantActionGroup"/> for deserialization. </summary>
-        internal TenantActionGroup()
+        /// <summary> Initializes a new instance of <see cref="TenantNotificationContent"/> for deserialization. </summary>
+        internal TenantNotificationContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TenantActionGroup PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual TenantNotificationContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TenantActionGroup>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TenantNotificationContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTenantActionGroup(document.RootElement, options);
+                        return DeserializeTenantNotificationContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TenantActionGroup)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TenantNotificationContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TenantActionGroup>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TenantNotificationContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TenantActionGroup)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TenantNotificationContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TenantActionGroup>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<TenantNotificationContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TenantActionGroup IPersistableModel<TenantActionGroup>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        TenantNotificationContent IPersistableModel<TenantNotificationContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TenantActionGroup>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TenantNotificationContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="tenantNotificationContent"> The <see cref="TenantNotificationContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(TenantNotificationContent tenantNotificationContent)
+        {
+            if (tenantNotificationContent == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(tenantNotificationContent, ModelSerializationExtensions.WireOptions);
+        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TenantActionGroup>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TenantNotificationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,15 +85,13 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TenantActionGroup>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TenantNotificationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TenantActionGroup)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TenantNotificationContent)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("groupShortName"u8);
-            writer.WriteStringValue(GroupShortName);
-            writer.WritePropertyName("enabled"u8);
-            writer.WriteBooleanValue(Enabled);
+            writer.WritePropertyName("alertType"u8);
+            writer.WriteStringValue(AlertType);
             if (Optional.IsCollectionDefined(EmailReceivers))
             {
                 writer.WritePropertyName("emailReceivers"u8);
@@ -107,7 +116,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("webhookReceivers"u8);
                 writer.WriteStartArray();
-                foreach (WebhookReceiver item in WebhookReceivers)
+                foreach (TenantActionGroupWebhookReceiver item in WebhookReceivers)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -152,47 +161,41 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TenantActionGroup IJsonModel<TenantActionGroup>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        TenantNotificationContent IJsonModel<TenantNotificationContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TenantActionGroup JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual TenantNotificationContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TenantActionGroup>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TenantNotificationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TenantActionGroup)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TenantNotificationContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTenantActionGroup(document.RootElement, options);
+            return DeserializeTenantNotificationContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static TenantActionGroup DeserializeTenantActionGroup(JsonElement element, ModelReaderWriterOptions options)
+        internal static TenantNotificationContent DeserializeTenantNotificationContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string groupShortName = default;
-            bool enabled = default;
+            string alertType = default;
             IList<MonitorEmailReceiver> emailReceivers = default;
             IList<MonitorSmsReceiver> smsReceivers = default;
-            IList<WebhookReceiver> webhookReceivers = default;
+            IList<TenantActionGroupWebhookReceiver> webhookReceivers = default;
             IList<MonitorAzureAppPushReceiver> azureAppPushReceivers = default;
             IList<MonitorVoiceReceiver> voiceReceivers = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("groupShortName"u8))
+                if (prop.NameEquals("alertType"u8))
                 {
-                    groupShortName = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("enabled"u8))
-                {
-                    enabled = prop.Value.GetBoolean();
+                    alertType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("emailReceivers"u8))
@@ -229,10 +232,10 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    List<WebhookReceiver> array = new List<WebhookReceiver>();
+                    List<TenantActionGroupWebhookReceiver> array = new List<TenantActionGroupWebhookReceiver>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(WebhookReceiver.DeserializeWebhookReceiver(item, options));
+                        array.Add(TenantActionGroupWebhookReceiver.DeserializeTenantActionGroupWebhookReceiver(item, options));
                     }
                     webhookReceivers = array;
                     continue;
@@ -270,12 +273,11 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TenantActionGroup(
-                groupShortName,
-                enabled,
+            return new TenantNotificationContent(
+                alertType,
                 emailReceivers ?? new ChangeTrackingList<MonitorEmailReceiver>(),
                 smsReceivers ?? new ChangeTrackingList<MonitorSmsReceiver>(),
-                webhookReceivers ?? new ChangeTrackingList<WebhookReceiver>(),
+                webhookReceivers ?? new ChangeTrackingList<TenantActionGroupWebhookReceiver>(),
                 azureAppPushReceivers ?? new ChangeTrackingList<MonitorAzureAppPushReceiver>(),
                 voiceReceivers ?? new ChangeTrackingList<MonitorVoiceReceiver>(),
                 additionalBinaryDataProperties);

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
         internal TestNotificationDetailsResult(string state)
         {
             State = state;
-            ActionDetails = new ChangeTrackingList<ActionDetail>();
+            ActionDetails = new ChangeTrackingList<TenantNotificationActionDetail>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TestNotificationDetailsResult"/>. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="createdTime"> The created time. </param>
         /// <param name="actionDetails"> The list of action detail. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TestNotificationDetailsResult(NotificationContext context, string state, string completedTime, string createdTime, IList<ActionDetail> actionDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TestNotificationDetailsResult(NotificationContext context, string state, string completedTime, string createdTime, IList<TenantNotificationActionDetail> actionDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Context = context;
             State = state;
@@ -55,6 +55,6 @@ namespace Azure.ResourceManager.Monitor.Models
         public string CreatedTime { get; }
 
         /// <summary> The list of action detail. </summary>
-        public IList<ActionDetail> ActionDetails { get; }
+        public IList<TenantNotificationActionDetail> ActionDetails { get; }
     }
 }

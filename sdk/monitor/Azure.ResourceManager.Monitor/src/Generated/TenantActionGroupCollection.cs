@@ -20,26 +20,26 @@ namespace Azure.ResourceManager.Monitor
     /// <summary>
     /// A class representing a collection of <see cref="TenantActionGroupResource"/> and their operations.
     /// Each <see cref="TenantActionGroupResource"/> in the collection will belong to the same instance of <see cref="ManagementGroupResource"/>.
-    /// To get a <see cref="TenantActionGroupResourceCollection"/> instance call the GetTenantActionGroupResources method from an instance of <see cref="ManagementGroupResource"/>.
+    /// To get a <see cref="TenantActionGroupCollection"/> instance call the GetTenantActionGroups method from an instance of <see cref="ManagementGroupResource"/>.
     /// </summary>
-    public partial class TenantActionGroupResourceCollection : ArmCollection
+    public partial class TenantActionGroupCollection : ArmCollection
     {
         private readonly ClientDiagnostics _tenantActionGroupsClientDiagnostics;
         private readonly TenantActionGroups _tenantActionGroupsRestClient;
 
-        /// <summary> Initializes a new instance of TenantActionGroupResourceCollection for mocking. </summary>
-        protected TenantActionGroupResourceCollection()
+        /// <summary> Initializes a new instance of TenantActionGroupCollection for mocking. </summary>
+        protected TenantActionGroupCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TenantActionGroupResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantActionGroupCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal TenantActionGroupResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal TenantActionGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(TenantActionGroupResource.ResourceType, out string tenantActionGroupResourceApiVersion);
+            TryGetApiVersion(TenantActionGroupResource.ResourceType, out string tenantActionGroupApiVersion);
             _tenantActionGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", TenantActionGroupResource.ResourceType.Namespace, Diagnostics);
-            _tenantActionGroupsRestClient = new TenantActionGroups(_tenantActionGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, tenantActionGroupResourceApiVersion ?? "2023-05-01-preview");
+            _tenantActionGroupsRestClient = new TenantActionGroups(_tenantActionGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, tenantActionGroupApiVersion ?? "2023-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -77,13 +77,13 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantActionGroupName"/>, <paramref name="xMsClientTenantId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="tenantActionGroupName"/> or <paramref name="xMsClientTenantId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<TenantActionGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string tenantActionGroupName, string xMsClientTenantId, TenantActionGroupResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<TenantActionGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string tenantActionGroupName, string xMsClientTenantId, TenantActionGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tenantActionGroupName, nameof(tenantActionGroupName));
             Argument.AssertNotNullOrEmpty(xMsClientTenantId, nameof(xMsClientTenantId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _tenantActionGroupsClientDiagnostics.CreateScope("TenantActionGroupResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _tenantActionGroupsClientDiagnostics.CreateScope("TenantActionGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantActionGroupsRestClient.CreateCreateOrUpdateRequest(Id.Name, tenantActionGroupName, xMsClientTenantId, TenantActionGroupResourceData.ToRequestContent(data), context);
+                HttpMessage message = _tenantActionGroupsRestClient.CreateCreateOrUpdateRequest(Id.Name, tenantActionGroupName, xMsClientTenantId, TenantActionGroupData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<TenantActionGroupResourceData> response = Response.FromValue(TenantActionGroupResourceData.FromResponse(result), result);
+                Response<TenantActionGroupData> response = Response.FromValue(TenantActionGroupData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 MonitorArmOperation<TenantActionGroupResource> operation = new MonitorArmOperation<TenantActionGroupResource>(Response.FromValue(new TenantActionGroupResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -134,13 +134,13 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantActionGroupName"/>, <paramref name="xMsClientTenantId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="tenantActionGroupName"/> or <paramref name="xMsClientTenantId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<TenantActionGroupResource> CreateOrUpdate(WaitUntil waitUntil, string tenantActionGroupName, string xMsClientTenantId, TenantActionGroupResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<TenantActionGroupResource> CreateOrUpdate(WaitUntil waitUntil, string tenantActionGroupName, string xMsClientTenantId, TenantActionGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tenantActionGroupName, nameof(tenantActionGroupName));
             Argument.AssertNotNullOrEmpty(xMsClientTenantId, nameof(xMsClientTenantId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _tenantActionGroupsClientDiagnostics.CreateScope("TenantActionGroupResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _tenantActionGroupsClientDiagnostics.CreateScope("TenantActionGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -148,9 +148,9 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantActionGroupsRestClient.CreateCreateOrUpdateRequest(Id.Name, tenantActionGroupName, xMsClientTenantId, TenantActionGroupResourceData.ToRequestContent(data), context);
+                HttpMessage message = _tenantActionGroupsRestClient.CreateCreateOrUpdateRequest(Id.Name, tenantActionGroupName, xMsClientTenantId, TenantActionGroupData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<TenantActionGroupResourceData> response = Response.FromValue(TenantActionGroupResourceData.FromResponse(result), result);
+                Response<TenantActionGroupData> response = Response.FromValue(TenantActionGroupData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 MonitorArmOperation<TenantActionGroupResource> operation = new MonitorArmOperation<TenantActionGroupResource>(Response.FromValue(new TenantActionGroupResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Monitor
             Argument.AssertNotNullOrEmpty(tenantActionGroupName, nameof(tenantActionGroupName));
             Argument.AssertNotNullOrEmpty(xMsClientTenantId, nameof(xMsClientTenantId));
 
-            using DiagnosticScope scope = _tenantActionGroupsClientDiagnostics.CreateScope("TenantActionGroupResourceCollection.Get");
+            using DiagnosticScope scope = _tenantActionGroupsClientDiagnostics.CreateScope("TenantActionGroupCollection.Get");
             scope.Start();
             try
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Monitor
                 };
                 HttpMessage message = _tenantActionGroupsRestClient.CreateGetRequest(Id.Name, tenantActionGroupName, xMsClientTenantId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<TenantActionGroupResourceData> response = Response.FromValue(TenantActionGroupResourceData.FromResponse(result), result);
+                Response<TenantActionGroupData> response = Response.FromValue(TenantActionGroupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Monitor
             Argument.AssertNotNullOrEmpty(tenantActionGroupName, nameof(tenantActionGroupName));
             Argument.AssertNotNullOrEmpty(xMsClientTenantId, nameof(xMsClientTenantId));
 
-            using DiagnosticScope scope = _tenantActionGroupsClientDiagnostics.CreateScope("TenantActionGroupResourceCollection.Get");
+            using DiagnosticScope scope = _tenantActionGroupsClientDiagnostics.CreateScope("TenantActionGroupCollection.Get");
             scope.Start();
             try
             {
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Monitor
                 };
                 HttpMessage message = _tenantActionGroupsRestClient.CreateGetRequest(Id.Name, tenantActionGroupName, xMsClientTenantId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<TenantActionGroupResourceData> response = Response.FromValue(TenantActionGroupResourceData.FromResponse(result), result);
+                Response<TenantActionGroupData> response = Response.FromValue(TenantActionGroupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TenantActionGroupResourceData, TenantActionGroupResource>(new TenantActionGroupResourceDataAsyncCollectionResultOfT(_tenantActionGroupsRestClient, Id.Name, xMsClientTenantId, context, "TenantActionGroupResourceCollection.GetAll"), data => new TenantActionGroupResource(Client, data));
+            return new AsyncPageableWrapper<TenantActionGroupData, TenantActionGroupResource>(new TenantActionGroupDataAsyncCollectionResultOfT(_tenantActionGroupsRestClient, Id.Name, xMsClientTenantId, context, "TenantActionGroupCollection.GetAll"), data => new TenantActionGroupResource(Client, data));
         }
 
         /// <summary>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TenantActionGroupResourceData, TenantActionGroupResource>(new TenantActionGroupResourceDataCollectionResultOfT(_tenantActionGroupsRestClient, Id.Name, xMsClientTenantId, context, "TenantActionGroupResourceCollection.GetAll"), data => new TenantActionGroupResource(Client, data));
+            return new PageableWrapper<TenantActionGroupData, TenantActionGroupResource>(new TenantActionGroupDataCollectionResultOfT(_tenantActionGroupsRestClient, Id.Name, xMsClientTenantId, context, "TenantActionGroupCollection.GetAll"), data => new TenantActionGroupResource(Client, data));
         }
 
         /// <summary>
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Monitor
             Argument.AssertNotNullOrEmpty(tenantActionGroupName, nameof(tenantActionGroupName));
             Argument.AssertNotNullOrEmpty(xMsClientTenantId, nameof(xMsClientTenantId));
 
-            using DiagnosticScope scope = _tenantActionGroupsClientDiagnostics.CreateScope("TenantActionGroupResourceCollection.Exists");
+            using DiagnosticScope scope = _tenantActionGroupsClientDiagnostics.CreateScope("TenantActionGroupCollection.Exists");
             scope.Start();
             try
             {
@@ -373,14 +373,14 @@ namespace Azure.ResourceManager.Monitor
                 HttpMessage message = _tenantActionGroupsRestClient.CreateGetRequest(Id.Name, tenantActionGroupName, xMsClientTenantId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<TenantActionGroupResourceData> response = default;
+                Response<TenantActionGroupData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(TenantActionGroupResourceData.FromResponse(result), result);
+                        response = Response.FromValue(TenantActionGroupData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((TenantActionGroupResourceData)null, result);
+                        response = Response.FromValue((TenantActionGroupData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.Monitor
             Argument.AssertNotNullOrEmpty(tenantActionGroupName, nameof(tenantActionGroupName));
             Argument.AssertNotNullOrEmpty(xMsClientTenantId, nameof(xMsClientTenantId));
 
-            using DiagnosticScope scope = _tenantActionGroupsClientDiagnostics.CreateScope("TenantActionGroupResourceCollection.Exists");
+            using DiagnosticScope scope = _tenantActionGroupsClientDiagnostics.CreateScope("TenantActionGroupCollection.Exists");
             scope.Start();
             try
             {
@@ -432,14 +432,14 @@ namespace Azure.ResourceManager.Monitor
                 HttpMessage message = _tenantActionGroupsRestClient.CreateGetRequest(Id.Name, tenantActionGroupName, xMsClientTenantId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<TenantActionGroupResourceData> response = default;
+                Response<TenantActionGroupData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(TenantActionGroupResourceData.FromResponse(result), result);
+                        response = Response.FromValue(TenantActionGroupData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((TenantActionGroupResourceData)null, result);
+                        response = Response.FromValue((TenantActionGroupData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Monitor
             Argument.AssertNotNullOrEmpty(tenantActionGroupName, nameof(tenantActionGroupName));
             Argument.AssertNotNullOrEmpty(xMsClientTenantId, nameof(xMsClientTenantId));
 
-            using DiagnosticScope scope = _tenantActionGroupsClientDiagnostics.CreateScope("TenantActionGroupResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _tenantActionGroupsClientDiagnostics.CreateScope("TenantActionGroupCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -491,14 +491,14 @@ namespace Azure.ResourceManager.Monitor
                 HttpMessage message = _tenantActionGroupsRestClient.CreateGetRequest(Id.Name, tenantActionGroupName, xMsClientTenantId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<TenantActionGroupResourceData> response = default;
+                Response<TenantActionGroupData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(TenantActionGroupResourceData.FromResponse(result), result);
+                        response = Response.FromValue(TenantActionGroupData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((TenantActionGroupResourceData)null, result);
+                        response = Response.FromValue((TenantActionGroupData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.Monitor
             Argument.AssertNotNullOrEmpty(tenantActionGroupName, nameof(tenantActionGroupName));
             Argument.AssertNotNullOrEmpty(xMsClientTenantId, nameof(xMsClientTenantId));
 
-            using DiagnosticScope scope = _tenantActionGroupsClientDiagnostics.CreateScope("TenantActionGroupResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _tenantActionGroupsClientDiagnostics.CreateScope("TenantActionGroupCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -554,14 +554,14 @@ namespace Azure.ResourceManager.Monitor
                 HttpMessage message = _tenantActionGroupsRestClient.CreateGetRequest(Id.Name, tenantActionGroupName, xMsClientTenantId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<TenantActionGroupResourceData> response = default;
+                Response<TenantActionGroupData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(TenantActionGroupResourceData.FromResponse(result), result);
+                        response = Response.FromValue(TenantActionGroupData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((TenantActionGroupResourceData)null, result);
+                        response = Response.FromValue((TenantActionGroupData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("actionDetails"u8);
                 writer.WriteStartArray();
-                foreach (ActionDetail item in ActionDetails)
+                foreach (TenantNotificationActionDetail item in ActionDetails)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Monitor.Models
             string state = default;
             string completedTime = default;
             string createdTime = default;
-            IList<ActionDetail> actionDetails = default;
+            IList<TenantNotificationActionDetail> actionDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -194,10 +194,10 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    List<ActionDetail> array = new List<ActionDetail>();
+                    List<TenantNotificationActionDetail> array = new List<TenantNotificationActionDetail>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ActionDetail.DeserializeActionDetail(item, options));
+                        array.Add(TenantNotificationActionDetail.DeserializeTenantNotificationActionDetail(item, options));
                     }
                     actionDetails = array;
                     continue;
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 state,
                 completedTime,
                 createdTime,
-                actionDetails ?? new ChangeTrackingList<ActionDetail>(),
+                actionDetails ?? new ChangeTrackingList<TenantNotificationActionDetail>(),
                 additionalBinaryDataProperties);
         }
     }

@@ -12,22 +12,22 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> A tenant action group object for the body of patch operations. </summary>
-    public partial class TenantActionGroupResourcePatch
+    public partial class TenantActionGroupPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TenantActionGroupResourcePatch"/>. </summary>
-        public TenantActionGroupResourcePatch()
+        /// <summary> Initializes a new instance of <see cref="TenantActionGroupPatch"/>. </summary>
+        public TenantActionGroupPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TenantActionGroupResourcePatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantActionGroupPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The action group settings for an update operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TenantActionGroupResourcePatch(IDictionary<string, string> tags, ActionGroupPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TenantActionGroupPatch(IDictionary<string, string> tags, ActionGroupPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Properties = properties;

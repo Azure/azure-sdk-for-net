@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.Monitor.Mocking
         {
         }
 
-        /// <summary> Gets a collection of TenantActionGroupResources in the <see cref="ManagementGroupResource"/>. </summary>
-        /// <returns> An object representing collection of TenantActionGroupResources and their operations over a TenantActionGroupResource. </returns>
-        public virtual TenantActionGroupResourceCollection GetTenantActionGroupResources()
+        /// <summary> Gets a collection of TenantActionGroups in the <see cref="ManagementGroupResource"/>. </summary>
+        /// <returns> An object representing collection of TenantActionGroups and their operations over a TenantActionGroupResource. </returns>
+        public virtual TenantActionGroupCollection GetTenantActionGroups()
         {
-            return GetCachedClient(client => new TenantActionGroupResourceCollection(client, Id));
+            return GetCachedClient(client => new TenantActionGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="tenantActionGroupName"/> or <paramref name="xMsClientTenantId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="tenantActionGroupName"/> or <paramref name="xMsClientTenantId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<TenantActionGroupResource>> GetTenantActionGroupResourceAsync(string tenantActionGroupName, string xMsClientTenantId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TenantActionGroupResource>> GetTenantActionGroupAsync(string tenantActionGroupName, string xMsClientTenantId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tenantActionGroupName, nameof(tenantActionGroupName));
             Argument.AssertNotNullOrEmpty(xMsClientTenantId, nameof(xMsClientTenantId));
 
-            return await GetTenantActionGroupResources().GetAsync(tenantActionGroupName, xMsClientTenantId, cancellationToken).ConfigureAwait(false);
+            return await GetTenantActionGroups().GetAsync(tenantActionGroupName, xMsClientTenantId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -92,12 +92,12 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="tenantActionGroupName"/> or <paramref name="xMsClientTenantId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="tenantActionGroupName"/> or <paramref name="xMsClientTenantId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<TenantActionGroupResource> GetTenantActionGroupResource(string tenantActionGroupName, string xMsClientTenantId, CancellationToken cancellationToken = default)
+        public virtual Response<TenantActionGroupResource> GetTenantActionGroup(string tenantActionGroupName, string xMsClientTenantId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tenantActionGroupName, nameof(tenantActionGroupName));
             Argument.AssertNotNullOrEmpty(xMsClientTenantId, nameof(xMsClientTenantId));
 
-            return GetTenantActionGroupResources().Get(tenantActionGroupName, xMsClientTenantId, cancellationToken);
+            return GetTenantActionGroups().Get(tenantActionGroupName, xMsClientTenantId, cancellationToken);
         }
     }
 }

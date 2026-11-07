@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -20,8 +21,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of <see cref="DiagnosticSettings"/>. </summary>
         public DiagnosticSettings()
         {
-            Metrics = new ChangeTrackingList<DiagnosticsMetricSettings>();
-            Logs = new ChangeTrackingList<DiagnosticsLogSettings>();
+            Metrics = new ChangeTrackingList<MetricSettings>();
+            Logs = new ChangeTrackingList<LogSettings>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DiagnosticSettings"/>. </summary>
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="marketplacePartnerId"> The full ARM resource ID of the Marketplace resource to which you would like to send Diagnostic Logs. </param>
         /// <param name="logAnalyticsDestinationType"> A string indicating whether the export to Log Analytics should use the default destination type, i.e. AzureDiagnostics, or use a destination type constructed as follows: &lt;normalized service identity&gt;_&lt;normalized category name&gt;. Possible values are: Dedicated and null (null is default.). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiagnosticSettings(string storageAccountId, string serviceBusRuleId, string eventHubAuthorizationRuleId, string eventHubName, IList<DiagnosticsMetricSettings> metrics, IList<DiagnosticsLogSettings> logs, string workspaceId, string marketplacePartnerId, string logAnalyticsDestinationType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiagnosticSettings(ResourceIdentifier storageAccountId, ResourceIdentifier serviceBusRuleId, ResourceIdentifier eventHubAuthorizationRuleId, string eventHubName, IList<MetricSettings> metrics, IList<LogSettings> logs, ResourceIdentifier workspaceId, ResourceIdentifier marketplacePartnerId, string logAnalyticsDestinationType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageAccountId = storageAccountId;
             ServiceBusRuleId = serviceBusRuleId;
@@ -50,28 +51,28 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> The resource ID of the storage account to which you would like to send Diagnostic Logs. </summary>
-        public string StorageAccountId { get; set; }
+        public ResourceIdentifier StorageAccountId { get; set; }
 
         /// <summary> The service bus rule Id of the diagnostic setting. This is here to maintain backwards compatibility. </summary>
-        public string ServiceBusRuleId { get; set; }
+        public ResourceIdentifier ServiceBusRuleId { get; set; }
 
         /// <summary> The resource Id for the event hub authorization rule. </summary>
-        public string EventHubAuthorizationRuleId { get; set; }
+        public ResourceIdentifier EventHubAuthorizationRuleId { get; set; }
 
         /// <summary> The name of the event hub. If none is specified, the default event hub will be selected. </summary>
         public string EventHubName { get; set; }
 
         /// <summary> The list of metric settings. </summary>
-        public IList<DiagnosticsMetricSettings> Metrics { get; } = new ChangeTrackingList<DiagnosticsMetricSettings>();
+        public IList<MetricSettings> Metrics { get; } = new ChangeTrackingList<MetricSettings>();
 
         /// <summary> The list of logs settings. </summary>
-        public IList<DiagnosticsLogSettings> Logs { get; } = new ChangeTrackingList<DiagnosticsLogSettings>();
+        public IList<LogSettings> Logs { get; } = new ChangeTrackingList<LogSettings>();
 
         /// <summary> The full ARM resource ID of the Log Analytics workspace to which you would like to send Diagnostic Logs. Example: /subscriptions/4b9e8510-67ab-4e9a-95a9-e2f1e570ea9c/resourceGroups/insights-integration/providers/Microsoft.OperationalInsights/workspaces/viruela2. </summary>
-        public string WorkspaceId { get; set; }
+        public ResourceIdentifier WorkspaceId { get; set; }
 
         /// <summary> The full ARM resource ID of the Marketplace resource to which you would like to send Diagnostic Logs. </summary>
-        public string MarketplacePartnerId { get; set; }
+        public ResourceIdentifier MarketplacePartnerId { get; set; }
 
         /// <summary> A string indicating whether the export to Log Analytics should use the default destination type, i.e. AzureDiagnostics, or use a destination type constructed as follows: &lt;normalized service identity&gt;_&lt;normalized category name&gt;. Possible values are: Dedicated and null (null is default.). </summary>
         public string LogAnalyticsDestinationType { get; set; }

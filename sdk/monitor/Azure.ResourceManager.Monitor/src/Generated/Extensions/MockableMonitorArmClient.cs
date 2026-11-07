@@ -253,51 +253,6 @@ namespace Azure.ResourceManager.Monitor.Mocking
             return new VmInsightsOnboardingStatusResource(Client, scope.AppendProviderResource("Microsoft.Insights", "vmInsightsOnboardingStatuses", "default"));
         }
 
-        /// <summary> Gets an object representing a <see cref="DiagnosticSettingsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DiagnosticSettingsResource"/> object. </returns>
-        public virtual DiagnosticSettingsResource GetDiagnosticSettingsResource(ResourceIdentifier id)
-        {
-            DiagnosticSettingsResource.ValidateResourceId(id);
-            return new DiagnosticSettingsResource(Client, id);
-        }
-
-        /// <summary> Gets a collection of <see cref="DiagnosticSettingsResourceCollection"/> objects within the specified scope. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <returns> Returns a collection of <see cref="DiagnosticSettingsResource"/> objects. </returns>
-        public virtual DiagnosticSettingsResourceCollection GetDiagnosticSettingsResources(ResourceIdentifier scope)
-        {
-            return new DiagnosticSettingsResourceCollection(Client, scope);
-        }
-
-        /// <summary> Gets the active diagnostic settings for the specified resource. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="name"> The name of the diagnostic setting. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DiagnosticSettingsResource> GetDiagnosticSettingsResource(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            return GetDiagnosticSettingsResources(scope).Get(name, cancellationToken);
-        }
-
-        /// <summary> Gets the active diagnostic settings for the specified resource. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="name"> The name of the diagnostic setting. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DiagnosticSettingsResource>> GetDiagnosticSettingsResourceAsync(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            return await GetDiagnosticSettingsResources(scope).GetAsync(name, cancellationToken).ConfigureAwait(false);
-        }
-
         /// <summary> Gets an object representing a <see cref="DiagnosticSettingsCategoryResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DiagnosticSettingsCategoryResource"/> object. </returns>

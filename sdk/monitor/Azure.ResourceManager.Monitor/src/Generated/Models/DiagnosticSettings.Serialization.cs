@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -98,7 +99,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("metrics"u8);
                 writer.WriteStartArray();
-                foreach (DiagnosticsMetricSettings item in Metrics)
+                foreach (MetricSettings item in Metrics)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("logs"u8);
                 writer.WriteStartArray();
-                foreach (DiagnosticsLogSettings item in Logs)
+                foreach (LogSettings item in Logs)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -171,31 +172,43 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            string storageAccountId = default;
-            string serviceBusRuleId = default;
-            string eventHubAuthorizationRuleId = default;
+            ResourceIdentifier storageAccountId = default;
+            ResourceIdentifier serviceBusRuleId = default;
+            ResourceIdentifier eventHubAuthorizationRuleId = default;
             string eventHubName = default;
-            IList<DiagnosticsMetricSettings> metrics = default;
-            IList<DiagnosticsLogSettings> logs = default;
-            string workspaceId = default;
-            string marketplacePartnerId = default;
+            IList<MetricSettings> metrics = default;
+            IList<LogSettings> logs = default;
+            ResourceIdentifier workspaceId = default;
+            ResourceIdentifier marketplacePartnerId = default;
             string logAnalyticsDestinationType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("storageAccountId"u8))
                 {
-                    storageAccountId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageAccountId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("serviceBusRuleId"u8))
                 {
-                    serviceBusRuleId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    serviceBusRuleId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("eventHubAuthorizationRuleId"u8))
                 {
-                    eventHubAuthorizationRuleId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eventHubAuthorizationRuleId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("eventHubName"u8))
@@ -209,10 +222,10 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    List<DiagnosticsMetricSettings> array = new List<DiagnosticsMetricSettings>();
+                    List<MetricSettings> array = new List<MetricSettings>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DiagnosticsMetricSettings.DeserializeDiagnosticsMetricSettings(item, options));
+                        array.Add(MetricSettings.DeserializeMetricSettings(item, options));
                     }
                     metrics = array;
                     continue;
@@ -223,22 +236,30 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    List<DiagnosticsLogSettings> array = new List<DiagnosticsLogSettings>();
+                    List<LogSettings> array = new List<LogSettings>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DiagnosticsLogSettings.DeserializeDiagnosticsLogSettings(item, options));
+                        array.Add(LogSettings.DeserializeLogSettings(item, options));
                     }
                     logs = array;
                     continue;
                 }
                 if (prop.NameEquals("workspaceId"u8))
                 {
-                    workspaceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    workspaceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("marketplacePartnerId"u8))
                 {
-                    marketplacePartnerId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    marketplacePartnerId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("logAnalyticsDestinationType"u8))
@@ -256,8 +277,8 @@ namespace Azure.ResourceManager.Monitor.Models
                 serviceBusRuleId,
                 eventHubAuthorizationRuleId,
                 eventHubName,
-                metrics ?? new ChangeTrackingList<DiagnosticsMetricSettings>(),
-                logs ?? new ChangeTrackingList<DiagnosticsLogSettings>(),
+                metrics ?? new ChangeTrackingList<MetricSettings>(),
+                logs ?? new ChangeTrackingList<LogSettings>(),
                 workspaceId,
                 marketplacePartnerId,
                 logAnalyticsDestinationType,

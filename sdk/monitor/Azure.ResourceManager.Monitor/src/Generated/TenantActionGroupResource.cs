@@ -19,9 +19,9 @@ using Azure.ResourceManager.Monitor.Models;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
-    /// A class representing a TenantActionGroupResource along with the instance operations that can be performed on it.
+    /// A class representing a TenantActionGroup along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TenantActionGroupResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagementGroupResource"/> using the GetTenantActionGroupResources method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagementGroupResource"/> using the GetTenantActionGroups method.
     /// </summary>
     public partial class TenantActionGroupResource : ArmResource
     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Monitor
         private readonly TenantActionGroups _tenantActionGroupsRestClient;
         private readonly ClientDiagnostics _combineClientClientDiagnostics;
         private readonly CombineClient _combineClientRestClient;
-        private readonly TenantActionGroupResourceData _data;
+        private readonly TenantActionGroupData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Insights/tenantActionGroups";
 
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Initializes a new instance of <see cref="TenantActionGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal TenantActionGroupResource(ArmClient client, TenantActionGroupResourceData data) : this(client, data.Id)
+        internal TenantActionGroupResource(ArmClient client, TenantActionGroupData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -52,11 +52,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal TenantActionGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string tenantActionGroupResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string tenantActionGroupApiVersion);
             _tenantActionGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
-            _tenantActionGroupsRestClient = new TenantActionGroups(_tenantActionGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, tenantActionGroupResourceApiVersion ?? "2023-05-01-preview");
+            _tenantActionGroupsRestClient = new TenantActionGroups(_tenantActionGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, tenantActionGroupApiVersion ?? "2023-05-01-preview");
             _combineClientClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
-            _combineClientRestClient = new CombineClient(_combineClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, tenantActionGroupResourceApiVersion ?? "2023-05-01-preview");
+            _combineClientRestClient = new CombineClient(_combineClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, tenantActionGroupApiVersion ?? "2023-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual TenantActionGroupResourceData Data
+        public virtual TenantActionGroupData Data
         {
             get
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Monitor
                 };
                 HttpMessage message = _tenantActionGroupsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, xMsClientTenantId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<TenantActionGroupResourceData> response = Response.FromValue(TenantActionGroupResourceData.FromResponse(result), result);
+                Response<TenantActionGroupData> response = Response.FromValue(TenantActionGroupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Monitor
                 };
                 HttpMessage message = _tenantActionGroupsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, xMsClientTenantId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<TenantActionGroupResourceData> response = Response.FromValue(TenantActionGroupResourceData.FromResponse(result), result);
+                Response<TenantActionGroupData> response = Response.FromValue(TenantActionGroupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="xMsClientTenantId"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="xMsClientTenantId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<TenantActionGroupResource>> UpdateAsync(string xMsClientTenantId, TenantActionGroupResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TenantActionGroupResource>> UpdateAsync(string xMsClientTenantId, TenantActionGroupPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(xMsClientTenantId, nameof(xMsClientTenantId));
             Argument.AssertNotNull(patch, nameof(patch));
@@ -240,9 +240,9 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantActionGroupsRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, xMsClientTenantId, TenantActionGroupResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _tenantActionGroupsRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, xMsClientTenantId, TenantActionGroupPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<TenantActionGroupResourceData> response = Response.FromValue(TenantActionGroupResourceData.FromResponse(result), result);
+                Response<TenantActionGroupData> response = Response.FromValue(TenantActionGroupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="xMsClientTenantId"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="xMsClientTenantId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<TenantActionGroupResource> Update(string xMsClientTenantId, TenantActionGroupResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<TenantActionGroupResource> Update(string xMsClientTenantId, TenantActionGroupPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(xMsClientTenantId, nameof(xMsClientTenantId));
             Argument.AssertNotNull(patch, nameof(patch));
@@ -295,9 +295,9 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantActionGroupsRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, xMsClientTenantId, TenantActionGroupResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _tenantActionGroupsRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, xMsClientTenantId, TenantActionGroupPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<TenantActionGroupResourceData> response = Response.FromValue(TenantActionGroupResourceData.FromResponse(result), result);
+                Response<TenantActionGroupData> response = Response.FromValue(TenantActionGroupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -446,14 +446,14 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="xMsClientTenantId"> The tenant ID of the client making the request. </param>
-        /// <param name="notificationRequest"> The notification request body which includes the contact details. </param>
+        /// <param name="content"> The notification request body which includes the contact details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="xMsClientTenantId"/> or <paramref name="notificationRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="xMsClientTenantId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="xMsClientTenantId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<TestNotificationDetailsResult>> CreateNotificationsAtTenantActionGroupResourceLevelAsync(WaitUntil waitUntil, string xMsClientTenantId, TenantNotificationRequestBody notificationRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<TestNotificationDetailsResult>> CreateNotificationsAtTenantActionGroupResourceLevelAsync(WaitUntil waitUntil, string xMsClientTenantId, TenantNotificationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(xMsClientTenantId, nameof(xMsClientTenantId));
-            Argument.AssertNotNull(notificationRequest, nameof(notificationRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _combineClientClientDiagnostics.CreateScope("TenantActionGroupResource.CreateNotificationsAtTenantActionGroupResourceLevel");
             scope.Start();
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _combineClientRestClient.CreateCreateNotificationsAtTenantActionGroupResourceLevelRequest(Id.Parent.Name, Id.Name, xMsClientTenantId, TenantNotificationRequestBody.ToRequestContent(notificationRequest), context);
+                HttpMessage message = _combineClientRestClient.CreateCreateNotificationsAtTenantActionGroupResourceLevelRequest(Id.Parent.Name, Id.Name, xMsClientTenantId, TenantNotificationContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MonitorArmOperation<TestNotificationDetailsResult> operation = new MonitorArmOperation<TestNotificationDetailsResult>(
                     new TestNotificationDetailsResultOperationSource(),
@@ -508,14 +508,14 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="xMsClientTenantId"> The tenant ID of the client making the request. </param>
-        /// <param name="notificationRequest"> The notification request body which includes the contact details. </param>
+        /// <param name="content"> The notification request body which includes the contact details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="xMsClientTenantId"/> or <paramref name="notificationRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="xMsClientTenantId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="xMsClientTenantId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<TestNotificationDetailsResult> CreateNotificationsAtTenantActionGroupResourceLevel(WaitUntil waitUntil, string xMsClientTenantId, TenantNotificationRequestBody notificationRequest, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<TestNotificationDetailsResult> CreateNotificationsAtTenantActionGroupResourceLevel(WaitUntil waitUntil, string xMsClientTenantId, TenantNotificationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(xMsClientTenantId, nameof(xMsClientTenantId));
-            Argument.AssertNotNull(notificationRequest, nameof(notificationRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _combineClientClientDiagnostics.CreateScope("TenantActionGroupResource.CreateNotificationsAtTenantActionGroupResourceLevel");
             scope.Start();
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _combineClientRestClient.CreateCreateNotificationsAtTenantActionGroupResourceLevelRequest(Id.Parent.Name, Id.Name, xMsClientTenantId, TenantNotificationRequestBody.ToRequestContent(notificationRequest), context);
+                HttpMessage message = _combineClientRestClient.CreateCreateNotificationsAtTenantActionGroupResourceLevelRequest(Id.Parent.Name, Id.Name, xMsClientTenantId, TenantNotificationContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MonitorArmOperation<TestNotificationDetailsResult> operation = new MonitorArmOperation<TestNotificationDetailsResult>(
                     new TestNotificationDetailsResultOperationSource(),

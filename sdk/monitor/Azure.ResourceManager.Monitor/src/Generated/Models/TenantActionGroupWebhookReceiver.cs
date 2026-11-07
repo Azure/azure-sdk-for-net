@@ -12,16 +12,16 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> A webhook receiver. </summary>
-    public partial class WebhookReceiver
+    public partial class TenantActionGroupWebhookReceiver
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="WebhookReceiver"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantActionGroupWebhookReceiver"/>. </summary>
         /// <param name="name"> The name of the webhook receiver. Names must be unique across all receivers within a tenant action group. </param>
         /// <param name="serviceUri"> The URI where webhooks should be sent. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="serviceUri"/> is null. </exception>
-        public WebhookReceiver(string name, string serviceUri)
+        public TenantActionGroupWebhookReceiver(string name, Uri serviceUri)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(serviceUri, nameof(serviceUri));
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Monitor.Models
             ServiceUri = serviceUri;
         }
 
-        /// <summary> Initializes a new instance of <see cref="WebhookReceiver"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantActionGroupWebhookReceiver"/>. </summary>
         /// <param name="name"> The name of the webhook receiver. Names must be unique across all receivers within a tenant action group. </param>
         /// <param name="serviceUri"> The URI where webhooks should be sent. </param>
         /// <param name="useCommonAlertSchema"> Indicates whether to use common alert schema. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="identifierUri"> Indicates the identifier uri for aad auth. </param>
         /// <param name="tenantId"> Indicates the tenant id for aad auth. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebhookReceiver(string name, string serviceUri, bool? useCommonAlertSchema, bool? useAadAuth, string objectId, string identifierUri, string tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TenantActionGroupWebhookReceiver(string name, Uri serviceUri, bool? useCommonAlertSchema, bool? useAadAuth, string objectId, Uri identifierUri, string tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             ServiceUri = serviceUri;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public string Name { get; set; }
 
         /// <summary> The URI where webhooks should be sent. </summary>
-        public string ServiceUri { get; set; }
+        public Uri ServiceUri { get; set; }
 
         /// <summary> Indicates whether to use common alert schema. </summary>
         public bool? UseCommonAlertSchema { get; set; }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public string ObjectId { get; set; }
 
         /// <summary> Indicates the identifier uri for aad auth. </summary>
-        public string IdentifierUri { get; set; }
+        public Uri IdentifierUri { get; set; }
 
         /// <summary> Indicates the tenant id for aad auth. </summary>
         public string TenantId { get; set; }

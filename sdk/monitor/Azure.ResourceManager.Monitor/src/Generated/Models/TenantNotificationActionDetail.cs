@@ -11,17 +11,17 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The action detail. </summary>
-    public partial class ActionDetail
+    public partial class TenantNotificationActionDetail
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ActionDetail"/>. </summary>
-        internal ActionDetail()
+        /// <summary> Initializes a new instance of <see cref="TenantNotificationActionDetail"/>. </summary>
+        internal TenantNotificationActionDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ActionDetail"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantNotificationActionDetail"/>. </summary>
         /// <param name="mechanismType"> The mechanism type. </param>
         /// <param name="name"> The name of the action. </param>
         /// <param name="status"> The status of the action. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="sendTime"> The send time. </param>
         /// <param name="message"> The detail of the friendly error message. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ActionDetail(string mechanismType, string name, string status, string subState, string sendTime, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TenantNotificationActionDetail(string mechanismType, string name, string status, string subState, string sendTime, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MechanismType = mechanismType;
             Name = name;

@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary></summary>
-    public partial class TenantActionGroupResource : IJsonModel<TenantActionGroupResourceData>
+    public partial class TenantActionGroupResource : IJsonModel<TenantActionGroupData>
     {
-        private static IJsonModel<TenantActionGroupResourceData> s_dataDeserializationInstance;
+        private static IJsonModel<TenantActionGroupData> s_dataDeserializationInstance;
 
-        private static IJsonModel<TenantActionGroupResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new TenantActionGroupResourceData();
+        private static IJsonModel<TenantActionGroupData> DataDeserializationInstance => s_dataDeserializationInstance ??= new TenantActionGroupData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TenantActionGroupResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<TenantActionGroupResourceData>)Data).Write(writer, options);
+        void IJsonModel<TenantActionGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<TenantActionGroupData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TenantActionGroupResourceData IJsonModel<TenantActionGroupResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        TenantActionGroupData IJsonModel<TenantActionGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TenantActionGroupResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TenantActionGroupResourceData>(Data, options, AzureResourceManagerMonitorContext.Default);
+        BinaryData IPersistableModel<TenantActionGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TenantActionGroupData>(Data, options, AzureResourceManagerMonitorContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TenantActionGroupResourceData IPersistableModel<TenantActionGroupResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TenantActionGroupResourceData>(data, options, AzureResourceManagerMonitorContext.Default);
+        TenantActionGroupData IPersistableModel<TenantActionGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TenantActionGroupData>(data, options, AzureResourceManagerMonitorContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TenantActionGroupResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<TenantActionGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

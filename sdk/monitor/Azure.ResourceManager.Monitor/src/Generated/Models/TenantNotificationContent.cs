@@ -12,27 +12,27 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The request body which contain contact detail metadata. </summary>
-    public partial class TenantNotificationRequestBody
+    public partial class TenantNotificationContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TenantNotificationRequestBody"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantNotificationContent"/>. </summary>
         /// <param name="alertType"> The value of the supported alert type. Supported alert type value is: servicehealth. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alertType"/> is null. </exception>
-        public TenantNotificationRequestBody(string alertType)
+        public TenantNotificationContent(string alertType)
         {
             Argument.AssertNotNull(alertType, nameof(alertType));
 
             AlertType = alertType;
             EmailReceivers = new ChangeTrackingList<MonitorEmailReceiver>();
             SmsReceivers = new ChangeTrackingList<MonitorSmsReceiver>();
-            WebhookReceivers = new ChangeTrackingList<WebhookReceiver>();
+            WebhookReceivers = new ChangeTrackingList<TenantActionGroupWebhookReceiver>();
             AzureAppPushReceivers = new ChangeTrackingList<MonitorAzureAppPushReceiver>();
             VoiceReceivers = new ChangeTrackingList<MonitorVoiceReceiver>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TenantNotificationRequestBody"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantNotificationContent"/>. </summary>
         /// <param name="alertType"> The value of the supported alert type. Supported alert type value is: servicehealth. </param>
         /// <param name="emailReceivers"> The list of email receivers that are part of this action group. </param>
         /// <param name="smsReceivers"> The list of SMS receivers that are part of this action group. </param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="azureAppPushReceivers"> The list of AzureAppPush receivers that are part of this action group. </param>
         /// <param name="voiceReceivers"> The list of voice receivers that are part of this action group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TenantNotificationRequestBody(string alertType, IList<MonitorEmailReceiver> emailReceivers, IList<MonitorSmsReceiver> smsReceivers, IList<WebhookReceiver> webhookReceivers, IList<MonitorAzureAppPushReceiver> azureAppPushReceivers, IList<MonitorVoiceReceiver> voiceReceivers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TenantNotificationContent(string alertType, IList<MonitorEmailReceiver> emailReceivers, IList<MonitorSmsReceiver> smsReceivers, IList<TenantActionGroupWebhookReceiver> webhookReceivers, IList<MonitorAzureAppPushReceiver> azureAppPushReceivers, IList<MonitorVoiceReceiver> voiceReceivers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AlertType = alertType;
             EmailReceivers = emailReceivers;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public IList<MonitorSmsReceiver> SmsReceivers { get; }
 
         /// <summary> The list of webhook receivers that are part of this action group. </summary>
-        public IList<WebhookReceiver> WebhookReceivers { get; }
+        public IList<TenantActionGroupWebhookReceiver> WebhookReceivers { get; }
 
         /// <summary> The list of AzureAppPush receivers that are part of this action group. </summary>
         public IList<MonitorAzureAppPushReceiver> AzureAppPushReceivers { get; }

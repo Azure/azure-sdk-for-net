@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (TenantActionGroupResourceData item in Value)
+            foreach (TenantActionGroupData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            IList<TenantActionGroupResourceData> value = default;
+            IList<TenantActionGroupData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<TenantActionGroupResourceData> array = new List<TenantActionGroupResourceData>();
+                    List<TenantActionGroupData> array = new List<TenantActionGroupData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(TenantActionGroupResourceData.DeserializeTenantActionGroupResourceData(item, options));
+                        array.Add(TenantActionGroupData.DeserializeTenantActionGroupData(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TenantActionGroupList(value ?? new ChangeTrackingList<TenantActionGroupResourceData>(), nextLink, additionalBinaryDataProperties);
+            return new TenantActionGroupList(value ?? new ChangeTrackingList<TenantActionGroupData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -14,56 +14,56 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> A webhook receiver. </summary>
-    public partial class WebhookReceiver : IJsonModel<WebhookReceiver>
+    public partial class TenantActionGroupWebhookReceiver : IJsonModel<TenantActionGroupWebhookReceiver>
     {
-        /// <summary> Initializes a new instance of <see cref="WebhookReceiver"/> for deserialization. </summary>
-        internal WebhookReceiver()
+        /// <summary> Initializes a new instance of <see cref="TenantActionGroupWebhookReceiver"/> for deserialization. </summary>
+        internal TenantActionGroupWebhookReceiver()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual WebhookReceiver PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual TenantActionGroupWebhookReceiver PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WebhookReceiver>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TenantActionGroupWebhookReceiver>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeWebhookReceiver(document.RootElement, options);
+                        return DeserializeTenantActionGroupWebhookReceiver(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WebhookReceiver)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TenantActionGroupWebhookReceiver)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WebhookReceiver>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TenantActionGroupWebhookReceiver>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(WebhookReceiver)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TenantActionGroupWebhookReceiver)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<WebhookReceiver>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<TenantActionGroupWebhookReceiver>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WebhookReceiver IPersistableModel<WebhookReceiver>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        TenantActionGroupWebhookReceiver IPersistableModel<TenantActionGroupWebhookReceiver>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<WebhookReceiver>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TenantActionGroupWebhookReceiver>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<WebhookReceiver>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TenantActionGroupWebhookReceiver>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WebhookReceiver>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TenantActionGroupWebhookReceiver>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebhookReceiver)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TenantActionGroupWebhookReceiver)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("serviceUri"u8);
-            writer.WriteStringValue(ServiceUri);
+            writer.WriteStringValue(ServiceUri.AbsoluteUri);
             if (Optional.IsDefined(UseCommonAlertSchema))
             {
                 writer.WritePropertyName("useCommonAlertSchema"u8);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(IdentifierUri))
             {
                 writer.WritePropertyName("identifierUri"u8);
-                writer.WriteStringValue(IdentifierUri);
+                writer.WriteStringValue(IdentifierUri.AbsoluteUri);
             }
             if (Optional.IsDefined(TenantId))
             {
@@ -127,35 +127,35 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WebhookReceiver IJsonModel<WebhookReceiver>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        TenantActionGroupWebhookReceiver IJsonModel<TenantActionGroupWebhookReceiver>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual WebhookReceiver JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual TenantActionGroupWebhookReceiver JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WebhookReceiver>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TenantActionGroupWebhookReceiver>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebhookReceiver)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TenantActionGroupWebhookReceiver)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeWebhookReceiver(document.RootElement, options);
+            return DeserializeTenantActionGroupWebhookReceiver(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static WebhookReceiver DeserializeWebhookReceiver(JsonElement element, ModelReaderWriterOptions options)
+        internal static TenantActionGroupWebhookReceiver DeserializeTenantActionGroupWebhookReceiver(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
-            string serviceUri = default;
+            Uri serviceUri = default;
             bool? useCommonAlertSchema = default;
             bool? useAadAuth = default;
             string objectId = default;
-            string identifierUri = default;
+            Uri identifierUri = default;
             string tenantId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (prop.NameEquals("serviceUri"u8))
                 {
-                    serviceUri = prop.Value.GetString();
+                    serviceUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("useCommonAlertSchema"u8))
@@ -195,7 +195,11 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (prop.NameEquals("identifierUri"u8))
                 {
-                    identifierUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identifierUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("tenantId"u8))
@@ -208,7 +212,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new WebhookReceiver(
+            return new TenantActionGroupWebhookReceiver(
                 name,
                 serviceUri,
                 useCommonAlertSchema,
