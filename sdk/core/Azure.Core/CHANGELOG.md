@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added support for Azure Arc user-assigned managed identities. `ManagedIdentityCredential` supports selection by client ID, resource ID, or object ID; `DefaultAzureCredential` supports selection through its client ID and resource ID options.
+
 ### Breaking Changes
 
 ### Bugs Fixed
