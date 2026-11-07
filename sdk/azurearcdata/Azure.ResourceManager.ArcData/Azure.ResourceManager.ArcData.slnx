@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.ArcData.csproj" />
+  <Project Path="tests/Azure.ResourceManager.ArcData.Tests.csproj" />
+</Solution>
