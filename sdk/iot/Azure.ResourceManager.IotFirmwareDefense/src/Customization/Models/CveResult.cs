@@ -2,25 +2,25 @@
 // Licensed under the MIT License.
 
 using System.ComponentModel;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary> CVE analysis result resource. </summary>
+    [CodeGenSuppress("Component")]
     public partial class CveResult
     {
-        ///// <summary> ID of the CVE result. </summary>
-        //public string CveId { get; set; }
         /// <summary> The SBOM component for the CVE. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public CveComponent Component
         {
             get
             {
-                var r = new CveComponent();
-                r.ComponentId = ComponentId;
-                r.Name = ComponentName;
-                r.Version = ComponentVersion;
-                return r;
+                var component = new CveComponent();
+                component.ComponentId = ComponentId;
+                component.Name = ComponentName;
+                component.Version = ComponentVersion;
+                return component;
             }
             set
             {
@@ -29,8 +29,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 ComponentVersion = value.Version;
             }
         }
-        ///// <summary> Severity of the CVE. </summary>
-        //public string Severity { get; set; }
+
         /// <summary> Name of the CVE. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string NamePropertiesName

@@ -13,96 +13,172 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense
 {
-    /// <summary>
-    /// A class representing the IotFirmware data model.
-    /// Firmware definition
-    /// </summary>
+    /// <summary> Firmware definition. </summary>
     public partial class IotFirmwareData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IotFirmwareData"/>. </summary>
         public IotFirmwareData()
         {
-            StatusMessages = new ChangeTrackingList<FirmwareAnalysisStatusMessage>();
         }
 
         /// <summary> Initializes a new instance of <see cref="IotFirmwareData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="fileName"> File name for a firmware that user uploaded. </param>
-        /// <param name="vendor"> Firmware vendor. </param>
-        /// <param name="model"> Firmware model. </param>
-        /// <param name="version"> Firmware version. </param>
-        /// <param name="description"> User-specified description of the firmware. </param>
-        /// <param name="fileSize"> File size of the uploaded firmware image. </param>
-        /// <param name="status"> The status of firmware scan. </param>
-        /// <param name="statusMessages"> A list of errors or other messages generated during firmware analysis. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IotFirmwareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string fileName, string vendor, string model, string version, string description, long? fileSize, FirmwareAnalysisStatus? status, IList<FirmwareAnalysisStatusMessage> statusMessages, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal IotFirmwareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FirmwareProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            FileName = fileName;
-            Vendor = vendor;
-            Model = model;
-            Version = version;
-            Description = description;
-            FileSize = fileSize;
-            Status = status;
-            StatusMessages = statusMessages;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal FirmwareProperties Properties { get; set; }
+
         /// <summary> File name for a firmware that user uploaded. </summary>
-        public string FileName { get; set; }
+        public string FileName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FileName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirmwareProperties();
+                }
+                Properties.FileName = value;
+            }
+        }
+
         /// <summary> Firmware vendor. </summary>
-        public string Vendor { get; set; }
+        public string Vendor
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Vendor;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirmwareProperties();
+                }
+                Properties.Vendor = value;
+            }
+        }
+
         /// <summary> Firmware model. </summary>
-        public string Model { get; set; }
+        public string Model
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Model;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirmwareProperties();
+                }
+                Properties.Model = value;
+            }
+        }
+
         /// <summary> Firmware version. </summary>
-        public string Version { get; set; }
+        public string Version
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Version;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirmwareProperties();
+                }
+                Properties.Version = value;
+            }
+        }
+
         /// <summary> User-specified description of the firmware. </summary>
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirmwareProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> File size of the uploaded firmware image. </summary>
-        public long? FileSize { get; set; }
+        public long? FileSize
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FileSize;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirmwareProperties();
+                }
+                Properties.FileSize = value;
+            }
+        }
+
         /// <summary> The status of firmware scan. </summary>
-        public FirmwareAnalysisStatus? Status { get; set; }
+        public FirmwareAnalysisStatus? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirmwareProperties();
+                }
+                Properties.Status = value;
+            }
+        }
+
         /// <summary> A list of errors or other messages generated during firmware analysis. </summary>
-        public IList<FirmwareAnalysisStatusMessage> StatusMessages { get; }
+        public IList<FirmwareAnalysisStatusMessage> StatusMessages
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirmwareProperties();
+                }
+                return Properties.StatusMessages;
+            }
+        }
+
         /// <summary> Provisioning state of the resource. </summary>
-        public FirmwareProvisioningState? ProvisioningState { get; }
+        public FirmwareProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }
