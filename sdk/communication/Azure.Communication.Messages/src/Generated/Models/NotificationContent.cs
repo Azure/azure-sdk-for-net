@@ -13,7 +13,7 @@ namespace Azure.Communication.Messages
 {
     /// <summary>
     /// Details of the message to send.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AudioNotificationContent"/>, <see cref="DocumentNotificationContent"/>, <see cref="ImageNotificationContent"/>, <see cref="InteractiveNotificationContent"/>, <see cref="MediaNotificationContent"/>, <see cref="ReactionNotificationContent"/>, <see cref="StickerNotificationContent"/>, <see cref="TemplateNotificationContent"/>, <see cref="TextNotificationContent"/>, and <see cref="VideoNotificationContent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AudioNotificationContent"/>, <see cref="DocumentNotificationContent"/>, <see cref="ImageNotificationContent"/>, <see cref="InteractiveNotificationRequest"/>, <see cref="MediaNotificationContent"/>, <see cref="ReactionNotificationRequest"/>, <see cref="StickerNotificationRequest"/>, <see cref="TemplateNotificationContent"/>, <see cref="TextNotificationContent"/>, and <see cref="VideoNotificationContent"/>.
     /// </summary>
     public abstract partial class NotificationContent
     {

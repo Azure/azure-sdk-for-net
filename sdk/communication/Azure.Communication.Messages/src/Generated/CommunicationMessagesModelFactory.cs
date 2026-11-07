@@ -21,12 +21,12 @@ namespace Azure.Communication.Messages
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
         /// <param name="emoji"> emoji content like \uD83D\uDE00. </param>
         /// <param name="messageId"> ID of the previous message you want to reply to. </param>
-        /// <returns> A new <see cref="Messages.ReactionNotificationContent"/> instance for mocking. </returns>
-        public static ReactionNotificationContent ReactionNotificationContent(Guid channelRegistrationId = default, IEnumerable<string> to = default, string emoji = default, string messageId = default)
+        /// <returns> A new <see cref="Messages.ReactionNotificationRequest"/> instance for mocking. </returns>
+        public static ReactionNotificationRequest ReactionNotificationRequest(Guid channelRegistrationId = default, IEnumerable<string> to = default, string emoji = default, string messageId = default)
         {
             to ??= new ChangeTrackingList<string>();
 
-            return new ReactionNotificationContent(
+            return new ReactionNotificationRequest(
                 channelRegistrationId,
                 to.ToList(),
                 CommunicationMessageKind.Reaction,
@@ -39,24 +39,24 @@ namespace Azure.Communication.Messages
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
         /// <param name="mediaUri"> A media url for the file. Required if the type is one of the supported media types, e.g. image. </param>
-        /// <returns> A new <see cref="Messages.StickerNotificationContent"/> instance for mocking. </returns>
-        public static StickerNotificationContent StickerNotificationContent(Guid channelRegistrationId = default, IEnumerable<string> to = default, Uri mediaUri = default)
+        /// <returns> A new <see cref="Messages.StickerNotificationRequest"/> instance for mocking. </returns>
+        public static StickerNotificationRequest StickerNotificationRequest(Guid channelRegistrationId = default, IEnumerable<string> to = default, Uri mediaUri = default)
         {
             to ??= new ChangeTrackingList<string>();
 
-            return new StickerNotificationContent(channelRegistrationId, to.ToList(), CommunicationMessageKind.Sticker, additionalBinaryDataProperties: null, mediaUri);
+            return new StickerNotificationRequest(channelRegistrationId, to.ToList(), CommunicationMessageKind.Sticker, additionalBinaryDataProperties: null, mediaUri);
         }
 
         /// <summary> A request to send an Interactive message notification. </summary>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
         /// <param name="interactiveMessage"> The interactive message content. </param>
-        /// <returns> A new <see cref="Messages.InteractiveNotificationContent"/> instance for mocking. </returns>
-        public static InteractiveNotificationContent InteractiveNotificationContent(Guid channelRegistrationId = default, IEnumerable<string> to = default, InteractiveMessage interactiveMessage = default)
+        /// <returns> A new <see cref="Messages.InteractiveNotificationRequest"/> instance for mocking. </returns>
+        public static InteractiveNotificationRequest InteractiveNotificationRequest(Guid channelRegistrationId = default, IEnumerable<string> to = default, InteractiveMessage interactiveMessage = default)
         {
             to ??= new ChangeTrackingList<string>();
 
-            return new InteractiveNotificationContent(channelRegistrationId, to.ToList(), CommunicationMessageKind.Interactive, additionalBinaryDataProperties: null, interactiveMessage);
+            return new InteractiveNotificationRequest(channelRegistrationId, to.ToList(), CommunicationMessageKind.Interactive, additionalBinaryDataProperties: null, interactiveMessage);
         }
 
         /// <summary> The Interactive message content to which user can read and respond. </summary>
@@ -65,91 +65,91 @@ namespace Azure.Communication.Messages
         /// <param name="footer"> Gets or Sets Message footer content. Emojis, markdown, and links are supported. </param>
         /// <param name="action"> The binding object to get or set Action which describes options user have to respond to message. </param>
         /// <returns> A new <see cref="Messages.InteractiveMessage"/> instance for mocking. </returns>
-        public static InteractiveMessage InteractiveMessage(MessageContent header = default, TextMessageContent body = default, TextMessageContent footer = default, ActionBindings action = default)
+        public static InteractiveMessage InteractiveMessage(MessageRequest header = default, TextMessageRequest body = default, TextMessageRequest footer = default, ActionBindings action = default)
         {
             return new InteractiveMessage(header, body, footer, action, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
         /// The message content object used to create interactive messages components.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Messages.ActionGroupContent"/>, <see cref="Messages.ButtonSetContent"/>, <see cref="Messages.DocumentMessageContent"/>, <see cref="Messages.ImageMessageContent"/>, <see cref="Messages.LinkContent"/>, <see cref="Messages.TextMessageContent"/>, and <see cref="Messages.VideoMessageContent"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Messages.ActionGroupRequest"/>, <see cref="Messages.ButtonSetRequest"/>, <see cref="Messages.DocumentMessageRequest"/>, <see cref="Messages.ImageMessageRequest"/>, <see cref="Messages.LinkRequest"/>, <see cref="Messages.TextMessageRequest"/>, and <see cref="Messages.VideoMessageRequest"/>.
         /// </summary>
         /// <param name="kind"> Kind of MessageContent. </param>
-        /// <returns> A new <see cref="Messages.MessageContent"/> instance for mocking. </returns>
-        public static MessageContent MessageContent(string kind = default)
+        /// <returns> A new <see cref="Messages.MessageRequest"/> instance for mocking. </returns>
+        public static MessageRequest MessageRequest(string kind = default)
         {
-            return new UnknownMessageContent(new MessageContentKind(kind), additionalBinaryDataProperties: null);
+            return new UnknownMessageRequest(new MessageContentKind(kind), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The message content of type text information. </summary>
         /// <param name="text"> The text value. </param>
-        /// <returns> A new <see cref="Messages.TextMessageContent"/> instance for mocking. </returns>
-        public static TextMessageContent TextMessageContent(string text = default)
+        /// <returns> A new <see cref="Messages.TextMessageRequest"/> instance for mocking. </returns>
+        public static TextMessageRequest TextMessageRequest(string text = default)
         {
-            return new TextMessageContent(MessageContentKind.Text, additionalBinaryDataProperties: null, text);
+            return new TextMessageRequest(MessageContentKind.Text, additionalBinaryDataProperties: null, text);
         }
 
         /// <summary> The message content of type document information. </summary>
         /// <param name="mediaUri"> MediaUri of the media content. </param>
-        /// <returns> A new <see cref="Messages.DocumentMessageContent"/> instance for mocking. </returns>
-        public static DocumentMessageContent DocumentMessageContent(Uri mediaUri = default)
+        /// <returns> A new <see cref="Messages.DocumentMessageRequest"/> instance for mocking. </returns>
+        public static DocumentMessageRequest DocumentMessageRequest(Uri mediaUri = default)
         {
-            return new DocumentMessageContent(MessageContentKind.Document, additionalBinaryDataProperties: null, mediaUri);
+            return new DocumentMessageRequest(MessageContentKind.Document, additionalBinaryDataProperties: null, mediaUri);
         }
 
         /// <summary> The message content of type image information. </summary>
         /// <param name="mediaUri"> MediaUri of the media content. </param>
-        /// <returns> A new <see cref="Messages.ImageMessageContent"/> instance for mocking. </returns>
-        public static ImageMessageContent ImageMessageContent(Uri mediaUri = default)
+        /// <returns> A new <see cref="Messages.ImageMessageRequest"/> instance for mocking. </returns>
+        public static ImageMessageRequest ImageMessageRequest(Uri mediaUri = default)
         {
-            return new ImageMessageContent(MessageContentKind.Image, additionalBinaryDataProperties: null, mediaUri);
+            return new ImageMessageRequest(MessageContentKind.Image, additionalBinaryDataProperties: null, mediaUri);
         }
 
         /// <summary> The message content of type video information. </summary>
         /// <param name="mediaUri"> MediaUri of the media content. </param>
-        /// <returns> A new <see cref="Messages.VideoMessageContent"/> instance for mocking. </returns>
-        public static VideoMessageContent VideoMessageContent(Uri mediaUri = default)
+        /// <returns> A new <see cref="Messages.VideoMessageRequest"/> instance for mocking. </returns>
+        public static VideoMessageRequest VideoMessageRequest(Uri mediaUri = default)
         {
-            return new VideoMessageContent(MessageContentKind.Video, additionalBinaryDataProperties: null, mediaUri);
+            return new VideoMessageRequest(MessageContentKind.Video, additionalBinaryDataProperties: null, mediaUri);
         }
 
         /// <summary> The message content of type ButtonSet/ List of buttons information. </summary>
         /// <param name="buttons"> Unique Id of the button content. </param>
-        /// <returns> A new <see cref="Messages.ButtonSetContent"/> instance for mocking. </returns>
-        public static ButtonSetContent ButtonSetContent(IEnumerable<ButtonContent> buttons = default)
+        /// <returns> A new <see cref="Messages.ButtonSetRequest"/> instance for mocking. </returns>
+        public static ButtonSetRequest ButtonSetRequest(IEnumerable<ButtonRequest> buttons = default)
         {
-            buttons ??= new ChangeTrackingList<ButtonContent>();
+            buttons ??= new ChangeTrackingList<ButtonRequest>();
 
-            return new ButtonSetContent(MessageContentKind.ButtonSet, additionalBinaryDataProperties: null, buttons.ToList());
+            return new ButtonSetRequest(MessageContentKind.ButtonSet, additionalBinaryDataProperties: null, buttons.ToList());
         }
 
         /// <summary> The message content of type Button information. </summary>
         /// <param name="id"> Unique Id of the button content. </param>
         /// <param name="title"> Title of the button content. </param>
-        /// <returns> A new <see cref="Messages.ButtonContent"/> instance for mocking. </returns>
-        public static ButtonContent ButtonContent(string id = default, string title = default)
+        /// <returns> A new <see cref="Messages.ButtonRequest"/> instance for mocking. </returns>
+        public static ButtonRequest ButtonRequest(string id = default, string title = default)
         {
-            return new ButtonContent(id, title, additionalBinaryDataProperties: null);
+            return new ButtonRequest(id, title, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The message content of type Url information. </summary>
         /// <param name="title"> Title of the url content. </param>
         /// <param name="uri"> The url in the content. </param>
-        /// <returns> A new <see cref="Messages.LinkContent"/> instance for mocking. </returns>
-        public static LinkContent LinkContent(string title = default, Uri uri = default)
+        /// <returns> A new <see cref="Messages.LinkRequest"/> instance for mocking. </returns>
+        public static LinkRequest LinkRequest(string title = default, Uri uri = default)
         {
-            return new LinkContent(MessageContentKind.Uri, additionalBinaryDataProperties: null, title, uri);
+            return new LinkRequest(MessageContentKind.Uri, additionalBinaryDataProperties: null, title, uri);
         }
 
         /// <summary> The action content of type ActionGroup. </summary>
         /// <param name="title"> Title of the actionGroup content. </param>
         /// <param name="groups"> Set or group of actions. </param>
-        /// <returns> A new <see cref="Messages.ActionGroupContent"/> instance for mocking. </returns>
-        public static ActionGroupContent ActionGroupContent(string title = default, IEnumerable<ActionGroup> groups = default)
+        /// <returns> A new <see cref="Messages.ActionGroupRequest"/> instance for mocking. </returns>
+        public static ActionGroupRequest ActionGroupRequest(string title = default, IEnumerable<ActionGroup> groups = default)
         {
             groups ??= new ChangeTrackingList<ActionGroup>();
 
-            return new ActionGroupContent(MessageContentKind.Group, additionalBinaryDataProperties: null, title, groups.ToList());
+            return new ActionGroupRequest(MessageContentKind.Group, additionalBinaryDataProperties: null, title, groups.ToList());
         }
 
         /// <summary> The Action Group content. </summary>
@@ -187,7 +187,7 @@ namespace Azure.Communication.Messages
         /// <summary> WhatsApp List Binding actions to the interactive message. </summary>
         /// <param name="content"> Action content of Interactive message. </param>
         /// <returns> A new <see cref="Models.Channels.WhatsAppListActionBindings"/> instance for mocking. </returns>
-        public static WhatsAppListActionBindings WhatsAppListActionBindings(ActionGroupContent content = default)
+        public static WhatsAppListActionBindings WhatsAppListActionBindings(ActionGroupRequest content = default)
         {
             return new WhatsAppListActionBindings(MessageActionBindingKind.WhatsAppListAction, additionalBinaryDataProperties: null, content);
         }
@@ -195,7 +195,7 @@ namespace Azure.Communication.Messages
         /// <summary> WhatsApp Binding actions to the interactive message. </summary>
         /// <param name="content"> Action content of Interactive message. </param>
         /// <returns> A new <see cref="Models.Channels.WhatsAppButtonActionBindings"/> instance for mocking. </returns>
-        public static WhatsAppButtonActionBindings WhatsAppButtonActionBindings(ButtonSetContent content = default)
+        public static WhatsAppButtonActionBindings WhatsAppButtonActionBindings(ButtonSetRequest content = default)
         {
             return new WhatsAppButtonActionBindings(MessageActionBindingKind.WhatsAppButtonAction, additionalBinaryDataProperties: null, content);
         }
@@ -203,7 +203,7 @@ namespace Azure.Communication.Messages
         /// <summary> WhatsApp Binding actions to the interactive message. </summary>
         /// <param name="content"> Action content of Interactive message. </param>
         /// <returns> A new <see cref="Models.Channels.WhatsAppUrlActionBindings"/> instance for mocking. </returns>
-        public static WhatsAppUrlActionBindings WhatsAppUrlActionBindings(LinkContent content = default)
+        public static WhatsAppUrlActionBindings WhatsAppUrlActionBindings(LinkRequest content = default)
         {
             return new WhatsAppUrlActionBindings(MessageActionBindingKind.WhatsAppUrlAction, additionalBinaryDataProperties: null, content);
         }
@@ -262,10 +262,10 @@ namespace Azure.Communication.Messages
         /// <param name="messageId"> The id of the message this read receipt refers to. </param>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="typingIndicator"> Whether this status update includes a typing indicator. This field defaults to false when not provided. </param>
-        /// <returns> A new <see cref="Messages.ReadReceiptContent"/> instance for mocking. </returns>
-        public static ReadReceiptContent ReadReceiptContent(string messageId = default, Guid channelRegistrationId = default, bool? typingIndicator = default)
+        /// <returns> A new <see cref="Messages.ReadReceiptRequest"/> instance for mocking. </returns>
+        public static ReadReceiptRequest ReadReceiptRequest(string messageId = default, Guid channelRegistrationId = default, bool? typingIndicator = default)
         {
-            return new ReadReceiptContent(messageId, channelRegistrationId, typingIndicator, additionalBinaryDataProperties: null);
+            return new ReadReceiptRequest(messageId, channelRegistrationId, typingIndicator, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A conversation. </summary>

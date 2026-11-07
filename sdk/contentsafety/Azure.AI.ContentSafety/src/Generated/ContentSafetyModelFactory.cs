@@ -320,17 +320,17 @@ namespace Azure.AI.ContentSafety
         /// <summary> Input describing the media to inspect using Content Provenance Detection. </summary>
         /// <param name="content"> Source content to inspect. </param>
         /// <returns> A new <see cref="ContentSafety.DetectProvenanceOptions"/> instance for mocking. </returns>
-        public static DetectProvenanceOptions DetectProvenanceOptions(ProvenanceContent content = default)
+        public static DetectProvenanceOptions DetectProvenanceOptions(ProvenanceRequest content = default)
         {
             return new DetectProvenanceOptions(content, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Source content descriptor for a Content Provenance Detection operation. </summary>
         /// <param name="uri"> Blob URI of the media to inspect. Media up to 100 MB is supported. Supported formats: image (JPEG, PNG, GIF, WebP), audio (MP3, WAV), and video (MP4). </param>
-        /// <returns> A new <see cref="ContentSafety.ProvenanceContent"/> instance for mocking. </returns>
-        public static ProvenanceContent ProvenanceContent(Uri uri = default)
+        /// <returns> A new <see cref="ContentSafety.ProvenanceRequest"/> instance for mocking. </returns>
+        public static ProvenanceRequest ProvenanceRequest(Uri uri = default)
         {
-            return new ProvenanceContent(uri, additionalBinaryDataProperties: null);
+            return new ProvenanceRequest(uri, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Result of a Content Provenance Detection operation. </summary>

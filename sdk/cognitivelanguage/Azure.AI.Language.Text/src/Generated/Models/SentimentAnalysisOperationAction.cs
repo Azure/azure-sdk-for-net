@@ -23,12 +23,12 @@ namespace Azure.AI.Language.Text
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameters"> Parameters for the Sentiment Analysis task. </param>
-        internal SentimentAnalysisOperationAction(string name, AnalyzeTextOperationActionKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, SentimentAnalysisActionContent parameters) : base(name, kind, additionalBinaryDataProperties)
+        internal SentimentAnalysisOperationAction(string name, AnalyzeTextOperationActionKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, SentimentAnalysisActionRequest parameters) : base(name, kind, additionalBinaryDataProperties)
         {
             Parameters = parameters;
         }
 
         /// <summary> Parameters for the Sentiment Analysis task. </summary>
-        public SentimentAnalysisActionContent Parameters { get; set; }
+        public SentimentAnalysisActionRequest Parameters { get; set; }
     }
 }
