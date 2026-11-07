@@ -14,66 +14,66 @@ using Azure.Core;
 namespace Azure.Communication.Messages
 {
     /// <summary> A request to send a read receipt update from Business to User. </summary>
-    public partial class ReadReceiptContent : IJsonModel<ReadReceiptContent>
+    public partial class ReadReceiptRequest : IJsonModel<ReadReceiptRequest>
     {
-        /// <summary> Initializes a new instance of <see cref="ReadReceiptContent"/> for deserialization. </summary>
-        internal ReadReceiptContent()
+        /// <summary> Initializes a new instance of <see cref="ReadReceiptRequest"/> for deserialization. </summary>
+        internal ReadReceiptRequest()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ReadReceiptContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ReadReceiptRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ReadReceiptContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ReadReceiptRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeReadReceiptContent(document.RootElement, options);
+                        return DeserializeReadReceiptRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReadReceiptContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReadReceiptRequest)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ReadReceiptContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ReadReceiptRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureCommunicationMessagesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ReadReceiptContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReadReceiptRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ReadReceiptContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ReadReceiptRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ReadReceiptContent IPersistableModel<ReadReceiptContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ReadReceiptRequest IPersistableModel<ReadReceiptRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ReadReceiptContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ReadReceiptRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="readReceiptContent"> The <see cref="ReadReceiptContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(ReadReceiptContent readReceiptContent)
+        /// <param name="readReceiptRequest"> The <see cref="ReadReceiptRequest"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(ReadReceiptRequest readReceiptRequest)
         {
-            if (readReceiptContent == null)
+            if (readReceiptRequest == null)
             {
                 return null;
             }
-            return RequestContent.Create(readReceiptContent, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(readReceiptRequest, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ReadReceiptContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ReadReceiptRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -84,10 +84,10 @@ namespace Azure.Communication.Messages
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ReadReceiptContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ReadReceiptRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReadReceiptContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ReadReceiptRequest)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("messageId"u8);
             writer.WriteStringValue(MessageId);
@@ -117,24 +117,24 @@ namespace Azure.Communication.Messages
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ReadReceiptContent IJsonModel<ReadReceiptContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ReadReceiptRequest IJsonModel<ReadReceiptRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ReadReceiptContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ReadReceiptRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ReadReceiptContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ReadReceiptRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReadReceiptContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ReadReceiptRequest)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeReadReceiptContent(document.RootElement, options);
+            return DeserializeReadReceiptRequest(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ReadReceiptContent DeserializeReadReceiptContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static ReadReceiptRequest DeserializeReadReceiptRequest(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -170,7 +170,7 @@ namespace Azure.Communication.Messages
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ReadReceiptContent(messageId, channelRegistrationId, typingIndicator, additionalBinaryDataProperties);
+            return new ReadReceiptRequest(messageId, channelRegistrationId, typingIndicator, additionalBinaryDataProperties);
         }
     }
 }

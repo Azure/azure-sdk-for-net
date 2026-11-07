@@ -12,57 +12,57 @@ using System.Text.Json;
 
 namespace Azure.Communication.Messages
 {
-    /// <summary> The message content of type ButtonSet/ List of buttons information. </summary>
-    public partial class ButtonSetContent : MessageContent, IJsonModel<ButtonSetContent>
+    /// <summary> The message content of type document information. </summary>
+    public partial class DocumentMessageRequest : MessageRequest, IJsonModel<DocumentMessageRequest>
     {
-        /// <summary> Initializes a new instance of <see cref="ButtonSetContent"/> for deserialization. </summary>
-        internal ButtonSetContent()
+        /// <summary> Initializes a new instance of <see cref="DocumentMessageRequest"/> for deserialization. </summary>
+        internal DocumentMessageRequest()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override MessageContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override MessageRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ButtonSetContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DocumentMessageRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeButtonSetContent(document.RootElement, options);
+                        return DeserializeDocumentMessageRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ButtonSetContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentMessageRequest)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ButtonSetContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DocumentMessageRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureCommunicationMessagesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ButtonSetContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentMessageRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ButtonSetContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DocumentMessageRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ButtonSetContent IPersistableModel<ButtonSetContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (ButtonSetContent)PersistableModelCreateCore(data, options);
+        DocumentMessageRequest IPersistableModel<DocumentMessageRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => (DocumentMessageRequest)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ButtonSetContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DocumentMessageRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ButtonSetContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DocumentMessageRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -73,41 +73,36 @@ namespace Azure.Communication.Messages
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ButtonSetContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DocumentMessageRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ButtonSetContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentMessageRequest)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("buttons"u8);
-            writer.WriteStartArray();
-            foreach (ButtonContent item in Buttons)
-            {
-                writer.WriteObjectValue(item, options);
-            }
-            writer.WriteEndArray();
+            writer.WritePropertyName("mediaUri"u8);
+            writer.WriteStringValue(MediaUri.AbsoluteUri);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ButtonSetContent IJsonModel<ButtonSetContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ButtonSetContent)JsonModelCreateCore(ref reader, options);
+        DocumentMessageRequest IJsonModel<DocumentMessageRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DocumentMessageRequest)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override MessageContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override MessageRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ButtonSetContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DocumentMessageRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ButtonSetContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentMessageRequest)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeButtonSetContent(document.RootElement, options);
+            return DeserializeDocumentMessageRequest(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ButtonSetContent DeserializeButtonSetContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static DocumentMessageRequest DeserializeDocumentMessageRequest(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -115,7 +110,7 @@ namespace Azure.Communication.Messages
             }
             MessageContentKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<ButtonContent> buttons = default;
+            Uri mediaUri = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
@@ -123,14 +118,9 @@ namespace Azure.Communication.Messages
                     kind = new MessageContentKind(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("buttons"u8))
+                if (prop.NameEquals("mediaUri"u8))
                 {
-                    List<ButtonContent> array = new List<ButtonContent>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(ButtonContent.DeserializeButtonContent(item, options));
-                    }
-                    buttons = array;
+                    mediaUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")
@@ -138,7 +128,7 @@ namespace Azure.Communication.Messages
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ButtonSetContent(kind, additionalBinaryDataProperties, buttons ?? new ChangeTrackingList<ButtonContent>());
+            return new DocumentMessageRequest(kind, additionalBinaryDataProperties, mediaUri);
         }
     }
 }

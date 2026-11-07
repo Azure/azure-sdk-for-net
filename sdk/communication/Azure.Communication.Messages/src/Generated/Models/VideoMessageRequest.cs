@@ -11,23 +11,23 @@ using System.Collections.Generic;
 namespace Azure.Communication.Messages
 {
     /// <summary> The message content of type video information. </summary>
-    public partial class VideoMessageContent : MessageContent
+    public partial class VideoMessageRequest : MessageRequest
     {
-        /// <summary> Initializes a new instance of <see cref="VideoMessageContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VideoMessageRequest"/>. </summary>
         /// <param name="mediaUri"> MediaUri of the media content. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mediaUri"/> is null. </exception>
-        public VideoMessageContent(Uri mediaUri) : base(MessageContentKind.Video)
+        public VideoMessageRequest(Uri mediaUri) : base(MessageContentKind.Video)
         {
             Argument.AssertNotNull(mediaUri, nameof(mediaUri));
 
             MediaUri = mediaUri;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VideoMessageContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VideoMessageRequest"/>. </summary>
         /// <param name="kind"> Kind of MessageContent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="mediaUri"> MediaUri of the media content. </param>
-        internal VideoMessageContent(MessageContentKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri mediaUri) : base(kind, additionalBinaryDataProperties)
+        internal VideoMessageRequest(MessageContentKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri mediaUri) : base(kind, additionalBinaryDataProperties)
         {
             MediaUri = mediaUri;
         }

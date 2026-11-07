@@ -11,23 +11,23 @@ using System.Collections.Generic;
 namespace Azure.Communication.Messages
 {
     /// <summary> The message content of type text information. </summary>
-    public partial class TextMessageContent : MessageContent
+    public partial class TextMessageRequest : MessageRequest
     {
-        /// <summary> Initializes a new instance of <see cref="TextMessageContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextMessageRequest"/>. </summary>
         /// <param name="text"> The text value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        public TextMessageContent(string text) : base(MessageContentKind.Text)
+        public TextMessageRequest(string text) : base(MessageContentKind.Text)
         {
             Argument.AssertNotNull(text, nameof(text));
 
             Text = text;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextMessageContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextMessageRequest"/>. </summary>
         /// <param name="kind"> Kind of MessageContent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="text"> The text value. </param>
-        internal TextMessageContent(MessageContentKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string text) : base(kind, additionalBinaryDataProperties)
+        internal TextMessageRequest(MessageContentKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string text) : base(kind, additionalBinaryDataProperties)
         {
             Text = text;
         }

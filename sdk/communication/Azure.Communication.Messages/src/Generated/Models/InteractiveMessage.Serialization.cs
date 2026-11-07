@@ -134,9 +134,9 @@ namespace Azure.Communication.Messages
             {
                 return null;
             }
-            MessageContent header = default;
-            TextMessageContent body = default;
-            TextMessageContent footer = default;
+            MessageRequest header = default;
+            TextMessageRequest body = default;
+            TextMessageRequest footer = default;
             ActionBindings action = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -147,12 +147,12 @@ namespace Azure.Communication.Messages
                     {
                         continue;
                     }
-                    header = MessageContent.DeserializeMessageContent(prop.Value, options);
+                    header = MessageRequest.DeserializeMessageRequest(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("body"u8))
                 {
-                    body = TextMessageContent.DeserializeTextMessageContent(prop.Value, options);
+                    body = TextMessageRequest.DeserializeTextMessageRequest(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("footer"u8))
@@ -161,7 +161,7 @@ namespace Azure.Communication.Messages
                     {
                         continue;
                     }
-                    footer = TextMessageContent.DeserializeTextMessageContent(prop.Value, options);
+                    footer = TextMessageRequest.DeserializeTextMessageRequest(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("action"u8))

@@ -12,28 +12,28 @@ using System.Linq;
 namespace Azure.Communication.Messages
 {
     /// <summary> The message content of type ButtonSet/ List of buttons information. </summary>
-    public partial class ButtonSetContent : MessageContent
+    public partial class ButtonSetRequest : MessageRequest
     {
-        /// <summary> Initializes a new instance of <see cref="ButtonSetContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ButtonSetRequest"/>. </summary>
         /// <param name="buttons"> Unique Id of the button content. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="buttons"/> is null. </exception>
-        public ButtonSetContent(IEnumerable<ButtonContent> buttons) : base(MessageContentKind.ButtonSet)
+        public ButtonSetRequest(IEnumerable<ButtonRequest> buttons) : base(MessageContentKind.ButtonSet)
         {
             Argument.AssertNotNull(buttons, nameof(buttons));
 
             Buttons = buttons.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ButtonSetContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ButtonSetRequest"/>. </summary>
         /// <param name="kind"> Kind of MessageContent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="buttons"> Unique Id of the button content. </param>
-        internal ButtonSetContent(MessageContentKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<ButtonContent> buttons) : base(kind, additionalBinaryDataProperties)
+        internal ButtonSetRequest(MessageContentKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<ButtonRequest> buttons) : base(kind, additionalBinaryDataProperties)
         {
             Buttons = buttons;
         }
 
         /// <summary> Unique Id of the button content. </summary>
-        public IList<ButtonContent> Buttons { get; }
+        public IList<ButtonRequest> Buttons { get; }
     }
 }

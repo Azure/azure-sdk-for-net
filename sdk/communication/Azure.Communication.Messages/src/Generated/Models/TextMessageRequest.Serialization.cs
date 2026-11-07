@@ -12,57 +12,57 @@ using System.Text.Json;
 
 namespace Azure.Communication.Messages
 {
-    /// <summary> The message content of type video information. </summary>
-    public partial class VideoMessageContent : MessageContent, IJsonModel<VideoMessageContent>
+    /// <summary> The message content of type text information. </summary>
+    public partial class TextMessageRequest : MessageRequest, IJsonModel<TextMessageRequest>
     {
-        /// <summary> Initializes a new instance of <see cref="VideoMessageContent"/> for deserialization. </summary>
-        internal VideoMessageContent()
+        /// <summary> Initializes a new instance of <see cref="TextMessageRequest"/> for deserialization. </summary>
+        internal TextMessageRequest()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override MessageContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override MessageRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VideoMessageContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TextMessageRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVideoMessageContent(document.RootElement, options);
+                        return DeserializeTextMessageRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VideoMessageContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TextMessageRequest)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VideoMessageContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TextMessageRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureCommunicationMessagesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VideoMessageContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TextMessageRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VideoMessageContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<TextMessageRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VideoMessageContent IPersistableModel<VideoMessageContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (VideoMessageContent)PersistableModelCreateCore(data, options);
+        TextMessageRequest IPersistableModel<TextMessageRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => (TextMessageRequest)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VideoMessageContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TextMessageRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VideoMessageContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TextMessageRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -73,36 +73,36 @@ namespace Azure.Communication.Messages
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VideoMessageContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TextMessageRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VideoMessageContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TextMessageRequest)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("mediaUri"u8);
-            writer.WriteStringValue(MediaUri.AbsoluteUri);
+            writer.WritePropertyName("text"u8);
+            writer.WriteStringValue(Text);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VideoMessageContent IJsonModel<VideoMessageContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (VideoMessageContent)JsonModelCreateCore(ref reader, options);
+        TextMessageRequest IJsonModel<TextMessageRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (TextMessageRequest)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override MessageContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override MessageRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VideoMessageContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TextMessageRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VideoMessageContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TextMessageRequest)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVideoMessageContent(document.RootElement, options);
+            return DeserializeTextMessageRequest(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VideoMessageContent DeserializeVideoMessageContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static TextMessageRequest DeserializeTextMessageRequest(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -110,7 +110,7 @@ namespace Azure.Communication.Messages
             }
             MessageContentKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            Uri mediaUri = default;
+            string text = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
@@ -118,9 +118,9 @@ namespace Azure.Communication.Messages
                     kind = new MessageContentKind(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("mediaUri"u8))
+                if (prop.NameEquals("text"u8))
                 {
-                    mediaUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    text = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -128,7 +128,7 @@ namespace Azure.Communication.Messages
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VideoMessageContent(kind, additionalBinaryDataProperties, mediaUri);
+            return new TextMessageRequest(kind, additionalBinaryDataProperties, text);
         }
     }
 }

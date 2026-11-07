@@ -11,16 +11,16 @@ using System.Collections.Generic;
 namespace Azure.Communication.Messages
 {
     /// <summary> A request to send a read receipt update from Business to User. </summary>
-    public partial class ReadReceiptContent
+    public partial class ReadReceiptRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ReadReceiptContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReadReceiptRequest"/>. </summary>
         /// <param name="messageId"> The id of the message this read receipt refers to. </param>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="messageId"/> is null. </exception>
-        public ReadReceiptContent(string messageId, Guid channelRegistrationId)
+        public ReadReceiptRequest(string messageId, Guid channelRegistrationId)
         {
             Argument.AssertNotNull(messageId, nameof(messageId));
 
@@ -28,12 +28,12 @@ namespace Azure.Communication.Messages
             ChannelRegistrationId = channelRegistrationId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReadReceiptContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReadReceiptRequest"/>. </summary>
         /// <param name="messageId"> The id of the message this read receipt refers to. </param>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="typingIndicator"> Whether this status update includes a typing indicator. This field defaults to false when not provided. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReadReceiptContent(string messageId, Guid channelRegistrationId, bool? typingIndicator, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReadReceiptRequest(string messageId, Guid channelRegistrationId, bool? typingIndicator, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MessageId = messageId;
             ChannelRegistrationId = channelRegistrationId;

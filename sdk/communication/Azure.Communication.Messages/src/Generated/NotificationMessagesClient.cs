@@ -291,7 +291,7 @@ namespace Azure.Communication.Messages
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="readReceiptContent"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response SendReadReceipt(ReadReceiptContent readReceiptContent, CancellationToken cancellationToken = default)
+        public virtual Response SendReadReceipt(ReadReceiptRequest readReceiptContent, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(readReceiptContent, nameof(readReceiptContent));
 
@@ -303,7 +303,7 @@ namespace Azure.Communication.Messages
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="readReceiptContent"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> SendReadReceiptAsync(ReadReceiptContent readReceiptContent, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> SendReadReceiptAsync(ReadReceiptRequest readReceiptContent, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(readReceiptContent, nameof(readReceiptContent));
 
