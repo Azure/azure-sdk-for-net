@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -73,15 +74,16 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.AlertRuleData AlertRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string alertRuleName, string description, string provisioningState, bool isEnabled, AlertRuleCondition condition, AlertRuleAction action, IEnumerable<AlertRuleAction> actions, DateTimeOffset? lastUpdatedOn)
             => throw new NotSupportedException("This API is no longer supported.");
 
-        /// <summary>
-        /// Initializes a new instance of <see cref="DiagnosticSettingsCategoryData"/>.
-        /// </summary>
-        /// <remarks>This API is no longer supported.</remarks>
-        // The current TypeSpec no longer models the old diagnostic-settings category resource, so there is no generated factory overload to delegate to.
-        [Obsolete("This API is no longer supported.", false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static Azure.ResourceManager.Monitor.DiagnosticSettingsCategoryData DiagnosticSettingsCategoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MonitorCategoryType? categoryType, IEnumerable<string> categoryGroups)
-            => throw new NotSupportedException("This API is no longer supported.");
+        /// <summary> Initializes a new instance of <see cref="Azure.ResourceManager.Monitor.DiagnosticSettingsCategoryData"/>. </summary>
+        /// <param name="id"> The resource identifier. </param>
+        /// <param name="name"> The resource name. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="systemData"> The system metadata. </param>
+        /// <param name="categoryType"> The type of diagnostic settings category. </param>
+        /// <param name="categoryGroups"> The supported category groups. </param>
+        /// <returns> A new diagnostic settings category data instance. </returns>
+        public static Azure.ResourceManager.Monitor.DiagnosticSettingsCategoryData DiagnosticSettingsCategoryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MonitorCategoryType? categoryType = null, IEnumerable<string> categoryGroups = null)
+            => new Azure.ResourceManager.Monitor.DiagnosticSettingsCategoryData(id, name, resourceType, systemData, new DiagnosticSettingsCategoryProperties(categoryType, categoryGroups?.ToList() ?? new List<string>(), default), default);
 
         /// <summary>
         /// Initializes a new instance of <see cref="Azure.ResourceManager.Monitor.DiagnosticSettingData"/>.
@@ -101,26 +103,6 @@ namespace Azure.ResourceManager.Monitor.Models
         [Obsolete("This API is no longer supported.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AlertRulePatch AlertRulePatch(IDictionary<string, string> tags, string name, string description, string provisioningState, bool? isEnabled, AlertRuleCondition condition, AlertRuleAction action, IEnumerable<AlertRuleAction> actions, DateTimeOffset? lastUpdatedOn)
-            => throw new NotSupportedException("This API is no longer supported.");
-
-        /// <summary>
-        /// Initializes a new instance of <see cref="DataContainer"/>.
-        /// </summary>
-        /// <remarks>This API is no longer supported.</remarks>
-        // The current TypeSpec no longer models the old VM Insights data-container shape, so there is no generated factory overload to delegate to.
-        [Obsolete("This API is no longer supported.", false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DataContainer DataContainer(DataContainerWorkspace workspace)
-            => throw new NotSupportedException("This API is no longer supported.");
-
-        /// <summary>
-        /// Initializes a new instance of <see cref="DataContainerWorkspace"/>.
-        /// </summary>
-        /// <remarks>This API is no longer supported.</remarks>
-        // The current TypeSpec no longer models the old VM Insights data-container workspace shape, so there is no generated factory overload to delegate to.
-        [Obsolete("This API is no longer supported.", false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DataContainerWorkspace DataContainerWorkspace(ResourceIdentifier id, AzureLocation location, string customerId)
             => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary>
@@ -153,15 +135,18 @@ namespace Azure.ResourceManager.Monitor.Models
         public static SubscriptionMonitorMetric SubscriptionMonitorMetric(string id, string subscriptionScopeMetricType, MonitorLocalizableString name, string displayDescription, string errorCode, string errorMessage, MonitorMetricUnit unit, IEnumerable<MonitorTimeSeriesElement> timeseries)
             => throw new NotSupportedException("This API is no longer supported.");
 
-        /// <summary>
-        /// Initializes a new instance of <see cref="VmInsightsOnboardingStatusData"/>.
-        /// </summary>
-        /// <remarks>This API is no longer supported.</remarks>
-        // The current TypeSpec no longer models the old VM Insights onboarding-status resource, so there is no generated factory overload to delegate to.
-        [Obsolete("This API is no longer supported.", false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static Azure.ResourceManager.Monitor.VmInsightsOnboardingStatusData VmInsightsOnboardingStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier resourceId, OnboardingStatus? onboardingStatus, DataStatus? dataStatus, IEnumerable<DataContainer> data)
-            => throw new NotSupportedException("This API is no longer supported.");
+        /// <summary> Initializes a new instance of <see cref="VmInsightsOnboardingStatusData"/>. </summary>
+        /// <param name="id"> The resource identifier. </param>
+        /// <param name="name"> The resource name. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="systemData"> The system metadata. </param>
+        /// <param name="resourceId"> The identifier of the resource being monitored. </param>
+        /// <param name="onboardingStatus"> The onboarding status. </param>
+        /// <param name="dataStatus"> The data status. </param>
+        /// <param name="data"> Containers storing VM Insights data. </param>
+        /// <returns> A new VM Insights onboarding status data instance. </returns>
+        public static Azure.ResourceManager.Monitor.VmInsightsOnboardingStatusData VmInsightsOnboardingStatusData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier resourceId = null, OnboardingStatus? onboardingStatus = null, DataStatus? dataStatus = null, IEnumerable<DataContainer> data = null)
+            => new Azure.ResourceManager.Monitor.VmInsightsOnboardingStatusData(id, name, resourceType, systemData, new VMInsightsOnboardingStatusProperties(resourceId?.ToString(), onboardingStatus ?? default, dataStatus ?? default, data?.ToList() ?? new List<DataContainer>(), default), default);
     }
 #pragma warning restore CS0618
 }

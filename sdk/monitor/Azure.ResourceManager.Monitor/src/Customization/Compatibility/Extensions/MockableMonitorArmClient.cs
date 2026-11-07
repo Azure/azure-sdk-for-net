@@ -59,53 +59,5 @@ namespace Azure.ResourceManager.Monitor.Mocking
         [ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<Response<DiagnosticSettingResource>> GetDiagnosticSettingAsync(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API is no longer supported.");
-
-        /// <summary> Gets an object representing a <see cref="DiagnosticSettingsCategoryResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DiagnosticSettingsCategoryResource"/> object. </returns>
-        [Obsolete("This API is no longer supported.", false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual DiagnosticSettingsCategoryResource GetDiagnosticSettingsCategoryResource(ResourceIdentifier id) => throw new NotSupportedException("This API is no longer supported.");
-
-        /// <summary> Gets a collection of <see cref="DiagnosticSettingsCategoryResource"/> objects within the specified scope. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <returns> Returns a collection of <see cref="DiagnosticSettingsCategoryResource"/> objects. </returns>
-        [Obsolete("This API is no longer supported.", false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual DiagnosticSettingsCategoryCollection GetDiagnosticSettingsCategories(ResourceIdentifier scope) => throw new NotSupportedException("This API is no longer supported.");
-
-        /// <summary> Gets a diagnostic settings category. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="name"> The diagnostic settings category name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> The diagnostic settings category resource. </returns>
-        [Obsolete("This API is no longer supported.", false)]
-        [ForwardsClientCalls]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<DiagnosticSettingsCategoryResource> GetDiagnosticSettingsCategory(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API is no longer supported.");
-
-        /// <summary> Gets a diagnostic settings category. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="name"> The diagnostic settings category name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> The diagnostic settings category resource. </returns>
-        [Obsolete("This API is no longer supported.", false)]
-        [ForwardsClientCalls]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Task<Response<DiagnosticSettingsCategoryResource>> GetDiagnosticSettingsCategoryAsync(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API is no longer supported.");
-
-        /// <summary> Gets an object representing a <see cref="VmInsightsOnboardingStatusResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VmInsightsOnboardingStatusResource"/> object. </returns>
-        [Obsolete("This API is no longer supported.", false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual VmInsightsOnboardingStatusResource GetVmInsightsOnboardingStatusResource(ResourceIdentifier id) => throw new NotSupportedException("This API is no longer supported.");
-
-        /// <summary> Gets an object representing a <see cref="VmInsightsOnboardingStatusResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> Returns a <see cref="VmInsightsOnboardingStatusResource"/> object. </returns>
-        [Obsolete("This API is no longer supported.", false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual VmInsightsOnboardingStatusResource GetVmInsightsOnboardingStatus(ResourceIdentifier scope) => throw new NotSupportedException("This API is no longer supported.");
     }
 }
