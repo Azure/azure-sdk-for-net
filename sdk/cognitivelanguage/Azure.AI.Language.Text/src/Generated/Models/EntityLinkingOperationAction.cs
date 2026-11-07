@@ -23,12 +23,12 @@ namespace Azure.AI.Language.Text
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameters"> Task parameters. </param>
-        internal EntityLinkingOperationAction(string name, AnalyzeTextOperationActionKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, EntityLinkingActionContent parameters) : base(name, kind, additionalBinaryDataProperties)
+        internal EntityLinkingOperationAction(string name, AnalyzeTextOperationActionKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, EntityLinkingActionRequest parameters) : base(name, kind, additionalBinaryDataProperties)
         {
             Parameters = parameters;
         }
 
         /// <summary> Task parameters. </summary>
-        public EntityLinkingActionContent Parameters { get; set; }
+        public EntityLinkingActionRequest Parameters { get; set; }
     }
 }

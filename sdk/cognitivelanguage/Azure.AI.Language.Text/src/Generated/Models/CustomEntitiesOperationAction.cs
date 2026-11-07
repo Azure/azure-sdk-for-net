@@ -23,12 +23,12 @@ namespace Azure.AI.Language.Text
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameters"> task parameters. </param>
-        internal CustomEntitiesOperationAction(string name, AnalyzeTextOperationActionKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, CustomEntitiesActionContent parameters) : base(name, kind, additionalBinaryDataProperties)
+        internal CustomEntitiesOperationAction(string name, AnalyzeTextOperationActionKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, CustomEntitiesActionRequest parameters) : base(name, kind, additionalBinaryDataProperties)
         {
             Parameters = parameters;
         }
 
         /// <summary> task parameters. </summary>
-        public CustomEntitiesActionContent Parameters { get; set; }
+        public CustomEntitiesActionRequest Parameters { get; set; }
     }
 }

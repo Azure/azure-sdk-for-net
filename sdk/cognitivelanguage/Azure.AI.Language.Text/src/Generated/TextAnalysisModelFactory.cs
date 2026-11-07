@@ -29,7 +29,7 @@ namespace Azure.AI.Language.Text
         /// <param name="textInput"> Contains the analysis input to be handled by the service. </param>
         /// <param name="actionContent"> Task parameters. </param>
         /// <returns> A new <see cref="Text.TextEntityLinkingInput"/> instance for mocking. </returns>
-        public static TextEntityLinkingInput TextEntityLinkingInput(MultiLanguageTextInput textInput = default, EntityLinkingActionContent actionContent = default)
+        public static TextEntityLinkingInput TextEntityLinkingInput(MultiLanguageTextInput textInput = default, EntityLinkingActionRequest actionContent = default)
         {
             return new TextEntityLinkingInput(AnalyzeTextInputKind.EntityLinking, additionalBinaryDataProperties: null, textInput, actionContent);
         }
@@ -58,17 +58,17 @@ namespace Azure.AI.Language.Text
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="modelVersion"> model version. </param>
         /// <param name="stringIndexType"> Optional parameter to provide the string index type used to interpret string offsets. Defaults to TextElements (Graphemes). </param>
-        /// <returns> A new <see cref="Text.EntityLinkingActionContent"/> instance for mocking. </returns>
-        public static EntityLinkingActionContent EntityLinkingActionContent(bool? loggingOptOut = default, string modelVersion = default, StringIndexType? stringIndexType = default)
+        /// <returns> A new <see cref="Text.EntityLinkingActionRequest"/> instance for mocking. </returns>
+        public static EntityLinkingActionRequest EntityLinkingActionRequest(bool? loggingOptOut = default, string modelVersion = default, StringIndexType? stringIndexType = default)
         {
-            return new EntityLinkingActionContent(loggingOptOut, modelVersion, stringIndexType, additionalBinaryDataProperties: null);
+            return new EntityLinkingActionRequest(loggingOptOut, modelVersion, stringIndexType, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The entity recognition analyze text input task request. </summary>
         /// <param name="textInput"> The input to be analyzed. </param>
         /// <param name="actionContent"> Task parameters. </param>
         /// <returns> A new <see cref="Text.TextEntityRecognitionInput"/> instance for mocking. </returns>
-        public static TextEntityRecognitionInput TextEntityRecognitionInput(MultiLanguageTextInput textInput = default, EntitiesActionContent actionContent = default)
+        public static TextEntityRecognitionInput TextEntityRecognitionInput(MultiLanguageTextInput textInput = default, EntitiesActionRequest actionContent = default)
         {
             return new TextEntityRecognitionInput(AnalyzeTextInputKind.EntityRecognition, additionalBinaryDataProperties: null, textInput, actionContent);
         }
@@ -81,13 +81,13 @@ namespace Azure.AI.Language.Text
         /// <param name="exclusions"> (Optional) request parameter that filters out any entities that are included the excludeList. When a user specifies an excludeList, they cannot get a prediction returned with an entity in that list. We will apply inclusionList before exclusionList. </param>
         /// <param name="overlapPolicy"> (Optional) describes the type of overlap policy to apply to the ner output. </param>
         /// <param name="inferenceOptions"> (Optional) request parameter that allows the user to provide settings for running the inference. </param>
-        /// <returns> A new <see cref="Text.EntitiesActionContent"/> instance for mocking. </returns>
-        public static EntitiesActionContent EntitiesActionContent(bool? loggingOptOut = default, string modelVersion = default, StringIndexType? stringIndexType = default, IEnumerable<EntityCategory> inclusions = default, IEnumerable<EntityCategory> exclusions = default, EntityOverlapPolicy overlapPolicy = default, EntityInferenceConfig inferenceOptions = default)
+        /// <returns> A new <see cref="Text.EntitiesActionRequest"/> instance for mocking. </returns>
+        public static EntitiesActionRequest EntitiesActionRequest(bool? loggingOptOut = default, string modelVersion = default, StringIndexType? stringIndexType = default, IEnumerable<EntityCategory> inclusions = default, IEnumerable<EntityCategory> exclusions = default, EntityOverlapPolicy overlapPolicy = default, EntityInferenceConfig inferenceOptions = default)
         {
             inclusions ??= new ChangeTrackingList<EntityCategory>();
             exclusions ??= new ChangeTrackingList<EntityCategory>();
 
-            return new EntitiesActionContent(
+            return new EntitiesActionRequest(
                 loggingOptOut,
                 modelVersion,
                 stringIndexType,
@@ -135,7 +135,7 @@ namespace Azure.AI.Language.Text
         /// <param name="textInput"> Contains the input documents. </param>
         /// <param name="actionContent"> Key phrase extraction task parameters. </param>
         /// <returns> A new <see cref="Text.TextKeyPhraseExtractionInput"/> instance for mocking. </returns>
-        public static TextKeyPhraseExtractionInput TextKeyPhraseExtractionInput(MultiLanguageTextInput textInput = default, KeyPhraseActionContent actionContent = default)
+        public static TextKeyPhraseExtractionInput TextKeyPhraseExtractionInput(MultiLanguageTextInput textInput = default, KeyPhraseActionRequest actionContent = default)
         {
             return new TextKeyPhraseExtractionInput(AnalyzeTextInputKind.KeyPhraseExtraction, additionalBinaryDataProperties: null, textInput, actionContent);
         }
@@ -143,17 +143,17 @@ namespace Azure.AI.Language.Text
         /// <summary> Supported parameters for a Key Phrase Extraction task. </summary>
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="modelVersion"> model version. </param>
-        /// <returns> A new <see cref="Text.KeyPhraseActionContent"/> instance for mocking. </returns>
-        public static KeyPhraseActionContent KeyPhraseActionContent(bool? loggingOptOut = default, string modelVersion = default)
+        /// <returns> A new <see cref="Text.KeyPhraseActionRequest"/> instance for mocking. </returns>
+        public static KeyPhraseActionRequest KeyPhraseActionRequest(bool? loggingOptOut = default, string modelVersion = default)
         {
-            return new KeyPhraseActionContent(loggingOptOut, modelVersion, additionalBinaryDataProperties: null);
+            return new KeyPhraseActionRequest(loggingOptOut, modelVersion, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Contains the language detection document analysis task input. </summary>
         /// <param name="textInput"> Documents to be analyzed. </param>
         /// <param name="actionContent"> task parameters. </param>
         /// <returns> A new <see cref="Text.TextLanguageDetectionInput"/> instance for mocking. </returns>
-        public static TextLanguageDetectionInput TextLanguageDetectionInput(LanguageDetectionTextInput textInput = default, LanguageDetectionActionContent actionContent = default)
+        public static TextLanguageDetectionInput TextLanguageDetectionInput(LanguageDetectionTextInput textInput = default, LanguageDetectionActionRequest actionContent = default)
         {
             return new TextLanguageDetectionInput(AnalyzeTextInputKind.LanguageDetection, additionalBinaryDataProperties: null, textInput, actionContent);
         }
@@ -181,17 +181,17 @@ namespace Azure.AI.Language.Text
         /// <summary> Supported parameters for a Language Detection task. </summary>
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="modelVersion"> model version. </param>
-        /// <returns> A new <see cref="Text.LanguageDetectionActionContent"/> instance for mocking. </returns>
-        public static LanguageDetectionActionContent LanguageDetectionActionContent(bool? loggingOptOut = default, string modelVersion = default)
+        /// <returns> A new <see cref="Text.LanguageDetectionActionRequest"/> instance for mocking. </returns>
+        public static LanguageDetectionActionRequest LanguageDetectionActionRequest(bool? loggingOptOut = default, string modelVersion = default)
         {
-            return new LanguageDetectionActionContent(loggingOptOut, modelVersion, additionalBinaryDataProperties: null);
+            return new LanguageDetectionActionRequest(loggingOptOut, modelVersion, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Contains the analyze text PIIEntityRecognition task input. </summary>
         /// <param name="textInput"> Contains the input documents. </param>
         /// <param name="actionContent"> Pii task parameters. </param>
         /// <returns> A new <see cref="Text.TextPiiEntitiesRecognitionInput"/> instance for mocking. </returns>
-        public static TextPiiEntitiesRecognitionInput TextPiiEntitiesRecognitionInput(MultiLanguageTextInput textInput = default, PiiActionContent actionContent = default)
+        public static TextPiiEntitiesRecognitionInput TextPiiEntitiesRecognitionInput(MultiLanguageTextInput textInput = default, PiiActionRequest actionContent = default)
         {
             return new TextPiiEntitiesRecognitionInput(AnalyzeTextInputKind.PiiEntityRecognition, additionalBinaryDataProperties: null, textInput, actionContent);
         }
@@ -208,15 +208,15 @@ namespace Azure.AI.Language.Text
         /// <param name="redactionPolicies"> List of RedactionPolicies to be used on the input. </param>
         /// <param name="confidenceScoreThreshold"> Confidence score threshold configuration for PII entity recognition. </param>
         /// <param name="disableEntityValidation"> Disable entity validation for PII entity recognition. </param>
-        /// <returns> A new <see cref="Text.PiiActionContent"/> instance for mocking. </returns>
-        public static PiiActionContent PiiActionContent(bool? loggingOptOut = default, string modelVersion = default, PiiDomain? domain = default, IEnumerable<PiiCategory> piiCategories = default, StringIndexType? stringIndexType = default, IEnumerable<PiiCategoriesExclude> excludePiiCategories = default, ValueExclusionPolicy valueExclusionPolicy = default, IEnumerable<EntitySynonyms> entitySynonyms = default, IEnumerable<BaseRedactionPolicy> redactionPolicies = default, ConfidenceScoreThreshold confidenceScoreThreshold = default, bool? disableEntityValidation = default)
+        /// <returns> A new <see cref="Text.PiiActionRequest"/> instance for mocking. </returns>
+        public static PiiActionRequest PiiActionRequest(bool? loggingOptOut = default, string modelVersion = default, PiiDomain? domain = default, IEnumerable<PiiCategory> piiCategories = default, StringIndexType? stringIndexType = default, IEnumerable<PiiCategoriesExclude> excludePiiCategories = default, ValueExclusionPolicy valueExclusionPolicy = default, IEnumerable<EntitySynonyms> entitySynonyms = default, IEnumerable<BaseRedactionPolicy> redactionPolicies = default, ConfidenceScoreThreshold confidenceScoreThreshold = default, bool? disableEntityValidation = default)
         {
             piiCategories ??= new ChangeTrackingList<PiiCategory>();
             excludePiiCategories ??= new ChangeTrackingList<PiiCategoriesExclude>();
             entitySynonyms ??= new ChangeTrackingList<EntitySynonyms>();
             redactionPolicies ??= new ChangeTrackingList<BaseRedactionPolicy>();
 
-            return new PiiActionContent(
+            return new PiiActionRequest(
                 loggingOptOut,
                 modelVersion,
                 domain,
@@ -369,7 +369,7 @@ namespace Azure.AI.Language.Text
         /// <param name="textInput"> Contains the input documents. </param>
         /// <param name="actionContent"> Sentiment Analysis task parameters. </param>
         /// <returns> A new <see cref="Text.TextSentimentAnalysisInput"/> instance for mocking. </returns>
-        public static TextSentimentAnalysisInput TextSentimentAnalysisInput(MultiLanguageTextInput textInput = default, SentimentAnalysisActionContent actionContent = default)
+        public static TextSentimentAnalysisInput TextSentimentAnalysisInput(MultiLanguageTextInput textInput = default, SentimentAnalysisActionRequest actionContent = default)
         {
             return new TextSentimentAnalysisInput(AnalyzeTextInputKind.SentimentAnalysis, additionalBinaryDataProperties: null, textInput, actionContent);
         }
@@ -379,10 +379,10 @@ namespace Azure.AI.Language.Text
         /// <param name="modelVersion"> model version. </param>
         /// <param name="opinionMining"> Whether to use opinion mining in the request or not. </param>
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. </param>
-        /// <returns> A new <see cref="Text.SentimentAnalysisActionContent"/> instance for mocking. </returns>
-        public static SentimentAnalysisActionContent SentimentAnalysisActionContent(bool? loggingOptOut = default, string modelVersion = default, bool? opinionMining = default, StringIndexType? stringIndexType = default)
+        /// <returns> A new <see cref="Text.SentimentAnalysisActionRequest"/> instance for mocking. </returns>
+        public static SentimentAnalysisActionRequest SentimentAnalysisActionRequest(bool? loggingOptOut = default, string modelVersion = default, bool? opinionMining = default, StringIndexType? stringIndexType = default)
         {
-            return new SentimentAnalysisActionContent(loggingOptOut, modelVersion, opinionMining, stringIndexType, additionalBinaryDataProperties: null);
+            return new SentimentAnalysisActionRequest(loggingOptOut, modelVersion, opinionMining, stringIndexType, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -1806,7 +1806,7 @@ namespace Azure.AI.Language.Text
         /// <param name="name"> task name. </param>
         /// <param name="parameters"> task parameters. </param>
         /// <returns> A new <see cref="Text.CustomEntitiesOperationAction"/> instance for mocking. </returns>
-        public static CustomEntitiesOperationAction CustomEntitiesOperationAction(string name = default, CustomEntitiesActionContent parameters = default)
+        public static CustomEntitiesOperationAction CustomEntitiesOperationAction(string name = default, CustomEntitiesActionRequest parameters = default)
         {
             return new CustomEntitiesOperationAction(name, AnalyzeTextOperationActionKind.CustomEntityRecognition, additionalBinaryDataProperties: null, parameters);
         }
@@ -1816,17 +1816,17 @@ namespace Azure.AI.Language.Text
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <param name="stringIndexType"> Optional parameter to provide the string index type used to interpret string offsets. Defaults to TextElements (Graphemes). </param>
-        /// <returns> A new <see cref="Text.CustomEntitiesActionContent"/> instance for mocking. </returns>
-        public static CustomEntitiesActionContent CustomEntitiesActionContent(bool? loggingOptOut = default, string projectName = default, string deploymentName = default, StringIndexType? stringIndexType = default)
+        /// <returns> A new <see cref="Text.CustomEntitiesActionRequest"/> instance for mocking. </returns>
+        public static CustomEntitiesActionRequest CustomEntitiesActionRequest(bool? loggingOptOut = default, string projectName = default, string deploymentName = default, StringIndexType? stringIndexType = default)
         {
-            return new CustomEntitiesActionContent(loggingOptOut, projectName, deploymentName, stringIndexType, additionalBinaryDataProperties: null);
+            return new CustomEntitiesActionRequest(loggingOptOut, projectName, deploymentName, stringIndexType, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Use custom models to classify text into single label taxonomy. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="actionContent"> Task parameters. </param>
         /// <returns> A new <see cref="Text.CustomSingleLabelClassificationOperationAction"/> instance for mocking. </returns>
-        public static CustomSingleLabelClassificationOperationAction CustomSingleLabelClassificationOperationAction(string name = default, CustomSingleLabelClassificationActionContent actionContent = default)
+        public static CustomSingleLabelClassificationOperationAction CustomSingleLabelClassificationOperationAction(string name = default, CustomSingleLabelClassificationActionRequest actionContent = default)
         {
             return new CustomSingleLabelClassificationOperationAction(name, AnalyzeTextOperationActionKind.CustomSingleLabelClassification, additionalBinaryDataProperties: null, actionContent);
         }
@@ -1835,17 +1835,17 @@ namespace Azure.AI.Language.Text
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
-        /// <returns> A new <see cref="Text.CustomSingleLabelClassificationActionContent"/> instance for mocking. </returns>
-        public static CustomSingleLabelClassificationActionContent CustomSingleLabelClassificationActionContent(bool? loggingOptOut = default, string projectName = default, string deploymentName = default)
+        /// <returns> A new <see cref="Text.CustomSingleLabelClassificationActionRequest"/> instance for mocking. </returns>
+        public static CustomSingleLabelClassificationActionRequest CustomSingleLabelClassificationActionRequest(bool? loggingOptOut = default, string projectName = default, string deploymentName = default)
         {
-            return new CustomSingleLabelClassificationActionContent(loggingOptOut, projectName, deploymentName, additionalBinaryDataProperties: null);
+            return new CustomSingleLabelClassificationActionRequest(loggingOptOut, projectName, deploymentName, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Use custom models to classify text into multi label taxonomy. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="actionContent"> Task parameters. </param>
         /// <returns> A new <see cref="Text.CustomMultiLabelClassificationOperationAction"/> instance for mocking. </returns>
-        public static CustomMultiLabelClassificationOperationAction CustomMultiLabelClassificationOperationAction(string name = default, CustomMultiLabelClassificationActionContent actionContent = default)
+        public static CustomMultiLabelClassificationOperationAction CustomMultiLabelClassificationOperationAction(string name = default, CustomMultiLabelClassificationActionRequest actionContent = default)
         {
             return new CustomMultiLabelClassificationOperationAction(name, AnalyzeTextOperationActionKind.CustomMultiLabelClassification, additionalBinaryDataProperties: null, actionContent);
         }
@@ -1854,17 +1854,17 @@ namespace Azure.AI.Language.Text
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
-        /// <returns> A new <see cref="Text.CustomMultiLabelClassificationActionContent"/> instance for mocking. </returns>
-        public static CustomMultiLabelClassificationActionContent CustomMultiLabelClassificationActionContent(bool? loggingOptOut = default, string projectName = default, string deploymentName = default)
+        /// <returns> A new <see cref="Text.CustomMultiLabelClassificationActionRequest"/> instance for mocking. </returns>
+        public static CustomMultiLabelClassificationActionRequest CustomMultiLabelClassificationActionRequest(bool? loggingOptOut = default, string projectName = default, string deploymentName = default)
         {
-            return new CustomMultiLabelClassificationActionContent(loggingOptOut, projectName, deploymentName, additionalBinaryDataProperties: null);
+            return new CustomMultiLabelClassificationActionRequest(loggingOptOut, projectName, deploymentName, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Contains the analyze text Entity linking LRO task. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="parameters"> Task parameters. </param>
         /// <returns> A new <see cref="Text.EntityLinkingOperationAction"/> instance for mocking. </returns>
-        public static EntityLinkingOperationAction EntityLinkingOperationAction(string name = default, EntityLinkingActionContent parameters = default)
+        public static EntityLinkingOperationAction EntityLinkingOperationAction(string name = default, EntityLinkingActionRequest parameters = default)
         {
             return new EntityLinkingOperationAction(name, AnalyzeTextOperationActionKind.EntityLinking, additionalBinaryDataProperties: null, parameters);
         }
@@ -1873,7 +1873,7 @@ namespace Azure.AI.Language.Text
         /// <param name="name"> task name. </param>
         /// <param name="parameters"> Task parameters. </param>
         /// <returns> A new <see cref="Text.EntitiesOperationAction"/> instance for mocking. </returns>
-        public static EntitiesOperationAction EntitiesOperationAction(string name = default, EntitiesActionContent parameters = default)
+        public static EntitiesOperationAction EntitiesOperationAction(string name = default, EntitiesActionRequest parameters = default)
         {
             return new EntitiesOperationAction(name, AnalyzeTextOperationActionKind.EntityRecognition, additionalBinaryDataProperties: null, parameters);
         }
@@ -1909,7 +1909,7 @@ namespace Azure.AI.Language.Text
         /// <param name="name"> task name. </param>
         /// <param name="parameters"> Key phrase extraction task parameters. </param>
         /// <returns> A new <see cref="Text.KeyPhraseOperationAction"/> instance for mocking. </returns>
-        public static KeyPhraseOperationAction KeyPhraseOperationAction(string name = default, KeyPhraseActionContent parameters = default)
+        public static KeyPhraseOperationAction KeyPhraseOperationAction(string name = default, KeyPhraseActionRequest parameters = default)
         {
             return new KeyPhraseOperationAction(name, AnalyzeTextOperationActionKind.KeyPhraseExtraction, additionalBinaryDataProperties: null, parameters);
         }
@@ -1918,7 +1918,7 @@ namespace Azure.AI.Language.Text
         /// <param name="name"> task name. </param>
         /// <param name="parameters"> Pii task parameters. </param>
         /// <returns> A new <see cref="Text.PiiOperationAction"/> instance for mocking. </returns>
-        public static PiiOperationAction PiiOperationAction(string name = default, PiiActionContent parameters = default)
+        public static PiiOperationAction PiiOperationAction(string name = default, PiiActionRequest parameters = default)
         {
             return new PiiOperationAction(name, AnalyzeTextOperationActionKind.PiiEntityRecognition, additionalBinaryDataProperties: null, parameters);
         }
@@ -1927,7 +1927,7 @@ namespace Azure.AI.Language.Text
         /// <param name="name"> task name. </param>
         /// <param name="parameters"> Parameters for the Sentiment Analysis task. </param>
         /// <returns> A new <see cref="Text.SentimentAnalysisOperationAction"/> instance for mocking. </returns>
-        public static SentimentAnalysisOperationAction SentimentAnalysisOperationAction(string name = default, SentimentAnalysisActionContent parameters = default)
+        public static SentimentAnalysisOperationAction SentimentAnalysisOperationAction(string name = default, SentimentAnalysisActionRequest parameters = default)
         {
             return new SentimentAnalysisOperationAction(name, AnalyzeTextOperationActionKind.SentimentAnalysis, additionalBinaryDataProperties: null, parameters);
         }
@@ -1936,7 +1936,7 @@ namespace Azure.AI.Language.Text
         /// <param name="name"> task name. </param>
         /// <param name="actionContent"> Parameters for the Extractive Summarization task. </param>
         /// <returns> A new <see cref="Text.ExtractiveSummarizationOperationAction"/> instance for mocking. </returns>
-        public static ExtractiveSummarizationOperationAction ExtractiveSummarizationOperationAction(string name = default, ExtractiveSummarizationActionContent actionContent = default)
+        public static ExtractiveSummarizationOperationAction ExtractiveSummarizationOperationAction(string name = default, ExtractiveSummarizationActionRequest actionContent = default)
         {
             return new ExtractiveSummarizationOperationAction(name, AnalyzeTextOperationActionKind.ExtractiveSummarization, additionalBinaryDataProperties: null, actionContent);
         }
@@ -1948,10 +1948,10 @@ namespace Azure.AI.Language.Text
         /// <param name="sortBy"> Specifies how to sort the extracted summaries. </param>
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. </param>
         /// <param name="query"> (Optional) If provided, the query will be used to extract most relevant sentences from the document. </param>
-        /// <returns> A new <see cref="Text.ExtractiveSummarizationActionContent"/> instance for mocking. </returns>
-        public static ExtractiveSummarizationActionContent ExtractiveSummarizationActionContent(bool? loggingOptOut = default, string modelVersion = default, long? sentenceCount = default, ExtractiveSummarizationSortingCriteria? sortBy = default, StringIndexType? stringIndexType = default, string query = default)
+        /// <returns> A new <see cref="Text.ExtractiveSummarizationActionRequest"/> instance for mocking. </returns>
+        public static ExtractiveSummarizationActionRequest ExtractiveSummarizationActionRequest(bool? loggingOptOut = default, string modelVersion = default, long? sentenceCount = default, ExtractiveSummarizationSortingCriteria? sortBy = default, StringIndexType? stringIndexType = default, string query = default)
         {
-            return new ExtractiveSummarizationActionContent(
+            return new ExtractiveSummarizationActionRequest(
                 loggingOptOut,
                 modelVersion,
                 sentenceCount,
@@ -1965,7 +1965,7 @@ namespace Azure.AI.Language.Text
         /// <param name="name"> task name. </param>
         /// <param name="actionContent"> Parameters for the Abstractive Summarization task. </param>
         /// <returns> A new <see cref="Text.AbstractiveSummarizationOperationAction"/> instance for mocking. </returns>
-        public static AbstractiveSummarizationOperationAction AbstractiveSummarizationOperationAction(string name = default, AbstractiveSummarizationActionContent actionContent = default)
+        public static AbstractiveSummarizationOperationAction AbstractiveSummarizationOperationAction(string name = default, AbstractiveSummarizationActionRequest actionContent = default)
         {
             return new AbstractiveSummarizationOperationAction(name, AnalyzeTextOperationActionKind.AbstractiveSummarization, additionalBinaryDataProperties: null, actionContent);
         }
@@ -1977,10 +1977,10 @@ namespace Azure.AI.Language.Text
         /// <param name="stringIndexType"> String index type. </param>
         /// <param name="summaryLength"> (NOTE: Recommended to use summaryLength over sentenceCount) Controls the approximate length of the output summaries. </param>
         /// <param name="instruction"> (Optional) If provided, the query will be used to generate the summary. </param>
-        /// <returns> A new <see cref="Text.AbstractiveSummarizationActionContent"/> instance for mocking. </returns>
-        public static AbstractiveSummarizationActionContent AbstractiveSummarizationActionContent(bool? loggingOptOut = default, string modelVersion = default, int? sentenceCount = default, StringIndexType? stringIndexType = default, SummaryLengthBucket? summaryLength = default, string instruction = default)
+        /// <returns> A new <see cref="Text.AbstractiveSummarizationActionRequest"/> instance for mocking. </returns>
+        public static AbstractiveSummarizationActionRequest AbstractiveSummarizationActionRequest(bool? loggingOptOut = default, string modelVersion = default, int? sentenceCount = default, StringIndexType? stringIndexType = default, SummaryLengthBucket? summaryLength = default, string instruction = default)
         {
-            return new AbstractiveSummarizationActionContent(
+            return new AbstractiveSummarizationActionRequest(
                 loggingOptOut,
                 modelVersion,
                 sentenceCount,
