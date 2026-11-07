@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed deserialization of `DocumentChartFigure` when the service returns the chart `content` as an escaped JSON string instead of an object, which made reading an analysis result throw `InvalidOperationException` ([#57370](https://github.com/Azure/azure-sdk-for-net/issues/57370)).
+
 ### Other Changes
 
 ## 1.2.0-beta.3 (2026-08-11)
