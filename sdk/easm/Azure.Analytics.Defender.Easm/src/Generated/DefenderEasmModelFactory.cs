@@ -2034,12 +2034,12 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> A request body used to export an asset. </summary>
         /// <param name="fileName"> The name of the file to export. </param>
         /// <param name="columns"> The columns to export. </param>
-        /// <returns> A new <see cref="Easm.AssetsExportRequestContent"/> instance for mocking. </returns>
-        public static AssetsExportRequestContent AssetsExportRequestContent(string fileName = default, IEnumerable<string> columns = default)
+        /// <returns> A new <see cref="Easm.AssetsExportRequestRequest"/> instance for mocking. </returns>
+        public static AssetsExportRequestRequest AssetsExportRequestRequest(string fileName = default, IEnumerable<string> columns = default)
         {
             columns ??= new ChangeTrackingList<string>();
 
-            return new AssetsExportRequestContent(fileName, columns.ToList(), additionalBinaryDataProperties: null);
+            return new AssetsExportRequestRequest(fileName, columns.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The page result response for the observation. </summary>
@@ -2084,10 +2084,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="priorDays"> The number of days prior to retrieve deltas for. </param>
         /// <param name="kind"> The type of asset. </param>
         /// <param name="date"> expected format to be: yyyy-MM-dd. </param>
-        /// <returns> A new <see cref="Easm.DeltaDetailsRequestContent"/> instance for mocking. </returns>
-        public static DeltaDetailsRequestContent DeltaDetailsRequestContent(DeltaDetailType deltaDetailType = default, int? priorDays = default, GlobalAssetType kind = default, string date = default)
+        /// <returns> A new <see cref="Easm.DeltaDetailsRequestRequest"/> instance for mocking. </returns>
+        public static DeltaDetailsRequestRequest DeltaDetailsRequestRequest(DeltaDetailType deltaDetailType = default, int? priorDays = default, GlobalAssetType kind = default, string date = default)
         {
-            return new DeltaDetailsRequestContent(deltaDetailType, priorDays, kind, date, additionalBinaryDataProperties: null);
+            return new DeltaDetailsRequestRequest(deltaDetailType, priorDays, kind, date, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Result for each of the delta detail response. </summary>
@@ -2111,10 +2111,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> A request body used to retrieve a delta summary. </summary>
         /// <param name="priorDays"> The number of days prior to retrieve deltas for. </param>
         /// <param name="date"> expected format to be: yyyy-MM-dd. </param>
-        /// <returns> A new <see cref="Easm.DeltaSummaryRequestContent"/> instance for mocking. </returns>
-        public static DeltaSummaryRequestContent DeltaSummaryRequestContent(int? priorDays = default, string date = default)
+        /// <returns> A new <see cref="Easm.DeltaSummaryRequestRequest"/> instance for mocking. </returns>
+        public static DeltaSummaryRequestRequest DeltaSummaryRequestRequest(int? priorDays = default, string date = default)
         {
-            return new DeltaSummaryRequestContent(priorDays, date, additionalBinaryDataProperties: null);
+            return new DeltaSummaryRequestRequest(priorDays, date, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Define response body for getting delta summary. </summary>
@@ -2517,12 +2517,12 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> AssetChainRequest containing information needed for the retrieval of the asset chain summary. </summary>
         /// <param name="assetChainSource"> Asset chain source. </param>
         /// <param name="sourceIds"> A collection of asset chain source ids. </param>
-        /// <returns> A new <see cref="Easm.AssetChainRequestContent"/> instance for mocking. </returns>
-        public static AssetChainRequestContent AssetChainRequestContent(AssetChainSource assetChainSource = default, IEnumerable<string> sourceIds = default)
+        /// <returns> A new <see cref="Easm.AssetChainRequestRequest"/> instance for mocking. </returns>
+        public static AssetChainRequestRequest AssetChainRequestRequest(AssetChainSource assetChainSource = default, IEnumerable<string> sourceIds = default)
         {
             sourceIds ??= new ChangeTrackingList<string>();
 
-            return new AssetChainRequestContent(assetChainSource, sourceIds.ToList(), additionalBinaryDataProperties: null);
+            return new AssetChainRequestRequest(assetChainSource, sourceIds.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Response for the asset chain summary. </summary>
