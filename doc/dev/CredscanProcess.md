@@ -59,7 +59,7 @@ and inconvenient for lengthy strings. Suppressing warnings in a file is convenie
 strings in that file will still trigger warnings if present in another unsuppressed file.
 
 ## Correct Baselined Warnings
-In addition to active warning that appear in the [net-aggregate-reports][aggregate_reports] pipeline ouput, there
+In addition to active warning that appear in the [net-aggregate-reports][aggregate_reports] pipeline output, there
 are also CredScan warnings that have been suppressed in [eng/dotnet.gdnbaselines][baseline]. This file is a snapshot of
 the active warnings at one point in time; CredScan won't re-raise warnings that have been recorded here.
 
