@@ -56,7 +56,7 @@ public class Sample_WebSearchCustomStreaming : ProjectsOpenAITestBase
             ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
             InputItems = { ResponseItem.CreateUserMessageItem("How many medals did the USA win in the 2024 summer olympics?") },
         };
-        await foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreamingAsync(options))
+        await foreach (StreamingResponseUpdate streamResponse in await responseClient.CreateResponseStreamingAsync(options))
         {
             if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
             {
@@ -130,7 +130,7 @@ public class Sample_WebSearchCustomStreaming : ProjectsOpenAITestBase
             ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
             InputItems = { ResponseItem.CreateUserMessageItem("How many medals did the USA win in the 2024 summer olympics?") },
         };
-        foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreaming(options))
+        foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreamingAsync(options).Result.ToEnumerable())
         {
             if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
             {

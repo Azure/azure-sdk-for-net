@@ -100,7 +100,7 @@ public partial class ResponsesTelemetryTests
     private async Task<ResponseResult> RunFileSearchStreamingAsync(ProjectResponsesClient client)
     {
         ResponseResult completedResponse = null;
-        await foreach (StreamingResponseUpdate update in client.CreateResponseStreamingAsync(FileSearchPrompt))
+        await foreach (StreamingResponseUpdate update in await client.CreateResponseStreamingAsync(FileSearchPrompt))
         {
             if (update is StreamingResponseCompletedUpdate completed)
             {

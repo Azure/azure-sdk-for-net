@@ -51,7 +51,7 @@ public class Sample_BingGroundingStreaming : ProjectsOpenAITestBase
 
         string annotation = "";
         string text = "";
-        await foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreamingAsync("How does wikipedia explain Euler's Identity?"))
+        await foreach (StreamingResponseUpdate streamResponse in await responseClient.CreateResponseStreamingAsync("How does wikipedia explain Euler's Identity?"))
         {
             if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
             {
@@ -121,7 +121,7 @@ public class Sample_BingGroundingStreaming : ProjectsOpenAITestBase
 
         string annotation = "";
         string text = "";
-        foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreaming("How does wikipedia explain Euler's Identity?"))
+        foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreamingAsync("How does wikipedia explain Euler's Identity?").Result.ToEnumerable())
         {
             if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
             {

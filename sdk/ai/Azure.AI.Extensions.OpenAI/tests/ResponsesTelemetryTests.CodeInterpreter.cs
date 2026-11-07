@@ -60,7 +60,7 @@ public partial class ResponsesTelemetryTests
     private async Task<ResponseResult> RunCodeInterpreterStreamingAsync(ProjectResponsesClient client)
     {
         ResponseResult completedResponse = null;
-        await foreach (StreamingResponseUpdate update in client.CreateResponseStreamingAsync(CodeInterpreterPrompt))
+        await foreach (StreamingResponseUpdate update in await client.CreateResponseStreamingAsync(CodeInterpreterPrompt))
         {
             if (update is StreamingResponseCompletedUpdate completed)
             {
