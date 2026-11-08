@@ -174,6 +174,15 @@ export async function cleanupLiveEval({
         throw new Error(`Refusing to clean a plan for a different TypeSpec project: ${candidate.id}.`);
       }
       if (typeSpecProject) {
+        if (getCaseInsensitiveProperty(details, "status") === "Abandoned") {
+          const pullRequests = [];
+          for (const url of collectPullRequestUrls(candidate, details)) {
+            pullRequests.push(await checkPullRequest(url, candidates.startedAt, true, getPullRequest));
+          }
+          if (pullRequests.every((pr) => pr.state === "closed")) {
+            continue;
+          }
+        }
         const createdAt = Date.parse(getCaseInsensitiveProperty(details, "createdDate"));
         if (!Number.isFinite(createdAt) || now - createdAt < 2 * 60 * 60 * 1000) {
           ageErrors.push(`Refusing pre-cleanup of test plan ${candidate.id}: creation time must be verified and at least two hours old.`);
