@@ -78,7 +78,17 @@ function planControllerEvidence({ snapshot, progress, markers, loadSession }) {
     const marker = exported.get(file.filename);
     requireEvidence(content && marker?.chunks?.some(chunk => chunk.content.includes(evidence.quote) &&
       content.includes(chunk.content.trimEnd())), `assessment is not backed by a successful read of ${file.filename}.`);
-    requireEvidence(typeof file.patch !== "string" || file.patch.includes(evidence.quote), `quote is not in the captured patch for ${file.filename}.`);
+    if (typeof file.patch === "string") {
+      requireEvidence(file.patch.includes(evidence.quote), `quote is not in the captured patch for ${file.filename}.`);
+    } else {
+      requireEvidence(Array.isArray(marker.sourceContents) && marker.sourceContents.length > 0 &&
+        marker.sourceContents.every(source => source === null || typeof source === "string"),
+      `captured patchless source content is missing for ${file.filename}.`);
+      requireEvidence(marker.sourceContents.some(source => typeof source === "string" && source.trim()),
+        `no quotable source text for ${file.filename}; empty or non-text inputs must remain incomplete.`);
+      requireEvidence(marker.sourceContents.some(source => typeof source === "string" && source.includes(evidence.quote)),
+        `quote is not in the captured base or head content for ${file.filename}.`);
+    }
     plan.files.push(marker);
   }
   return [...plans.values()].map(({ worker, files, session }) => ({ worker, files, session }));

@@ -106,12 +106,14 @@ function Export-PrReReviewInput {
         $patchFile = "patches/$("$number".PadLeft($width, '0')).patch"
         $marker = [Convert]::ToHexString([Security.Cryptography.RandomNumberGenerator]::GetBytes(8)).ToLowerInvariant()
 
+        $sourceContents = @()
         $body = if ($null -ne $file.patch) {
             [string]$file.patch
         } elseif ($file.status -ceq 'removed') {
             throw "GitHub returned no patch for removed file '$($file.filename)'; its deletion cannot be reviewed."
         } else {
             $content = Get-PrReReviewHeadContent -Repository $Repository -HeadSha $HeadSha -Path $file.filename
+            $sourceContents = @($content)
             $headText = if ($null -eq $content) {
                 'GitHub returned no patch, and the file has no text content at the head commit.'
             } else {
@@ -126,6 +128,7 @@ function Export-PrReReviewInput {
                 }
                 $previousPath = if ($file.previous_filename) { [string]$file.previous_filename } else { [string]$file.filename }
                 $previous = Get-PrReReviewHeadContent -Repository $Repository -HeadSha $MergeBaseSha -Path $previousPath
+                $sourceContents = @($previous, $content)
                 $baseText = if ($null -eq $previous) { 'The file has no text content at the merge base.' } else { $previous }
                 "GitHub returned no patch; full content at the merge base ($previousPath):`n$baseText`n$headText"
             }
@@ -168,7 +171,10 @@ function Export-PrReReviewInput {
             patchFile = $patchFile
             readFiles = $readFiles.ToArray()
         })
-        $markers.Add([ordered]@{ path = [string]$file.filename; marker = $marker; chunks = $chunks.ToArray() })
+        $entry = [ordered]@{ path = [string]$file.filename; marker = $marker; chunks = $chunks.ToArray() }
+        # Keep source text separate from presentation wrappers for assessment quotes.
+        if ($null -eq $file.patch) { $entry.sourceContents = $sourceContents }
+        $markers.Add($entry)
     }
 
     [IO.File]::WriteAllText((Join-Path $InputDirectory 'files.json'), (ConvertTo-Json -InputObject ([ordered]@{ headSha = $HeadSha; files = $list.ToArray() }) -Depth 5))

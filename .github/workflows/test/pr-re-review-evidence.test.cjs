@@ -15,7 +15,7 @@ const { makeWorklist, runQueue, buildOutputs, assertPublication } = require("../
 const { planControllerEvidence } = require("../pr-re-review/ReviewEvidence.cjs");
 const pwsh = process.env.REVIEW_PWSH || "pwsh";
 
-async function fixture(t, mode = "complete") {
+async function fixture(t, mode = "complete", patchless) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), "rereview-evidence-"));
   t.after(() => fs.rmSync(root, { recursive: true, force: true }));
   const input = path.join(root, "review-input");
@@ -30,13 +30,31 @@ async function fixture(t, mode = "complete") {
       { filename: "src/Second.cs", status: "modified", patch: "+second-change" }
     ]
   };
+  if (patchless) {
+    delete snapshot.files[0].patch;
+    snapshot.files[0].status = patchless.status || "modified";
+    fs.writeFileSync(path.join(root, "source.json"), JSON.stringify(patchless));
+  }
   fs.writeFileSync(path.join(input, "snapshot.json"), JSON.stringify(snapshot));
   // The actual #64557 exporter creates the markers/chunks; no alternate capture
   // or read-coverage implementation is substituted by this integration fixture.
   const exported = spawnSync(pwsh, ["-NoProfile", "-Command", `
     Import-Module $env:REVIEW_INPUT_MODULE
     $snapshot = Get-Content (Join-Path $env:REVIEW_TEST_ROOT 'review-input/snapshot.json') -Raw | ConvertFrom-Json
-    Export-PrReReviewInput -Files @($snapshot.files) -Repository Azure/azure-sdk-for-net -HeadSha $snapshot.head_sha -InputDirectory (Join-Path $env:REVIEW_TEST_ROOT 'visible') -MarkersPath (Join-Path $env:REVIEW_TEST_ROOT 'review-input/markers.json')
+    if (Test-Path (Join-Path $env:REVIEW_TEST_ROOT 'source.json')) {
+      $source = Get-Content (Join-Path $env:REVIEW_TEST_ROOT 'source.json') -Raw | ConvertFrom-Json
+      & (Get-Module PrReReviewInput) {
+        param($Source)
+        $script:TestSource = $Source
+        function script:Invoke-PrReReviewGhApi {
+          param([string[]]$Arguments)
+          if ($Arguments[-1] -ceq ('repos/Azure/azure-sdk-for-net/contents/src/First.cs?ref=' + ('a' * 40))) { return $script:TestSource.head }
+          if ($Arguments[-1] -ceq ('repos/Azure/azure-sdk-for-net/contents/src/First.cs?ref=' + ('b' * 40))) { return $script:TestSource.base }
+          throw 'Unexpected source request.'
+        }
+      } $source
+    }
+    Export-PrReReviewInput -Files @($snapshot.files) -Repository Azure/azure-sdk-for-net -HeadSha $snapshot.head_sha -MergeBaseSha $snapshot.base_sha -InputDirectory (Join-Path $env:REVIEW_TEST_ROOT 'visible') -MarkersPath (Join-Path $env:REVIEW_TEST_ROOT 'review-input/markers.json')
   `], { encoding: "utf8", env: { ...process.env, REVIEW_TEST_ROOT: root, REVIEW_INPUT_MODULE: path.join(directory, "PrReReviewInput.psm1") } });
   assert.equal(exported.status, 0, exported.stderr);
   const markers = JSON.parse(fs.readFileSync(path.join(input, "markers.json"), "utf8"));
@@ -56,7 +74,7 @@ async function fixture(t, mode = "complete") {
       const result = {
         id: item.id, status: "complete", reasoning: `Checked the changes and interactions in ${item.file.filename}.`,
         findings: [], action: "none", ...(mode === "completion-only" ? {} : {
-          evidence: { readCallId: "read-0", quote: item.file.patch.split("\n")[0] }
+          evidence: { readCallId: "read-0", quote: patchless && item.id === "file:0" ? patchless.quote : item.file.patch.split("\n")[0] }
         })
       };
       const response = { results: [result] };
@@ -100,6 +118,48 @@ test("wrapped visible read results work through the shared coverage guard", asyn
   const f = await fixture(t, "wrapped");
   const validated = guard(f);
   assert.equal(validated.status, 0, validated.stderr);
+});
+
+test("patchless assessments quote actual base or head source, including an emptied head", async t => {
+  for (const source of [
+    { base: "// old declaration", head: "// new declaration", quote: "// old declaration" },
+    { base: "// old declaration", head: "// new declaration", quote: "// new declaration" },
+    { base: "// old declaration", head: "", quote: "// old declaration" },
+    { base: "// old declaration", head: "binary\0content", quote: "// old declaration" },
+    { status: "added", head: "# Review input is also legitimate source text", quote: "# Review input" }
+  ]) {
+    const f = await fixture(t, "complete", source);
+    const validated = guard(f);
+    assert.equal(validated.status, 0, validated.stderr);
+  }
+});
+
+test("patchless wrapper-only quotes cannot become source-backed assessments", async t => {
+  for (const quote of ["# Review input", "GitHub returned no patch", "# End of review input"]) {
+    const f = await fixture(t, "complete", { base: "// old declaration", head: "// new declaration", quote });
+    const validated = guard(f);
+    assert.notEqual(validated.status, 0);
+    assert.match(validated.stderr + validated.stdout, /quote is not in the captured base or head content/);
+  }
+});
+
+test("empty, whitespace-only and non-text patchless inputs cannot complete using a wrapper quote", async t => {
+  for (const source of [
+    { status: "added", head: "" },
+    { base: "", head: " \r\n\t" },
+    { base: "old\0binary", head: "new\0binary" }
+  ]) {
+    const f = await fixture(t, "complete", { ...source, quote: "# Review input" });
+    const validated = guard(f);
+    assert.notEqual(validated.status, 0);
+    assert.match(validated.stderr + validated.stdout, /no quotable source text/);
+  }
+});
+
+test("patchless evidence fails closed when captured source metadata is missing", async t => {
+  const f = await fixture(t, "complete", { status: "added", head: "// new declaration", quote: "// new declaration" });
+  delete f.arguments_.markers.files[0].sourceContents;
+  assert.throws(() => planControllerEvidence(f.arguments_), /captured patchless source content is missing/);
 });
 
 test("a completed controller ledger and fabricated complete totals are not proof of a read", async t => {

@@ -70,6 +70,26 @@ Describe 'Export-PrReReviewInput' {
         $inputText = & $export.Read $export.Files[0]
         $inputText | Should -Match '// new declaration'
         $inputText | Should -Match '// deleted declaration'
+        $export.Markers[0].sourceContents | Should -Be @('// deleted declaration', '// new declaration')
+    }
+
+    It 'retains raw patchless head text without treating export labels as source' {
+        Mock -ModuleName PrReReviewInput Get-PrReReviewHeadContent { '// new declaration' }
+        $export = Invoke-Export @(New-ChangedFile 'src/New.cs' -Status 'added' -Patch $null)
+        $export.Markers[0].sourceContents | Should -Be @('// new declaration')
+        $export.ListText | Should -Not -Match 'sourceContents'
+    }
+
+    It 'distinguishes empty text and non-text patchless sources in trusted metadata' {
+        Mock -ModuleName PrReReviewInput Get-PrReReviewHeadContent { '' }
+        $empty = Invoke-Export @(New-ChangedFile 'empty.txt' -Status 'added' -Patch $null)
+        $empty.Markers[0].sourceContents.Count | Should -Be 1
+        $empty.Markers[0].sourceContents[0] | Should -BeOfType ([string])
+        $empty.Markers[0].sourceContents[0] | Should -BeExactly ''
+        Mock -ModuleName PrReReviewInput Get-PrReReviewHeadContent { $null }
+        $binary = Invoke-Export @(New-ChangedFile 'binary.dat' -Status 'added' -Patch $null)
+        $binary.Markers[0].sourceContents.Count | Should -Be 1
+        ($null -eq $binary.Markers[0].sourceContents[0]) | Should -BeTrue
     }
 
     It 'uses the previous path at the merge base when a renamed file has no patch' {

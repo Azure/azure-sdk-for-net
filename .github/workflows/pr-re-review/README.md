@@ -11,6 +11,8 @@ A completion result is still a model review conclusion, not proof of comprehensi
 
 The evidence extension retains source-backed file assessments in worker results and records the controller-selected worker log with each attempt. Publication binds each quote to that worker's successful exported-part read before its final decision, then delegates complete-part checks to the shared `Assert-PrReReviewReadCoverage` helper. It consumes the captured input/progress artifacts, not a single agent submission transcript, and delegates capture, freshness and completion to the existing controller and trusted helpers. The input artifact includes pre-inference markers; the progress artifact includes worker execution logs. Session-log evidence remains best-effort, not tamper-proof proof of comprehension.
 
+For patchless files, trusted markers retain the retrieved merge-base/head text separately from exporter headers, labels and markers. Quotes must occur in that source text as well as in a successfully read exported part. A text-bearing base remains quotable when the head becomes empty or non-text. If neither revision has non-whitespace text, the assessment must remain incomplete: the current text-evidence protocol cannot verify empty/non-text inputs using wrapper quotes.
+
 ## Validation
 
 CI provisions the pinned gh-aw setup helpers for handler/receipt tests. To run the Node suites locally, point `GH_AW_TEST_ACTIONS_DIR` at those same helpers:
