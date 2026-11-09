@@ -82,8 +82,7 @@ namespace Azure.Core.Tests.Identity
         {
             RequireArcUserAssignedIdentity();
 
-            using (ReadOrRestoreManagedIdentityEnvironment())
-            using (new TestEnvVar(new Dictionary<string, string>
+            using (ReadOrRestoreManagedIdentityEnvironment(new Dictionary<string, string>
             {
                 { "AZURE_TOKEN_CREDENTIALS", "ManagedIdentityCredential" },
                 { "AZURE_CLIENT_ID", null }
@@ -112,8 +111,10 @@ namespace Azure.Core.Tests.Identity
             RequireSetting(TestEnvironment.ArcEnable, "IDENTITYTEST_ARCTEST_ENABLE");
             string clientId = RequireSetting(TestEnvironment.ArcUnassignedClientId, "IDENTITYTEST_ARCTEST_UNASSIGNEDCLIENTID");
 
-            using (ReadOrRestoreManagedIdentityEnvironment())
-            using (new TestEnvVar("AZURE_TOKEN_CREDENTIALS", "ManagedIdentityCredential"))
+            using (ReadOrRestoreManagedIdentityEnvironment(new Dictionary<string, string>
+            {
+                { "AZURE_TOKEN_CREDENTIALS", "ManagedIdentityCredential" }
+            }))
             {
                 TokenCredential credential = useDefaultCredential
                     ? new DefaultAzureCredential(InstrumentClientOptions(new DefaultAzureCredentialOptions { ManagedIdentityClientId = clientId }))
