@@ -23,7 +23,7 @@ namespace Azure.AI.Language.Text
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="textInput"> Contains the input documents. </param>
         /// <param name="actionContent"> Pii task parameters. </param>
-        internal TextPiiEntitiesRecognitionInput(AnalyzeTextInputKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, MultiLanguageTextInput textInput, PiiActionContent actionContent) : base(kind, additionalBinaryDataProperties)
+        internal TextPiiEntitiesRecognitionInput(AnalyzeTextInputKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, MultiLanguageTextInput textInput, PiiActionRequest actionContent) : base(kind, additionalBinaryDataProperties)
         {
             TextInput = textInput;
             ActionContent = actionContent;
@@ -33,6 +33,6 @@ namespace Azure.AI.Language.Text
         public MultiLanguageTextInput TextInput { get; set; }
 
         /// <summary> Pii task parameters. </summary>
-        public PiiActionContent ActionContent { get; set; }
+        public PiiActionRequest ActionContent { get; set; }
     }
 }
