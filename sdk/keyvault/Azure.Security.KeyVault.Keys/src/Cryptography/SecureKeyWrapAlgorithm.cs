@@ -10,7 +10,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     /// An algorithm used for secure key wrap and unwrap operations.
     /// </summary>
     /// <remarks>
-    /// This type is only available with API version 2026-01-01-preview and newer.
+    /// This type is only available with API version 2026-04-01 and newer.
     /// Secure key wrap and unwrap operations are only supported remotely and cannot be performed locally.
     /// </remarks>
     public readonly struct SecureKeyWrapAlgorithm : IEquatable<SecureKeyWrapAlgorithm>
