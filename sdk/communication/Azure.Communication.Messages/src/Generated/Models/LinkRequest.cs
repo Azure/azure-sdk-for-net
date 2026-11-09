@@ -11,13 +11,13 @@ using System.Collections.Generic;
 namespace Azure.Communication.Messages
 {
     /// <summary> The message content of type Url information. </summary>
-    public partial class LinkContent : MessageContent
+    public partial class LinkRequest : MessageRequest
     {
-        /// <summary> Initializes a new instance of <see cref="LinkContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkRequest"/>. </summary>
         /// <param name="title"> Title of the url content. </param>
         /// <param name="uri"> The url in the content. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="title"/> or <paramref name="uri"/> is null. </exception>
-        public LinkContent(string title, Uri uri) : base(MessageContentKind.Uri)
+        public LinkRequest(string title, Uri uri) : base(MessageContentKind.Uri)
         {
             Argument.AssertNotNull(title, nameof(title));
             Argument.AssertNotNull(uri, nameof(uri));
@@ -26,12 +26,12 @@ namespace Azure.Communication.Messages
             Uri = uri;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LinkContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkRequest"/>. </summary>
         /// <param name="kind"> Kind of MessageContent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="title"> Title of the url content. </param>
         /// <param name="uri"> The url in the content. </param>
-        internal LinkContent(MessageContentKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string title, Uri uri) : base(kind, additionalBinaryDataProperties)
+        internal LinkRequest(MessageContentKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string title, Uri uri) : base(kind, additionalBinaryDataProperties)
         {
             Title = title;
             Uri = uri;

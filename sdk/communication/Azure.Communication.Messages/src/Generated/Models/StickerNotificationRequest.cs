@@ -11,14 +11,14 @@ using System.Collections.Generic;
 namespace Azure.Communication.Messages
 {
     /// <summary> A request to send a Sticker notification. </summary>
-    public partial class StickerNotificationContent : NotificationContent
+    public partial class StickerNotificationRequest : NotificationContent
     {
-        /// <summary> Initializes a new instance of <see cref="StickerNotificationContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StickerNotificationRequest"/>. </summary>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
         /// <param name="mediaUri"> A media url for the file. Required if the type is one of the supported media types, e.g. image. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> or <paramref name="mediaUri"/> is null. </exception>
-        public StickerNotificationContent(Guid channelRegistrationId, IEnumerable<string> to, Uri mediaUri) : base(channelRegistrationId, to, CommunicationMessageKind.Sticker)
+        public StickerNotificationRequest(Guid channelRegistrationId, IEnumerable<string> to, Uri mediaUri) : base(channelRegistrationId, to, CommunicationMessageKind.Sticker)
         {
             Argument.AssertNotNull(to, nameof(to));
             Argument.AssertNotNull(mediaUri, nameof(mediaUri));
@@ -26,13 +26,13 @@ namespace Azure.Communication.Messages
             MediaUri = mediaUri;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StickerNotificationContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StickerNotificationRequest"/>. </summary>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
         /// <param name="kind"> The type discriminator describing a message type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="mediaUri"> A media url for the file. Required if the type is one of the supported media types, e.g. image. </param>
-        internal StickerNotificationContent(Guid channelRegistrationId, IList<string> to, CommunicationMessageKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri mediaUri) : base(channelRegistrationId, to, kind, additionalBinaryDataProperties)
+        internal StickerNotificationRequest(Guid channelRegistrationId, IList<string> to, CommunicationMessageKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri mediaUri) : base(channelRegistrationId, to, kind, additionalBinaryDataProperties)
         {
             MediaUri = mediaUri;
         }

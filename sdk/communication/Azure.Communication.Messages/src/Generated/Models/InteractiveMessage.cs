@@ -20,7 +20,7 @@ namespace Azure.Communication.Messages
         /// <param name="body"> Gets or Sets Message body content. Emojis, markdown, and links are supported. </param>
         /// <param name="action"> The binding object to get or set Action which describes options user have to respond to message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> or <paramref name="action"/> is null. </exception>
-        public InteractiveMessage(TextMessageContent body, ActionBindings action)
+        public InteractiveMessage(TextMessageRequest body, ActionBindings action)
         {
             Argument.AssertNotNull(body, nameof(body));
             Argument.AssertNotNull(action, nameof(action));
@@ -35,7 +35,7 @@ namespace Azure.Communication.Messages
         /// <param name="footer"> Gets or Sets Message footer content. Emojis, markdown, and links are supported. </param>
         /// <param name="action"> The binding object to get or set Action which describes options user have to respond to message. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InteractiveMessage(MessageContent header, TextMessageContent body, TextMessageContent footer, ActionBindings action, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InteractiveMessage(MessageRequest header, TextMessageRequest body, TextMessageRequest footer, ActionBindings action, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Header = header;
             Body = body;
@@ -45,13 +45,13 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary> Gets or Sets Header content. Supports the following types:text, images etc. </summary>
-        public MessageContent Header { get; set; }
+        public MessageRequest Header { get; set; }
 
         /// <summary> Gets or Sets Message body content. Emojis, markdown, and links are supported. </summary>
-        public TextMessageContent Body { get; }
+        public TextMessageRequest Body { get; }
 
         /// <summary> Gets or Sets Message footer content. Emojis, markdown, and links are supported. </summary>
-        public TextMessageContent Footer { get; set; }
+        public TextMessageRequest Footer { get; set; }
 
         /// <summary> The binding object to get or set Action which describes options user have to respond to message. </summary>
         public ActionBindings Action { get; }

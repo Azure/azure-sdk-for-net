@@ -13,56 +13,56 @@ using System.Text.Json;
 namespace Azure.Communication.Messages
 {
     /// <summary> The action content of type ActionGroup. </summary>
-    public partial class ActionGroupContent : MessageContent, IJsonModel<ActionGroupContent>
+    public partial class ActionGroupRequest : MessageRequest, IJsonModel<ActionGroupRequest>
     {
-        /// <summary> Initializes a new instance of <see cref="ActionGroupContent"/> for deserialization. </summary>
-        internal ActionGroupContent()
+        /// <summary> Initializes a new instance of <see cref="ActionGroupRequest"/> for deserialization. </summary>
+        internal ActionGroupRequest()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override MessageContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override MessageRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ActionGroupContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ActionGroupRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeActionGroupContent(document.RootElement, options);
+                        return DeserializeActionGroupRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ActionGroupContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActionGroupRequest)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ActionGroupContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ActionGroupRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureCommunicationMessagesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ActionGroupContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActionGroupRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ActionGroupContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ActionGroupRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ActionGroupContent IPersistableModel<ActionGroupContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (ActionGroupContent)PersistableModelCreateCore(data, options);
+        ActionGroupRequest IPersistableModel<ActionGroupRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => (ActionGroupRequest)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ActionGroupContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ActionGroupRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ActionGroupContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ActionGroupRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -73,10 +73,10 @@ namespace Azure.Communication.Messages
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ActionGroupContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ActionGroupRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActionGroupContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ActionGroupRequest)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("title"u8);
@@ -92,24 +92,24 @@ namespace Azure.Communication.Messages
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ActionGroupContent IJsonModel<ActionGroupContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ActionGroupContent)JsonModelCreateCore(ref reader, options);
+        ActionGroupRequest IJsonModel<ActionGroupRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ActionGroupRequest)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override MessageContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override MessageRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ActionGroupContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ActionGroupRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActionGroupContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ActionGroupRequest)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeActionGroupContent(document.RootElement, options);
+            return DeserializeActionGroupRequest(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ActionGroupContent DeserializeActionGroupContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static ActionGroupRequest DeserializeActionGroupRequest(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -146,7 +146,7 @@ namespace Azure.Communication.Messages
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ActionGroupContent(kind, additionalBinaryDataProperties, title, groups ?? new ChangeTrackingList<ActionGroup>());
+            return new ActionGroupRequest(kind, additionalBinaryDataProperties, title, groups ?? new ChangeTrackingList<ActionGroup>());
         }
     }
 }

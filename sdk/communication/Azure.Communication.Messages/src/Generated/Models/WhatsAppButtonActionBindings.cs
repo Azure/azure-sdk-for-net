@@ -17,7 +17,7 @@ namespace Azure.Communication.Messages.Models.Channels
         /// <summary> Initializes a new instance of <see cref="WhatsAppButtonActionBindings"/>. </summary>
         /// <param name="content"> Action content of Interactive message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public WhatsAppButtonActionBindings(ButtonSetContent content) : base(MessageActionBindingKind.WhatsAppButtonAction)
+        public WhatsAppButtonActionBindings(ButtonSetRequest content) : base(MessageActionBindingKind.WhatsAppButtonAction)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -28,12 +28,12 @@ namespace Azure.Communication.Messages.Models.Channels
         /// <param name="kind"> Kind of the MessageActionBinding. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="content"> Action content of Interactive message. </param>
-        internal WhatsAppButtonActionBindings(MessageActionBindingKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, ButtonSetContent content) : base(kind, additionalBinaryDataProperties)
+        internal WhatsAppButtonActionBindings(MessageActionBindingKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, ButtonSetRequest content) : base(kind, additionalBinaryDataProperties)
         {
             Content = content;
         }
 
         /// <summary> Action content of Interactive message. </summary>
-        public ButtonSetContent Content { get; }
+        public ButtonSetRequest Content { get; }
     }
 }
