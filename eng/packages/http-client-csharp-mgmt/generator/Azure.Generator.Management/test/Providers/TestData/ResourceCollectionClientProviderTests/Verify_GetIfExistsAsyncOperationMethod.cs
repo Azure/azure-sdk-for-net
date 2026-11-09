@@ -8,7 +8,7 @@ try
     {
         CancellationToken = cancellationToken
     };
-    global::Azure.Core.HttpMessage message = _testClientRestClient.CreateGetRequest(global::System.Guid.Parse(this.Id.SubscriptionId), this.Id.ResourceGroupName, testName, context);
+    using global::Azure.Core.HttpMessage message = _testClientRestClient.CreateGetRequest(global::System.Guid.Parse(this.Id.SubscriptionId), this.Id.ResourceGroupName, testName, context);
     await this.Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
     global::Azure.Response result = message.Response;
     global::Azure.Response<global::Samples.ResponseTypeData> response = default;

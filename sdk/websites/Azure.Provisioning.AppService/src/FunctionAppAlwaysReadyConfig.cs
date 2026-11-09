@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
+#nullable disable
 
 using System.ComponentModel;
 using Azure.Provisioning.Primitives;
@@ -18,10 +18,10 @@ public partial class FunctionAppAlwaysReadyConfig : ProvisionableConstruct
     [EditorBrowsable(EditorBrowsableState.Never)]
     public BicepValue<float> InstanceCount
     {
-        get { Initialize(); return _instanceCount!; }
-        set { Initialize(); _instanceCount!.Assign(value); }
+        get { Initialize(); return _instanceCount; }
+        set { Initialize(); _instanceCount.Assign(value); }
     }
-    private BicepValue<float>? _instanceCount;
+    private BicepValue<float> _instanceCount;
 
     partial void DefineAdditionalProperties()
     {

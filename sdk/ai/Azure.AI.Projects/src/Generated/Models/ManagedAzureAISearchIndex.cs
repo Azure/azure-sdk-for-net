@@ -11,8 +11,13 @@ namespace Azure.AI.Projects
     public partial class ManagedAzureAISearchIndex : AIProjectIndex
     {
         /// <summary> Initializes a new instance of <see cref="ManagedAzureAISearchIndex"/>. </summary>
-        public ManagedAzureAISearchIndex() : base(IndexType.ManagedAzureSearch)
+        /// <param name="vectorStoreId"> Vector store id of managed index. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
+        public ManagedAzureAISearchIndex(string vectorStoreId) : base(IndexType.ManagedAzureSearch)
         {
+            Argument.AssertNotNull(vectorStoreId, nameof(vectorStoreId));
+
+            VectorStoreId = vectorStoreId;
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedAzureAISearchIndex"/>. </summary>
@@ -26,16 +31,6 @@ namespace Azure.AI.Projects
         /// <param name="vectorStoreId"> Vector store id of managed index. </param>
         internal ManagedAzureAISearchIndex(IndexType @type, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, string vectorStoreId) : base(@type, id, name, version, description, tags, additionalBinaryDataProperties)
         {
-            VectorStoreId = vectorStoreId;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ManagedAzureAISearchIndex"/>. </summary>
-        /// <param name="vectorStoreId"> Vector store id of managed index. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
-        public ManagedAzureAISearchIndex(string vectorStoreId) : this()
-        {
-            Argument.AssertNotNull(vectorStoreId, nameof(vectorStoreId));
-
             VectorStoreId = vectorStoreId;
         }
 

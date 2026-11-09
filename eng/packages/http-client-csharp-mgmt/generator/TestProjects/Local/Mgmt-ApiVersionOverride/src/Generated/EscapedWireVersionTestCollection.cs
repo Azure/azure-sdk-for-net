@@ -87,7 +87,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _escapedWireVersionReadsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, escapedWireVersionTestName, context);
+                using HttpMessage message = _escapedWireVersionReadsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, escapedWireVersionTestName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EscapedWireVersionTestData> response = Response.FromValue(EscapedWireVersionTestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _escapedWireVersionReadsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, escapedWireVersionTestName, context);
+                using HttpMessage message = _escapedWireVersionReadsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, escapedWireVersionTestName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EscapedWireVersionTestData> response = Response.FromValue(EscapedWireVersionTestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -241,7 +241,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _escapedWireVersionReadsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, escapedWireVersionTestName, context);
+                using HttpMessage message = _escapedWireVersionReadsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, escapedWireVersionTestName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EscapedWireVersionTestData> response = default;
@@ -298,7 +298,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _escapedWireVersionReadsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, escapedWireVersionTestName, context);
+                using HttpMessage message = _escapedWireVersionReadsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, escapedWireVersionTestName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EscapedWireVersionTestData> response = default;
@@ -355,7 +355,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _escapedWireVersionReadsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, escapedWireVersionTestName, context);
+                using HttpMessage message = _escapedWireVersionReadsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, escapedWireVersionTestName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EscapedWireVersionTestData> response = default;
@@ -416,7 +416,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _escapedWireVersionReadsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, escapedWireVersionTestName, context);
+                using HttpMessage message = _escapedWireVersionReadsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, escapedWireVersionTestName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EscapedWireVersionTestData> response = default;

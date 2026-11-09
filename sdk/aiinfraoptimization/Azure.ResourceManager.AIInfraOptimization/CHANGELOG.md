@@ -1,5 +1,15 @@
 # Release History
 
+## 1.0.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.0.0-beta.1 (2026-11-04)
 
 This is the initial public preview release of the Azure AI Infrastructure Optimization management client library for .NET.

@@ -3,7 +3,6 @@
 
 #nullable disable
 
-using Azure.Provisioning.Primitives;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.ContainerRegistry
@@ -12,7 +11,7 @@ namespace Azure.Provisioning.ContainerRegistry
     {
         // ConnectedRegistry has both an ARM resource parent and a flattened model property named Parent.
         // Defining the resource parent here lets the customization below target the model property unambiguously.
-        private ResourceReference<ContainerRegistryService> _parent;
+        private ProvisioningResourceReference<ContainerRegistryService> _parent;
 
         /// <summary> Gets or sets the Parent. </summary>
         public ContainerRegistryService Parent

@@ -11,7 +11,7 @@ using Azure.ResourceManager.CommvaultContentStore;
 
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
-    /// <summary> Supported Commvault role names. </summary>
+    /// <summary> Supported Commvault role names. Extensible enum — additional roles may be added in future versions without a breaking change. </summary>
     public readonly partial struct CommvaultRoleName : IEquatable<CommvaultRoleName>
     {
         private readonly string _value;

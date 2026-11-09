@@ -115,6 +115,10 @@ namespace SignalRServiceExtension.Tests
 
         [Theory]
         [MemberData(nameof(SignalRAttributeTestData))]
+        public Task SignalRAttributeConnectionStringSettingFacts(Type classType, Dictionary<string, string> configDict)
+            => ConnectionStringSettingFacts(classType, configDict);
+
+        [Theory]
         [MemberData(nameof(SignalRConnectionInfoAttributeTestData))]
         public async Task ConnectionStringSettingFacts(Type classType, Dictionary<string, string> configDict)
         {
