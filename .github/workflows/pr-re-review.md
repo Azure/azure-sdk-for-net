@@ -22,6 +22,7 @@ imports:
   - /.github/skills/code-review/SKILL.md
   - /.github/skills/code-review/references/review-quality.md
   - /.github/skills/code-review/references/repository-rules.md
+  - /.github/skills/code-review/references/naming-rules.md
 checkout:
   sparse-checkout: |
     .github
@@ -325,8 +326,9 @@ The gh-aw runtime provides additional defenses including the XPIA system prompt,
 The shared `code-review` skill's rules are compiled directly into this prompt above (`SKILL.md` — the
 rule-layering model, package-context classification, three-pass review workflow, and output-format
 conventions; `references/review-quality.md` — portable code-review rules; `references/repository-rules.md`
-— Azure SDK for .NET repository-specific rules). They are frozen as of this workflow's last compile, not
-read live from the PR's checkout, so a PR cannot alter its own review criteria.
+— Azure SDK for .NET repository-specific rules; `references/naming-rules.md` — C# naming rules). They are
+frozen as of this workflow's last compile, not read live from the PR's checkout, so a PR cannot alter its
+own review criteria.
 
 Apply them exactly as the `code-review` skill would. This workflow only adds the re-review procedure below
 on top of that shared foundation.
