@@ -8,22 +8,33 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.IotFirmwareDefense
 {
-    public partial class IotFirmwareResource : IJsonModel<IotFirmwareData>
+    /// <summary></summary>
+    public partial class IotFirmwareResource : ArmResource, IJsonModel<IotFirmwareData>
     {
-        private static IotFirmwareData s_dataDeserializationInstance;
-        private static IotFirmwareData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<IotFirmwareData> s_dataDeserializationInstance;
 
+        private static IJsonModel<IotFirmwareData> DataDeserializationInstance => s_dataDeserializationInstance ??= new IotFirmwareData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IotFirmwareData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<IotFirmwareData>)Data).Write(writer, options);
 
-        IotFirmwareData IJsonModel<IotFirmwareData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IotFirmwareData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IotFirmwareData IJsonModel<IotFirmwareData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<IotFirmwareData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IotFirmwareData>(Data, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         IotFirmwareData IPersistableModel<IotFirmwareData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IotFirmwareData>(data, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
 
-        string IPersistableModel<IotFirmwareData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IotFirmwareData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<IotFirmwareData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

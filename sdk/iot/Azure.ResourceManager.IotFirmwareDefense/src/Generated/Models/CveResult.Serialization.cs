@@ -11,14 +11,56 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.IotFirmwareDefense;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    public partial class CveResult : IUtf8JsonSerializable, IJsonModel<CveResult>
+    /// <summary> The object representing a firmware analysis CVE result resource. </summary>
+    public partial class CveResult : ResourceData, IJsonModel<CveResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CveResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CveResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCveResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CveResult)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CveResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CveResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CveResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CveResult IPersistableModel<CveResult>.Create(BinaryData data, ModelReaderWriterOptions options) => (CveResult)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CveResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CveResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,373 +72,120 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CveResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CveResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CveResult)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(CveId))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("cveId"u8);
-                writer.WriteStringValue(CveId);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(ComponentId))
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName("componentId"u8);
-                writer.WriteStringValue(ComponentId);
-            }
-            if (Optional.IsDefined(ComponentName))
-            {
-                writer.WritePropertyName("componentName"u8);
-                writer.WriteStringValue(ComponentName);
-            }
-            if (Optional.IsDefined(ComponentVersion))
-            {
-                writer.WritePropertyName("componentVersion"u8);
-                writer.WriteStringValue(ComponentVersion);
-            }
-            if (Optional.IsDefined(Severity))
-            {
-                writer.WritePropertyName("severity"u8);
-                writer.WriteStringValue(Severity);
-            }
-            if (Optional.IsDefined(CveName))
-            {
-                writer.WritePropertyName("cveName"u8);
-                writer.WriteStringValue(CveName);
-            }
-            if (Optional.IsDefined(Component))
-            {
-                writer.WritePropertyName("component"u8);
-                writer.WriteObjectValue<CveComponent>(Component, options);
-            }
-            if (Optional.IsDefined(CvssScore))
-            {
-                writer.WritePropertyName("cvssScore"u8);
-                writer.WriteStringValue(CvssScore);
-            }
-            if (Optional.IsDefined(CvssV2Score))
-            {
-                writer.WritePropertyName("cvssV2Score"u8);
-                writer.WriteStringValue(CvssV2Score);
-            }
-            if (Optional.IsDefined(CvssV3Score))
-            {
-                writer.WritePropertyName("cvssV3Score"u8);
-                writer.WriteStringValue(CvssV3Score);
-            }
-            if (Optional.IsDefined(CvssVersion))
-            {
-                writer.WritePropertyName("cvssVersion"u8);
-                writer.WriteStringValue(CvssVersion);
-            }
-            if (Optional.IsDefined(EffectiveCvssScore))
-            {
-                writer.WritePropertyName("effectiveCvssScore"u8);
-                writer.WriteNumberValue(EffectiveCvssScore.Value);
-            }
-            if (Optional.IsDefined(EffectiveCvssVersion))
-            {
-                writer.WritePropertyName("effectiveCvssVersion"u8);
-                writer.WriteNumberValue(EffectiveCvssVersion.Value);
-            }
-            if (Optional.IsCollectionDefined(CvssScores))
-            {
-                writer.WritePropertyName("cvssScores"u8);
-                writer.WriteStartArray();
-                foreach (var item in CvssScores)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
-                writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Links))
-            {
-                writer.WritePropertyName("links"u8);
-                writer.WriteStartArray();
-                foreach (var item in Links)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            writer.WriteEndObject();
         }
 
-        CveResult IJsonModel<CveResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CveResult IJsonModel<CveResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CveResult)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CveResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CveResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CveResult)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCveResult(document.RootElement, options);
         }
 
-        internal static CveResult DeserializeCveResult(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CveResult DeserializeCveResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            string cveId = default;
-            string componentId = default;
-            string componentName = default;
-            string componentVersion = default;
-            string severity = default;
-            string cveName = default;
-            CveComponent component = default;
-            string cvssScore = default;
-            string cvssV2Score = default;
-            string cvssV3Score = default;
-            string cvssVersion = default;
-            float? effectiveCvssScore = default;
-            int? effectiveCvssVersion = default;
-            IList<CvssScore> cvssScores = default;
-            IReadOnlyList<CveLink> links = default;
-            string description = default;
-            FirmwareProvisioningState? provisioningState = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            CveResultProperties properties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerIotFirmwareDefenseContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("cveId"u8))
-                        {
-                            cveId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("componentId"u8))
-                        {
-                            componentId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("componentName"u8))
-                        {
-                            componentName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("componentVersion"u8))
-                        {
-                            componentVersion = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("severity"u8))
-                        {
-                            severity = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("cveName"u8))
-                        {
-                            cveName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("component"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            component = CveComponent.DeserializeCveComponent(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("cvssScore"u8))
-                        {
-                            cvssScore = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("cvssV2Score"u8))
-                        {
-                            cvssV2Score = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("cvssV3Score"u8))
-                        {
-                            cvssV3Score = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("cvssVersion"u8))
-                        {
-                            cvssVersion = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("effectiveCvssScore"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            effectiveCvssScore = property0.Value.GetSingle();
-                            continue;
-                        }
-                        if (property0.NameEquals("effectiveCvssVersion"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            effectiveCvssVersion = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("cvssScores"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<CvssScore> array = new List<CvssScore>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(Models.CvssScore.DeserializeCvssScore(item, options));
-                            }
-                            cvssScores = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("links"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<CveLink> array = new List<CveLink>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(CveLink.DeserializeCveLink(item, options));
-                            }
-                            links = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("description"u8))
-                        {
-                            description = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new FirmwareProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
+                        continue;
                     }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerIotFirmwareDefenseContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = CveResultProperties.DeserializeCveResultProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new CveResult(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
-                cveId,
-                componentId,
-                componentName,
-                componentVersion,
-                severity,
-                cveName,
-                component,
-                cvssScore,
-                cvssV2Score,
-                cvssV3Score,
-                cvssVersion,
-                effectiveCvssScore,
-                effectiveCvssVersion,
-                cvssScores ?? new ChangeTrackingList<CvssScore>(),
-                links ?? new ChangeTrackingList<CveLink>(),
-                description,
-                provisioningState,
-                serializedAdditionalRawData);
+                properties,
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<CveResult>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CveResult>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(CveResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        CveResult IPersistableModel<CveResult>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CveResult>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCveResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CveResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<CveResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

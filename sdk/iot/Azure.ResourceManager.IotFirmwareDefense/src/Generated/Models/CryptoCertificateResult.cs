@@ -15,139 +15,369 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> The object representing a firmware analysis crypto certificate resource. </summary>
     public partial class CryptoCertificateResult : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CryptoCertificateResult"/>. </summary>
         public CryptoCertificateResult()
         {
-            CertificateUsage = new ChangeTrackingList<CertificateUsage>();
-            FilePaths = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CryptoCertificateResult"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="cryptoCertId"> ID for the certificate result. </param>
-        /// <param name="certificateName"> Name of the certificate. </param>
-        /// <param name="subject"> Subject information of the certificate. </param>
-        /// <param name="issuer"> Issuer information of the certificate. </param>
-        /// <param name="issuedOn"> Issue date for the certificate. </param>
-        /// <param name="expireOn"> Expiration date for the certificate. </param>
-        /// <param name="certificateRole"> Role of the certificate (Root CA, etc). </param>
-        /// <param name="signatureAlgorithm"> The signature algorithm used in the certificate. </param>
-        /// <param name="certificateKeySize"> Size of the certificate's key in bits. </param>
-        /// <param name="certificateKeyAlgorithm"> Key algorithm used in the certificate. </param>
-        /// <param name="encoding"> Encoding used for the certificate. </param>
-        /// <param name="serialNumber"> Serial number of the certificate. </param>
-        /// <param name="fingerprint"> Fingerprint of the certificate. </param>
-        /// <param name="certificateUsage"> List of functions the certificate can fulfill. </param>
-        /// <param name="filePaths"> List of files where this certificate was found. </param>
-        /// <param name="pairedKey"> A matching paired private key. </param>
-        /// <param name="isExpired"> Indicates if the certificate is expired. </param>
-        /// <param name="isSelfSigned"> Indicates if the certificate is self-signed. </param>
-        /// <param name="isWeakSignature"> Indicates the signature algorithm used is insecure according to NIST guidance. </param>
-        /// <param name="isShortKeySize"> Indicates the certificate's key size is considered too small to be secure for the key algorithm according to NIST guidance. </param>
-        /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CryptoCertificateResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string cryptoCertId, string certificateName, CryptoCertificateEntity subject, CryptoCertificateEntity issuer, DateTimeOffset? issuedOn, DateTimeOffset? expireOn, string certificateRole, string signatureAlgorithm, long? certificateKeySize, string certificateKeyAlgorithm, string encoding, string serialNumber, string fingerprint, IList<CertificateUsage> certificateUsage, IReadOnlyList<string> filePaths, CryptoPairedKey pairedKey, bool? isExpired, bool? isSelfSigned, bool? isWeakSignature, bool? isShortKeySize, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CryptoCertificateResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CryptoCertificate properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            CryptoCertId = cryptoCertId;
-            CertificateName = certificateName;
-            Subject = subject;
-            Issuer = issuer;
-            IssuedOn = issuedOn;
-            ExpireOn = expireOn;
-            CertificateRole = certificateRole;
-            SignatureAlgorithm = signatureAlgorithm;
-            CertificateKeySize = certificateKeySize;
-            CertificateKeyAlgorithm = certificateKeyAlgorithm;
-            Encoding = encoding;
-            SerialNumber = serialNumber;
-            Fingerprint = fingerprint;
-            CertificateUsage = certificateUsage;
-            FilePaths = filePaths;
-            PairedKey = pairedKey;
-            IsExpired = isExpired;
-            IsSelfSigned = isSelfSigned;
-            IsWeakSignature = isWeakSignature;
-            IsShortKeySize = isShortKeySize;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal CryptoCertificate Properties { get; set; }
+
         /// <summary> ID for the certificate result. </summary>
-        public string CryptoCertId { get; set; }
+        public string CryptoCertId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CryptoCertId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CryptoCertificate();
+                }
+                Properties.CryptoCertId = value;
+            }
+        }
+
         /// <summary> Name of the certificate. </summary>
-        public string CertificateName { get; set; }
+        public string CertificateName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CertificateName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CryptoCertificate();
+                }
+                Properties.CertificateName = value;
+            }
+        }
+
         /// <summary> Subject information of the certificate. </summary>
-        public CryptoCertificateEntity Subject { get; set; }
+        public CryptoCertificateEntity Subject
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Subject;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CryptoCertificate();
+                }
+                Properties.Subject = value;
+            }
+        }
+
         /// <summary> Issuer information of the certificate. </summary>
-        public CryptoCertificateEntity Issuer { get; set; }
+        public CryptoCertificateEntity Issuer
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Issuer;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CryptoCertificate();
+                }
+                Properties.Issuer = value;
+            }
+        }
+
         /// <summary> Issue date for the certificate. </summary>
-        public DateTimeOffset? IssuedOn { get; set; }
+        public DateTimeOffset? IssuedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IssuedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CryptoCertificate();
+                }
+                Properties.IssuedOn = value;
+            }
+        }
+
         /// <summary> Expiration date for the certificate. </summary>
-        public DateTimeOffset? ExpireOn { get; set; }
+        public DateTimeOffset? ExpireOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpireOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CryptoCertificate();
+                }
+                Properties.ExpireOn = value;
+            }
+        }
+
         /// <summary> Role of the certificate (Root CA, etc). </summary>
-        public string CertificateRole { get; set; }
+        public string CertificateRole
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CertificateRole;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CryptoCertificate();
+                }
+                Properties.CertificateRole = value;
+            }
+        }
+
         /// <summary> The signature algorithm used in the certificate. </summary>
-        public string SignatureAlgorithm { get; set; }
+        public string SignatureAlgorithm
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SignatureAlgorithm;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CryptoCertificate();
+                }
+                Properties.SignatureAlgorithm = value;
+            }
+        }
+
         /// <summary> Size of the certificate's key in bits. </summary>
-        public long? CertificateKeySize { get; set; }
+        public long? CertificateKeySize
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CertificateKeySize;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CryptoCertificate();
+                }
+                Properties.CertificateKeySize = value;
+            }
+        }
+
         /// <summary> Key algorithm used in the certificate. </summary>
-        public string CertificateKeyAlgorithm { get; set; }
+        public string CertificateKeyAlgorithm
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CertificateKeyAlgorithm;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CryptoCertificate();
+                }
+                Properties.CertificateKeyAlgorithm = value;
+            }
+        }
+
         /// <summary> Encoding used for the certificate. </summary>
-        public string Encoding { get; set; }
+        public string Encoding
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Encoding;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CryptoCertificate();
+                }
+                Properties.Encoding = value;
+            }
+        }
+
         /// <summary> Serial number of the certificate. </summary>
-        public string SerialNumber { get; set; }
+        public string SerialNumber
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SerialNumber;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CryptoCertificate();
+                }
+                Properties.SerialNumber = value;
+            }
+        }
+
         /// <summary> Fingerprint of the certificate. </summary>
-        public string Fingerprint { get; set; }
+        public string Fingerprint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Fingerprint;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CryptoCertificate();
+                }
+                Properties.Fingerprint = value;
+            }
+        }
+
         /// <summary> List of functions the certificate can fulfill. </summary>
-        public IList<CertificateUsage> CertificateUsage { get; }
+        public IList<CertificateUsage> CertificateUsage
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new CryptoCertificate();
+                }
+                return Properties.CertificateUsage;
+            }
+        }
+
         /// <summary> List of files where this certificate was found. </summary>
-        public IReadOnlyList<string> FilePaths { get; }
+        public IReadOnlyList<string> FilePaths
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new CryptoCertificate();
+                }
+                return Properties.FilePaths;
+            }
+        }
+
         /// <summary> A matching paired private key. </summary>
-        public CryptoPairedKey PairedKey { get; set; }
+        public CryptoPairedKey PairedKey
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PairedKey;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CryptoCertificate();
+                }
+                Properties.PairedKey = value;
+            }
+        }
+
         /// <summary> Indicates if the certificate is expired. </summary>
-        public bool? IsExpired { get; set; }
+        public bool? IsExpired
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsExpired;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CryptoCertificate();
+                }
+                Properties.IsExpired = value;
+            }
+        }
+
         /// <summary> Indicates if the certificate is self-signed. </summary>
-        public bool? IsSelfSigned { get; set; }
+        public bool? IsSelfSigned
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsSelfSigned;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CryptoCertificate();
+                }
+                Properties.IsSelfSigned = value;
+            }
+        }
+
         /// <summary> Indicates the signature algorithm used is insecure according to NIST guidance. </summary>
-        public bool? IsWeakSignature { get; set; }
+        public bool? IsWeakSignature
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsWeakSignature;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CryptoCertificate();
+                }
+                Properties.IsWeakSignature = value;
+            }
+        }
+
         /// <summary> Indicates the certificate's key size is considered too small to be secure for the key algorithm according to NIST guidance. </summary>
-        public bool? IsShortKeySize { get; set; }
+        public bool? IsShortKeySize
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsShortKeySize;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CryptoCertificate();
+                }
+                Properties.IsShortKeySize = value;
+            }
+        }
+
         /// <summary> The status of the last operation. </summary>
-        public FirmwareProvisioningState? ProvisioningState { get; }
+        public FirmwareProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

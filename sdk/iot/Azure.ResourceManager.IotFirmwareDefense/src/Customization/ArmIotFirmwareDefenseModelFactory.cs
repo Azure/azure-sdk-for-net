@@ -2,15 +2,18 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ComponentModel;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary> Model factory for models. </summary>
+    // Keep the shipped SKU/provisioning-state parameter order to avoid ambiguous named-argument calls.
+    [CodeGenSuppress("FirmwareAnalysisWorkspaceData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(FirmwareProvisioningState?), typeof(IotFirmwareDefenseSku))]
     public static partial class ArmIotFirmwareDefenseModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="Models.BinaryHardeningResult"/>. </summary>
@@ -38,7 +41,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 resourceType: resourceType,
                 systemData: systemData,
                 binaryHardeningId: binaryHardeningId,
-                securityHardeningFeatures: new BinaryHardeningFeatures(nxFlag, pieFlag, relroFlag, canaryFlag, strippedFlag, serializedAdditionalRawData: null),
+                securityHardeningFeatures: BinaryHardeningFeatures(nxFlag, pieFlag, relroFlag, canaryFlag, strippedFlag),
                 executableArchitecture: architecture,
                 filePath: filePath,
                 executableClass: @class,
@@ -190,11 +193,27 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 cveName: namePropertiesName,
                 effectiveCvssScore: cvss3score.Score > 0 ? cvss3score.Score : cvss2score.Score,
                 effectiveCvssVersion: cvss3score.Score > 0 ? 3 : 2,
+                effectiveVectorString: default,
                 cvssScores: cves,
                 links: links?.ToList(),
                 description: description
             );
         }
+
+        // Keep the legacy binary signature without optional arguments that conflict with the expanded factory.
+        /// <summary> Initializes a new instance of <see cref="Models.CveResult"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CveResult CveResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string cveId, string componentId, string componentName, string componentVersion, string severity, string cveName, CveComponent component, string cvssScore, string cvssV2Score, string cvssV3Score, string cvssVersion, float? effectiveCvssScore, int? effectiveCvssVersion, IEnumerable<CvssScore> cvssScores, IEnumerable<CveLink> links, string description, FirmwareProvisioningState? provisioningState) =>
+            CveResult(id, name, resourceType, systemData, cveId, componentId, componentName, componentVersion, severity, cveName, component, cvssScore, cvssV2Score, cvssV3Score, cvssVersion, effectiveCvssScore, effectiveCvssVersion, default, default, cvssScores, links, description, default, default, default, default, provisioningState);
+
+        /// <summary> Initializes a new instance of <see cref="IotFirmwareDefense.FirmwareAnalysisWorkspaceData"/>. </summary>
+        public static FirmwareAnalysisWorkspaceData FirmwareAnalysisWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IotFirmwareDefenseSku sku = default, FirmwareProvisioningState? provisioningState = default) =>
+            new FirmwareAnalysisWorkspaceData(id, name, resourceType, systemData, tags ?? new Dictionary<string, string>(), location, new WorkspaceProperties(provisioningState, default), sku, default);
+
+        // The separate optional SKU model is no longer emitted from TypeSpec; retain its shipped factory.
+        /// <summary> Initializes a new instance of <see cref="Models.IotFirmwareDefenseSkuUpdate"/>. </summary>
+        public static IotFirmwareDefenseSkuUpdate IotFirmwareDefenseSkuUpdate(string name = default, IotFirmwareDefenseSkuTier? tier = default, string size = default, string family = default, int? capacity = default) =>
+            new IotFirmwareDefenseSkuUpdate { Name = name, Tier = tier, Size = size, Family = family, Capacity = capacity };
 
         /// <summary> Initializes a new instance of <see cref="Models.FirmwareAnalysisWorkspacePatch"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
