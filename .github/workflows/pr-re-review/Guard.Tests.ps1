@@ -249,11 +249,11 @@ Describe 'Compiled re-review publication guard' {
         }
     }
 
-    It 'checks out the guard from the workflow commit without persisting credentials' {
+    It 'checks out the guard from the trusted PR base without persisting credentials' {
         $checkout = Get-Step 'Checkout trusted re-review publication guard'
         Get-StepProperty $checkout 'uses' | Should -BeExactly 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1'
         $with = Get-StepMapping $checkout 'with'
-        $with['ref'] | Should -BeExactly '${{ github.sha }}'
+        $with['ref'] | Should -BeExactly '${{ github.event.pull_request.base.sha }}'
         $with['persist-credentials'] | Should -BeExactly 'false'
         $with['sparse-checkout'] | Should -BeExactly '.github/workflows/pr-re-review'
     }
@@ -268,16 +268,19 @@ Describe 'Compiled re-review publication guard' {
         $located = [array]::IndexOf($script:StepNames, 'Setup agent output environment variable')
         $checkout = [array]::IndexOf($script:StepNames, 'Checkout trusted re-review publication guard')
         $guard = [array]::IndexOf($script:StepNames, 'Require complete re-review coverage before publishing')
+        $evidence = [array]::IndexOf($script:StepNames, 'Verify source-backed worker assessments with shared read coverage')
         $publish = [array]::IndexOf($script:StepNames, 'Process Safe Outputs')
         $located | Should -BeGreaterOrEqual 0
         $checkout | Should -BeGreaterThan $located
         $guard | Should -BeGreaterThan $checkout
-        $publish | Should -BeGreaterThan $guard
+        $evidence | Should -BeGreaterThan $guard
+        $publish | Should -BeGreaterThan $evidence
     }
 
     It '<Name> has no condition or continue-on-error that could bypass a failed guard' -ForEach @(
         @{ Name = 'Checkout trusted re-review publication guard' }
         @{ Name = 'Require complete re-review coverage before publishing' }
+        @{ Name = 'Verify source-backed worker assessments with shared read coverage' }
         @{ Name = 'Process Safe Outputs' }
     ) {
         $step = Get-Step $Name
