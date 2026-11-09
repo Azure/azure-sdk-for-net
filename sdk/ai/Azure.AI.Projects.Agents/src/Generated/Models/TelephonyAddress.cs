@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -12,7 +11,6 @@ namespace Azure.AI.Projects.Agents
     /// Shared source, recipient and transfer address. Connections validate each role before dialing; unsupported types fail. New types may be added.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PhoneNumber"/>, <see cref="SipAddress"/>, and <see cref="TeamsAddress"/>.
     /// </summary>
-    [Experimental("AAIP001")]
     public abstract partial class TelephonyAddress
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -21,22 +19,26 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="TelephonyAddress"/>. </summary>
         /// <param name="type"> Endpoint address type. </param>
         /// <param name="value"> Concrete address value. Known variants apply their format constraints; unknown variants are rejected before dialing. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         private protected TelephonyAddress(TelephonyAddressType @type, string value)
         {
             Type = @type;
             Value = value;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="TelephonyAddress"/>. </summary>
         /// <param name="type"> Endpoint address type. </param>
         /// <param name="value"> Concrete address value. Known variants apply their format constraints; unknown variants are rejected before dialing. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal TelephonyAddress(TelephonyAddressType @type, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Endpoint address type. </summary>
         internal TelephonyAddressType Type { get; set; }

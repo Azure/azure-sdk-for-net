@@ -10,16 +10,17 @@ using OpenAI.Realtime;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The flat response audio-output projection, with optional `voice`, `voice_type`, `voice_locale`, and `format` fields. </summary>
-    [Experimental("AAIP001")]
     public partial class VoiceResponseAudioOutput
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VoiceResponseAudioOutput"/>. </summary>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         public VoiceResponseAudioOutput()
         {
         }
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="VoiceResponseAudioOutput"/>. </summary>
         /// <param name="voice"> The voice name used for the response's audio output. </param>
@@ -27,6 +28,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="voiceLocale"> The BCP-47 locale of the voice used for the response's audio output. </param>
         /// <param name="format"> The audio format used for the response's audio output. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        [Experimental("AAIP002")]
         internal VoiceResponseAudioOutput(string voice, VoiceType? voiceType, string voiceLocale, RealtimeAudioFormat format, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Voice = voice;
@@ -46,6 +48,7 @@ namespace Azure.AI.Projects.Agents
         public string VoiceLocale { get; set; }
 
         /// <summary> The audio format used for the response's audio output. </summary>
+        [Experimental("AAIP002")]
         public RealtimeAudioFormat Format { get; set; }
     }
 }

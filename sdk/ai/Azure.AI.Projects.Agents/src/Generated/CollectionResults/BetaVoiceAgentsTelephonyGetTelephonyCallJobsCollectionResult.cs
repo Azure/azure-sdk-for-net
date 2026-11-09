@@ -6,12 +6,10 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    [Experimental("AAIP001")]
     internal partial class BetaVoiceAgentsTelephonyGetTelephonyCallJobsCollectionResult : CollectionResult
     {
         private readonly BetaVoiceAgentsTelephony _client;

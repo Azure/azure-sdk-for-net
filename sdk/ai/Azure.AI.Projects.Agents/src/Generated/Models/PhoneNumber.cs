@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Phone-number address used by supported source and destination roles. </summary>
-    [Experimental("AAIP001")]
     public partial class PhoneNumber : TelephonyAddress
     {
         /// <summary> Initializes a new instance of <see cref="PhoneNumber"/>. </summary>

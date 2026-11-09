@@ -362,7 +362,7 @@ For each thread that **is resolved**:
 
 ## Step 3 - Fresh full review pass
 
-Independently review every changed file from Step 1, one file at a time, using the shared rules, exactly as a first-pass review would, to catch anything missed by earlier passes (including commits pushed after the native reviewer's last pass). Before posting any new finding, confirm it is not already covered by an existing open thread (Step 2) or another reviewer's comment.
+Independently review every changed file from Step 1, using the shared rules, exactly as a first-pass review would, to catch anything missed by earlier passes (including commits pushed after the native reviewer's last pass). For a large change set, treat each `get_files` page as a batch: finish reviewing and count every file on that page, keep a compact ledger of the page, files reviewed, and files remaining, then continue with the next page. Batching is only an organization strategy; do not sample or skip files, including generated files. Review each file's patch, fetching file contents at the target head only when GitHub omits the patch or more context is needed. Before posting any new finding, confirm it is not already covered by an existing open thread (Step 2) or another reviewer's comment.
 
 ## Step 4 - Confirm coverage, then submit one review
 

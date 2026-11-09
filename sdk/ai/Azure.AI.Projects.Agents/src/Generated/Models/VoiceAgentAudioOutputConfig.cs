@@ -13,14 +13,15 @@ namespace Azure.AI.Projects.Agents
     /// Output audio configuration for a voice agent. Extends the voice configuration with the session-level `format` and
     /// `output_audio_timestamp_types` settings, which apply to every voice type.
     /// </summary>
-    [Experimental("AAIP001")]
     public partial class VoiceAgentAudioOutputConfig : VoiceAgentVoiceConfig
     {
         /// <summary> Initializes a new instance of <see cref="VoiceAgentAudioOutputConfig"/>. </summary>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         public VoiceAgentAudioOutputConfig()
         {
             OutputAudioTimestampTypes = new ChangeTrackingList<VoiceAgentAudioTimestampType>();
         }
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentAudioOutputConfig"/>. </summary>
         /// <param name="voice"> The voice name or identifier. Applies to `openai`, `azure-standard`, `azure-custom`, `azure-personal`, and `azure-realtime-native`. It does not apply to `avatar-voice-sync`, which derives the voice name from the avatar. </param>
@@ -39,6 +40,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="format"> The output audio format. Applies to every `voice_type` and defaults to 24 kHz PCM. </param>
         /// <param name="outputAudioTimestampTypes"> Timestamp kinds to include with output audio. Applies to every `voice_type`. </param>
+        [Experimental("AAIP002")]
         internal VoiceAgentAudioOutputConfig(string voice, VoiceType? voiceType, string voiceLocale, float? speed, float? voiceTemperature, Uri customLexiconUrl, Uri customTextNormalizationUrl, IList<string> preferLocales, string style, string pitch, string volume, string customVoiceEndpointId, string personalVoiceModel, IDictionary<string, BinaryData> additionalBinaryDataProperties, RealtimeAudioFormat format, IList<VoiceAgentAudioTimestampType> outputAudioTimestampTypes) : base(voice, voiceType, voiceLocale, speed, voiceTemperature, customLexiconUrl, customTextNormalizationUrl, preferLocales, style, pitch, volume, customVoiceEndpointId, personalVoiceModel, additionalBinaryDataProperties)
         {
             Format = format;
@@ -46,6 +48,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The output audio format. Applies to every `voice_type` and defaults to 24 kHz PCM. </summary>
+        [Experimental("AAIP002")]
         public RealtimeAudioFormat Format { get; set; }
 
         /// <summary> Timestamp kinds to include with output audio. Applies to every `voice_type`. </summary>

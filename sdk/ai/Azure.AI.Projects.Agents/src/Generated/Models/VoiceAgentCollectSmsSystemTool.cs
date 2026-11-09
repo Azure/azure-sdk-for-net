@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Collects one complete SMS from an explicitly selected sender. </summary>
-    [Experimental("AAIP001")]
     public partial class VoiceAgentCollectSmsSystemTool : VoiceAgentSystemTool
     {
         /// <summary> Initializes a new instance of <see cref="VoiceAgentCollectSmsSystemTool"/>. </summary>

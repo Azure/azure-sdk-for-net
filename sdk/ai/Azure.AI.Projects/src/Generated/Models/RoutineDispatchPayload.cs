@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
@@ -12,7 +11,6 @@ namespace Azure.AI.Projects
     /// Base model for a manual dispatch payload.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentInvocationsApiDispatchPayload"/> and <see cref="AgentResponsesApiDispatchPayload"/>.
     /// </summary>
-    [Experimental("AAIP001")]
     public abstract partial class RoutineDispatchPayload
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -20,19 +18,23 @@ namespace Azure.AI.Projects
 
         /// <summary> Initializes a new instance of <see cref="RoutineDispatchPayload"/>. </summary>
         /// <param name="type"> The manual dispatch payload type. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         private protected RoutineDispatchPayload(RoutineDispatchPayloadType @type)
         {
             Type = @type;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="RoutineDispatchPayload"/>. </summary>
         /// <param name="type"> The manual dispatch payload type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal RoutineDispatchPayload(RoutineDispatchPayloadType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> The manual dispatch payload type. </summary>
         internal RoutineDispatchPayloadType Type { get; set; }

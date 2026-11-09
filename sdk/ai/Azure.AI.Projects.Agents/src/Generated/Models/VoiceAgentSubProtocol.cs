@@ -2,12 +2,9 @@
 
 #nullable disable
 
-using System.Diagnostics.CodeAnalysis;
-
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Voice protocol; realtime includes cascaded models. </summary>
-    [Experimental("AAIP001")]
     public enum VoiceAgentSubProtocol
     {
         /// <summary> Realtime. </summary>

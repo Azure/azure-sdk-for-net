@@ -4,35 +4,37 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Insights on set of Agent Evaluation Results. </summary>
-    [Experimental("AAIP001")]
     public partial class AgentClusterInsightRequest : InsightRequest
     {
         /// <summary> Initializes a new instance of <see cref="AgentClusterInsightRequest"/>. </summary>
         /// <param name="agentName"> Identifier for the agent. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         public AgentClusterInsightRequest(string agentName) : base(InsightType.AgentClusterInsight)
         {
             Argument.AssertNotNull(agentName, nameof(agentName));
 
             AgentName = agentName;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="AgentClusterInsightRequest"/>. </summary>
         /// <param name="type"> The type of request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="agentName"> Identifier for the agent. </param>
         /// <param name="modelConfiguration"> Configuration of the model used in the insight generation. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal AgentClusterInsightRequest(InsightType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string agentName, InsightModelConfiguration modelConfiguration) : base(@type, additionalBinaryDataProperties)
         {
             AgentName = agentName;
             ModelConfiguration = modelConfiguration;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Identifier for the agent. </summary>
         public string AgentName { get; set; }

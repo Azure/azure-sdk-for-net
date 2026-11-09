@@ -4,12 +4,10 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Extensible endpoint address kinds. Address type describes the endpoint independently of the provider. </summary>
-    [Experimental("AAIP001")]
     internal readonly partial struct TelephonyAddressType : IEquatable<TelephonyAddressType>
     {
         private readonly string _value;
@@ -17,7 +15,7 @@ namespace Azure.AI.Projects.Agents
         private const string PhoneNumberValue = "phone_number";
         /// <summary> A Microsoft Teams identity. Source addresses require a nonempty resource-account object GUID; transfer destinations also support 28:orgid:{guid}. </summary>
         private const string TeamsValue = "teams";
-        /// <summary> A SIP or SIPS destination for transfer. </summary>
+        /// <summary> A SIP or SIPS destination for transfer. SIP is in preview and requires the `VoiceAgents=V1Preview` opt-in. </summary>
         private const string SipValue = "sip";
 
         /// <summary> Initializes a new instance of <see cref="TelephonyAddressType"/>. </summary>
@@ -36,7 +34,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> A Microsoft Teams identity. Source addresses require a nonempty resource-account object GUID; transfer destinations also support 28:orgid:{guid}. </summary>
         public static TelephonyAddressType Teams { get; } = new TelephonyAddressType(TeamsValue);
 
-        /// <summary> A SIP or SIPS destination for transfer. </summary>
+        /// <summary> A SIP or SIPS destination for transfer. SIP is in preview and requires the `VoiceAgents=V1Preview` opt-in. </summary>
         public static TelephonyAddressType Sip { get; } = new TelephonyAddressType(SipValue);
 
         /// <summary> Determines if two <see cref="TelephonyAddressType"/> values are the same. </summary>

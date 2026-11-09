@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The canonical system-tool transfer destination. </summary>
-    [Experimental("AAIP001")]
     public partial class VoiceAgentTransferDestination
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

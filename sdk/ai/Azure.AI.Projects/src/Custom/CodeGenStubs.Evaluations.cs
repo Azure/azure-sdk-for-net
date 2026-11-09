@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Evaluation;
@@ -16,8 +18,34 @@ namespace Azure.AI.Projects.Evaluation;
 [CodeGenType("ClusterInsightResult")] public partial class ClusterInsightResult { }
 [CodeGenType("ClusterTokenUsage")] public partial class ClusterTokenUsage { }
 [CodeGenType("CronTrigger")] public partial class CronTrigger { }
-[CodeGenType("DailyRecurrenceSchedule")] public partial class DailyRecurrenceSchedule { }
-[CodeGenType("Dimension")] public partial class EvaluationsDimension { }
+[CodeGenType("DailyRecurrenceSchedule")]
+public partial class DailyRecurrenceSchedule
+{
+    /// <summary> Initializes a daily schedule with explicit recurrence hours. </summary>
+    /// <param name="hours"> Hours for the recurrence schedule. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="hours"/> is null. </exception>
+    public DailyRecurrenceSchedule(IEnumerable<int> hours) : this()
+    {
+        Argument.AssertNotNull(hours, nameof(hours));
+        foreach (int hour in hours)
+        {
+            Hours.Add(hour);
+        }
+    }
+}
+
+[CodeGenType("Dimension")]
+public partial class EvaluationsDimension
+{
+    /// <summary> Initializes a rubric dimension with an explicit weight. </summary>
+    /// <param name="id"> The dimension identifier. </param>
+    /// <param name="description"> What this dimension measures. </param>
+    /// <param name="weight"> The configured dimension weight. </param>
+    public EvaluationsDimension(string id, string description, int weight) : this(id, description)
+    {
+        Weight = weight;
+    }
+}
 [CodeGenType("EndpointBasedEvaluatorDefinition")] public partial class EndpointBasedEvaluatorDefinition { }
 [CodeGenType("EvalResult")] public partial class EvalResult { }
 [CodeGenType("EvalRunResultCompareItem")] public partial class EvalRunResultCompareItem { }
@@ -27,7 +55,21 @@ namespace Azure.AI.Projects.Evaluation;
 [CodeGenType("EvaluationComparisonInsightResult")] public partial class EvaluationComparisonInsightResult { }
 [CodeGenType("EvaluatorCredentialRequest")] public partial class EvaluationCredentialContent { }
 [CodeGenType("EvaluatorGenerationArtifacts")] public partial class EvaluatorGenerationArtifacts { }
-[CodeGenType("EvaluatorGenerationInputs")] public partial class EvaluatorGenerationInputs { }
+[CodeGenType("EvaluatorGenerationInputs")]
+public partial class EvaluatorGenerationInputs
+{
+    /// <summary> Initializes evaluator generation inputs with a caller-provided quality model. </summary>
+    /// <param name="sources"> The source materials for evaluator generation. </param>
+    /// <param name="model"> The model used to generate the quality evaluator. </param>
+    /// <param name="evaluatorName"> The evaluator name. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="sources"/>, <paramref name="model"/>, or <paramref name="evaluatorName"/> is null. </exception>
+    public EvaluatorGenerationInputs(IEnumerable<EvaluatorGenerationJobSource> sources, string model, string evaluatorName)
+        : this(sources, evaluatorName)
+    {
+        Argument.AssertNotNull(model, nameof(model));
+        Model = model;
+    }
+}
 [CodeGenType("EvaluatorGenerationJobSource")] public partial class EvaluatorGenerationJobSource { }
 [CodeGenType("EvaluatorGenerationTokenUsage")] public partial class EvaluatorGenerationTokenUsage { }
 [CodeGenType("EvaluationLevel")] public readonly partial struct ProjectsEvaluationLevel { }

@@ -13,16 +13,17 @@ namespace Azure.AI.Projects.Agents
     /// managed speech-to-speech experience. Establish realtime voice sessions through
     /// `GET /agents/{agent_name}/endpoint/protocols/voice`. Every create or update produces a new immutable version.
     /// </summary>
-    [Experimental("AAIP001")]
     public partial class VoiceAgentDefinition : VoiceAgentBaseDefinition
     {
         /// <summary> Initializes a new instance of <see cref="VoiceAgentDefinition"/>. </summary>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         public VoiceAgentDefinition() : base(VoiceAgentSubProtocol.Realtime)
         {
             OutputModalities = new ChangeTrackingList<VoiceOutputModality>();
             Include = new ChangeTrackingList<VoiceAgentSessionIncludeOption>();
             Tools = new ChangeTrackingList<VoiceAgentTool>();
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentDefinition"/>. </summary>
         /// <param name="kind"></param>
@@ -61,7 +62,8 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <param name="parallelToolCalls"> Whether the model may call multiple tools in parallel. </param>
         /// <param name="subagentConfig"> Optional subagent configuration. Set `subagent_type` to `delegate` for delegated background specialists or `inline` for inline voice subagents. </param>
-        /// <param name="postCall"> Optional post-call delivery configuration. After each session ends, the service notifies the configured destinations. </param>
+        /// <param name="postCall"> Optional post-call delivery configuration. After each session ends, the service notifies the configured destinations. Post-call delivery is in preview and requires `VoiceAgents=V1Preview`. </param>
+        [Experimental("AAIP001")]
         internal VoiceAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, VoiceAgentSubProtocol subProtocol, string instructions, IDictionary<string, StructuredInputDefinition> structuredInputs, bool? store, VoiceModelType? modelType, string model, VoiceConversationEngine conversationEngine, VoiceAgentGreetingConfig greeting, VoiceAgentAudioConfig audio, VoiceAgentSoundscapeConfig soundscape, IList<VoiceOutputModality> outputModalities, BinaryData internalMaxOutputTokens, IList<VoiceAgentSessionIncludeOption> include, VoiceAgentInterimResponseConfig interimResponse, VoiceAgentAvatarConfig avatar, IList<VoiceAgentTool> tools, BinaryData internalToolChoice, bool? parallelToolCalls, VoiceAgentSubagentConfig subagentConfig, VoiceAgentPostCallConfig postCall) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties, subProtocol, instructions, structuredInputs, store)
         {
             ModelType = modelType;
@@ -131,7 +133,8 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Optional subagent configuration. Set `subagent_type` to `delegate` for delegated background specialists or `inline` for inline voice subagents. </summary>
         public VoiceAgentSubagentConfig SubagentConfig { get; set; }
 
-        /// <summary> Optional post-call delivery configuration. After each session ends, the service notifies the configured destinations. </summary>
+        /// <summary> Optional post-call delivery configuration. After each session ends, the service notifies the configured destinations. Post-call delivery is in preview and requires `VoiceAgents=V1Preview`. </summary>
+        [Experimental("AAIP001")]
         public VoiceAgentPostCallConfig PostCall { get; set; }
     }
 }

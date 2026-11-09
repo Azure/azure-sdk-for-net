@@ -4,27 +4,28 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Identifiers returned after a routine dispatch is queued. </summary>
-    [Experimental("AAIP001")]
     public partial class DispatchRoutineResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DispatchRoutineResult"/>. </summary>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         public DispatchRoutineResult()
         {
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="DispatchRoutineResult"/>. </summary>
         /// <param name="dispatchId"> The dispatch identifier created for the routine dispatch. </param>
         /// <param name="actionCorrelationId"> A downstream action correlation identifier, when available. </param>
         /// <param name="taskId"> A workspace task identifier created for the dispatch, when available. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal DispatchRoutineResult(string dispatchId, string actionCorrelationId, string taskId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DispatchId = dispatchId;
@@ -32,6 +33,7 @@ namespace Azure.AI.Projects
             TaskId = taskId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> The dispatch identifier created for the routine dispatch. </summary>
         public string DispatchId { get; set; }

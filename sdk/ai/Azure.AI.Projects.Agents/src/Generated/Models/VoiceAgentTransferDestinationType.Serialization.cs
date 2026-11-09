@@ -3,14 +3,12 @@
 #nullable disable
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     internal static partial class VoiceAgentTransferDestinationTypeExtensions
     {
         /// <param name="value"> The value to serialize. </param>
-        [Experimental("AAIP001")]
         public static string ToSerialString(this VoiceAgentTransferDestinationType value) => value switch
         {
             VoiceAgentTransferDestinationType.PhoneNumber => "phone_number",
@@ -20,7 +18,6 @@ namespace Azure.AI.Projects.Agents
         };
 
         /// <param name="value"> The value to deserialize. </param>
-        [Experimental("AAIP001")]
         public static VoiceAgentTransferDestinationType ToVoiceAgentTransferDestinationType(this string value)
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "phone_number"))

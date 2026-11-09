@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A greeting authored by the session model from a scoped opening-turn prompt. </summary>
-    [Experimental("AAIP001")]
     public partial class VoiceAgentLlmGeneratedGreetingConfig : VoiceAgentGreetingConfig
     {
         /// <summary> Initializes a new instance of <see cref="VoiceAgentLlmGeneratedGreetingConfig"/>. </summary>

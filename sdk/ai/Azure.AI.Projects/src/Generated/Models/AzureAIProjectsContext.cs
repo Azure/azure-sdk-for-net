@@ -14,14 +14,11 @@ namespace Azure.AI.Projects
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.AgentClusterInsightRequest is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentClusterInsightRequest))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.AgentClusterInsightRequest is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.AgentClusterInsightResult is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentClusterInsightResult))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.AgentClusterInsightResult is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentDataGenerationJobSource))]
     [ModelReaderWriterBuildable(typeof(AgentEvaluatorGenerationJobSource))]
+    [ModelReaderWriterBuildable(typeof(AgentFilterTraceSource))]
     [ModelReaderWriterBuildable(typeof(AgenticIdentityPreviewCredentials))]
     [ModelReaderWriterBuildable(typeof(AgentInsight))]
     [ModelReaderWriterBuildable(typeof(AgentInsightDetails))]
@@ -41,18 +38,10 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(AgentInsightSummary))]
     [ModelReaderWriterBuildable(typeof(AgentInsightSuspension))]
     [ModelReaderWriterBuildable(typeof(AgentInsightTokenUsage))]
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.AgentInvocationsApiDispatchPayload is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentInvocationsApiDispatchPayload))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.AgentInvocationsApiDispatchPayload is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.AgentInvocationsApiRoutineAction is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentInvocationsApiRoutineAction))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.AgentInvocationsApiRoutineAction is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.AgentResponsesApiDispatchPayload is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentResponsesApiDispatchPayload))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.AgentResponsesApiDispatchPayload is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.AgentResponsesApiRoutineAction is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentResponsesApiRoutineAction))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.AgentResponsesApiRoutineAction is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.AgentTaxonomyInput is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentTaxonomyInput))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.AgentTaxonomyInput is experimental and may change in future versions.
@@ -74,36 +63,35 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(AzureAIAgentTarget))]
     [ModelReaderWriterBuildable(typeof(AzureAIModelTarget))]
     [ModelReaderWriterBuildable(typeof(AzureAISearchIndex))]
+    [ModelReaderWriterBuildable(typeof(AzureAITraceDataSourceEvalRunDataSource))]
+    [ModelReaderWriterBuildable(typeof(AzureAITraceDataSourcePreviewEvalRunDataSource))]
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.AzureOpenAIModelConfiguration is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AzureOpenAIModelConfiguration))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.AzureOpenAIModelConfiguration is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(BlobReferenceSasCredential))]
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.ChartCoordinate is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ChartCoordinate))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.ChartCoordinate is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(ChatCompletionTool))]
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Memory.ChatSummaryMemoryItem is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ChatSummaryMemoryItem))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Memory.ChatSummaryMemoryItem is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.ClusterInsightResult is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ClusterInsightResult))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.ClusterInsightResult is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.ClusterTokenUsage is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ClusterTokenUsage))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.ClusterTokenUsage is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.CodeBasedEvaluatorDefinition is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(CodeBasedEvaluatorDefinition))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.CodeBasedEvaluatorDefinition is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ContinuousEvaluationRuleAction))]
+    [ModelReaderWriterBuildable(typeof(ConversationIdTraceSource))]
+    [ModelReaderWriterBuildable(typeof(ConversationsDataGenerationJobConfiguration))]
     [ModelReaderWriterBuildable(typeof(CreateAsyncResult))]
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.CronTrigger is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(CreateChatCompletionRequestResponseFormat))]
+    [ModelReaderWriterBuildable(typeof(CreateEvalCompletionsRunDataSource))]
+    [ModelReaderWriterBuildable(typeof(CreateEvalCompletionsRunDataSourceInputMessagesItemReference))]
+    [ModelReaderWriterBuildable(typeof(CreateEvalCompletionsRunDataSourceInputMessagesTemplate))]
+    [ModelReaderWriterBuildable(typeof(CreateEvalCompletionsRunDataSourceSamplingParams))]
+    [ModelReaderWriterBuildable(typeof(CreateEvalJsonlRunDataSource))]
     [ModelReaderWriterBuildable(typeof(CronTrigger))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.CronTrigger is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.CustomRoutineTrigger is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(CustomRoutineTrigger))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.CustomRoutineTrigger is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.DailyRecurrenceSchedule is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(DailyRecurrenceSchedule))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.DailyRecurrenceSchedule is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(DataGenerationJob))]
     [ModelReaderWriterBuildable(typeof(DataGenerationJobConfiguration))]
     [ModelReaderWriterBuildable(typeof(DataGenerationJobInputs))]
@@ -112,54 +100,58 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(DataGenerationJobSource))]
     [ModelReaderWriterBuildable(typeof(DataGenerationModelOptions))]
     [ModelReaderWriterBuildable(typeof(DataGenerationTokenUsage))]
+    [ModelReaderWriterBuildable(typeof(DataGenerationWarning))]
     [ModelReaderWriterBuildable(typeof(DatasetCredential))]
     [ModelReaderWriterBuildable(typeof(DatasetDataGenerationJobOutput))]
+    [ModelReaderWriterBuildable(typeof(DatasetEvaluationRuleAction))]
     [ModelReaderWriterBuildable(typeof(DatasetEvaluatorGenerationJobSource))]
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.DefinitionUpdatedDiagnosticChange is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(DefinitionUpdatedDiagnosticChange))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.DefinitionUpdatedDiagnosticChange is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Memory.DeleteMemoryStoreResponse is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(DeleteMemoryStoreResponse))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Memory.DeleteMemoryStoreResponse is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(DeleteScopeRequest))]
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.DispatchRoutineResult is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.DimensionAddedDiagnosticChange is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(DimensionAddedDiagnosticChange))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.DimensionAddedDiagnosticChange is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.DimensionRemovedDiagnosticChange is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(DimensionRemovedDiagnosticChange))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.DimensionRemovedDiagnosticChange is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.DimensionUpdatedDiagnosticChange is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(DimensionUpdatedDiagnosticChange))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.DimensionUpdatedDiagnosticChange is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(DispatchRoutineResult))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.DispatchRoutineResult is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(EmbeddingConfiguration))]
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.EndpointBasedEvaluatorDefinition is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(EndpointBasedEvaluatorDefinition))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.EndpointBasedEvaluatorDefinition is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.EvalResult is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(EvalCsvFileIdSource))]
+    [ModelReaderWriterBuildable(typeof(EvalCsvRunDataSource))]
+    [ModelReaderWriterBuildable(typeof(EvalItem))]
+    [ModelReaderWriterBuildable(typeof(EvalJsonlFileContentSource))]
+    [ModelReaderWriterBuildable(typeof(EvalJsonlFileContentSourceContent))]
+    [ModelReaderWriterBuildable(typeof(EvalJsonlFileIdSource))]
     [ModelReaderWriterBuildable(typeof(EvalResult))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.EvalResult is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.EvalRunResultCompareItem is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(EvalRunDataSource))]
     [ModelReaderWriterBuildable(typeof(EvalRunResultCompareItem))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.EvalRunResultCompareItem is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.EvalRunResultComparison is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(EvalRunResultComparison))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.EvalRunResultComparison is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.EvalRunResultSummary is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(EvalRunResultSummary))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.EvalRunResultSummary is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.EvaluationComparisonInsightRequest is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(EvalStoredCompletionsSource))]
+    [ModelReaderWriterBuildable(typeof(EvaluationAzureStandardVoiceModelConfiguration))]
     [ModelReaderWriterBuildable(typeof(EvaluationComparisonInsightRequest))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.EvaluationComparisonInsightRequest is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.EvaluationComparisonInsightResult is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(EvaluationComparisonInsightResult))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.EvaluationComparisonInsightResult is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(EvaluationCredentialContent))]
     [ModelReaderWriterBuildable(typeof(EvaluationDataGenerationJob))]
     [ModelReaderWriterBuildable(typeof(EvaluationDataGenerationJobInputs))]
     [ModelReaderWriterBuildable(typeof(EvaluationDataGenerationJobOutputConfiguration))]
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.EvaluationResultSample is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(EvaluationModelConfiguration))]
     [ModelReaderWriterBuildable(typeof(EvaluationResultSample))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.EvaluationResultSample is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(EvaluationRule))]
     [ModelReaderWriterBuildable(typeof(EvaluationRuleAction))]
     [ModelReaderWriterBuildable(typeof(EvaluationRuleFilter))]
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.EvaluationRunClusterInsightRequest is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(EvaluationRunClusterInsightRequest))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.EvaluationRunClusterInsightRequest is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.EvaluationRunClusterInsightResult is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(EvaluationRunClusterInsightResult))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.EvaluationRunClusterInsightResult is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.EvaluationScheduleTask is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(EvaluationScheduleTask))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.EvaluationScheduleTask is experimental and may change in future versions.
@@ -171,17 +163,28 @@ namespace Azure.AI.Projects
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.EvaluationTaxonomyInput is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(EvaluationTaxonomyInput))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.EvaluationTaxonomyInput is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(EvaluationVoiceModelConfiguration))]
     [ModelReaderWriterBuildable(typeof(EvaluatorDefinition))]
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.EvaluatorDiagnostic is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(EvaluatorDiagnostic))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.EvaluatorDiagnostic is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.EvaluatorDiagnosticActor is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(EvaluatorDiagnosticActor))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.EvaluatorDiagnosticActor is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.EvaluatorFieldChange is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(EvaluatorFieldChange))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.EvaluatorFieldChange is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(EvaluatorGenerationArtifacts))]
     [ModelReaderWriterBuildable(typeof(EvaluatorGenerationInputs))]
     [ModelReaderWriterBuildable(typeof(EvaluatorGenerationJob))]
     [ModelReaderWriterBuildable(typeof(EvaluatorGenerationJobSource))]
     [ModelReaderWriterBuildable(typeof(EvaluatorGenerationTokenUsage))]
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.EvaluatorHealthMetrics is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(EvaluatorHealthMetrics))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.EvaluatorHealthMetrics is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(EvaluatorMetric))]
     [ModelReaderWriterBuildable(typeof(EvaluatorVersion))]
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.FileDataGenerationJobOutput is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(FileDataGenerationJobOutput))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.FileDataGenerationJobOutput is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(FileDataGenerationJobSource))]
     [ModelReaderWriterBuildable(typeof(FileDataset))]
     [ModelReaderWriterBuildable(typeof(FolderDataset))]
@@ -189,42 +192,31 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(FoundryModelWarning))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.FoundryModelWarning is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(FoundryOpenAIError))]
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.GitHubIssueRoutineTrigger is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(FunctionObject))]
+    [ModelReaderWriterBuildable(typeof(FunctionParameters))]
     [ModelReaderWriterBuildable(typeof(GitHubIssueRoutineTrigger))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.GitHubIssueRoutineTrigger is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.HourlyRecurrenceSchedule is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.HealthComputedDiagnosticChange is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(HealthComputedDiagnosticChange))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.HealthComputedDiagnosticChange is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(HourlyRecurrenceSchedule))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.HourlyRecurrenceSchedule is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.HumanEvaluationPreviewRuleAction is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(HumanEvaluationPreviewRuleAction))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.HumanEvaluationPreviewRuleAction is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.InsightCluster is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(InnerError))]
     [ModelReaderWriterBuildable(typeof(InsightCluster))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.InsightCluster is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.InsightModelConfiguration is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(InsightModelConfiguration))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.InsightModelConfiguration is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.InsightRequest is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(InsightRequest))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.InsightRequest is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.InsightResult is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(InsightResult))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.InsightResult is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.InsightSample is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(InsightSample))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.InsightSample is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.InsightScheduleTask is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(InsightScheduleTask))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.InsightScheduleTask is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.InsightsMetadata is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(InsightsMetadata))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.InsightsMetadata is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.InsightSummary is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(InsightSummary))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.InsightSummary is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.InternalCreateMemoryStoreRequest is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(InternalCreateMemoryStoreRequest))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.InternalCreateMemoryStoreRequest is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(ItemGenerationParams))]
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.LoraConfig is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LoraConfig))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.LoraConfig is experimental and may change in future versions.
@@ -290,13 +282,9 @@ namespace Azure.AI.Projects
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.ModelVersion is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ModelVersion))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.ModelVersion is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.MonthlyRecurrenceSchedule is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(MonthlyRecurrenceSchedule))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.MonthlyRecurrenceSchedule is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(NoAuthenticationCredentials))]
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.OneTimeTrigger is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(OneTimeTrigger))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.OneTimeTrigger is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(PagedConnection))]
     [ModelReaderWriterBuildable(typeof(PagedDatasetVersion))]
     [ModelReaderWriterBuildable(typeof(PagedDeployment))]
@@ -306,9 +294,7 @@ namespace Azure.AI.Projects
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.PagedEvaluationTaxonomy is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(PagedEvaluatorVersion))]
     [ModelReaderWriterBuildable(typeof(PagedIndex))]
-#pragma warning disable AAIP001 // global::Azure.Core.PagedInsight is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(PagedInsight))]
-#pragma warning restore AAIP001 // global::Azure.Core.PagedInsight is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.PagedRedTeam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(PagedRedTeam))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.PagedRedTeam is experimental and may change in future versions.
@@ -323,12 +309,10 @@ namespace Azure.AI.Projects
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.ProceduralMemoryItem is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ProceduralMemoryItem))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.ProceduralMemoryItem is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.ProjectsInsight is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(ProjectsError))]
     [ModelReaderWriterBuildable(typeof(ProjectsInsight))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.ProjectsInsight is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.ProjectsRoutine is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(ProjectsMetadata))]
     [ModelReaderWriterBuildable(typeof(ProjectsRoutine))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.ProjectsRoutine is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.ProjectsSchedule is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ProjectsSchedule))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.ProjectsSchedule is experimental and may change in future versions.
@@ -340,67 +324,62 @@ namespace Azure.AI.Projects
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.PromptBasedEvaluatorDefinition is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(PromptDataGenerationJobSource))]
     [ModelReaderWriterBuildable(typeof(PromptEvaluatorGenerationJobSource))]
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.RecurrenceSchedule is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(RecurrenceSchedule))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.RecurrenceSchedule is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.RecurrenceTrigger is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(RecurrenceTrigger))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.RecurrenceTrigger is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.RedTeam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(RedTeam))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.RedTeam is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.ReinforcementFineTuningDataGenerationJob is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.RedTeamItemGenerationParams is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(RedTeamItemGenerationParams))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.RedTeamItemGenerationParams is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.RedTeamSeedPromptsItemGenerationParams is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(RedTeamSeedPromptsItemGenerationParams))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.RedTeamSeedPromptsItemGenerationParams is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.RedTeamTaxonomyItemGenerationParams is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(RedTeamTaxonomyItemGenerationParams))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.RedTeamTaxonomyItemGenerationParams is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ReinforcementFineTuningDataGenerationJob))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.ReinforcementFineTuningDataGenerationJob is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.ReinforcementFineTuningDataGenerationJobInputs is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ReinforcementFineTuningDataGenerationJobInputs))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.ReinforcementFineTuningDataGenerationJobInputs is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.ReinforcementFineTuningDataGenerationJobOutputConfiguration is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ReinforcementFineTuningDataGenerationJobOutputConfiguration))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.ReinforcementFineTuningDataGenerationJobOutputConfiguration is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(ResponseFormatJsonObject))]
+    [ModelReaderWriterBuildable(typeof(ResponseFormatJsonSchema))]
+    [ModelReaderWriterBuildable(typeof(ResponseFormatJsonSchemaJsonSchema))]
+    [ModelReaderWriterBuildable(typeof(ResponseFormatText))]
 #pragma warning disable OPENAI001 // global::OpenAI.Responses.ResponseInputTokenUsageDetails is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ResponseInputTokenUsageDetails))]
 #pragma warning restore OPENAI001 // global::OpenAI.Responses.ResponseInputTokenUsageDetails is experimental and may change in future versions.
 #pragma warning disable OPENAI001 // global::OpenAI.Responses.ResponseOutputTokenUsageDetails is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ResponseOutputTokenUsageDetails))]
 #pragma warning restore OPENAI001 // global::OpenAI.Responses.ResponseOutputTokenUsageDetails is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(ResponseRetrievalItemGenerationParams))]
 #pragma warning disable OPENAI001 // global::OpenAI.Responses.ResponseTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ResponseTool))]
 #pragma warning restore OPENAI001 // global::OpenAI.Responses.ResponseTool is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.RoutineAction is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(RoutineAction))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.RoutineAction is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.RoutineDispatchPayload is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(RoutineDispatchPayload))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.RoutineDispatchPayload is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.RoutineRun is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(RoutineRun))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.RoutineRun is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.RoutineTrigger is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(RoutineTrigger))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.RoutineTrigger is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(RubricBasedEvaluatorDefinition))]
     [ModelReaderWriterBuildable(typeof(RubricGenerationInputQualityWarning))]
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.ScheduleRoutineTrigger is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.RubricScoring is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(RubricScoring))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.RubricScoring is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ScheduleRoutineTrigger))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.ScheduleRoutineTrigger is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.ScheduleRun is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ScheduleRun))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.ScheduleRun is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.ScheduleTrigger is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ScheduleTrigger))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.ScheduleTrigger is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.ServiceEvaluatorDiagnosticActor is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(ServiceEvaluatorDiagnosticActor))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.ServiceEvaluatorDiagnosticActor is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(SimpleQnADataGenerationJobConfiguration))]
     [ModelReaderWriterBuildable(typeof(SimulationSeedDataGenerationJobConfiguration))]
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.SupervisedFineTuningDataGenerationJob is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(SupervisedFineTuningDataGenerationJob))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.SupervisedFineTuningDataGenerationJob is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.SupervisedFineTuningDataGenerationJobInputs is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(SupervisedFineTuningDataGenerationJobInputs))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.SupervisedFineTuningDataGenerationJobInputs is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.SupervisedFineTuningDataGenerationJobOutputConfiguration is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(SupervisedFineTuningDataGenerationJobOutputConfiguration))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.SupervisedFineTuningDataGenerationJobOutputConfiguration is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(SyntheticDataGenerationItemGenerationParams))]
+    [ModelReaderWriterBuildable(typeof(TargetCompletionEvalRunDataSource))]
+    [ModelReaderWriterBuildable(typeof(TargetCompletionItemGenerationParams))]
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.TargetConfig is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(TargetConfig))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.TargetConfig is experimental and may change in future versions.
@@ -410,16 +389,17 @@ namespace Azure.AI.Projects
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.TaxonomySubCategory is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(TaxonomySubCategory))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.TaxonomySubCategory is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.TimerRoutineTrigger is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(TimerRoutineTrigger))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.TimerRoutineTrigger is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ToolDescription))]
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.ToolUseFineTuningDataGenerationJobConfiguration is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ToolUseFineTuningDataGenerationJobConfiguration))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.ToolUseFineTuningDataGenerationJobConfiguration is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(TraceEvaluationRuleAction))]
+    [ModelReaderWriterBuildable(typeof(TraceIdTraceSource))]
     [ModelReaderWriterBuildable(typeof(TracesDataGenerationJobConfiguration))]
     [ModelReaderWriterBuildable(typeof(TracesDataGenerationJobSource))]
+    [ModelReaderWriterBuildable(typeof(TracesEvalRunDataSource))]
     [ModelReaderWriterBuildable(typeof(TracesEvaluatorGenerationJobSource))]
+    [ModelReaderWriterBuildable(typeof(TraceSource))]
+    [ModelReaderWriterBuildable(typeof(TracesPreviewEvalRunDataSource))]
     [ModelReaderWriterBuildable(typeof(UnknownAIProjectConnectionBaseCredential))]
     [ModelReaderWriterBuildable(typeof(UnknownAIProjectDataset))]
     [ModelReaderWriterBuildable(typeof(UnknownAIProjectDeployment))]
@@ -430,44 +410,48 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(UnknownEvaluationTaxonomyInput))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.UnknownEvaluationTaxonomyInput is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(UnknownEvaluatorDefinition))]
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.UnknownInsightRequest is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(UnknownInsightRequest))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.UnknownInsightRequest is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.UnknownInsightResult is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(UnknownInsightResult))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.UnknownInsightResult is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.UnknownInsightSample is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(UnknownInsightSample))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.UnknownInsightSample is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Memory.UnknownMemoryItem is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(UnknownMemoryItem))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Memory.UnknownMemoryItem is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Memory.UnknownMemoryStoreDefinition is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(UnknownMemoryStoreDefinition))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Memory.UnknownMemoryStoreDefinition is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.UnknownRecurrenceSchedule is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(UnknownRecurrenceSchedule))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.UnknownRecurrenceSchedule is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.UnknownScheduleTask is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(UnknownScheduleTask))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.UnknownScheduleTask is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.UnknownTargetConfig is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(UnknownTargetConfig))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.UnknownTargetConfig is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.UnknownTrigger is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(UnknownTrigger))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.UnknownTrigger is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(UpdateMemoryStoreRequest))]
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.UpdateModelVersionOptions is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(UpdateModelVersionOptions))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.UpdateModelVersionOptions is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(UserConversationSimulationAudioEffectsConfiguration))]
+    [ModelReaderWriterBuildable(typeof(UserConversationSimulationConfiguration))]
+    [ModelReaderWriterBuildable(typeof(UserConversationSimulationDefaultConfiguration))]
+    [ModelReaderWriterBuildable(typeof(UserConversationSimulationDefaultInterruptionConfiguration))]
+    [ModelReaderWriterBuildable(typeof(UserConversationSimulationEvalRunDataSource))]
+    [ModelReaderWriterBuildable(typeof(UserConversationSimulationInlineTestCasesSource))]
+    [ModelReaderWriterBuildable(typeof(UserConversationSimulationInterruptionConfiguration))]
+    [ModelReaderWriterBuildable(typeof(UserConversationSimulationPreviewEvalRunDataSource))]
+    [ModelReaderWriterBuildable(typeof(UserConversationSimulationTestCase))]
+    [ModelReaderWriterBuildable(typeof(UserConversationSimulationUserBehaviorConfiguration))]
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.UserEvaluatorDiagnosticActor is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(UserEvaluatorDiagnosticActor))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.UserEvaluatorDiagnosticActor is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Memory.UserProfileMemoryItem is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(UserProfileMemoryItem))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Memory.UserProfileMemoryItem is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.VersionCreatedDiagnosticChange is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(VersionCreatedDiagnosticChange))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.VersionCreatedDiagnosticChange is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(VersionedDatasetReference))]
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.WeeklyRecurrenceSchedule is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(WeeklyRecurrenceSchedule))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.WeeklyRecurrenceSchedule is experimental and may change in future versions.
     public partial class AzureAIProjectsContext : ModelReaderWriterContext
     {
     }

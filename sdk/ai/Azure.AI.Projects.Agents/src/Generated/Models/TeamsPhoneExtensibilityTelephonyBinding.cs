@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A Microsoft Teams Phone extensibility binding owned by a voice agent. </summary>
-    [Experimental("AAIP001")]
     public partial class TeamsPhoneExtensibilityTelephonyBinding : TelephonyBinding
     {
         /// <summary> Initializes a new instance of <see cref="TeamsPhoneExtensibilityTelephonyBinding"/>. </summary>

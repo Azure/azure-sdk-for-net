@@ -4,29 +4,31 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Insights from the agent cluster analysis. </summary>
-    [Experimental("AAIP001")]
     public partial class AgentClusterInsightResult : InsightResult
     {
         /// <summary> Initializes a new instance of <see cref="AgentClusterInsightResult"/>. </summary>
         /// <param name="clusterInsight"></param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal AgentClusterInsightResult(ClusterInsightResult clusterInsight) : base(InsightType.AgentClusterInsight)
         {
             ClusterInsight = clusterInsight;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="AgentClusterInsightResult"/>. </summary>
         /// <param name="type"> The type of insights result. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="clusterInsight"></param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal AgentClusterInsightResult(InsightType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ClusterInsightResult clusterInsight) : base(@type, additionalBinaryDataProperties)
         {
             ClusterInsight = clusterInsight;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Gets the ClusterInsight. </summary>
         public ClusterInsightResult ClusterInsight { get; }

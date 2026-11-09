@@ -60,9 +60,7 @@ public partial class AgentAdministrationClient
     [Experimental("AAIP001")]
     private ProjectAgentSkills _cachedAgentSkills;
     private AgentOptimizationJobs _cachedAgentOptimizationJobs;
-    [Experimental("AAIP001")]
     private BetaVoiceAgentsConversations _cachedAgentEndpointConversations;
-    [Experimental("AAIP001")]
     private BetaVoiceAgentsTelephony _cachedAgentTelephony;
     [Experimental("AAIP001")]
     private TelephonyCampaigns _cachedAgentTelephonyCampaigns;
@@ -1123,7 +1121,6 @@ public partial class AgentAdministrationClient
     }
 
     /// <summary> Gets the client for the voice Agent. </summary>
-    [Experimental("AAIP001")]
     public virtual BetaVoiceAgentsConversations GetBetaVoiceAgentEndpointConversations()
     {
         return Volatile.Read(ref _cachedAgentEndpointConversations) ?? Interlocked.CompareExchange(ref _cachedAgentEndpointConversations, new BetaVoiceAgentsConversations(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentEndpointConversations;
@@ -1132,7 +1129,6 @@ public partial class AgentAdministrationClient
     /// <summary>
     /// Gets the AgentTelephony sub-client.
     /// </summary>
-    [Experimental("AAIP001")]
     public virtual BetaVoiceAgentsTelephony GetBetaVoiceAgentTelephony()
     {
         return Volatile.Read(ref _cachedAgentTelephony) ?? Interlocked.CompareExchange(ref _cachedAgentTelephony, new BetaVoiceAgentsTelephony(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentTelephony;
@@ -1153,7 +1149,6 @@ public partial class AgentAdministrationClient
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
     public virtual ClientResult<ProjectsAgentRecord> GenerateAgent(GenerateVoiceAgentRequest body, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(body, nameof(body));
@@ -1172,7 +1167,6 @@ public partial class AgentAdministrationClient
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
     public virtual async Task<ClientResult<ProjectsAgentRecord>> GenerateAgentAsync(GenerateVoiceAgentRequest body, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(body, nameof(body));

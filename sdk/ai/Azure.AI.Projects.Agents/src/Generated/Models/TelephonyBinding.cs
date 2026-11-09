@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -12,7 +11,6 @@ namespace Azure.AI.Projects.Agents
     /// A telephony binding owned by a voice agent.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SipTelephonyBinding"/>, <see cref="TeamsPhoneExtensibilityTelephonyBinding"/>, and <see cref="TwilioTelephonyBinding"/>.
     /// </summary>
-    [Experimental("AAIP001")]
     public abstract partial class TelephonyBinding
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -21,11 +19,13 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="TelephonyBinding"/>. </summary>
         /// <param name="provider"> The telephony provider. </param>
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         private protected TelephonyBinding(TelephonyProvider provider, string connectionName)
         {
             Provider = provider;
             ConnectionName = connectionName;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="TelephonyBinding"/>. </summary>
         /// <param name="id"> The service-generated binding identifier. </param>
@@ -34,6 +34,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="label"> The optional display label for the binding. </param>
         /// <param name="incomingCallUrl"> The service-generated incoming address: an HTTPS webhook for webhook-based providers or a SIP/SIPS ingress URI for SIP. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal TelephonyBinding(string id, TelephonyProvider provider, string connectionName, string label, Uri incomingCallUrl, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
@@ -43,6 +44,7 @@ namespace Azure.AI.Projects.Agents
             IncomingCallUrl = incomingCallUrl;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> The service-generated binding identifier. </summary>
         public string Id { get; }

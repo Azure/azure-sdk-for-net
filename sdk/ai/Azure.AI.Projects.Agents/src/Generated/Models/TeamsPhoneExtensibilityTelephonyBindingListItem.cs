@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A Microsoft Teams Phone extensibility binding returned in a list, including its entity tag. </summary>
-    [Experimental("AAIP001")]
     public partial class TeamsPhoneExtensibilityTelephonyBindingListItem : TelephonyBindingListItem
     {
         /// <summary> Initializes a new instance of <see cref="TeamsPhoneExtensibilityTelephonyBindingListItem"/>. </summary>

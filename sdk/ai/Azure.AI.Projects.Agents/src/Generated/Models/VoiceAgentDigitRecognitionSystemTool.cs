@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Retrieves the unchanged transcript of the last user audio turn. </summary>
-    [Experimental("AAIP001")]
     public partial class VoiceAgentDigitRecognitionSystemTool : VoiceAgentSystemTool
     {
         /// <summary> Initializes a new instance of <see cref="VoiceAgentDigitRecognitionSystemTool"/>. </summary>

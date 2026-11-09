@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A service-managed control that acts on the active voice session without customer code or external authentication. </summary>
-    [Experimental("AAIP001")]
     public partial class VoiceAgentSystemTool : VoiceAgentTool
     {
         /// <summary> Initializes a new instance of <see cref="VoiceAgentSystemTool"/>. </summary>

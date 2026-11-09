@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -14,7 +13,6 @@ namespace Azure.AI.Projects.Agents
     /// The generated `instructions` and audio/voice settings are stored as separate fields on the resulting agent
     /// definition, so the caller can edit or override any of them afterward via standard agent versioning.
     /// </summary>
-    [Experimental("AAIP001")]
     public partial class GenerateVoiceAgentRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

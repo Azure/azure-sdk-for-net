@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> A routine definition returned by the service. </summary>
-    [Experimental("AAIP001")]
     public partial class ProjectsRoutine
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -17,11 +15,13 @@ namespace Azure.AI.Projects
 
         /// <summary> Initializes a new instance of <see cref="ProjectsRoutine"/>. </summary>
         /// <param name="isEnabled"> Whether the routine is enabled. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal ProjectsRoutine(bool isEnabled)
         {
             IsEnabled = isEnabled;
             Triggers = new ChangeTrackingDictionary<string, RoutineTrigger>();
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="ProjectsRoutine"/>. </summary>
         /// <param name="name"> The routine name. </param>
@@ -32,6 +32,7 @@ namespace Azure.AI.Projects
         /// <param name="createdOn"> The time when the routine was created. </param>
         /// <param name="updatedOn"> The time when the routine was last updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal ProjectsRoutine(string name, string description, bool isEnabled, IDictionary<string, RoutineTrigger> triggers, RoutineAction action, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
@@ -43,6 +44,7 @@ namespace Azure.AI.Projects
             UpdatedOn = updatedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> The routine name. </summary>
         public string Name { get; }

@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Shared direct-call/Campaign retry policy. Omission means one attempt; CallJobs return max_attempts=1 and interval=0 seconds. </summary>
-    [Experimental("AAIP001")]
     public partial class FixedIntervalRetryPolicy : TelephonyOutboundRetryPolicy
     {
         /// <summary> Initializes a new instance of <see cref="FixedIntervalRetryPolicy"/>. </summary>

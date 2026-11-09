@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -18,7 +17,6 @@ namespace Azure.AI.Projects.Agents
     ///   the voice name is derived from the avatar.
     /// <list type="bullet"><item><description>`azure-realtime-native`: `voice` and `speed`.</description></item></list>
     /// </summary>
-    [Experimental("AAIP001")]
     public partial class VoiceAgentVoiceConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
