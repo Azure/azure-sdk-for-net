@@ -14,6 +14,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.ResourceManager.SecurityInsights
 {
     // Preserve the previously generated body parameter names for named-argument callers.
+    // TODO: Remove this customization after https://github.com/Azure/azure-sdk-for-net/issues/64685 is fixed.
     [CodeGenSuppress("QueryThreatIntelligenceIndicatorsAsync", typeof(ArmClient), typeof(ResourceIdentifier), typeof(ThreatIntelligenceFilteringCriteria), typeof(CancellationToken))]
     [CodeGenSuppress("QueryThreatIntelligenceIndicators", typeof(ArmClient), typeof(ResourceIdentifier), typeof(ThreatIntelligenceFilteringCriteria), typeof(CancellationToken))]
     [CodeGenSuppress("PostAsync", typeof(ArmClient), typeof(ResourceIdentifier), typeof(Models.DataConnectorsCheckRequirements), typeof(CancellationToken))]

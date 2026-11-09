@@ -14,6 +14,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.ResourceManager.SecurityCenter
 {
     // Preserve the previously generated body parameter names for named-argument callers.
+    // TODO: Remove this customization after https://github.com/Azure/azure-sdk-for-net/issues/64685 is fixed.
     [CodeGenSuppress("ExecuteAsync", typeof(WaitUntil), typeof(ExecuteGovernanceRuleParams), typeof(CancellationToken))]
     [CodeGenSuppress("Execute", typeof(WaitUntil), typeof(ExecuteGovernanceRuleParams), typeof(CancellationToken))]
     public partial class GovernanceRuleResource

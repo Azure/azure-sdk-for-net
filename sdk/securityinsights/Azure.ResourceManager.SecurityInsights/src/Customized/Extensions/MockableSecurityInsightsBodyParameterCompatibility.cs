@@ -15,6 +15,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.ResourceManager.SecurityInsights.Mocking
 {
     // Preserve the previously generated body parameter names for named-argument callers.
+    // TODO: Remove this customization after https://github.com/Azure/azure-sdk-for-net/issues/64685 is fixed.
     [CodeGenSuppress("QueryThreatIntelligenceIndicatorsAsync", typeof(ResourceIdentifier), typeof(ThreatIntelligenceFilteringCriteria), typeof(CancellationToken))]
     [CodeGenSuppress("QueryThreatIntelligenceIndicators", typeof(ResourceIdentifier), typeof(ThreatIntelligenceFilteringCriteria), typeof(CancellationToken))]
     [CodeGenSuppress("PostAsync", typeof(ResourceIdentifier), typeof(Models.DataConnectorsCheckRequirements), typeof(CancellationToken))]
