@@ -12,16 +12,16 @@ using System.Linq;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> A request body used to export an asset. </summary>
-    public partial class AssetsExportRequestContent
+    public partial class AssetsExportRequestRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AssetsExportRequestContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssetsExportRequestRequest"/>. </summary>
         /// <param name="fileName"> The name of the file to export. </param>
         /// <param name="columns"> The columns to export. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> or <paramref name="columns"/> is null. </exception>
-        public AssetsExportRequestContent(string fileName, IEnumerable<string> columns)
+        public AssetsExportRequestRequest(string fileName, IEnumerable<string> columns)
         {
             Argument.AssertNotNull(fileName, nameof(fileName));
             Argument.AssertNotNull(columns, nameof(columns));
@@ -30,11 +30,11 @@ namespace Azure.Analytics.Defender.Easm
             Columns = columns.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AssetsExportRequestContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssetsExportRequestRequest"/>. </summary>
         /// <param name="fileName"> The name of the file to export. </param>
         /// <param name="columns"> The columns to export. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AssetsExportRequestContent(string fileName, IList<string> columns, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AssetsExportRequestRequest(string fileName, IList<string> columns, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FileName = fileName;
             Columns = columns;

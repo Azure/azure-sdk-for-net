@@ -12,16 +12,16 @@ using System.Linq;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> AssetChainRequest containing information needed for the retrieval of the asset chain summary. </summary>
-    public partial class AssetChainRequestContent
+    public partial class AssetChainRequestRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AssetChainRequestContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssetChainRequestRequest"/>. </summary>
         /// <param name="assetChainSource"> Asset chain source. </param>
         /// <param name="sourceIds"> A collection of asset chain source ids. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceIds"/> is null. </exception>
-        public AssetChainRequestContent(AssetChainSource assetChainSource, IEnumerable<string> sourceIds)
+        public AssetChainRequestRequest(AssetChainSource assetChainSource, IEnumerable<string> sourceIds)
         {
             Argument.AssertNotNull(sourceIds, nameof(sourceIds));
 
@@ -29,11 +29,11 @@ namespace Azure.Analytics.Defender.Easm
             SourceIds = sourceIds.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AssetChainRequestContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssetChainRequestRequest"/>. </summary>
         /// <param name="assetChainSource"> Asset chain source. </param>
         /// <param name="sourceIds"> A collection of asset chain source ids. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AssetChainRequestContent(AssetChainSource assetChainSource, IList<string> sourceIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AssetChainRequestRequest(AssetChainSource assetChainSource, IList<string> sourceIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AssetChainSource = assetChainSource;
             SourceIds = sourceIds;

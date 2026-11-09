@@ -14,66 +14,66 @@ using Azure.Core;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> AssetChainRequest containing information needed for the retrieval of the asset chain summary. </summary>
-    public partial class AssetChainRequestContent : IJsonModel<AssetChainRequestContent>
+    public partial class AssetChainRequestRequest : IJsonModel<AssetChainRequestRequest>
     {
-        /// <summary> Initializes a new instance of <see cref="AssetChainRequestContent"/> for deserialization. </summary>
-        internal AssetChainRequestContent()
+        /// <summary> Initializes a new instance of <see cref="AssetChainRequestRequest"/> for deserialization. </summary>
+        internal AssetChainRequestRequest()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AssetChainRequestContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AssetChainRequestRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AssetChainRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AssetChainRequestRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAssetChainRequestContent(document.RootElement, options);
+                        return DeserializeAssetChainRequestRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AssetChainRequestContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssetChainRequestRequest)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AssetChainRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AssetChainRequestRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAnalyticsDefenderEasmContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AssetChainRequestContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssetChainRequestRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AssetChainRequestContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AssetChainRequestRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AssetChainRequestContent IPersistableModel<AssetChainRequestContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AssetChainRequestRequest IPersistableModel<AssetChainRequestRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AssetChainRequestContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AssetChainRequestRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="assetChainRequestContent"> The <see cref="AssetChainRequestContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(AssetChainRequestContent assetChainRequestContent)
+        /// <param name="assetChainRequestRequest"> The <see cref="AssetChainRequestRequest"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(AssetChainRequestRequest assetChainRequestRequest)
         {
-            if (assetChainRequestContent == null)
+            if (assetChainRequestRequest == null)
             {
                 return null;
             }
-            return RequestContent.Create(assetChainRequestContent, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(assetChainRequestRequest, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AssetChainRequestContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AssetChainRequestRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -84,10 +84,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AssetChainRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AssetChainRequestRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssetChainRequestContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AssetChainRequestRequest)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("assetChainSource"u8);
             writer.WriteStringValue(AssetChainSource.ToString());
@@ -122,24 +122,24 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AssetChainRequestContent IJsonModel<AssetChainRequestContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AssetChainRequestRequest IJsonModel<AssetChainRequestRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AssetChainRequestContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AssetChainRequestRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AssetChainRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AssetChainRequestRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssetChainRequestContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AssetChainRequestRequest)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAssetChainRequestContent(document.RootElement, options);
+            return DeserializeAssetChainRequestRequest(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AssetChainRequestContent DeserializeAssetChainRequestContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static AssetChainRequestRequest DeserializeAssetChainRequestRequest(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -177,7 +177,7 @@ namespace Azure.Analytics.Defender.Easm
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AssetChainRequestContent(assetChainSource, sourceIds ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new AssetChainRequestRequest(assetChainSource, sourceIds ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }
