@@ -128,7 +128,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _fooSettingsOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, FooSettingsData.ToRequestContent(data), context);
+                HttpMessage message = _fooSettingsOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, FooSettingsData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FooSettingsData> response = Response.FromValue(FooSettingsData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -184,7 +184,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _fooSettingsOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, FooSettingsData.ToRequestContent(data), context);
+                HttpMessage message = _fooSettingsOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, FooSettingsData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FooSettingsData> response = Response.FromValue(FooSettingsData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -235,7 +235,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _fooSettingsOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
+                HttpMessage message = _fooSettingsOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FooSettingsData> response = Response.FromValue(FooSettingsData.FromResponse(result), result);
                 if (response.Value == null)
@@ -283,7 +283,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _fooSettingsOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
+                HttpMessage message = _fooSettingsOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FooSettingsData> response = Response.FromValue(FooSettingsData.FromResponse(result), result);
                 if (response.Value == null)
@@ -335,7 +335,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _fooSettingsOperationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, FooConfigurationPatch.ToRequestContent(patch), context);
+                HttpMessage message = _fooSettingsOperationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, FooConfigurationPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FooSettingsData> response = Response.FromValue(FooSettingsData.FromResponse(result), result);
                 if (response.Value == null)
@@ -387,7 +387,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _fooSettingsOperationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, FooConfigurationPatch.ToRequestContent(patch), context);
+                HttpMessage message = _fooSettingsOperationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, FooConfigurationPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FooSettingsData> response = Response.FromValue(FooSettingsData.FromResponse(result), result);
                 if (response.Value == null)
@@ -436,7 +436,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _fooSettingsOperationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
+                HttpMessage message = _fooSettingsOperationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -487,7 +487,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _fooSettingsOperationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
+                HttpMessage message = _fooSettingsOperationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());

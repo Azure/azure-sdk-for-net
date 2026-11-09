@@ -139,7 +139,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FooData> response = Response.FromValue(FooData.FromResponse(result), result);
                 if (response.Value == null)
@@ -187,7 +187,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FooData> response = Response.FromValue(FooData.FromResponse(result), result);
                 if (response.Value == null)
@@ -236,7 +236,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _foosRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _foosRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation operation = new TestsArmOperation(
                     _foosClientDiagnostics,
@@ -291,7 +291,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _foosRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _foosRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation operation = new TestsArmOperation(
                     _foosClientDiagnostics,
@@ -345,7 +345,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _entityResourceReproRestClient.CreateGetContainerItemsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _entityResourceReproRestClient.CreateGetContainerItemsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerItemLikeListResult> response = Response.FromValue(ContainerItemLikeListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -393,7 +393,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _entityResourceReproRestClient.CreateGetContainerItemsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _entityResourceReproRestClient.CreateGetContainerItemsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerItemLikeListResult> response = Response.FromValue(ContainerItemLikeListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -446,7 +446,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _foosRestClient.CreateFooActionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FooActionRequest.ToRequestContent(content), context);
+                HttpMessage message = _foosRestClient.CreateFooActionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FooActionRequest.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<FooActionResult> operation = new TestsArmOperation<FooActionResult>(
                     new FooActionResultOperationSource(),
@@ -506,7 +506,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _foosRestClient.CreateFooActionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FooActionRequest.ToRequestContent(content), context);
+                HttpMessage message = _foosRestClient.CreateFooActionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FooActionRequest.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<FooActionResult> operation = new TestsArmOperation<FooActionResult>(
                     new FooActionResultOperationSource(),
@@ -561,7 +561,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _foosRestClient.CreateGetMetadataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _foosRestClient.CreateGetMetadataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 using JsonDocument document = JsonDocument.Parse(result.Content, ModelSerializationExtensions.JsonDocumentOptions);
                 IDictionary<string, BinaryData> value = default;
@@ -620,7 +620,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _foosRestClient.CreateGetMetadataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _foosRestClient.CreateGetMetadataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 using JsonDocument document = JsonDocument.Parse(result.Content, ModelSerializationExtensions.JsonDocumentOptions);
                 IDictionary<string, BinaryData> value = default;
@@ -679,7 +679,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _foosRestClient.CreateGetProvisioningStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _foosRestClient.CreateGetProvisioningStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FooProvisioningState> response = Response.FromValue(new FooProvisioningState(JsonDocument.Parse(result.Content, ModelSerializationExtensions.JsonDocumentOptions).RootElement.GetString()), result);
                 if (response.Value == null)
@@ -727,7 +727,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _foosRestClient.CreateGetProvisioningStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _foosRestClient.CreateGetProvisioningStateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FooProvisioningState> response = Response.FromValue(new FooProvisioningState(JsonDocument.Parse(result.Content, ModelSerializationExtensions.JsonDocumentOptions).RootElement.GetString()), result);
                 if (response.Value == null)
@@ -852,7 +852,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _foosRestClient.CreateSplitDependenciesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _foosRestClient.CreateSplitDependenciesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<IList<FooDependency>> operation = new TestsArmOperation<IList<FooDependency>>(
                     new IListOfFooDependencyOperationSource(),
@@ -908,7 +908,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _foosRestClient.CreateSplitDependenciesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _foosRestClient.CreateSplitDependenciesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<IList<FooDependency>> operation = new TestsArmOperation<IList<FooDependency>>(
                     new IListOfFooDependencyOperationSource(),
@@ -963,7 +963,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _grandparentFlattenReproRestClient.CreateGetGrandparentFlattenLeavesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _grandparentFlattenReproRestClient.CreateGetGrandparentFlattenLeavesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GrandparentFlattenLeafListResult> response = Response.FromValue(GrandparentFlattenLeafListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1011,7 +1011,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _grandparentFlattenReproRestClient.CreateGetGrandparentFlattenLeavesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _grandparentFlattenReproRestClient.CreateGetGrandparentFlattenLeavesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GrandparentFlattenLeafListResult> response = Response.FromValue(GrandparentFlattenLeafListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1059,7 +1059,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _sharedParamReproRestClient.CreateGetDerivedPatchesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _sharedParamReproRestClient.CreateGetDerivedPatchesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SharedParamReproListResult> response = Response.FromValue(SharedParamReproListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1107,7 +1107,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _sharedParamReproRestClient.CreateGetDerivedPatchesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _sharedParamReproRestClient.CreateGetDerivedPatchesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SharedParamReproListResult> response = Response.FromValue(SharedParamReproListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1155,7 +1155,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _sharedParamReproRestClient.CreateGetSiblingPatchesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _sharedParamReproRestClient.CreateGetSiblingPatchesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SiblingPatchListResult> response = Response.FromValue(SiblingPatchListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1203,7 +1203,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _sharedParamReproRestClient.CreateGetSiblingPatchesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _sharedParamReproRestClient.CreateGetSiblingPatchesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SiblingPatchListResult> response = Response.FromValue(SiblingPatchListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1256,7 +1256,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _foosRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FooData.ToRequestContent(data), context);
+                HttpMessage message = _foosRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FooData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<FooResource> operation = new TestsArmOperation<FooResource>(
                     new FooResourceOperationSource(Client),
@@ -1316,7 +1316,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _foosRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FooData.ToRequestContent(data), context);
+                HttpMessage message = _foosRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FooData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<FooResource> operation = new TestsArmOperation<FooResource>(
                     new FooResourceOperationSource(Client),
@@ -1362,7 +1362,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<FooData> response = Response.FromValue(FooData.FromResponse(result), result);
                     return Response.FromValue(new FooResource(Client, response.Value), response.GetRawResponse());
@@ -1405,7 +1405,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<FooData> response = Response.FromValue(FooData.FromResponse(result), result);
                     return Response.FromValue(new FooResource(Client, response.Value), response.GetRawResponse());
@@ -1446,7 +1446,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<FooData> response = Response.FromValue(FooData.FromResponse(result), result);
                     return Response.FromValue(new FooResource(Client, response.Value), response.GetRawResponse());
@@ -1487,7 +1487,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<FooData> response = Response.FromValue(FooData.FromResponse(result), result);
                     return Response.FromValue(new FooResource(Client, response.Value), response.GetRawResponse());
@@ -1528,7 +1528,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<FooData> response = Response.FromValue(FooData.FromResponse(result), result);
                     return Response.FromValue(new FooResource(Client, response.Value), response.GetRawResponse());
@@ -1569,7 +1569,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<FooData> response = Response.FromValue(FooData.FromResponse(result), result);
                     return Response.FromValue(new FooResource(Client, response.Value), response.GetRawResponse());

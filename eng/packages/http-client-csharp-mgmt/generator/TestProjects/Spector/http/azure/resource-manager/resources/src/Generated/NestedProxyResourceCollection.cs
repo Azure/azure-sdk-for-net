@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _nestedRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nextedProxyResourceName, NestedProxyResourceData.ToRequestContent(data), context);
+                HttpMessage message = _nestedRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nextedProxyResourceName, NestedProxyResourceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResourcesArmOperation<NestedProxyResource> operation = new ResourcesArmOperation<NestedProxyResource>(
                     new NestedProxyResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _nestedRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nextedProxyResourceName, NestedProxyResourceData.ToRequestContent(data), context);
+                HttpMessage message = _nestedRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nextedProxyResourceName, NestedProxyResourceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResourcesArmOperation<NestedProxyResource> operation = new ResourcesArmOperation<NestedProxyResource>(
                     new NestedProxyResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _nestedRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nextedProxyResourceName, context);
+                HttpMessage message = _nestedRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nextedProxyResourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NestedProxyResourceData> response = Response.FromValue(NestedProxyResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _nestedRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nextedProxyResourceName, context);
+                HttpMessage message = _nestedRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nextedProxyResourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NestedProxyResourceData> response = Response.FromValue(NestedProxyResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _nestedRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nextedProxyResourceName, context);
+                HttpMessage message = _nestedRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nextedProxyResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NestedProxyResourceData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _nestedRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nextedProxyResourceName, context);
+                HttpMessage message = _nestedRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nextedProxyResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NestedProxyResourceData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _nestedRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nextedProxyResourceName, context);
+                HttpMessage message = _nestedRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nextedProxyResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NestedProxyResourceData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _nestedRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nextedProxyResourceName, context);
+                HttpMessage message = _nestedRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, nextedProxyResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NestedProxyResourceData> response = default;

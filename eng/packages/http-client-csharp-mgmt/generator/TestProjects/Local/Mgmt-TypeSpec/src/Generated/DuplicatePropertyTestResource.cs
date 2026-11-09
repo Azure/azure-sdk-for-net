@@ -125,7 +125,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _duplicatePropertyTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _duplicatePropertyTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DuplicatePropertyTestData> response = Response.FromValue(DuplicatePropertyTestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _duplicatePropertyTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _duplicatePropertyTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DuplicatePropertyTestData> response = Response.FromValue(DuplicatePropertyTestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -222,7 +222,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _duplicatePropertyTestsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _duplicatePropertyTestsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation operation = new TestsArmOperation(
                     _duplicatePropertyTestsClientDiagnostics,
@@ -277,7 +277,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _duplicatePropertyTestsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _duplicatePropertyTestsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation operation = new TestsArmOperation(
                     _duplicatePropertyTestsClientDiagnostics,
@@ -336,7 +336,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _duplicatePropertyTestsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DuplicatePropertyTestData.ToRequestContent(data), context);
+                HttpMessage message = _duplicatePropertyTestsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DuplicatePropertyTestData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<DuplicatePropertyTestResource> operation = new TestsArmOperation<DuplicatePropertyTestResource>(
                     new DuplicatePropertyTestResourceOperationSource(Client),
@@ -396,7 +396,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _duplicatePropertyTestsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DuplicatePropertyTestData.ToRequestContent(data), context);
+                HttpMessage message = _duplicatePropertyTestsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DuplicatePropertyTestData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<DuplicatePropertyTestResource> operation = new TestsArmOperation<DuplicatePropertyTestResource>(
                     new DuplicatePropertyTestResourceOperationSource(Client),
@@ -442,7 +442,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _duplicatePropertyTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _duplicatePropertyTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DuplicatePropertyTestData> response = Response.FromValue(DuplicatePropertyTestData.FromResponse(result), result);
                     return Response.FromValue(new DuplicatePropertyTestResource(Client, response.Value), response.GetRawResponse());
@@ -485,7 +485,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _duplicatePropertyTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _duplicatePropertyTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DuplicatePropertyTestData> response = Response.FromValue(DuplicatePropertyTestData.FromResponse(result), result);
                     return Response.FromValue(new DuplicatePropertyTestResource(Client, response.Value), response.GetRawResponse());
@@ -526,7 +526,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _duplicatePropertyTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _duplicatePropertyTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DuplicatePropertyTestData> response = Response.FromValue(DuplicatePropertyTestData.FromResponse(result), result);
                     return Response.FromValue(new DuplicatePropertyTestResource(Client, response.Value), response.GetRawResponse());
@@ -567,7 +567,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _duplicatePropertyTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _duplicatePropertyTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DuplicatePropertyTestData> response = Response.FromValue(DuplicatePropertyTestData.FromResponse(result), result);
                     return Response.FromValue(new DuplicatePropertyTestResource(Client, response.Value), response.GetRawResponse());
@@ -608,7 +608,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _duplicatePropertyTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _duplicatePropertyTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DuplicatePropertyTestData> response = Response.FromValue(DuplicatePropertyTestData.FromResponse(result), result);
                     return Response.FromValue(new DuplicatePropertyTestResource(Client, response.Value), response.GetRawResponse());
@@ -649,7 +649,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _duplicatePropertyTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _duplicatePropertyTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DuplicatePropertyTestData> response = Response.FromValue(DuplicatePropertyTestData.FromResponse(result), result);
                     return Response.FromValue(new DuplicatePropertyTestResource(Client, response.Value), response.GetRawResponse());

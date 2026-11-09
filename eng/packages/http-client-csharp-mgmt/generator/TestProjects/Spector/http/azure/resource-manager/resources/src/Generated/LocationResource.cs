@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _locationResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _locationResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LocationResourceData> response = Response.FromValue(LocationResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _locationResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _locationResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LocationResourceData> response = Response.FromValue(LocationResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _locationResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, LocationResourceData.ToRequestContent(data), context);
+                HttpMessage message = _locationResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, LocationResourceData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LocationResourceData> response = Response.FromValue(LocationResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _locationResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, LocationResourceData.ToRequestContent(data), context);
+                HttpMessage message = _locationResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, LocationResourceData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LocationResourceData> response = Response.FromValue(LocationResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _locationResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _locationResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _locationResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _locationResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
