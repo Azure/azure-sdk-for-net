@@ -4,13 +4,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The direct outbound call to create. </summary>
-    [Experimental("AAIP001")]
     public partial class TelephonyCallJobCreate
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

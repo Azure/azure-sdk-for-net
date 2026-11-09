@@ -43,7 +43,7 @@ namespace Azure.AI.Projects.Agents
         internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
-        /// [Protocol Method] Creates a telephony binding for the voice agent named in the path.
+        /// [Protocol Method] Creates a telephony binding for the voice agent named in the path. Creating a SIP binding requires the `VoiceAgents=V1Preview` opt-in.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -73,7 +73,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Creates a telephony binding for the voice agent named in the path.
+        /// [Protocol Method] Creates a telephony binding for the voice agent named in the path. Creating a SIP binding requires the `VoiceAgents=V1Preview` opt-in.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -102,7 +102,7 @@ namespace Azure.AI.Projects.Agents
             }
         }
 
-        /// <summary> Creates a telephony binding for the voice agent named in the path. </summary>
+        /// <summary> Creates a telephony binding for the voice agent named in the path. Creating a SIP binding requires the `VoiceAgents=V1Preview` opt-in. </summary>
         /// <param name="agentName"> The name of the voice agent that owns the binding. </param>
         /// <param name="binding"> The provider-specific binding to create. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
@@ -114,7 +114,7 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromValue((TelephonyBinding)result, result.GetRawResponse());
         }
 
-        /// <summary> Creates a telephony binding for the voice agent named in the path. </summary>
+        /// <summary> Creates a telephony binding for the voice agent named in the path. Creating a SIP binding requires the `VoiceAgents=V1Preview` opt-in. </summary>
         /// <param name="agentName"> The name of the voice agent that owns the binding. </param>
         /// <param name="binding"> The provider-specific binding to create. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
@@ -211,7 +211,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Updates a telephony binding owned by the voice agent named in the path.
+        /// [Protocol Method] Updates a telephony binding owned by the voice agent named in the path. Updating a SIP binding requires the `VoiceAgents=V1Preview` opt-in.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -243,7 +243,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Updates a telephony binding owned by the voice agent named in the path.
+        /// [Protocol Method] Updates a telephony binding owned by the voice agent named in the path. Updating a SIP binding requires the `VoiceAgents=V1Preview` opt-in.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -275,7 +275,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Deletes a telephony binding owned by the voice agent named in the path.
+        /// [Protocol Method] Deletes a telephony binding owned by the voice agent named in the path. Deleting a SIP binding requires the `VoiceAgents=V1Preview` opt-in.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -306,7 +306,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Deletes a telephony binding owned by the voice agent named in the path.
+        /// [Protocol Method] Deletes a telephony binding owned by the voice agent named in the path. Deleting a SIP binding requires the `VoiceAgents=V1Preview` opt-in.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -336,7 +336,7 @@ namespace Azure.AI.Projects.Agents
             }
         }
 
-        /// <summary> Deletes a telephony binding owned by the voice agent named in the path. </summary>
+        /// <summary> Deletes a telephony binding owned by the voice agent named in the path. Deleting a SIP binding requires the `VoiceAgents=V1Preview` opt-in. </summary>
         /// <param name="agentName"> The name of the voice agent that owns the binding. </param>
         /// <param name="bindingId"> The service-generated binding identifier. </param>
         /// <param name="ifMatch"> The entity tag returned by the latest read. The request fails if the resource changed since that read. </param>
@@ -348,7 +348,7 @@ namespace Azure.AI.Projects.Agents
             return DeleteTelephonyBinding(agentName, bindingId, ifMatch, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
         }
 
-        /// <summary> Deletes a telephony binding owned by the voice agent named in the path. </summary>
+        /// <summary> Deletes a telephony binding owned by the voice agent named in the path. Deleting a SIP binding requires the `VoiceAgents=V1Preview` opt-in. </summary>
         /// <param name="agentName"> The name of the voice agent that owns the binding. </param>
         /// <param name="bindingId"> The service-generated binding identifier. </param>
         /// <param name="ifMatch"> The entity tag returned by the latest read. The request fails if the resource changed since that read. </param>
@@ -657,7 +657,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Transfers an active inbound call to a configured target for the voice agent named in the path.
+        /// [Protocol Method] Transfers an active inbound call to a configured target for the voice agent named in the path. Transferring a SIP call requires the `VoiceAgents=V1Preview` opt-in.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -688,7 +688,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Transfers an active inbound call to a configured target for the voice agent named in the path.
+        /// [Protocol Method] Transfers an active inbound call to a configured target for the voice agent named in the path. Transferring a SIP call requires the `VoiceAgents=V1Preview` opt-in.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -718,7 +718,7 @@ namespace Azure.AI.Projects.Agents
             }
         }
 
-        /// <summary> Transfers an active inbound call to a configured target for the voice agent named in the path. </summary>
+        /// <summary> Transfers an active inbound call to a configured target for the voice agent named in the path. Transferring a SIP call requires the `VoiceAgents=V1Preview` opt-in. </summary>
         /// <param name="agentName"> The name of the voice agent that owns the active call. </param>
         /// <param name="callId"> The service-generated call identifier. </param>
         /// <param name="target"> The name of a transfer target configured for the voice agent. </param>
@@ -732,7 +732,7 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromValue((TelephonyCallRecord)result, result.GetRawResponse());
         }
 
-        /// <summary> Transfers an active inbound call to a configured target for the voice agent named in the path. </summary>
+        /// <summary> Transfers an active inbound call to a configured target for the voice agent named in the path. Transferring a SIP call requires the `VoiceAgents=V1Preview` opt-in. </summary>
         /// <param name="agentName"> The name of the voice agent that owns the active call. </param>
         /// <param name="callId"> The service-generated call identifier. </param>
         /// <param name="target"> The name of a transfer target configured for the voice agent. </param>
@@ -747,7 +747,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Ends an active inbound call owned by the voice agent named in the path.
+        /// [Protocol Method] Ends an active inbound call owned by the voice agent named in the path. Ending a SIP call requires the `VoiceAgents=V1Preview` opt-in.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -777,7 +777,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Ends an active inbound call owned by the voice agent named in the path.
+        /// [Protocol Method] Ends an active inbound call owned by the voice agent named in the path. Ending a SIP call requires the `VoiceAgents=V1Preview` opt-in.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -806,7 +806,7 @@ namespace Azure.AI.Projects.Agents
             }
         }
 
-        /// <summary> Ends an active inbound call owned by the voice agent named in the path. </summary>
+        /// <summary> Ends an active inbound call owned by the voice agent named in the path. Ending a SIP call requires the `VoiceAgents=V1Preview` opt-in. </summary>
         /// <param name="agentName"> The name of the voice agent that owns the active call. </param>
         /// <param name="callId"> The service-generated call identifier. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
@@ -818,7 +818,7 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromValue((TelephonyCallRecord)result, result.GetRawResponse());
         }
 
-        /// <summary> Ends an active inbound call owned by the voice agent named in the path. </summary>
+        /// <summary> Ends an active inbound call owned by the voice agent named in the path. Ending a SIP call requires the `VoiceAgents=V1Preview` opt-in. </summary>
         /// <param name="agentName"> The name of the voice agent that owns the active call. </param>
         /// <param name="callId"> The service-generated call identifier. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
@@ -911,7 +911,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Replaces all transfer targets configured for the voice agent named in the path.
+        /// [Protocol Method] Replaces all transfer targets configured for the voice agent named in the path. Configuring a SIP destination requires the `VoiceAgents=V1Preview` opt-in.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -942,7 +942,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Replaces all transfer targets configured for the voice agent named in the path.
+        /// [Protocol Method] Replaces all transfer targets configured for the voice agent named in the path. Configuring a SIP destination requires the `VoiceAgents=V1Preview` opt-in.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -972,7 +972,7 @@ namespace Azure.AI.Projects.Agents
             }
         }
 
-        /// <summary> Replaces all transfer targets configured for the voice agent named in the path. </summary>
+        /// <summary> Replaces all transfer targets configured for the voice agent named in the path. Configuring a SIP destination requires the `VoiceAgents=V1Preview` opt-in. </summary>
         /// <param name="agentName"> The name of the voice agent whose transfer targets are replaced. </param>
         /// <param name="ifMatch"> The entity tag returned by the latest read. The request fails if the resource changed since that read. </param>
         /// <param name="transferTargets"> The complete set of destinations to which the voice agent may transfer calls. An empty array clears all targets when replacing the configuration. </param>
@@ -988,7 +988,7 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromValue((TelephonyTransferTargets)result, result.GetRawResponse());
         }
 
-        /// <summary> Replaces all transfer targets configured for the voice agent named in the path. </summary>
+        /// <summary> Replaces all transfer targets configured for the voice agent named in the path. Configuring a SIP destination requires the `VoiceAgents=V1Preview` opt-in. </summary>
         /// <param name="agentName"> The name of the voice agent whose transfer targets are replaced. </param>
         /// <param name="ifMatch"> The entity tag returned by the latest read. The request fails if the resource changed since that read. </param>
         /// <param name="transferTargets"> The complete set of destinations to which the voice agent may transfer calls. An empty array clears all targets when replacing the configuration. </param>
@@ -1005,7 +1005,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Creates one durable outbound CallJob. Each attempt pins the Agent endpoint's execution version for validation and its voice session.
+        /// [Protocol Method] Creates one durable outbound CallJob. Each attempt pins the Agent endpoint's execution version for validation and its voice session. A call job over a `SipOutbound` connection requires the `VoiceAgents=V1Preview` opt-in.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -1036,7 +1036,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Creates one durable outbound CallJob. Each attempt pins the Agent endpoint's execution version for validation and its voice session.
+        /// [Protocol Method] Creates one durable outbound CallJob. Each attempt pins the Agent endpoint's execution version for validation and its voice session. A call job over a `SipOutbound` connection requires the `VoiceAgents=V1Preview` opt-in.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -1066,7 +1066,7 @@ namespace Azure.AI.Projects.Agents
             }
         }
 
-        /// <summary> Creates one durable outbound CallJob. Each attempt pins the Agent endpoint's execution version for validation and its voice session. </summary>
+        /// <summary> Creates one durable outbound CallJob. Each attempt pins the Agent endpoint's execution version for validation and its voice session. A call job over a `SipOutbound` connection requires the `VoiceAgents=V1Preview` opt-in. </summary>
         /// <param name="agentName"> The name of the voice agent that executes the call. </param>
         /// <param name="idempotencyKey"> Customer retry key. Equivalent requests return the same job; retained keys for deleted jobs return 409 call_job_deleted, never redial. </param>
         /// <param name="job"> The direct outbound call to create. </param>
@@ -1079,7 +1079,7 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromValue((TelephonyCallJob)result, result.GetRawResponse());
         }
 
-        /// <summary> Creates one durable outbound CallJob. Each attempt pins the Agent endpoint's execution version for validation and its voice session. </summary>
+        /// <summary> Creates one durable outbound CallJob. Each attempt pins the Agent endpoint's execution version for validation and its voice session. A call job over a `SipOutbound` connection requires the `VoiceAgents=V1Preview` opt-in. </summary>
         /// <param name="agentName"> The name of the voice agent that executes the call. </param>
         /// <param name="idempotencyKey"> Customer retry key. Equivalent requests return the same job; retained keys for deleted jobs return 409 call_job_deleted, never redial. </param>
         /// <param name="job"> The direct outbound call to create. </param>
@@ -1281,7 +1281,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Deletes a terminal, reconciled job (otherwise 409), without cancelling calls or removing Campaign outcomes/call history. Later GET returns 404; repeated DELETE returns 204.
+        /// [Protocol Method] Deletes a terminal, reconciled job (otherwise 409), without cancelling calls or removing Campaign outcomes/call history. Later GET returns 404; repeated DELETE returns 204. Deleting a SIP call job requires the `VoiceAgents=V1Preview` opt-in.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -1290,16 +1290,17 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="agentName"> The owning voice agent. </param>
         /// <param name="callJobId"> The call-job identifier. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult DeleteTelephonyCallJob(string agentName, string callJobId, RequestOptions options)
+        internal virtual ClientResult DeleteTelephonyCallJob(string agentName, string callJobId, string foundryFeatures, RequestOptions options)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.DeleteTelephonyCallJob");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateDeleteTelephonyCallJobRequest(agentName, callJobId, options);
+                using PipelineMessage message = CreateDeleteTelephonyCallJobRequest(agentName, callJobId, foundryFeatures, options);
                 return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
             }
             catch (Exception e)
@@ -1310,7 +1311,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Deletes a terminal, reconciled job (otherwise 409), without cancelling calls or removing Campaign outcomes/call history. Later GET returns 404; repeated DELETE returns 204.
+        /// [Protocol Method] Deletes a terminal, reconciled job (otherwise 409), without cancelling calls or removing Campaign outcomes/call history. Later GET returns 404; repeated DELETE returns 204. Deleting a SIP call job requires the `VoiceAgents=V1Preview` opt-in.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -1319,16 +1320,17 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="agentName"> The owning voice agent. </param>
         /// <param name="callJobId"> The call-job identifier. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> DeleteTelephonyCallJobAsync(string agentName, string callJobId, RequestOptions options)
+        internal virtual async Task<ClientResult> DeleteTelephonyCallJobAsync(string agentName, string callJobId, string foundryFeatures, RequestOptions options)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.DeleteTelephonyCallJob");
             scope.Start();
             try
             {
-                using PipelineMessage message = CreateDeleteTelephonyCallJobRequest(agentName, callJobId, options);
+                using PipelineMessage message = CreateDeleteTelephonyCallJobRequest(agentName, callJobId, foundryFeatures, options);
                 return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
             }
             catch (Exception e)
@@ -1338,24 +1340,26 @@ namespace Azure.AI.Projects.Agents
             }
         }
 
-        /// <summary> Deletes a terminal, reconciled job (otherwise 409), without cancelling calls or removing Campaign outcomes/call history. Later GET returns 404; repeated DELETE returns 204. </summary>
+        /// <summary> Deletes a terminal, reconciled job (otherwise 409), without cancelling calls or removing Campaign outcomes/call history. Later GET returns 404; repeated DELETE returns 204. Deleting a SIP call job requires the `VoiceAgents=V1Preview` opt-in. </summary>
         /// <param name="agentName"> The owning voice agent. </param>
         /// <param name="callJobId"> The call-job identifier. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult DeleteTelephonyCallJob(string agentName, string callJobId, CancellationToken cancellationToken = default)
+        internal virtual ClientResult DeleteTelephonyCallJob(string agentName, string callJobId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            return DeleteTelephonyCallJob(agentName, callJobId, cancellationToken.ToRequestOptions());
+            return DeleteTelephonyCallJob(agentName, callJobId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
         }
 
-        /// <summary> Deletes a terminal, reconciled job (otherwise 409), without cancelling calls or removing Campaign outcomes/call history. Later GET returns 404; repeated DELETE returns 204. </summary>
+        /// <summary> Deletes a terminal, reconciled job (otherwise 409), without cancelling calls or removing Campaign outcomes/call history. Later GET returns 404; repeated DELETE returns 204. Deleting a SIP call job requires the `VoiceAgents=V1Preview` opt-in. </summary>
         /// <param name="agentName"> The owning voice agent. </param>
         /// <param name="callJobId"> The call-job identifier. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult> DeleteTelephonyCallJobAsync(string agentName, string callJobId, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult> DeleteTelephonyCallJobAsync(string agentName, string callJobId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            return await DeleteTelephonyCallJobAsync(agentName, callJobId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return await DeleteTelephonyCallJobAsync(agentName, callJobId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1443,7 +1447,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Cancels future attempts using If-Match; completion may be asynchronous. New cancellation after connection returns 409 and lets the active call finish.
+        /// [Protocol Method] Cancels future attempts using If-Match; completion may be asynchronous. New cancellation after connection returns 409 and lets the active call finish. Cancelling a SIP call job requires the `VoiceAgents=V1Preview` opt-in.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -1474,7 +1478,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Cancels future attempts using If-Match; completion may be asynchronous. New cancellation after connection returns 409 and lets the active call finish.
+        /// [Protocol Method] Cancels future attempts using If-Match; completion may be asynchronous. New cancellation after connection returns 409 and lets the active call finish. Cancelling a SIP call job requires the `VoiceAgents=V1Preview` opt-in.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -1504,7 +1508,7 @@ namespace Azure.AI.Projects.Agents
             }
         }
 
-        /// <summary> Cancels future attempts using If-Match; completion may be asynchronous. New cancellation after connection returns 409 and lets the active call finish. </summary>
+        /// <summary> Cancels future attempts using If-Match; completion may be asynchronous. New cancellation after connection returns 409 and lets the active call finish. Cancelling a SIP call job requires the `VoiceAgents=V1Preview` opt-in. </summary>
         /// <param name="agentName"> The name of the voice agent that owns the call job. </param>
         /// <param name="callJobId"> The service-generated identifier of the call job to cancel. </param>
         /// <param name="ifMatch"> The entity tag returned by the latest read. The request fails if the resource changed since that read. </param>
@@ -1517,7 +1521,7 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromValue((TelephonyCallJob)result, result.GetRawResponse());
         }
 
-        /// <summary> Cancels future attempts using If-Match; completion may be asynchronous. New cancellation after connection returns 409 and lets the active call finish. </summary>
+        /// <summary> Cancels future attempts using If-Match; completion may be asynchronous. New cancellation after connection returns 409 and lets the active call finish. Cancelling a SIP call job requires the `VoiceAgents=V1Preview` opt-in. </summary>
         /// <param name="agentName"> The name of the voice agent that owns the call job. </param>
         /// <param name="callJobId"> The service-generated identifier of the call job to cancel. </param>
         /// <param name="ifMatch"> The entity tag returned by the latest read. The request fails if the resource changed since that read. </param>

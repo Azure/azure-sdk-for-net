@@ -4,12 +4,10 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The greeting modes supported by a voice agent. </summary>
-    [Experimental("AAIP001")]
     internal readonly partial struct VoiceAgentGreetingMode : IEquatable<VoiceAgentGreetingMode>
     {
         private readonly string _value;

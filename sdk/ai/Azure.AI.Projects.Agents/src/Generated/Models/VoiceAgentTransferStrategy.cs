@@ -4,12 +4,10 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Per-invocation transfer routing. Unsupported strategies are rejected before provider execution; schema membership does not imply support by every provider. </summary>
-    [Experimental("AAIP001")]
     public readonly partial struct VoiceAgentTransferStrategy : IEquatable<VoiceAgentTransferStrategy>
     {
         private readonly string _value;

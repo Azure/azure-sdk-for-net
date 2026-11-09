@@ -6,12 +6,10 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    [Experimental("AAIP001")]
     internal partial class BetaVoiceAgentsTelephonyGetTelephonyCallJobsCollectionResultOfT : CollectionResult<TelephonyCallJob>
     {
         private readonly BetaVoiceAgentsTelephony _client;
@@ -100,7 +98,6 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Gets the values from the specified page. </summary>
         /// <param name="page"></param>
         /// <returns> The values from the specified page. </returns>
-        [Experimental("AAIP001")]
         protected override IEnumerable<TelephonyCallJob> GetValuesFromPage(ClientResult page)
         {
             return ((AgentsPagedResultTelephonyCallJob)page).Data;

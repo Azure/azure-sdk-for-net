@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Teams source/transfer identity, validated by role and provider. Not supported for outbound recipients. </summary>
-    [Experimental("AAIP001")]
     public partial class TeamsAddress : TelephonyAddress
     {
         /// <summary> Initializes a new instance of <see cref="TeamsAddress"/>. </summary>

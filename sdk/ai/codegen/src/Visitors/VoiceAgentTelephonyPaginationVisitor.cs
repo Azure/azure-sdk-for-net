@@ -40,7 +40,8 @@ public class VoiceAgentTelephonyPaginationVisitor : ScmLibraryVisitor
     {
         if (IsTelephonyPager(type))
         {
-            if (!type.Attributes.Concat(type.CustomCodeView?.Attributes ?? []).Any(attribute => attribute.Type.Name == nameof(ExperimentalAttribute)))
+            if (type is CollectionResultDefinition { ScopeName: "TelephonyCampaigns.GetAll" or "TelephonyCampaigns.GetValidationErrors" } &&
+                !type.Attributes.Concat(type.CustomCodeView?.Attributes ?? []).Any(attribute => attribute.Type.Name == nameof(ExperimentalAttribute)))
             {
                 type.Update(attributes: [.. type.Attributes, new AttributeStatement(typeof(ExperimentalAttribute), Literal("AAIP001"))]);
             }

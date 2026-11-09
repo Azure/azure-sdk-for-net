@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 
 namespace Azure.AI.Projects.Agents;
 
-[Experimental("AAIP001")]
 [CodeGenType("AgentTelephony")]
 [CodeGenSuppress("GetTelephonyBindings", typeof(string), typeof(AgentDefinitionOptInKeys?), typeof(TelephonyProvider?), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetTelephonyBindingsAsync", typeof(string), typeof(AgentDefinitionOptInKeys?), typeof(TelephonyProvider?), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
@@ -30,7 +29,6 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="telephonyBinding"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
     public virtual ClientResult<TelephonyBinding> CreateTelephonyBinding(string agentName, TelephonyBinding telephonyBinding, CancellationToken cancellationToken = default)
     {
         return CreateTelephonyBinding(
@@ -48,7 +46,6 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="telephonyBinding"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
     public virtual async Task<ClientResult<TelephonyBinding>> CreateTelephonyBindingAsync(string agentName, TelephonyBinding telephonyBinding, CancellationToken cancellationToken = default)
     {
         return await CreateTelephonyBindingAsync(
@@ -84,7 +81,6 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
     public virtual CollectionResult<TelephonyBindingListItem> GetTelephonyBindings(string agentName, TelephonyProvider? provider = default, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
@@ -134,7 +130,6 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
     public virtual AsyncCollectionResult<TelephonyBindingListItem> GetTelephonyBindingsAsync(string agentName, TelephonyProvider? provider = default, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
@@ -166,7 +161,6 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="bindingId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="bindingId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
     public virtual ClientResult<TelephonyBinding> GetTelephonyBinding(string agentName, string bindingId, CancellationToken cancellationToken = default)
     {
         return GetTelephonyBinding(
@@ -184,7 +178,6 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="bindingId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="bindingId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
     public virtual async Task<ClientResult<TelephonyBinding>> GetTelephonyBindingAsync(string agentName, string bindingId, CancellationToken cancellationToken = default)
     {
         return await GetTelephonyBindingAsync(
@@ -319,7 +312,6 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
     public virtual CollectionResult<TelephonyCallSummary> GetTelephonyCalls(string agentName, TelephonyProvider? provider = default, TelephonyCallStatus? status = default, DateTimeOffset? startedAfter = default, DateTimeOffset? startedBefore = default, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
@@ -367,7 +359,6 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
     public virtual AsyncCollectionResult<TelephonyCallSummary> GetTelephonyCallsAsync(string agentName, TelephonyProvider? provider = default, TelephonyCallStatus? status = default, DateTimeOffset? startedAfter = default, DateTimeOffset? startedBefore = default, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
@@ -394,7 +385,6 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="callId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="callId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
     public virtual ClientResult<TelephonyCallRecord> GetTelephonyCall(string agentName, string callId, CancellationToken cancellationToken = default)
     {
         return GetTelephonyCall(
@@ -412,7 +402,6 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="callId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="callId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
     public virtual async Task<ClientResult<TelephonyCallRecord>> GetTelephonyCallAsync(string agentName, string callId, CancellationToken cancellationToken = default)
     {
         return await GetTelephonyCallAsync(
@@ -431,7 +420,6 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="callId"/> or <paramref name="target"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="callId"/> or <paramref name="target"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
     public virtual ClientResult<TelephonyCallRecord> TransferTelephonyCall(string agentName, string callId, string target, CancellationToken cancellationToken = default)
     {
         return TransferTelephonyCall(
@@ -451,7 +439,6 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="callId"/> or <paramref name="target"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="callId"/> or <paramref name="target"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
     public virtual async Task<ClientResult<TelephonyCallRecord>> TransferTelephonyCallAsync(string agentName, string callId, string target, CancellationToken cancellationToken = default)
     {
         return await TransferTelephonyCallAsync(
@@ -470,7 +457,6 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="callId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="callId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
     public virtual ClientResult<TelephonyCallRecord> EndTelephonyCall(string agentName, string callId, CancellationToken cancellationToken = default)
     {
         return EndTelephonyCall(
@@ -488,7 +474,6 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="callId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="callId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
     public virtual async Task<ClientResult<TelephonyCallRecord>> EndTelephonyCallAsync(string agentName, string callId, CancellationToken cancellationToken = default)
     {
         return await EndTelephonyCallAsync(
@@ -505,7 +490,6 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
     public virtual ClientResult<TelephonyTransferTargets> GetTelephonyTransferTargets(string agentName, CancellationToken cancellationToken = default)
     {
         return GetTelephonyTransferTargets(
@@ -521,7 +505,6 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
     public virtual async Task<ClientResult<TelephonyTransferTargets>> GetTelephonyTransferTargetsAsync(string agentName, CancellationToken cancellationToken = default)
     {
         return await GetTelephonyTransferTargetsAsync(
@@ -539,7 +522,6 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="ifMatch"/> or <paramref name="transferTargets"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
     public virtual ClientResult<TelephonyTransferTargets> ReplaceTelephonyTransferTargets(string agentName, string ifMatch, IEnumerable<TelephonyTransferTarget> transferTargets, CancellationToken cancellationToken = default)
     {
         return ReplaceTelephonyTransferTargets(
@@ -559,7 +541,6 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="ifMatch"/> or <paramref name="transferTargets"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
     public virtual async Task<ClientResult<TelephonyTransferTargets>> ReplaceTelephonyTransferTargetsAsync(string agentName, string ifMatch, IEnumerable<TelephonyTransferTarget> transferTargets, CancellationToken cancellationToken = default)
     {
         return await ReplaceTelephonyTransferTargetsAsync(
@@ -579,7 +560,6 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="idempotencyKey"/> or <paramref name="body"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="idempotencyKey"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
     public virtual ClientResult<TelephonyCallJob> CreateTelephonyCallJob(string agentName, string idempotencyKey, TelephonyCallJobCreate body, CancellationToken cancellationToken = default)
     {
         return CreateTelephonyCallJob(
@@ -599,7 +579,6 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="idempotencyKey"/> or <paramref name="body"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="idempotencyKey"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
     public virtual async Task<ClientResult<TelephonyCallJob>> CreateTelephonyCallJobAsync(string agentName, string idempotencyKey, TelephonyCallJobCreate body, CancellationToken cancellationToken = default)
     {
         return await CreateTelephonyCallJobAsync(
@@ -618,7 +597,6 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="callJobId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="callJobId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
     public virtual ClientResult<TelephonyCallJob> GetTelephonyCallJob(string agentName, string callJobId, CancellationToken cancellationToken = default)
     {
         return GetTelephonyCallJob(
@@ -636,7 +614,6 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="callJobId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="callJobId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
     public virtual async Task<ClientResult<TelephonyCallJob>> GetTelephonyCallJobAsync(string agentName, string callJobId, CancellationToken cancellationToken = default)
     {
         return await GetTelephonyCallJobAsync(
@@ -654,7 +631,6 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="callJobId"/> or <paramref name="ifMatch"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="callJobId"/> or <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
     public virtual ClientResult<TelephonyCallJob> CancelTelephonyCallJob(string agentName, string callJobId, string ifMatch, CancellationToken cancellationToken = default)
     {
         return CancelTelephonyCallJob(
@@ -674,7 +650,6 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="callJobId"/> or <paramref name="ifMatch"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="callJobId"/> or <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
     public virtual async Task<ClientResult<TelephonyCallJob>> CancelTelephonyCallJobAsync(string agentName, string callJobId, string ifMatch, CancellationToken cancellationToken = default)
     {
         return await CancelTelephonyCallJobAsync(

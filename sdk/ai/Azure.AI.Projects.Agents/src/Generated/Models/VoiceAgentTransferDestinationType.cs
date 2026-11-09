@@ -2,19 +2,16 @@
 
 #nullable disable
 
-using System.Diagnostics.CodeAnalysis;
-
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The supported address formats for a system-tool transfer destination. </summary>
-    [Experimental("AAIP001")]
     public enum VoiceAgentTransferDestinationType
     {
         /// <summary> An E.164 telephone number. </summary>
         PhoneNumber,
         /// <summary> A Microsoft Teams user or resource-account identifier. </summary>
         Teams,
-        /// <summary> A SIP or SIPS URI. </summary>
+        /// <summary> A SIP or SIPS URI. SIP is in preview and requires the `VoiceAgents=V1Preview` opt-in. </summary>
         Sip
     }
 }

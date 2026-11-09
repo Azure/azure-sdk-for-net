@@ -4,12 +4,10 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The conversation engine types supported by a voice agent. </summary>
-    [Experimental("AAIP001")]
     internal readonly partial struct VoiceConversationEngineType : IEquatable<VoiceConversationEngineType>
     {
         private readonly string _value;

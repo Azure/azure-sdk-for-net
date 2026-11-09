@@ -4,11 +4,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
-    [Experimental("AAIP001")]
     internal partial class UnknownVoiceAgentTool : VoiceAgentTool
     {
         /// <summary> Initializes a new instance of <see cref="UnknownVoiceAgentTool"/>. </summary>

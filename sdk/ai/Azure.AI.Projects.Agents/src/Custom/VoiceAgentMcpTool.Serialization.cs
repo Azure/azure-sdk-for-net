@@ -6,6 +6,8 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using OpenAI.Responses;
 
+#pragma warning disable AAIP002
+
 namespace Azure.AI.Projects.Agents;
 
 [CodeGenSerialization(nameof(AllowedTools), DeserializationValueHook = nameof(DeserializeAllowedToolsValue))]

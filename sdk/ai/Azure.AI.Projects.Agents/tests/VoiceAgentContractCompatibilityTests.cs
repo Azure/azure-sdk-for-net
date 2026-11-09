@@ -3,17 +3,117 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Reflection;
 using System.Text.Json;
 using NUnit.Framework;
 using OpenAI.Realtime;
 
-#pragma warning disable AAIP001, OPENAI001, OPENAI002
+#pragma warning disable AAIP001, AAIP002, OPENAI001, OPENAI002
 
 namespace Azure.AI.Projects.Agents.Tests;
 
 public class VoiceAgentContractCompatibilityTests
 {
+    [TestCase(typeof(VoiceAgentDefinition))]
+    [TestCase(typeof(VoiceAgentBaseDefinition))]
+    [TestCase(typeof(VoiceAgentSubProtocol))]
+    [TestCase(typeof(VoiceAgentSubagentConfig))]
+    [TestCase(typeof(VoiceAgentDelegateSubagentConfig))]
+    [TestCase(typeof(VoiceAgentTool))]
+    [TestCase(typeof(VoiceAgentMcpTool))]
+    [TestCase(typeof(VoiceConversation))]
+    [TestCase(typeof(VoiceAudioItem))]
+    [TestCase(typeof(VoiceGeneratedAudioItem))]
+    [TestCase(typeof(VoiceRecording))]
+    [TestCase(typeof(TelephonyAddress))]
+    [TestCase(typeof(PhoneNumber))]
+    [TestCase(typeof(TeamsAddress))]
+    [TestCase(typeof(TelephonyBinding))]
+    [TestCase(typeof(TwilioTelephonyBinding))]
+    [TestCase(typeof(TeamsPhoneExtensibilityTelephonyBinding))]
+    [TestCase(typeof(BetaVoiceAgentsConversations))]
+    [TestCase(typeof(BetaVoiceAgentsTelephony))]
+    [TestCase(typeof(BetaVoiceAgentsTelephonyGetTelephonyCallsCollectionResult))]
+    [TestCase(typeof(BetaVoiceAgentsTelephonyGetTelephonyCallsAsyncCollectionResult))]
+    [TestCase(typeof(BetaVoiceAgentsTelephonyGetTelephonyCallJobsCollectionResult))]
+    [TestCase(typeof(BetaVoiceAgentsTelephonyGetTelephonyCallJobsAsyncCollectionResult))]
+    [TestCase(typeof(GenerateVoiceAgentRequest))]
+    public void CoreVoiceTypesAreNotBlanketPreview(Type type)
+    {
+        Assert.That(type.GetCustomAttribute<ExperimentalAttribute>(), Is.Null,
+            "Conditional preview variants must not mark the whole GA type experimental.");
+    }
+
+    [TestCase(typeof(VoiceAgentLiveDefinition))]
+    [TestCase(typeof(BetaVoiceAgentsLiveConversations))]
+    [TestCase(typeof(VoiceAgentInlineSubagentConfig))]
+    [TestCase(typeof(SipAddress))]
+    [TestCase(typeof(SipTelephonyBinding))]
+    [TestCase(typeof(TelephonyCampaign))]
+    [TestCase(typeof(VoiceAgentPostCallConfig))]
+    public void RequiredVoicePreviewTypesRetainOptIn(Type type)
+    {
+        Assert.That(type.GetCustomAttribute<ExperimentalAttribute>()?.DiagnosticId, Is.EqualTo("AAIP001"));
+    }
+
+    [Test]
+    public void PostCallRemainsPreviewOnOtherwiseStableVoiceDefinition()
+    {
+        Assert.That(typeof(VoiceAgentDefinition).GetProperty(nameof(VoiceAgentDefinition.PostCall))
+            .GetCustomAttribute<ExperimentalAttribute>()?.DiagnosticId, Is.EqualTo("AAIP001"));
+    }
+
+    [Test]
+    public void CoreConversationClientFactoryIsNotPreview()
+    {
+        Assert.That(typeof(AgentAdministrationClient)
+            .GetMethod(nameof(AgentAdministrationClient.GetBetaVoiceAgentEndpointConversations))
+            .GetCustomAttribute<ExperimentalAttribute>(), Is.Null);
+        Assert.That(typeof(AgentAdministrationClient)
+            .GetMethod(nameof(AgentAdministrationClient.GetBetaVoiceAgentTelephony))
+            .GetCustomAttribute<ExperimentalAttribute>(), Is.Null);
+    }
+
+    [TestCase(typeof(VoiceConversation))]
+    [TestCase(typeof(VoiceResult))]
+    [TestCase(typeof(TelephonyBinding))]
+    [TestCase(typeof(TelephonyAddress))]
+    public void StableSerializationMembersDoNotRequirePreviewOptIn(Type type)
+    {
+        MethodInfo[] members = type.GetMethods(
+            BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance)
+            .Where(method => method.Name is "op_Implicit" or "op_Explicit" or
+                "JsonModelCreateCore" or "JsonModelWriteCore" or
+                "PersistableModelCreateCore" or "PersistableModelWriteCore").ToArray();
+        Assert.That(members, Is.Not.Empty);
+        foreach (MethodInfo method in members)
+        {
+            Assert.That(method.GetCustomAttribute<ExperimentalAttribute>(), Is.Null, method.Name);
+        }
+    }
+
+    [Test]
+    public void McpToolboxRequestHeaderBindingsRoundTrip()
+    {
+        MCPToolboxTool tool = ModelReaderWriter.Read<MCPToolboxTool>(BinaryData.FromString("""
+            {"type":"mcp","server_label":"support","project_connection_id":"support-connection","request_header_bindings":[{"header_name":"X-Request-Id","source":"client_headers","required":true}]}
+            """));
+        using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write(tool, new("W")));
+        JsonElement binding = document.RootElement.GetProperty("request_header_bindings")[0];
+        Assert.Multiple(() =>
+        {
+            Assert.That(tool.RequestHeaderBindings, Has.Count.EqualTo(1));
+            Assert.That(tool.RequestHeaderBindings[0].HeaderName, Is.EqualTo("X-Request-Id"));
+            Assert.That(tool.RequestHeaderBindings[0].Source.ToString(), Is.EqualTo("client_headers"));
+            Assert.That(tool.RequestHeaderBindings[0].Required, Is.True);
+            Assert.That(binding.GetProperty("header_name").GetString(), Is.EqualTo("X-Request-Id"));
+            Assert.That(binding.GetProperty("source").GetString(), Is.EqualTo("client_headers"));
+            Assert.That(binding.GetProperty("required").GetBoolean(), Is.True);
+        });
+    }
+
     [TestCase(false)]
     [TestCase(true)]
     public void DelegateConfigurationSupportsLegacyAndExplicitDiscriminators(bool includeDiscriminator)

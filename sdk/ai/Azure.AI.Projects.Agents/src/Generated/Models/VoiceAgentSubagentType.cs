@@ -4,12 +4,10 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The subagent configuration mode. Additional modes may be added over time. </summary>
-    [Experimental("AAIP001")]
     internal readonly partial struct VoiceAgentSubagentType : IEquatable<VoiceAgentSubagentType>
     {
         private readonly string _value;

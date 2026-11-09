@@ -24,6 +24,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="DeclarativeAgentDefinition"/>. </summary>
         /// <param name="model"> The model deployment to use for this agent. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="model"/> is null. </exception>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         public DeclarativeAgentDefinition(string model) : base(ProjectsAgentKind.Prompt)
         {
             Argument.AssertNotNull(model, nameof(model));
@@ -33,6 +34,7 @@ namespace Azure.AI.Projects.Agents
             Tools = new ChangeTrackingList<ResponseTool>();
             StructuredInputs = new ChangeTrackingDictionary<string, StructuredInputDefinition>();
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="DeclarativeAgentDefinition"/>. </summary>
         /// <param name="kind"></param>
@@ -81,7 +83,6 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The managed runtime and agent loop used to execute this prompt agent. </summary>
-        [Experimental("AAIP001")]
         public AgentHarness Harness { get; set; }
 
         /// <summary> The model deployment to use for this agent. </summary>

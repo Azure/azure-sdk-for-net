@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -13,7 +12,6 @@ namespace Azure.AI.Projects.Agents
     /// delegate configurations, the service treats an omitted `subagent_type` as `delegate`.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceAgentDelegateSubagentConfig"/> and <see cref="VoiceAgentInlineSubagentConfig"/>.
     /// </summary>
-    [Experimental("AAIP001")]
     public abstract partial class VoiceAgentSubagentConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -21,19 +19,23 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentSubagentConfig"/>. </summary>
         /// <param name="subagentType"> The subagent mode. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         private protected VoiceAgentSubagentConfig(VoiceAgentSubagentType subagentType)
         {
             SubagentType = subagentType;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentSubagentConfig"/>. </summary>
         /// <param name="subagentType"> The subagent mode. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal VoiceAgentSubagentConfig(VoiceAgentSubagentType subagentType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SubagentType = subagentType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> The subagent mode. </summary>
         internal VoiceAgentSubagentType SubagentType { get; set; }

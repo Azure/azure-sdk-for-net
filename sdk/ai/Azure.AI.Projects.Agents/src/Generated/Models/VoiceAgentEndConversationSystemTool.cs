@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A service-managed control that ends the active conversation. </summary>
-    [Experimental("AAIP001")]
     public partial class VoiceAgentEndConversationSystemTool : VoiceAgentSystemTool
     {
         /// <summary> Initializes a new instance of <see cref="VoiceAgentEndConversationSystemTool"/>. </summary>

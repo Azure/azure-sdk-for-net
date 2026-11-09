@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Sends literal or templated keypad digits. </summary>
-    [Experimental("AAIP001")]
     public partial class VoiceAgentSendDtmfSystemTool : VoiceAgentSystemTool
     {
         /// <summary> Initializes a new instance of <see cref="VoiceAgentSendDtmfSystemTool"/>. </summary>

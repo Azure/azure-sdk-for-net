@@ -4,13 +4,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Requests a transfer to an explicitly configured logical target. </summary>
-    [Experimental("AAIP001")]
     public partial class VoiceAgentTransferSystemTool : VoiceAgentSystemTool
     {
         /// <summary> Initializes a new instance of <see cref="VoiceAgentTransferSystemTool"/>. </summary>

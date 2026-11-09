@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The configured transfer routing policy. The model selects a target name, not destinations or routing settings. </summary>
-    [Experimental("AAIP001")]
     public partial class VoiceAgentTransferRouting
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

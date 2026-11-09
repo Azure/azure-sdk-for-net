@@ -18,7 +18,7 @@ namespace Azure.AI.Projects.Agents
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/skills/", false);
+            uri.AppendPath("/openai/v1/skills/", false);
             uri.AppendPath(name, true);
             if (_apiVersion != null)
             {
@@ -35,7 +35,7 @@ namespace Azure.AI.Projects.Agents
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/skills", false);
+            uri.AppendPath("/openai/v1/skills", false);
             if (limit != null)
             {
                 uri.AppendQuery("limit", TypeFormatters.ConvertToString(limit), true);
@@ -67,7 +67,7 @@ namespace Azure.AI.Projects.Agents
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/skills/", false);
+            uri.AppendPath("/openai/v1/skills/", false);
             uri.AppendPath(name, true);
             if (_apiVersion != null)
             {
@@ -86,7 +86,7 @@ namespace Azure.AI.Projects.Agents
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/skills/", false);
+            uri.AppendPath("/openai/v1/skills/", false);
             uri.AppendPath(name, true);
             if (_apiVersion != null)
             {
@@ -103,7 +103,7 @@ namespace Azure.AI.Projects.Agents
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/skills/", false);
+            uri.AppendPath("/openai/v1/skills/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/versions", false);
             if (_apiVersion != null)
@@ -123,7 +123,7 @@ namespace Azure.AI.Projects.Agents
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/skills/", false);
+            uri.AppendPath("/openai/v1/skills/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/versions", false);
             if (_apiVersion != null)
@@ -143,7 +143,7 @@ namespace Azure.AI.Projects.Agents
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/skills/", false);
+            uri.AppendPath("/openai/v1/skills/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/versions", false);
             if (limit != null)
@@ -177,7 +177,7 @@ namespace Azure.AI.Projects.Agents
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/skills/", false);
+            uri.AppendPath("/openai/v1/skills/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/versions/", false);
             uri.AppendPath(version, true);
@@ -196,7 +196,7 @@ namespace Azure.AI.Projects.Agents
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/skills/", false);
+            uri.AppendPath("/openai/v1/skills/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/content", false);
             if (_apiVersion != null)
@@ -214,7 +214,7 @@ namespace Azure.AI.Projects.Agents
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/skills/", false);
+            uri.AppendPath("/openai/v1/skills/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/versions/", false);
             uri.AppendPath(version, true);
@@ -234,7 +234,7 @@ namespace Azure.AI.Projects.Agents
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/skills/", false);
+            uri.AppendPath("/openai/v1/skills/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/versions/", false);
             uri.AppendPath(version, true);

@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Sends a text message from the Agent's SMS-capable number. </summary>
-    [Experimental("AAIP001")]
     public partial class VoiceAgentSendSmsSystemTool : VoiceAgentSystemTool
     {
         /// <summary> Initializes a new instance of <see cref="VoiceAgentSendSmsSystemTool"/>. </summary>

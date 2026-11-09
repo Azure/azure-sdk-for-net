@@ -4,13 +4,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A configured logical transfer target. Only its name and description are model-visible; destinations and routing are executor settings. </summary>
-    [Experimental("AAIP001")]
     public partial class VoiceAgentTransferTarget
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

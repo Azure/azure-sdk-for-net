@@ -19,6 +19,7 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
 - [Key concepts](#key-concepts)
   - [Service API versions](#service-api-versions)
   - [Select a service API version](#select-a-service-api-version)
+  - [Voice Agent feature stages](#voice-agent-feature-stages)
 - [Additional concepts](#additional-concepts)
 - [Examples](#examples)
   - [Declarative Agents](#declarative-agents)
@@ -83,6 +84,21 @@ The API version may be set by supplying the `version` parameter to the `AgentAdm
 AgentAdministrationClientOptions options = new(version: AgentAdministrationClientOptions.ServiceVersion.V1);
 AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
 ```
+
+### Voice Agent feature stages
+
+Voice Agent features have individual release stages in the `v1` service contract:
+
+| Stage | Features |
+| --- | --- |
+| GA | Realtime and cascaded voice agents; agent generation and version management; persisted Realtime conversations, responses, and items; heard/generated audio and conversation recordings; audio, voice, transcription, avatar, and soundscape configuration; function, MCP, system, and toolbox tools; delegate subagents; Twilio and Teams Phone Extensibility bindings, calls, transfers, and direct outbound call jobs. |
+| Preview | Native GPT Live; inline subagents and handoff; SIP addresses and bindings; telephony campaigns; post-call delivery, including `VoiceAgentDefinition.PostCall`. |
+
+Preview models and members retain the `AAIP001` experimental opt-in. The `VoiceAgents=V1Preview` feature header remains available for operations or configurations that require preview features; GA configurations do not require a blanket Voice Agents preview opt-in. Shared base types can represent both GA and preview variants without making every variant experimental.
+
+Existing `BetaVoiceAgents...` client names are retained for compatibility and do not determine a feature's release stage. `AAIP002` separately identifies members that depend on experimental OpenAI SDK types, even when the Foundry feature is GA. The NuGet package's prerelease version is also independent of the service's per-feature stages.
+
+Service availability still depends on the selected model, provider, and deployment. Soundscapes are rendered only for telephony calls, not direct WebSocket or browser WebRTC sessions, and are not mixed into persisted conversation recordings. Configuring the GA `gpt-live-transcribe` transcription model does not make the native GPT Live protocol GA.
 
 ### Additional concepts
 

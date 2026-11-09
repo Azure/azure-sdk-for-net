@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -12,16 +11,17 @@ namespace Azure.AI.Projects.Agents
     /// Shared voice-agent settings; protocol-specific fields remain flat on each subtype.
     /// Creates and updates produce immutable versions. Each version selects its own protocol, so a new version can switch between Realtime and Live.
     /// </summary>
-    [Experimental("AAIP001")]
     public partial class VoiceAgentBaseDefinition : ProjectsAgentDefinition
     {
         /// <summary> Initializes a new instance of <see cref="VoiceAgentBaseDefinition"/>. </summary>
         /// <param name="subProtocol"> The voice protocol for this agent version. Null and unknown values are invalid. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         public VoiceAgentBaseDefinition(VoiceAgentSubProtocol subProtocol) : base(ProjectsAgentKind.Voice)
         {
             SubProtocol = subProtocol;
             StructuredInputs = new ChangeTrackingDictionary<string, StructuredInputDefinition>();
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentBaseDefinition"/>. </summary>
         /// <param name="kind"></param>
@@ -31,6 +31,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="instructions"> Frontend instructions, templated with structured_inputs. Backend instructions belong in delegation.responses. </param>
         /// <param name="structuredInputs"> Template inputs for session instructions and supported greetings. </param>
         /// <param name="store"> Persists conversation content and audio in Foundry, not native Live recordings. Defaults to false. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal VoiceAgentBaseDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, VoiceAgentSubProtocol subProtocol, string instructions, IDictionary<string, StructuredInputDefinition> structuredInputs, bool? store) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
         {
             SubProtocol = subProtocol;
@@ -38,6 +39,7 @@ namespace Azure.AI.Projects.Agents
             StructuredInputs = structuredInputs;
             Store = store;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> The voice protocol for this agent version. Null and unknown values are invalid. </summary>
         internal VoiceAgentSubProtocol SubProtocol { get; set; }

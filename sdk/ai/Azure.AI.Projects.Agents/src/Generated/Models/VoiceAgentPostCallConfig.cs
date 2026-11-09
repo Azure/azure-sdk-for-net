@@ -29,7 +29,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentPostCallConfig"/>. </summary>
         /// <param name="destinations"> The destinations to notify. </param>
-        /// <param name="include"> Additional content to include in each delivery. The transcript is always delivered. `audio` is not supported in this preview; the service rejects it when the agent version is saved. </param>
+        /// <param name="include"> Additional content to include in each delivery. The transcript is always delivered; add `audio` to also deliver a URL to the merged call recording. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal VoiceAgentPostCallConfig(IList<VoiceAgentPostCallDestination> destinations, IList<VoiceAgentPostCallIncludeOption> include, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -41,7 +41,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The destinations to notify. </summary>
         public IList<VoiceAgentPostCallDestination> Destinations { get; }
 
-        /// <summary> Additional content to include in each delivery. The transcript is always delivered. `audio` is not supported in this preview; the service rejects it when the agent version is saved. </summary>
+        /// <summary> Additional content to include in each delivery. The transcript is always delivered; add `audio` to also deliver a URL to the merged call recording. </summary>
         public IList<VoiceAgentPostCallIncludeOption> Include { get; }
     }
 }

@@ -3,6 +3,7 @@
 ## 3.0.0-beta.7 (Unreleased)
 
 ### Features Added
+- Promoted core Realtime/cascaded Voice Agent definitions, persisted conversations/responses/items, heard/generated audio and recordings, audio/voice/avatar/soundscape configuration, tools, delegate subagents, and non-SIP telephony to GA in the service contract. These shared types and core client operations no longer require a blanket `AAIP001` opt-in.
 - Added trace-driven skill optimization, skill candidate results, and evaluation context models.
 - Added experimental Live voice agent definitions, native client/server event models, and `BetaVoiceAgentsLiveConversations` for stored Live history and recordings.
 - Added typed `VoiceAgentLiveSessionResource` snapshots, `VoiceAgentLiveDelegation` configuration, and `VoiceAgentLiveDelegationItem` metadata, including `foundry_managed_agent` ownership with the pinned agent name and resolved version.
@@ -10,10 +11,11 @@
 - Added experimental Live Decision, delegation configuration, and transport event models aligned with OpenAI TypeSpec 1.34.1.
 - Live models, enums, value types, and model-factory methods require the `AAIP001` experimental opt-in.
 - Added experimental inline voice subagents with handoff conditions, policies, and per-subagent voice configuration.
-- Added experimental language-detection, digit-recognition, transfer, SMS, and DTMF system-tool configuration, including execution timeouts.
+- Added language-detection, digit-recognition, transfer, SMS, and DTMF system-tool configuration, including execution timeouts.
 - Added experimental SIP telephony binding models and allowed-caller configuration.
 - Added experimental telephony campaign configuration, schedules, operation-bound completion reads, pagination, and validation-error APIs.
 - Added the public `FoundryOpenAIError` data model for typed campaign failure details while keeping exception-formatting helpers internal.
+- Added MCP toolbox request-header bindings for forwarding declared client headers to an MCP server.
 
 ### Breaking Changes
 - `VoiceAgentTransferRouting.RingTimeoutSeconds` now uses `TimeSpan?` instead of `int?`; JSON continues to use seconds.
@@ -26,6 +28,7 @@
 - `VoiceRecordingChannelLayout.Left` and `Right` now use the extensible `VoiceAudioRole` type instead of `string`. Their wire values remain `user` and `agent`.
 
 ### Bugs Fixed
+- Fixed required-versus-conditional preview metadata handling so GA base types can serialize preview variants without exposing a blanket experimental API. Native GPT Live, inline/handoff, SIP, campaigns, and post-call delivery remain preview; experimental OpenAI dependencies retain member-level `AAIP002` attribution.
 - Fixed Live Decision input and stored-message payloads to expose public patch access and preserve message fields during wire serialization.
 - Fixed typed persisted Realtime response status and output-modality serialization to use the external OpenAI enum values rather than treating them as ModelReaderWriter models.
 - Fixed semantic VAD eagerness serialization and deserialization to preserve the external OpenAI string values.
@@ -35,7 +38,7 @@
 - Fixed telephony call-history pagination to stop on terminal pages and use the correct cursor when paging backward.
 
 ### Other Changes
-- Regenerated from `feature/foundry-release` at [`768c3a412129295692b60788fa76fc27b6d484ff`](https://github.com/Azure/azure-rest-api-specs/tree/768c3a412129295692b60788fa76fc27b6d484ff), using OpenAI TypeSpec 1.34.1.
+- Regenerated from `feature/foundry-release` at [`298aa64878ea0a8f5eb2f610760a60356c3e58e2`](https://github.com/Azure/azure-rest-api-specs/tree/298aa64878ea0a8f5eb2f610760a60356c3e58e2), using OpenAI TypeSpec 1.34.1.
 
 ## 3.0.0-beta.6 (2026-10-30)
 

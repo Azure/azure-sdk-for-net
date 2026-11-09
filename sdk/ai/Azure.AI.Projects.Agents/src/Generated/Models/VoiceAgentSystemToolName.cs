@@ -4,12 +4,10 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A service-managed voice-session control action. Known values are stable; additional values may be added over time. </summary>
-    [Experimental("AAIP001")]
     public readonly partial struct VoiceAgentSystemToolName : IEquatable<VoiceAgentSystemToolName>
     {
         private readonly string _value;

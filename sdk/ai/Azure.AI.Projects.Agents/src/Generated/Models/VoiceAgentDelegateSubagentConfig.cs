@@ -4,13 +4,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Configuration for referenced Foundry agents invoked as delegated background specialists. </summary>
-    [Experimental("AAIP001")]
     public partial class VoiceAgentDelegateSubagentConfig : VoiceAgentSubagentConfig
     {
         /// <summary> Initializes a new instance of <see cref="VoiceAgentDelegateSubagentConfig"/>. </summary>

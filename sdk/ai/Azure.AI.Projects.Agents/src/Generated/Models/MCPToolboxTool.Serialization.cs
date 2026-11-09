@@ -21,6 +21,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         protected override ToolboxTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MCPToolboxTool>)this).GetFormatFromOptions(options) : options.Format;
@@ -35,8 +36,10 @@ namespace Azure.AI.Projects.Agents
                     throw new FormatException($"The model {nameof(MCPToolboxTool)} does not support reading '{options.Format}' format.");
             }
         }
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MCPToolboxTool>)this).GetFormatFromOptions(options) : options.Format;
@@ -48,28 +51,38 @@ namespace Azure.AI.Projects.Agents
                     throw new FormatException($"The model {nameof(MCPToolboxTool)} does not support writing '{options.Format}' format.");
             }
         }
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         BinaryData IPersistableModel<MCPToolboxTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         MCPToolboxTool IPersistableModel<MCPToolboxTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (MCPToolboxTool)PersistableModelCreateCore(data, options);
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         string IPersistableModel<MCPToolboxTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         void IJsonModel<MCPToolboxTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MCPToolboxTool>)this).GetFormatFromOptions(options) : options.Format;
@@ -179,14 +192,28 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("project_connection_id"u8);
                 writer.WriteStringValue(ProjectConnectionId);
             }
+            if (Optional.IsCollectionDefined(RequestHeaderBindings))
+            {
+                writer.WritePropertyName("request_header_bindings"u8);
+                writer.WriteStartArray();
+                foreach (MCPToolboxRequestHeaderBinding item in RequestHeaderBindings)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
         }
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         MCPToolboxTool IJsonModel<MCPToolboxTool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MCPToolboxTool)JsonModelCreateCore(ref reader, options);
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         protected override ToolboxTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MCPToolboxTool>)this).GetFormatFromOptions(options) : options.Format;
@@ -197,9 +224,11 @@ namespace Azure.AI.Projects.Agents
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMCPToolboxTool(document.RootElement, options);
         }
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         internal static MCPToolboxTool DeserializeMCPToolboxTool(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -224,6 +253,7 @@ namespace Azure.AI.Projects.Agents
             BinaryData requireApprovalInternal = default;
             bool? deferLoading = default;
             string projectConnectionId = default;
+            IList<MCPToolboxRequestHeaderBinding> requestHeaderBindings = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -367,6 +397,20 @@ namespace Azure.AI.Projects.Agents
                     projectConnectionId = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("request_header_bindings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<MCPToolboxRequestHeaderBinding> array = new List<MCPToolboxRequestHeaderBinding>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(MCPToolboxRequestHeaderBinding.DeserializeMCPToolboxRequestHeaderBinding(item, options));
+                    }
+                    requestHeaderBindings = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -389,10 +433,12 @@ namespace Azure.AI.Projects.Agents
                 allowedCallers,
                 requireApprovalInternal,
                 deferLoading,
-                projectConnectionId)
+                projectConnectionId,
+                requestHeaderBindings ?? new ChangeTrackingList<MCPToolboxRequestHeaderBinding>())
             {
                 _allowedToolsIsDefined = allowedToolsIsDefined
             };
         }
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
     }
 }

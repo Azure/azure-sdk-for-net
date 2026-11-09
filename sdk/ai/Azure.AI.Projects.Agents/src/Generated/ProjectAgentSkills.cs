@@ -48,7 +48,7 @@ namespace Azure.AI.Projects.Agents
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The unique name of the skill. </param>
+        /// <param name="name"> The public ID of the skill. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -80,7 +80,7 @@ namespace Azure.AI.Projects.Agents
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The unique name of the skill. </param>
+        /// <param name="name"> The public ID of the skill. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -105,7 +105,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Retrieves the specified skill and its current configuration. </summary>
-        /// <param name="name"> The unique name of the skill. </param>
+        /// <param name="name"> The public ID of the skill. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -119,7 +119,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Retrieves the specified skill and its current configuration. </summary>
-        /// <param name="name"> The unique name of the skill. </param>
+        /// <param name="name"> The public ID of the skill. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -140,7 +140,7 @@ namespace Azure.AI.Projects.Agents
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the skill to update. </param>
+        /// <param name="name"> The public ID of the skill to update. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
@@ -174,7 +174,7 @@ namespace Azure.AI.Projects.Agents
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the skill to update. </param>
+        /// <param name="name"> The public ID of the skill to update. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
@@ -201,7 +201,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Modifies the specified skill's configuration. </summary>
-        /// <param name="name"> The name of the skill to update. </param>
+        /// <param name="name"> The public ID of the skill to update. </param>
         /// <param name="defaultVersion"> The version identifier that the skill should point to. When set, the skill's default version will resolve to this version instead of the latest. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="defaultVersion"/> is null. </exception>
@@ -218,7 +218,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Modifies the specified skill's configuration. </summary>
-        /// <param name="name"> The name of the skill to update. </param>
+        /// <param name="name"> The public ID of the skill to update. </param>
         /// <param name="defaultVersion"> The version identifier that the skill should point to. When set, the skill's default version will resolve to this version instead of the latest. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="defaultVersion"/> is null. </exception>
@@ -242,7 +242,7 @@ namespace Azure.AI.Projects.Agents
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The unique name of the skill. </param>
+        /// <param name="name"> The public ID of the skill. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -274,7 +274,7 @@ namespace Azure.AI.Projects.Agents
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The unique name of the skill. </param>
+        /// <param name="name"> The public ID of the skill. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -299,7 +299,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Removes the specified skill and its associated versions. </summary>
-        /// <param name="name"> The unique name of the skill. </param>
+        /// <param name="name"> The public ID of the skill. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -313,7 +313,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Removes the specified skill and its associated versions. </summary>
-        /// <param name="name"> The unique name of the skill. </param>
+        /// <param name="name"> The public ID of the skill. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -334,7 +334,7 @@ namespace Azure.AI.Projects.Agents
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the skill. If the skill does not exist, it will be created. </param>
+        /// <param name="name"> The public ID of an existing skill, or the skill name when creating a new skill. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
@@ -368,7 +368,7 @@ namespace Azure.AI.Projects.Agents
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the skill. If the skill does not exist, it will be created. </param>
+        /// <param name="name"> The public ID of an existing skill, or the skill name when creating a new skill. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
@@ -395,7 +395,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Creates a new version of a skill. If the skill does not exist, it will be created. </summary>
-        /// <param name="name"> The name of the skill. If the skill does not exist, it will be created. </param>
+        /// <param name="name"> The public ID of an existing skill, or the skill name when creating a new skill. </param>
         /// <param name="inlineContent"> Inline skill content for simple skills without file uploads. Foundry-specific extension. </param>
         /// <param name="isDefault"> Whether to set this version as the default. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -412,7 +412,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Creates a new version of a skill. If the skill does not exist, it will be created. </summary>
-        /// <param name="name"> The name of the skill. If the skill does not exist, it will be created. </param>
+        /// <param name="name"> The public ID of an existing skill, or the skill name when creating a new skill. </param>
         /// <param name="inlineContent"> Inline skill content for simple skills without file uploads. Foundry-specific extension. </param>
         /// <param name="isDefault"> Whether to set this version as the default. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -436,7 +436,7 @@ namespace Azure.AI.Projects.Agents
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the skill. </param>
+        /// <param name="name"> The public ID of an existing skill, or the skill name when creating a new skill. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -472,7 +472,7 @@ namespace Azure.AI.Projects.Agents
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the skill. </param>
+        /// <param name="name"> The public ID of an existing skill, or the skill name when creating a new skill. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -508,7 +508,7 @@ namespace Azure.AI.Projects.Agents
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the skill to list versions for. </param>
+        /// <param name="name"> The public ID of the skill to list versions for. </param>
         /// <param name="limit">
         /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
         /// default is 20.
@@ -564,7 +564,7 @@ namespace Azure.AI.Projects.Agents
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the skill to list versions for. </param>
+        /// <param name="name"> The public ID of the skill to list versions for. </param>
         /// <param name="limit">
         /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
         /// default is 20.
@@ -613,7 +613,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Returns the available versions for the specified skill. </summary>
-        /// <param name="name"> The name of the skill to list versions for. </param>
+        /// <param name="name"> The public ID of the skill to list versions for. </param>
         /// <param name="limit">
         /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
         /// default is 20.
@@ -651,7 +651,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Returns the available versions for the specified skill. </summary>
-        /// <param name="name"> The name of the skill to list versions for. </param>
+        /// <param name="name"> The public ID of the skill to list versions for. </param>
         /// <param name="limit">
         /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
         /// default is 20.
@@ -689,14 +689,14 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Retrieves the specified version of a skill by name and version identifier.
+        /// [Protocol Method] Retrieves the specified version of a skill by public ID and version identifier.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the skill. </param>
+        /// <param name="name"> The public ID of the skill. </param>
         /// <param name="version"> The version identifier to retrieve. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
@@ -723,14 +723,14 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Retrieves the specified version of a skill by name and version identifier.
+        /// [Protocol Method] Retrieves the specified version of a skill by public ID and version identifier.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the skill. </param>
+        /// <param name="name"> The public ID of the skill. </param>
         /// <param name="version"> The version identifier to retrieve. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
@@ -756,8 +756,8 @@ namespace Azure.AI.Projects.Agents
             }
         }
 
-        /// <summary> Retrieves the specified version of a skill by name and version identifier. </summary>
-        /// <param name="name"> The name of the skill. </param>
+        /// <summary> Retrieves the specified version of a skill by public ID and version identifier. </summary>
+        /// <param name="name"> The public ID of the skill. </param>
         /// <param name="version"> The version identifier to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
@@ -772,8 +772,8 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromValue((SkillVersion)result, result.GetRawResponse());
         }
 
-        /// <summary> Retrieves the specified version of a skill by name and version identifier. </summary>
-        /// <param name="name"> The name of the skill. </param>
+        /// <summary> Retrieves the specified version of a skill by public ID and version identifier. </summary>
+        /// <param name="name"> The public ID of the skill. </param>
         /// <param name="version"> The version identifier to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
@@ -796,7 +796,7 @@ namespace Azure.AI.Projects.Agents
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the skill. </param>
+        /// <param name="name"> The public ID of the skill. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -828,7 +828,7 @@ namespace Azure.AI.Projects.Agents
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the skill. </param>
+        /// <param name="name"> The public ID of the skill. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -853,7 +853,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Downloads the zip content for the default version of a skill. </summary>
-        /// <param name="name"> The name of the skill. </param>
+        /// <param name="name"> The public ID of the skill. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -867,7 +867,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Downloads the zip content for the default version of a skill. </summary>
-        /// <param name="name"> The name of the skill. </param>
+        /// <param name="name"> The public ID of the skill. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -888,7 +888,7 @@ namespace Azure.AI.Projects.Agents
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the skill. </param>
+        /// <param name="name"> The public ID of the skill. </param>
         /// <param name="version"> The version to download content for. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
@@ -922,7 +922,7 @@ namespace Azure.AI.Projects.Agents
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the skill. </param>
+        /// <param name="name"> The public ID of the skill. </param>
         /// <param name="version"> The version to download content for. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
@@ -949,7 +949,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Downloads the zip content for a specific version of a skill. </summary>
-        /// <param name="name"> The name of the skill. </param>
+        /// <param name="name"> The public ID of the skill. </param>
         /// <param name="version"> The version to download content for. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
@@ -965,7 +965,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Downloads the zip content for a specific version of a skill. </summary>
-        /// <param name="name"> The name of the skill. </param>
+        /// <param name="name"> The public ID of the skill. </param>
         /// <param name="version"> The version to download content for. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
@@ -988,7 +988,7 @@ namespace Azure.AI.Projects.Agents
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the skill. </param>
+        /// <param name="name"> The public ID of the skill. </param>
         /// <param name="version"> The version identifier to delete. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
@@ -1022,7 +1022,7 @@ namespace Azure.AI.Projects.Agents
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the skill. </param>
+        /// <param name="name"> The public ID of the skill. </param>
         /// <param name="version"> The version identifier to delete. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
@@ -1049,7 +1049,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Removes the specified version of a skill. </summary>
-        /// <param name="name"> The name of the skill. </param>
+        /// <param name="name"> The public ID of the skill. </param>
         /// <param name="version"> The version identifier to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
@@ -1065,7 +1065,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Removes the specified version of a skill. </summary>
-        /// <param name="name"> The name of the skill. </param>
+        /// <param name="name"> The public ID of the skill. </param>
         /// <param name="version"> The version identifier to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
