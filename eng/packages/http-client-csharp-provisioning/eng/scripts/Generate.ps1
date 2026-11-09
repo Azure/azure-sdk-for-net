@@ -37,7 +37,7 @@ foreach ($project in $provisioningTypespecProjects) {
     }
 
     Write-Host "Generating $($project.Name)" -ForegroundColor Cyan
-    Invoke (Get-Provisioning-TspCommand $provisioningTypespecSpec $project.OutputDirectory -apiVersion $project.ApiVersion -debug:$Debug -newProject:$false)
+    Invoke (Get-Provisioning-TspCommand $provisioningTypespecSpec $project.OutputDirectory -apiVersion $project.ApiVersion -debug:$Debug)
 
     if ($LASTEXITCODE -ne 0) {
         exit $LASTEXITCODE
