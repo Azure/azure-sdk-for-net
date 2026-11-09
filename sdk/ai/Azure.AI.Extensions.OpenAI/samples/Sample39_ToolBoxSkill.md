@@ -119,25 +119,26 @@ ProjectAgentSkills skillsClient = projectClient.AgentAdministrationClient.GetAge
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateToolbox_ToolBoxSkill_Sync
-SkillVersion skill = skillsClient.CreateSkillVersion(
-    name: "shipping-cost-skill",
-    inlineContent: new SkillInlineContent(
-        description: "Compute shipping cost for a package given weight and destination.",
-        instructions: "You are a shipping cost calculator. When asked to compute " +
-          "shipping cost, use this formula: cost (USD) = 5 + 2 * weight_kg " +
-          "for domestic destinations, and cost (USD) = 15 + 4 * weight_kg " +
-          "for international destinations. Always state the formula you used."
-    )
-);
-Console.WriteLine($"Created skill {skill.Name}, v. {skill.Version}.");
-ToolboxSkillReference reference = new(skill.Name)
-{
-    Version = skill.Version
-};
+// TODO: Uncomment after the bootstrap.
+//SkillVersion skill = skillsClient.CreateSkillVersion(
+//    name: "shipping-cost-skill",
+//    inlineContent: new SkillInlineRequest(
+//        description: "Compute shipping cost for a package given weight and destination.",
+//        instructions: "You are a shipping cost calculator. When asked to compute " +
+//          "shipping cost, use this formula: cost (USD) = 5 + 2 * weight_kg " +
+//          "for domestic destinations, and cost (USD) = 15 + 4 * weight_kg " +
+//          "for international destinations. Always state the formula you used."
+//    )
+//);
+//Console.WriteLine($"Created skill {skill.Name}, v. {skill.Version}.");
+//ToolboxSkillReference reference = new(skill.Name)
+//{
+//    Version = skill.Version
+//};
 ToolboxVersion toolBox = toolboxClient.CreateVersion(
     name: "mySkillToolbox",
     tools: [new ToolboxSearchPreviewToolboxTool()],
-    skills: [reference],
+    //skills: [reference],
     description: "Toolbox exposing a shipping-cost skill."
 );
 Console.WriteLine($"Created toolbox {toolBox.Name}, v. {toolBox.Version}.");
@@ -145,25 +146,26 @@ Console.WriteLine($"Created toolbox {toolBox.Name}, v. {toolBox.Version}.");
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateToolbox_ToolBoxSkill_Async
-SkillVersion skill = await skillsClient.CreateSkillVersionAsync(
-    name: "shipping-cost-skill",
-    inlineContent: new SkillInlineContent(
-        description: "Compute shipping cost for a package given weight and destination.",
-        instructions: "You are a shipping cost calculator. When asked to compute " +
-          "shipping cost, use this formula: cost (USD) = 5 + 2 * weight_kg " +
-          "for domestic destinations, and cost (USD) = 15 + 4 * weight_kg " +
-          "for international destinations. Always state the formula you used."
-    )
-);
-Console.WriteLine($"Created skill {skill.Name}, v. {skill.Version}.");
-ToolboxSkillReference reference = new(skill.Name)
-{
-    Version = skill.Version
-};
+// TODO: Uncomment after the bootstrap.
+//SkillVersion skill = await skillsClient.CreateSkillVersionAsync(
+//    name: "shipping-cost-skill",
+//    inlineContent: new SkillInlineRequest(
+//        description: "Compute shipping cost for a package given weight and destination.",
+//        instructions: "You are a shipping cost calculator. When asked to compute " +
+//          "shipping cost, use this formula: cost (USD) = 5 + 2 * weight_kg " +
+//          "for domestic destinations, and cost (USD) = 15 + 4 * weight_kg " +
+//          "for international destinations. Always state the formula you used."
+//    )
+//);
+//Console.WriteLine($"Created skill {skill.Name}, v. {skill.Version}.");
+//ToolboxSkillReference reference = new(skill.Name)
+//{
+//    Version = skill.Version
+//};
 ToolboxVersion toolBox = await toolboxClient.CreateVersionAsync(
     name: "mySkillToolbox",
     tools: [new ToolboxSearchPreviewToolboxTool()],
-    skills: [reference],
+    //skills: [reference],
     description: "Toolbox exposing a shipping-cost skill."
 );
 Console.WriteLine($"Created toolbox {toolBox.Name}, v. {toolBox.Version}.");
@@ -358,12 +360,14 @@ Synchronous sample:
 ```C# Snippet:DeleteToolBoxSkill_ToolBoxSkill_Sync
 // projectClient.AgentAdministrationClient.DeleteAgent(agentVersion.Name, force: true);
 toolboxClient.Delete(name: toolBox.Name);
-skillsClient.DeleteSkill(name: skill.Name);
+// TODO: Uncomment after the bootstrap.
+//skillsClient.DeleteSkill(name: skill.Name);
 ```
 
 Asynchronous sample:
 ```C# Snippet:DeleteToolBoxSkill_ToolBoxSkill_Async
 // await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentVersion.Name, force: true);
 await toolboxClient.DeleteAsync(name: toolBox.Name);
-await skillsClient.DeleteSkillAsync(name: skill.Name);
+// TODO: Uncomment after the bootstrap.
+//await skillsClient.DeleteSkillAsync(name: skill.Name);
 ```
