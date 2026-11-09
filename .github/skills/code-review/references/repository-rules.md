@@ -228,8 +228,8 @@ entries that no longer match a real diff accumulate silently and nothing will fl
   credential type, or newly supported values, identity kinds, or hosts for an existing one —
   including a capability that arrives with no `api/*.cs` change, such as through a dependency
   bump. Binding is explicit per setting, so a missed one is silently unconfigurable — nothing
-  fails. The places to check are usually untouched by the PR; their absence from the diff is the
-  finding:
+  fails. The places to check are usually untouched by the PR, which is no reason to skip them;
+  report a verified gap in one of them, not their absence from the diff:
   1. **Binding** — connection parameters in the `*ClientSettings` type's `BindCore`, options
      properties in the options type's `IConfigurationSection` constructor, credential settings
      in `DefaultAzureCredentialOptions(CredentialSettings, IConfigurationSection)`, and a new
