@@ -534,9 +534,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary>
         /// Authentication configuration used by a cache rule to access an upstream registry.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.GoogleArtifactRegistryCacheAuthentication"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AwsElasticContainerRegistryCacheAuthentication"/>, <see cref="Models.EntraFederatedIdentityCredentialCacheAuthentication"/>, and <see cref="Models.GoogleArtifactRegistryCacheAuthentication"/>.
         /// </summary>
-        /// <param name="authenticationType"> Authentication type discriminator. </param>
+        /// <param name="authenticationType"> Authentication type discriminator. The authentication type cannot change once configured. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryCacheAuthentication"/> instance for mocking. </returns>
         public static ContainerRegistryCacheAuthentication ContainerRegistryCacheAuthentication(string authenticationType = default)
         {
@@ -556,13 +556,172 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new GoogleArtifactRegistryCacheAuthentication(AdditionalAuthenticationType.GoogleArtifactRegistry, default, projectNumber, workloadIdentityPool, workloadIdentityProvider);
         }
 
+        /// <summary> Amazon Elastic Container Registry (ECR) authentication configuration. </summary>
+        /// <param name="accountNumber">
+        /// The AWS account that owns the IAM role used for authentication.
+        /// The IAM role is assumed via AWS Security Token Service (STS) when exchanging a
+        /// federated Entra access token for an ECR access token. The full IAM role ARN is
+        /// derived from `accountNumber`, `rolePath`, and `roleName` as
+        /// `arn:aws:iam::{accountNumber}:role{rolePath}{roleName}` (the initial path defaults to `/`).
+        /// </param>
+        /// <param name="region">
+        /// The AWS region of the upstream Elastic Container Registry (e.g. `us-west-2`).
+        /// Only commercial AWS regions are supported; the GovCloud (`us-gov-*`), China
+        /// (`cn-<i>`), and Secret/Top Secret ISO (`us-iso</i>`) partitions are rejected. The
+        /// pattern stays forward-compatible for new commercial regions without requiring a
+        /// contract change.
+        /// </param>
+        /// <param name="roleName">
+        /// The name of the AWS IAM role assumed for authentication.
+        /// This is the role name only, not the full ARN; the IAM path is supplied separately
+        /// via `rolePath`, so '/' is not permitted here.
+        /// </param>
+        /// <param name="rolePath">
+        /// Optional IAM path of the role (for example `/team/` or `/division/team/`). The value
+        /// must be supplied in canonical form with a leading and trailing '/'; it is validated
+        /// as-is and is never normalized. A non-root path must contain at least one character
+        /// between the surrounding slashes. When authentication is first configured, an omitted
+        /// path defaults to the root (`/`). When updating an existing authentication configuration,
+        /// an omitted path retains its current value.
+        /// </param>
+        /// <returns> A new <see cref="Models.AwsElasticContainerRegistryCacheAuthentication"/> instance for mocking. </returns>
+        public static AwsElasticContainerRegistryCacheAuthentication AwsElasticContainerRegistryCacheAuthentication(string accountNumber = default, string region = default, string roleName = default, string rolePath = default)
+        {
+            return new AwsElasticContainerRegistryCacheAuthentication(
+                AdditionalAuthenticationType.AwsElasticContainerRegistry,
+                default,
+                accountNumber,
+                region,
+                roleName,
+                rolePath);
+        }
+
+        /// <summary> Microsoft Entra federated identity credential authentication configuration. </summary>
+        /// <param name="sourceTenantId">
+        /// The upstream tenant that issues the token for `federatedApplicationClientId` and contains
+        /// the application's enterprise application (service principal).
+        /// </param>
+        /// <param name="federatedApplicationClientId">
+        /// The client ID of the multi-tenant application. Its application registration and
+        /// federated identity credential must be in the cache rule managed identity's home tenant.
+        /// The credential's subject is the managed identity's principal/object ID, not its client ID.
+        /// Its enterprise application (service principal) must exist in `sourceTenantId`.
+        /// </param>
+        /// <returns> A new <see cref="Models.EntraFederatedIdentityCredentialCacheAuthentication"/> instance for mocking. </returns>
+        public static EntraFederatedIdentityCredentialCacheAuthentication EntraFederatedIdentityCredentialCacheAuthentication(string sourceTenantId = default, string federatedApplicationClientId = default)
+        {
+            return new EntraFederatedIdentityCredentialCacheAuthentication(AdditionalAuthenticationType.EntraFederatedIdentityCredential, default, sourceTenantId, federatedApplicationClientId);
+        }
+
         /// <param name="credentialSetResourceId"> The ARM resource ID of the credential store which is associated with the Cache rule. </param>
-        /// <param name="additionalAuthenticationProperties"> Authentication configuration used by the cache rule to access the upstream source repository. </param>
+        /// <param name="additionalAuthenticationProperties">
+        /// Authentication configuration used by the cache rule to access the upstream source repository.
+        /// Omitted fields retain their current values. When authentication is first configured, all
+        /// required fields of the selected authentication type must be supplied. Changing an existing
+        /// authentication type is not supported.
+        /// </param>
         /// <param name="identity"> The identity of the cache rule. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryCacheRulePatch"/> instance for mocking. </returns>
-        public static ContainerRegistryCacheRulePatch ContainerRegistryCacheRulePatch(ResourceIdentifier credentialSetResourceId = default, ContainerRegistryCacheAuthentication additionalAuthenticationProperties = default, ManagedServiceIdentity identity = default)
+        public static ContainerRegistryCacheRulePatch ContainerRegistryCacheRulePatch(ResourceIdentifier credentialSetResourceId = default, AdditionalAuthenticationUpdateProperties additionalAuthenticationProperties = default, ManagedServiceIdentity identity = default)
         {
             return new ContainerRegistryCacheRulePatch(credentialSetResourceId is null && additionalAuthenticationProperties is null ? default : new CacheRuleUpdateProperties(credentialSetResourceId, additionalAuthenticationProperties, default), identity, default);
+        }
+
+        /// <summary>
+        /// Partial authentication configuration for a cache rule. Omitted fields retain their current
+        /// values. When authentication is first configured, all required fields of the selected
+        /// authentication type must be supplied. Changing an existing authentication type is not supported.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.EcrAuthenticationUpdateProperties"/>, <see cref="Models.EntraFederatedIdentityCredentialAuthenticationUpdateProperties"/>, and <see cref="Models.GarAuthenticationUpdateProperties"/>.
+        /// </summary>
+        /// <param name="authenticationType">
+        /// The existing authentication type, or the type to configure when no authentication exists.
+        /// This discriminator is required, but changing an existing authentication type is not supported.
+        /// </param>
+        /// <returns> A new <see cref="Models.AdditionalAuthenticationUpdateProperties"/> instance for mocking. </returns>
+        public static AdditionalAuthenticationUpdateProperties AdditionalAuthenticationUpdateProperties(string authenticationType = default)
+        {
+            return new UnknownAdditionalAuthenticationUpdateProperties(authenticationType is null ? default : new AdditionalAuthenticationType(authenticationType), default);
+        }
+
+        /// <summary>
+        /// Partial Google Artifact Registry (GAR) authentication configuration.
+        /// When authentication is first configured, projectNumber, workloadIdentityPool, and
+        /// workloadIdentityProvider must be supplied.
+        /// </summary>
+        /// <param name="projectNumber">
+        /// The Google Cloud Platform project that is configured for authentication
+        /// Permissions should be granted to principal://iam.googleapis.com/projects/{ProjectNumber}/locations/global/workloadIdentityPools/{WorkloadIdentityPool}/providers/{WorkloadIdentityProvider}/subject/{ManagedIdentityPrincipal}
+        /// </param>
+        /// <param name="workloadIdentityPool"> The Google Cloud platform workload identity pool used for authentication. </param>
+        /// <param name="workloadIdentityProvider"> The Google Cloud Platform workload identity provider used for authentication. </param>
+        /// <returns> A new <see cref="Models.GarAuthenticationUpdateProperties"/> instance for mocking. </returns>
+        public static GarAuthenticationUpdateProperties GarAuthenticationUpdateProperties(string projectNumber = default, string workloadIdentityPool = default, string workloadIdentityProvider = default)
+        {
+            return new GarAuthenticationUpdateProperties(AdditionalAuthenticationType.GoogleArtifactRegistry, default, projectNumber, workloadIdentityPool, workloadIdentityProvider);
+        }
+
+        /// <summary>
+        /// Partial Amazon Elastic Container Registry (ECR) authentication configuration.
+        /// When authentication is first configured, accountNumber, region, and roleName must be supplied.
+        /// </summary>
+        /// <param name="accountNumber">
+        /// The AWS account that owns the IAM role used for authentication.
+        /// The IAM role is assumed via AWS Security Token Service (STS) when exchanging a
+        /// federated Entra access token for an ECR access token. The full IAM role ARN is
+        /// derived from `accountNumber`, `rolePath`, and `roleName` as
+        /// `arn:aws:iam::{accountNumber}:role{rolePath}{roleName}` (the initial path defaults to `/`).
+        /// </param>
+        /// <param name="region">
+        /// The AWS region of the upstream Elastic Container Registry (e.g. `us-west-2`).
+        /// Only commercial AWS regions are supported; the GovCloud (`us-gov-*`), China
+        /// (`cn-<i>`), and Secret/Top Secret ISO (`us-iso</i>`) partitions are rejected. The
+        /// pattern stays forward-compatible for new commercial regions without requiring a
+        /// contract change.
+        /// </param>
+        /// <param name="roleName">
+        /// The name of the AWS IAM role assumed for authentication.
+        /// This is the role name only, not the full ARN; the IAM path is supplied separately
+        /// via `rolePath`, so '/' is not permitted here.
+        /// </param>
+        /// <param name="rolePath">
+        /// Optional IAM path of the role (for example `/team/` or `/division/team/`). The value
+        /// must be supplied in canonical form with a leading and trailing '/'; it is validated
+        /// as-is and is never normalized. A non-root path must contain at least one character
+        /// between the surrounding slashes. When authentication is first configured, an omitted
+        /// path defaults to the root (`/`). When updating an existing authentication configuration,
+        /// an omitted path retains its current value.
+        /// </param>
+        /// <returns> A new <see cref="Models.EcrAuthenticationUpdateProperties"/> instance for mocking. </returns>
+        public static EcrAuthenticationUpdateProperties EcrAuthenticationUpdateProperties(string accountNumber = default, string region = default, string roleName = default, string rolePath = default)
+        {
+            return new EcrAuthenticationUpdateProperties(
+                AdditionalAuthenticationType.AwsElasticContainerRegistry,
+                default,
+                accountNumber,
+                region,
+                roleName,
+                rolePath);
+        }
+
+        /// <summary>
+        /// Partial Microsoft Entra federated identity credential authentication configuration.
+        /// When authentication is first configured, sourceTenantId and federatedApplicationClientId
+        /// must be supplied.
+        /// </summary>
+        /// <param name="sourceTenantId">
+        /// The upstream tenant that issues the token for `federatedApplicationClientId` and contains
+        /// the application's enterprise application (service principal).
+        /// </param>
+        /// <param name="federatedApplicationClientId">
+        /// The client ID of the multi-tenant application. Its application registration and
+        /// federated identity credential must be in the cache rule managed identity's home tenant.
+        /// The credential's subject is the managed identity's principal/object ID, not its client ID.
+        /// Its enterprise application (service principal) must exist in `sourceTenantId`.
+        /// </param>
+        /// <returns> A new <see cref="Models.EntraFederatedIdentityCredentialAuthenticationUpdateProperties"/> instance for mocking. </returns>
+        public static EntraFederatedIdentityCredentialAuthenticationUpdateProperties EntraFederatedIdentityCredentialAuthenticationUpdateProperties(string sourceTenantId = default, string federatedApplicationClientId = default)
+        {
+            return new EntraFederatedIdentityCredentialAuthenticationUpdateProperties(AdditionalAuthenticationType.EntraFederatedIdentityCredential, default, sourceTenantId, federatedApplicationClientId);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

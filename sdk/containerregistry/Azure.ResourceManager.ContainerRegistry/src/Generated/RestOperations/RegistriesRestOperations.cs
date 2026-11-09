@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries/", false);
             uri.AppendPath(registryName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ContainerRegistry/registries") ?? "2026-09-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ContainerRegistry/registries") ?? "2026-10-15-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries/", false);
             uri.AppendPath(registryName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ContainerRegistry/registries") ?? "2026-09-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ContainerRegistry/registries") ?? "2026-10-15-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries/", false);
             uri.AppendPath(registryName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ContainerRegistry/registries") ?? "2026-09-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ContainerRegistry/registries") ?? "2026-10-15-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries/", false);
             uri.AppendPath(registryName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ContainerRegistry/registries") ?? "2026-09-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ContainerRegistry/registries") ?? "2026-10-15-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ContainerRegistry/registries") ?? "2026-09-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ContainerRegistry/registries") ?? "2026-10-15-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.ContainerRegistry/registries") ?? "2026-09-01-preview");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.ContainerRegistry/registries") ?? "2026-10-15-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ContainerRegistry/registries") ?? "2026-09-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ContainerRegistry/registries") ?? "2026-10-15-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.ContainerRegistry/registries") ?? "2026-09-01-preview");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.ContainerRegistry/registries") ?? "2026-10-15-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries/", false);
             uri.AppendPath(registryName, true);
             uri.AppendPath("/importImage", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ContainerRegistry/registries") ?? "2026-09-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ContainerRegistry/registries") ?? "2026-10-15-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries/", false);
             uri.AppendPath(registryName, true);
             uri.AppendPath("/listUsages", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ContainerRegistry/registries") ?? "2026-09-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ContainerRegistry/registries") ?? "2026-10-15-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries/", false);
             uri.AppendPath(registryName, true);
             uri.AppendPath("/listCredentials", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ContainerRegistry/registries") ?? "2026-09-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ContainerRegistry/registries") ?? "2026-10-15-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries/", false);
             uri.AppendPath(registryName, true);
             uri.AppendPath("/regenerateCredential", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ContainerRegistry/registries") ?? "2026-09-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ContainerRegistry/registries") ?? "2026-10-15-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries/", false);
             uri.AppendPath(registryName, true);
             uri.AppendPath("/generateCredentials", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ContainerRegistry/registries") ?? "2026-09-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ContainerRegistry/registries") ?? "2026-10-15-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             uri.AppendPath(registryName, true);
             uri.AppendPath("/privateLinkResources/", false);
             uri.AppendPath(groupName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ContainerRegistry/registries/privateLinkResources") ?? "2026-09-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ContainerRegistry/registries/privateLinkResources") ?? "2026-10-15-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries/", false);
             uri.AppendPath(registryName, true);
             uri.AppendPath("/privateLinkResources", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ContainerRegistry/registries/privateLinkResources") ?? "2026-09-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.ContainerRegistry/registries/privateLinkResources") ?? "2026-10-15-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.ContainerRegistry/registries/privateLinkResources") ?? "2026-09-01-preview");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.ContainerRegistry/registries/privateLinkResources") ?? "2026-10-15-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

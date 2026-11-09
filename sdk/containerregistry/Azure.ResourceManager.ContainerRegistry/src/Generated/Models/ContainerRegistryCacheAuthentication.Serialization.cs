@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary>
     /// Authentication configuration used by a cache rule to access an upstream registry.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="GoogleArtifactRegistryCacheAuthentication"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AwsElasticContainerRegistryCacheAuthentication"/>, <see cref="EntraFederatedIdentityCredentialCacheAuthentication"/>, and <see cref="GoogleArtifactRegistryCacheAuthentication"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownContainerRegistryCacheAuthentication))]
     public abstract partial class ContainerRegistryCacheAuthentication : IJsonModel<ContainerRegistryCacheAuthentication>
@@ -130,6 +130,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "AwsElasticContainerRegistry":
+                        return AwsElasticContainerRegistryCacheAuthentication.DeserializeAwsElasticContainerRegistryCacheAuthentication(element, options);
+                    case "EntraFederatedIdentityCredential":
+                        return EntraFederatedIdentityCredentialCacheAuthentication.DeserializeEntraFederatedIdentityCredentialCacheAuthentication(element, options);
                     case "GoogleArtifactRegistry":
                         return GoogleArtifactRegistryCacheAuthentication.DeserializeGoogleArtifactRegistryCacheAuthentication(element, options);
                 }

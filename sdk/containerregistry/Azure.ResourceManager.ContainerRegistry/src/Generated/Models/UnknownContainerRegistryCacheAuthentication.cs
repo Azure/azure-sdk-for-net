@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     internal partial class UnknownContainerRegistryCacheAuthentication : ContainerRegistryCacheAuthentication
     {
         /// <summary> Initializes a new instance of <see cref="UnknownContainerRegistryCacheAuthentication"/>. </summary>
-        /// <param name="authenticationType"> Authentication type discriminator. </param>
+        /// <param name="authenticationType"> Authentication type discriminator. The authentication type cannot change once configured. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal UnknownContainerRegistryCacheAuthentication(AdditionalAuthenticationType authenticationType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(authenticationType != default ? authenticationType : "unknown", additionalBinaryDataProperties)
         {

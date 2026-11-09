@@ -17,6 +17,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         private readonly string _value;
         /// <summary> Google Artifact Registry (GAR) authentication via workload identity federation. </summary>
         private const string GoogleArtifactRegistryValue = "GoogleArtifactRegistry";
+        /// <summary> Amazon Elastic Container Registry (ECR) authentication via workload identity federation. </summary>
+        private const string AwsElasticContainerRegistryValue = "AwsElasticContainerRegistry";
+        /// <summary>
+        /// Microsoft Entra authentication via a federated identity credential on an application
+        /// in another tenant.
+        /// </summary>
+        private const string EntraFederatedIdentityCredentialValue = "EntraFederatedIdentityCredential";
 
         /// <summary> Initializes a new instance of <see cref="AdditionalAuthenticationType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -30,6 +37,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Google Artifact Registry (GAR) authentication via workload identity federation. </summary>
         public static AdditionalAuthenticationType GoogleArtifactRegistry { get; } = new AdditionalAuthenticationType(GoogleArtifactRegistryValue);
+
+        /// <summary> Amazon Elastic Container Registry (ECR) authentication via workload identity federation. </summary>
+        public static AdditionalAuthenticationType AwsElasticContainerRegistry { get; } = new AdditionalAuthenticationType(AwsElasticContainerRegistryValue);
+
+        /// <summary>
+        /// Microsoft Entra authentication via a federated identity credential on an application
+        /// in another tenant.
+        /// </summary>
+        public static AdditionalAuthenticationType EntraFederatedIdentityCredential { get; } = new AdditionalAuthenticationType(EntraFederatedIdentityCredentialValue);
 
         /// <summary> Determines if two <see cref="AdditionalAuthenticationType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
