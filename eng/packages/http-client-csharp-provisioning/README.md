@@ -45,3 +45,5 @@ Keep all three generator dependencies in `package.json` aligned with
 `eng/centralpackagemanagement/Directory.Generation.Packages.props` and compatible
 with each other. After updating the pins, run `npm install` in this directory,
 then run `eng/scripts/Generate.ps1` to regenerate and build both local fixtures.
+Keep dependency overrides and automatic-pinning entries aligned with the management
+emitter's `package.json`.
