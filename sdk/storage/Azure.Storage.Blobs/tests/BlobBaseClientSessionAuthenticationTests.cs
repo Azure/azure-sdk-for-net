@@ -596,6 +596,9 @@ namespace Azure.Storage.Blobs.Test
         [RecordedTest]
         public async Task GetPropertiesAsync_Sessions()
         {
+            // Initialize credential diagnostics outside instrumented client operations.
+            await GetAuthToken();
+
             string containerName = GetNewContainerName();
             SessionAuthCountingPolicy countingPolicy = new SessionAuthCountingPolicy(containerName);
             BlobClientOptions options = GetOptions();
