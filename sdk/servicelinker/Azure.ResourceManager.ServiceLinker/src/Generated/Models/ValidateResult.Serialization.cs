@@ -75,25 +75,53 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 throw new FormatException($"The model {nameof(ValidateResult)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(LinkerName))
+            if (Optional.IsDefined(LinkerName, _linkerNameIsDefined))
             {
-                writer.WritePropertyName("linkerName"u8);
-                writer.WriteStringValue(LinkerName);
+                if (LinkerName != null)
+                {
+                    writer.WritePropertyName("linkerName"u8);
+                    writer.WriteStringValue(LinkerName);
+                }
+                else
+                {
+                    writer.WriteNull("linkerName"u8);
+                }
             }
-            if (Optional.IsDefined(IsConnectionAvailable))
+            if (Optional.IsDefined(IsConnectionAvailable, _isConnectionAvailableIsDefined))
             {
-                writer.WritePropertyName("isConnectionAvailable"u8);
-                writer.WriteBooleanValue(IsConnectionAvailable.Value);
+                if (IsConnectionAvailable != null)
+                {
+                    writer.WritePropertyName("isConnectionAvailable"u8);
+                    writer.WriteBooleanValue(IsConnectionAvailable.Value);
+                }
+                else
+                {
+                    writer.WriteNull("isConnectionAvailable"u8);
+                }
             }
-            if (Optional.IsDefined(ReportStartOn))
+            if (Optional.IsDefined(ReportStartsOn, _reportStartsOnIsDefined))
             {
-                writer.WritePropertyName("reportStartTimeUtc"u8);
-                writer.WriteStringValue(ReportStartOn.Value, "O");
+                if (ReportStartsOn != null)
+                {
+                    writer.WritePropertyName("reportStartTimeUtc"u8);
+                    writer.WriteStringValue(ReportStartsOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("reportStartTimeUtc"u8);
+                }
             }
-            if (Optional.IsDefined(ReportEndOn))
+            if (Optional.IsDefined(ReportEndsOn, _reportEndsOnIsDefined))
             {
-                writer.WritePropertyName("reportEndTimeUtc"u8);
-                writer.WriteStringValue(ReportEndOn.Value, "O");
+                if (ReportEndsOn != null)
+                {
+                    writer.WritePropertyName("reportEndTimeUtc"u8);
+                    writer.WriteStringValue(ReportEndsOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("reportEndTimeUtc"u8);
+                }
             }
             if (Optional.IsDefined(SourceId))
             {
@@ -105,10 +133,17 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 writer.WritePropertyName("targetId"u8);
                 writer.WriteStringValue(TargetId);
             }
-            if (Optional.IsDefined(AuthType))
+            if (Optional.IsDefined(AuthType, _authTypeIsDefined))
             {
-                writer.WritePropertyName("authType"u8);
-                writer.WriteStringValue(AuthType.Value.ToString());
+                if (AuthType != null)
+                {
+                    writer.WritePropertyName("authType"u8);
+                    writer.WriteStringValue(AuthType.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("authType"u8);
+                }
             }
             if (Optional.IsCollectionDefined(ValidationDetail))
             {
@@ -162,12 +197,17 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
+            bool linkerNameIsDefined = false;
             string linkerName = default;
+            bool isConnectionAvailableIsDefined = false;
             bool? isConnectionAvailable = default;
-            DateTimeOffset? reportStartOn = default;
-            DateTimeOffset? reportEndOn = default;
+            bool reportStartsOnIsDefined = false;
+            DateTimeOffset? reportStartsOn = default;
+            bool reportEndsOnIsDefined = false;
+            DateTimeOffset? reportEndsOn = default;
             ResourceIdentifier sourceId = default;
             ResourceIdentifier targetId = default;
+            bool authTypeIsDefined = false;
             LinkerAuthType? authType = default;
             IList<LinkerValidationResultItemInfo> validationDetail = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -175,6 +215,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 if (prop.NameEquals("linkerName"u8))
                 {
+                    linkerNameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         linkerName = null;
@@ -185,6 +226,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (prop.NameEquals("isConnectionAvailable"u8))
                 {
+                    isConnectionAvailableIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         isConnectionAvailable = null;
@@ -195,22 +237,24 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (prop.NameEquals("reportStartTimeUtc"u8))
                 {
+                    reportStartsOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        reportStartOn = null;
+                        reportStartsOn = null;
                         continue;
                     }
-                    reportStartOn = prop.Value.GetDateTimeOffset("O");
+                    reportStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("reportEndTimeUtc"u8))
                 {
+                    reportEndsOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        reportEndOn = null;
+                        reportEndsOn = null;
                         continue;
                     }
-                    reportEndOn = prop.Value.GetDateTimeOffset("O");
+                    reportEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("sourceId"u8))
@@ -233,6 +277,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (prop.NameEquals("authType"u8))
                 {
+                    authTypeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         authType = null;
@@ -257,19 +302,26 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ValidateResult(
                 linkerName,
                 isConnectionAvailable,
-                reportStartOn,
-                reportEndOn,
+                reportStartsOn,
+                reportEndsOn,
                 sourceId,
                 targetId,
                 authType,
                 validationDetail ?? new ChangeTrackingList<LinkerValidationResultItemInfo>(),
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _linkerNameIsDefined = linkerNameIsDefined,
+                _isConnectionAvailableIsDefined = isConnectionAvailableIsDefined,
+                _reportStartsOnIsDefined = reportStartsOnIsDefined,
+                _reportEndsOnIsDefined = reportEndsOnIsDefined,
+                _authTypeIsDefined = authTypeIsDefined
+            };
         }
     }
 }

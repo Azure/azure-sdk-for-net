@@ -109,14 +109,14 @@ namespace Azure.Search.Documents.Tests.Models
                 .SetName("Roundtrip_CorsOptions");
 
 #if AZURE_SEARCH_PREVIEW
-            // --- 2026-05-01-preview: new knowledge source polymorphic subtypes ---
+            // --- 2026-08-01-preview: new knowledge source polymorphic subtypes ---
             // Each carries the discriminator ("kind") and a nested parameters object; roundtrip exercises
             // the polymorphic dispatch in the KnowledgeSource base type plus the subtype's own serializer.
 
             // McpServerKnowledgeSource — MCP server with stored-headers auth and a tool that uses auto output parsing.
             yield return new TestCaseData(
                 typeof(McpServerKnowledgeSource),
-                @"{""name"":""mcp-ks"",""kind"":""mcpServer"",""mcpServerParameters"":{""serverURL"":""https://learn.microsoft.com/api/mcp"",""authentication"":{""kind"":""storedHeaders"",""storedHeadersParameters"":{""headers"":{""Authorization"":""Bearer fake""}}},""tools"":[{""name"":""microsoft_docs_search"",""outputParsing"":{""kind"":""auto""},""inclusionMode"":""always""}]}}")
+                @"{""name"":""mcp-ks"",""kind"":""mcpServer"",""mcpServerParameters"":{""serverURL"":""https://learn.microsoft.com/api/mcp"",""authentication"":{""kind"":""storedHeaders"",""storedHeadersParameters"":{""headers"":{""Authorization"":""Bearer fake""}}},""tools"":[{""name"":""microsoft_docs_search"",""outputParsing"":{""kind"":""auto""},""resultsProcessing"":""rerank""}]}}")
                 .SetName("Roundtrip_McpServerKnowledgeSource");
 
             // FabricDataAgentKnowledgeSource

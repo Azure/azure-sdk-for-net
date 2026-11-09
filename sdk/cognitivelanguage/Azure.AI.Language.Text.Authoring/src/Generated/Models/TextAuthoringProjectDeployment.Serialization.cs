@@ -202,7 +202,7 @@ namespace Azure.AI.Language.Text.Authoring
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new TextAuthoringProjectDeployment(
@@ -212,7 +212,7 @@ namespace Azure.AI.Language.Text.Authoring
                 lastDeployedOn,
                 deploymentExpiredOn,
                 modelTrainingConfigVersion,
-                assignedResources,
+                assignedResources ?? new ChangeTrackingList<TextAuthoringDeploymentResource>(),
                 additionalBinaryDataProperties);
         }
     }

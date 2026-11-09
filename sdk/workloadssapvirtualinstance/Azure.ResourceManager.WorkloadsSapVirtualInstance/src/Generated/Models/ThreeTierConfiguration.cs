@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         {
             get
             {
-                return HighAvailabilityConfig is null ? default : HighAvailabilityConfig.HighAvailabilityType;
+                return HighAvailabilityConfig is null ? (SapHighAvailabilityType?)default : HighAvailabilityConfig.HighAvailabilityType;
             }
             set
             {

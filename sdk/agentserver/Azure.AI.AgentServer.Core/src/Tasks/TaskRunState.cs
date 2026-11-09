@@ -16,11 +16,17 @@ internal sealed class TaskRunState<TOutput>
     private readonly TaskCompletionSource<TOutput> _completion =
         new(TaskCreationOptions.RunContinuationsAsynchronously);
 
-    public TaskRunState(string taskId, string inputId, bool isQueued)
+    public TaskRunState(
+        string taskId,
+        string inputId,
+        bool isQueued,
+        TaskStreamState stream)
     {
         TaskId = taskId;
         InputId = inputId;
         IsQueued = isQueued;
+        StreamState = stream;
+        Cancel = Cancellation.RequestAsync;
     }
 
     public string TaskId { get; }
@@ -29,6 +35,10 @@ internal sealed class TaskRunState<TOutput>
 
     public bool IsQueued { get; }
 
+    public TaskStreamState StreamState { get; }
+
+    public TaskStream Stream => StreamState.Reader;
+
     /// <summary>
     /// The crash-recovery generation for the run's context (spec §22): mirrors the record's
     /// lease <c>generation</c> at dispatch. 0 on a fresh run; incremented each time the lease is
@@ -36,13 +46,23 @@ internal sealed class TaskRunState<TOutput>
     /// </summary>
     public int RecoveryCount { get; set; }
 
-    public Func<Task> Cancel { get; set; } = () => Task.CompletedTask;
+    public TaskRunCancellation Cancellation { get; } = new();
+
+    public Func<Task> Cancel { get; set; }
 
     public Task<TOutput> ResultTask => _completion.Task;
 
-    public void SetResult(TOutput result) => _completion.TrySetResult(result);
+    public void SetResult(TOutput result)
+    {
+        Cancellation.Retire();
+        _completion.TrySetResult(result);
+    }
 
-    public void SetException(Exception exception) => _completion.TrySetException(exception);
+    public void SetException(Exception exception)
+    {
+        Cancellation.Retire();
+        _completion.TrySetException(exception);
+    }
 
     public Task RequestCancellationAsync() => Cancel();
 

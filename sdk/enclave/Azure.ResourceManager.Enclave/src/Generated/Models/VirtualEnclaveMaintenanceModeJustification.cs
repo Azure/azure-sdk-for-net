@@ -11,12 +11,15 @@ using Azure.ResourceManager.Enclave;
 
 namespace Azure.ResourceManager.Enclave.Models
 {
-    /// <summary></summary>
+    /// <summary> The justification for entering or exiting virtual enclave maintenance mode. </summary>
     public readonly partial struct VirtualEnclaveMaintenanceModeJustification : IEquatable<VirtualEnclaveMaintenanceModeJustification>
     {
         private readonly string _value;
+        /// <summary> Maintenance mode is required for networking changes. </summary>
         private const string NetworkingValue = "Networking";
+        /// <summary> Maintenance mode is required for governance changes. </summary>
         private const string GovernanceValue = "Governance";
+        /// <summary> No maintenance mode justification applies. </summary>
         private const string OffValue = "Off";
 
         /// <summary> Initializes a new instance of <see cref="VirtualEnclaveMaintenanceModeJustification"/>. </summary>
@@ -29,13 +32,13 @@ namespace Azure.ResourceManager.Enclave.Models
             _value = value;
         }
 
-        /// <summary> Gets the Networking. </summary>
+        /// <summary> Maintenance mode is required for networking changes. </summary>
         public static VirtualEnclaveMaintenanceModeJustification Networking { get; } = new VirtualEnclaveMaintenanceModeJustification(NetworkingValue);
 
-        /// <summary> Gets the Governance. </summary>
+        /// <summary> Maintenance mode is required for governance changes. </summary>
         public static VirtualEnclaveMaintenanceModeJustification Governance { get; } = new VirtualEnclaveMaintenanceModeJustification(GovernanceValue);
 
-        /// <summary> Gets the Off. </summary>
+        /// <summary> No maintenance mode justification applies. </summary>
         public static VirtualEnclaveMaintenanceModeJustification Off { get; } = new VirtualEnclaveMaintenanceModeJustification(OffValue);
 
         /// <summary> Determines if two <see cref="VirtualEnclaveMaintenanceModeJustification"/> values are the same. </summary>

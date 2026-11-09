@@ -10,9 +10,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Resources.Deployments.Models;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Deployments
 {
     /// <summary></summary>
     internal partial class ArmDeploymentValidateResultOperationSource : IOperationSource<ArmDeploymentValidateResult>

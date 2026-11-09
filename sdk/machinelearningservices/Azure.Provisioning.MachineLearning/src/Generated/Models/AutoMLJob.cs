@@ -26,6 +26,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new AutoMLJob. </summary>
         public AutoMLJob()
         {
+            JobType.Assign(MachineLearning.JobType.AutoML);
         }
 
         /// <summary> Gets or sets the EnvironmentId. </summary>
@@ -139,7 +140,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("jobType", new string[] { "jobType" }, defaultValue: "AutoML");
             _environmentId = DefineProperty<string>(nameof(EnvironmentId), new string[] { "environmentId" });
             _environmentVariables = DefineDictionaryProperty<string>(nameof(EnvironmentVariables), new string[] { "environmentVariables" });
             _outputs = DefineDictionaryProperty<MachineLearningJobOutput>(nameof(Outputs), new string[] { "outputs" });

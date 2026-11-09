@@ -18,6 +18,7 @@ namespace Azure.Provisioning.EventHubs
         /// <summary> Creates a new EventHubsThrottlingPolicy. </summary>
         public EventHubsThrottlingPolicy()
         {
+            ApplicationGroupPolicyType.Assign(EventHubs.ApplicationGroupPolicyType.ThrottlingPolicy);
         }
 
         /// <summary> Gets or sets the RateLimitThreshold. </summary>
@@ -54,7 +55,6 @@ namespace Azure.Provisioning.EventHubs
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("type", new string[] { "type" }, defaultValue: "ThrottlingPolicy");
             _rateLimitThreshold = DefineProperty<long>(nameof(RateLimitThreshold), new string[] { "rateLimitThreshold" }, isRequired: true);
             _metricId = DefineProperty<EventHubsMetricId>(nameof(MetricId), new string[] { "metricId" }, isRequired: true);
             DefineAdditionalProperties();

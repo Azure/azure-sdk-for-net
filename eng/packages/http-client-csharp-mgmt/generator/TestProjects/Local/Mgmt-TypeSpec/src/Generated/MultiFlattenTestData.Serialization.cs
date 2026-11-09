@@ -189,12 +189,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         continue;
                     }
-                    properties = MultiFlattenProperties.DeserializeMultiFlattenProperties(prop.Value, options);
+                    properties = MultiFlattenProperties.DeserializeMultiFlattenProperties(prop.Value, prop.Value.GetUtf8Bytes(), options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MultiFlattenTestData(

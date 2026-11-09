@@ -19,17 +19,14 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> Initializes a new instance of <see cref="BulkCreateCustomProperties"/>. </summary>
         /// <param name="capacity"> Total capacity to achieve. It can be in terms of VMs or vCPUs. </param>
-        /// <param name="priorityProfile"> Configuration Options for Regular or Spot instances in BulkCreateCustom. </param>
         /// <param name="computeProfile"> Compute Profile to configure the Virtual Machines. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="priorityProfile"/> or <paramref name="computeProfile"/> is null. </exception>
-        public BulkCreateCustomProperties(int capacity, BulkCreateCustomPriorityProfile priorityProfile, ComputeProfile computeProfile)
+        /// <exception cref="ArgumentNullException"> <paramref name="computeProfile"/> is null. </exception>
+        public BulkCreateCustomProperties(int capacity, ComputeProfile computeProfile)
         {
-            Argument.AssertNotNull(priorityProfile, nameof(priorityProfile));
             Argument.AssertNotNull(computeProfile, nameof(computeProfile));
 
             Capacity = capacity;
-            PriorityProfile = priorityProfile;
-            VmSizesProfile = new ChangeTrackingList<BulkCreateCustomVmSizeProfile>();
+            Resources = new ChangeTrackingList<BulkCreateCustomResolvedItem>();
             ComputeProfile = computeProfile;
         }
 
@@ -38,23 +35,19 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="capacity"> Total capacity to achieve. It can be in terms of VMs or vCPUs. </param>
         /// <param name="capacityType"> Specifies capacity type for launching instances. It can be in terms of VMs or vCPUs. </param>
-        /// <param name="priorityProfile"> Configuration Options for Regular or Spot instances in BulkCreateCustom. </param>
-        /// <param name="vmSizesProfile"> List of VM sizes supported for BulkCreateCustom. </param>
+        /// <param name="resources"> The virtual machine resources resolved for the operation. </param>
         /// <param name="computeProfile"> Compute Profile to configure the Virtual Machines. </param>
-        /// <param name="zoneAllocationPolicy"> Zone Allocation Policy for launching instances. </param>
         /// <param name="overridesProfile"> Per-VM overrides and the shared name prefix, specified when the operation is created. </param>
         /// <param name="executionParameters"> Extra parameters that control how the request is executed, including the retry policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BulkCreateCustomProperties(DateTimeOffset? createdOn, BulkInstancesOperationProvisioningState? provisioningState, int capacity, CapacityType? capacityType, BulkCreateCustomPriorityProfile priorityProfile, IList<BulkCreateCustomVmSizeProfile> vmSizesProfile, ComputeProfile computeProfile, BulkCreateCustomZoneAllocationPolicy zoneAllocationPolicy, BulkCreateCustomOverridesProfile overridesProfile, BulkActionExecutionParameterDetail executionParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkCreateCustomProperties(DateTimeOffset? createdOn, BulkInstancesOperationProvisioningState? provisioningState, int capacity, CapacityType? capacityType, IReadOnlyList<BulkCreateCustomResolvedItem> resources, ComputeProfile computeProfile, BulkCreateCustomOverridesProfile overridesProfile, BulkActionExecutionParameterDetail executionParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CreatedOn = createdOn;
             ProvisioningState = provisioningState;
             Capacity = capacity;
             CapacityType = capacityType;
-            PriorityProfile = priorityProfile;
-            VmSizesProfile = vmSizesProfile;
+            Resources = resources;
             ComputeProfile = computeProfile;
-            ZoneAllocationPolicy = zoneAllocationPolicy;
             OverridesProfile = overridesProfile;
             ExecutionParameters = executionParameters;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -72,17 +65,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> Specifies capacity type for launching instances. It can be in terms of VMs or vCPUs. </summary>
         public CapacityType? CapacityType { get; set; }
 
-        /// <summary> Configuration Options for Regular or Spot instances in BulkCreateCustom. </summary>
-        public BulkCreateCustomPriorityProfile PriorityProfile { get; set; }
-
-        /// <summary> List of VM sizes supported for BulkCreateCustom. </summary>
-        public IList<BulkCreateCustomVmSizeProfile> VmSizesProfile { get; }
+        /// <summary> The virtual machine resources resolved for the operation. </summary>
+        public IReadOnlyList<BulkCreateCustomResolvedItem> Resources { get; }
 
         /// <summary> Compute Profile to configure the Virtual Machines. </summary>
         public ComputeProfile ComputeProfile { get; set; }
-
-        /// <summary> Zone Allocation Policy for launching instances. </summary>
-        public BulkCreateCustomZoneAllocationPolicy ZoneAllocationPolicy { get; set; }
 
         /// <summary> Per-VM overrides and the shared name prefix, specified when the operation is created. </summary>
         public BulkCreateCustomOverridesProfile OverridesProfile { get; set; }

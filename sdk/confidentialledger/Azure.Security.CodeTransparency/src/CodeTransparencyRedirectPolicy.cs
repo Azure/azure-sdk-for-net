@@ -138,7 +138,7 @@ namespace Azure.Security.CodeTransparency
 
             int redirectCount = 0;
 
-            while (IsRedirectResponse(message.Response.Status))
+            while (ShouldFollowRedirect(message))
             {
                 if (++redirectCount > MaxRedirects)
                 {
@@ -295,6 +295,11 @@ namespace Azure.Security.CodeTransparency
         private static bool IsRedirectResponse(int statusCode)
         {
             return statusCode == SeeOtherStatusCode || statusCode == 307 || statusCode == 308;
+        }
+
+        private static bool ShouldFollowRedirect(HttpMessage message)
+        {
+            return IsRedirectResponse(message.Response.Status);
         }
 
         private static Uri BuildRedirectUri(Uri requestUri, string location)

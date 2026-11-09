@@ -413,15 +413,6 @@ public class CustomerServiceBot : IDisposable
                     await _audioProcessor.StopPlaybackAsync().ConfigureAwait(false);
                 }
 
-                // Cancel any ongoing response
-                try
-                {
-                    await _session!.CancelResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogDebug(ex, "No response to cancel");
-                }
                 break;
 
             case SessionUpdateInputAudioBufferSpeechStopped speechStopped:

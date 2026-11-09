@@ -1,12 +1,9 @@
 $repoRoot = Resolve-Path (Join-Path $PSScriptRoot '..')
 
 $failingSpecs = @(
-    Join-Path 'http' 'streaming' 'jsonl'
-    Join-Path 'http' 'response' 'status-code-range' # Response namespace conflicts with Azure.Response
     Join-Path 'http' 'type' 'file'
 # Azure scenarios not yet buildable
 
-    Join-Path 'http' 'azure' 'client-generator-core' 'alternate-type'
     Join-Path 'http' 'azure' 'client-generator-core' 'deserialize-empty-string-as-null' # long path issue and also not needed for Azure emitter
     Join-Path 'http' 'azure' 'client-generator-core' 'flatten-property' # flatten property not supported
     Join-Path 'http' 'authentication' 'noauth' 'union' # NoAuth not supported
@@ -22,6 +19,7 @@ $failingSpecs = @(
     Join-Path 'http' 'azure' 'resource-manager' 'multi-service-shared-models'
     Join-Path 'http' 'azure' 'resource-manager' 'multi-service-older-versions'
     Join-Path 'http' 'azure' 'resource-manager' 'management-group'
+    Join-Path 'http' 'azure' 'resource-manager' 'service-group'
 )
 
 function Capitalize-FirstLetter {

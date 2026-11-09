@@ -9,7 +9,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Deployments
 {
     internal static partial class PipelineRequestHeadersExtensions
     {

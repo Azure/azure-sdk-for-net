@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityAssessmentMetadataData, TenantAssessmentMetadataResource>(new AssessmentsMetadataGetAllAsyncCollectionResultOfT(_assessmentsMetadataRestClient, context, "TenantAssessmentMetadataCollection.GetAll"), data => new TenantAssessmentMetadataResource(Client, data));
+            return new AsyncPageableWrapper<SecurityAssessmentMetadataData, TenantAssessmentMetadataResource>(new SecurityAssessmentMetadataDataAsync0CollectionResultOfT(_assessmentsMetadataRestClient, context, "TenantAssessmentMetadataCollection.GetAll"), data => new TenantAssessmentMetadataResource(Client, data));
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityAssessmentMetadataData, TenantAssessmentMetadataResource>(new AssessmentsMetadataGetAllCollectionResultOfT(_assessmentsMetadataRestClient, context, "TenantAssessmentMetadataCollection.GetAll"), data => new TenantAssessmentMetadataResource(Client, data));
+            return new PageableWrapper<SecurityAssessmentMetadataData, TenantAssessmentMetadataResource>(new SecurityAssessmentMetadataData0CollectionResultOfT(_assessmentsMetadataRestClient, context, "TenantAssessmentMetadataCollection.GetAll"), data => new TenantAssessmentMetadataResource(Client, data));
         }
 
         /// <summary>

@@ -30,14 +30,16 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Initializes a new instance of <see cref="AkriConnectorTemplateRuntimeImageConfigurationSettings"/>. </summary>
         /// <param name="imageName"> The image name without any registry reference, tag or digest. </param>
         /// <param name="imagePullPolicy"> The pull policy of the image. </param>
+        /// <param name="readinessProbe"> Optional readiness probe for the connector container. When set, the operator injects this into the pod spec and uses the pod's `Ready` condition for health reporting instead of crash-based detection. </param>
         /// <param name="replicas"> The number of replicas to be set up. </param>
         /// <param name="registrySettings"> The registry settings for the image. You can omit this field if using the default docker hub repository or using a local image. </param>
         /// <param name="tagDigestSettings"> Optional image tag or digest. If not specified, the default tag is `latest`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AkriConnectorTemplateRuntimeImageConfigurationSettings(string imageName, AkriConnectorsImagePullPolicy? imagePullPolicy, int? replicas, AkriConnectorsRegistrySettings registrySettings, AkriConnectorsTagDigestSettings tagDigestSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AkriConnectorTemplateRuntimeImageConfigurationSettings(string imageName, AkriConnectorsImagePullPolicy? imagePullPolicy, AkriConnectorTemplateReadinessProbe readinessProbe, int? replicas, AkriConnectorsRegistrySettings registrySettings, AkriConnectorsTagDigestSettings tagDigestSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ImageName = imageName;
             ImagePullPolicy = imagePullPolicy;
+            ReadinessProbe = readinessProbe;
             Replicas = replicas;
             RegistrySettings = registrySettings;
             TagDigestSettings = tagDigestSettings;
@@ -49,6 +51,9 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> The pull policy of the image. </summary>
         public AkriConnectorsImagePullPolicy? ImagePullPolicy { get; set; }
+
+        /// <summary> Optional readiness probe for the connector container. When set, the operator injects this into the pod spec and uses the pod's `Ready` condition for health reporting instead of crash-based detection. </summary>
+        public AkriConnectorTemplateReadinessProbe ReadinessProbe { get; set; }
 
         /// <summary> The number of replicas to be set up. </summary>
         public int? Replicas { get; set; }

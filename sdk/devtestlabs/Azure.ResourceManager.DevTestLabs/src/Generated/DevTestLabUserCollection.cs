@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevTestLabUserData, DevTestLabUserResource>(new UsersGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DevTestLabUserData, DevTestLabUserResource>(new DevTestLabUserDataAsyncCollectionResultOfT(
                 _usersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevTestLabUserData, DevTestLabUserResource>(new UsersGetAllCollectionResultOfT(
+            return new PageableWrapper<DevTestLabUserData, DevTestLabUserResource>(new DevTestLabUserDataCollectionResultOfT(
                 _usersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

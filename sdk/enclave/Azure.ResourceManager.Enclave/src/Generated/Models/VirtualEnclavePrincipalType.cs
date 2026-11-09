@@ -11,12 +11,15 @@ using Azure.ResourceManager.Enclave;
 
 namespace Azure.ResourceManager.Enclave.Models
 {
-    /// <summary></summary>
+    /// <summary> The type of a virtual enclave principal. </summary>
     public readonly partial struct VirtualEnclavePrincipalType : IEquatable<VirtualEnclavePrincipalType>
     {
         private readonly string _value;
+        /// <summary> A user principal. </summary>
         private const string UserValue = "User";
+        /// <summary> A group principal. </summary>
         private const string GroupValue = "Group";
+        /// <summary> A service principal. </summary>
         private const string ServicePrincipalValue = "ServicePrincipal";
 
         /// <summary> Initializes a new instance of <see cref="VirtualEnclavePrincipalType"/>. </summary>
@@ -29,13 +32,13 @@ namespace Azure.ResourceManager.Enclave.Models
             _value = value;
         }
 
-        /// <summary> Gets the User. </summary>
+        /// <summary> A user principal. </summary>
         public static VirtualEnclavePrincipalType User { get; } = new VirtualEnclavePrincipalType(UserValue);
 
-        /// <summary> Gets the Group. </summary>
+        /// <summary> A group principal. </summary>
         public static VirtualEnclavePrincipalType Group { get; } = new VirtualEnclavePrincipalType(GroupValue);
 
-        /// <summary> Gets the ServicePrincipal. </summary>
+        /// <summary> A service principal. </summary>
         public static VirtualEnclavePrincipalType ServicePrincipal { get; } = new VirtualEnclavePrincipalType(ServicePrincipalValue);
 
         /// <summary> Determines if two <see cref="VirtualEnclavePrincipalType"/> values are the same. </summary>

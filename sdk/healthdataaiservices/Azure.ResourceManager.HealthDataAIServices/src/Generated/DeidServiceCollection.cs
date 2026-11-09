@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DeidServiceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DeidServiceResource.ResourceType, out string deidServiceApiVersion);
             _deidServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthDataAIServices", DeidServiceResource.ResourceType.Namespace, Diagnostics);
-            _deidServicesRestClient = new DeidServices(_deidServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deidServiceApiVersion ?? "2024-09-20");
+            _deidServicesRestClient = new DeidServices(_deidServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HealthDataAIServices/deidServices", out string deidServicesApiVersionOverride) ? deidServicesApiVersionOverride : "2024-09-20");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeidServiceData, DeidServiceResource>(new DeidServicesGetByResourceGroupAsyncCollectionResultOfT(_deidServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DeidServiceCollection.GetAll"), data => new DeidServiceResource(Client, data));
+            return new AsyncPageableWrapper<DeidServiceData, DeidServiceResource>(new DeidServiceDataAsyncCollectionResultOfT(_deidServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DeidServiceCollection.GetAll"), data => new DeidServiceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeidServiceData, DeidServiceResource>(new DeidServicesGetByResourceGroupCollectionResultOfT(_deidServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DeidServiceCollection.GetAll"), data => new DeidServiceResource(Client, data));
+            return new PageableWrapper<DeidServiceData, DeidServiceResource>(new DeidServiceDataCollectionResultOfT(_deidServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DeidServiceCollection.GetAll"), data => new DeidServiceResource(Client, data));
         }
 
         /// <summary>

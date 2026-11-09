@@ -25,10 +25,17 @@ parameters:
       - data
       - functions
       - datamovement
-  # Comma separated list of emails allowed to skip codeowners validation. User 
-  # must queue the pipeline manually with the 'Skip.VerifyCodeowners' variable 
-  # set to 'true'.
+  # Comma separated list of Microsoft emails allowed to skip codeowners
+  # validation on manually queued builds. Build.RequestedForEmail is empty on
+  # pull request builds, so use AllowSkipAliases for those.
   - name: AllowSkipEmails
+    type: string
+    default: ''
+  # Comma separated list of GitHub aliases (logins) allowed to skip codeowners
+  # validation on pull request builds. Matched against the GitHub login of the
+  # pull request author. Pull requests opened by a coding agent report the agent
+  # as the author, so they are not exempt.
+  - name: AllowSkipAliases
     type: string
     default: ''
 
@@ -41,9 +48,10 @@ steps:
         pwsh: true
         filePath: $(Build.SourcesDirectory)/eng/common/scripts/Set-VerifyCodeownersSkip.ps1
         arguments: >-
-          -RequestedForEmail '$(Build.RequestedForEmail)'
-          -SkipVerifyCodeowners '$(Skip.VerifyCodeowners)'
-          -AdditionalSkipEmails '${{ parameters.AllowSkipEmails }}'
+          -BuildReason '$(Build.Reason)'
+          -Repo '${{ parameters.Repo }}'
+          -PullRequestNumber '$(System.PullRequest.PullRequestNumber)'
+          -AdditionalSkipAliases '${{ parameters.AllowSkipAliases }}'
         workingDirectory: $(Build.SourcesDirectory)
 
     - template: /eng/common/pipelines/templates/steps/install-azsdk-cli.yml
@@ -85,6 +93,7 @@ steps:
         arguments: >-
           -RequestedForEmail '$(Build.RequestedForEmail)'
           -SkipVerifyCodeowners '$(Skip.VerifyCodeowners)'
+          -BuildReason '$(Build.Reason)'
           -AdditionalSkipEmails '${{ parameters.AllowSkipEmails }}'
         workingDirectory: $(Build.SourcesDirectory)
 

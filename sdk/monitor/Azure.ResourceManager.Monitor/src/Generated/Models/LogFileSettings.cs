@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             get
             {
-                return Text is null ? default : Text.RecordStartTimestampFormat;
+                return Text is null ? (LogFileTextSettingsRecordStartTimestampFormat?)default : Text.RecordStartTimestampFormat;
             }
             set
             {

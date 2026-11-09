@@ -21,6 +21,8 @@ namespace Azure.ResourceManager.Avs.Models
         private const string AvailableWindowForMaintenanceWhileScheduleOperationValue = "AvailableWindowForMaintenance";
         /// <summary> Blocked time range constraint. </summary>
         private const string BlockedWhileScheduleOperationValue = "Blocked";
+        /// <summary> Defines weekend scheduling restriction. </summary>
+        private const string WeekendSchedulingValue = "WeekendScheduling";
 
         /// <summary> Initializes a new instance of <see cref="ScheduleOperationConstraintKind"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -40,6 +42,9 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Blocked time range constraint. </summary>
         public static ScheduleOperationConstraintKind BlockedWhileScheduleOperation { get; } = new ScheduleOperationConstraintKind(BlockedWhileScheduleOperationValue);
+
+        /// <summary> Defines weekend scheduling restriction. </summary>
+        public static ScheduleOperationConstraintKind WeekendScheduling { get; } = new ScheduleOperationConstraintKind(WeekendSchedulingValue);
 
         /// <summary> Determines if two <see cref="ScheduleOperationConstraintKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

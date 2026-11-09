@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ClusterServerListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ClusterServerListResult(value ?? new ChangeTrackingList<CosmosDBForPostgreSqlClusterServerData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

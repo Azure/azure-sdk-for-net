@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.HorizonDB.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HorizonDB
 {
@@ -51,9 +52,8 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HorizonDBParameterGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string horizonDBParameterGroupApiVersion);
             _horizonDBParameterGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", ResourceType.Namespace, Diagnostics);
-            _horizonDBParameterGroupsRestClient = new HorizonDBParameterGroups(_horizonDBParameterGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, horizonDBParameterGroupApiVersion ?? "2026-01-20-preview");
+            _horizonDBParameterGroupsRestClient = new HorizonDBParameterGroups(_horizonDBParameterGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HorizonDb/parameterGroups", out string horizonDBParameterGroupsApiVersionOverride) ? horizonDBParameterGroupsApiVersionOverride : "2026-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-20-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-20-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-20-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-20-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-20-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-20-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-20-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.HorizonDB
             {
                 CancellationToken = cancellationToken
             };
-            return new HorizonDBParameterGroupsGetConnectionsAsyncCollectionResultOfT(
+            return new HorizonDBParameterGroupConnectionPropertiesAsyncCollectionResultOfT(
                 _horizonDBParameterGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-20-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.HorizonDB
             {
                 CancellationToken = cancellationToken
             };
-            return new HorizonDBParameterGroupsGetConnectionsCollectionResultOfT(
+            return new HorizonDBParameterGroupConnectionPropertiesCollectionResultOfT(
                 _horizonDBParameterGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-20-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.HorizonDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HorizonDBParameterGroupData, HorizonDBParameterGroupResource>(new HorizonDBParameterGroupsGetVersionsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HorizonDBParameterGroupData, HorizonDBParameterGroupResource>(new HorizonDBParameterGroupDataAsync1CollectionResultOfT(
                 _horizonDBParameterGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-20-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.HorizonDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HorizonDBParameterGroupData, HorizonDBParameterGroupResource>(new HorizonDBParameterGroupsGetVersionsCollectionResultOfT(
+            return new PageableWrapper<HorizonDBParameterGroupData, HorizonDBParameterGroupResource>(new HorizonDBParameterGroupData1CollectionResultOfT(
                 _horizonDBParameterGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -671,10 +671,9 @@ namespace Azure.ResourceManager.HorizonDB
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -714,10 +713,9 @@ namespace Azure.ResourceManager.HorizonDB
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

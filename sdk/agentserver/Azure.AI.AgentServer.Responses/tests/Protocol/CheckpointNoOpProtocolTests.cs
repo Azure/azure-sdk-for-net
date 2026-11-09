@@ -17,7 +17,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 /// <summary>
 /// Protocol tests for the non-resilient checkpoint no-op contract (FR-030). When
 /// <see cref="ResponsesServerOptions.ResilientBackground"/> is <c>false</c>, a
-/// <c>yield stream.Checkpoint()</c> is a no-op — it neither persists an extra snapshot nor alters
+/// <c>yield stream.CreateCheckpointEvent()</c> is a no-op — it neither persists an extra snapshot nor alters
 /// the emitted event sequence — so handlers can checkpoint unconditionally and the framework only
 /// pays the persistence cost when resilient background is enabled.
 /// </summary>
@@ -104,7 +104,7 @@ public class CheckpointNoOpProtocolTests : IDisposable
         yield return text.EmitDone();
         yield return message.EmitDone();
 
-        yield return stream.Checkpoint();
+        yield return stream.CreateCheckpointEvent();
 
         await Task.Yield();
         yield return stream.EmitCompleted();

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.MachineLearning
@@ -15,15 +16,28 @@ namespace Azure.Provisioning.MachineLearning
     /// </summary>
     public partial class ForecastHorizon : ProvisionableConstruct
     {
+        private BicepValue<ForecastHorizonMode> _mode;
+
         /// <summary> Creates a new ForecastHorizon. </summary>
         public ForecastHorizon()
         {
+        }
+
+        /// <summary> [Required] Set forecast horizon value selection mode. </summary>
+        internal BicepValue<ForecastHorizonMode> Mode
+        {
+            get
+            {
+                Initialize();
+                return _mode;
+            }
         }
 
         /// <summary> Define all the provisionable properties for ForecastHorizon. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _mode = DefineProperty<ForecastHorizonMode>(nameof(Mode), new string[] { "mode" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

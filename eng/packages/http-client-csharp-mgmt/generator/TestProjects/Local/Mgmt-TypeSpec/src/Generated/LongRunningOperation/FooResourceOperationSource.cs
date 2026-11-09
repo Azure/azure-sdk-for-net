@@ -32,7 +32,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         FooResource IOperationSource<FooResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            FooData data = FooData.DeserializeFooData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            FooData data = FooData.DeserializeFooData(document.RootElement, document.RootElement.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions);
             return new FooResource(_client, data);
         }
 
@@ -42,7 +42,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         async ValueTask<FooResource> IOperationSource<FooResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            FooData data = FooData.DeserializeFooData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            FooData data = FooData.DeserializeFooData(document.RootElement, document.RootElement.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions);
             return new FooResource(_client, data);
         }
     }

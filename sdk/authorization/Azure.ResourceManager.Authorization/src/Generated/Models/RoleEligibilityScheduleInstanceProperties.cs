@@ -30,15 +30,15 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="principalType"> The principal type of the assigned principal ID. </param>
         /// <param name="roleEligibilityScheduleId"> Id of the master role eligibility schedule. </param>
         /// <param name="status"> The status of the role eligibility schedule instance. </param>
-        /// <param name="startOn"> The startDateTime of the role eligibility schedule instance. </param>
-        /// <param name="endOn"> The endDateTime of the role eligibility schedule instance. </param>
+        /// <param name="startsOn"> The startDateTime of the role eligibility schedule instance. </param>
+        /// <param name="endsOn"> The endDateTime of the role eligibility schedule instance. </param>
         /// <param name="memberType"> Membership type of the role eligibility schedule. </param>
         /// <param name="condition"> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'. </param>
         /// <param name="conditionVersion"> Version of the condition. Currently accepted value is '2.0'. </param>
         /// <param name="createdOn"> DateTime when role eligibility schedule was created. </param>
         /// <param name="expandedProperties"> Additional properties of principal, scope and role definition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoleEligibilityScheduleInstanceProperties(string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, RoleManagementPrincipalType? principalType, ResourceIdentifier roleEligibilityScheduleId, RoleManagementScheduleStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, RoleManagementScheduleMemberType? memberType, string condition, string conditionVersion, DateTimeOffset? createdOn, RoleManagementExpandedProperties expandedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoleEligibilityScheduleInstanceProperties(string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, RoleManagementPrincipalType? principalType, ResourceIdentifier roleEligibilityScheduleId, RoleManagementScheduleStatus? status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, RoleManagementScheduleMemberType? memberType, string condition, string conditionVersion, DateTimeOffset? createdOn, RoleManagementExpandedProperties expandedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Scope = scope;
             RoleDefinitionId = roleDefinitionId;
@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.Authorization.Models
             PrincipalType = principalType;
             RoleEligibilityScheduleId = roleEligibilityScheduleId;
             Status = status;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             MemberType = memberType;
             Condition = condition;
             ConditionVersion = conditionVersion;
@@ -82,11 +82,11 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> The startDateTime of the role eligibility schedule instance. </summary>
         [WirePath("startDateTime")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The endDateTime of the role eligibility schedule instance. </summary>
         [WirePath("endDateTime")]
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> Membership type of the role eligibility schedule. </summary>
         [WirePath("memberType")]

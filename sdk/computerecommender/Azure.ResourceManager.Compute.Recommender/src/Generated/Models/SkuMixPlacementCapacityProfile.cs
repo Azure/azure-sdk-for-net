@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         /// <param name="capacity"> The capacity to run the workload. For VMs: [1..10,000]. For vCPUs: [1..100,000]. </param>
         /// <param name="capacityType"> The unit type for the capacity value. </param>
         /// <param name="priority"> The priority of the VMs to allocate. </param>
-        /// <param name="spotPriorityProfile"> Required when priority is Spot. Contains spot-specific configuration. </param>
+        /// <param name="spotPriorityProfile"> Contains spot-specific configuration. </param>
         /// <param name="allocationStrategy"> The allocation strategy for determining the optimal SKU split. </param>
         /// <param name="osType"> The OS type. Required when allocationStrategy is LowestPrice because pricing varies by OS. </param>
         /// <param name="zoneAllocationPolicy"> Zone allocation policy. Default: BestEffortBalanced. </param>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         /// <summary> The priority of the VMs to allocate. </summary>
         public SkuMixPlacementPriority Priority { get; }
 
-        /// <summary> Required when priority is Spot. Contains spot-specific configuration. </summary>
+        /// <summary> Contains spot-specific configuration. </summary>
         internal SkuMixPlacementSpotPriorityProfile SpotPriorityProfile { get; set; }
 
         /// <summary> The allocation strategy for determining the optimal SKU split. </summary>

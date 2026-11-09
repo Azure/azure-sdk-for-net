@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(WebSiteResource.ResourceType, out string webSiteApiVersion);
             _sitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WebSiteResource.ResourceType.Namespace, Diagnostics);
-            _sitesRestClient = new Sites(_sitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteApiVersion ?? "2026-03-15");
+            _sitesRestClient = new Sites(_sitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _webAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WebSiteResource.ResourceType.Namespace, Diagnostics);
             _webAppsRestClient = new WebApps(_webAppsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WebSiteData, WebSiteResource>(new WebAppsGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<WebSiteData, WebSiteResource>(new WebSiteDataAsync1CollectionResultOfT(
                 _webAppsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WebSiteData, WebSiteResource>(new WebAppsGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<WebSiteData, WebSiteResource>(new WebSiteData1CollectionResultOfT(
                 _webAppsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

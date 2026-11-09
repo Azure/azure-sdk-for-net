@@ -58,7 +58,7 @@ public class ResponseEventStreamCheckpointTests : IDisposable
         var request = new CreateResponse { Model = "test-model", Background = true };
         var stream = new ResponseEventStream(ctx, request);
 
-        var evt = stream.Checkpoint();
+        var evt = stream.CreateCheckpointEvent();
 
         Assert.That(evt, Is.InstanceOf<ResponseCheckpointEvent>());
         Assert.That(((ResponseCheckpointEvent)evt).Response, Is.SameAs(stream.Response));
@@ -173,7 +173,7 @@ public class ResponseEventStreamCheckpointTests : IDisposable
 
         if (!checkpointAfterTerminal)
         {
-            yield return stream.Checkpoint();
+            yield return stream.CreateCheckpointEvent();
         }
 
         await Task.Yield();
@@ -182,7 +182,7 @@ public class ResponseEventStreamCheckpointTests : IDisposable
         if (checkpointAfterTerminal)
         {
             // C4: a checkpoint after the terminal event must be silently dropped.
-            yield return stream.Checkpoint();
+            yield return stream.CreateCheckpointEvent();
         }
     }
 

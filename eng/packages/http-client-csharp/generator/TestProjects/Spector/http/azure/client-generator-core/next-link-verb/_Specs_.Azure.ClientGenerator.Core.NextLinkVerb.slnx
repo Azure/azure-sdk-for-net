@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="src/_Specs_.Azure.ClientGenerator.Core.NextLinkVerb.csproj" />
+  <Project Path="tests/_Specs_.Azure.ClientGenerator.Core.NextLinkVerb.Tests.csproj" />
 </Solution>

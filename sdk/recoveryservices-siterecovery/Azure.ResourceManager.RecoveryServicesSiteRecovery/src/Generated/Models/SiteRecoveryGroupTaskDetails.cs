@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryGroupTaskDetails"/>. </summary>
+        protected SiteRecoveryGroupTaskDetails() : this(default)
+        {
+        }
+
         /// <summary> The type of task details. </summary>
         internal string InstanceType { get; set; }
 

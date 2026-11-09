@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 CancellationToken = cancellationToken
             };
-            return new NamespaceTopicEventSubscriptionsGetDeliveryAttributesAsyncCollectionResultOfT(
+            return new DeliveryAttributeMappingAsync5CollectionResultOfT(
                 _namespaceTopicEventSubscriptionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 CancellationToken = cancellationToken
             };
-            return new NamespaceTopicEventSubscriptionsGetDeliveryAttributesCollectionResultOfT(
+            return new DeliveryAttributeMapping5CollectionResultOfT(
                 _namespaceTopicEventSubscriptionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

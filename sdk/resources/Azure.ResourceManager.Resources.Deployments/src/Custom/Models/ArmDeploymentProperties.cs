@@ -9,7 +9,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Text.Json;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.Deployments.Models
 {
     public partial class ArmDeploymentProperties
     {

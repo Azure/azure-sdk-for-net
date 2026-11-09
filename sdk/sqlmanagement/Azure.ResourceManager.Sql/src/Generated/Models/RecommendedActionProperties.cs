@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="isExecutableAction"> Gets if this recommended action is actionable by user. </param>
         /// <param name="isRevertableAction"> Gets if changes applied by this recommended action can be reverted by user. </param>
         /// <param name="isArchivedAction"> Gets if this recommended action was suggested some time ago but user chose to ignore this and system added a new recommended action again. </param>
-        /// <param name="executeActionStartOn"> Gets the time when system started applying this recommended action on the user resource. e.g., index creation start time. </param>
+        /// <param name="executeActionStartsOn"> Gets the time when system started applying this recommended action on the user resource. e.g., index creation start time. </param>
         /// <param name="executeActionDuration"> Gets the time taken for applying this recommended action on user resource. e.g., time taken for index creation. </param>
-        /// <param name="revertActionStartOn"> Gets the time when system started reverting changes of this recommended action on user resource. e.g., time when index drop is executed. </param>
+        /// <param name="revertActionStartsOn"> Gets the time when system started reverting changes of this recommended action on user resource. e.g., time when index drop is executed. </param>
         /// <param name="revertActionDuration"> Gets the time taken for reverting changes of this recommended action on user resource. e.g., time taken for dropping the created index. </param>
         /// <param name="executeActionInitiatedBy"> Gets if approval for applying this recommended action was given by user/system. </param>
         /// <param name="executeActionInitiatedOn"> Gets the time when this recommended action was approved for execution. </param>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="linkedObjects"> Gets the linked objects, if any. </param>
         /// <param name="actionDetails"> Gets additional details specific to this recommended action. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecommendedActionProperties(string recommendationReason, DateTimeOffset? validSince, DateTimeOffset? lastRefresh, RecommendedActionStateInfo state, bool? isExecutableAction, bool? isRevertableAction, bool? isArchivedAction, DateTimeOffset? executeActionStartOn, TimeSpan? executeActionDuration, DateTimeOffset? revertActionStartOn, TimeSpan? revertActionDuration, RecommendedActionInitiatedBy? executeActionInitiatedBy, DateTimeOffset? executeActionInitiatedOn, RecommendedActionInitiatedBy? revertActionInitiatedBy, DateTimeOffset? revertActionInitiatedOn, int? score, RecommendedActionImplementationInfo implementationDetails, RecommendedActionErrorInfo errorDetails, IReadOnlyList<RecommendedActionImpactRecord> estimatedImpact, IReadOnlyList<RecommendedActionImpactRecord> observedImpact, IReadOnlyList<RecommendedActionMetricInfo> timeSeries, IReadOnlyList<string> linkedObjects, IReadOnlyDictionary<string, string> actionDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecommendedActionProperties(string recommendationReason, DateTimeOffset? validSince, DateTimeOffset? lastRefresh, RecommendedActionStateInfo state, bool? isExecutableAction, bool? isRevertableAction, bool? isArchivedAction, DateTimeOffset? executeActionStartsOn, TimeSpan? executeActionDuration, DateTimeOffset? revertActionStartsOn, TimeSpan? revertActionDuration, RecommendedActionInitiatedBy? executeActionInitiatedBy, DateTimeOffset? executeActionInitiatedOn, RecommendedActionInitiatedBy? revertActionInitiatedBy, DateTimeOffset? revertActionInitiatedOn, int? score, RecommendedActionImplementationInfo implementationDetails, RecommendedActionErrorInfo errorDetails, IReadOnlyList<RecommendedActionImpactRecord> estimatedImpact, IReadOnlyList<RecommendedActionImpactRecord> observedImpact, IReadOnlyList<RecommendedActionMetricInfo> timeSeries, IReadOnlyList<string> linkedObjects, IReadOnlyDictionary<string, string> actionDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RecommendationReason = recommendationReason;
             ValidSince = validSince;
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.Sql.Models
             IsExecutableAction = isExecutableAction;
             IsRevertableAction = isRevertableAction;
             IsArchivedAction = isArchivedAction;
-            ExecuteActionStartOn = executeActionStartOn;
+            ExecuteActionStartsOn = executeActionStartsOn;
             ExecuteActionDuration = executeActionDuration;
-            RevertActionStartOn = revertActionStartOn;
+            RevertActionStartsOn = revertActionStartsOn;
             RevertActionDuration = revertActionDuration;
             ExecuteActionInitiatedBy = executeActionInitiatedBy;
             ExecuteActionInitiatedOn = executeActionInitiatedOn;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Gets the time when system started applying this recommended action on the user resource. e.g., index creation start time. </summary>
         [WirePath("executeActionStartTime")]
-        public DateTimeOffset? ExecuteActionStartOn { get; }
+        public DateTimeOffset? ExecuteActionStartsOn { get; }
 
         /// <summary> Gets the time taken for applying this recommended action on user resource. e.g., time taken for index creation. </summary>
         [WirePath("executeActionDuration")]
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Gets the time when system started reverting changes of this recommended action on user resource. e.g., time when index drop is executed. </summary>
         [WirePath("revertActionStartTime")]
-        public DateTimeOffset? RevertActionStartOn { get; }
+        public DateTimeOffset? RevertActionStartsOn { get; }
 
         /// <summary> Gets the time taken for reverting changes of this recommended action on user resource. e.g., time taken for dropping the created index. </summary>
         [WirePath("revertActionDuration")]

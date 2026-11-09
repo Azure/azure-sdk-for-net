@@ -12,15 +12,15 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Per-resource override entry for reimage requests. </summary>
+    /// <summary> A reimage configuration override for one virtual machine. </summary>
     public partial class ReimageResourceOverride
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ReimageResourceOverride"/>. </summary>
-        /// <param name="resourceId"> The Azure resource ID of the virtual machine for this override. </param>
-        /// <param name="profile"> Per-resource reimage profile override. </param>
+        /// <param name="resourceId"> The Azure resource ID of the virtual machine to which the override applies. </param>
+        /// <param name="profile"> The reimage configuration for this virtual machine. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="profile"/> is null. </exception>
         public ReimageResourceOverride(ResourceIdentifier resourceId, BulkActionsVirtualMachineReimageParametersContent profile)
         {
@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ReimageResourceOverride"/>. </summary>
-        /// <param name="resourceId"> The Azure resource ID of the virtual machine for this override. </param>
-        /// <param name="profile"> Per-resource reimage profile override. </param>
+        /// <param name="resourceId"> The Azure resource ID of the virtual machine to which the override applies. </param>
+        /// <param name="profile"> The reimage configuration for this virtual machine. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ReimageResourceOverride(ResourceIdentifier resourceId, BulkActionsVirtualMachineReimageParametersContent profile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The Azure resource ID of the virtual machine for this override. </summary>
+        /// <summary> The Azure resource ID of the virtual machine to which the override applies. </summary>
         public ResourceIdentifier ResourceId { get; }
 
-        /// <summary> Per-resource reimage profile override. </summary>
+        /// <summary> The reimage configuration for this virtual machine. </summary>
         public BulkActionsVirtualMachineReimageParametersContent Profile { get; }
     }
 }

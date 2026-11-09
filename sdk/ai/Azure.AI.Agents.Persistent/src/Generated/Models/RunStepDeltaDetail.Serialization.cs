@@ -13,7 +13,7 @@ namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
     /// Represents a single run step detail item in a streaming run step's delta payload.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RunStepDeltaMessageCreation"/>, <see cref="RunStepDeltaToolCallObject"/>, <see cref="RunStepDeltaMCPObject"/>, and <see cref="RunStepDeltaOpenAPIObject"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RunStepDeltaMCPObject"/>, <see cref="RunStepDeltaMessageCreation"/>, <see cref="RunStepDeltaOpenAPIObject"/>, and <see cref="RunStepDeltaToolCallObject"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownRunStepDeltaDetail))]
     public abstract partial class RunStepDeltaDetail : IJsonModel<RunStepDeltaDetail>
@@ -124,14 +124,14 @@ namespace Azure.AI.Agents.Persistent
             {
                 switch (discriminator.GetString())
                 {
-                    case "message_creation":
-                        return RunStepDeltaMessageCreation.DeserializeRunStepDeltaMessageCreation(element, options);
-                    case "tool_calls":
-                        return RunStepDeltaToolCallObject.DeserializeRunStepDeltaToolCallObject(element, options);
                     case "mcp":
                         return RunStepDeltaMCPObject.DeserializeRunStepDeltaMCPObject(element, options);
+                    case "message_creation":
+                        return RunStepDeltaMessageCreation.DeserializeRunStepDeltaMessageCreation(element, options);
                     case "openapi":
                         return RunStepDeltaOpenAPIObject.DeserializeRunStepDeltaOpenAPIObject(element, options);
+                    case "tool_calls":
+                        return RunStepDeltaToolCallObject.DeserializeRunStepDeltaToolCallObject(element, options);
                 }
             }
             return UnknownRunStepDeltaDetail.DeserializeUnknownRunStepDeltaDetail(element, options);

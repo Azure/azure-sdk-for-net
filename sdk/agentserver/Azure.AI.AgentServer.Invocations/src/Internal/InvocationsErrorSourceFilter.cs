@@ -34,7 +34,7 @@ internal sealed class InvocationsErrorSourceFilter : IEndpointFilter
     /// Exception.Data key used to identify platform infrastructure exceptions.
     /// Matches the key set by storage pipeline code in the Responses package.
     /// </summary>
-    private const string PlatformErrorDataKey = "Azure.AI.AgentServer.PlatformError";
+    internal const string PlatformErrorDataKey = "Azure.AI.AgentServer.PlatformError";
 
     private readonly ILogger<InvocationsErrorSourceFilter> _logger;
 
@@ -119,7 +119,7 @@ internal sealed class InvocationsErrorSourceFilter : IEndpointFilter
         return detail;
     }
 
-    private static void SetErrorSourceHeaders(HttpContext httpContext, string source, string? detail = null)
+    internal static void SetErrorSourceHeaders(HttpContext httpContext, string source, string? detail = null)
     {
         httpContext.Response.OnStarting(state =>
         {

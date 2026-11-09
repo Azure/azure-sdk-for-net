@@ -18,31 +18,24 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComputeSkuMixPlacementDeploymentChoice"/>. </summary>
-        /// <param name="id"> Unique identifier for this deployment choice. </param>
         /// <param name="score"> Placement score from 0 to 9 (inclusive). Higher is better. </param>
         /// <param name="skuSplit"> The list of VM size / zone allocations that make up this deployment choice. </param>
-        internal ComputeSkuMixPlacementDeploymentChoice(string id, int score, IEnumerable<ComputeSkuMixPlacementItem> skuSplit)
+        internal ComputeSkuMixPlacementDeploymentChoice(int score, IEnumerable<ComputeSkuMixPlacementItem> skuSplit)
         {
-            Id = id;
             Score = score;
             SkuSplit = skuSplit.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ComputeSkuMixPlacementDeploymentChoice"/>. </summary>
-        /// <param name="id"> Unique identifier for this deployment choice. </param>
         /// <param name="score"> Placement score from 0 to 9 (inclusive). Higher is better. </param>
         /// <param name="skuSplit"> The list of VM size / zone allocations that make up this deployment choice. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeSkuMixPlacementDeploymentChoice(string id, int score, IList<ComputeSkuMixPlacementItem> skuSplit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeSkuMixPlacementDeploymentChoice(int score, IList<ComputeSkuMixPlacementItem> skuSplit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Id = id;
             Score = score;
             SkuSplit = skuSplit;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Unique identifier for this deployment choice. </summary>
-        public string Id { get; }
 
         /// <summary> Placement score from 0 to 9 (inclusive). Higher is better. </summary>
         public int Score { get; }

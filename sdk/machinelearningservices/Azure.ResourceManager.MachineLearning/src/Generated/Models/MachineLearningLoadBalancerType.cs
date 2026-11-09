@@ -28,9 +28,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             _value = value;
         }
 
-        /// <summary> Gets the PublicIp. </summary>
-        public static MachineLearningLoadBalancerType PublicIp { get; } = new MachineLearningLoadBalancerType(PublicIpValue);
-
         /// <summary> Gets the InternalLoadBalancer. </summary>
         public static MachineLearningLoadBalancerType InternalLoadBalancer { get; } = new MachineLearningLoadBalancerType(InternalLoadBalancerValue);
 

@@ -24,6 +24,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new IaasVmBackupJob. </summary>
         public IaasVmBackupJob()
         {
+            JobType.Assign("AzureIaaSVMJob");
         }
 
         /// <summary> Gets the Duration. </summary>
@@ -100,7 +101,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("jobType", new string[] { "jobType" }, defaultValue: "AzureIaaSVMJob");
             _duration = DefineProperty<TimeSpan>(nameof(Duration), new string[] { "duration" }, format: "P");
             _actionsInfo = DefineListProperty<JobSupportedAction>(nameof(ActionsInfo), new string[] { "actionsInfo" });
             _errorDetails = DefineListProperty<IaasVmErrorInfo>(nameof(ErrorDetails), new string[] { "errorDetails" });

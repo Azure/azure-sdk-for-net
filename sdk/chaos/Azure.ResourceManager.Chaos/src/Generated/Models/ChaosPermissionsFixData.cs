@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosPermissionsFixData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ChaosPermissionsFixProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal ChaosPermissionsFixData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PermissionsFixProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public ChaosPermissionsFixProperties Properties { get; }
+        public PermissionsFixProperties Properties { get; }
     }
 }

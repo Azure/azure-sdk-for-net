@@ -3,6 +3,7 @@
 
 namespace Azure.Security.CodeTransparency
 {
+    /// <summary> Model factory for models. </summary>
     public static partial class CodeTransparencyModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="Azure.Security.CodeTransparency.ServiceIdentityResult"/> for mocking. </summary>

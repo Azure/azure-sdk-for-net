@@ -8,7 +8,7 @@
 using System.Threading;
 using Azure;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Deployments
 {
     internal static partial class CancellationTokenExtensions
     {

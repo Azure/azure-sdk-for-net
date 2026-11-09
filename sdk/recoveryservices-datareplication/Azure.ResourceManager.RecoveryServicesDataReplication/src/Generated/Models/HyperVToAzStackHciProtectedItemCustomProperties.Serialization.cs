@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new HyperVToAzStackHciProtectedItemCustomProperties(
@@ -615,8 +615,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 targetArcClusterCustomLocationId,
                 targetAzStackHciClusterName,
                 fabricDiscoveryMachineId,
-                disksToInclude,
-                nicsToInclude,
+                disksToInclude ?? new ChangeTrackingList<HyperVToAzStackHciDiskInput>(),
+                nicsToInclude ?? new ChangeTrackingList<HyperVToAzStackHciNicInput>(),
                 sourceVmName,
                 sourceCpuCores,
                 sourceMemoryInMegaBytes,

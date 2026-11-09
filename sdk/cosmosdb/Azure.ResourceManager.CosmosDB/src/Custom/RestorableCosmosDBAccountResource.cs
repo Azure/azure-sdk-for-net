@@ -59,21 +59,5 @@ namespace Azure.ResourceManager.CosmosDB
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<DatabaseRestoreResourceInfo> GetRestorableSqlResources(AzureLocation? restoreLocation = default, string restoreTimestampInUtc = null, CancellationToken cancellationToken = default)
             => throw new NotSupportedException("This function is obsolete. Use GetAllRestorableSqlResourceData instead.");
-
-        /// <summary>
-        /// Lists the restorable Azure Cosmos DB MongoDB collections for a given database under a database account.
-        /// Back-compat overload that delegates to <see cref="GetRestorableMongoDBCollectionsAsync(string, string, string, CancellationToken)"/>.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<RestorableMongoDBCollection> GetRestorableMongoDBCollectionsAsync(string restorableMongoDBDatabaseRid, CancellationToken cancellationToken)
-            => GetRestorableMongoDBCollectionsAsync(restorableMongoDBDatabaseRid, null, null, cancellationToken);
-
-        /// <summary>
-        /// Lists the restorable Azure Cosmos DB MongoDB collections for a given database under a database account.
-        /// Back-compat overload that delegates to <see cref="GetRestorableMongoDBCollections(string, string, string, CancellationToken)"/>.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<RestorableMongoDBCollection> GetRestorableMongoDBCollections(string restorableMongoDBDatabaseRid, CancellationToken cancellationToken)
-            => GetRestorableMongoDBCollections(restorableMongoDBDatabaseRid, null, null, cancellationToken);
     }
 }

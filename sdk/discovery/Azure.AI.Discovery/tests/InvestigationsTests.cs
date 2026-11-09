@@ -51,7 +51,7 @@ namespace Azure.AI.Discovery.Tests
             {
                 Assert.That(inv.ProjectName, Is.EqualTo(Project));
                 Assert.That(inv.Status, Is.Not.Null);
-                Assert.That(inv.CreatedAt, Is.Not.Null);
+                Assert.That(inv.CreatedOn, Is.Not.Null);
             }
         }
 
@@ -65,8 +65,8 @@ namespace Azure.AI.Discovery.Tests
             Assert.That(investigation, Is.Not.Null);
             Assert.That(investigation.ProjectName, Is.EqualTo(Project));
             Assert.That(investigation.Status, Is.Not.Null);
-            Assert.That(investigation.CreatedAt, Is.Not.Null);
-            Assert.That(investigation.LastModifiedAt, Is.Not.Null);
+            Assert.That(investigation.CreatedOn, Is.Not.Null);
+            Assert.That(investigation.LastModifiedOn, Is.Not.Null);
         }
 
         [RecordedTest]

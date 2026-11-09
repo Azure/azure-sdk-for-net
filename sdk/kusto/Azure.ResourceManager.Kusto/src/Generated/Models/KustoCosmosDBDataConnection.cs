@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Kusto.Models
     public partial class KustoCosmosDBDataConnection : KustoDataConnectionData
     {
         /// <summary> Initializes a new instance of <see cref="KustoCosmosDBDataConnection"/>. </summary>
-        public KustoCosmosDBDataConnection() : base(DataConnectionKind.CosmosDb)
+        public KustoCosmosDBDataConnection() : base(DataConnectionKind.CosmosDB)
         {
         }
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Kusto.Models
         {
             get
             {
-                return Properties is null ? default : Properties.RetrievalStartOn;
+                return Properties is null ? default : Properties.RetrievalStartsOn;
             }
             set
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 {
                     Properties = new CosmosDBDataConnectionProperties();
                 }
-                Properties.RetrievalStartOn = value;
+                Properties.RetrievalStartsOn = value;
             }
         }
 

@@ -41,6 +41,15 @@ namespace Azure.Core.TestFramework
             Type[] parameterTypes = invocation.Method.GetParameters().Select(p => p.ParameterType).ToArray();
 
             var methodName = invocation.Method.Name;
+
+            // Async-only streaming methods return IAsyncEnumerable<T> directly and have no sync counterpart.
+            // Types that merely implement the interface, like AsyncPageable<T>, still map to their sync overloads.
+            if (AsyncEnumerableType.IsInterface(invocation.Method.ReturnType))
+            {
+                invocation.Proceed();
+                return;
+            }
+
             if (!methodName.EndsWith(AsyncSuffix))
             {
                 MethodInfo asyncAlternative = GetMethod(invocation, methodName + AsyncSuffix, parameterTypes);

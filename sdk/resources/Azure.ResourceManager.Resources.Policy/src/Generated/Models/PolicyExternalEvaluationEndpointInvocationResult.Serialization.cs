@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     {
                         continue;
                     }
-                    claims = BinaryData.FromString(prop.Value.GetRawText());
+                    claims = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("policyAction"u8))
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     {
                         continue;
                     }
-                    policyEvaluationDetails = BinaryData.FromString(prop.Value.GetRawText());
+                    policyEvaluationDetails = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("additionalInfo"u8))
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     {
                         continue;
                     }
-                    additionalInfo = BinaryData.FromString(prop.Value.GetRawText());
+                    additionalInfo = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("expiration"u8))
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new PolicyExternalEvaluationEndpointInvocationResult(

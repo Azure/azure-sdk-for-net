@@ -98,13 +98,13 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             return new ContainerServiceMaintenanceConfigurationResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="MaintenanceWindowResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ContainerServiceManagedMaintenanceWindowResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MaintenanceWindowResource"/> object. </returns>
-        public virtual MaintenanceWindowResource GetMaintenanceWindowResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerServiceManagedMaintenanceWindowResource"/> object. </returns>
+        public virtual ContainerServiceManagedMaintenanceWindowResource GetContainerServiceManagedMaintenanceWindowResource(ResourceIdentifier id)
         {
-            MaintenanceWindowResource.ValidateResourceId(id);
-            return new MaintenanceWindowResource(Client, id);
+            ContainerServiceManagedMaintenanceWindowResource.ValidateResourceId(id);
+            return new ContainerServiceManagedMaintenanceWindowResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ManagedClusterNamespaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -206,6 +206,15 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             return new ManagedClusterMeshMembershipResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="AgentFabricMembershipResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AgentFabricMembershipResource"/> object. </returns>
+        public virtual AgentFabricMembershipResource GetAgentFabricMembershipResource(ResourceIdentifier id)
+        {
+            AgentFabricMembershipResource.ValidateResourceId(id);
+            return new AgentFabricMembershipResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="ContainerServiceAlertConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ContainerServiceAlertConfigurationResource"/> object. </returns>
@@ -213,6 +222,15 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         {
             ContainerServiceAlertConfigurationResource.ValidateResourceId(id);
             return new ContainerServiceAlertConfigurationResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="UpgradeInsightResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="UpgradeInsightResource"/> object. </returns>
+        public virtual UpgradeInsightResource GetUpgradeInsightResource(ResourceIdentifier id)
+        {
+            UpgradeInsightResource.ValidateResourceId(id);
+            return new UpgradeInsightResource(Client, id);
         }
     }
 }

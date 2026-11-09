@@ -21,14 +21,14 @@ namespace Azure.AI.Discovery
         /// <param name="nodepoolId"> The nodepool the operation targets. </param>
         /// <param name="status"> Current status of the operation. </param>
         /// <param name="runtimeDetails"> Human-readable details about the run status. </param>
-        /// <param name="createdAt"> When the operation was submitted. </param>
-        internal WorkspaceOperation(string id, string nodepoolId, RunStatus status, string runtimeDetails, DateTimeOffset createdAt)
+        /// <param name="createdOn"> When the operation was submitted. </param>
+        internal WorkspaceOperation(string id, string nodepoolId, RunStatus status, string runtimeDetails, DateTimeOffset createdOn)
         {
             Id = id;
             NodepoolId = nodepoolId;
             Status = status;
             RuntimeDetails = runtimeDetails;
-            CreatedAt = createdAt;
+            CreatedOn = createdOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkspaceOperation"/>. </summary>
@@ -36,18 +36,18 @@ namespace Azure.AI.Discovery
         /// <param name="nodepoolId"> The nodepool the operation targets. </param>
         /// <param name="status"> Current status of the operation. </param>
         /// <param name="runtimeDetails"> Human-readable details about the run status. </param>
-        /// <param name="createdAt"> When the operation was submitted. </param>
-        /// <param name="completedAt"> When the operation completed. </param>
+        /// <param name="createdOn"> When the operation was submitted. </param>
+        /// <param name="completedOn"> When the operation completed. </param>
         /// <param name="createdBy"> The user who created the operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceOperation(string id, string nodepoolId, RunStatus status, string runtimeDetails, DateTimeOffset createdAt, DateTimeOffset? completedAt, string createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkspaceOperation(string id, string nodepoolId, RunStatus status, string runtimeDetails, DateTimeOffset createdOn, DateTimeOffset? completedOn, string createdBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             NodepoolId = nodepoolId;
             Status = status;
             RuntimeDetails = runtimeDetails;
-            CreatedAt = createdAt;
-            CompletedAt = completedAt;
+            CreatedOn = createdOn;
+            CompletedOn = completedOn;
             CreatedBy = createdBy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -65,10 +65,10 @@ namespace Azure.AI.Discovery
         public string RuntimeDetails { get; }
 
         /// <summary> When the operation was submitted. </summary>
-        public DateTimeOffset CreatedAt { get; }
+        public DateTimeOffset CreatedOn { get; }
 
         /// <summary> When the operation completed. </summary>
-        public DateTimeOffset? CompletedAt { get; }
+        public DateTimeOffset? CompletedOn { get; }
 
         /// <summary> The user who created the operation. </summary>
         public string CreatedBy { get; }

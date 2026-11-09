@@ -11,7 +11,7 @@ using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Application Monitoring Open Telemetry Logs and Traces Profile for AKS. Collects OpenTelemetry logs and traces of the application using Azure Monitor OpenTelemetry based SDKs. See https://aka.ms/AKSAppMonitoringDocs and https://aka.ms/AzureMonitorApplicationMonitoring for an overview. </summary>
+    /// <summary> Application Monitoring OpenTelemetry logs and traces profile for AKS. Collects OpenTelemetry logs and traces of the application using Azure Monitor OpenTelemetry based SDKs. See https://aka.ms/AKSAppMonitoringDocs and https://aka.ms/AzureMonitorApplicationMonitoring for an overview. </summary>
     public partial class ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogsAndTraces
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogsAndTraces"/>. </summary>
-        /// <param name="isAppMonitoringOpenTelemetryLogsAndTracesEnabled"> Indicates if Application Monitoring Open Telemetry Logs and traces is enabled or not. </param>
-        /// <param name="httpPort"> The host port for Open Telemetry HTTP/PROTOBUF logs and traces. If not specified, the default port is 28331. </param>
-        /// <param name="grpcPort"> The host port for Open Telemetry GRPC logs and traces. If not specified, the default port is 28332. </param>
+        /// <param name="isAppMonitoringOpenTelemetryLogsAndTracesEnabled"> Indicates if Application Monitoring OpenTelemetry Logs and traces is enabled or not. </param>
+        /// <param name="httpPort"> The host port for OpenTelemetry HTTP/PROTOBUF logs and traces. If not specified, the default port is 28331. </param>
+        /// <param name="grpcPort"> The host port for OpenTelemetry GRPC logs and traces. If not specified, the default port is 28332. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogsAndTraces(bool? isAppMonitoringOpenTelemetryLogsAndTracesEnabled, long? httpPort, long? grpcPort, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -35,15 +35,15 @@ namespace Azure.ResourceManager.ContainerService.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Indicates if Application Monitoring Open Telemetry Logs and traces is enabled or not. </summary>
+        /// <summary> Indicates if Application Monitoring OpenTelemetry Logs and traces is enabled or not. </summary>
         [WirePath("enabled")]
         public bool? IsAppMonitoringOpenTelemetryLogsAndTracesEnabled { get; set; }
 
-        /// <summary> The host port for Open Telemetry HTTP/PROTOBUF logs and traces. If not specified, the default port is 28331. </summary>
+        /// <summary> The host port for OpenTelemetry HTTP/PROTOBUF logs and traces. If not specified, the default port is 28331. </summary>
         [WirePath("httpPort")]
         public long? HttpPort { get; set; }
 
-        /// <summary> The host port for Open Telemetry GRPC logs and traces. If not specified, the default port is 28332. </summary>
+        /// <summary> The host port for OpenTelemetry GRPC logs and traces. If not specified, the default port is 28332. </summary>
         [WirePath("grpcPort")]
         public long? GrpcPort { get; set; }
     }

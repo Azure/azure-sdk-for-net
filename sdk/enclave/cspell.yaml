@@ -3,5 +3,6 @@ import:
 overrides:
   - filename: '**/sdk/enclave/**/*.cs'
     words:
+      - AZPROVISION
       - mobo
       - rbac

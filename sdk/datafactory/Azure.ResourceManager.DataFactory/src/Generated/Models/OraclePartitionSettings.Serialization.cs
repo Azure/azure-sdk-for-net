@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    partitionNames = BinaryData.FromString(prop.Value.GetRawText());
+                    partitionNames = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("partitionColumnName"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new OraclePartitionSettings(partitionNames, partitionColumnName, partitionUpperBound, partitionLowerBound, additionalBinaryDataProperties);

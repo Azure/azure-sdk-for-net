@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(NetworkVerifierWorkspaceResource.ResourceType, out string networkVerifierWorkspaceApiVersion);
             _verifierWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkVerifierWorkspaceResource.ResourceType.Namespace, Diagnostics);
-            _verifierWorkspacesRestClient = new VerifierWorkspaces(_verifierWorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkVerifierWorkspaceApiVersion ?? "2025-07-01");
+            _verifierWorkspacesRestClient = new VerifierWorkspaces(_verifierWorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkVerifierWorkspaceApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -277,31 +277,31 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> Optional skip token. </param>
         /// <param name="skip"> Optional num entries to skip. </param>
-        /// <param name="maxCount"> Optional num entries to show. </param>
+        /// <param name="top"> Optional num entries to show. </param>
         /// <param name="sortKey"> Optional key by which to sort. </param>
         /// <param name="sortValue"> Optional sort value for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkVerifierWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkVerifierWorkspaceResource> GetAllAsync(string skipToken = default, int? skip = default, int? maxCount = default, string sortKey = default, string sortValue = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NetworkVerifierWorkspaceResource> GetAllAsync(string skipToken = default, int? skip = default, int? top = default, string sortKey = default, string sortValue = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkVerifierWorkspaceData, NetworkVerifierWorkspaceResource>(new VerifierWorkspacesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkVerifierWorkspaceData, NetworkVerifierWorkspaceResource>(new NetworkVerifierWorkspaceDataAsyncCollectionResultOfT(
                 _verifierWorkspacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 skipToken,
                 skip,
-                maxCount,
+                top,
                 sortKey,
                 sortValue,
                 context,
@@ -321,31 +321,31 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> Optional skip token. </param>
         /// <param name="skip"> Optional num entries to skip. </param>
-        /// <param name="maxCount"> Optional num entries to show. </param>
+        /// <param name="top"> Optional num entries to show. </param>
         /// <param name="sortKey"> Optional key by which to sort. </param>
         /// <param name="sortValue"> Optional sort value for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkVerifierWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkVerifierWorkspaceResource> GetAll(string skipToken = default, int? skip = default, int? maxCount = default, string sortKey = default, string sortValue = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<NetworkVerifierWorkspaceResource> GetAll(string skipToken = default, int? skip = default, int? top = default, string sortKey = default, string sortValue = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkVerifierWorkspaceData, NetworkVerifierWorkspaceResource>(new VerifierWorkspacesGetAllCollectionResultOfT(
+            return new PageableWrapper<NetworkVerifierWorkspaceData, NetworkVerifierWorkspaceResource>(new NetworkVerifierWorkspaceDataCollectionResultOfT(
                 _verifierWorkspacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 skipToken,
                 skip,
-                maxCount,
+                top,
                 sortKey,
                 sortValue,
                 context,
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>

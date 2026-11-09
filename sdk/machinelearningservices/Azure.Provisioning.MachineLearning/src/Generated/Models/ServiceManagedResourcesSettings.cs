@@ -13,42 +13,42 @@ namespace Azure.Provisioning.MachineLearning
     /// <summary> The ServiceManagedResourcesSettings. </summary>
     internal partial class ServiceManagedResourcesSettings : ProvisionableConstruct
     {
-        private CosmosDbSettings _cosmosDb;
+        private CosmosDBSettings _cosmosDB;
 
         /// <summary> Creates a new ServiceManagedResourcesSettings. </summary>
         public ServiceManagedResourcesSettings()
         {
         }
 
-        /// <summary> Gets or sets the CosmosDb. </summary>
-        internal CosmosDbSettings CosmosDb
+        /// <summary> Gets or sets the CosmosDB. </summary>
+        internal CosmosDBSettings CosmosDB
         {
             get
             {
                 Initialize();
-                return _cosmosDb;
+                return _cosmosDB;
             }
             set
             {
                 Initialize();
-                AssignOrReplace(ref _cosmosDb, value);
+                AssignOrReplace(ref _cosmosDB, value);
             }
         }
 
         /// <summary> Gets or sets the CollectionsThroughput. </summary>
-        public BicepValue<int> CosmosDbCollectionsThroughput
+        public BicepValue<int> CosmosDBCollectionsThroughput
         {
             get
             {
-                return CosmosDb is null ? default : CosmosDb.CollectionsThroughput;
+                return CosmosDB is null ? default : CosmosDB.CollectionsThroughput;
             }
             set
             {
-                if (CosmosDb is null)
+                if (CosmosDB is null)
                 {
-                    CosmosDb = new CosmosDbSettings();
+                    CosmosDB = new CosmosDBSettings();
                 }
-                CosmosDb.CollectionsThroughput = value;
+                CosmosDB.CollectionsThroughput = value;
             }
         }
 
@@ -56,7 +56,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _cosmosDb = DefineModelProperty<CosmosDbSettings>(nameof(CosmosDb), new string[] { "cosmosDb" });
+            _cosmosDB = DefineModelProperty<CosmosDBSettings>(nameof(CosmosDB), new string[] { "cosmosDb" });
             DefineAdditionalProperties();
         }
 

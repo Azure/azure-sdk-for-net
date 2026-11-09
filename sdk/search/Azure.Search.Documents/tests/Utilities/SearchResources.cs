@@ -630,7 +630,7 @@ namespace Azure.Search.Documents.Tests
                 // Generate a random knowledge agent Name
                 KnowledgeBaseName = Random.GetName(8);
                 KnowledgeSourceName = Random.GetName(8);
-                string deploymentName = "gpt-5-mini";
+                string deploymentName = "gpt-5.4-mini";
 
                 SearchIndexKnowledgeSource indexKnowledgeSource = new(KnowledgeSourceName, new(IndexName));
                 KnowledgeSource knowledgeSource = await client.CreateKnowledgeSourceAsync(indexKnowledgeSource);
@@ -653,7 +653,7 @@ namespace Azure.Search.Documents.Tests
                             ResourceUri = new Uri(TestFixture.TestEnvironment.OpenAIEndpoint),
                             ApiKey = TestFixture.TestEnvironment.OpenAIKey,
                             DeploymentName = deploymentName,
-                            ModelName = AzureOpenAIModelName.Gpt5Mini
+                            ModelName = AzureOpenAIModelName.Gpt54Mini
                         }));
 
                 await client.CreateKnowledgeBaseAsync(knowledgeAgent);

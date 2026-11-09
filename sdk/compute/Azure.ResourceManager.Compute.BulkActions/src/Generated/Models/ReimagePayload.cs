@@ -11,7 +11,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Reimage payload with common profile and per-resource overrides. </summary>
+    /// <summary> The shared and per-virtual-machine configuration for a bulk reimage action. </summary>
     public partial class ReimagePayload
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ReimagePayload"/>. </summary>
-        /// <param name="baseProfile"> Common reimage profile applied to all resources unless overridden. </param>
-        /// <param name="resourceOverrides"> Per-resource reimage overrides. </param>
+        /// <param name="baseProfile"> The reimage configuration applied to every virtual machine unless a per-virtual-machine override is provided. </param>
+        /// <param name="resourceOverrides"> The reimage configuration overrides for individual virtual machines. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ReimagePayload(BulkActionsVirtualMachineReimageParametersContent baseProfile, IList<ReimageResourceOverride> resourceOverrides, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Common reimage profile applied to all resources unless overridden. </summary>
+        /// <summary> The reimage configuration applied to every virtual machine unless a per-virtual-machine override is provided. </summary>
         public BulkActionsVirtualMachineReimageParametersContent BaseProfile { get; set; }
 
-        /// <summary> Per-resource reimage overrides. </summary>
+        /// <summary> The reimage configuration overrides for individual virtual machines. </summary>
         public IList<ReimageResourceOverride> ResourceOverrides { get; }
     }
 }

@@ -7,10 +7,14 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Projects;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Evaluation
 {
-    /// <summary> Represents a target specifying an Azure AI agent. </summary>
+    /// <summary>
+    /// A target that identifies an Azure AI agent.
+    /// See [evaluate model or agent targets](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/cloud-evaluation-targets?tabs=python).
+    /// </summary>
     public partial class AzureAIAgentTarget : EvaluationTarget, IJsonModel<AzureAIAgentTarget>
     {
         /// <summary> Initializes a new instance of <see cref="AzureAIAgentTarget"/> for deserialization. </summary>
@@ -94,12 +98,17 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(InternalTools))
+            if (Optional.IsCollectionDefined(Tools))
             {
                 writer.WritePropertyName("tools"u8);
                 writer.WriteStartArray();
-                foreach (InternalTool item in InternalTools)
+                foreach (ResponseTool item in Tools)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
@@ -136,7 +145,7 @@ namespace Azure.AI.Projects.Evaluation
             string name = default;
             string version = default;
             IList<ToolDescription> toolDescriptions = default;
-            IList<InternalTool> internalTools = default;
+            IList<ResponseTool> tools = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -170,21 +179,12 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 if (prop.NameEquals("tools"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<InternalTool> array = new List<InternalTool>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(InternalTool.DeserializeInternalTool(item, options));
-                    }
-                    internalTools = array;
+                    DeserializeToolsValue(prop, ref tools);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AzureAIAgentTarget(
@@ -193,7 +193,7 @@ namespace Azure.AI.Projects.Evaluation
                 name,
                 version,
                 toolDescriptions ?? new ChangeTrackingList<ToolDescription>(),
-                internalTools ?? new ChangeTrackingList<InternalTool>());
+                tools ?? new ChangeTrackingList<ResponseTool>());
         }
     }
 }

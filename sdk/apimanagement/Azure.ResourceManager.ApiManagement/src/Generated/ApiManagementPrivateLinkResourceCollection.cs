@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementPrivateLinkResourceData, ApiManagementPrivateLinkResource>(new PrivateEndpointConnectionGetPrivateLinkResourcesAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiManagementPrivateLinkResourceData, ApiManagementPrivateLinkResource>(new ApiManagementPrivateLinkResourceDataAsyncCollectionResultOfT(
                 _privateEndpointConnectionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementPrivateLinkResourceData, ApiManagementPrivateLinkResource>(new PrivateEndpointConnectionGetPrivateLinkResourcesCollectionResultOfT(
+            return new PageableWrapper<ApiManagementPrivateLinkResourceData, ApiManagementPrivateLinkResource>(new ApiManagementPrivateLinkResourceDataCollectionResultOfT(
                 _privateEndpointConnectionRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

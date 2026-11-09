@@ -6,6 +6,7 @@
       "$id": "1",
       "kind": "enum",
       "name": "DaysOfWeekEnum",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "Type.Enum.Fixed.DaysOfWeekEnum",
       "valueType": {
         "$id": "2",
@@ -300,7 +301,6 @@
                 "$id": "28",
                 "name": "getKnownValue",
                 "isExactName": false,
-                "resourceName": "String",
                 "doc": "getKnownValue",
                 "accessibility": "public",
                 "parameters": [
@@ -407,7 +407,6 @@
                 "$id": "32",
                 "name": "putKnownValue",
                 "isExactName": false,
-                "resourceName": "String",
                 "doc": "putKnownValue",
                 "accessibility": "public",
                 "parameters": [
@@ -545,7 +544,6 @@
                 "$id": "38",
                 "name": "putUnknownValue",
                 "isExactName": false,
-                "resourceName": "String",
                 "doc": "putUnknownValue",
                 "accessibility": "public",
                 "parameters": [

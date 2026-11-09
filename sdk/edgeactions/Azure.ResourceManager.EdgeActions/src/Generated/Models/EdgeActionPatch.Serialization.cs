@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.EdgeActions.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new EdgeActionPatch(properties, sku, tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);

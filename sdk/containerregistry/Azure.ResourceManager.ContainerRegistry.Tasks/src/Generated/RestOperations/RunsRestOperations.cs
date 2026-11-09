@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
             return message;
         }
 
-        internal HttpMessage CreateGetLogSasUriRequest(Guid subscriptionId, string resourceGroupName, string registryName, string runId, RequestContext context)
+        internal HttpMessage CreateGetLogSasUrlRequest(Guid subscriptionId, string resourceGroupName, string registryName, string runId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

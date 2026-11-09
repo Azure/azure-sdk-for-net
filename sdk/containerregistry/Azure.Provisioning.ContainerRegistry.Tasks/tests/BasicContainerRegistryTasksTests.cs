@@ -73,18 +73,18 @@ public class BasicContainerRegistryTasksTests
               name: '${take('registry${uniqueString(resourceGroup().id)}', 50)}/build'
               location: location
               properties: {
-                status: 'Enabled'
                 platform: {
                   os: 'Linux'
                 }
+                status: 'Enabled'
                 step: {
                   contextPath: 'https://github.com/Azure-Samples/acr-tasks.git'
-                  type: 'Docker'
+                  dockerFilePath: 'Dockerfile'
                   imageNames: [
                     'sample:{{.Run.ID}}'
                   ]
                   isPushEnabled: true
-                  dockerFilePath: 'Dockerfile'
+                  type: 'Docker'
                 }
               }
             }

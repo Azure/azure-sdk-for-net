@@ -15,7 +15,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
     public partial class BackupHourlySchedule : ProvisionableConstruct
     {
         private BicepValue<int> _interval;
-        private BicepValue<DateTimeOffset> _scheduleWindowStartOn;
+        private BicepValue<DateTimeOffset> _scheduleWindowStartsOn;
         private BicepValue<int> _scheduleWindowDuration;
 
         /// <summary> Creates a new BackupHourlySchedule. </summary>
@@ -38,18 +38,18 @@ namespace Azure.Provisioning.RecoveryServicesBackup
             }
         }
 
-        /// <summary> Gets or sets the ScheduleWindowStartOn. </summary>
-        public BicepValue<DateTimeOffset> ScheduleWindowStartOn
+        /// <summary> Gets or sets the ScheduleWindowStartsOn. </summary>
+        public BicepValue<DateTimeOffset> ScheduleWindowStartsOn
         {
             get
             {
                 Initialize();
-                return _scheduleWindowStartOn;
+                return _scheduleWindowStartsOn;
             }
             set
             {
                 Initialize();
-                _scheduleWindowStartOn.Assign(value);
+                _scheduleWindowStartsOn.Assign(value);
             }
         }
 
@@ -73,7 +73,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         {
             base.DefineProvisionableProperties();
             _interval = DefineProperty<int>(nameof(Interval), new string[] { "interval" });
-            _scheduleWindowStartOn = DefineProperty<DateTimeOffset>(nameof(ScheduleWindowStartOn), new string[] { "scheduleWindowStartTime" }, format: "O");
+            _scheduleWindowStartsOn = DefineProperty<DateTimeOffset>(nameof(ScheduleWindowStartsOn), new string[] { "scheduleWindowStartTime" }, format: "O");
             _scheduleWindowDuration = DefineProperty<int>(nameof(ScheduleWindowDuration), new string[] { "scheduleWindowDuration" });
             DefineAdditionalProperties();
         }

@@ -87,10 +87,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteObjectValue(item.Value, options);
             }
             writer.WriteEndObject();
-            if (Optional.IsDefined(RequestLogging))
+            if (Optional.IsDefined(RequestLogging, _requestLoggingIsDefined))
             {
-                writer.WritePropertyName("requestLogging"u8);
-                writer.WriteObjectValue(RequestLogging, options);
+                if (RequestLogging != null)
+                {
+                    writer.WritePropertyName("requestLogging"u8);
+                    writer.WriteObjectValue(RequestLogging, options);
+                }
+                else
+                {
+                    writer.WriteNull("requestLogging"u8);
+                }
             }
             if (Optional.IsDefined(RollingRate))
             {
@@ -140,6 +147,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             IDictionary<string, DataCollectionConfiguration> collections = default;
+            bool requestLoggingIsDefined = false;
             RequestLogging requestLogging = default;
             RollingRateType? rollingRate = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -157,6 +165,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("requestLogging"u8))
                 {
+                    requestLoggingIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         requestLogging = null;
@@ -176,10 +185,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DataCollector(collections, requestLogging, rollingRate, additionalBinaryDataProperties);
+            return new DataCollector(collections ?? new ChangeTrackingDictionary<string, DataCollectionConfiguration>(), requestLogging, rollingRate, additionalBinaryDataProperties)
+            {
+                _requestLoggingIsDefined = requestLoggingIsDefined
+            };
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Azure.AI.Projects.Memory
 {
     /// <summary>
     /// A single memory item stored in the memory store, containing content and metadata.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="UserProfileMemoryItem"/>, <see cref="ChatSummaryMemoryItem"/>, and <see cref="ProceduralMemoryItem"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ChatSummaryMemoryItem"/>, <see cref="ProceduralMemoryItem"/>, and <see cref="UserProfileMemoryItem"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownMemoryItem))]
     public abstract partial class MemoryItem : IJsonModel<MemoryItem>
@@ -144,12 +144,12 @@ namespace Azure.AI.Projects.Memory
             {
                 switch (discriminator.GetString())
                 {
-                    case "user_profile":
-                        return UserProfileMemoryItem.DeserializeUserProfileMemoryItem(element, options);
                     case "chat_summary":
                         return ChatSummaryMemoryItem.DeserializeChatSummaryMemoryItem(element, options);
                     case "procedural":
                         return ProceduralMemoryItem.DeserializeProceduralMemoryItem(element, options);
+                    case "user_profile":
+                        return UserProfileMemoryItem.DeserializeUserProfileMemoryItem(element, options);
                 }
             }
             return UnknownMemoryItem.DeserializeUnknownMemoryItem(element, options);

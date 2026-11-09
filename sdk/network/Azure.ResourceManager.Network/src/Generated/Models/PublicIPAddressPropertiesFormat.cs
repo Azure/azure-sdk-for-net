@@ -41,8 +41,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="migrationPhase"> Migration phase of Public IP Address. </param>
         /// <param name="linkedPublicIPAddress"> The linked public IP address of the public IP address resource. </param>
         /// <param name="deleteOption"> Specify what happens to the public IP address when the VM using it is deleted. </param>
+        /// <param name="isUpgradedToV2"> Whether the public IP address SKU has been upgraded from Standard to StandardV2. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PublicIPAddressPropertiesFormat(NetworkIPAllocationMethod? publicIPAllocationMethod, NetworkIPVersion? publicIPAddressVersion, NetworkIPConfiguration ipConfiguration, PublicIPAddressDnsSettings dnsSettings, DdosSettings ddosSettings, IList<IPTag> ipTags, string ipAddress, NetworkSubResource publicIPPrefix, int? idleTimeoutInMinutes, Guid? resourceGuid, NetworkProvisioningState? provisioningState, PublicIPAddressData servicePublicIPAddress, NatGatewayData natGateway, PublicIPAddressMigrationPhase? migrationPhase, PublicIPAddressData linkedPublicIPAddress, IPAddressDeleteOption? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PublicIPAddressPropertiesFormat(NetworkIPAllocationMethod? publicIPAllocationMethod, NetworkIPVersion? publicIPAddressVersion, NetworkIPConfiguration ipConfiguration, PublicIPAddressDnsSettings dnsSettings, DdosSettings ddosSettings, IList<IPTag> ipTags, string ipAddress, NetworkSubResource publicIPPrefix, int? idleTimeoutInMinutes, Guid? resourceGuid, NetworkProvisioningState? provisioningState, PublicIPAddressData servicePublicIPAddress, NatGatewayData natGateway, PublicIPAddressMigrationPhase? migrationPhase, PublicIPAddressData linkedPublicIPAddress, IPAddressDeleteOption? deleteOption, bool? isUpgradedToV2, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PublicIPAllocationMethod = publicIPAllocationMethod;
             PublicIPAddressVersion = publicIPAddressVersion;
@@ -60,6 +61,7 @@ namespace Azure.ResourceManager.Network.Models
             MigrationPhase = migrationPhase;
             LinkedPublicIPAddress = linkedPublicIPAddress;
             DeleteOption = deleteOption;
+            IsUpgradedToV2 = isUpgradedToV2;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -126,6 +128,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Specify what happens to the public IP address when the VM using it is deleted. </summary>
         [WirePath("deleteOption")]
         public IPAddressDeleteOption? DeleteOption { get; set; }
+
+        /// <summary> Whether the public IP address SKU has been upgraded from Standard to StandardV2. </summary>
+        [WirePath("upgradedToV2")]
+        public bool? IsUpgradedToV2 { get; }
 
         /// <summary> Resource ID. </summary>
         [WirePath("publicIPPrefix.id")]

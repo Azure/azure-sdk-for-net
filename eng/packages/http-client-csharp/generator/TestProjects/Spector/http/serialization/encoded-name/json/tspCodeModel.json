@@ -43,6 +43,7 @@
       "$id": "5",
       "kind": "model",
       "name": "JsonEncodedNameModel",
+      "apiVersions": [],
       "namespace": "Serialization.EncodedName.Json.Property",
       "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property.JsonEncodedNameModel",
       "usage": "Input,Output,Json",
@@ -58,6 +59,7 @@
           "$id": "6",
           "kind": "property",
           "name": "defaultName",
+          "apiVersions": [],
           "serializedName": "wireName",
           "doc": "Pass in true",
           "type": {
@@ -149,7 +151,6 @@
                 "$id": "14",
                 "name": "send",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -285,7 +286,6 @@
                 "$id": "20",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {

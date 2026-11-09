@@ -17,13 +17,18 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ResourceNavigationLink : NetworkResourceData
     {
         /// <summary> Initializes a new instance of <see cref="ResourceNavigationLink"/>. </summary>
+        public ResourceNavigationLink()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResourceNavigationLink"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the resource. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="properties"> Resource navigation link properties format. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal ResourceNavigationLink(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, ResourceNavigationLinkFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
+        internal ResourceNavigationLink(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, ResourceNavigationLinkFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, resourceType)
         {
             Properties = properties;
             ETag = eTag;
@@ -31,11 +36,47 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Resource navigation link properties format. </summary>
         [WirePath("properties")]
-        internal ResourceNavigationLinkFormat Properties { get; }
+        internal ResourceNavigationLinkFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
+        /// <summary> Resource type of the linked resource. </summary>
+        [WirePath("properties.linkedResourceType")]
+        public ResourceType? LinkedResourceType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LinkedResourceType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ResourceNavigationLinkFormat();
+                }
+                Properties.LinkedResourceType = value;
+            }
+        }
+
+        /// <summary> Link to the external resource. </summary>
+        [WirePath("properties.link")]
+        public ResourceIdentifier Link
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Link;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ResourceNavigationLinkFormat();
+                }
+                Properties.Link = value;
+            }
+        }
 
         /// <summary> The provisioning state of the resource navigation link resource. </summary>
         [WirePath("properties.provisioningState")]

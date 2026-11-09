@@ -22,6 +22,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new WorkloadBackupJob. </summary>
         public WorkloadBackupJob()
         {
+            JobType.Assign("AzureWorkloadJob");
         }
 
         /// <summary> Gets the WorkloadType. </summary>
@@ -78,7 +79,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("jobType", new string[] { "jobType" }, defaultValue: "AzureWorkloadJob");
             _workloadType = DefineProperty<string>(nameof(WorkloadType), new string[] { "workloadType" });
             _duration = DefineProperty<TimeSpan>(nameof(Duration), new string[] { "duration" }, format: "P");
             _actionsInfo = DefineListProperty<JobSupportedAction>(nameof(ActionsInfo), new string[] { "actionsInfo" });

@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.HardwareSecurityModules.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HardwareSecurityModules
 {
@@ -51,9 +52,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DedicatedHsmResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string dedicatedHsmApiVersion);
             _dedicatedHsmsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", ResourceType.Namespace, Diagnostics);
-            _dedicatedHsmsRestClient = new DedicatedHsms(_dedicatedHsmsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dedicatedHsmApiVersion ?? "2025-03-31");
+            _dedicatedHsmsRestClient = new DedicatedHsms(_dedicatedHsmsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HardwareSecurityModules/dedicatedHSMs", out string dedicatedHsmsApiVersionOverride) ? dedicatedHsmsApiVersionOverride : "2025-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 CancellationToken = cancellationToken
             };
-            return new DedicatedHsmsGetOutboundNetworkDependenciesEndpointsAsyncCollectionResultOfT(
+            return new DedicatedHsmEgressEndpointAsyncCollectionResultOfT(
                 _dedicatedHsmsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 CancellationToken = cancellationToken
             };
-            return new DedicatedHsmsGetOutboundNetworkDependenciesEndpointsCollectionResultOfT(
+            return new DedicatedHsmEgressEndpointCollectionResultOfT(
                 _dedicatedHsmsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -591,10 +591,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -634,10 +633,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

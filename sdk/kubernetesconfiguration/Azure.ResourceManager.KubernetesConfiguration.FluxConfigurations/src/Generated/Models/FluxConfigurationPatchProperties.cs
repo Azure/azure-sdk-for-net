@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <summary> Initializes a new instance of <see cref="FluxConfigurationPatchProperties"/>. </summary>
         public FluxConfigurationPatchProperties()
         {
-            Kustomizations = new ChangeTrackingDictionary<string, KustomizationPatch>();
+            Kustomizations = new ChangeTrackingDictionary<string, FluxConfigurationsKustomizationPatch>();
             ConfigurationProtectedSettings = new ChangeTrackingDictionary<string, string>();
         }
 
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="kustomizations"> Array of kustomizations used to reconcile the artifact pulled by the source type on the cluster. </param>
         /// <param name="configurationProtectedSettings"> Key-value pairs of protected configuration settings for the configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FluxConfigurationPatchProperties(FluxConfigurationSourceKindType? sourceKind, bool? isSuspended, FluxGitRepositoryPatch gitRepository, FluxBucketPatch bucket, AzureBlobPatch azureBlob, OciRepositoryPatch ociRepository, IDictionary<string, KustomizationPatch> kustomizations, IDictionary<string, string> configurationProtectedSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FluxConfigurationPatchProperties(FluxConfigurationSourceKindType? sourceKind, bool? isSuspended, FluxGitRepositoryPatch gitRepository, FluxBucketPatch bucket, AzureBlobPatch azureBlob, OciRepositoryPatch ociRepository, IDictionary<string, FluxConfigurationsKustomizationPatch> kustomizations, IDictionary<string, string> configurationProtectedSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceKind = sourceKind;
             IsSuspended = isSuspended;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         public OciRepositoryPatch OciRepository { get; set; }
 
         /// <summary> Array of kustomizations used to reconcile the artifact pulled by the source type on the cluster. </summary>
-        public IDictionary<string, KustomizationPatch> Kustomizations { get; } = new ChangeTrackingDictionary<string, KustomizationPatch>();
+        public IDictionary<string, FluxConfigurationsKustomizationPatch> Kustomizations { get; } = new ChangeTrackingDictionary<string, FluxConfigurationsKustomizationPatch>();
 
         /// <summary> Key-value pairs of protected configuration settings for the configuration. </summary>
         public IDictionary<string, string> ConfigurationProtectedSettings { get; } = new ChangeTrackingDictionary<string, string>();

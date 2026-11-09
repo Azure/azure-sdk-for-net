@@ -117,6 +117,7 @@ namespace Azure.ResourceManager.BotService.Models
             bool? isTokenEnabled = default;
             bool? isEndpointParametersEnabled = default;
             bool? isDetailedLoggingEnabled = default;
+            bool isBlockUserUploadEnabledIsDefined = false;
             bool? isBlockUserUploadEnabled = default;
             bool? isNoStorageEnabled = default;
             ETag? eTag = default;
@@ -193,6 +194,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (prop.NameEquals("isBlockUserUploadEnabled"u8))
                 {
+                    isBlockUserUploadEnabledIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         isBlockUserUploadEnabled = null;
@@ -292,7 +294,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new DirectLineSite(
@@ -315,7 +317,10 @@ namespace Azure.ResourceManager.BotService.Models
                 trustedOrigins ?? new ChangeTrackingList<string>(),
                 isWebChatSpeechEnabled,
                 isWebchatPreviewEnabled,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _isBlockUserUploadEnabledIsDefined = isBlockUserUploadEnabledIsDefined
+            };
         }
     }
 }

@@ -272,8 +272,8 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An async collection of <see cref="TemplateSpecResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TemplateSpecResource> GetAllAsync(TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
-            Core.HttpMessage FirstPageRequest(int? pageSizeHint) => _templateSpecRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, expand);
-            Core.HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _templateSpecRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _templateSpecRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _templateSpecRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TemplateSpecResource(Client, TemplateSpecData.DeserializeTemplateSpecData(e)), _templateSpecClientDiagnostics, Pipeline, "TemplateSpecCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -303,8 +303,8 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of <see cref="TemplateSpecResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TemplateSpecResource> GetAll(TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
-            Core.HttpMessage FirstPageRequest(int? pageSizeHint) => _templateSpecRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, expand);
-            Core.HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _templateSpecRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _templateSpecRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _templateSpecRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TemplateSpecResource(Client, TemplateSpecData.DeserializeTemplateSpecData(e)), _templateSpecClientDiagnostics, Pipeline, "TemplateSpecCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 

@@ -253,7 +253,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new DocumentClassifierDetails(
@@ -264,7 +264,7 @@ namespace Azure.AI.DocumentIntelligence
                 modifiedOn,
                 apiVersion,
                 baseClassifierId,
-                documentTypes,
+                documentTypes ?? new ChangeTrackingDictionary<string, ClassifierDocumentTypeDetails>(),
                 warnings ?? new ChangeTrackingList<DocumentIntelligenceWarning>(),
                 additionalBinaryDataProperties);
         }

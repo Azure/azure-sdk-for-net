@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 CancellationToken = cancellationToken
             };
-            return new ClusterRecoveryPointsGetByReplicationProtectionClusterAsyncCollectionResultOfT(
+            return new SiteRecoveryClusterRecoveryPointAsyncCollectionResultOfT(
                 _clusterRecoveryPointsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 CancellationToken = cancellationToken
             };
-            return new ClusterRecoveryPointsGetByReplicationProtectionClusterCollectionResultOfT(
+            return new SiteRecoveryClusterRecoveryPointCollectionResultOfT(
                 _clusterRecoveryPointsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

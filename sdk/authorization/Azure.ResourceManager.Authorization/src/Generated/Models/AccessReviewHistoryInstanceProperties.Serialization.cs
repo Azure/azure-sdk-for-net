@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 throw new FormatException($"The model {nameof(AccessReviewHistoryInstanceProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ReviewHistoryPeriodStartOn))
+            if (Optional.IsDefined(ReviewHistoryPeriodStartsOn))
             {
                 writer.WritePropertyName("reviewHistoryPeriodStartDateTime"u8);
-                writer.WriteStringValue(ReviewHistoryPeriodStartOn.Value, "O");
+                writer.WriteStringValue(ReviewHistoryPeriodStartsOn.Value, "O");
             }
-            if (Optional.IsDefined(ReviewHistoryPeriodEndOn))
+            if (Optional.IsDefined(ReviewHistoryPeriodEndsOn))
             {
                 writer.WritePropertyName("reviewHistoryPeriodEndDateTime"u8);
-                writer.WriteStringValue(ReviewHistoryPeriodEndOn.Value, "O");
+                writer.WriteStringValue(ReviewHistoryPeriodEndsOn.Value, "O");
             }
             if (Optional.IsDefined(DisplayName))
             {
@@ -94,25 +94,46 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(RunOn))
+            if (Optional.IsDefined(RunOn, _runOnIsDefined))
             {
-                writer.WritePropertyName("runDateTime"u8);
-                writer.WriteStringValue(RunOn.Value, "O");
+                if (RunOn != null)
+                {
+                    writer.WritePropertyName("runDateTime"u8);
+                    writer.WriteStringValue(RunOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("runDateTime"u8);
+                }
             }
-            if (Optional.IsDefined(FulfilledOn))
+            if (Optional.IsDefined(FulfilledOn, _fulfilledOnIsDefined))
             {
-                writer.WritePropertyName("fulfilledDateTime"u8);
-                writer.WriteStringValue(FulfilledOn.Value, "O");
+                if (FulfilledOn != null)
+                {
+                    writer.WritePropertyName("fulfilledDateTime"u8);
+                    writer.WriteStringValue(FulfilledOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("fulfilledDateTime"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(DownloadUri))
             {
                 writer.WritePropertyName("downloadUri"u8);
                 writer.WriteStringValue(DownloadUri);
             }
-            if (Optional.IsDefined(Expiration))
+            if (Optional.IsDefined(Expiration, _expirationIsDefined))
             {
-                writer.WritePropertyName("expiration"u8);
-                writer.WriteStringValue(Expiration.Value, "O");
+                if (Expiration != null)
+                {
+                    writer.WritePropertyName("expiration"u8);
+                    writer.WriteStringValue(Expiration.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("expiration"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -156,13 +177,16 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            DateTimeOffset? reviewHistoryPeriodStartOn = default;
-            DateTimeOffset? reviewHistoryPeriodEndOn = default;
+            DateTimeOffset? reviewHistoryPeriodStartsOn = default;
+            DateTimeOffset? reviewHistoryPeriodEndsOn = default;
             string displayName = default;
             AccessReviewHistoryDefinitionStatus? status = default;
+            bool runOnIsDefined = false;
             DateTimeOffset? runOn = default;
+            bool fulfilledOnIsDefined = false;
             DateTimeOffset? fulfilledOn = default;
             string downloadUri = default;
+            bool expirationIsDefined = false;
             DateTimeOffset? expiration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -173,7 +197,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    reviewHistoryPeriodStartOn = prop.Value.GetDateTimeOffset("O");
+                    reviewHistoryPeriodStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("reviewHistoryPeriodEndDateTime"u8))
@@ -182,7 +206,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    reviewHistoryPeriodEndOn = prop.Value.GetDateTimeOffset("O");
+                    reviewHistoryPeriodEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("displayName"u8))
@@ -201,6 +225,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (prop.NameEquals("runDateTime"u8))
                 {
+                    runOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         runOn = null;
@@ -211,6 +236,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (prop.NameEquals("fulfilledDateTime"u8))
                 {
+                    fulfilledOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         fulfilledOn = null;
@@ -226,6 +252,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (prop.NameEquals("expiration"u8))
                 {
+                    expirationIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         expiration = null;
@@ -236,19 +263,24 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AccessReviewHistoryInstanceProperties(
-                reviewHistoryPeriodStartOn,
-                reviewHistoryPeriodEndOn,
+                reviewHistoryPeriodStartsOn,
+                reviewHistoryPeriodEndsOn,
                 displayName,
                 status,
                 runOn,
                 fulfilledOn,
                 downloadUri,
                 expiration,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _runOnIsDefined = runOnIsDefined,
+                _fulfilledOnIsDefined = fulfilledOnIsDefined,
+                _expirationIsDefined = expirationIsDefined
+            };
         }
     }
 }

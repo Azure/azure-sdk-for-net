@@ -14,7 +14,7 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Base for all lists of resources. </summary>
-    internal partial class ResourceList : IJsonModel<ResourceList>
+    public partial class ResourceList : IJsonModel<ResourceList>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ResourceList(nextLink, additionalBinaryDataProperties);

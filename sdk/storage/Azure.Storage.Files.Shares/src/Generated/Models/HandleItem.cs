@@ -20,11 +20,11 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="sessionId"> SMB session ID in context of which the file handle was opened. </param>
         /// <param name="clientIP"> Client IP that opened the handle. </param>
         /// <param name="clientName"> Name of the client machine where the share is being mounted. </param>
-        /// <param name="openTime">
+        /// <param name="openOn">
         /// Time when the session that previously opened the handle has last been
         /// reconnected. (UTC)
         /// </param>
-        internal HandleItem(string handleId, StringEncoded path, string fileId, string sessionId, string clientIP, string clientName, DateTimeOffset openTime)
+        internal HandleItem(string handleId, StringEncoded path, string fileId, string sessionId, string clientIP, string clientName, DateTimeOffset openOn)
         {
             HandleId = handleId;
             Path = path;
@@ -32,7 +32,7 @@ namespace Azure.Storage.Files.Shares.Models
             SessionId = sessionId;
             ClientIP = clientIP;
             ClientName = clientName;
-            OpenTime = openTime;
+            OpenOn = openOn;
             AccessRightList = new ChangeTrackingList<AccessRight>();
         }
 
@@ -44,13 +44,13 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="sessionId"> SMB session ID in context of which the file handle was opened. </param>
         /// <param name="clientIP"> Client IP that opened the handle. </param>
         /// <param name="clientName"> Name of the client machine where the share is being mounted. </param>
-        /// <param name="openTime">
+        /// <param name="openOn">
         /// Time when the session that previously opened the handle has last been
         /// reconnected. (UTC)
         /// </param>
-        /// <param name="lastReconnectTime"> Time handle was last connected to (UTC). </param>
+        /// <param name="lastReconnectOn"> Time handle was last connected to (UTC). </param>
         /// <param name="accessRightList"> The access rights. </param>
-        internal HandleItem(string handleId, StringEncoded path, string fileId, string parentId, string sessionId, string clientIP, string clientName, DateTimeOffset openTime, DateTimeOffset? lastReconnectTime, IList<AccessRight> accessRightList)
+        internal HandleItem(string handleId, StringEncoded path, string fileId, string parentId, string sessionId, string clientIP, string clientName, DateTimeOffset openOn, DateTimeOffset? lastReconnectOn, IList<AccessRight> accessRightList)
         {
             HandleId = handleId;
             Path = path;
@@ -59,8 +59,8 @@ namespace Azure.Storage.Files.Shares.Models
             SessionId = sessionId;
             ClientIP = clientIP;
             ClientName = clientName;
-            OpenTime = openTime;
-            LastReconnectTime = lastReconnectTime;
+            OpenOn = openOn;
+            LastReconnectOn = lastReconnectOn;
             AccessRightList = accessRightList;
         }
 
@@ -89,10 +89,10 @@ namespace Azure.Storage.Files.Shares.Models
         /// Time when the session that previously opened the handle has last been
         /// reconnected. (UTC)
         /// </summary>
-        public DateTimeOffset OpenTime { get; }
+        public DateTimeOffset OpenOn { get; }
 
         /// <summary> Time handle was last connected to (UTC). </summary>
-        public DateTimeOffset? LastReconnectTime { get; }
+        public DateTimeOffset? LastReconnectOn { get; }
 
         /// <summary> The access rights. </summary>
         public IList<AccessRight> AccessRightList { get; }

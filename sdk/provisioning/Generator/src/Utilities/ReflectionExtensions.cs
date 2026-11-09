@@ -96,7 +96,6 @@ public static class ReflectionExtensions
     public static bool IsModelType(this Type type, List<Type>? visited = default) =>
         type.IsClass &&
         (type.GetInterfaces().Where(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IPersistableModel<>)).Any() ||
-            type == typeof(Azure.ResourceManager.AppContainers.Models.ContainerAppManagedEnvironmentOutboundSettings) ||
             type == typeof(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryWebhookCreateOrUpdateContent)
 #pragma warning disable CS0618 // Type or member is obsolete
         // || type == typeof(Azure.ResourceManager.Network.Models.ProtocolCustomSettings)

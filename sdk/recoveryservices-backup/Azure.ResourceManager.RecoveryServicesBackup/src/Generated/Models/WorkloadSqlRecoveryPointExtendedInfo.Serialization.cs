@@ -99,6 +99,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(SnapshotRecoveryPointInfo))
+            {
+                writer.WritePropertyName("snapshotRecoveryPointInfo"u8);
+                writer.WriteObjectValue(SnapshotRecoveryPointInfo, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -144,6 +149,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             DateTimeOffset? dataDirectoryInfoCapturedOn = default;
             IList<SqlDataDirectory> dataDirectoryPaths = default;
             IList<BackupDatabaseInRecoveryPoint> includedDatabases = default;
+            SnapshotRecoveryPointInfo snapshotRecoveryPointInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -184,12 +190,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     includedDatabases = array;
                     continue;
                 }
+                if (prop.NameEquals("snapshotRecoveryPointInfo"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    snapshotRecoveryPointInfo = SnapshotRecoveryPointInfo.DeserializeSnapshotRecoveryPointInfo(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new WorkloadSqlRecoveryPointExtendedInfo(dataDirectoryInfoCapturedOn, dataDirectoryPaths ?? new ChangeTrackingList<SqlDataDirectory>(), includedDatabases ?? new ChangeTrackingList<BackupDatabaseInRecoveryPoint>(), additionalBinaryDataProperties);
+            return new WorkloadSqlRecoveryPointExtendedInfo(dataDirectoryInfoCapturedOn, dataDirectoryPaths ?? new ChangeTrackingList<SqlDataDirectory>(), includedDatabases ?? new ChangeTrackingList<BackupDatabaseInRecoveryPoint>(), snapshotRecoveryPointInfo, additionalBinaryDataProperties);
         }
     }
 }

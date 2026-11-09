@@ -9,7 +9,7 @@ using System;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Deployments
 {
     internal partial class ResourcesClient
     {

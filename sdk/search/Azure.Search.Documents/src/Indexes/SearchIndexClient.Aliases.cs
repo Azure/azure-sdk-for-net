@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -15,6 +17,21 @@ namespace Azure.Search.Documents.Indexes
     public partial class SearchIndexClient
     {
         #region Alias Customizations
+
+        /// <summary> Lists all aliases available for a search service. </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <returns> The response returned from the service. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<BinaryData> GetAliases(RequestContext context) =>
+            GetAliases(search: default, pageSize: default, searchType: default, context: context);
+
+        /// <summary> Lists all aliases available for a search service. </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <returns> The response returned from the service. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<BinaryData> GetAliasesAsync(RequestContext context) =>
+            GetAliasesAsync(search: default, pageSize: default, searchType: default, context: context);
+
         /// <summary>
         /// Creates a new search alias or updates an alias if it already exists.
         /// </summary>

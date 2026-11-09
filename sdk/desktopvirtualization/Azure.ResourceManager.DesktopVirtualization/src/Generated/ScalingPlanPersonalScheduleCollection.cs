@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScalingPlanPersonalScheduleData, ScalingPlanPersonalScheduleResource>(new ScalingPlanPersonalSchedulesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ScalingPlanPersonalScheduleData, ScalingPlanPersonalScheduleResource>(new ScalingPlanPersonalScheduleDataAsyncCollectionResultOfT(
                 _scalingPlanPersonalSchedulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScalingPlanPersonalScheduleData, ScalingPlanPersonalScheduleResource>(new ScalingPlanPersonalSchedulesGetAllCollectionResultOfT(
+            return new PageableWrapper<ScalingPlanPersonalScheduleData, ScalingPlanPersonalScheduleResource>(new ScalingPlanPersonalScheduleDataCollectionResultOfT(
                 _scalingPlanPersonalSchedulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

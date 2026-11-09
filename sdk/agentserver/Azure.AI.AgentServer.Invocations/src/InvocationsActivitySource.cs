@@ -42,29 +42,57 @@ internal class InvocationsActivitySource
     /// </summary>
     /// <param name="context">The invocation context with resolved IDs.</param>
     /// <param name="headers">The request headers (for x-request-id propagation).</param>
-    public virtual void PropagateInvocationBaggage(
+    /// <returns>The normalized correlation baggage applied to the current activity, when one exists.</returns>
+    public virtual InvocationCorrelationBaggage PropagateInvocationBaggage(
         InvocationContext context,
         IHeaderDictionary headers)
     {
+        var baggage = InvocationCorrelationBaggage.Create(context, headers);
         var activity = Activity.Current;
         if (activity is null)
         {
-            return;
+            return baggage;
         }
 
-        // Baggage for downstream correlation (§4.3)
-        activity.AddBaggage("azure.ai.agentserver.invocation_id", context.InvocationId);
-        activity.AddBaggage("azure.ai.agentserver.session_id", context.SessionId ?? string.Empty);
-
-        // x-request-id propagation (if present in headers)
-        if (headers.TryGetValue(PlatformHeaders.RequestId, out var requestId))
+        activity.AddBaggage("azure.ai.agentserver.invocation_id", baggage.InvocationId);
+        activity.AddBaggage("azure.ai.agentserver.session_id", baggage.SessionId);
+        if (baggage.RequestId is not null)
         {
-            var requestIdStr = requestId.ToString();
-            if (!string.IsNullOrEmpty(requestIdStr))
+            activity.AddBaggage(PlatformHeaders.RequestId, baggage.RequestId);
+        }
+        return baggage;
+    }
+}
+
+internal readonly record struct InvocationCorrelationBaggage(
+    string? InvocationId,
+    string? SessionId,
+    string? RequestId)
+{
+    internal void AddStartTags(ActivityTagsCollection tags)
+    {
+        // Processors run synchronously during StartActivity. Seed only the sanctioned
+        // enrichment attribute here; ApplyBaggage handles downstream propagation.
+        if (!string.IsNullOrWhiteSpace(SessionId))
+        {
+            tags["microsoft.session.id"] = SessionId;
+        }
+    }
+
+    internal static InvocationCorrelationBaggage Create(
+        InvocationContext context,
+        IHeaderDictionary headers)
+    {
+        string? requestId = null;
+        if (headers.TryGetValue(PlatformHeaders.RequestId, out var requestIdValues))
+        {
+            var value = requestIdValues.ToString();
+            if (!string.IsNullOrEmpty(value))
             {
-                activity.AddBaggage(PlatformHeaders.RequestId,
-                    requestIdStr.Length > 256 ? requestIdStr[..256] : requestIdStr);
+                requestId = value.Length > 256 ? value[..256] : value;
             }
         }
+
+        return new(context.InvocationId, context.SessionId ?? string.Empty, requestId);
     }
 }

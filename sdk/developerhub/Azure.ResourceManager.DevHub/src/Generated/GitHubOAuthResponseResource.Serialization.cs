@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.DevHub
 {
     /// <summary></summary>
-    public partial class GitHubOAuthResponseResource : IJsonModel<GitHubOAuthResponseData>
+    public partial class GitHubOAuthResponseResource : IJsonModel<GitHubOAuthResultData>
     {
-        private static IJsonModel<GitHubOAuthResponseData> s_dataDeserializationInstance;
+        private static IJsonModel<GitHubOAuthResultData> s_dataDeserializationInstance;
 
-        private static IJsonModel<GitHubOAuthResponseData> DataDeserializationInstance => s_dataDeserializationInstance ??= new GitHubOAuthResponseData();
+        private static IJsonModel<GitHubOAuthResultData> DataDeserializationInstance => s_dataDeserializationInstance ??= new GitHubOAuthResultData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<GitHubOAuthResponseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GitHubOAuthResponseData>)Data).Write(writer, options);
+        void IJsonModel<GitHubOAuthResultData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GitHubOAuthResultData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GitHubOAuthResponseData IJsonModel<GitHubOAuthResponseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        GitHubOAuthResultData IJsonModel<GitHubOAuthResultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GitHubOAuthResponseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GitHubOAuthResponseData>(Data, options, AzureResourceManagerDevHubContext.Default);
+        BinaryData IPersistableModel<GitHubOAuthResultData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GitHubOAuthResultData>(Data, options, AzureResourceManagerDevHubContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GitHubOAuthResponseData IPersistableModel<GitHubOAuthResponseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GitHubOAuthResponseData>(data, options, AzureResourceManagerDevHubContext.Default);
+        GitHubOAuthResultData IPersistableModel<GitHubOAuthResultData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GitHubOAuthResultData>(data, options, AzureResourceManagerDevHubContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GitHubOAuthResponseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<GitHubOAuthResultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

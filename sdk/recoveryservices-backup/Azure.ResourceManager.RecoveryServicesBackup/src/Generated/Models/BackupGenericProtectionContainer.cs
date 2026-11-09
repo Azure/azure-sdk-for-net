@@ -7,12 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Base class for container with backup items. Containers with specific workloads are derived from this class.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BackupServerContainer"/>, <see cref="DpmContainer"/>, <see cref="IaasClassicComputeVmContainer"/>, <see cref="IaasVmContainer"/>, <see cref="IaasComputeVmContainer"/>, <see cref="SqlAvailabilityGroupWorkloadProtectionContainer"/>, <see cref="WorkloadContainer"/>, <see cref="SqlContainer"/>, <see cref="StorageContainer"/>, <see cref="VmAppContainerProtectionContainer"/>, <see cref="GenericContainer"/>, and <see cref="MabContainer"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BackupServerContainer"/>, <see cref="DpmContainer"/>, <see cref="GenericContainer"/>, <see cref="IaasClassicComputeVmContainer"/>, <see cref="IaasComputeVmContainer"/>, <see cref="IaasVmContainer"/>, <see cref="MabContainer"/>, <see cref="SqlAvailabilityGroupWorkloadProtectionContainer"/>, <see cref="SqlContainer"/>, <see cref="StorageContainer"/>, <see cref="VmAppContainerProtectionContainer"/>, and <see cref="WorkloadContainer"/>.
     /// </summary>
     public abstract partial class BackupGenericProtectionContainer
     {
@@ -43,8 +44,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Backup is VMAppContainer
         /// </param>
         /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
+        /// <param name="sourceLocation"> Source location of the container. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupGenericProtectionContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackupGenericProtectionContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, AzureLocation? sourceLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FriendlyName = friendlyName;
             BackupManagementType = backupManagementType;
@@ -52,6 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             HealthStatus = healthStatus;
             ContainerType = containerType;
             ProtectableObjectType = protectableObjectType;
+            SourceLocation = sourceLocation;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -77,5 +80,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Type of the protectable object associated with this container. </summary>
         public string ProtectableObjectType { get; set; }
+
+        /// <summary> Source location of the container. </summary>
+        public AzureLocation? SourceLocation { get; }
     }
 }

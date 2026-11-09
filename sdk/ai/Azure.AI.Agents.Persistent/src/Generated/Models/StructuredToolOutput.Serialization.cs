@@ -13,7 +13,7 @@ namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
     /// The data provided during a tool outputs submission to resolve pending tool calls and allow the model to continue.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ToolOutput"/> and <see cref="ComputerToolOutput"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ComputerToolOutput"/> and <see cref="ToolOutput"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownStructuredToolOutput))]
     public abstract partial class StructuredToolOutput : IJsonModel<StructuredToolOutput>
@@ -134,10 +134,10 @@ namespace Azure.AI.Agents.Persistent
             {
                 switch (discriminator.GetString())
                 {
-                    case "function_call_output":
-                        return ToolOutput.DeserializeToolOutput(element, options);
                     case "computer_call_output":
                         return ComputerToolOutput.DeserializeComputerToolOutput(element, options);
+                    case "function_call_output":
+                        return ToolOutput.DeserializeToolOutput(element, options);
                 }
             }
             return UnknownStructuredToolOutput.DeserializeUnknownStructuredToolOutput(element, options);

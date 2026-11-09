@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new NetAppCachePatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, additionalBinaryDataProperties);

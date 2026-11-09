@@ -19,6 +19,7 @@ namespace Azure.Provisioning.Cdn
         /// <summary> Creates a new SecurityPolicyWebApplicationFirewall. </summary>
         public SecurityPolicyWebApplicationFirewall()
         {
+            PolicyType.Assign(SecurityPolicyType.WebApplicationFirewall);
         }
 
         /// <summary> Gets or sets the WafPolicy. </summary>
@@ -72,7 +73,6 @@ namespace Azure.Provisioning.Cdn
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("type", new string[] { "type" }, defaultValue: "WebApplicationFirewall");
             _wafPolicy = DefineModelProperty<CdnResourceReference>(nameof(WafPolicy), new string[] { "wafPolicy" });
             _associations = DefineListProperty<SecurityPolicyWebApplicationFirewallAssociation>(nameof(Associations), new string[] { "associations" });
             DefineAdditionalProperties();

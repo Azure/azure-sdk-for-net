@@ -110,15 +110,22 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("sourceComputerId"u8);
                 writer.WriteStringValue(SourceComputerId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && Optional.IsDefined(EndsOn, _endsOnIsDefined))
             {
-                writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                if (EndsOn != null)
+                {
+                    writer.WritePropertyName("endTime"u8);
+                    writer.WriteStringValue(EndsOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("endTime"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(ConfiguredDuration))
             {
@@ -204,8 +211,9 @@ namespace Azure.ResourceManager.Automation.Models
             string osType = default;
             Guid? correlationId = default;
             Guid? sourceComputerId = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            bool endsOnIsDefined = false;
+            DateTimeOffset? endsOn = default;
             TimeSpan? configuredDuration = default;
             JobNavigation job = default;
             DateTimeOffset? createdOn = default;
@@ -273,17 +281,18 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
                 {
+                    endsOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        endOn = null;
+                        endsOn = null;
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("configuredDuration"u8))
@@ -343,7 +352,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new UpdateConfigurationMachineRunProperties(
@@ -354,8 +363,8 @@ namespace Azure.ResourceManager.Automation.Models
                 osType,
                 correlationId,
                 sourceComputerId,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 configuredDuration,
                 job,
                 createdOn,
@@ -363,7 +372,10 @@ namespace Azure.ResourceManager.Automation.Models
                 lastModifiedOn,
                 lastModifiedBy,
                 error,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _endsOnIsDefined = endsOnIsDefined
+            };
         }
     }
 }

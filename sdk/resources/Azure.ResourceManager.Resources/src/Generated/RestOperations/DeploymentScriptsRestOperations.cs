@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Resources
             return uri;
         }
 
-        internal Core.HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string scriptName, ArmDeploymentScriptData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string scriptName, ArmDeploymentScriptData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Resources
             return uri;
         }
 
-        internal Core.HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string scriptName, ArmDeploymentScriptPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string scriptName, ArmDeploymentScriptPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Resources
             return uri;
         }
 
-        internal Core.HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string scriptName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string scriptName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Resources
             return uri;
         }
 
-        internal Core.HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string scriptName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string scriptName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.Resources
             return uri;
         }
 
-        internal Core.HttpMessage CreateListBySubscriptionRequest(string subscriptionId)
+        internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.Resources
             return uri;
         }
 
-        internal Core.HttpMessage CreateGetLogsRequest(string subscriptionId, string resourceGroupName, string scriptName)
+        internal HttpMessage CreateGetLogsRequest(string subscriptionId, string resourceGroupName, string scriptName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.Resources
             return uri;
         }
 
-        internal Core.HttpMessage CreateGetLogsDefaultRequest(string subscriptionId, string resourceGroupName, string scriptName, int? tail)
+        internal HttpMessage CreateGetLogsDefaultRequest(string subscriptionId, string resourceGroupName, string scriptName, int? tail)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -701,7 +701,7 @@ namespace Azure.ResourceManager.Resources
             return uri;
         }
 
-        internal Core.HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
+        internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -782,7 +782,7 @@ namespace Azure.ResourceManager.Resources
             return uri;
         }
 
-        internal Core.HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId)
+        internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -858,7 +858,7 @@ namespace Azure.ResourceManager.Resources
             return uri;
         }
 
-        internal Core.HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
+        internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;

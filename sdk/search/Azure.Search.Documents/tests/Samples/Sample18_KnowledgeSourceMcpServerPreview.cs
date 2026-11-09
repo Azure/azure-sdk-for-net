@@ -15,7 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests.Samples
 {
-    [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_05_01_Preview)]
+    [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_08_01_Preview)]
     public partial class KnowledgeSourceMcpServerPreview : SearchTestBase
     {
         public KnowledgeSourceMcpServerPreview(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -97,7 +97,7 @@ namespace Azure.Search.Documents.Tests.Samples
                     Console.WriteLine($"  Tools: {retrievedMcp.McpServerParameters.Tools.Count}");
                     foreach (McpServerTool tool in retrievedMcp.McpServerParameters.Tools)
                     {
-                        Console.WriteLine($"    - {tool.Name} (inclusion: {tool.InclusionMode})");
+                        Console.WriteLine($"    - {tool.Name} (results processing: {tool.ResultsProcessing})");
                     }
                 }
 

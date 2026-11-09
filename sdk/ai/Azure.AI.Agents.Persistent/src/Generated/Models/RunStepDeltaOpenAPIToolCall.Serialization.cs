@@ -159,7 +159,7 @@ namespace Azure.AI.Agents.Persistent
                     continue;
                 }
             }
-            return new RunStepDeltaOpenAPIToolCall(index, id, @type, additionalBinaryDataProperties, openAPI);
+            return new RunStepDeltaOpenAPIToolCall(index, id, @type, additionalBinaryDataProperties, openAPI ?? new ChangeTrackingDictionary<string, string>());
         }
     }
 }

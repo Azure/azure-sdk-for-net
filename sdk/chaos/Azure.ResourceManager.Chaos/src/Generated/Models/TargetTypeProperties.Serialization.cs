@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new TargetTypeProperties(displayName, description, propertiesSchema, resourceTypes ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);

@@ -13,7 +13,7 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary>
     /// Base type for analyzers.
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="CustomAnalyzer"/>, <see cref="PatternAnalyzer"/>, <see cref="LuceneStandardAnalyzer"/>, and <see cref="StopAnalyzer"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="CustomAnalyzer"/>, <see cref="LuceneStandardAnalyzer"/>, <see cref="PatternAnalyzer"/>, and <see cref="StopAnalyzer"/>.
     /// </summary>
     public partial class LexicalAnalyzer
     {

@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityInsightsWatchlistItemData, SecurityInsightsWatchlistItemResource>(new WatchlistItemsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SecurityInsightsWatchlistItemData, SecurityInsightsWatchlistItemResource>(new SecurityInsightsWatchlistItemDataAsyncCollectionResultOfT(
                 _watchlistItemsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityInsightsWatchlistItemData, SecurityInsightsWatchlistItemResource>(new WatchlistItemsGetAllCollectionResultOfT(
+            return new PageableWrapper<SecurityInsightsWatchlistItemData, SecurityInsightsWatchlistItemResource>(new SecurityInsightsWatchlistItemDataCollectionResultOfT(
                 _watchlistItemsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

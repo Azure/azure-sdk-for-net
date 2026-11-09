@@ -16,20 +16,6 @@ namespace Azure.ResourceManager.Billing
     //     parameterless overload required for binary compat with GA call sites.
     public partial class BillingSubscriptionResource
     {
-        /// <summary> Back-compat parameterless Get for GA 1.2.2 callers. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Task<Response<BillingSubscriptionResource>> GetAsync(CancellationToken cancellationToken)
-        {
-            return GetAsync(expand: default, cancellationToken: cancellationToken);
-        }
-
-        /// <summary> Back-compat parameterless Get for GA 1.2.2 callers. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<BillingSubscriptionResource> Get(CancellationToken cancellationToken)
-        {
-            return Get(expand: default, cancellationToken: cancellationToken);
-        }
-
         /// <summary> Back-compat Update overload for GA 1.2.2 callers that pass <see cref="BillingSubscriptionData"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<BillingSubscriptionResource>> UpdateAsync(WaitUntil waitUntil, BillingSubscriptionData data, CancellationToken cancellationToken)

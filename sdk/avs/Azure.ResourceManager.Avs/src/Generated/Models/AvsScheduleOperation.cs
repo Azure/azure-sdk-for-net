@@ -26,11 +26,13 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="isDisabled"> If scheduling is disabled. </param>
         /// <param name="disabledReason"> Reason for schedule disabled. </param>
         /// <param name="constraints"> Constraints for scheduling maintenance. </param>
-        internal AvsScheduleOperation(MaintenanceManagementOperationKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? isDisabled, string disabledReason, IReadOnlyList<AvsScheduleOperationConstraint> constraints) : base(kind, additionalBinaryDataProperties)
+        /// <param name="recommendation"> Recommendations for scheduling maintenance. </param>
+        internal AvsScheduleOperation(MaintenanceManagementOperationKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? isDisabled, string disabledReason, IReadOnlyList<AvsScheduleOperationConstraint> constraints, MaintenanceRecommendation recommendation) : base(kind, additionalBinaryDataProperties)
         {
             IsDisabled = isDisabled;
             DisabledReason = disabledReason;
             Constraints = constraints;
+            Recommendation = recommendation;
         }
 
         /// <summary> If scheduling is disabled. </summary>
@@ -41,5 +43,17 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Constraints for scheduling maintenance. </summary>
         public IReadOnlyList<AvsScheduleOperationConstraint> Constraints { get; }
+
+        /// <summary> Recommendations for scheduling maintenance. </summary>
+        internal MaintenanceRecommendation Recommendation { get; }
+
+        /// <summary> List of recommended maintenance windows. </summary>
+        public IReadOnlyList<MaintenanceWindowRecommendation> RecommendationMaintenanceWindows
+        {
+            get
+            {
+                return Recommendation is null ? default : Recommendation.MaintenanceWindows;
+            }
+        }
     }
 }

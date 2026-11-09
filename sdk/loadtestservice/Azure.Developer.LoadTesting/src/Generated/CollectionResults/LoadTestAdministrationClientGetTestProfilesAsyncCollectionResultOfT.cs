@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -18,8 +20,8 @@ namespace Azure.Developer.LoadTesting
     {
         private readonly LoadTestAdministrationClient _client;
         private readonly int? _maxpagesize;
-        private readonly DateTimeOffset? _lastModifiedStartTime;
-        private readonly DateTimeOffset? _lastModifiedEndTime;
+        private readonly DateTimeOffset? _lastModifiedStartsOn;
+        private readonly DateTimeOffset? _lastModifiedEndsOn;
         private readonly IEnumerable<string> _testProfileIds;
         private readonly IEnumerable<string> _testIds;
         private readonly RequestContext _context;
@@ -28,18 +30,18 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Initializes a new instance of LoadTestAdministrationClientGetTestProfilesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The LoadTestAdministrationClient client used to send requests. </param>
         /// <param name="maxpagesize"> Maximum number of results to include in a single response. </param>
-        /// <param name="lastModifiedStartTime"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter test profiles. </param>
-        /// <param name="lastModifiedEndTime"> End DateTime(RFC 3339 literal format) of the last updated time range to filter test profiles. </param>
+        /// <param name="lastModifiedStartsOn"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter test profiles. </param>
+        /// <param name="lastModifiedEndsOn"> End DateTime(RFC 3339 literal format) of the last updated time range to filter test profiles. </param>
         /// <param name="testProfileIds"> Comma separated list of IDs of the test profiles to filter. </param>
         /// <param name="testIds"> Comma separated list IDs of the tests which should be associated with the test profiles to fetch. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public LoadTestAdministrationClientGetTestProfilesAsyncCollectionResultOfT(LoadTestAdministrationClient client, int? maxpagesize, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, IEnumerable<string> testProfileIds, IEnumerable<string> testIds, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public LoadTestAdministrationClientGetTestProfilesAsyncCollectionResultOfT(LoadTestAdministrationClient client, int? maxpagesize, DateTimeOffset? lastModifiedStartsOn, DateTimeOffset? lastModifiedEndsOn, IEnumerable<string> testProfileIds, IEnumerable<string> testIds, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _maxpagesize = maxpagesize;
-            _lastModifiedStartTime = lastModifiedStartTime;
-            _lastModifiedEndTime = lastModifiedEndTime;
+            _lastModifiedStartsOn = lastModifiedStartsOn;
+            _lastModifiedEndsOn = lastModifiedEndsOn;
             _testProfileIds = testProfileIds;
             _testIds = testIds;
             _context = context;
@@ -50,12 +52,20 @@ namespace Azure.Developer.LoadTesting
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of LoadTestAdministrationClientGetTestProfilesAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<TestProfile>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IAsyncEnumerable<Page<TestProfile>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            return AsPagesAsync(continuationToken, pageSizeHint, _context?.CancellationToken ?? default);
+        }
+
+        /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
+        /// <param name="pageSizeHint"> The number of items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        private async IAsyncEnumerable<Page<TestProfile>> AsPagesAsync(string continuationToken, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken)
+        {
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage, cancellationToken).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
@@ -73,14 +83,23 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink, CancellationToken cancellationToken)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetTestProfilesRequest(nextLink, _maxpagesize, _lastModifiedStartTime, _lastModifiedEndTime, _testProfileIds, _testIds, _context) : _client.CreateGetTestProfilesRequest(_maxpagesize, _lastModifiedStartTime, _lastModifiedEndTime, _testProfileIds, _testIds, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetTestProfilesRequest(nextLink, _maxpagesize, _lastModifiedStartsOn, _lastModifiedEndsOn, _testProfileIds, _testIds, _context) : _client.CreateGetTestProfilesRequest(_maxpagesize, _lastModifiedStartsOn, _lastModifiedEndsOn, _testProfileIds, _testIds, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
-                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
+                ErrorOptions errorOptions = _context?.ErrorOptions ?? ErrorOptions.Default;
+                await _client.Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+
+                if (message.Response.IsError && (errorOptions & ErrorOptions.NoThrow) != ErrorOptions.NoThrow)
+                {
+                    throw new RequestFailedException(message.Response);
+                }
+
+                return message.Response;
             }
             catch (Exception e)
             {

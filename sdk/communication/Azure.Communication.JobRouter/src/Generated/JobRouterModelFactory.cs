@@ -573,7 +573,7 @@ namespace Azure.Communication.JobRouter
         /// QueueAndMatchMode: Used when matching worker to a job is required to be done right after job is queued.
         /// ScheduleAndSuspendMode: Used for scheduling jobs to be queued at a future time. At specified time, matching of a worker to the job will not start automatically.
         /// SuspendMode: Used when matching workers to a job needs to be suspended.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="JobRouter.ScheduleAndSuspendMode"/>, <see cref="JobRouter.QueueAndMatchMode"/>, and <see cref="JobRouter.SuspendMode"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="JobRouter.QueueAndMatchMode"/>, <see cref="JobRouter.ScheduleAndSuspendMode"/>, and <see cref="JobRouter.SuspendMode"/>.
         /// </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of JobMatchingMode. </param>
         /// <returns> A new <see cref="JobRouter.JobMatchingMode"/> instance for mocking. </returns>

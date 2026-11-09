@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         {
             TryGetApiVersion(ProtectionGroupResource.ResourceType, out string protectionGroupApiVersion);
             _protectionGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CommvaultContentStore", ProtectionGroupResource.ResourceType.Namespace, Diagnostics);
-            _protectionGroupsRestClient = new ProtectionGroups(_protectionGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, protectionGroupApiVersion ?? "2026-07-03-preview");
+            _protectionGroupsRestClient = new ProtectionGroups(_protectionGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, protectionGroupApiVersion ?? "2026-11-03");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-11-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-11-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-11-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-11-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-11-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ProtectionGroupData, ProtectionGroupResource>(new ProtectionGroupsGetByCloudAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ProtectionGroupData, ProtectionGroupResource>(new ProtectionGroupDataAsyncCollectionResultOfT(
                 _protectionGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-11-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ProtectionGroupData, ProtectionGroupResource>(new ProtectionGroupsGetByCloudAccountCollectionResultOfT(
+            return new PageableWrapper<ProtectionGroupData, ProtectionGroupResource>(new ProtectionGroupDataCollectionResultOfT(
                 _protectionGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-11-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-11-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-11-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-11-03. </description>
         /// </item>
         /// </list>
         /// </summary>

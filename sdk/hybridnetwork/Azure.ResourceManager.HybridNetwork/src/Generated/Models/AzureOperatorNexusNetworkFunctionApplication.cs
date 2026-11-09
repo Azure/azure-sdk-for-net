@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary>
     /// Azure Operator Distributed Services network function application definition.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureOperatorNexusNetworkFunctionImageApplication"/> and <see cref="AzureOperatorNexusNetworkFunctionArmTemplateApplication"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureOperatorNexusNetworkFunctionArmTemplateApplication"/> and <see cref="AzureOperatorNexusNetworkFunctionImageApplication"/>.
     /// </summary>
     public abstract partial class AzureOperatorNexusNetworkFunctionApplication : NetworkFunctionApplication
     {

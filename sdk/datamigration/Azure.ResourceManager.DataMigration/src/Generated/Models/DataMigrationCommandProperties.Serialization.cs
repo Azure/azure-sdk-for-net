@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary>
     /// Base class for all types of DMS (classic) command properties. If command is not supported by current client, this object is returned.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="DataMigrationMongoDBCancelCommand"/>, <see cref="DataMigrationMongoDBFinishCommand"/>, and <see cref="DataMigrationMongoDBRestartCommand"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataMigrationMongoDBCancelCommand"/>, <see cref="DataMigrationMongoDBFinishCommand"/>, <see cref="DataMigrationMongoDBRestartCommand"/>, <see cref="MigrateMISyncCompleteCommandProperties"/>, and <see cref="MigrateSyncCompleteCommandProperties"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownCommandProperties))]
     public abstract partial class DataMigrationCommandProperties : IJsonModel<DataMigrationCommandProperties>
@@ -159,16 +159,16 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Migrate.Sync.Complete.Database":
-                        return MigrateSyncCompleteCommandProperties.DeserializeMigrateSyncCompleteCommandProperties(element, options);
-                    case "Migrate.SqlServer.AzureDbSqlMi.Complete":
-                        return MigrateMISyncCompleteCommandProperties.DeserializeMigrateMISyncCompleteCommandProperties(element, options);
                     case "cancel":
                         return DataMigrationMongoDBCancelCommand.DeserializeDataMigrationMongoDBCancelCommand(element, options);
                     case "finish":
                         return DataMigrationMongoDBFinishCommand.DeserializeDataMigrationMongoDBFinishCommand(element, options);
                     case "restart":
                         return DataMigrationMongoDBRestartCommand.DeserializeDataMigrationMongoDBRestartCommand(element, options);
+                    case "Migrate.SqlServer.AzureDbSqlMi.Complete":
+                        return MigrateMISyncCompleteCommandProperties.DeserializeMigrateMISyncCompleteCommandProperties(element, options);
+                    case "Migrate.Sync.Complete.Database":
+                        return MigrateSyncCompleteCommandProperties.DeserializeMigrateSyncCompleteCommandProperties(element, options);
                 }
             }
             return UnknownCommandProperties.DeserializeUnknownCommandProperties(element, options);

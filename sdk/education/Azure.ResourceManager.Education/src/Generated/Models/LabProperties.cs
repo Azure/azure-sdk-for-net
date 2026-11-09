@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Education.Models
         /// <param name="displayName"> Lab Display Name. </param>
         /// <param name="budgetPerStudent"> Default monetary cap for each student in this lab. </param>
         /// <param name="description"> Detail description of this lab. </param>
-        /// <param name="expireOn"> Default expiration date for each student in this lab. </param>
+        /// <param name="expiresOn"> Default expiration date for each student in this lab. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="displayName"/>, <paramref name="budgetPerStudent"/> or <paramref name="description"/> is null. </exception>
-        public LabProperties(string displayName, EducationAmount budgetPerStudent, string description, DateTimeOffset expireOn)
+        public LabProperties(string displayName, EducationAmount budgetPerStudent, string description, DateTimeOffset expiresOn)
         {
             Argument.AssertNotNull(displayName, nameof(displayName));
             Argument.AssertNotNull(budgetPerStudent, nameof(budgetPerStudent));
@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.Education.Models
             DisplayName = displayName;
             BudgetPerStudent = budgetPerStudent;
             Description = description;
-            ExpireOn = expireOn;
+            ExpiresOn = expiresOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="LabProperties"/>. </summary>
         /// <param name="displayName"> Lab Display Name. </param>
         /// <param name="budgetPerStudent"> Default monetary cap for each student in this lab. </param>
         /// <param name="description"> Detail description of this lab. </param>
-        /// <param name="expireOn"> Default expiration date for each student in this lab. </param>
+        /// <param name="expiresOn"> Default expiration date for each student in this lab. </param>
         /// <param name="effectiveOn"> Lab creation date. </param>
         /// <param name="status"> The status of this lab. </param>
         /// <param name="maxStudentCount"> the total number of students that can be accepted to the lab. </param>
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.Education.Models
         /// <param name="totalBudget"> Total budget. </param>
         /// <param name="totalAllocatedBudget"> Total allocated budget. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LabProperties(string displayName, EducationAmount budgetPerStudent, string description, DateTimeOffset expireOn, DateTimeOffset? effectiveOn, LabStatus? status, int? maxStudentCount, string invitationCode, EducationAmount totalBudget, EducationAmount totalAllocatedBudget, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LabProperties(string displayName, EducationAmount budgetPerStudent, string description, DateTimeOffset expiresOn, DateTimeOffset? effectiveOn, LabStatus? status, int? maxStudentCount, string invitationCode, EducationAmount totalBudget, EducationAmount totalAllocatedBudget, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             BudgetPerStudent = budgetPerStudent;
             Description = description;
-            ExpireOn = expireOn;
+            ExpiresOn = expiresOn;
             EffectiveOn = effectiveOn;
             Status = status;
             MaxStudentCount = maxStudentCount;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Education.Models
         public string Description { get; set; }
 
         /// <summary> Default expiration date for each student in this lab. </summary>
-        public DateTimeOffset ExpireOn { get; set; }
+        public DateTimeOffset ExpiresOn { get; set; }
 
         /// <summary> Lab creation date. </summary>
         public DateTimeOffset? EffectiveOn { get; }

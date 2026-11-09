@@ -563,14 +563,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new VMwareCbtEnableMigrationContent(
                 instanceType,
                 additionalBinaryDataProperties,
                 vMwareMachineId,
-                disksToInclude,
+                disksToInclude ?? new ChangeTrackingList<VMwareCbtDiskContent>(),
                 licenseType,
                 sqlServerLicenseType,
                 linuxLicenseType,

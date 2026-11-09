@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateGetFunctionAppStacksProvidersRequest(string stackOsType, RequestContext context)
+        internal HttpMessage CreateGetFunctionAppStacksProvidersRequest(string stackOSType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -99,9 +99,9 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (stackOsType != null)
+            if (stackOSType != null)
             {
-                uri.AppendQuery("stackOsType", stackOsType, true);
+                uri.AppendQuery("stackOsType", stackOSType, true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateNextGetFunctionAppStacksProvidersRequest(Uri nextPage, string stackOsType, RequestContext context)
+        internal HttpMessage CreateNextGetFunctionAppStacksProvidersRequest(Uri nextPage, string stackOSType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateGetFunctionAppStacksForLocationProvidersRequest(AzureLocation location, string stackOsType, RequestContext context)
+        internal HttpMessage CreateGetFunctionAppStacksForLocationProvidersRequest(AzureLocation location, string stackOSType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -147,9 +147,9 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (stackOsType != null)
+            if (stackOSType != null)
             {
-                uri.AppendQuery("stackOsType", stackOsType, true);
+                uri.AppendQuery("stackOsType", stackOSType, true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateNextGetFunctionAppStacksForLocationProvidersRequest(Uri nextPage, AzureLocation location, string stackOsType, RequestContext context)
+        internal HttpMessage CreateNextGetFunctionAppStacksForLocationProvidersRequest(Uri nextPage, AzureLocation location, string stackOSType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateGetWebAppStacksByLocationRequest(AzureLocation location, string stackOsType, RequestContext context)
+        internal HttpMessage CreateGetWebAppStacksByLocationRequest(AzureLocation location, string stackOSType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -195,9 +195,9 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (stackOsType != null)
+            if (stackOSType != null)
             {
-                uri.AppendQuery("stackOsType", stackOsType, true);
+                uri.AppendQuery("stackOsType", stackOSType, true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateNextGetWebAppStacksByLocationRequest(Uri nextPage, AzureLocation location, string stackOsType, RequestContext context)
+        internal HttpMessage CreateNextGetWebAppStacksByLocationRequest(Uri nextPage, AzureLocation location, string stackOSType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateGetWebAppStacksProvidersRequest(string stackOsType, RequestContext context)
+        internal HttpMessage CreateGetWebAppStacksProvidersRequest(string stackOSType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -241,9 +241,9 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (stackOsType != null)
+            if (stackOSType != null)
             {
-                uri.AppendQuery("stackOsType", stackOsType, true);
+                uri.AppendQuery("stackOsType", stackOSType, true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateNextGetWebAppStacksProvidersRequest(Uri nextPage, string stackOsType, RequestContext context)
+        internal HttpMessage CreateNextGetWebAppStacksProvidersRequest(Uri nextPage, string stackOSType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

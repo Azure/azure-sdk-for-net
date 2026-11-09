@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CloudExadataInfrastructureData(
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
-                zones,
+                zones ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }
     }

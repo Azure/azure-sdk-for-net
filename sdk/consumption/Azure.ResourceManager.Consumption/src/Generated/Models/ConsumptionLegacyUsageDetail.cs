@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.BillingPeriodStartOn;
+                return Properties.BillingPeriodStartsOn;
             }
         }
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.BillingPeriodEndOn;
+                return Properties.BillingPeriodEndsOn;
             }
         }
 

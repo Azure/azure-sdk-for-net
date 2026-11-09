@@ -4,12 +4,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.Projects.Agents;
 
-namespace OpenAI
+namespace Azure.AI.Projects.Agents
 {
     /// <summary> The SkillReferenceParam. </summary>
-    internal partial class SkillReferenceParam : ContainerSkill
+    public partial class SkillReferenceParam : ContainerSkill
     {
         /// <summary> Initializes a new instance of <see cref="SkillReferenceParam"/>. </summary>
         /// <param name="skillId"> The ID of the referenced skill. </param>

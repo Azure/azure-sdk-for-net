@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingProductData, BillingProductResource>(new ProductsGetByBillingAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BillingProductData, BillingProductResource>(new BillingProductDataAsyncCollectionResultOfT(
                 _productsRestClient,
                 Id.Name,
                 filter,
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingProductData, BillingProductResource>(new ProductsGetByBillingAccountCollectionResultOfT(
+            return new PageableWrapper<BillingProductData, BillingProductResource>(new BillingProductDataCollectionResultOfT(
                 _productsRestClient,
                 Id.Name,
                 filter,

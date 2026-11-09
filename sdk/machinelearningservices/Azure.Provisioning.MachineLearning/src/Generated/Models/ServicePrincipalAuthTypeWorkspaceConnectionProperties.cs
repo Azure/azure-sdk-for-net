@@ -15,6 +15,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new ServicePrincipalAuthTypeWorkspaceConnectionProperties. </summary>
         public ServicePrincipalAuthTypeWorkspaceConnectionProperties()
         {
+            AuthType.Assign(ConnectionAuthType.ServicePrincipal);
         }
 
         /// <summary> Gets or sets the Credentials. </summary>
@@ -36,7 +37,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("authType", new string[] { "authType" }, defaultValue: "ServicePrincipal");
             _credentials = DefineModelProperty<WorkspaceConnectionServicePrincipal>(nameof(Credentials), new string[] { "credentials" });
             DefineAdditionalProperties();
         }

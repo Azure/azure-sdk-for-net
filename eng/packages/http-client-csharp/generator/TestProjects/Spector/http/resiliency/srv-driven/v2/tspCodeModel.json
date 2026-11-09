@@ -9,6 +9,10 @@
       "$id": "1",
       "kind": "enum",
       "name": "Versions",
+      "apiVersions": [
+        "v1",
+        "v2"
+      ],
       "crossLanguageDefinitionId": "Resiliency.ServiceDriven.Versions",
       "valueType": {
         "$id": "2",
@@ -83,7 +87,6 @@
             "$id": "7",
             "name": "addOperation",
             "isExactName": false,
-            "resourceName": "ServiceDriven",
             "doc": "Added operation",
             "accessibility": "public",
             "parameters": [],
@@ -129,7 +132,6 @@
             "$id": "9",
             "name": "fromNone",
             "isExactName": false,
-            "resourceName": "AddOptionalParam",
             "doc": "Test that grew up from accepting no parameters to an optional input parameter",
             "accessibility": "public",
             "parameters": [
@@ -227,7 +229,6 @@
             "$id": "15",
             "name": "fromOneRequired",
             "isExactName": false,
-            "resourceName": "AddOptionalParam",
             "doc": "Operation that grew up from accepting one required parameter to accepting a required parameter and an optional parameter.",
             "accessibility": "public",
             "parameters": [
@@ -375,7 +376,6 @@
             "$id": "25",
             "name": "fromOneOptional",
             "isExactName": false,
-            "resourceName": "AddOptionalParam",
             "doc": "Tests that we can grow up an operation from accepting one optional parameter to accepting two optional parameters.",
             "accessibility": "public",
             "parameters": [

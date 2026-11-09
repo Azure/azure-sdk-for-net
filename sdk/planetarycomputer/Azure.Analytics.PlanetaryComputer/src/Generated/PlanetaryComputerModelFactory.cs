@@ -149,7 +149,7 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// Ingestion Source
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PlanetaryComputer.SharedAccessSignatureTokenIngestionSource"/> and <see cref="PlanetaryComputer.ManagedIdentityIngestionSource"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PlanetaryComputer.ManagedIdentityIngestionSource"/> and <see cref="PlanetaryComputer.SharedAccessSignatureTokenIngestionSource"/>.
         /// </summary>
         /// <param name="id"> Ingestion source id. </param>
         /// <param name="createdOn"> Created time in UTC format. </param>
@@ -752,7 +752,7 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// Base type for STAC items and collections with discriminator.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PlanetaryComputer.StacItemCollection"/> and <see cref="PlanetaryComputer.StacItem"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PlanetaryComputer.StacItem"/> and <see cref="PlanetaryComputer.StacItemCollection"/>.
         /// </summary>
         /// <param name="kind"> Discriminator property for StacItemOrStacItemCollection. </param>
         /// <param name="stacVersion"> Stac Version. </param>
@@ -860,7 +860,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// Supported geometry types include:
         /// <list type="bullet"><item><description><b>Point</b>: A single geographic coordinate.</description></item><item><description><b>LineString</b>: A sequence of geographic coordinates forming a line.</description></item><item><description><b>Polygon</b>: A closed shape defined by linear rings.</description></item><item><description><b>MultiPoint</b>: A collection of Points.</description></item><item><description><b>MultiLineString</b>: A collection of LineStrings.</description></item><item><description><b>MultiPolygon</b>: A collection of Polygons.</description></item></list>
         /// Used for spatial filtering in STAC.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PlanetaryComputer.PointGeometry"/>, <see cref="PlanetaryComputer.PolygonGeometry"/>, <see cref="PlanetaryComputer.MultiPolygon"/>, <see cref="PlanetaryComputer.MultiLineString"/>, <see cref="PlanetaryComputer.LineString"/>, and <see cref="PlanetaryComputer.MultiPoint"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PlanetaryComputer.LineString"/>, <see cref="PlanetaryComputer.MultiLineString"/>, <see cref="PlanetaryComputer.MultiPoint"/>, <see cref="PlanetaryComputer.MultiPolygon"/>, <see cref="PlanetaryComputer.PointGeometry"/>, and <see cref="PlanetaryComputer.PolygonGeometry"/>.
         /// </summary>
         /// <param name="type"> Discriminator property for GeoJsonGeometry. </param>
         /// <param name="boundingBox"> Optional bounding box of the geometry. </param>

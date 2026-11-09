@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    /// <summary> Advanced Ingress routing for path/header based routing for a Container App Environment. </summary>
+    /// <summary> A set of host names and http request routing rules for a Container App Environment. </summary>
     public partial class ContainerAppHttpRouteConfigData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

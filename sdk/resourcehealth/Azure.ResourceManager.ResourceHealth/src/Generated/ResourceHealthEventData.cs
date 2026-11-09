@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             get
             {
-                return Properties is null ? default : Properties.ImpactStartOn;
+                return Properties is null ? default : Properties.ImpactStartsOn;
             }
         }
 

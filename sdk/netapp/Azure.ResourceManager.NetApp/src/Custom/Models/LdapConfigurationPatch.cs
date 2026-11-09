@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public LdapConfigurationPatch()
         {
             LdapServers = new ChangeTrackingList<IPAddress>();
+            DnsServers = new ChangeTrackingList<IPAddress>();
         }
 
         /// <summary> The certificate CN host. </summary>
@@ -43,13 +44,29 @@ namespace Azure.ResourceManager.NetApp.Models
 
         protected virtual LdapConfigurationPatch PersistableModelCreateCore(System.BinaryData data, ModelReaderWriterOptions options)
         {
-            var reader = new Utf8JsonReader(data.ToArray());
-            return JsonModelCreateCore(ref reader, options);
+            string format = options.Format == "W" ? ((IPersistableModel<LdapConfigurationPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeLdapConfigurationPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LdapConfigurationPatch)} does not support reading '{options.Format}' format.");
+            }
         }
 
         protected virtual System.BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            return BinaryData.FromString("{}");
+            string format = options.Format == "W" ? ((IPersistableModel<LdapConfigurationPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(LdapConfigurationPatch)} does not support writing '{options.Format}' format.");
+            }
         }
 
         LdapConfigurationPatch IPersistableModel<LdapConfigurationPatch>.Create(System.BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
@@ -69,11 +86,117 @@ namespace Azure.ResourceManager.NetApp.Models
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            string format = options.Format == "W" ? ((IPersistableModel<LdapConfigurationPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LdapConfigurationPatch)} does not support writing '{format}' format.");
+            }
+            if (Optional.IsDefined(Domain))
+            {
+                writer.WritePropertyName("domain"u8);
+                writer.WriteStringValue(Domain);
+            }
+            if (Optional.IsCollectionDefined(LdapServers))
+            {
+                writer.WritePropertyName("ldapServers"u8);
+                writer.WriteStartArray();
+                foreach (IPAddress item in LdapServers)
+                {
+                    writer.WriteStringValue(item?.ToString());
+                }
+                writer.WriteEndArray();
+            }
+            SecureLdapType? secureLdapType = SecureLdapType;
+            if (!Optional.IsDefined(secureLdapType) && Optional.IsDefined(IsLdapOverTlsEnabled))
+            {
+                secureLdapType = IsLdapOverTlsEnabled.Value ? global::Azure.ResourceManager.NetApp.Models.SecureLdapType.LdapOverTls : global::Azure.ResourceManager.NetApp.Models.SecureLdapType.None;
+            }
+            if (Optional.IsDefined(secureLdapType))
+            {
+                writer.WritePropertyName("secureLdapType"u8);
+                writer.WriteStringValue(secureLdapType.Value.ToString());
+            }
+            if (Optional.IsDefined(ServerCACertificate))
+            {
+                writer.WritePropertyName("serverCACertificate"u8);
+                writer.WriteStringValue(ServerCACertificate);
+            }
+            if (Optional.IsDefined(CertificateCNHost))
+            {
+                writer.WritePropertyName("certificateCNHost"u8);
+                writer.WriteStringValue(CertificateCNHost);
+            }
+            if (Optional.IsCollectionDefined(DnsServers))
+            {
+                writer.WritePropertyName("dnsServers"u8);
+                writer.WriteStartArray();
+                foreach (IPAddress item in DnsServers)
+                {
+                    writer.WriteStringValue(item?.ToString());
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(LdapPort))
+            {
+                writer.WritePropertyName("ldapPort"u8);
+                writer.WriteNumberValue(LdapPort.Value);
+            }
+            if (Optional.IsDefined(UserDN))
+            {
+                writer.WritePropertyName("userDN"u8);
+                writer.WriteStringValue(UserDN);
+            }
+            if (Optional.IsDefined(GroupDN))
+            {
+                writer.WritePropertyName("groupDN"u8);
+                writer.WriteStringValue(GroupDN);
+            }
+            if (Optional.IsDefined(NetGroupDN))
+            {
+                writer.WritePropertyName("netGroupDN"u8);
+                writer.WriteStringValue(NetGroupDN);
+            }
+            if (Optional.IsDefined(BindAuthenticationLevel))
+            {
+                writer.WritePropertyName("bindAuthenticationLevel"u8);
+                writer.WriteStringValue(BindAuthenticationLevel.Value.ToString());
+            }
+            if (Optional.IsDefined(BindDN))
+            {
+                writer.WritePropertyName("bindDN"u8);
+                writer.WriteStringValue(BindDN);
+            }
+            if (Optional.IsDefined(BindPasswordAkvConfig))
+            {
+                writer.WritePropertyName("bindPasswordAkvConfig"u8);
+                writer.WriteObjectValue(BindPasswordAkvConfig, options);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         protected virtual LdapConfigurationPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            return new LdapConfigurationPatch();
+            string format = options.Format == "W" ? ((IPersistableModel<LdapConfigurationPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LdapConfigurationPatch)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLdapConfigurationPatch(document.RootElement, options);
         }
     }
 }

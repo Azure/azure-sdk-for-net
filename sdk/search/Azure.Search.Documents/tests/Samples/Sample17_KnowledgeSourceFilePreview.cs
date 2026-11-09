@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests.Samples
 {
-    [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_05_01_Preview)]
+    [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_08_01_Preview)]
     public partial class KnowledgeSourceFilePreview : SearchTestBase
     {
         public KnowledgeSourceFilePreview(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -97,34 +98,81 @@ namespace Azure.Search.Documents.Tests.Samples
                 await DelayAsync(TimeSpan.FromSeconds(2));
 
                 #region Snippet:Azure_Search_Tests_Samples_Sample17_FileKS_UploadFiles
-                // Upload files directly to the File knowledge source.
-                // Files are uploaded as binary content with a Content-Disposition header
-                // specifying the filename.
+                // Upload a file with a relative path and custom metadata.
                 string filePath = "path/to/azure-search-overview.txt";
 #if !SNIPPET
                 filePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Samples", "azure-search-overview.txt");
 #endif
                 string fileName = Path.GetFileName(filePath);
+                string relativeFileName = $"guides/{fileName}";
                 BinaryData fileData = BinaryData.FromBytes(File.ReadAllBytes(filePath));
 
-                Response<KnowledgeSourceFile> uploadResponse = await indexClient.UploadKnowledgeSourceFileAsync(
+                FileUploadMetadata uploadMetadata = new FileUploadMetadata
+                {
+                    FileName = relativeFileName,
+                    Metadata =
+                    {
+                        ["category"] = "documentation",
+                        ["language"] = "en"
+                    }
+                };
+
+#pragma warning disable SCME0004 // Multipart file request types are experimental.
+                UploadKnowledgeSourceFileMultipartRequest uploadRequest = new UploadKnowledgeSourceFileMultipartRequest(
+                    uploadMetadata,
+                    fileData);
+                Response<KnowledgeSourceFile> uploadResponse = await indexClient.UploadKnowledgeSourceFileMultipartAsync(
                     knowledgeSourceName,
-                    contentDisposition: $"attachment; filename=\"{fileName}\"",
-                    file: fileData);
+                    uploadRequest);
+#pragma warning restore SCME0004
 
                 KnowledgeSourceFile uploadedFile = uploadResponse.Value;
                 Console.WriteLine($"Uploaded file '{uploadedFile.FileName}' (ID: {uploadedFile.FileId}, Size: {uploadedFile.FileSizeBytes} bytes)");
+                Console.WriteLine($"  Prefix: {uploadedFile.Prefix}");
+                Console.WriteLine($"  Parsing mode selected by the service: {uploadedFile.ParsingMode}");
+                Console.WriteLine($"  Extraction mode selected by the service: {uploadedFile.ExtractionMode}");
 
-                // List all files in the knowledge source
-                await foreach (KnowledgeSourceFile file in indexClient.GetKnowledgeSourceFilesAsync(knowledgeSourceName))
+                // Replace the content and metadata without changing the file ID.
+                FileUploadMetadata updatedMetadata = new FileUploadMetadata
+                {
+                    FileName = relativeFileName,
+                    Metadata =
+                    {
+                        ["category"] = "product-documentation",
+                        ["language"] = "en"
+                    }
+                };
+#pragma warning disable SCME0004 // Multipart file request types are experimental.
+                UpdateKnowledgeSourceFileRequest updateRequest = new UpdateKnowledgeSourceFileRequest(
+                    updatedMetadata,
+                    fileData);
+                KnowledgeSourceFile updatedFile = await indexClient.UpdateKnowledgeSourceFileAsync(
+                    uploadedFile.FileId,
+                    knowledgeSourceName,
+                    updateRequest);
+#pragma warning restore SCME0004
+                Console.WriteLine($"Updated file metadata category: {updatedFile.Metadata["category"]}");
+
+                // Prefixes are derived from relative paths. The pageable handles
+                // continuation tokens internally; callers should not parse them.
+                HashSet<string> listedFileIds = new HashSet<string>();
+                await foreach (KnowledgeSourceFile file in indexClient.GetKnowledgeSourceFilesAsync(
+                    knowledgeSourceName,
+                    prefix: "guides/",
+                    pageSize: 1))
                 {
                     Console.WriteLine($"  File: {file.FileName} (ID: {file.FileId})");
+                    listedFileIds.Add(file.FileId);
                 }
-
-                // Delete a file from the knowledge source if needed
-                await indexClient.DeleteKnowledgeSourceFileAsync(uploadedFile.FileId, knowledgeSourceName);
-                Console.WriteLine($"Deleted file '{uploadedFile.FileName}'");
                 #endregion Snippet:Azure_Search_Tests_Samples_Sample17_FileKS_UploadFiles
+
+                Assert.AreEqual(uploadedFile.FileId, updatedFile.FileId);
+                Assert.AreEqual("product-documentation", updatedFile.Metadata["category"]);
+                Assert.AreEqual("guides/", updatedFile.Prefix);
+                Assert.IsTrue(listedFileIds.SetEquals(new[] { uploadedFile.FileId }));
+                Assert.IsTrue(
+                    updatedFile.ExtractionMode == FileKnowledgeSourceExtractionMode.Minimal ||
+                    updatedFile.ExtractionMode == FileKnowledgeSourceExtractionMode.Standard);
 
                 await DelayAsync(TimeSpan.FromSeconds(2));
 
@@ -224,6 +272,12 @@ namespace Azure.Search.Documents.Tests.Samples
                 #endregion Snippet:Azure_Search_Tests_Samples_Sample17_FileKS_Retrieve
 
                 Assert.IsNotNull(retrievalResponse);
+
+                #region Snippet:Azure_Search_Tests_Samples_Sample17_FileKS_DeleteFile
+                // Delete the uploaded file after retrieval is complete.
+                await indexClient.DeleteKnowledgeSourceFileAsync(uploadedFile.FileId, knowledgeSourceName);
+                Console.WriteLine($"Deleted file '{uploadedFile.FileName}'");
+                #endregion Snippet:Azure_Search_Tests_Samples_Sample17_FileKS_DeleteFile
             }
             finally
             {

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.HybridContainerService.Models;
 using Azure.ResourceManager.Models;
 
@@ -13,13 +14,11 @@ namespace Azure.ResourceManager.HybridContainerService
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AgentPoolListResult))]
     [ModelReaderWriterBuildable(typeof(AgentPoolProvisioningStatus))]
     [ModelReaderWriterBuildable(typeof(AgentPoolUpdateProfile))]
-    [ModelReaderWriterBuildable(typeof(ClusterVmAccessProfile))]
-    [ModelReaderWriterBuildable(typeof(ControlPlaneProfileControlPlaneEndpoint))]
     [ModelReaderWriterBuildable(typeof(HciInfraVnetProfile))]
     [ModelReaderWriterBuildable(typeof(HybridContainerServiceAgentPoolData))]
     [ModelReaderWriterBuildable(typeof(HybridContainerServiceAgentPoolProfile))]
@@ -40,9 +39,9 @@ namespace Azure.ResourceManager.HybridContainerService
     [ModelReaderWriterBuildable(typeof(HybridContainerServiceVmSkuProperties))]
     [ModelReaderWriterBuildable(typeof(HybridContainerServiceVmSkuResource))]
     [ModelReaderWriterBuildable(typeof(HybridIdentityMetadataData))]
-    [ModelReaderWriterBuildable(typeof(HybridIdentityMetadataList))]
     [ModelReaderWriterBuildable(typeof(HybridIdentityMetadataResource))]
     [ModelReaderWriterBuildable(typeof(InfraVnetProfile))]
+    [ModelReaderWriterBuildable(typeof(KeyRotationStatus))]
     [ModelReaderWriterBuildable(typeof(KubernetesPatchVersions))]
     [ModelReaderWriterBuildable(typeof(KubernetesVersionProfileData))]
     [ModelReaderWriterBuildable(typeof(KubernetesVersionProfileProperties))]
@@ -60,7 +59,6 @@ namespace Azure.ResourceManager.HybridContainerService
     [ModelReaderWriterBuildable(typeof(ProvisionedClusterData))]
     [ModelReaderWriterBuildable(typeof(ProvisionedClusterInfraNetworkProfile))]
     [ModelReaderWriterBuildable(typeof(ProvisionedClusterLicenseProfile))]
-    [ModelReaderWriterBuildable(typeof(ProvisionedClusterListResult))]
     [ModelReaderWriterBuildable(typeof(ProvisionedClusterLoadBalancerProfile))]
     [ModelReaderWriterBuildable(typeof(ProvisionedClusterNetworkProfile))]
     [ModelReaderWriterBuildable(typeof(ProvisionedClusterPoolUpgradeProfile))]
@@ -68,6 +66,7 @@ namespace Azure.ResourceManager.HybridContainerService
     [ModelReaderWriterBuildable(typeof(ProvisionedClusterProperties))]
     [ModelReaderWriterBuildable(typeof(ProvisionedClusterPropertiesAutoScalerProfile))]
     [ModelReaderWriterBuildable(typeof(ProvisionedClusterResource))]
+    [ModelReaderWriterBuildable(typeof(ProvisionedClusterSecurityProfile))]
     [ModelReaderWriterBuildable(typeof(ProvisionedClusterStatus))]
     [ModelReaderWriterBuildable(typeof(ProvisionedClusterUpgradeProfileData))]
     [ModelReaderWriterBuildable(typeof(ProvisionedClusterUpgradeProfileResource))]
@@ -78,7 +77,6 @@ namespace Azure.ResourceManager.HybridContainerService
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineIPItem))]
     [ModelReaderWriterBuildable(typeof(VirtualNetworkPropertiesStatusOperationStatus))]
-    [ModelReaderWriterBuildable(typeof(VirtualNetworksListResult))]
     public partial class AzureResourceManagerHybridContainerServiceContext : ModelReaderWriterContext
     {
     }

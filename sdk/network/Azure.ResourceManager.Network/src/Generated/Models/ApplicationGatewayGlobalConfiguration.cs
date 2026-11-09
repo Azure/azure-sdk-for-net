@@ -25,11 +25,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayGlobalConfiguration"/>. </summary>
         /// <param name="enableRequestBuffering"> Enable request buffering. </param>
         /// <param name="enableResponseBuffering"> Enable response buffering. </param>
+        /// <param name="disableDefaultServerHeaderInResponse"> Disable default server header in response. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGatewayGlobalConfiguration(bool? enableRequestBuffering, bool? enableResponseBuffering, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationGatewayGlobalConfiguration(bool? enableRequestBuffering, bool? enableResponseBuffering, bool? disableDefaultServerHeaderInResponse, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EnableRequestBuffering = enableRequestBuffering;
             EnableResponseBuffering = enableResponseBuffering;
+            DisableDefaultServerHeaderInResponse = disableDefaultServerHeaderInResponse;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -40,5 +42,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Enable response buffering. </summary>
         [WirePath("enableResponseBuffering")]
         public bool? EnableResponseBuffering { get; set; }
+
+        /// <summary> Disable default server header in response. </summary>
+        [WirePath("disableDefaultServerHeaderInResponse")]
+        public bool? DisableDefaultServerHeaderInResponse { get; set; }
     }
 }

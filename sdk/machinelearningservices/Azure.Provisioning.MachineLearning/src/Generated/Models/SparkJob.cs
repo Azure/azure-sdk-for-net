@@ -31,6 +31,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new SparkJob. </summary>
         public SparkJob()
         {
+            JobType.Assign(MachineLearning.JobType.Spark);
         }
 
         /// <summary> Gets or sets the Archives. </summary>
@@ -264,7 +265,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("jobType", new string[] { "jobType" }, defaultValue: "Spark");
             _archives = DefineListProperty<string>(nameof(Archives), new string[] { "archives" });
             _args = DefineProperty<string>(nameof(Args), new string[] { "args" });
             _codeId = DefineProperty<ResourceIdentifier>(nameof(CodeId), new string[] { "codeId" }, isRequired: true);

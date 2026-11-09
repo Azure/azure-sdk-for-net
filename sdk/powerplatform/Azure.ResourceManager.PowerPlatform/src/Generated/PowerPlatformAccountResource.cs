@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.PowerPlatform.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.PowerPlatform
 {
@@ -51,9 +52,8 @@ namespace Azure.ResourceManager.PowerPlatform
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PowerPlatformAccountResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string powerPlatformAccountApiVersion);
             _accountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PowerPlatform", ResourceType.Namespace, Diagnostics);
-            _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, powerPlatformAccountApiVersion ?? "2020-10-30-preview");
+            _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.PowerPlatform/accounts", out string accountsApiVersionOverride) ? accountsApiVersionOverride : "2020-10-30-preview");
             ValidateResourceId(id);
         }
 
@@ -505,10 +505,9 @@ namespace Azure.ResourceManager.PowerPlatform
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -548,10 +547,9 @@ namespace Azure.ResourceManager.PowerPlatform
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

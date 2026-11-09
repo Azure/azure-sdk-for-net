@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.HorizonDB;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HorizonDB.Models
 {
@@ -25,17 +26,22 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <summary> Initializes a new instance of <see cref="HorizonDBClusterPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="properties"> The properties that can be updated for a HorizonDB cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDBClusterPatch(IDictionary<string, string> tags, HorizonDBClusterPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBClusterPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, HorizonDBClusterPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
+            Identity = identity;
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
+
+        /// <summary> The managed service identities assigned to this resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The properties that can be updated for a HorizonDB cluster. </summary>
         public HorizonDBClusterPatchProperties Properties { get; set; }

@@ -14,22 +14,22 @@ namespace Azure.AI.Language.Text
     public partial class CustomSingleLabelClassificationOperationResult : AnalyzeTextOperationResult
     {
         /// <summary> Initializes a new instance of <see cref="CustomSingleLabelClassificationOperationResult"/>. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="lastUpdateOn"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="results"> List of results. </param>
-        internal CustomSingleLabelClassificationOperationResult(DateTimeOffset lastUpdateDateTime, TextActionState status, CustomLabelClassificationResult results) : base(lastUpdateDateTime, status, AnalyzeTextOperationResultsKind.CustomSingleLabelClassificationOperationResults)
+        internal CustomSingleLabelClassificationOperationResult(DateTimeOffset lastUpdateOn, TextActionState status, CustomLabelClassificationResult results) : base(lastUpdateOn, status, AnalyzeTextOperationResultsKind.CustomSingleLabelClassificationOperationResults)
         {
             Results = results;
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomSingleLabelClassificationOperationResult"/>. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="lastUpdateOn"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="kind"> Kind of the task. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="results"> List of results. </param>
-        internal CustomSingleLabelClassificationOperationResult(DateTimeOffset lastUpdateDateTime, TextActionState status, string taskName, AnalyzeTextOperationResultsKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, CustomLabelClassificationResult results) : base(lastUpdateDateTime, status, taskName, kind, additionalBinaryDataProperties)
+        internal CustomSingleLabelClassificationOperationResult(DateTimeOffset lastUpdateOn, TextActionState status, string taskName, AnalyzeTextOperationResultsKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, CustomLabelClassificationResult results) : base(lastUpdateOn, status, taskName, kind, additionalBinaryDataProperties)
         {
             Results = results;
         }

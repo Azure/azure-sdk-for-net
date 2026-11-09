@@ -20,7 +20,7 @@ namespace Azure.Provisioning.MachineLearning
         private ManagedNetworkProvisionStatus _status;
         private BicepValue<FirewallSku> _firewallSku;
         private BicepValue<ManagedNetworkKind> _managedNetworkKind;
-        private BicepValue<string> _firewallPublicIpAddress;
+        private BicepValue<string> _firewallPublicIPAddress;
 
         /// <summary> Creates a new ManagedNetworkSettings. </summary>
         public ManagedNetworkSettings()
@@ -127,13 +127,13 @@ namespace Azure.Provisioning.MachineLearning
             }
         }
 
-        /// <summary> Gets the FirewallPublicIpAddress. </summary>
-        public BicepValue<string> FirewallPublicIpAddress
+        /// <summary> Gets the FirewallPublicIPAddress. </summary>
+        public BicepValue<string> FirewallPublicIPAddress
         {
             get
             {
                 Initialize();
-                return _firewallPublicIpAddress;
+                return _firewallPublicIPAddress;
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.Provisioning.MachineLearning
             _status = DefineModelProperty<ManagedNetworkProvisionStatus>(nameof(Status), new string[] { "status" });
             _firewallSku = DefineProperty<FirewallSku>(nameof(FirewallSku), new string[] { "firewallSku" });
             _managedNetworkKind = DefineProperty<ManagedNetworkKind>(nameof(ManagedNetworkKind), new string[] { "managedNetworkKind" });
-            _firewallPublicIpAddress = DefineProperty<string>(nameof(FirewallPublicIpAddress), new string[] { "firewallPublicIpAddress" }, isOutput: true);
+            _firewallPublicIPAddress = DefineProperty<string>(nameof(FirewallPublicIPAddress), new string[] { "firewallPublicIpAddress" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

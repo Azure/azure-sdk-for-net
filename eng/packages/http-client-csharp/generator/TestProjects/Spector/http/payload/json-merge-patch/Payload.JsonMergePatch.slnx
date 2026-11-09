@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="src/Payload.JsonMergePatch.csproj" />
+  <Project Path="tests/Payload.JsonMergePatch.Tests.csproj" />
 </Solution>

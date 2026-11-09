@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(ThumbprintString);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
+            if (options.Format != "W" && Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expiryTime"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(IsExportable))
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Automation.Models
                 return null;
             }
             string thumbprintString = default;
-            DateTimeOffset? expireOn = default;
+            DateTimeOffset? expiresOn = default;
             bool? isExportable = default;
             DateTimeOffset? createdOn = default;
             DateTimeOffset? lastModifiedOn = default;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("isExportable"u8))
@@ -203,12 +203,12 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CertificateProperties(
                 thumbprintString,
-                expireOn,
+                expiresOn,
                 isExportable,
                 createdOn,
                 lastModifiedOn,

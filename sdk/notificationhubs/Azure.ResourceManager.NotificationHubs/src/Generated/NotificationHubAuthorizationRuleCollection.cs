@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NotificationHubAuthorizationRuleData, NotificationHubAuthorizationRuleResource>(new SharedAccessAuthorizationRuleResourcesGetAuthorizationRulesAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NotificationHubAuthorizationRuleData, NotificationHubAuthorizationRuleResource>(new NotificationHubAuthorizationRuleDataAsyncCollectionResultOfT(
                 _sharedAccessAuthorizationRuleResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NotificationHubAuthorizationRuleData, NotificationHubAuthorizationRuleResource>(new SharedAccessAuthorizationRuleResourcesGetAuthorizationRulesCollectionResultOfT(
+            return new PageableWrapper<NotificationHubAuthorizationRuleData, NotificationHubAuthorizationRuleResource>(new NotificationHubAuthorizationRuleDataCollectionResultOfT(
                 _sharedAccessAuthorizationRuleResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -45,7 +45,13 @@ namespace Azure.ResourceManager.IotHub
             TryGetApiVersion(EventHubConsumerGroupInfoResource.ResourceType, out string eventHubConsumerGroupInfoApiVersion);
             _eventHubEndpointName = eventHubEndpointName;
             _iotHubResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotHub", EventHubConsumerGroupInfoResource.ResourceType.Namespace, Diagnostics);
-            _iotHubResourceRestClient = new IotHubResource(_iotHubResourceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, eventHubConsumerGroupInfoApiVersion ?? "2026-05-01-preview");
+            _iotHubResourceRestClient = new IotHubResource(
+                _iotHubResourceClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                eventHubConsumerGroupInfoApiVersion ?? "2026-10-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -72,7 +78,7 @@ namespace Azure.ResourceManager.IotHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,7 +133,7 @@ namespace Azure.ResourceManager.IotHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,7 +188,7 @@ namespace Azure.ResourceManager.IotHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -231,7 +237,7 @@ namespace Azure.ResourceManager.IotHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -280,7 +286,7 @@ namespace Azure.ResourceManager.IotHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -292,7 +298,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EventHubConsumerGroupInfoData, EventHubConsumerGroupInfoResource>(new IotHubResourceGetEventHubConsumerGroupsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EventHubConsumerGroupInfoData, EventHubConsumerGroupInfoResource>(new EventHubConsumerGroupInfoDataAsyncCollectionResultOfT(
                 _iotHubResourceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -315,7 +321,7 @@ namespace Azure.ResourceManager.IotHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -327,7 +333,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EventHubConsumerGroupInfoData, EventHubConsumerGroupInfoResource>(new IotHubResourceGetEventHubConsumerGroupsCollectionResultOfT(
+            return new PageableWrapper<EventHubConsumerGroupInfoData, EventHubConsumerGroupInfoResource>(new EventHubConsumerGroupInfoDataCollectionResultOfT(
                 _iotHubResourceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -350,7 +356,7 @@ namespace Azure.ResourceManager.IotHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -407,7 +413,7 @@ namespace Azure.ResourceManager.IotHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -464,7 +470,7 @@ namespace Azure.ResourceManager.IotHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -525,7 +531,7 @@ namespace Azure.ResourceManager.IotHub
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

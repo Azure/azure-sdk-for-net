@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The details of a response from an operation on a resource. </summary>
+    /// <summary> The status and settings for an operation on one virtual machine. </summary>
     public partial class ComputeBulkOperationDetails : IJsonModel<ComputeBulkOperationDetails>
     {
         /// <summary> Initializes a new instance of <see cref="ComputeBulkOperationDetails"/> for deserialization. </summary>
@@ -142,6 +142,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 writer.WritePropertyName("resourceNotificationDetails"u8);
                 writer.WriteObjectValue(ResourceNotificationDetails, options);
             }
+            if (Optional.IsDefined(CapacityRecommendation))
+            {
+                writer.WritePropertyName("capacityRecommendation"u8);
+                writer.WriteObjectValue(CapacityRecommendation, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -197,6 +202,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             DateTimeOffset? completedOn = default;
             BulkOperationRetryPolicy retryPolicy = default;
             ResourceNotificationDetails resourceNotificationDetails = default;
+            CapacityRecommendation capacityRecommendation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -309,9 +315,18 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     resourceNotificationDetails = ResourceNotificationDetails.DeserializeResourceNotificationDetails(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("capacityRecommendation"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    capacityRecommendation = CapacityRecommendation.DeserializeCapacityRecommendation(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ComputeBulkOperationDetails(
@@ -328,6 +343,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 completedOn,
                 retryPolicy,
                 resourceNotificationDetails,
+                capacityRecommendation,
                 additionalBinaryDataProperties);
         }
     }

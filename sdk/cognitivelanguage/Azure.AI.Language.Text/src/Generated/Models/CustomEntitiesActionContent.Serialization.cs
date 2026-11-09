@@ -171,7 +171,7 @@ namespace Azure.AI.Language.Text
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CustomEntitiesActionContent(loggingOptOut, projectName, deploymentName, stringIndexType, additionalBinaryDataProperties);

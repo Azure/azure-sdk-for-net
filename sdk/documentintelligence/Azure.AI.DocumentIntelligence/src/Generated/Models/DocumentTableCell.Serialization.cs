@@ -274,7 +274,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new DocumentTableCell(
@@ -285,7 +285,7 @@ namespace Azure.AI.DocumentIntelligence
                 columnSpan,
                 content,
                 boundingRegions ?? new ChangeTrackingList<BoundingRegion>(),
-                spans,
+                spans ?? new ChangeTrackingList<DocumentSpan>(),
                 elements ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }

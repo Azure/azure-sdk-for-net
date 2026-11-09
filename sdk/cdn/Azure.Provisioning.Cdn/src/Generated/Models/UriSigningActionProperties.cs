@@ -18,6 +18,7 @@ namespace Azure.Provisioning.Cdn
         /// <summary> Creates a new UriSigningActionProperties. </summary>
         public UriSigningActionProperties()
         {
+            TypeName.Assign(DeliveryRuleActionParametersType.DeliveryRuleUrlSigningActionParameters);
         }
 
         /// <summary> Gets or sets the Algorithm. </summary>
@@ -54,7 +55,6 @@ namespace Azure.Provisioning.Cdn
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("typeName", new string[] { "typeName" }, defaultValue: "DeliveryRuleUrlSigningActionParameters");
             _algorithm = DefineProperty<UriSigningAlgorithm>(nameof(Algorithm), new string[] { "algorithm" });
             _parameterNameOverride = DefineListProperty<UriSigningParamIdentifier>(nameof(ParameterNameOverride), new string[] { "parameterNameOverride" });
             DefineAdditionalProperties();

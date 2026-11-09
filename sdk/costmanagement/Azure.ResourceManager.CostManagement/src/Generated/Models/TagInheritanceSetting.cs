@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             get
             {
-                return Properties is null ? default : Properties.PreferContainerTags;
+                return Properties is null ? (bool?)default : Properties.PreferContainerTags;
             }
             set
             {

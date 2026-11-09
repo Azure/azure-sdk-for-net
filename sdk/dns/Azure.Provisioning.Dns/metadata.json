@@ -1,0 +1,5 @@
+{
+  "apiVersions": {
+    "Microsoft.Network": "2023-07-01-preview"
+  }
+}

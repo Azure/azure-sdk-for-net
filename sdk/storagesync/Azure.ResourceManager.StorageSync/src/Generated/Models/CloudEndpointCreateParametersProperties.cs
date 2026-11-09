@@ -27,13 +27,15 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="azureFileShareName"> Azure file share name. </param>
         /// <param name="storageAccountTenantId"> Storage Account Tenant Id. </param>
         /// <param name="friendlyName"> Friendly Name. </param>
+        /// <param name="changeEnumerationIntervalDays"> The interval for enumerating changes on the cloud endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CloudEndpointCreateParametersProperties(ResourceIdentifier storageAccountResourceId, string azureFileShareName, Guid? storageAccountTenantId, string friendlyName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CloudEndpointCreateParametersProperties(ResourceIdentifier storageAccountResourceId, string azureFileShareName, Guid? storageAccountTenantId, string friendlyName, int? changeEnumerationIntervalDays, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageAccountResourceId = storageAccountResourceId;
             AzureFileShareName = azureFileShareName;
             StorageAccountTenantId = storageAccountTenantId;
             FriendlyName = friendlyName;
+            ChangeEnumerationIntervalDays = changeEnumerationIntervalDays;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -48,5 +50,8 @@ namespace Azure.ResourceManager.StorageSync.Models
 
         /// <summary> Friendly Name. </summary>
         public string FriendlyName { get; set; }
+
+        /// <summary> The interval for enumerating changes on the cloud endpoint. </summary>
+        public int? ChangeEnumerationIntervalDays { get; set; }
     }
 }

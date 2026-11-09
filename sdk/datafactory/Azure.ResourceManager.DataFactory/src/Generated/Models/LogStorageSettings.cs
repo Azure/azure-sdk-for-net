@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -16,6 +17,17 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="LogStorageSettings"/>. </summary>
+        /// <param name="linkedServiceName"> Log storage linked service reference. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
+        public LogStorageSettings(DataFactoryLinkedServiceReference linkedServiceName)
+        {
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+
+            LinkedServiceName = linkedServiceName;
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+        }
 
         /// <summary> Initializes a new instance of <see cref="LogStorageSettings"/>. </summary>
         /// <param name="linkedServiceName"> Log storage linked service reference. </param>

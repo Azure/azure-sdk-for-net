@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Reservations
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ReservationQuotaData, ReservationQuotaResource>(new QuotaGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ReservationQuotaData, ReservationQuotaResource>(new ReservationQuotaDataAsyncCollectionResultOfT(
                 _quotaRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 _providerId,
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Reservations
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ReservationQuotaData, ReservationQuotaResource>(new QuotaGetAllCollectionResultOfT(
+            return new PageableWrapper<ReservationQuotaData, ReservationQuotaResource>(new ReservationQuotaDataCollectionResultOfT(
                 _quotaRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 _providerId,

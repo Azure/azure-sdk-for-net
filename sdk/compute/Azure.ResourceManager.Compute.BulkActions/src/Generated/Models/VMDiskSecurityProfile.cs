@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> Specifies the customer managed disk encryption set resource id for the managed disk that is used for Customer Managed Key encrypted ConfidentialVM OS Disk and VMGuest blob. </summary>
         internal DiskEncryptionSetParametersContent DiskEncryptionSet { get; set; }
 
-        /// <summary> The ID of the sub-resource. </summary>
+        /// <summary> The Azure resource ID. </summary>
         public string DiskEncryptionSetId
         {
             get

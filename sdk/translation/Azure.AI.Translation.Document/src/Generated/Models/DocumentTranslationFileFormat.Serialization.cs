@@ -256,13 +256,13 @@ namespace Azure.AI.Translation.Document
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new DocumentTranslationFileFormat(
                 format,
-                fileExtensions,
-                contentTypes,
+                fileExtensions ?? new ChangeTrackingList<string>(),
+                contentTypes ?? new ChangeTrackingList<string>(),
                 defaultFormatVersion,
                 formatVersions ?? new ChangeTrackingList<string>(),
                 @type,

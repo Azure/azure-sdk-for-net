@@ -11,14 +11,19 @@ using Azure.ResourceManager.Enclave;
 
 namespace Azure.ResourceManager.Enclave.Models
 {
-    /// <summary></summary>
+    /// <summary> The maintenance mode for a virtual enclave. </summary>
     public readonly partial struct VirtualEnclaveMaintenanceModeConfigurationMode : IEquatable<VirtualEnclaveMaintenanceModeConfigurationMode>
     {
         private readonly string _value;
+        /// <summary> Maintenance mode is on. </summary>
         private const string OnValue = "On";
-        private const string CanNotDeleteValue = "CanNotDelete";
+        /// <summary> Resources cannot be deleted while maintenance mode is active. </summary>
+        private const string CannotDeleteValue = "CanNotDelete";
+        /// <summary> Maintenance mode is off. </summary>
         private const string OffValue = "Off";
+        /// <summary> General maintenance mode is active. </summary>
         private const string GeneralValue = "General";
+        /// <summary> Advanced maintenance mode is active. </summary>
         private const string AdvancedValue = "Advanced";
 
         /// <summary> Initializes a new instance of <see cref="VirtualEnclaveMaintenanceModeConfigurationMode"/>. </summary>
@@ -31,19 +36,19 @@ namespace Azure.ResourceManager.Enclave.Models
             _value = value;
         }
 
-        /// <summary> Gets the On. </summary>
+        /// <summary> Maintenance mode is on. </summary>
         public static VirtualEnclaveMaintenanceModeConfigurationMode On { get; } = new VirtualEnclaveMaintenanceModeConfigurationMode(OnValue);
 
-        /// <summary> Gets the CanNotDelete. </summary>
-        public static VirtualEnclaveMaintenanceModeConfigurationMode CanNotDelete { get; } = new VirtualEnclaveMaintenanceModeConfigurationMode(CanNotDeleteValue);
+        /// <summary> Resources cannot be deleted while maintenance mode is active. </summary>
+        public static VirtualEnclaveMaintenanceModeConfigurationMode CannotDelete { get; } = new VirtualEnclaveMaintenanceModeConfigurationMode(CannotDeleteValue);
 
-        /// <summary> Gets the Off. </summary>
+        /// <summary> Maintenance mode is off. </summary>
         public static VirtualEnclaveMaintenanceModeConfigurationMode Off { get; } = new VirtualEnclaveMaintenanceModeConfigurationMode(OffValue);
 
-        /// <summary> Gets the General. </summary>
+        /// <summary> General maintenance mode is active. </summary>
         public static VirtualEnclaveMaintenanceModeConfigurationMode General { get; } = new VirtualEnclaveMaintenanceModeConfigurationMode(GeneralValue);
 
-        /// <summary> Gets the Advanced. </summary>
+        /// <summary> Advanced maintenance mode is active. </summary>
         public static VirtualEnclaveMaintenanceModeConfigurationMode Advanced { get; } = new VirtualEnclaveMaintenanceModeConfigurationMode(AdvancedValue);
 
         /// <summary> Determines if two <see cref="VirtualEnclaveMaintenanceModeConfigurationMode"/> values are the same. </summary>

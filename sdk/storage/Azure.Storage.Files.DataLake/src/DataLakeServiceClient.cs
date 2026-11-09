@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -392,28 +392,62 @@ namespace Azure.Storage.Files.DataLake
             _uri = serviceUri;
             _blobUri = new DataLakeUriBuilder(serviceUri).ToBlobUri();
 
+            // Build the DFS pipeline from the supplied authentication policy as-is.
+            // For token-credential scenarios, only the inner blob service client gets a
+            // separate pipeline wrapped with SessionAuthenticationPolicy, so DFS endpoint
+            // requests can never route through session auth.
+            HttpPipeline dfsPipeline = options.Build(authentication);
+
+            HttpPipeline blobPipeline = dfsPipeline;
+            HttpPipelinePolicy blobAuthentication = authentication;
+            ClientDiagnostics clientDiagnostics = new ClientDiagnostics(options);
+            if (tokenCredential != null)
+            {
+                blobAuthentication = BlobServiceClientInternals.CreateSessionPolicy(
+                    _blobUri,
+                    CreateBlobClientOptions(options, clientDiagnostics),
+                    authentication,
+                    dfsPipeline, // Sessions are created over the bearer-authenticated pipeline.
+                    tokenCredential,
+                    options.SessionOptions);
+                blobPipeline = options.Build(blobAuthentication);
+            }
+
             _clientConfiguration = new DataLakeClientConfiguration(
-                pipeline: options.Build(authentication),
+                pipeline: dfsPipeline,
                 sharedKeyCredential: storageSharedKeyCredential,
                 sasCredential: sasCredential,
                 tokenCredential: tokenCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: clientDiagnostics,
                 clientOptions: options,
-                customerProvidedKey: options.CustomerProvidedKey);
+                customerProvidedKey: options.CustomerProvidedKey)
+            {
+                BlobPipeline = blobPipeline,
+            };
 
             _blobServiceClient = BlobServiceClientInternals.Create(
                 _blobUri,
                 _clientConfiguration,
-                authentication);
+                blobAuthentication);
 
             DataLakeErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
+        }
+
+        private static BlobClientOptions CreateBlobClientOptions(
+            DataLakeClientOptions clientOptions,
+            ClientDiagnostics clientDiagnostics)
+        {
+            return new BlobClientOptions(clientOptions.Version.AsBlobsVersion())
+            {
+                Diagnostics = { IsDistributedTracingEnabled = clientDiagnostics.IsActivityEnabled }
+            };
         }
 
         /// <summary>
         /// Helper to access protected static members of BlobServiceClient
         /// that should not be exposed directly to customers.
         /// </summary>
-        private class BlobServiceClientInternals : BlobServiceClient
+        internal class BlobServiceClientInternals : BlobServiceClient
         {
             public static BlobServiceClient Create(
                 Uri uri,
@@ -422,15 +456,34 @@ namespace Azure.Storage.Files.DataLake
             {
                 return BlobServiceClient.CreateClient(
                     uri,
-                    new BlobClientOptions(clientConfiguration.ClientOptions.Version.AsBlobsVersion())
-                    {
-                        Diagnostics = { IsDistributedTracingEnabled = clientConfiguration.ClientDiagnostics.IsActivityEnabled }
-                    },
+                    CreateBlobClientOptions(clientConfiguration.ClientOptions, clientConfiguration.ClientDiagnostics),
                     authentication,
-                    clientConfiguration.Pipeline,
+                    clientConfiguration.BlobPipeline,
                     clientConfiguration.SharedKeyCredential,
                     clientConfiguration.SasCredential,
                     clientConfiguration.TokenCredential);
+            }
+
+            public static HttpPipelinePolicy CreateSessionPolicy(
+                Uri endpoint,
+                BlobClientOptions blobClientOptions,
+                HttpPipelinePolicy bearerTokenAuthPolicy,
+                HttpPipeline createSessionPipeline,
+                TokenCredential tokenCredential,
+                Blobs.Models.SessionOptions sessionOptions)
+            {
+                Blobs.Models.SessionProvider sessionProvider = sessionOptions?.SessionProvider
+                    ?? BlobServiceClient.CreateContainerSessionProvider(
+                        endpoint,
+                        blobClientOptions,
+                        bearerTokenAuthPolicy,
+                        createSessionPipeline,
+                        tokenCredential);
+                return BlobServiceClient.CreateSessionAuthenticationPolicy(
+                    endpoint,
+                    bearerTokenAuthPolicy,
+                    sessionProvider,
+                    sessionOptions);
             }
         }
         #endregion ctors
@@ -1174,6 +1227,16 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
+        ///
+        /// When a file system is deleted, a file system with the same name can't be
+        /// created for at least 30 seconds.  The file system might not be available for
+        /// more than 30 seconds if the service is still processing the request.  While the
+        /// file system is being deleted, attempts to create a file system of the same name
+        /// fail with status code 409 (Conflict).  The service indicates that the file
+        /// system is being deleted.  Operations on paths within the file system, including
+        /// reads and writes, may continue to succeed for up to 30 seconds after the delete
+        /// request is accepted.  After this period, all operations on the file system and
+        /// its paths fail with status code 404 (Not Found).
         /// </remarks>
         public virtual Response DeleteFileSystem(
             string fileSystemName,
@@ -1229,6 +1292,16 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
+        ///
+        /// When a file system is deleted, a file system with the same name can't be
+        /// created for at least 30 seconds.  The file system might not be available for
+        /// more than 30 seconds if the service is still processing the request.  While the
+        /// file system is being deleted, attempts to create a file system of the same name
+        /// fail with status code 409 (Conflict).  The service indicates that the file
+        /// system is being deleted.  Operations on paths within the file system, including
+        /// reads and writes, may continue to succeed for up to 30 seconds after the delete
+        /// request is accepted.  After this period, all operations on the file system and
+        /// its paths fail with status code 404 (Not Found).
         /// </remarks>
         public virtual async Task<Response> DeleteFileSystemAsync(
             string fileSystemName,

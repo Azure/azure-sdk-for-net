@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
 {
     /// <summary>
     /// Describes a unit of image customization
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ImageTemplateShellCustomizer"/>, <see cref="ImageTemplateRestartCustomizer"/>, <see cref="ImageTemplateWindowsUpdateCustomizer"/>, <see cref="ImageTemplatePowerShellCustomizer"/>, and <see cref="ImageTemplateFileCustomizer"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ImageTemplateFileCustomizer"/>, <see cref="ImageTemplatePowerShellCustomizer"/>, <see cref="ImageTemplateRestartCustomizer"/>, <see cref="ImageTemplateShellCustomizer"/>, and <see cref="ImageTemplateWindowsUpdateCustomizer"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownImageTemplateCustomizer))]
     public abstract partial class ImageTemplateCustomizer : IJsonModel<ImageTemplateCustomizer>
@@ -135,16 +135,16 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Shell":
-                        return ImageTemplateShellCustomizer.DeserializeImageTemplateShellCustomizer(element, options);
-                    case "WindowsRestart":
-                        return ImageTemplateRestartCustomizer.DeserializeImageTemplateRestartCustomizer(element, options);
-                    case "WindowsUpdate":
-                        return ImageTemplateWindowsUpdateCustomizer.DeserializeImageTemplateWindowsUpdateCustomizer(element, options);
-                    case "PowerShell":
-                        return ImageTemplatePowerShellCustomizer.DeserializeImageTemplatePowerShellCustomizer(element, options);
                     case "File":
                         return ImageTemplateFileCustomizer.DeserializeImageTemplateFileCustomizer(element, options);
+                    case "PowerShell":
+                        return ImageTemplatePowerShellCustomizer.DeserializeImageTemplatePowerShellCustomizer(element, options);
+                    case "WindowsRestart":
+                        return ImageTemplateRestartCustomizer.DeserializeImageTemplateRestartCustomizer(element, options);
+                    case "Shell":
+                        return ImageTemplateShellCustomizer.DeserializeImageTemplateShellCustomizer(element, options);
+                    case "WindowsUpdate":
+                        return ImageTemplateWindowsUpdateCustomizer.DeserializeImageTemplateWindowsUpdateCustomizer(element, options);
                 }
             }
             return UnknownImageTemplateCustomizer.DeserializeUnknownImageTemplateCustomizer(element, options);

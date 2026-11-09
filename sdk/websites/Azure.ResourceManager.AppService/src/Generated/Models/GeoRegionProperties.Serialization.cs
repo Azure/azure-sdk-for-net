@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new GeoRegionProperties(description, displayName, orgDomain, additionalBinaryDataProperties);

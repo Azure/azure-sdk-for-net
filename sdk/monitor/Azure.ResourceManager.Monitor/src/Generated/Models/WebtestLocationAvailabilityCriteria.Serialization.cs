@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     failedLocationCount = prop.Value.GetSingle();
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new WebtestLocationAvailabilityCriteria(odataType, additionalProperties, webTestId, componentId, failedLocationCount);
         }

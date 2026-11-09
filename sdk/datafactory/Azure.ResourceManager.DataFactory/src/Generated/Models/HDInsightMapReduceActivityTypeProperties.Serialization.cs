@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         else
                         {
-                            array.Add(ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(item.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default));
+                            array.Add(ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(item.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default));
                         }
                     }
                     storageLinkedServices = array;
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         else
                         {
-                            array.Add(BinaryData.FromString(item.GetRawText()));
+                            array.Add(item.GetUtf8Bytes());
                         }
                     }
                     arguments = array;
@@ -282,12 +282,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("className"u8))
                 {
-                    className = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    className = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("jarFilePath"u8))
                 {
-                    jarFilePath = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    jarFilePath = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("jarLinkedService"u8))
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    jarLinkedService = ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    jarLinkedService = ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(prop.Value.GetUtf8Bytes(), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("jarLibs"u8))
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         else
                         {
-                            array.Add(BinaryData.FromString(item.GetRawText()));
+                            array.Add(item.GetUtf8Bytes());
                         }
                     }
                     jarLibs = array;
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
                         }
                     }
                     defines = dictionary;
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new HDInsightMapReduceActivityTypeProperties(

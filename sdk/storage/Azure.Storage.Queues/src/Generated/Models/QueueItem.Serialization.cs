@@ -104,7 +104,7 @@ namespace Azure.Storage.Queues.Models
             writer.WriteStartElement("Name");
             writer.WriteValue(Name);
             writer.WriteEndElement();
-            if (Optional.IsCollectionDefined(Metadata))
+            if (Metadata != null && Optional.IsCollectionDefined(Metadata))
             {
                 writer.WriteStartElement("Metadata");
                 foreach (var pair in Metadata)

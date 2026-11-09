@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -529,22 +529,6 @@ namespace Azure.Messaging.EventGrid
             return MapsGeofenceEventProperties((IEnumerable<string>)expiredGeofenceGeometryId, geometries, invalidPeriodGeofenceGeometryId, isEventPublished);
         }
 
-        /// <summary> Initializes new instance of AcsChatThreadCreatedWithUserEventData class. </summary>
-        /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
-        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
-        /// <param name="threadId"> The chat thread id. </param>
-        /// <param name="createTime"> The original creation time of the thread. </param>
-        /// <param name="version"> The version of the thread. </param>
-        /// <param name="createdByCommunicationIdentifier"> The communication identifier of the user who created the thread. </param>
-        /// <param name="properties"> The thread properties. </param>
-        /// <param name="participants"> The list of properties of participants who are part of the thread. </param>
-        /// <returns> A new <see cref="SystemEvents.AcsChatThreadCreatedWithUserEventData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AcsChatThreadCreatedWithUserEventData AcsChatThreadCreatedWithUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, DateTimeOffset? createTime, long? version, CommunicationIdentifierModel createdByCommunicationIdentifier, IReadOnlyDictionary<string, object> properties, IReadOnlyList<AcsChatThreadParticipantProperties> participants)
-        {
-            return AcsChatThreadCreatedWithUserEventData(recipientCommunicationIdentifier, transactionId, threadId, createTime, version, createdByCommunicationIdentifier, properties, null, participants);
-        }
-
         /// <summary> Initializes new instance of AcsChatThreadCreatedEventData class. </summary>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
@@ -558,35 +542,6 @@ namespace Azure.Messaging.EventGrid
         public static AcsChatThreadCreatedEventData AcsChatThreadCreatedEventData(string transactionId, string threadId, DateTimeOffset? createTime, long? version, CommunicationIdentifierModel createdByCommunicationIdentifier, IReadOnlyDictionary<string, object> properties, IReadOnlyList<AcsChatThreadParticipantProperties> participants)
         {
             return AcsChatThreadCreatedEventData(transactionId, threadId, createTime, version, createdByCommunicationIdentifier, properties, new Dictionary<string, string>(), (IEnumerable<AcsChatThreadParticipantProperties>)participants);
-        }
-
-        /// <summary> Initializes a new instance of AcsChatThreadCreatedWithUserEventData. </summary>
-        /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
-        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
-        /// <param name="threadId"> The chat thread id. </param>
-        /// <param name="createTime"> The original creation time of the thread. </param>
-        /// <param name="version"> The version of the thread. </param>
-        /// <param name="createdByCommunicationIdentifier"> The communication identifier of the user who created the thread. </param>
-        /// <param name="properties"> The thread properties. </param>
-        /// <param name="participants"> The list of properties of participants who are part of the thread. </param>
-        /// <returns> A new <see cref="SystemEvents.AcsChatThreadCreatedWithUserEventData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AcsChatThreadCreatedWithUserEventData AcsChatThreadCreatedWithUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, DateTimeOffset? createTime, long? version, CommunicationIdentifierModel createdByCommunicationIdentifier, IReadOnlyDictionary<string, object> properties, IEnumerable<AcsChatThreadParticipantProperties> participants)
-        {
-            properties ??= new Dictionary<string, object>();
-            participants ??= new List<AcsChatThreadParticipantProperties>();
-
-            return AcsChatThreadCreatedWithUserEventData(recipientCommunicationIdentifier, transactionId, threadId, createTime, version, createdByCommunicationIdentifier, properties, new Dictionary<string, string>(), participants?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of AcsChatThreadParticipantProperties. </summary>
-        /// <param name="displayName"> The name of the user. </param>
-        /// <param name="participantCommunicationIdentifier"> The communication identifier of the user. </param>
-        /// <returns> A new <see cref="SystemEvents.AcsChatThreadParticipantProperties"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AcsChatThreadParticipantProperties AcsChatThreadParticipantProperties(string displayName, CommunicationIdentifierModel participantCommunicationIdentifier)
-        {
-            return AcsChatThreadParticipantProperties(displayName, participantCommunicationIdentifier, new Dictionary<string, string>());
         }
 
         /// <summary> Initializes a new instance of AcsChatThreadPropertiesUpdatedPerUserEventData. </summary>
@@ -605,23 +560,6 @@ namespace Azure.Messaging.EventGrid
             properties ??= new Dictionary<string, object>();
 
             return AcsChatThreadPropertiesUpdatedPerUserEventData(recipientCommunicationIdentifier, transactionId, threadId, createTime, version, editedByCommunicationIdentifier, editTime, new Dictionary<string, string>(), properties);
-        }
-
-        /// <summary> Initializes a new instance of AcsChatThreadPropertiesUpdatedEventData. </summary>
-        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
-        /// <param name="threadId"> The chat thread id. </param>
-        /// <param name="createTime"> The original creation time of the thread. </param>
-        /// <param name="version"> The version of the thread. </param>
-        /// <param name="editedByCommunicationIdentifier"> The communication identifier of the user who updated the thread properties. </param>
-        /// <param name="editTime"> The time at which the properties of the thread were updated. </param>
-        /// <param name="properties"> The updated thread properties. </param>
-        /// <returns> A new <see cref="SystemEvents.AcsChatThreadPropertiesUpdatedEventData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AcsChatThreadPropertiesUpdatedEventData AcsChatThreadPropertiesUpdatedEventData(string transactionId, string threadId, DateTimeOffset? createTime, long? version, CommunicationIdentifierModel editedByCommunicationIdentifier, DateTimeOffset? editTime, IReadOnlyDictionary<string, object> properties)
-        {
-            properties ??= new Dictionary<string, object>();
-
-            return AcsChatThreadPropertiesUpdatedEventData(transactionId, threadId, createTime, version, editedByCommunicationIdentifier, editTime, properties, new Dictionary<string, string>());
         }
 
         /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatThreadCreatedEventData"/>. </summary>
@@ -829,78 +767,6 @@ namespace Azure.Messaging.EventGrid
             return new(tenantId, subscriptionId, resourceGroup, resourceProvider, resourceUri, operationName, status, JsonDocument.Parse(authorization).RootElement, JsonDocument.Parse(claims).RootElement, correlationId, JsonDocument.Parse(httpRequest).RootElement, null);
         }
 
-        /// <summary> Initializes a new instance of AcsChatMessageReceivedEventData. </summary>
-        /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
-        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
-        /// <param name="threadId"> The chat thread id. </param>
-        /// <param name="messageId"> The chat message id. </param>
-        /// <param name="senderCommunicationIdentifier"> The communication identifier of the sender. </param>
-        /// <param name="senderDisplayName"> The display name of the sender. </param>
-        /// <param name="composeTime"> The original compose time of the message. </param>
-        /// <param name="type"> The type of the message. </param>
-        /// <param name="version"> The version of the message. </param>
-        /// <param name="messageBody"> The body of the chat message. </param>
-        /// <returns> A new <see cref="SystemEvents.AcsChatMessageReceivedEventData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AcsChatMessageReceivedEventData AcsChatMessageReceivedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string senderDisplayName, DateTimeOffset? composeTime, string type, long? version, string messageBody)
-        {
-            return AcsChatMessageReceivedEventData(recipientCommunicationIdentifier, transactionId, threadId, messageId, senderCommunicationIdentifier, senderDisplayName, composeTime, type, version, messageBody, new ChangeTrackingDictionary<string, string>());
-        }
-
-        /// <summary> Initializes a new instance of AcsChatMessageReceivedInThreadEventData. </summary>
-        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
-        /// <param name="threadId"> The chat thread id. </param>
-        /// <param name="messageId"> The chat message id. </param>
-        /// <param name="senderCommunicationIdentifier"> The communication identifier of the sender. </param>
-        /// <param name="senderDisplayName"> The display name of the sender. </param>
-        /// <param name="composeTime"> The original compose time of the message. </param>
-        /// <param name="type"> The type of the message. </param>
-        /// <param name="version"> The version of the message. </param>
-        /// <param name="messageBody"> The body of the chat message. </param>
-        /// <returns> A new <see cref="SystemEvents.AcsChatMessageReceivedInThreadEventData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AcsChatMessageReceivedInThreadEventData AcsChatMessageReceivedInThreadEventData(string transactionId, string threadId, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string senderDisplayName, DateTimeOffset? composeTime, string type, long? version, string messageBody)
-        {
-            return AcsChatMessageReceivedInThreadEventData(transactionId, threadId, messageId, senderCommunicationIdentifier, senderDisplayName, composeTime, type, version, messageBody, new ChangeTrackingDictionary<string, string>());
-        }
-
-        /// <summary> Initializes a new instance of AcsChatMessageEditedEventData. </summary>
-        /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
-        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
-        /// <param name="threadId"> The chat thread id. </param>
-        /// <param name="messageId"> The chat message id. </param>
-        /// <param name="senderCommunicationIdentifier"> The communication identifier of the sender. </param>
-        /// <param name="senderDisplayName"> The display name of the sender. </param>
-        /// <param name="composeTime"> The original compose time of the message. </param>
-        /// <param name="type"> The type of the message. </param>
-        /// <param name="version"> The version of the message. </param>
-        /// <param name="messageBody"> The body of the chat message. </param>
-        /// <param name="editTime"> The time at which the message was edited. </param>
-        /// <returns> A new <see cref="SystemEvents.AcsChatMessageEditedEventData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AcsChatMessageEditedEventData AcsChatMessageEditedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string senderDisplayName, DateTimeOffset? composeTime, string type, long? version, string messageBody, DateTimeOffset? editTime)
-        {
-            return AcsChatMessageEditedEventData(recipientCommunicationIdentifier, transactionId, threadId, messageId, senderCommunicationIdentifier, senderDisplayName, composeTime, type, version, messageBody, new ChangeTrackingDictionary<string, string>(), editTime);
-        }
-
-        /// <summary> Initializes a new instance of AcsChatMessageEditedInThreadEventData. </summary>
-        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
-        /// <param name="threadId"> The chat thread id. </param>
-        /// <param name="messageId"> The chat message id. </param>
-        /// <param name="senderCommunicationIdentifier"> The communication identifier of the sender. </param>
-        /// <param name="senderDisplayName"> The display name of the sender. </param>
-        /// <param name="composeTime"> The original compose time of the message. </param>
-        /// <param name="type"> The type of the message. </param>
-        /// <param name="version"> The version of the message. </param>
-        /// <param name="messageBody"> The body of the chat message. </param>
-        /// <param name="editTime"> The time at which the message was edited. </param>
-        /// <returns> A new <see cref="SystemEvents.AcsChatMessageEditedInThreadEventData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AcsChatMessageEditedInThreadEventData AcsChatMessageEditedInThreadEventData(string transactionId, string threadId, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string senderDisplayName, DateTimeOffset? composeTime, string type, long? version, string messageBody, DateTimeOffset? editTime)
-        {
-            return AcsChatMessageEditedInThreadEventData(transactionId, threadId, messageId, senderCommunicationIdentifier, senderDisplayName, composeTime, type, version, messageBody, new ChangeTrackingDictionary<string, string>(), editTime);
-        }
-
         /// <summary> Initializes a new instance of MediaLiveEventIngestHeartbeatEventData. </summary>
         /// <param name="trackType"> Gets the type of the track (Audio / Video). </param>
         /// <param name="trackName"> Gets the track name. </param>
@@ -991,34 +857,6 @@ namespace Azure.Messaging.EventGrid
             return AcsRecordingFileStatusUpdatedEventData(null, null, null, (RecordingContentType)null, null, null, null);
         }
 
-        /// <summary> Initializes a new instance of AcsRecordingChunkInfoProperties. </summary>
-        /// <param name="documentId"> The documentId of the recording chunk. </param>
-        /// <param name="index"> The index of the recording chunk. </param>
-        /// <param name="endReason"> The reason for ending the recording chunk. </param>
-        /// <param name="metadataLocation"> The location of the metadata for this chunk. </param>
-        /// <param name="contentLocation"> The location of the content for this chunk. </param>
-        /// <returns> A new <see cref="SystemEvents.AcsRecordingChunkInfoProperties"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AcsRecordingChunkInfoProperties AcsRecordingChunkInfoProperties(string documentId, long? index, string endReason, string metadataLocation, string contentLocation)
-        {
-            return AcsRecordingChunkInfoProperties(documentId: documentId, index: index, endReason: endReason, metadataLocation: metadataLocation, contentLocation: contentLocation, deleteLocation: null);
-        }
-
-        /// <summary> Initializes a new instance of ContainerRegistryEventData. </summary>
-        /// <param name="id"> The event ID. </param>
-        /// <param name="timestamp"> The time at which the event occurred. </param>
-        /// <param name="action"> The action that encompasses the provided event. </param>
-        /// <param name="target"> The target of the event. </param>
-        /// <param name="request"> The request that generated the event. </param>
-        /// <param name="actor"> The agent that initiated the event. For most situations, this could be from the authorization context of the request. </param>
-        /// <param name="source"> The registry node that generated the event. Put differently, while the actor initiates the event, the source generates it. </param>
-        /// <returns> A new <see cref="SystemEvents.ContainerRegistryEventData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerRegistryEventData ContainerRegistryEventData(string id, DateTimeOffset? timestamp, string action, ContainerRegistryEventTarget target, ContainerRegistryEventRequest request, ContainerRegistryEventActor actor, ContainerRegistryEventSource source)
-        {
-            return ContainerRegistryEventData(id: id, timestamp: timestamp, action: action, target: target, request: request, actor: actor, source: source, location: null);
-        }
-
         /// <summary> Initializes a new instance of ContainerRegistryArtifactEventData. </summary>
         /// <param name="id"> The event ID. </param>
         /// <param name="timestamp"> The time at which the event occurred. </param>
@@ -1096,20 +934,6 @@ namespace Azure.Messaging.EventGrid
             return HealthcareDicomImageDeletedEventData(default, imageStudyInstanceUid, imageSeriesInstanceUid, imageSopInstanceUid, serviceHostName, sequenceNumber);
         }
 
-        /// <summary> Initializes a new instance of AcsEmailEngagementTrackingReportReceivedEventData. </summary>
-        /// <param name="sender"> The Sender Email Address. </param>
-        /// <param name="messageId"> The Id of the email that has been sent. </param>
-        /// <param name="userActionTimestamp"> The time at which the user interacted with the email. </param>
-        /// <param name="engagementContext"> The context of the type of engagement user had with email. </param>
-        /// <param name="userAgent"> The user agent interacting with the email. </param>
-        /// <param name="engagement"> The type of engagement user have with email. </param>
-        /// <returns> A new <see cref="SystemEvents.AcsEmailEngagementTrackingReportReceivedEventData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AcsEmailEngagementTrackingReportReceivedEventData AcsEmailEngagementTrackingReportReceivedEventData(string sender, string messageId, DateTimeOffset? userActionTimestamp, string engagementContext, string userAgent, AcsUserEngagement? engagement)
-        {
-            return AcsEmailEngagementTrackingReportReceivedEventData(sender, null, messageId, userActionTimestamp, engagementContext, userAgent, engagement);
-        }
-
         /// <summary> Initializes a new instance of AcsRouterJobReceivedEventData. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
@@ -1135,29 +959,6 @@ namespace Azure.Messaging.EventGrid
             return AcsRouterJobReceivedEventData(jobId, channelReference, channelId, queueId, labels, tags, status, classificationPolicyId, priority, requestedWorkerSelectors?.ToList(), scheduledOn, unavailableForMatching);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsIncomingCallEventData"/>. </summary>
-        /// <param name="toCommunicationIdentifier"> The communication identifier of the target user. </param>
-        /// <param name="fromCommunicationIdentifier"> The communication identifier of the user who initiated the call. </param>
-        /// <param name="serverCallId"> The Id of the server call. </param>
-        /// <param name="callerDisplayName"> Display name of caller. </param>
-        /// <param name="customContext"> Custom Context of Incoming Call. </param>
-        /// <param name="incomingCallContext"> Signed incoming call context. </param>
-        /// <param name="correlationId"> CorrelationId (CallId). </param>
-        /// <returns> A new <see cref="SystemEvents.AcsIncomingCallEventData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AcsIncomingCallEventData AcsIncomingCallEventData(CommunicationIdentifierModel toCommunicationIdentifier, CommunicationIdentifierModel fromCommunicationIdentifier, string serverCallId, string callerDisplayName, AcsIncomingCallCustomContext customContext, string incomingCallContext, string correlationId)
-        {
-            return AcsIncomingCallEventData(
-                toCommunicationIdentifier,
-                fromCommunicationIdentifier,
-                serverCallId,
-                callerDisplayName,
-                customContext,
-                incomingCallContext,
-                default,
-                correlationId);
-        }
-
         /// <summary> Initializes a new instance of ResourceNotificationsResourceUpdatedDetails. </summary>
         /// <param name="id"> id of the resource for which the event is being emitted. </param>
         /// <param name="name"> name of the resource for which the event is being emitted. </param>
@@ -1174,18 +975,6 @@ namespace Azure.Messaging.EventGrid
 
             return ResourceNotificationsResourceUpdatedDetails(id, name, resourceType, location,
                 new Dictionary<string, string>(), properties);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SystemEvents.CommunicationIdentifierModel"/>. </summary>
-        /// <param name="rawId"> Raw Id of the identifier. Optional in requests, required in responses. </param>
-        /// <param name="communicationUser"> The communication user. </param>
-        /// <param name="phoneNumber"> The phone number. </param>
-        /// <param name="microsoftTeamsUser"> The Microsoft Teams user. </param>
-        /// <returns> A new <see cref="SystemEvents.CommunicationIdentifierModel"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CommunicationIdentifierModel CommunicationIdentifierModel(string rawId, CommunicationUserIdentifierModel communicationUser, PhoneNumberIdentifierModel phoneNumber, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser)
-        {
-            return CommunicationIdentifierModel(default, rawId, communicationUser, phoneNumber, microsoftTeamsUser, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="SystemEvents.StorageBlobCreatedEventData"/>. </summary>
@@ -1251,44 +1040,6 @@ namespace Azure.Messaging.EventGrid
                 storageDiagnostics);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SystemEvents.StorageLifecyclePolicyCompletedEventData"/>. </summary>
-        /// <param name="scheduleTime"> The time the policy task was scheduled. </param>
-        /// <param name="deleteSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
-        /// <param name="tierToCoolSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
-        /// <param name="tierToArchiveSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
-        /// <returns> A new <see cref="SystemEvents.StorageLifecyclePolicyCompletedEventData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static StorageLifecyclePolicyCompletedEventData StorageLifecyclePolicyCompletedEventData(string scheduleTime, StorageLifecyclePolicyActionSummaryDetail deleteSummary, StorageLifecyclePolicyActionSummaryDetail tierToCoolSummary, StorageLifecyclePolicyActionSummaryDetail tierToArchiveSummary)
-        {
-            return StorageLifecyclePolicyCompletedEventData(scheduleTime, null, deleteSummary, tierToCoolSummary, default, tierToArchiveSummary);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SystemEvents.StorageLifecyclePolicyCompletedEventData"/>. </summary>
-        /// <param name="scheduleTime"> The time the policy task was scheduled. </param>
-        /// <param name="deleteSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
-        /// <param name="tierToCoolSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
-        /// <param name="tierToColdSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
-        /// <param name="tierToArchiveSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
-        /// <returns> A new <see cref="SystemEvents.StorageLifecyclePolicyCompletedEventData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static StorageLifecyclePolicyCompletedEventData StorageLifecyclePolicyCompletedEventData(string scheduleTime, StorageLifecyclePolicyActionSummaryDetail deleteSummary, StorageLifecyclePolicyActionSummaryDetail tierToCoolSummary, StorageLifecyclePolicyActionSummaryDetail tierToColdSummary, StorageLifecyclePolicyActionSummaryDetail tierToArchiveSummary)
-        {
-            return StorageLifecyclePolicyCompletedEventData(scheduleTime, null, deleteSummary, tierToCoolSummary, tierToColdSummary, tierToArchiveSummary);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsSmsReceivedEventData"/>. </summary>
-        /// <param name="messageId"> The identity of the SMS message. </param>
-        /// <param name="from"> The identity of SMS message sender. </param>
-        /// <param name="to"> The identity of SMS message receiver. </param>
-        /// <param name="message"> The SMS content. </param>
-        /// <param name="receivedTimestamp"> The time at which the SMS was received. </param>
-        /// <returns> A new <see cref="SystemEvents.AcsSmsReceivedEventData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AcsSmsReceivedEventData AcsSmsReceivedEventData(string messageId, string @from, string to, string message, DateTimeOffset? receivedTimestamp)
-        {
-            return AcsSmsReceivedEventData(messageId, @from, to, message, receivedTimestamp, default);
-        }
-
         /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsEmailDeliveryReportReceivedEventData"/>. </summary>
         /// <param name="sender"> The Sender Email Address. </param>
         /// <param name="recipient"> The recipient Email Address. </param>
@@ -1308,36 +1059,6 @@ namespace Azure.Messaging.EventGrid
                 status,
                 deliveryStatusDetails,
                 deliveryAttemptTimestamp);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsEmailDeliveryReportStatusDetails"/>. </summary>
-        /// <param name="statusMessage"> Detailed status message. </param>
-        /// <returns> A new <see cref="SystemEvents.AcsEmailDeliveryReportStatusDetails"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AcsEmailDeliveryReportStatusDetails AcsEmailDeliveryReportStatusDetails(string statusMessage)
-        {
-            return AcsEmailDeliveryReportStatusDetails(default, statusMessage);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsMessageMediaContent"/>. </summary>
-        /// <param name="mimeType"> The MIME type of the file this media represents. </param>
-        /// <param name="mediaId"> The media identifier. </param>
-        /// <param name="fileName"> The filename of the underlying media file as specified when uploaded. </param>
-        /// <param name="caption"> The caption for the media object, if supported and provided. </param>
-        /// <returns> A new <see cref="SystemEvents.AcsMessageMediaContent"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AcsMessageMediaContent AcsMessageMediaContent(string mimeType, string mediaId, string fileName, string caption)
-        {
-            return AcsMessageMediaContent(mimeType, mediaId, fileName, caption, default);
-        }
-
-        /// <summary> Initializes new instance of SubscriptionValidationResponse class. </summary>
-        /// <param name="validationResponse"> The validation response sent by the subscriber to Azure Event Grid to complete the validation of an event subscription. </param>
-        /// <returns> A new <see cref="SystemEvents.SubscriptionValidationResponse"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SubscriptionValidationResponse SubscriptionValidationResponse(string validationResponse = default)
-        {
-            return new(validationResponse);
         }
     }
 #pragma warning restore CA1054 // URI-like parameters should not be strings

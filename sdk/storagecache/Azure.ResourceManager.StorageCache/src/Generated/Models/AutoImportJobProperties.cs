@@ -93,20 +93,20 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> Date and time of when the currently running full scan began. </summary>
-        public DateTimeOffset? ScanStartOn
+        public DateTimeOffset? ScanStartsOn
         {
             get
             {
-                return Status is null ? default : Status.ScanStartOn;
+                return Status is null ? default : Status.ScanStartsOn;
             }
         }
 
         /// <summary> Date and time of when the full scan ended. </summary>
-        public DateTimeOffset? ScanEndOn
+        public DateTimeOffset? ScanEndsOn
         {
             get
             {
-                return Status is null ? default : Status.ScanEndOn;
+                return Status is null ? default : Status.ScanEndsOn;
             }
         }
 

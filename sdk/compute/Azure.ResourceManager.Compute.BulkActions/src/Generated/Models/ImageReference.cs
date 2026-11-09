@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageReference"/>. </summary>
-        /// <param name="id"> The ID of the sub-resource. </param>
+        /// <param name="id"> The Azure resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="publisher"> The image publisher. </param>
         /// <param name="offer"> Specifies the offer of the platform image or marketplace image used to create the virtual machine. </param>

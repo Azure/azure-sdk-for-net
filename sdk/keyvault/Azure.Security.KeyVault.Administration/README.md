@@ -168,7 +168,11 @@ A `KeyVaultEkmConnection` describes the EKM proxy connection used by a Managed H
 
 ### Thread safety
 
-We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
+Client service methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)), so reuse client instances across threads. Do not call `Dispose` while operations are in progress.
+
+### Client lifetime
+
+`KeyVaultAccessControlClient`, `KeyVaultBackupClient`, `KeyVaultEkmClient`, and `KeyVaultSettingsClient` implement `IDisposable`. Reuse them rather than creating a client for each request, and dispose them when their intended lifetimes end to release internally owned HTTP transports. Complete backup/restore polling, all other operations, and pageable enumeration before disposal. A transport or credential supplied by the application remains application-owned and is not disposed by the client.
 
 ### Additional concepts
 <!-- CLIENT COMMON BAR -->

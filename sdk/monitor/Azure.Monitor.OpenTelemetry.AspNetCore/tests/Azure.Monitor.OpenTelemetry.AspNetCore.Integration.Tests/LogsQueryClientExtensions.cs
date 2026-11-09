@@ -14,7 +14,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
     {
         private static TimeSpan s_queryDelay = TimeSpan.FromSeconds(30);
 
-        public static async Task<LogsTable?> QueryTelemetryAsync(this LogsQueryClient client, string workspaceId, string description, string query)
+        public static async Task<LogsTable?> QueryTelemetryAsync(this LogsQueryClient client, string workspaceId, string description, string query, Func<LogsTable, bool>? isComplete = null)
         {
             // Try every 30 secs for total of 10 minutes.
             // This delay should reasonably accomodate known delays:
@@ -31,9 +31,10 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                     query,
                     new LogsQueryTimeRange(TimeSpan.FromMinutes(30)));
 
-                if (response.Value.Table.Rows.Count > 0)
+                var result = response.Value.Table;
+                if (isComplete?.Invoke(result) ?? result.Rows.Count > 0)
                 {
-                    return response.Value.Table;
+                    return result;
                 }
 
                 Debug.WriteLine($"UnitTest: Query attempt {attempt}/{maxTries} returned no records. Waiting {s_queryDelay.TotalSeconds} seconds...");

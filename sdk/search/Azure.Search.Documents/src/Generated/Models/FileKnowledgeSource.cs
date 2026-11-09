@@ -31,16 +31,22 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="name"> The name of the knowledge source. </param>
         /// <param name="description"> Optional user-defined description. </param>
         /// <param name="kind"> The type of the knowledge source. </param>
+        /// <param name="resultsProcessing"> Controls whether results from this knowledge source are reranked before they are included in the final result set. Defaults to 'rerank' when not specified. </param>
         /// <param name="eTag"> The ETag of the knowledge source. </param>
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="fileParameters"> The parameters for the File knowledge source. </param>
-        internal FileKnowledgeSource(string name, string description, KnowledgeSourceKind kind, ETag? eTag, SearchResourceEncryptionKey encryptionKey, IDictionary<string, BinaryData> additionalBinaryDataProperties, FileKnowledgeSourceParameters fileParameters) : base(name, description, kind, eTag, encryptionKey, additionalBinaryDataProperties)
+        /// <param name="corsOptions"> Options to control Cross-Origin Resource Sharing (CORS) for the File knowledge source's file endpoints (upload, list, update, delete). </param>
+        internal FileKnowledgeSource(string name, string description, KnowledgeSourceKind kind, KnowledgeSourceResultsProcessing? resultsProcessing, ETag? eTag, SearchResourceEncryptionKey encryptionKey, IDictionary<string, BinaryData> additionalBinaryDataProperties, FileKnowledgeSourceParameters fileParameters, CorsOptions corsOptions) : base(name, description, kind, resultsProcessing, eTag, encryptionKey, additionalBinaryDataProperties)
         {
             FileParameters = fileParameters;
+            CorsOptions = corsOptions;
         }
 
         /// <summary> The parameters for the File knowledge source. </summary>
         public FileKnowledgeSourceParameters FileParameters { get; set; }
+
+        /// <summary> Options to control Cross-Origin Resource Sharing (CORS) for the File knowledge source's file endpoints (upload, list, update, delete). </summary>
+        public CorsOptions CorsOptions { get; set; }
     }
 }

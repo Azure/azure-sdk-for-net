@@ -124,6 +124,26 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("seedingMode"u8);
                 writer.WriteStringValue(SeedingMode.Value.ToString());
             }
+            if (Optional.IsDefined(LinkMode))
+            {
+                writer.WritePropertyName("linkMode"u8);
+                writer.WriteStringValue(LinkMode.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(MostRecentErrorCode))
+            {
+                writer.WritePropertyName("mostRecentError"u8);
+                writer.WriteStringValue(MostRecentErrorCode);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MostRecentErrorOn))
+            {
+                writer.WritePropertyName("mostRecentErrorTime"u8);
+                writer.WriteStringValue(MostRecentErrorOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(MostRecentErrorMessage))
+            {
+                writer.WritePropertyName("mostRecentErrorMessage"u8);
+                writer.WriteStringValue(MostRecentErrorMessage);
+            }
             if (Optional.IsCollectionDefined(Databases))
             {
                 writer.WritePropertyName("databases"u8);
@@ -186,6 +206,10 @@ namespace Azure.ResourceManager.Sql.Models
             string instanceAvailabilityGroupName = default;
             SqlServerFailoverModeType? failoverMode = default;
             SeedingModeType? seedingMode = default;
+            LinkModeType? linkMode = default;
+            string mostRecentErrorCode = default;
+            DateTimeOffset? mostRecentErrorOn = default;
+            string mostRecentErrorMessage = default;
             IList<DistributedAvailabilityGroupDatabase> databases = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -264,6 +288,34 @@ namespace Azure.ResourceManager.Sql.Models
                     seedingMode = new SeedingModeType(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("linkMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    linkMode = new LinkModeType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("mostRecentError"u8))
+                {
+                    mostRecentErrorCode = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("mostRecentErrorTime"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    mostRecentErrorOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("mostRecentErrorMessage"u8))
+                {
+                    mostRecentErrorMessage = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("databases"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -280,7 +332,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new DistributedAvailabilityGroupProperties(
@@ -294,6 +346,10 @@ namespace Azure.ResourceManager.Sql.Models
                 instanceAvailabilityGroupName,
                 failoverMode,
                 seedingMode,
+                linkMode,
+                mostRecentErrorCode,
+                mostRecentErrorOn,
+                mostRecentErrorMessage,
                 databases ?? new ChangeTrackingList<DistributedAvailabilityGroupDatabase>(),
                 additionalBinaryDataProperties);
         }

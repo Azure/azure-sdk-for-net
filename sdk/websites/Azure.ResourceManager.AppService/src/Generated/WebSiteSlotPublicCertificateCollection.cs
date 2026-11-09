@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PublicCertificateData, WebSiteSlotPublicCertificateResource>(new PublicCertificateOperationGroupGetPublicCertificatesSlotAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PublicCertificateData, WebSiteSlotPublicCertificateResource>(new PublicCertificateDataAsyncCollectionResultOfT(
                 _publicCertificateOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PublicCertificateData, WebSiteSlotPublicCertificateResource>(new PublicCertificateOperationGroupGetPublicCertificatesSlotCollectionResultOfT(
+            return new PageableWrapper<PublicCertificateData, WebSiteSlotPublicCertificateResource>(new PublicCertificateDataCollectionResultOfT(
                 _publicCertificateOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

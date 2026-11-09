@@ -48,7 +48,7 @@ public class Sample_AgentsEndpoint : SamplesBase
         #endregion
 
         #region Snippet:Sample_CreateSkill_AgentsEndpoint_Async
-        SkillInlineContent content = new(
+        SkillInlineRequest content = new(
             description: "Calculates the sum of two numbers.",
             instructions: """
                 To calculate the sum  run
@@ -107,7 +107,7 @@ public class Sample_AgentsEndpoint : SamplesBase
             agentName: hostedAgentName,
             agentVersion: hostedAgentVersion);
         Console.WriteLine($"Retrieved agent {agentVersion.Name}, v. {agentVersion.Version}");
-        SkillInlineContent content = new(
+        SkillInlineRequest content = new(
             description: "Calculates the sum of two numbers.",
             instructions: """
                 To calculate the sum  run

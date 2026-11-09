@@ -3,10 +3,10 @@ namespace Azure.Provisioning
     public partial class ProvisioningDeployment
     {
         internal ProvisioningDeployment() { }
-        public Azure.ResourceManager.Resources.ArmDeploymentResource Deployment { get { throw null; } }
+        public Azure.ResourceManager.Resources.Deployments.ArmDeploymentResource Deployment { get { throw null; } }
         public Azure.ResponseError? Error { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, object?> Outputs { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.ResourcesProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Resources.Deployments.Models.ResourcesProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class ProvisioningDeploymentOptions
     {
@@ -26,8 +26,8 @@ namespace Azure.Provisioning
         public static Azure.Provisioning.ProvisioningDeployment DeployToResourceGroup(this Azure.Provisioning.ProvisioningPlan plan, string resourceGroupName, Azure.Provisioning.ProvisioningDeploymentOptions? options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Provisioning.ProvisioningDeployment> DeployToResourceGroupAsync(this Azure.Provisioning.ProvisioningPlan plan, string resourceGroupName, Azure.Provisioning.ProvisioningDeploymentOptions? options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Collections.Generic.IReadOnlyList<Azure.Provisioning.Primitives.BicepErrorMessage> Lint(this Azure.Provisioning.ProvisioningPlan plan, string? optionalDirectoryPath = null) { throw null; }
-        public static Azure.ResourceManager.Resources.Models.ArmDeploymentValidateResult ValidateInResourceGroup(this Azure.Provisioning.ProvisioningPlan plan, string resourceGroupName, Azure.Provisioning.ProvisioningDeploymentOptions? options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Models.ArmDeploymentValidateResult> ValidateInResourceGroupAsync(this Azure.Provisioning.ProvisioningPlan plan, string resourceGroupName, Azure.Provisioning.ProvisioningDeploymentOptions? options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Resources.Deployments.Models.ArmDeploymentValidateResult ValidateInResourceGroup(this Azure.Provisioning.ProvisioningPlan plan, string resourceGroupName, Azure.Provisioning.ProvisioningDeploymentOptions? options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Deployments.Models.ArmDeploymentValidateResult> ValidateInResourceGroupAsync(this Azure.Provisioning.ProvisioningPlan plan, string resourceGroupName, Azure.Provisioning.ProvisioningDeploymentOptions? options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.Provisioning.Primitives

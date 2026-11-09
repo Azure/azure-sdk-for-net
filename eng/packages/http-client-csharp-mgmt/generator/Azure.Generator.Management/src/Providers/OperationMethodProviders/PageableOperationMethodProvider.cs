@@ -49,7 +49,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _restClientInfo = restClientInfo;
             _method = method;
             _parameterMappings = parameterMappings;
-            _convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_method.Operation, isAsync);
+            _convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_method.Operation, isAsync, enclosingType);
             _isAsync = isAsync;
             _itemType = _convenienceMethod.Signature.ReturnType!.Arguments[0]; // a paging method's return type should be `Pageable<T>` or `AsyncPageable<T>`, so we can safely access the first argument as the item type.
             InitializeTypeInfo(
@@ -132,7 +132,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _convenienceMethod.Signature.Modifiers,
                 returnType,
                 returnDescription,
-                OperationMethodParameterHelper.GetOperationMethodParameters(_method, _convenienceMethod, _parameterMappings, _enclosingType, shouldApplyLroHandling: _method.IsLongRunningOperation(), scopeParameter: _scopeParameter),
+                OperationMethodParameterHelper.GetOperationMethodParameters(_method, _convenienceMethod, _parameterMappings, _enclosingType, shouldApplyLroHandling: _method.IsLongRunningOperation(), scopeParameter: _scopeParameter, methodName: _methodName),
                 _convenienceMethod.Signature.Attributes,
                 _convenienceMethod.Signature.GenericArguments,
                 _convenienceMethod.Signature.GenericParameterConstraints,

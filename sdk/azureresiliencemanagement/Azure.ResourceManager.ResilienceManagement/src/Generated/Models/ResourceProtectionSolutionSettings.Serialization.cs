@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             ResourceIdentifier primaryResource = default;
             IReadOnlyList<ResourceIdentifier> replicaResources = default;
             bool isAutoFailover = default;
-            FailoverState? failoverState = default;
+            RecoveryResourceFailoverState? failoverState = default;
             TestFailoverState? testFailoverState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    failoverState = new FailoverState(prop.Value.GetString());
+                    failoverState = new RecoveryResourceFailoverState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("testFailoverState"u8))
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ResourceProtectionSolutionSettings(

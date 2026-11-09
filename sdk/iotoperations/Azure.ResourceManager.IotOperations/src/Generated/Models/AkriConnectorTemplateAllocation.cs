@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.IotOperations.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="AkriConnectorTemplateAllocation"/>. </summary>
+        protected AkriConnectorTemplateAllocation() : this(default)
+        {
+        }
+
         /// <summary> The allocation policy type. </summary>
         internal AkriConnectorTemplateAllocationPolicy Policy { get; set; }
     }

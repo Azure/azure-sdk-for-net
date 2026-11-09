@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HorizonDBClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(HorizonDBClusterResource.ResourceType, out string horizonDBClusterApiVersion);
             _horizonDBClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", HorizonDBClusterResource.ResourceType.Namespace, Diagnostics);
-            _horizonDBClustersRestClient = new HorizonDBClusters(_horizonDBClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, horizonDBClusterApiVersion ?? "2026-01-20-preview");
+            _horizonDBClustersRestClient = new HorizonDBClusters(_horizonDBClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HorizonDb/clusters", out string horizonDBClustersApiVersionOverride) ? horizonDBClustersApiVersionOverride : "2026-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-20-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-20-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +183,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-20-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +232,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-20-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +281,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-20-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.HorizonDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HorizonDBClusterData, HorizonDBClusterResource>(new HorizonDBClustersGetByResourceGroupAsyncCollectionResultOfT(_horizonDBClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HorizonDBClusterCollection.GetAll"), data => new HorizonDBClusterResource(Client, data));
+            return new AsyncPageableWrapper<HorizonDBClusterData, HorizonDBClusterResource>(new HorizonDBClusterDataAsyncCollectionResultOfT(_horizonDBClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HorizonDBClusterCollection.GetAll"), data => new HorizonDBClusterResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +309,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-20-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.HorizonDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HorizonDBClusterData, HorizonDBClusterResource>(new HorizonDBClustersGetByResourceGroupCollectionResultOfT(_horizonDBClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HorizonDBClusterCollection.GetAll"), data => new HorizonDBClusterResource(Client, data));
+            return new PageableWrapper<HorizonDBClusterData, HorizonDBClusterResource>(new HorizonDBClusterDataCollectionResultOfT(_horizonDBClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HorizonDBClusterCollection.GetAll"), data => new HorizonDBClusterResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +337,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-20-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +394,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-20-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +451,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-20-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +512,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-20-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

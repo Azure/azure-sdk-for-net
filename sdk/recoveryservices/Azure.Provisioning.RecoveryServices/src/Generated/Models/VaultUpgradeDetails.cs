@@ -16,9 +16,9 @@ namespace Azure.Provisioning.RecoveryServices
     public partial class VaultUpgradeDetails : ProvisionableConstruct
     {
         private BicepValue<string> _operationId;
-        private BicepValue<DateTimeOffset> _startOn;
+        private BicepValue<DateTimeOffset> _startsOn;
         private BicepValue<DateTimeOffset> _lastUpdatedOn;
-        private BicepValue<DateTimeOffset> _endOn;
+        private BicepValue<DateTimeOffset> _endsOn;
         private BicepValue<VaultUpgradeState> _status;
         private BicepValue<string> _message;
         private BicepValue<VaultUpgradeTriggerType> _triggerType;
@@ -40,13 +40,13 @@ namespace Azure.Provisioning.RecoveryServices
             }
         }
 
-        /// <summary> Gets the StartOn. </summary>
-        public BicepValue<DateTimeOffset> StartOn
+        /// <summary> Gets the StartsOn. </summary>
+        public BicepValue<DateTimeOffset> StartsOn
         {
             get
             {
                 Initialize();
-                return _startOn;
+                return _startsOn;
             }
         }
 
@@ -60,13 +60,13 @@ namespace Azure.Provisioning.RecoveryServices
             }
         }
 
-        /// <summary> Gets the EndOn. </summary>
-        public BicepValue<DateTimeOffset> EndOn
+        /// <summary> Gets the EndsOn. </summary>
+        public BicepValue<DateTimeOffset> EndsOn
         {
             get
             {
                 Initialize();
-                return _endOn;
+                return _endsOn;
             }
         }
 
@@ -125,9 +125,9 @@ namespace Azure.Provisioning.RecoveryServices
         {
             base.DefineProvisionableProperties();
             _operationId = DefineProperty<string>(nameof(OperationId), new string[] { "operationId" }, isOutput: true);
-            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTimeUtc" }, isOutput: true, format: "O");
+            _startsOn = DefineProperty<DateTimeOffset>(nameof(StartsOn), new string[] { "startTimeUtc" }, isOutput: true, format: "O");
             _lastUpdatedOn = DefineProperty<DateTimeOffset>(nameof(LastUpdatedOn), new string[] { "lastUpdatedTimeUtc" }, isOutput: true, format: "O");
-            _endOn = DefineProperty<DateTimeOffset>(nameof(EndOn), new string[] { "endTimeUtc" }, isOutput: true, format: "O");
+            _endsOn = DefineProperty<DateTimeOffset>(nameof(EndsOn), new string[] { "endTimeUtc" }, isOutput: true, format: "O");
             _status = DefineProperty<VaultUpgradeState>(nameof(Status), new string[] { "status" }, isOutput: true);
             _message = DefineProperty<string>(nameof(Message), new string[] { "message" }, isOutput: true);
             _triggerType = DefineProperty<VaultUpgradeTriggerType>(nameof(TriggerType), new string[] { "triggerType" }, isOutput: true);

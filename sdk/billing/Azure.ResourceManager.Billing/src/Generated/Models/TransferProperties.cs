@@ -24,16 +24,16 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TransferProperties"/>. </summary>
-        /// <param name="expireOn"> The time at which the transfer request expires. </param>
+        /// <param name="expiresOn"> The time at which the transfer request expires. </param>
         /// <param name="transferStatus"> Overall transfer status. </param>
         /// <param name="recipientEmailId"> The email ID of the user to whom the transfer request was sent. </param>
         /// <param name="initiatorEmailId"> The email ID of the user who sent the transfer request. </param>
         /// <param name="canceledBy"> The email ID of the user who canceled the transfer request. </param>
         /// <param name="detailedTransferStatus"> Detailed transfer status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TransferProperties(DateTimeOffset? expireOn, PartnerTransferStatus? transferStatus, string recipientEmailId, string initiatorEmailId, string canceledBy, IReadOnlyList<DetailedTransferStatus> detailedTransferStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TransferProperties(DateTimeOffset? expiresOn, PartnerTransferStatus? transferStatus, string recipientEmailId, string initiatorEmailId, string canceledBy, IReadOnlyList<DetailedTransferStatus> detailedTransferStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ExpireOn = expireOn;
+            ExpiresOn = expiresOn;
             TransferStatus = transferStatus;
             RecipientEmailId = recipientEmailId;
             InitiatorEmailId = initiatorEmailId;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> The time at which the transfer request expires. </summary>
         [WirePath("expirationTime")]
-        public DateTimeOffset? ExpireOn { get; }
+        public DateTimeOffset? ExpiresOn { get; }
 
         /// <summary> Overall transfer status. </summary>
         [WirePath("transferStatus")]

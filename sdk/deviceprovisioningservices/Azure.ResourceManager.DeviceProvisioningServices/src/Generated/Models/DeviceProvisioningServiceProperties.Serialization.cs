@@ -119,10 +119,15 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DeviceRegistryNamespace))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DeviceRegistryNamespaces))
             {
-                writer.WritePropertyName("deviceRegistryNamespace"u8);
-                writer.WriteObjectValue(DeviceRegistryNamespace, options);
+                writer.WritePropertyName("deviceRegistryNamespaces"u8);
+                writer.WriteStartArray();
+                foreach (DeviceRegistryNamespaceDescription item in DeviceRegistryNamespaces)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(AllocationPolicy))
             {
@@ -163,6 +168,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             {
                 writer.WritePropertyName("portalOperationsHostName"u8);
                 writer.WriteStringValue(PortalOperationsHostName);
+            }
+            if (Optional.IsDefined(DisableLocalAuth))
+            {
+                writer.WritePropertyName("disableLocalAuth"u8);
+                writer.WriteBooleanValue(DisableLocalAuth.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -212,7 +222,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             IList<DeviceProvisioningServicesPrivateEndpointConnectionData> privateEndpointConnections = default;
             string provisioningState = default;
             IList<IotHubDefinitionDescription> iotHubs = default;
-            DeviceRegistryNamespaceDescription deviceRegistryNamespace = default;
+            IReadOnlyList<DeviceRegistryNamespaceDescription> deviceRegistryNamespaces = default;
             DeviceProvisioningServicesAllocationPolicy? allocationPolicy = default;
             string serviceOperationsHostName = default;
             string deviceProvisioningHostName = default;
@@ -220,6 +230,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             IList<DeviceProvisioningServicesSharedAccessKey> authorizationPolicies = default;
             bool? isDataResidencyEnabled = default;
             string portalOperationsHostName = default;
+            bool? disableLocalAuth = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -288,13 +299,18 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     iotHubs = array;
                     continue;
                 }
-                if (prop.NameEquals("deviceRegistryNamespace"u8))
+                if (prop.NameEquals("deviceRegistryNamespaces"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    deviceRegistryNamespace = DeviceRegistryNamespaceDescription.DeserializeDeviceRegistryNamespaceDescription(prop.Value, options);
+                    List<DeviceRegistryNamespaceDescription> array = new List<DeviceRegistryNamespaceDescription>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(DeviceRegistryNamespaceDescription.DeserializeDeviceRegistryNamespaceDescription(item, options));
+                    }
+                    deviceRegistryNamespaces = array;
                     continue;
                 }
                 if (prop.NameEquals("allocationPolicy"u8))
@@ -349,9 +365,18 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     portalOperationsHostName = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("disableLocalAuth"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    disableLocalAuth = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new DeviceProvisioningServiceProperties(
@@ -361,7 +386,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 privateEndpointConnections ?? new ChangeTrackingList<DeviceProvisioningServicesPrivateEndpointConnectionData>(),
                 provisioningState,
                 iotHubs ?? new ChangeTrackingList<IotHubDefinitionDescription>(),
-                deviceRegistryNamespace,
+                deviceRegistryNamespaces ?? new ChangeTrackingList<DeviceRegistryNamespaceDescription>(),
                 allocationPolicy,
                 serviceOperationsHostName,
                 deviceProvisioningHostName,
@@ -369,6 +394,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 authorizationPolicies ?? new ChangeTrackingList<DeviceProvisioningServicesSharedAccessKey>(),
                 isDataResidencyEnabled,
                 portalOperationsHostName,
+                disableLocalAuth,
                 additionalBinaryDataProperties);
         }
     }

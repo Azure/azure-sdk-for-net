@@ -13,7 +13,7 @@ namespace Azure.AI.Projects.Agents
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="InternalUpdateAgentRequest"/>. </summary>
-        /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
+        /// <param name="definition"> The agent definition. This can be a prompt, workflow, hosted, external, or voice agent definition. </param>
         internal InternalUpdateAgentRequest(ProjectsAgentDefinition definition)
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
@@ -29,7 +29,7 @@ namespace Azure.AI.Projects.Agents
         /// with a maximum length of 512 characters.
         /// </param>
         /// <param name="description"> A human-readable description of the agent. </param>
-        /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
+        /// <param name="definition"> The agent definition. This can be a prompt, workflow, hosted, external, or voice agent definition. </param>
         /// <param name="blueprintReference"> The blueprint reference for the agent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal InternalUpdateAgentRequest(IDictionary<string, string> metadata, string description, ProjectsAgentDefinition definition, AgentBlueprintReference blueprintReference, IDictionary<string, BinaryData> additionalBinaryDataProperties)

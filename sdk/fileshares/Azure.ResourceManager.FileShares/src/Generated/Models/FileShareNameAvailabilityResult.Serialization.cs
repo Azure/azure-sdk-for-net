@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.FileShares.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new FileShareNameAvailabilityResult(isNameAvailable, reason, message, additionalBinaryDataProperties);

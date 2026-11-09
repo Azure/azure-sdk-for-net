@@ -17,7 +17,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppNetwork
 {
-    /// <summary> AppLink resource. </summary>
+    /// <summary> An Azure Kubernetes Application Network resource. </summary>
     public partial class AppLinkData : TrackedResourceData, IJsonModel<AppLinkData>
     {
         /// <summary> Initializes a new instance of <see cref="AppLinkData"/> for deserialization. </summary>
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.AppNetwork
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AppLinkData(

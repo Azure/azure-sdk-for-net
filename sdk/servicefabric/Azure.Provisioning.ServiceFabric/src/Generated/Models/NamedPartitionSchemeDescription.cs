@@ -18,6 +18,7 @@ namespace Azure.Provisioning.ServiceFabric
         /// <summary> Creates a new NamedPartitionSchemeDescription. </summary>
         public NamedPartitionSchemeDescription()
         {
+            PartitionScheme.Assign(ApplicationPartitionScheme.Named);
         }
 
         /// <summary> Gets or sets the Count. </summary>
@@ -54,7 +55,6 @@ namespace Azure.Provisioning.ServiceFabric
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("partitionScheme", new string[] { "partitionScheme" }, defaultValue: "Named");
             _count = DefineProperty<int>(nameof(Count), new string[] { "count" }, isRequired: true);
             _names = DefineListProperty<string>(nameof(Names), new string[] { "names" }, isRequired: true);
             DefineAdditionalProperties();

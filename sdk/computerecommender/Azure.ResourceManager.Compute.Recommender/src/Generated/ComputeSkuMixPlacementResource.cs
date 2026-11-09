@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Recommender
         {
             TryGetApiVersion(ResourceType, out string computeSkuMixPlacementApiVersion);
             _skuMixPlacementScoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute.Recommender", ResourceType.Namespace, Diagnostics);
-            _skuMixPlacementScoresRestClient = new SkuMixPlacementScores(_skuMixPlacementScoresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, computeSkuMixPlacementApiVersion ?? "2026-05-05-preview");
+            _skuMixPlacementScoresRestClient = new SkuMixPlacementScores(_skuMixPlacementScoresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, computeSkuMixPlacementApiVersion ?? "2026-09-05-preview");
             ValidateResourceId(id);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Recommender
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-05-preview. </description>
+        /// <description> 2026-09-05-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Compute.Recommender
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-05-preview. </description>
+        /// <description> 2026-09-05-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Compute.Recommender
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-05-preview. </description>
+        /// <description> 2026-09-05-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Compute.Recommender
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-05-preview. </description>
+        /// <description> 2026-09-05-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

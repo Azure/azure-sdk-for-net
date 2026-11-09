@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="MarkAsCompleteContent"/>. </summary>
         /// <param name="drillRunStage"> State of the Drill Run. </param>
-        public MarkAsCompleteContent(DrillRunSubtasks drillRunStage)
+        public MarkAsCompleteContent(DrillRunStage drillRunStage)
         {
             DrillRunStage = drillRunStage;
         }
@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <summary> Initializes a new instance of <see cref="MarkAsCompleteContent"/>. </summary>
         /// <param name="drillRunStage"> State of the Drill Run. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MarkAsCompleteContent(DrillRunSubtasks drillRunStage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MarkAsCompleteContent(DrillRunStage drillRunStage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DrillRunStage = drillRunStage;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> State of the Drill Run. </summary>
-        public DrillRunSubtasks DrillRunStage { get; }
+        public DrillRunStage DrillRunStage { get; }
     }
 }

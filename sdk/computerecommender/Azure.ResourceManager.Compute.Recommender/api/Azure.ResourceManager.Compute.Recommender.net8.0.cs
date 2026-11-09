@@ -100,11 +100,12 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         public static Azure.ResourceManager.Compute.Recommender.Models.ComputeRecommenderGenerateResult ComputeRecommenderGenerateResult(System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> desiredLocations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Recommender.Models.ComputeRecommenderResourceSize> desiredSizes = null, int? desiredCount = default(int?), bool? availabilityZones = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Recommender.Models.ComputeRecommenderPlacementScore> placementScores = null) { throw null; }
         public static Azure.ResourceManager.Compute.Recommender.Models.ComputeRecommenderPlacementScore ComputeRecommenderPlacementScore(string sku = null, Azure.Core.AzureLocation? region = default(Azure.Core.AzureLocation?), string availabilityZone = null, string score = null, bool? isQuotaAvailable = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Compute.Recommender.Models.ComputeRecommenderResourceSize ComputeRecommenderResourceSize(string sku = null) { throw null; }
+        public static Azure.ResourceManager.Compute.Recommender.Models.ComputeSkuMixPlacementCapacityLimit ComputeSkuMixPlacementCapacityLimit(string name = null, Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementPriority priority = default(Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementPriority), string zone = null, int limit = 0, Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementCapacityLimitReason reason = default(Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementCapacityLimitReason)) { throw null; }
         public static Azure.ResourceManager.Compute.Recommender.ComputeSkuMixPlacementData ComputeSkuMixPlacementData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<string> skuMixPlacementSupportedResourceTypes = null) { throw null; }
-        public static Azure.ResourceManager.Compute.Recommender.Models.ComputeSkuMixPlacementDeploymentChoice ComputeSkuMixPlacementDeploymentChoice(string id = null, int score = 0, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Recommender.Models.ComputeSkuMixPlacementItem> skuSplit = null) { throw null; }
+        public static Azure.ResourceManager.Compute.Recommender.Models.ComputeSkuMixPlacementDeploymentChoice ComputeSkuMixPlacementDeploymentChoice(int score = 0, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Recommender.Models.ComputeSkuMixPlacementItem> skuSplit = null) { throw null; }
         public static Azure.ResourceManager.Compute.Recommender.Models.ComputeSkuMixPlacementGenerateContent ComputeSkuMixPlacementGenerateContent(System.Collections.Generic.IEnumerable<string> zones = null, Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementCapacityProfile capacityProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementVMSize> instanceDescriptionVmSizes = null) { throw null; }
-        public static Azure.ResourceManager.Compute.Recommender.Models.ComputeSkuMixPlacementGenerateResult ComputeSkuMixPlacementGenerateResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Recommender.Models.ComputeSkuMixPlacementDeploymentChoice> placementChoices = null, System.DateTimeOffset? validUntilOn = default(System.DateTimeOffset?), Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementPartialFulfillmentReason partialFulfillmentReason = default(Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementPartialFulfillmentReason)) { throw null; }
-        public static Azure.ResourceManager.Compute.Recommender.Models.ComputeSkuMixPlacementItem ComputeSkuMixPlacementItem(string name = null, Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementPriority priority = default(Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementPriority), int capacity = 0, int? capacityMax = default(int?), string zone = null) { throw null; }
+        public static Azure.ResourceManager.Compute.Recommender.Models.ComputeSkuMixPlacementGenerateResult ComputeSkuMixPlacementGenerateResult(string id = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Recommender.Models.ComputeSkuMixPlacementDeploymentChoice> placementChoices = null, System.DateTimeOffset? validUntilOn = default(System.DateTimeOffset?), Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementPartialFulfillmentReason partialFulfillmentReason = default(Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementPartialFulfillmentReason), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Recommender.Models.ComputeSkuMixPlacementCapacityLimit> capacityLimits = null) { throw null; }
+        public static Azure.ResourceManager.Compute.Recommender.Models.ComputeSkuMixPlacementItem ComputeSkuMixPlacementItem(string name = null, Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementPriority priority = default(Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementPriority), int capacity = 0, string zone = null) { throw null; }
         public static Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementCapacityProfile SkuMixPlacementCapacityProfile(int capacity = 0, Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementCapacityType capacityType = default(Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementCapacityType), Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementPriority priority = default(Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementPriority), double? spotPriorityMaxPricePerVm = default(double?), Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementAllocationStrategy? allocationStrategy = default(Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementAllocationStrategy?), Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementOSType? osType = default(Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementOSType?), Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementZoneAllocationPolicy zoneAllocationPolicy = null) { throw null; }
         public static Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementVMSize SkuMixPlacementVMSize(string name = null, int? rank = default(int?)) { throw null; }
         public static Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementZoneAllocationPolicy SkuMixPlacementZoneAllocationPolicy(Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementZonalDistributionStrategy? distributionStrategy = default(Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementZonalDistributionStrategy?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementZonePreference> zonePreferences = null) { throw null; }
@@ -177,10 +178,27 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Recommender.Models.ComputeRecommenderResourceSize>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Recommender.Models.ComputeRecommenderResourceSize>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ComputeSkuMixPlacementCapacityLimit : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Recommender.Models.ComputeSkuMixPlacementCapacityLimit>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Recommender.Models.ComputeSkuMixPlacementCapacityLimit>
+    {
+        internal ComputeSkuMixPlacementCapacityLimit() { }
+        public int Limit { get { throw null; } }
+        public string Name { get { throw null; } }
+        public Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementPriority Priority { get { throw null; } }
+        public Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementCapacityLimitReason Reason { get { throw null; } }
+        public string Zone { get { throw null; } }
+        protected virtual Azure.ResourceManager.Compute.Recommender.Models.ComputeSkuMixPlacementCapacityLimit JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Compute.Recommender.Models.ComputeSkuMixPlacementCapacityLimit PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Compute.Recommender.Models.ComputeSkuMixPlacementCapacityLimit System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Recommender.Models.ComputeSkuMixPlacementCapacityLimit>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Recommender.Models.ComputeSkuMixPlacementCapacityLimit>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.Recommender.Models.ComputeSkuMixPlacementCapacityLimit System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Recommender.Models.ComputeSkuMixPlacementCapacityLimit>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Recommender.Models.ComputeSkuMixPlacementCapacityLimit>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Recommender.Models.ComputeSkuMixPlacementCapacityLimit>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ComputeSkuMixPlacementDeploymentChoice : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Recommender.Models.ComputeSkuMixPlacementDeploymentChoice>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Recommender.Models.ComputeSkuMixPlacementDeploymentChoice>
     {
         internal ComputeSkuMixPlacementDeploymentChoice() { }
-        public string Id { get { throw null; } }
         public int Score { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Recommender.Models.ComputeSkuMixPlacementItem> SkuSplit { get { throw null; } }
         protected virtual Azure.ResourceManager.Compute.Recommender.Models.ComputeSkuMixPlacementDeploymentChoice JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -212,6 +230,8 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
     public partial class ComputeSkuMixPlacementGenerateResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Recommender.Models.ComputeSkuMixPlacementGenerateResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Recommender.Models.ComputeSkuMixPlacementGenerateResult>
     {
         internal ComputeSkuMixPlacementGenerateResult() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Recommender.Models.ComputeSkuMixPlacementCapacityLimit> CapacityLimits { get { throw null; } }
+        public string Id { get { throw null; } }
         public Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementPartialFulfillmentReason PartialFulfillmentReason { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Recommender.Models.ComputeSkuMixPlacementDeploymentChoice> PlacementChoices { get { throw null; } }
         public System.DateTimeOffset? ValidUntilOn { get { throw null; } }
@@ -229,7 +249,6 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
     {
         internal ComputeSkuMixPlacementItem() { }
         public int Capacity { get { throw null; } }
-        public int? CapacityMax { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementPriority Priority { get { throw null; } }
         public string Zone { get { throw null; } }
@@ -259,6 +278,25 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         public static implicit operator Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementAllocationStrategy (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementAllocationStrategy? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementAllocationStrategy left, Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementAllocationStrategy right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SkuMixPlacementCapacityLimitReason : System.IEquatable<Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementCapacityLimitReason>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SkuMixPlacementCapacityLimitReason(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementCapacityLimitReason InsufficientCapacity { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementCapacityLimitReason InsufficientQuota { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementCapacityLimitReason None { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementCapacityLimitReason SkuNotAvailable { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementCapacityLimitReason other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementCapacityLimitReason left, Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementCapacityLimitReason right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementCapacityLimitReason (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementCapacityLimitReason? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementCapacityLimitReason left, Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementCapacityLimitReason right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class SkuMixPlacementCapacityProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementCapacityProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementCapacityProfile>

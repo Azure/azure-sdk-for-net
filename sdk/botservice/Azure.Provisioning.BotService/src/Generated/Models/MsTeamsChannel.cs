@@ -15,6 +15,7 @@ namespace Azure.Provisioning.BotService
         /// <summary> Creates a new MsTeamsChannel. </summary>
         public MsTeamsChannel()
         {
+            ChannelName.Assign("MsTeamsChannel");
         }
 
         /// <summary> Gets or sets the Properties. </summary>
@@ -36,7 +37,6 @@ namespace Azure.Provisioning.BotService
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("channelName", new string[] { "channelName" }, defaultValue: "MsTeamsChannel");
             _properties = DefineModelProperty<MsTeamsChannelProperties>(nameof(Properties), new string[] { "properties" });
             DefineAdditionalProperties();
         }

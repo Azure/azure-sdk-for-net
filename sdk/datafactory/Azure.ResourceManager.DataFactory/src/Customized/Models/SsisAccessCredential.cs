@@ -15,14 +15,5 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         /// <summary> Property restored as workaround for issue #59298. </summary>
         public DataFactorySecret Password { get; set; }
-
-        /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public SsisAccessCredential(DataFactoryElement<string> domain, DataFactoryElement<string> userName, DataFactorySecret password)
-            : this()
-        {
-            Domain = domain;
-            UserName = userName;
-            Password = password;
-        }
     }
 }

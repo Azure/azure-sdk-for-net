@@ -1,6 +1,6 @@
 # Release History
 
-## 1.6.0-beta.2 (Unreleased)
+## 1.7.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,14 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.6.0 (2026-09-15)
+
+### Features Added
+
+- Upgraded api-version to 2026-07-01.
+- Added support for Container App private endpoint connections, Azure Functions, Dapr component resiliency policies, .NET components, label history, sandbox groups, and sandbox group virtual network connections.
+- Added support for managed environment migration eligibility checks and OpenTelemetry configuration.
 
 ## 1.6.0-beta.1 (2026-06-02)
 

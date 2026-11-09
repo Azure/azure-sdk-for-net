@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.2.0-beta.6 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,80 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.5 (2026-10-14)
+
+### Features Added
+
+- Added `BulkActionsVirtualMachinePlacement` and the `ZonePlacementPolicyType` enum, surfaced as the `Placement` property on `LocationBasedBulkCreateData` and `LocationBasedBulkCreateCustomData`. Use `ZonePlacementPolicy` together with `IncludeZones` and `ExcludeZones` to constrain which zones a bulk operation may place VMs into.
+- Added `ExtendedLocation` on `LocationBasedBulkCreateData` and `LocationBasedBulkCreateCustomData`, alongside the existing `Zones`, for targeting an extended location such as an Azure Edge Zone.
+- Added per-VM `Zone`, `ExtendedLocation`, and `Placement` overrides on `BulkCreateCustomOverride`, which take precedence over the operation-level values. Leaving `Zone` unset keeps the operation-level `Zones`; setting it to an empty string requests a regional (non-zonal) VM.
+- Added Spot settings on `BulkActionVMProperties`: `Priority`, `BillingMaxPrice`, and `EvictionPolicy`. Priority is now configured per VM through the compute profile.
+
+### Breaking Changes
+
+- Removed the `PriorityProfile` and `BulkCreateCustomPriorityProfile` models, along with the `PriorityProfile` properties on `BulkCreateProperties` and `BulkCreateCustomProperties`. Set `Priority`, `BillingMaxPrice`, and `EvictionPolicy` on `ComputeProfile.VirtualMachineProfile` (`BulkActionVMProperties`) instead.
+- Removed `MinCapacity` from `BulkCreateProperties` and `BulkCreateCustomProperties`.
+- Removed the `PartialFulfillmentPolicy`, `PartialFulfillmentMode`, and `PartialFulfillmentReason` models, along with the `PartialFulfillmentPolicy` properties on `BulkCreateProperties` and `BulkCreateCustomProperties`.
+- Updated the corresponding `ArmComputeBulkActionsModelFactory` methods to drop the parameters for the removed properties and add the new ones.
+
+### Other Changes
+
+- The client continues to target API version `2026-10-06-preview`.
+
+## 1.2.0-beta.4 (2026-09-27)
+
+### Features Added
+
+- Added `BulkListOperationErrors` and `BulkListOperationErrorsAsync` on `ResourceGroupResource`. The operation returns a pageable list of `ComputeBulkOperationResult` describing bulk operations that failed, and accepts an optional `lookbackInMinutes` parameter to bound how far back errors are reported.
+- Added `BulkActionExecutionParameterDetail.AdditionalCreateParameters` for supplying additional create parameters to a bulk operation.
+
+### Breaking Changes
+
+- Removed `BulkCreateProperties.VmSizesProfile` and the `BulkCreateVmSizeProfile` model, and removed `BulkCreateCustomProperties.VmSizesProfile` and the `BulkCreateCustomVmSizeProfile` model. Specify the VM size through `ComputeProfile.VirtualMachineProfile.HardwareProfile.VmSize` instead.
+- Removed the `BulkCreateCustomOverrideBase` model. Use `BulkCreateCustomOverridesProfile.Overrides` with `BulkCreateCustomOverride` instead.
+- Removed the `ZoneAllocationPolicy`, `ZonePreference`, `BulkCreateCustomZoneAllocationPolicy`, `DistributionStrategy`, and `BulkCreateCustomDistributionStrategy` models, along with the `ZoneAllocationPolicy` properties on `BulkCreateProperties` and `BulkCreateCustomProperties`. Zone placement is no longer configurable from the client in this API version.
+- Removed the `AllocationStrategy` and `BulkCreateCustomAllocationStrategy` models, along with the `AllocationStrategy` properties on `PriorityProfile` and `BulkCreateCustomPriorityProfile`.
+- Updated the corresponding `ArmComputeBulkActionsModelFactory` methods to drop the parameters for the removed properties.
+
+### Other Changes
+
+- Updated the client to target API version `2026-10-06-preview`.
+
+## 1.2.0-beta.3 (2026-09-15)
+
+### Features Added
+
+- Added `LocationBasedBulkCreateResource`, `LocationBasedBulkCreateData`, and `LocationBasedBulkCreateCollection`, along with the `GetLocationBasedBulkCreate`, `GetLocationBasedBulkCreates`, and `GetLocationBasedBulkCreateResource` accessors.
+- Added `BulkCreateProperties` and `BulkCreateVmSizeProfile` models.
+- Added `GetBulkCreateAsyncOperationStatus` for polling the status of a bulk create operation.
+
+### Other Changes
+
+- Updated the client to target API version `2026-09-06-preview`.
+
+## 1.2.0-beta.2 (2026-08-06)
+
+### Features Added
+
+- Added capacity and placement recommendations for bulk start operations.
+- Added partial fulfillment controls, including minimum capacity.
+- Added pageable per-VM operation status for `BulkCreateCustom`.
+- Added resolved VM details to `BulkCreateCustom` results.
+
+### Breaking Changes
+
+- Renamed `RecurringScheduledActions*` models to `ScheduledActions*`.
+- Renamed `ResourceProvisioningState` to `OccurrenceResourceProvisioningState`.
+
+### Bugs Fixed
+
+- Renamed the non-resource model to `BulkCreateCustomResolvedItem`.
+- Corrected boolean and timestamp property names to follow .NET conventions.
+
+### Other Changes
+
+- Updated the client to target API version `2026-08-06-preview`.
 
 ## 1.2.0-beta.1 (2026-08-03)
 

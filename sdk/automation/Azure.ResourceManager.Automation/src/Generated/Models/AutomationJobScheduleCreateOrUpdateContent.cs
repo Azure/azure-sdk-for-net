@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Gets or sets the list of job schedule properties. </summary>
-        internal JobScheduleCreateProperties Properties { get; }
+        internal JobScheduleCreateProperties Properties { get; } = new JobScheduleCreateProperties();
 
         /// <summary> Gets or sets a list of job properties. </summary>
         public IDictionary<string, string> Parameters

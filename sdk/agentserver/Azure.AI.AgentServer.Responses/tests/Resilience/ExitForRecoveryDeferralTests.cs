@@ -391,7 +391,7 @@ public sealed class ExitForRecoveryDeferralTests : IDisposable
         yield return message.EmitDone();
 
         // Checkpoint the phase (durable write #1).
-        yield return stream.Checkpoint();
+        yield return stream.CreateCheckpointEvent();
 
         // Defer to the next lifetime. On a resilient background response this throws
         // ResponseExitForRecovery, which the orchestrator catches without failing the response.
@@ -452,7 +452,7 @@ public sealed class ExitForRecoveryDeferralTests : IDisposable
         yield return message.EmitDone();
 
         // Checkpoint the phase (durable write #1).
-        yield return stream.Checkpoint();
+        yield return stream.CreateCheckpointEvent();
 
         // Adversarial handler: swallow the deferral signal with a broad catch. The framework must
         // STILL defer — a broad catch must not be able to convert a deferral into a bad-handler
@@ -492,7 +492,7 @@ public sealed class ExitForRecoveryDeferralTests : IDisposable
         yield return message.EmitDone();
 
         // Checkpoint the phase (durable write #1).
-        yield return stream.Checkpoint();
+        yield return stream.CreateCheckpointEvent();
 
         // Adversarial handler: swallow the deferral signal with a broad catch AND THEN emit a
         // terminal event. The framework must STILL defer — once ExitForRecoveryAsync() has been

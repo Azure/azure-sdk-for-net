@@ -36,6 +36,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             Password = password;
         }
 
+        /// <summary> Initializes a new instance of <see cref="AmazonRdsForSqlServerLinkedService"/>. </summary>
+        /// <param name="connectionString"> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
+        public AmazonRdsForSqlServerLinkedService(DataFactoryElement<string> connectionString) : this()
+        {
+            ConnectionString = connectionString;
+        }
+
         /// <summary> Amazon RDS for SQL Server linked service properties. </summary>
         internal AmazonRdsForSqlServerLinkedServiceTypeProperties TypeProperties { get; set; }
 

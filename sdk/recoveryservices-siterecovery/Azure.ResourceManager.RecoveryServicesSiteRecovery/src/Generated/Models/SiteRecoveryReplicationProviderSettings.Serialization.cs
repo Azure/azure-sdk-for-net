@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
     /// Replication provider specific settings.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="HyperVVmDetails"/>, <see cref="ReplicationGroupDetails"/>, <see cref="VmmVmDetails"/>, and <see cref="VMwareVmDetails"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="HyperVVmDetails"/>, <see cref="ReplicationGroupDetails"/>, <see cref="VMwareVmDetails"/>, and <see cref="VmmVmDetails"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownConfigurationSettings))]
     public abstract partial class SiteRecoveryReplicationProviderSettings : IJsonModel<SiteRecoveryReplicationProviderSettings>
@@ -129,10 +129,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return HyperVVmDetails.DeserializeHyperVVmDetails(element, options);
                     case "ReplicationGroupDetails":
                         return ReplicationGroupDetails.DeserializeReplicationGroupDetails(element, options);
-                    case "VmmVirtualMachine":
-                        return VmmVmDetails.DeserializeVmmVmDetails(element, options);
                     case "VMwareVirtualMachine":
                         return VMwareVmDetails.DeserializeVMwareVmDetails(element, options);
+                    case "VmmVirtualMachine":
+                        return VmmVmDetails.DeserializeVmmVmDetails(element, options);
                 }
             }
             return UnknownConfigurationSettings.DeserializeUnknownConfigurationSettings(element, options);

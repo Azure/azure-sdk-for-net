@@ -26,8 +26,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 return false;
             }
 
-            string currentHost = GetCanonicalHost(currentUri);
-            string redirectHost = GetCanonicalHost(redirectUri);
+            if (!TryGetCanonicalHost(currentUri, out var currentHost) || !TryGetCanonicalHost(redirectUri, out var redirectHost))
+            {
+                return false;
+            }
+
             if (string.IsNullOrEmpty(currentHost) || string.IsNullOrEmpty(redirectHost))
             {
                 return false;
@@ -63,7 +66,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 return false;
             }
 
-            string redirectHost = GetCanonicalHost(redirectUri);
+            if (!TryGetCanonicalHost(redirectUri, out var redirectHost))
+            {
+                return false;
+            }
+
             foreach (string suffix in s_allowedRedirectDomainSuffixes)
             {
                 if (redirectHost.EndsWith(suffix, StringComparison.Ordinal))
@@ -80,6 +87,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             && string.Equals(redirectUri.Scheme, Uri.UriSchemeHttps, StringComparison.OrdinalIgnoreCase)
             && string.IsNullOrEmpty(redirectUri.UserInfo);
 
-        private static string GetCanonicalHost(Uri uri) => uri.IdnHost.TrimEnd('.').ToLowerInvariant();
+        /// <remarks>
+        /// <see cref="Uri.IdnHost"/> throws on a malformed punycode label. A redirect target is
+        /// chosen by whatever answered the request, so the input is not ours to trust.
+        /// </remarks>
+        private static bool TryGetCanonicalHost(Uri uri, out string host)
+        {
+            try
+            {
+                host = uri.IdnHost.TrimEnd('.').ToLowerInvariant();
+                return true;
+            }
+            catch (UriFormatException)
+            {
+                host = string.Empty;
+                return false;
+            }
+        }
     }
 }

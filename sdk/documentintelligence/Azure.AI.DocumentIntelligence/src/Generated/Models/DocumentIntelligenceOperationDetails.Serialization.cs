@@ -14,7 +14,7 @@ namespace Azure.AI.DocumentIntelligence
 {
     /// <summary>
     /// Operation info.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DocumentModelBuildOperationDetails"/>, <see cref="DocumentModelComposeOperationDetails"/>, <see cref="DocumentModelCopyToOperationDetails"/>, <see cref="DocumentClassifierCopyToOperationDetails"/>, and <see cref="DocumentClassifierBuildOperationDetails"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DocumentClassifierBuildOperationDetails"/>, <see cref="DocumentClassifierCopyToOperationDetails"/>, <see cref="DocumentModelBuildOperationDetails"/>, <see cref="DocumentModelComposeOperationDetails"/>, and <see cref="DocumentModelCopyToOperationDetails"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownDocumentIntelligenceOperationDetails))]
     public abstract partial class DocumentIntelligenceOperationDetails : IJsonModel<DocumentIntelligenceOperationDetails>
@@ -178,16 +178,16 @@ namespace Azure.AI.DocumentIntelligence
             {
                 switch (discriminator.GetString())
                 {
+                    case "documentClassifierBuild":
+                        return DocumentClassifierBuildOperationDetails.DeserializeDocumentClassifierBuildOperationDetails(element, options);
+                    case "documentClassifierCopyTo":
+                        return DocumentClassifierCopyToOperationDetails.DeserializeDocumentClassifierCopyToOperationDetails(element, options);
                     case "documentModelBuild":
                         return DocumentModelBuildOperationDetails.DeserializeDocumentModelBuildOperationDetails(element, options);
                     case "documentModelCompose":
                         return DocumentModelComposeOperationDetails.DeserializeDocumentModelComposeOperationDetails(element, options);
                     case "documentModelCopyTo":
                         return DocumentModelCopyToOperationDetails.DeserializeDocumentModelCopyToOperationDetails(element, options);
-                    case "documentClassifierCopyTo":
-                        return DocumentClassifierCopyToOperationDetails.DeserializeDocumentClassifierCopyToOperationDetails(element, options);
-                    case "documentClassifierBuild":
-                        return DocumentClassifierBuildOperationDetails.DeserializeDocumentClassifierBuildOperationDetails(element, options);
                 }
             }
             return UnknownDocumentIntelligenceOperationDetails.DeserializeUnknownDocumentIntelligenceOperationDetails(element, options);

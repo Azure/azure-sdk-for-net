@@ -4,12 +4,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.Projects.Agents;
 
-namespace OpenAI
+namespace Azure.AI.Projects.Agents
 {
     /// <summary> Inline skill payload. </summary>
-    internal partial class InlineSkillSourceParam
+    public partial class InlineSkillSourceParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

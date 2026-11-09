@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>This is the Azure AI Discovery client library for Microsoft Discovery. It provides a WorkspaceClient for managing investigations, conversations, tasks, and tools, and a BookshelfClient for creating, indexing, and searching knowledge bases.</Description>
     <AssemblyTitle>Microsoft Azure.AI.Discovery client library</AssemblyTitle>
-    <Version>1.0.0-beta.1</Version>
+    <Version>1.0.0-beta.2</Version>
     <PackageTags>Azure.AI.Discovery</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <GenerateAPIListing>true</GenerateAPIListing>

@@ -4,19 +4,17 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The supported scenarios for a data generation job. </summary>
-    [Experimental("AAIP001")]
-    public readonly partial struct DataGenerationJobScenario : IEquatable<DataGenerationJobScenario>
+    internal readonly partial struct DataGenerationJobScenario : IEquatable<DataGenerationJobScenario>
     {
         private readonly string _value;
-        /// <summary> Supervised Fine-tuning scenario. </summary>
-        private const string SupervisedFinetuningValue = "supervised_finetuning";
-        /// <summary> Reinforcement Fine-tuning scenario. </summary>
-        private const string ReinforcementFinetuningValue = "reinforcement_finetuning";
+        /// <summary> Supervised Fine-tuning preview scenario. </summary>
+        private const string SupervisedFinetuningPreviewValue = "supervised_finetuning_preview";
+        /// <summary> Reinforcement Fine-tuning preview scenario. </summary>
+        private const string ReinforcementFinetuningPreviewValue = "reinforcement_finetuning_preview";
         /// <summary> Evaluation scenario. </summary>
         private const string EvaluationValue = "evaluation";
 
@@ -30,11 +28,11 @@ namespace Azure.AI.Projects
             _value = value;
         }
 
-        /// <summary> Supervised Fine-tuning scenario. </summary>
-        public static DataGenerationJobScenario SupervisedFinetuning { get; } = new DataGenerationJobScenario(SupervisedFinetuningValue);
+        /// <summary> Supervised Fine-tuning preview scenario. </summary>
+        public static DataGenerationJobScenario SupervisedFinetuningPreview { get; } = new DataGenerationJobScenario(SupervisedFinetuningPreviewValue);
 
-        /// <summary> Reinforcement Fine-tuning scenario. </summary>
-        public static DataGenerationJobScenario ReinforcementFinetuning { get; } = new DataGenerationJobScenario(ReinforcementFinetuningValue);
+        /// <summary> Reinforcement Fine-tuning preview scenario. </summary>
+        public static DataGenerationJobScenario ReinforcementFinetuningPreview { get; } = new DataGenerationJobScenario(ReinforcementFinetuningPreviewValue);
 
         /// <summary> Evaluation scenario. </summary>
         public static DataGenerationJobScenario Evaluation { get; } = new DataGenerationJobScenario(EvaluationValue);

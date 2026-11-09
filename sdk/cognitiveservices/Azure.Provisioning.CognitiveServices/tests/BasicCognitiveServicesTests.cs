@@ -53,19 +53,19 @@ public class BasicCognitiveServicesTests
             resource account 'Microsoft.CognitiveServices/accounts@2026-05-01' = {
               name: take('account-${uniqueString(resourceGroup().id)}', 64)
               location: location
+              identity: {
+                type: 'SystemAssigned'
+              }
+              kind: 'TextTranslation'
               properties: {
+                disableLocalAuth: true
                 networkAcls: {
                   defaultAction: 'Deny'
                 }
                 publicNetworkAccess: 'Disabled'
-                disableLocalAuth: true
               }
-              kind: 'TextTranslation'
               sku: {
                 name: 'S1'
-              }
-              identity: {
-                type: 'SystemAssigned'
               }
             }
             """);

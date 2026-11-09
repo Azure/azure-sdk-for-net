@@ -81,41 +81,76 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("authMode"u8);
             writer.WriteStringValue(AuthMode.ToString());
-            if (Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description, _descriptionIsDefined))
             {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
+                if (Description != null)
+                {
+                    writer.WritePropertyName("description"u8);
+                    writer.WriteStringValue(Description);
+                }
+                else
+                {
+                    writer.WriteNull("description"u8);
+                }
             }
-            if (Optional.IsDefined(Keys))
+            if (Optional.IsDefined(Keys, _keysIsDefined))
             {
-                writer.WritePropertyName("keys"u8);
-                writer.WriteObjectValue(Keys, options);
+                if (Keys != null)
+                {
+                    writer.WritePropertyName("keys"u8);
+                    writer.WriteObjectValue(Keys, options);
+                }
+                else
+                {
+                    writer.WriteNull("keys"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Properties))
             {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteStartObject();
-                foreach (var item in Properties)
+                if (Properties != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    writer.WritePropertyName("properties"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Properties)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item.Value);
                     }
-                    writer.WriteStringValue(item.Value);
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("properties"u8);
+                }
             }
-            if (options.Format != "W" && Optional.IsDefined(ScoringUri))
+            if (options.Format != "W" && Optional.IsDefined(ScoringUri, _scoringUriIsDefined))
             {
-                writer.WritePropertyName("scoringUri"u8);
-                writer.WriteStringValue(ScoringUri.AbsoluteUri);
+                if (ScoringUri != null)
+                {
+                    writer.WritePropertyName("scoringUri"u8);
+                    writer.WriteStringValue(ScoringUri.AbsoluteUri);
+                }
+                else
+                {
+                    writer.WriteNull("scoringUri"u8);
+                }
             }
-            if (options.Format != "W" && Optional.IsDefined(SwaggerUri))
+            if (options.Format != "W" && Optional.IsDefined(SwaggerUri, _swaggerUriIsDefined))
             {
-                writer.WritePropertyName("swaggerUri"u8);
-                writer.WriteStringValue(SwaggerUri.AbsoluteUri);
+                if (SwaggerUri != null)
+                {
+                    writer.WritePropertyName("swaggerUri"u8);
+                    writer.WriteStringValue(SwaggerUri.AbsoluteUri);
+                }
+                else
+                {
+                    writer.WriteNull("swaggerUri"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -160,10 +195,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             MachineLearningEndpointAuthMode authMode = default;
+            bool descriptionIsDefined = false;
             string description = default;
+            bool keysIsDefined = false;
             MachineLearningEndpointAuthKeys keys = default;
-            IDictionary<string, string> properties = default;
+            IDictionary<string, string> properties = new ChangeTrackingDictionary<string, string>();
+            bool scoringUriIsDefined = false;
             Uri scoringUri = default;
+            bool swaggerUriIsDefined = false;
             Uri swaggerUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -175,6 +214,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("description"u8))
                 {
+                    descriptionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         description = null;
@@ -185,6 +225,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("keys"u8))
                 {
+                    keysIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         keys = null;
@@ -197,6 +238,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        properties = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -216,6 +258,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("scoringUri"u8))
                 {
+                    scoringUriIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         scoringUri = null;
@@ -226,6 +269,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("swaggerUri"u8))
                 {
+                    swaggerUriIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         swaggerUri = null;
@@ -236,17 +280,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MachineLearningEndpointProperties(
                 authMode,
                 description,
                 keys,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
+                properties,
                 scoringUri,
                 swaggerUri,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _descriptionIsDefined = descriptionIsDefined,
+                _keysIsDefined = keysIsDefined,
+                _scoringUriIsDefined = scoringUriIsDefined,
+                _swaggerUriIsDefined = swaggerUriIsDefined
+            };
         }
     }
 }

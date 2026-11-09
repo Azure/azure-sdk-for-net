@@ -2409,7 +2409,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 CancellationToken = cancellationToken
             };
-            return new TargetComputeSizesGetTargetComputeSizesByReplicationProtectedItemsAsyncCollectionResultOfT(
+            return new TargetComputeSizeAsyncCollectionResultOfT(
                 _targetComputeSizesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2450,7 +2450,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 CancellationToken = cancellationToken
             };
-            return new TargetComputeSizesGetTargetComputeSizesByReplicationProtectedItemsCollectionResultOfT(
+            return new TargetComputeSizeCollectionResultOfT(
                 _targetComputeSizesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

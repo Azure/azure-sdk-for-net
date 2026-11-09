@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StorageSync
         {
             TryGetApiVersion(ResourceType, out string storageSyncWorkflowApiVersion);
             _workflowsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageSync", ResourceType.Namespace, Diagnostics);
-            _workflowsRestClient = new Workflows(_workflowsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageSyncWorkflowApiVersion ?? "2022-09-01");
+            _workflowsRestClient = new Workflows(_workflowsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageSyncWorkflowApiVersion ?? "2025-12-01");
             ValidateResourceId(id);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.StorageSync
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-09-01. </description>
+        /// <description> 2025-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.StorageSync
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-09-01. </description>
+        /// <description> 2025-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.StorageSync
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-09-01. </description>
+        /// <description> 2025-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.StorageSync
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-09-01. </description>
+        /// <description> 2025-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ProviderHub.Models;
 
 namespace Azure.ResourceManager.ProviderHub.Models
@@ -14,86 +16,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
     // they cannot be recovered with TypeSpec decorators alone.
     public static partial class ArmProviderHubModelFactory
     {
-        /// <summary> Backward-compat factory method for ProviderRegistrationProperties (34 params). </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ProviderRegistrationProperties ProviderRegistrationProperties(
-            IEnumerable<string> providerAuthenticationAllowedAudiences = null,
-            IEnumerable<ResourceProviderAuthorization> providerAuthorizations = null,
-            string @namespace = null,
-            IEnumerable<ResourceProviderService> services = null,
-            string serviceName = null,
-            string providerVersion = null,
-            ResourceProviderType? providerType = null,
-            IEnumerable<string> requiredFeatures = null,
-            FeaturesPolicy? requiredFeaturesPolicy = null,
-            ProviderRequestHeaderOptions requestHeaderOptions = null,
-            ResourceProviderManagement management = null,
-            IEnumerable<ResourceProviderCapabilities> capabilities = null,
-            CrossTenantTokenValidation? crossTenantTokenValidation = null,
-            BinaryData metadata = null,
-            TemplateDeploymentOptions templateDeploymentOptions = null,
-            IEnumerable<ResourceProviderEndpoint> globalNotificationEndpoints = null,
-            bool? enableTenantLinkedNotification = null,
-            IEnumerable<ProviderNotification> notifications = null,
-            IEnumerable<FanoutLinkedNotificationRule> linkedNotificationRules = null,
-            AsyncOperationPollingRules asyncOperationPollingRules = null,
-            ProviderDstsConfiguration dstsConfiguration = null,
-            ProviderNotificationOption? notificationOptions = null,
-            IEnumerable<ResourceHydrationAccount> resourceHydrationAccounts = null,
-            IEnumerable<SubscriberSetting> notificationSubscriberSettings = null,
-            IEnumerable<ResourceProviderEndpoint> managementGroupGlobalNotificationEndpoints = null,
-            IEnumerable<string> optionalFeatures = null,
-            BlockActionVerb? resourceGroupLockOptionDuringMoveBlockActionVerb = null,
-            ServiceClientOptionsType? serviceClientOptionsType = null,
-            string legacyNamespace = null,
-            IEnumerable<string> legacyRegistrations = null,
-            string customManifestVersion = null,
-            ProviderHubMetadata providerHubMetadata = null,
-            ProviderHubProvisioningState? provisioningState = null,
-            SubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications = null,
-            IEnumerable<string> privateResourceProviderAllowedSubscriptions = null,
-            TokenAuthConfiguration tokenAuthConfiguration = null)
-        {
-            return new ProviderRegistrationProperties(
-                providerAuthenticationAllowedAudiences is null ? null : new ResourceProviderAuthentication(providerAuthenticationAllowedAudiences.ToList(), null),
-                providerAuthorizations?.ToList(),
-                @namespace,
-                services?.ToList(),
-                serviceName,
-                providerVersion,
-                providerType,
-                requiredFeatures?.ToList(),
-                requiredFeaturesPolicy is null ? default : new ProviderFeaturesRule(requiredFeaturesPolicy.Value, null),
-                requestHeaderOptions,
-                management,
-                capabilities?.ToList(),
-                crossTenantTokenValidation,
-                metadata,
-                templateDeploymentOptions,
-                globalNotificationEndpoints?.ToList(),
-                enableTenantLinkedNotification,
-                notifications?.ToList(),
-                linkedNotificationRules?.ToList(),
-                asyncOperationPollingRules is null ? default : new ResourceProviderAuthorizationRules(asyncOperationPollingRules, null),
-                dstsConfiguration,
-                notificationOptions,
-                resourceHydrationAccounts?.ToList(),
-                notificationSubscriberSettings is null ? default : new ResourceProviderManifestNotificationSettings(notificationSubscriberSettings.ToList(), null),
-                managementGroupGlobalNotificationEndpoints?.ToList(),
-                optionalFeatures?.ToList(),
-                resourceGroupLockOptionDuringMoveBlockActionVerb is null ? default : new ResourceProviderManifestResourceGroupLockOptionDuringMove(resourceGroupLockOptionDuringMoveBlockActionVerb, null),
-                serviceClientOptionsType is null ? default : new ResourceProviderManifestResponseOptions(serviceClientOptionsType, null),
-                legacyNamespace,
-                legacyRegistrations?.ToList(),
-                customManifestVersion,
-                additionalBinaryDataProperties: null,
-                providerHubMetadata,
-                provisioningState,
-                subscriptionLifecycleNotificationSpecifications,
-                privateResourceProviderAllowedSubscriptions is null ? default : new PrivateResourceProviderConfiguration(privateResourceProviderAllowedSubscriptions.ToList(), null),
-                tokenAuthConfiguration);
-        }
-
         /// <summary> Backward-compat factory method for ResourceProviderManifest (20 params). </summary>
         public static ResourceProviderManifest ResourceProviderManifest(
             IEnumerable<string> providerAuthenticationAllowedAudiences = null,
@@ -143,6 +65,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 notifications?.ToList(),
                 linkedNotificationRules?.ToList(),
                 resourceProviderAuthorizationRules,
+                tokenAuthConfiguration: null,
                 additionalBinaryDataProperties: null);
         }
 
@@ -182,6 +105,125 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 metadata: metadata,
                 globalNotificationEndpoints: globalNotificationEndpoints,
                 reRegisterSubscriptionMetadata: reRegisterSubscriptionMetadata);
+        }
+
+        /// <param name="serviceId"> The service id. </param>
+        /// <param name="componentId"> The component id. </param>
+        /// <param name="readiness"> The readiness. </param>
+        /// <returns> A new <see cref="Models.ServiceTreeInfo"/> instance for mocking. </returns>
+        public static ServiceTreeInfo ServiceTreeInfo(string serviceId = default, string componentId = default, ServiceTreeReadiness? readiness = default)
+        {
+            return new ServiceTreeInfo(serviceId, componentId, readiness, default);
+        }
+
+        /// <param name="serviceName"> The service name. </param>
+        /// <param name="serviceDnsName"> This is a URI property. </param>
+        /// <returns> A new <see cref="Models.ProviderDstsConfiguration"/> instance for mocking. </returns>
+        public static ProviderDstsConfiguration ProviderDstsConfiguration(string serviceName = default, string serviceDnsName = default)
+        {
+            return new ProviderDstsConfiguration(serviceName, serviceDnsName, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="operationsContentContents"> Operations content. </param>
+        /// <returns> A new <see cref="Models.OperationsPutContent"/> instance for mocking. </returns>
+        public static OperationsPutContent OperationsPutContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<LocalizedOperationDefinition> operationsContentContents = default)
+        {
+            return new OperationsPutContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                operationsContentContents is null ? default : new OperationsContentProperties((operationsContentContents ?? new ChangeTrackingList<LocalizedOperationDefinition>()).ToList(), default),
+                default);
+        }
+
+        /// <param name="properties"> Properties of the frontload payload. </param>
+        /// <returns> A new <see cref="Models.ProviderFrontloadPayload"/> instance for mocking. </returns>
+        public static ProviderFrontloadPayload ProviderFrontloadPayload(ProviderFrontloadPayloadProperties properties = default)
+        {
+            return new ProviderFrontloadPayload(properties, default);
+        }
+
+        /// <param name="operationType"> The operation type. </param>
+        /// <param name="providerNamespace"> The provider namespace. </param>
+        /// <param name="frontloadLocation"> The frontload location. </param>
+        /// <param name="copyFromLocation"> The copy from location. </param>
+        /// <param name="environmentType"> The environment type. </param>
+        /// <param name="serviceFeatureFlag"> The service feature flag. </param>
+        /// <param name="includeResourceTypes"> The resource types to include. </param>
+        /// <param name="excludeResourceTypes"> The resource types to exclude. </param>
+        /// <param name="overrideManifestLevelFieldsResourceHydrationAccounts"> The resource hydration accounts. </param>
+        /// <param name="overrideEndpointLevelFields"> The endpoint level fields to override. </param>
+        /// <param name="ignoreFields"> The fields to ignore. </param>
+        /// <returns> A new <see cref="Models.ProviderFrontloadPayloadProperties"/> instance for mocking. </returns>
+        public static ProviderFrontloadPayloadProperties ProviderFrontloadPayloadProperties(string operationType = default, string providerNamespace = default, string frontloadLocation = default, string copyFromLocation = default, AvailableCheckInManifestEnvironment environmentType = default, ServiceFeatureFlagAction serviceFeatureFlag = default, IEnumerable<string> includeResourceTypes = default, IEnumerable<string> excludeResourceTypes = default, IEnumerable<ResourceHydrationAccount> overrideManifestLevelFieldsResourceHydrationAccounts = default, ResourceTypeEndpointBase overrideEndpointLevelFields = default, IEnumerable<string> ignoreFields = default)
+        {
+            includeResourceTypes ??= new ChangeTrackingList<string>();
+            excludeResourceTypes ??= new ChangeTrackingList<string>();
+            ignoreFields ??= new ChangeTrackingList<string>();
+
+            return new ProviderFrontloadPayloadProperties(
+                operationType,
+                providerNamespace,
+                frontloadLocation,
+                copyFromLocation,
+                environmentType,
+                serviceFeatureFlag,
+                (includeResourceTypes ?? new ChangeTrackingList<string>()).ToList(),
+                (excludeResourceTypes ?? new ChangeTrackingList<string>()).ToList(),
+                overrideManifestLevelFieldsResourceHydrationAccounts is null ? default : new ManifestLevelPropertyBag((overrideManifestLevelFieldsResourceHydrationAccounts ?? new ChangeTrackingList<ResourceHydrationAccount>()).ToList(), default),
+                overrideEndpointLevelFields,
+                (ignoreFields ?? new ChangeTrackingList<string>()).ToList(),
+                default);
+        }
+
+        /// <param name="resourceHydrationAccounts"> The resource hydration accounts. </param>
+        /// <returns> A new <see cref="Models.ManifestLevelPropertyBag"/> instance for mocking. </returns>
+        public static ManifestLevelPropertyBag ManifestLevelPropertyBag(IEnumerable<ResourceHydrationAccount> resourceHydrationAccounts = default)
+        {
+            resourceHydrationAccounts ??= new ChangeTrackingList<ResourceHydrationAccount>();
+
+            return new ManifestLevelPropertyBag((resourceHydrationAccounts ?? new ChangeTrackingList<ResourceHydrationAccount>()).ToList(), default);
+        }
+
+        /// <param name="enabled"> Whether it's enabled. </param>
+        /// <param name="apiVersions"> The api versions. </param>
+        /// <param name="endpointUri"> The endpoint uri. </param>
+        /// <param name="locations"> The locations. </param>
+        /// <param name="requiredFeatures"> The required features. </param>
+        /// <param name="requiredFeaturesPolicy"> The required feature policy. </param>
+        /// <param name="timeout"> This is a TimeSpan property. </param>
+        /// <param name="endpointType"> The endpoint type. </param>
+        /// <param name="dstsConfiguration"> The dsts configuration. </param>
+        /// <param name="skuLink"> The sku link. </param>
+        /// <param name="apiVersion"> The api version. </param>
+        /// <param name="zones"> The zones. </param>
+        /// <returns> A new <see cref="Models.ResourceTypeEndpointBase"/> instance for mocking. </returns>
+        public static ResourceTypeEndpointBase ResourceTypeEndpointBase(bool enabled = default, IEnumerable<string> apiVersions = default, Uri endpointUri = default, IEnumerable<string> locations = default, IEnumerable<string> requiredFeatures = default, FeaturesPolicy requiredFeaturesPolicy = default, TimeSpan timeout = default, ProviderEndpointType endpointType = default, ProviderDstsConfiguration dstsConfiguration = default, string skuLink = default, string apiVersion = default, IEnumerable<string> zones = default)
+        {
+            apiVersions ??= new ChangeTrackingList<string>();
+            locations ??= new ChangeTrackingList<string>();
+            requiredFeatures ??= new ChangeTrackingList<string>();
+            zones ??= new ChangeTrackingList<string>();
+
+            return new ResourceTypeEndpointBase(
+                enabled,
+                (apiVersions ?? new ChangeTrackingList<string>()).ToList(),
+                endpointUri,
+                (locations ?? new ChangeTrackingList<string>()).ToList(),
+                (requiredFeatures ?? new ChangeTrackingList<string>()).ToList(),
+                new ProviderFeaturesRule(requiredFeaturesPolicy, default),
+                timeout,
+                endpointType,
+                dstsConfiguration,
+                skuLink,
+                apiVersion,
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
+                default);
         }
     }
 }

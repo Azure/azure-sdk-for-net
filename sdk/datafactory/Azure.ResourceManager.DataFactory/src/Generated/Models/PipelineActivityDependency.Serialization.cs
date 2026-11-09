@@ -147,9 +147,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                     dependencyConditions = array;
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
-            return new PipelineActivityDependency(activity, dependencyConditions, additionalProperties);
+            return new PipelineActivityDependency(activity, dependencyConditions ?? new ChangeTrackingList<DependencyCondition>(), additionalProperties);
         }
     }
 }

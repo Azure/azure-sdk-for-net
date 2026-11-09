@@ -98,7 +98,7 @@ namespace Azure.Provisioning.ContainerRegistry
             _credentialSetResourceId = DefineProperty<ResourceIdentifier>(nameof(CredentialSetResourceId), new string[] { "credentialSetResourceId" });
             _sourceRepository = DefineProperty<string>(nameof(SourceRepository), new string[] { "sourceRepository" });
             _targetRepository = DefineProperty<string>(nameof(TargetRepository), new string[] { "targetRepository" });
-            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "creationDate" }, isOutput: true);
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "creationDate" }, isOutput: true, format: "O");
             _provisioningState = DefineProperty<ContainerRegistryProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             DefineAdditionalProperties();
         }

@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             }
             int faultDurationInMin = default;
             DrillResourcesList resourceLists = default;
-            ForceInclusionState? forceInclusionAndUpdate = default;
+            DrillResourceForceInclusionState? forceInclusionAndUpdate = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -170,12 +170,12 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    forceInclusionAndUpdate = new ForceInclusionState(prop.Value.GetString());
+                    forceInclusionAndUpdate = new DrillResourceForceInclusionState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AddOrUpdateResourcesContent(faultDurationInMin, resourceLists, forceInclusionAndUpdate, additionalBinaryDataProperties);

@@ -44,7 +44,7 @@ ProvisioningParameter kustoDBName = new(nameof(kustoDBName), typeof(string))
 };
 infra.Add(kustoDBName);
 // Create Kusto cluster
-KustoCluster kustoCluster = new("kustoCluster", KustoCluster.ResourceVersions.V2024_04_13)
+KustoCluster kustoCluster = new("kustoCluster", KustoCluster.ResourceVersions.V2025_02_14)
 {
     Name = kustoClusterName,
     Sku = new KustoSku
@@ -61,7 +61,7 @@ KustoCluster kustoCluster = new("kustoCluster", KustoCluster.ResourceVersions.V2
 };
 infra.Add(kustoCluster);
 // Create Kusto database
-KustoReadWriteDatabase kustoDatabase = new("kustoDatabase", KustoDatabase.ResourceVersions.V2024_04_13)
+KustoReadWriteDatabase kustoDatabase = new("kustoDatabase", KustoDatabase.ResourceVersions.V2025_02_14)
 {
     Name = kustoDBName,
     Parent = kustoCluster,
@@ -175,7 +175,7 @@ CosmosDBSqlContainer cosmosDbContainer = new("cosmosDbContainer", CosmosDBSqlCon
     }
 };
 infra.Add(cosmosDbContainer);
-KustoCluster cluster = new(nameof(cluster), KustoCluster.ResourceVersions.V2024_04_13)
+KustoCluster cluster = new(nameof(cluster), KustoCluster.ResourceVersions.V2025_02_14)
 {
     Name = clusterName,
     Location = location,
@@ -199,13 +199,13 @@ CosmosDBSqlRoleAssignment cosmosDBSqlRoleAssignment = new("clusterCosmosDbDataAu
     Scope = cosmosDbAccount.Id
 };
 infra.Add(cosmosDBSqlRoleAssignment);
-KustoDatabase kustoDb = new KustoReadWriteDatabase(nameof(kustoDb), KustoDatabase.ResourceVersions.V2024_04_13)
+KustoDatabase kustoDb = new KustoReadWriteDatabase(nameof(kustoDb), KustoDatabase.ResourceVersions.V2025_02_14)
 {
     Name = kustoDatabaseName,
     Parent = cluster,
 };
 infra.Add(kustoDb);
-KustoScript kustoScript = new("kustoScript", KustoScript.ResourceVersions.V2024_04_13)
+KustoScript kustoScript = new("kustoScript", KustoScript.ResourceVersions.V2025_02_14)
 {
     Name = "db-script",
     Parent = kustoDb,
@@ -213,7 +213,7 @@ KustoScript kustoScript = new("kustoScript", KustoScript.ResourceVersions.V2024_
     ShouldContinueOnErrors = false
 };
 infra.Add(kustoScript);
-KustoDataConnection cosmosDbConnection = new KustoCosmosDBDataConnection("cosmosDbConnection", KustoDataConnection.ResourceVersions.V2024_04_13)
+KustoDataConnection cosmosDbConnection = new KustoCosmosDBDataConnection("cosmosDbConnection", KustoDataConnection.ResourceVersions.V2025_02_14)
 {
     Name = "cosmosDbConnection",
     Parent = kustoDb,
@@ -424,7 +424,7 @@ SystemTopicEventSubscription newBlobSubscription = new("newBlobSubscription", Sy
 infra.Add(newBlobSubscription);
 
 // Kusto cluster
-KustoCluster cluster = new("cluster", KustoCluster.ResourceVersions.V2024_04_13)
+KustoCluster cluster = new("cluster", KustoCluster.ResourceVersions.V2025_02_14)
 {
     Name = clusterName,
     Location = location,
@@ -442,7 +442,7 @@ KustoCluster cluster = new("cluster", KustoCluster.ResourceVersions.V2024_04_13)
 };
 infra.Add(cluster);
 
-KustoReadWriteDatabase kustoDb = new("kustoDb", KustoDatabase.ResourceVersions.V2024_04_13)
+KustoReadWriteDatabase kustoDb = new("kustoDb", KustoDatabase.ResourceVersions.V2025_02_14)
 {
     Name = databaseName,
     Parent = cluster,
@@ -450,7 +450,7 @@ KustoReadWriteDatabase kustoDb = new("kustoDb", KustoDatabase.ResourceVersions.V
 };
 infra.Add(kustoDb);
 
-KustoScript kustoScript = new("kustoScript", KustoScript.ResourceVersions.V2024_04_13)
+KustoScript kustoScript = new("kustoScript", KustoScript.ResourceVersions.V2025_02_14)
 {
     Name = "db-script",
     Parent = kustoDb,
@@ -459,7 +459,7 @@ KustoScript kustoScript = new("kustoScript", KustoScript.ResourceVersions.V2024_
 };
 infra.Add(kustoScript);
 
-KustoEventGridDataConnection eventConnection = new("eventConnection", KustoDataConnection.ResourceVersions.V2024_04_13)
+KustoEventGridDataConnection eventConnection = new("eventConnection", KustoDataConnection.ResourceVersions.V2025_02_14)
 {
     Name = "eventConnection",
     Parent = kustoDb,

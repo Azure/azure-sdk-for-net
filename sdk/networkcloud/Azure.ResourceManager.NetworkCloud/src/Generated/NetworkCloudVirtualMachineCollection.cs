@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkCloudVirtualMachineCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(NetworkCloudVirtualMachineResource.ResourceType, out string networkCloudVirtualMachineApiVersion);
             _virtualMachinesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudVirtualMachineResource.ResourceType.Namespace, Diagnostics);
-            _virtualMachinesRestClient = new VirtualMachines(_virtualMachinesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudVirtualMachineApiVersion ?? "2026-05-01-preview");
+            _virtualMachinesRestClient = new VirtualMachines(_virtualMachinesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.NetworkCloud/virtualMachines", out string virtualMachinesApiVersionOverride) ? virtualMachinesApiVersionOverride : "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,7 +126,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -186,7 +185,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,7 +234,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -284,7 +283,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,7 +297,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudVirtualMachineData, NetworkCloudVirtualMachineResource>(new VirtualMachinesGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkCloudVirtualMachineData, NetworkCloudVirtualMachineResource>(new NetworkCloudVirtualMachineDataAsyncCollectionResultOfT(
                 _virtualMachinesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +320,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -335,7 +334,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudVirtualMachineData, NetworkCloudVirtualMachineResource>(new VirtualMachinesGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<NetworkCloudVirtualMachineData, NetworkCloudVirtualMachineResource>(new NetworkCloudVirtualMachineDataCollectionResultOfT(
                 _virtualMachinesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -358,7 +357,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -415,7 +414,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -472,7 +471,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -533,7 +532,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>

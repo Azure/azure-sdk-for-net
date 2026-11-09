@@ -13,13 +13,13 @@ namespace Azure.Provisioning.CognitiveServices
         /// <summary> Creates a new CognitiveServicesManagedAgentDeployment. </summary>
         public CognitiveServicesManagedAgentDeployment()
         {
+            DeploymentType.Assign(AgentDeploymentType.Managed);
         }
 
         /// <summary> Define all the provisionable properties for CognitiveServicesManagedAgentDeployment. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("deploymentType", new string[] { "deploymentType" }, defaultValue: "Managed");
             DefineAdditionalProperties();
         }
 

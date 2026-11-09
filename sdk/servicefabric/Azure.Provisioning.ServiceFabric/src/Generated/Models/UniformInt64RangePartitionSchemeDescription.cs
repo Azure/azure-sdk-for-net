@@ -19,6 +19,7 @@ namespace Azure.Provisioning.ServiceFabric
         /// <summary> Creates a new UniformInt64RangePartitionSchemeDescription. </summary>
         public UniformInt64RangePartitionSchemeDescription()
         {
+            PartitionScheme.Assign(ApplicationPartitionScheme.UniformInt64Range);
         }
 
         /// <summary> Gets or sets the Count. </summary>
@@ -70,7 +71,6 @@ namespace Azure.Provisioning.ServiceFabric
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("partitionScheme", new string[] { "partitionScheme" }, defaultValue: "UniformInt64Range");
             _count = DefineProperty<int>(nameof(Count), new string[] { "count" }, isRequired: true);
             _lowKey = DefineProperty<string>(nameof(LowKey), new string[] { "lowKey" }, isRequired: true);
             _highKey = DefineProperty<string>(nameof(HighKey), new string[] { "highKey" }, isRequired: true);

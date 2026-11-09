@@ -9,6 +9,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
 using Streaming.Sse._Named;
+using Streaming.Sse._Protocol;
 using Streaming.Sse._Retrieve;
 using Streaming.Sse._Unnamed;
 
@@ -32,5 +33,7 @@ namespace Streaming.Sse
         public virtual Named GetNamedClient() => throw null;
 
         public virtual Retrieve GetRetrieveClient() => throw null;
+
+        public virtual Protocol GetProtocolClient() => throw null;
     }
 }

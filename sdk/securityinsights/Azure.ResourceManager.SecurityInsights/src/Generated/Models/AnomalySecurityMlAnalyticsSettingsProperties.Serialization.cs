@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    customizableObservations = BinaryData.FromString(prop.Value.GetRawText());
+                    customizableObservations = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("frequency"u8))
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AnomalySecurityMlAnalyticsSettingsProperties(

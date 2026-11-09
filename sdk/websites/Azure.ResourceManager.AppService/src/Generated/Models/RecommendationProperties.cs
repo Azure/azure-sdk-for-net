@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="actionName"> Name of action recommended by this object. </param>
         /// <param name="enabled"> True if this recommendation is still valid (i.e. "actionable"). False if it is invalid. </param>
         /// <param name="states"> The list of states of this recommendation. If it's null then it should be considered "Active". </param>
-        /// <param name="startOn"> The beginning time in UTC of a range that the recommendation refers to. </param>
-        /// <param name="endOn"> The end time in UTC of a range that the recommendation refers to. </param>
+        /// <param name="startsOn"> The beginning time in UTC of a range that the recommendation refers to. </param>
+        /// <param name="endsOn"> The end time in UTC of a range that the recommendation refers to. </param>
         /// <param name="nextNotificationOn"> When to notify this recommendation next in UTC. Null means that this will never be notified anymore. </param>
-        /// <param name="notificationExpirationOn"> Date and time in UTC when this notification expires. </param>
+        /// <param name="notificationExpiresOn"> Date and time in UTC when this notification expires. </param>
         /// <param name="notifiedOn"> Last timestamp in UTC this instance was actually notified. Null means that this recommendation hasn't been notified yet. </param>
         /// <param name="score"> A metric value measured by the rule. </param>
         /// <param name="isDynamic"> True if this is associated with a dynamically added rule. </param>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="bladeName"> Deep link to a blade on the portal. </param>
         /// <param name="forwardLink"> Forward link to an external document associated with the rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecommendationProperties(DateTimeOffset? createdOn, Guid? recommendationId, ResourceIdentifier resourceId, ResourceScopeType? resourceScope, string ruleName, string displayName, string message, NotificationLevel? level, RecommendationChannel? channels, IReadOnlyList<string> categoryTags, string actionName, int? enabled, IList<string> states, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? nextNotificationOn, DateTimeOffset? notificationExpirationOn, DateTimeOffset? notifiedOn, double? score, bool? isDynamic, string extensionName, string bladeName, string forwardLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecommendationProperties(DateTimeOffset? createdOn, Guid? recommendationId, ResourceIdentifier resourceId, ResourceScopeType? resourceScope, string ruleName, string displayName, string message, NotificationLevel? level, RecommendationChannel? channels, IReadOnlyList<string> categoryTags, string actionName, int? enabled, IList<string> states, DateTimeOffset? startsOn, DateTimeOffset? endsOn, DateTimeOffset? nextNotificationOn, DateTimeOffset? notificationExpiresOn, DateTimeOffset? notifiedOn, double? score, bool? isDynamic, string extensionName, string bladeName, string forwardLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CreatedOn = createdOn;
             RecommendationId = recommendationId;
@@ -65,10 +65,10 @@ namespace Azure.ResourceManager.AppService.Models
             ActionName = actionName;
             Enabled = enabled;
             States = states;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             NextNotificationOn = nextNotificationOn;
-            NotificationExpirationOn = notificationExpirationOn;
+            NotificationExpiresOn = notificationExpiresOn;
             NotifiedOn = notifiedOn;
             Score = score;
             IsDynamic = isDynamic;
@@ -132,11 +132,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The beginning time in UTC of a range that the recommendation refers to. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> The end time in UTC of a range that the recommendation refers to. </summary>
         [WirePath("endTime")]
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> When to notify this recommendation next in UTC. Null means that this will never be notified anymore. </summary>
         [WirePath("nextNotificationTime")]
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Date and time in UTC when this notification expires. </summary>
         [WirePath("notificationExpirationTime")]
-        public DateTimeOffset? NotificationExpirationOn { get; set; }
+        public DateTimeOffset? NotificationExpiresOn { get; set; }
 
         /// <summary> Last timestamp in UTC this instance was actually notified. Null means that this recommendation hasn't been notified yet. </summary>
         [WirePath("notifiedTime")]

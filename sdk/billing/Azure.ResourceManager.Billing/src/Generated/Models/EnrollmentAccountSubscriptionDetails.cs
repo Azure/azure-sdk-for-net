@@ -23,19 +23,19 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EnrollmentAccountSubscriptionDetails"/>. </summary>
-        /// <param name="enrollmentAccountStartOn"> The enrollment Account and the subscription association start date. This field is available only for the Enterprise Agreement Type. </param>
+        /// <param name="enrollmentAccountStartsOn"> The enrollment Account and the subscription association start date. This field is available only for the Enterprise Agreement Type. </param>
         /// <param name="subscriptionEnrollmentAccountStatus"> The current enrollment account status of the subscription. This field is available only for the Enterprise Agreement Type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EnrollmentAccountSubscriptionDetails(DateTimeOffset? enrollmentAccountStartOn, SubscriptionEnrollmentAccountStatus? subscriptionEnrollmentAccountStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EnrollmentAccountSubscriptionDetails(DateTimeOffset? enrollmentAccountStartsOn, SubscriptionEnrollmentAccountStatus? subscriptionEnrollmentAccountStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            EnrollmentAccountStartOn = enrollmentAccountStartOn;
+            EnrollmentAccountStartsOn = enrollmentAccountStartsOn;
             SubscriptionEnrollmentAccountStatus = subscriptionEnrollmentAccountStatus;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The enrollment Account and the subscription association start date. This field is available only for the Enterprise Agreement Type. </summary>
         [WirePath("enrollmentAccountStartDate")]
-        public DateTimeOffset? EnrollmentAccountStartOn { get; }
+        public DateTimeOffset? EnrollmentAccountStartsOn { get; }
 
         /// <summary> The current enrollment account status of the subscription. This field is available only for the Enterprise Agreement Type. </summary>
         [WirePath("subscriptionEnrollmentAccountStatus")]

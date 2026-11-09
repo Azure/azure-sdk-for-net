@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap
 {
+    /// <summary></summary>
     public partial class SapDiscoverySiteResource : IJsonModel<SapDiscoverySiteData>
     {
-        private static SapDiscoverySiteData s_dataDeserializationInstance;
-        private static SapDiscoverySiteData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SapDiscoverySiteData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SapDiscoverySiteData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SapDiscoverySiteData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SapDiscoverySiteData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SapDiscoverySiteData>)Data).Write(writer, options);
 
-        SapDiscoverySiteData IJsonModel<SapDiscoverySiteData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SapDiscoverySiteData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SapDiscoverySiteData IJsonModel<SapDiscoverySiteData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SapDiscoverySiteData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SapDiscoverySiteData>(Data, options, AzureResourceManagerMigrationDiscoverySapContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SapDiscoverySiteData IPersistableModel<SapDiscoverySiteData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SapDiscoverySiteData>(data, options, AzureResourceManagerMigrationDiscoverySapContext.Default);
 
-        string IPersistableModel<SapDiscoverySiteData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SapDiscoverySiteData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SapDiscoverySiteData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

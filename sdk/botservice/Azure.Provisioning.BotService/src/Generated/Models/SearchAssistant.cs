@@ -13,13 +13,13 @@ namespace Azure.Provisioning.BotService
         /// <summary> Creates a new SearchAssistant. </summary>
         public SearchAssistant()
         {
+            ChannelName.Assign("SearchAssistant");
         }
 
         /// <summary> Define all the provisionable properties for SearchAssistant. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("channelName", new string[] { "channelName" }, defaultValue: "SearchAssistant");
             DefineAdditionalProperties();
         }
 

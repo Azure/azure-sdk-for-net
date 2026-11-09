@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -51,9 +52,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ExpressRoutePortResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string expressRoutePortApiVersion);
             _expressRoutePortsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _expressRoutePortsRestClient = new ExpressRoutePorts(_expressRoutePortsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, expressRoutePortApiVersion ?? "2025-07-01");
+            _expressRoutePortsRestClient = new ExpressRoutePorts(_expressRoutePortsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -605,10 +605,9 @@ namespace Azure.ResourceManager.Network
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -648,10 +647,9 @@ namespace Azure.ResourceManager.Network
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -767,6 +765,39 @@ namespace Azure.ResourceManager.Network
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of ExpressRoutePortAuthorizations in the <see cref="ExpressRoutePortResource"/>. </summary>
+        /// <returns> An object representing collection of ExpressRoutePortAuthorizations and their operations over a ExpressRoutePortAuthorizationResource. </returns>
+        public virtual ExpressRoutePortAuthorizationCollection GetExpressRoutePortAuthorizations()
+        {
+            return GetCachedClient(client => new ExpressRoutePortAuthorizationCollection(client, Id));
+        }
+
+        /// <summary> Gets the specified authorization from the specified express route port. </summary>
+        /// <param name="authorizationName"> The name of the authorization. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ExpressRoutePortAuthorizationResource>> GetExpressRoutePortAuthorizationAsync(string authorizationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
+
+            return await GetExpressRoutePortAuthorizations().GetAsync(authorizationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the specified authorization from the specified express route port. </summary>
+        /// <param name="authorizationName"> The name of the authorization. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ExpressRoutePortAuthorizationResource> GetExpressRoutePortAuthorization(string authorizationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
+
+            return GetExpressRoutePortAuthorizations().Get(authorizationName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ExpressRouteLinks in the <see cref="ExpressRoutePortResource"/>. </summary>

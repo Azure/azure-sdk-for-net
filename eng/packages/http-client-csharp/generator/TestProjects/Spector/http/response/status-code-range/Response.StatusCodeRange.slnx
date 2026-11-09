@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Response.StatusCodeRange.csproj" />
+  <Project Path="tests/Response.StatusCodeRange.Tests.csproj" />
+</Solution>

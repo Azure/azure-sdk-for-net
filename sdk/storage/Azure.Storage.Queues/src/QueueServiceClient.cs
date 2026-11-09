@@ -450,7 +450,7 @@ namespace Azure.Storage.Queues
         /// Use an empty marker to start enumeration from the beginning. Queue names are returned in lexicographic order.
         /// After getting a segment, process it, and then call ListQueuesSegmentAsync again (passing in the next marker) to get the next segment.
         /// </remarks>
-        internal async Task<Response<ListQueuesResponse>> GetQueuesInternal(
+        internal async Task<Response<ListQueuesResult>> GetQueuesInternal(
             string marker,
             QueueTraits traits,
             string prefix,
@@ -472,7 +472,7 @@ namespace Azure.Storage.Queues
 
                 try
                 {
-                    Response<ListQueuesResponse> response;
+                    Response<ListQueuesResult> response;
 
                     scope.Start();
                     IEnumerable<string> includeTypes = traits.AsIncludeTypes();

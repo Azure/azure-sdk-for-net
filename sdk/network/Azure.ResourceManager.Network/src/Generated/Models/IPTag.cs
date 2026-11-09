@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -25,11 +26,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="IPTag"/>. </summary>
         /// <param name="ipTagType"> The IP tag type. Example: FirstPartyUsage. </param>
         /// <param name="tag"> The value of the IP tag associated with the public IP. Example: SQL. </param>
+        /// <param name="firstPartyServiceTagId"> The resource ID of the first party service tag associated with the IP tag. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IPTag(string ipTagType, string tag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IPTag(string ipTagType, string tag, ResourceIdentifier firstPartyServiceTagId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IPTagType = ipTagType;
             Tag = tag;
+            FirstPartyServiceTagId = firstPartyServiceTagId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -40,5 +43,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The value of the IP tag associated with the public IP. Example: SQL. </summary>
         [WirePath("tag")]
         public string Tag { get; set; }
+
+        /// <summary> The resource ID of the first party service tag associated with the IP tag. </summary>
+        [WirePath("firstPartyServiceTagId")]
+        public ResourceIdentifier FirstPartyServiceTagId { get; set; }
     }
 }

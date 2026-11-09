@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new SecurityAdvisoryImpactedResourcesGetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventIdAsyncCollectionResultOfT(
+            return new ResourceHealthEventImpactedResourceDataAsync1CollectionResultOfT(
                 _securityAdvisoryImpactedResourcesRestClient,
                 Id.SubscriptionId,
                 Id.Name,
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new SecurityAdvisoryImpactedResourcesGetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventIdCollectionResultOfT(
+            return new ResourceHealthEventImpactedResourceData1CollectionResultOfT(
                 _securityAdvisoryImpactedResourcesRestClient,
                 Id.SubscriptionId,
                 Id.Name,

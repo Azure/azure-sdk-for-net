@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Kusto
 {
     /// <summary>
     /// Class representing an data connection.
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="KustoEventHubDataConnection"/>, <see cref="KustoIotHubDataConnection"/>, <see cref="KustoEventGridDataConnection"/>, <see cref="KustoCosmosDBDataConnection"/>, <see cref="EventGridDataConnectionWithManagedIdentity"/>, and <see cref="EventHubDataConnectionWithManagedIdentity"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="EventGridDataConnectionWithManagedIdentity"/>, <see cref="EventHubDataConnectionWithManagedIdentity"/>, <see cref="KustoCosmosDBDataConnection"/>, <see cref="KustoEventGridDataConnection"/>, <see cref="KustoEventHubDataConnection"/>, and <see cref="KustoIotHubDataConnection"/>.
     /// </summary>
     public partial class KustoDataConnectionData : ResourceData, IJsonModel<KustoDataConnectionData>
     {
@@ -150,18 +150,18 @@ namespace Azure.ResourceManager.Kusto
             {
                 switch (discriminator.GetString())
                 {
-                    case "EventHub":
-                        return KustoEventHubDataConnection.DeserializeKustoEventHubDataConnection(element, options);
-                    case "IotHub":
-                        return KustoIotHubDataConnection.DeserializeKustoIotHubDataConnection(element, options);
-                    case "EventGrid":
-                        return KustoEventGridDataConnection.DeserializeKustoEventGridDataConnection(element, options);
-                    case "CosmosDb":
-                        return KustoCosmosDBDataConnection.DeserializeKustoCosmosDBDataConnection(element, options);
                     case "EventGridWithManagedIdentity":
                         return EventGridDataConnectionWithManagedIdentity.DeserializeEventGridDataConnectionWithManagedIdentity(element, options);
                     case "EventHubWithManagedIdentity":
                         return EventHubDataConnectionWithManagedIdentity.DeserializeEventHubDataConnectionWithManagedIdentity(element, options);
+                    case "CosmosDb":
+                        return KustoCosmosDBDataConnection.DeserializeKustoCosmosDBDataConnection(element, options);
+                    case "EventGrid":
+                        return KustoEventGridDataConnection.DeserializeKustoEventGridDataConnection(element, options);
+                    case "EventHub":
+                        return KustoEventHubDataConnection.DeserializeKustoEventHubDataConnection(element, options);
+                    case "IotHub":
+                        return KustoIotHubDataConnection.DeserializeKustoIotHubDataConnection(element, options);
                 }
             }
             return UnknownKustoDataConnection.DeserializeUnknownKustoDataConnection(element, options);

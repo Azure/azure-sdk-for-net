@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class WorkloadSapAseRestoreContent : WorkloadRestoreContent
     {
         /// <summary> Initializes a new instance of <see cref="WorkloadSapAseRestoreContent"/>. </summary>
-        public WorkloadSapAseRestoreContent()
+        public WorkloadSapAseRestoreContent() : base("AzureWorkloadSAPAseRestoreRequest")
         {
         }
 
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="WorkloadSapAseRestoreContent"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        private protected WorkloadSapAseRestoreContent(string objectType) : base("AzureWorkloadSAPAseRestoreRequest")
+        private protected WorkloadSapAseRestoreContent(string objectType) : base(objectType)
         {
         }
     }

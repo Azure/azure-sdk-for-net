@@ -10,7 +10,7 @@ using System.Text;
 using System.Text.Json;
 using Microsoft.TypeSpec.Generator.Customizations;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.Deployments.Models
 {
     [CodeGenSerialization(nameof(Error), SerializationValueHook = nameof(SerializationError), DeserializationValueHook = nameof(DeserializeError))]
     public partial class WhatIfOperationResult
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return;
             }
-            error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerResourcesContext.Default);
+            error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerResourcesDeploymentsContext.Default);
         }
         // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- //
     }

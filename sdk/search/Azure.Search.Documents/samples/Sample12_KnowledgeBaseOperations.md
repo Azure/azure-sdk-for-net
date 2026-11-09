@@ -9,6 +9,7 @@ For more information, see the [agentic retrieval documentation](https://learn.mi
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample12_KnowledgeBase_Namespaces
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
+using Newtonsoft.Json;
 ```
 
 ## Create a Knowledge Base
@@ -41,6 +42,8 @@ KnowledgeBase knowledgeBase = new KnowledgeBase(
 {
     Description = "Knowledge base for hotel information"
 };
+knowledgeBase.Tags.Add("environment", "sample");
+knowledgeBase.Tags.Add("owner", "search-team");
 
 // Add an Azure OpenAI model for query planning
 string openAIEndpoint = Environment.GetEnvironmentVariable("OPENAI_ENDPOINT");
@@ -56,7 +59,6 @@ string openAIKey = Environment.GetEnvironmentVariable("OPENAI_KEY");
             }));
 
 KnowledgeBase createdBase = await indexClient.CreateKnowledgeBaseAsync(knowledgeBase);
-Console.WriteLine($"Created knowledge base '{createdBase.Name}' with {createdBase.KnowledgeSources.Count} source(s)");
 ```
 
 ## Get a Knowledge Base
@@ -79,6 +81,10 @@ Console.WriteLine($"  Knowledge sources: {knowledgeBase.KnowledgeSources.Count}"
 foreach (KnowledgeSourceReference sourceRef in knowledgeBase.KnowledgeSources)
 {
     Console.WriteLine($"    - {sourceRef.Name}");
+}
+foreach (KeyValuePair<string, string> tag in knowledgeBase.Tags)
+{
+    Console.WriteLine($"  Tag: {tag.Key} = {tag.Value}");
 }
 ```
 
@@ -115,11 +121,13 @@ SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
 // Get the existing knowledge base
 KnowledgeBase knowledgeBase = await indexClient.GetKnowledgeBaseAsync(knowledgeBaseName);
 
-// Update its description
+// Update its description and application metadata.
 knowledgeBase.Description = "Updated description for hotel knowledge base";
+knowledgeBase.Tags.Add("lifecycle", "updated");
 
 KnowledgeBase updatedBase = await indexClient.CreateOrUpdateKnowledgeBaseAsync(knowledgeBase);
 Console.WriteLine($"Updated knowledge base '{updatedBase.Name}': {updatedBase.Description}");
+Console.WriteLine($"  Lifecycle tag: {updatedBase.Tags["lifecycle"]}");
 ```
 
 ## Delete a Knowledge Base

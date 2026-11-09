@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         internal PublicCloudConnectorSolutionTypeProperties()
         {
             SupportedAzureRegions = new ChangeTrackingList<string>();
+            HostTypes = new ChangeTrackingList<PublicCloudHostType>();
             SolutionSettings = new ChangeTrackingList<PublicCloudConnectorSolutionTypeSettingsProperties>();
         }
 
@@ -28,13 +29,15 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="solutionType"> The name of the solution type. </param>
         /// <param name="description"> Short description of solution type. </param>
         /// <param name="supportedAzureRegions"> The locations this solution is supported in. </param>
+        /// <param name="hostTypes"> The supported host types for the current solution type. </param>
         /// <param name="solutionSettings"> Array of solution settings and its description. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PublicCloudConnectorSolutionTypeProperties(string solutionType, string description, IReadOnlyList<string> supportedAzureRegions, IReadOnlyList<PublicCloudConnectorSolutionTypeSettingsProperties> solutionSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PublicCloudConnectorSolutionTypeProperties(string solutionType, string description, IReadOnlyList<string> supportedAzureRegions, IList<PublicCloudHostType> hostTypes, IReadOnlyList<PublicCloudConnectorSolutionTypeSettingsProperties> solutionSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SolutionType = solutionType;
             Description = description;
             SupportedAzureRegions = supportedAzureRegions;
+            HostTypes = hostTypes;
             SolutionSettings = solutionSettings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -47,6 +50,9 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
 
         /// <summary> The locations this solution is supported in. </summary>
         public IReadOnlyList<string> SupportedAzureRegions { get; }
+
+        /// <summary> The supported host types for the current solution type. </summary>
+        public IList<PublicCloudHostType> HostTypes { get; }
 
         /// <summary> Array of solution settings and its description. </summary>
         public IReadOnlyList<PublicCloudConnectorSolutionTypeSettingsProperties> SolutionSettings { get; }

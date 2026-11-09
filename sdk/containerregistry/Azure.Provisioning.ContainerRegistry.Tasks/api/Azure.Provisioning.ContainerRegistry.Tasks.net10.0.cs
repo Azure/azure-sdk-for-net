@@ -113,7 +113,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskRunType> RunType { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> SourceRegistryAuth { get { throw null; } }
         public Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskSourceTriggerDescriptor SourceTrigger { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerRegistry.Tasks.ContainerRegistryTaskRunStatus> Status { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Task { get { throw null; } }

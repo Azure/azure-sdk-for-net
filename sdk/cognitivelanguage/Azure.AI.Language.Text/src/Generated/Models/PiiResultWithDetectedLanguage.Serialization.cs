@@ -207,15 +207,15 @@ namespace Azure.AI.Language.Text
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new PiiResultWithDetectedLanguage(
                 id,
-                warnings,
+                warnings ?? new ChangeTrackingList<DocumentWarning>(),
                 statistics,
                 redactedText,
-                entities,
+                entities ?? new ChangeTrackingList<PiiEntity>(),
                 detectedLanguage,
                 additionalBinaryDataProperties);
         }

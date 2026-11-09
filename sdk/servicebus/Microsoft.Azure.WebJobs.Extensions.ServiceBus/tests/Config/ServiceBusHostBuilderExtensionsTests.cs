@@ -6,12 +6,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Config;
+using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Azure.WebJobs.Hosting;
 using Microsoft.Azure.WebJobs.ServiceBus.Config;
+using Microsoft.Extensions.Azure;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
@@ -23,6 +27,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
     public class ServiceBusHostBuilderExtensionsTests
     {
         private const string ExtensionPath = "AzureWebJobs:Extensions:ServiceBus";
+        private const string FakeConnectionString =
+            "Endpoint=sb://default.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=abc123=";
 
         [Test]
         public void ConfigureOptions_AppliesValuesCorrectly_BackCompat()
@@ -286,6 +292,53 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
 
             // verify that the service bus config provider was registered
             var serviceBusExtensionConfig = configProviders.OfType<ServiceBusExtensionConfigProvider>().Single();
+        }
+
+        [Test]
+        public async Task AddServiceBusScaleForTrigger_DisposesCachedClient_OnHostDispose()
+        {
+            string triggerJson = @"{
+                ""name"": ""myQueueItem"",
+                ""type"": ""serviceBusTrigger"",
+                ""direction"": ""in"",
+                ""queueName"": ""testqueue"",
+                ""functionName"": ""FakeFunction""
+            }";
+
+            TriggerMetadata metadata = new TriggerMetadata(JObject.Parse(triggerJson));
+
+            IHost host = new HostBuilder()
+                .ConfigureAppConfiguration(config =>
+                {
+                    config.AddInMemoryCollection(new Dictionary<string, string>
+                    {
+                        { "AzureWebJobsServiceBus", FakeConnectionString }
+                    });
+                })
+                .ConfigureServices(services => services.AddAzureClientsCore())
+                .ConfigureWebJobsScale((_, builder) =>
+                {
+                    builder.AddServiceBus();
+                    builder.AddServiceBusScaleForTrigger(metadata);
+                },
+                _ => { })
+                .Build();
+
+            // Resolving the scale monitor provider runs the singleton factory registered by
+            // AddServiceBusScaleForTrigger, which is where CleanupService must be resolved for
+            // MS.DI to include it in the container disposal chain.
+            _ = host.Services.GetRequiredService<IScaleMonitorProvider>();
+
+            MessagingProvider provider = host.Services.GetRequiredService<MessagingProvider>();
+            Assert.AreEqual(1, provider.ClientCache.Count);
+
+            ServiceBusClient cachedClient = provider.ClientCache.Values.Single();
+            Assert.IsFalse(cachedClient.IsClosed);
+
+            await ((IAsyncDisposable)host).DisposeAsync();
+
+            Assert.IsTrue(cachedClient.IsClosed);
+            Assert.AreEqual(0, provider.ClientCache.Count);
         }
     }
 }

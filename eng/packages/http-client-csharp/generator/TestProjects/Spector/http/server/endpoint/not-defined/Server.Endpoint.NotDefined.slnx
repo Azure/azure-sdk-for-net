@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="src/Server.Endpoint.NotDefined.csproj" />
+  <Project Path="tests/Server.Endpoint.NotDefined.Tests.csproj" />
 </Solution>

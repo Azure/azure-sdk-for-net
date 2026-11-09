@@ -1,0 +1,17 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <IsGeneratorLibraryGenerationTest>false</IsGeneratorLibraryGenerationTest>
+    <IsMgmtLibrary>true</IsMgmtLibrary>
+  </PropertyGroup>
+
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\..\..\..\..\Directory.Build.props" />
+
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Provisioning" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\ExperimentalAttribute.cs" LinkBase="Shared\Core" />
+  </ItemGroup>
+</Project>

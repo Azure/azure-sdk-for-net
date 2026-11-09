@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Specifies the version of the script handler. </summary>
+        /// <summary> Specifies the Major.Minor version of the script handler. Customer is able to specify only the Major.Minor version of an extension, Azure platform will deliver the latest Patch.Hotfix version in the Major.Minor series. </summary>
         public string TypeHandlerVersion
         {
             get

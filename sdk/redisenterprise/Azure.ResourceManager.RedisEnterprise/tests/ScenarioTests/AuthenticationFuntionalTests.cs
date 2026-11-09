@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.RedisEnterprise.Models;
 using Azure.ResourceManager.Resources;
@@ -10,6 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.RedisEnterprise.Tests.ScenarioTests
 {
+    [NonParallelizable]
     public class AuthenticationFuntionalTests : RedisEnterpriseManagementTestBase
     {
         public AuthenticationFuntionalTests(bool isAsync)
@@ -93,9 +95,15 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests.ScenarioTests
             Assert.AreEqual(new Guid("5eb3eb10-a8a2-4db7-8bb4-e377180f7427"), accessPolicyAssignment.Data.UserObjectId);
             Assert.AreEqual("accessPolicyAssignmentName1", accessPolicyAssignment.Data.Name);
 
+            accessPolicyAssignment = await accessPolicyAssignment.GetAsync();
+            Assert.AreEqual("default", accessPolicyAssignment.Data.AccessPolicyName);
+            Assert.AreEqual(new Guid("5eb3eb10-a8a2-4db7-8bb4-e377180f7427"), accessPolicyAssignment.Data.UserObjectId);
+
             // List access policy assignments
             var accessPolicyAssignmentList = await accessPolicyAssignmentCollection.GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(1, accessPolicyAssignmentList.Count);
+            Assert.AreEqual("default", accessPolicyAssignmentList[0].Data.AccessPolicyName);
+            Assert.AreEqual(new Guid("5eb3eb10-a8a2-4db7-8bb4-e377180f7427"), accessPolicyAssignmentList[0].Data.UserObjectId);
 
             // Delete access policy assignment
             await accessPolicyAssignment.DeleteAsync(WaitUntil.Completed);

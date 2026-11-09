@@ -130,7 +130,7 @@ namespace Azure.AI.Agents.Persistent
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PersistentAgentsClient.GetFiles");
             scope.Start();
-            Response<InternalFileListResponse> baseResponse = InternalListFiles(purpose, cancellationToken);
+            Response<InternalFileListResult> baseResponse = InternalListFiles(purpose, cancellationToken);
             return Response.FromValue((IReadOnlyList<PersistentAgentFileInfo>)baseResponse.Value?.Data?.ToList(), baseResponse.GetRawResponse());
         }
 
@@ -143,7 +143,7 @@ namespace Azure.AI.Agents.Persistent
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PersistentAgentsClient.GetFiles");
             scope.Start();
-            Response<InternalFileListResponse> baseResponse = await InternalListFilesAsync(purpose, cancellationToken).ConfigureAwait(false);
+            Response<InternalFileListResult> baseResponse = await InternalListFilesAsync(purpose, cancellationToken).ConfigureAwait(false);
             return Response.FromValue((IReadOnlyList<PersistentAgentFileInfo>)baseResponse.Value?.Data?.ToList(), baseResponse.GetRawResponse());
         }
 

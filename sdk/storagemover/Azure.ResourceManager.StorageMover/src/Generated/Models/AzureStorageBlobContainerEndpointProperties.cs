@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.StorageMover.Models
 
             StorageAccountResourceId = storageAccountResourceId;
             BlobContainerName = blobContainerName;
+            AllowedStorageAccounts = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureStorageBlobContainerEndpointProperties"/>. </summary>
@@ -35,10 +36,29 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="storageAccountResourceId"> The Azure Resource ID of the storage account that is the target destination. </param>
         /// <param name="blobContainerName"> The name of the Storage blob container that is the target destination. </param>
-        internal AzureStorageBlobContainerEndpointProperties(EndpointType endpointType, string description, StorageMoverEndpointKind? endpointKind, StorageMoverProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, string storageAccountResourceId, string blobContainerName) : base(endpointType, description, endpointKind, provisioningState, additionalBinaryDataProperties)
+        /// <param name="enableCrossTenantTransfer">
+        /// Opt-in flag enabling this endpoint to be used as one side of a cross-tenant
+        /// data transfer pair. When set to true, RBAC for the endpoint's managed
+        /// identity is granted on the customer's storage account so that authorization
+        /// can be performed entirely in the tenant where this endpoint lives. Defaults
+        /// to false. Can be updated via PATCH.
+        /// </param>
+        /// <param name="allowedStorageAccounts">
+        /// Full ARM resource IDs of partner-tenant storage accounts that are allowed
+        /// to be the other side of a cross-tenant data transfer pair with this
+        /// endpoint. For a source endpoint this lists allowed target storage accounts;
+        /// for a target endpoint this lists allowed source storage accounts.
+        /// The full list is replaced on PATCH (omit an entry to remove it; include
+        /// an entry to add it). Mutual presence in both endpoints' allow lists is
+        /// re-validated at every job run start, so removing an entry blocks future
+        /// runs that reference the removed storage account.
+        /// </param>
+        internal AzureStorageBlobContainerEndpointProperties(EndpointType endpointType, string description, StorageMoverEndpointKind? endpointKind, StorageMoverProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, string storageAccountResourceId, string blobContainerName, bool? enableCrossTenantTransfer, IList<string> allowedStorageAccounts) : base(endpointType, description, endpointKind, provisioningState, additionalBinaryDataProperties)
         {
             StorageAccountResourceId = storageAccountResourceId;
             BlobContainerName = blobContainerName;
+            EnableCrossTenantTransfer = enableCrossTenantTransfer;
+            AllowedStorageAccounts = allowedStorageAccounts;
         }
 
         /// <summary> The Azure Resource ID of the storage account that is the target destination. </summary>
@@ -46,5 +66,26 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         /// <summary> The name of the Storage blob container that is the target destination. </summary>
         public string BlobContainerName { get; set; }
+
+        /// <summary>
+        /// Opt-in flag enabling this endpoint to be used as one side of a cross-tenant
+        /// data transfer pair. When set to true, RBAC for the endpoint's managed
+        /// identity is granted on the customer's storage account so that authorization
+        /// can be performed entirely in the tenant where this endpoint lives. Defaults
+        /// to false. Can be updated via PATCH.
+        /// </summary>
+        public bool? EnableCrossTenantTransfer { get; set; }
+
+        /// <summary>
+        /// Full ARM resource IDs of partner-tenant storage accounts that are allowed
+        /// to be the other side of a cross-tenant data transfer pair with this
+        /// endpoint. For a source endpoint this lists allowed target storage accounts;
+        /// for a target endpoint this lists allowed source storage accounts.
+        /// The full list is replaced on PATCH (omit an entry to remove it; include
+        /// an entry to add it). Mutual presence in both endpoints' allow lists is
+        /// re-validated at every job run start, so removing an entry blocks future
+        /// runs that reference the removed storage account.
+        /// </summary>
+        public IList<string> AllowedStorageAccounts { get; }
     }
 }

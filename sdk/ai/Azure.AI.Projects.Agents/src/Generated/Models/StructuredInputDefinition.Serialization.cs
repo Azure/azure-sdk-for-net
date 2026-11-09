@@ -175,7 +175,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    defaultValue = BinaryData.FromString(prop.Value.GetRawText());
+                    defaultValue = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("schema"u8))
@@ -193,7 +193,7 @@ namespace Azure.AI.Projects.Agents
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
                         }
                     }
                     schema = dictionary;
@@ -210,7 +210,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new StructuredInputDefinition(description, defaultValue, schema ?? new ChangeTrackingDictionary<string, BinaryData>(), isRequired, additionalBinaryDataProperties);

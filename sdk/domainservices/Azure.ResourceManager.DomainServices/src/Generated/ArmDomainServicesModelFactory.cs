@@ -79,6 +79,7 @@ namespace Azure.ResourceManager.DomainServices.Models
                 default);
         }
 
+        /// <summary> Replica Set Definition. </summary>
         /// <param name="replicaSetId"> ReplicaSet Id. </param>
         /// <param name="location"> Virtual network location. </param>
         /// <param name="vnetSiteId"> Virtual network site id. </param>
@@ -112,6 +113,7 @@ namespace Azure.ResourceManager.DomainServices.Models
                 default);
         }
 
+        /// <summary> Health Monitor Description. </summary>
         /// <param name="id"> Health Monitor Id. </param>
         /// <param name="name"> Health Monitor Name. </param>
         /// <param name="details"> Health Monitor Details. </param>
@@ -121,6 +123,7 @@ namespace Azure.ResourceManager.DomainServices.Models
             return new DomainServiceHealthMonitor(id, name, details, default);
         }
 
+        /// <summary> Health Alert Description. </summary>
         /// <param name="id"> Health Alert Id. </param>
         /// <param name="name"> Health Alert Name. </param>
         /// <param name="issue"> Health Alert Issue. </param>
@@ -142,6 +145,7 @@ namespace Azure.ResourceManager.DomainServices.Models
                 default);
         }
 
+        /// <summary> Secure LDAP Settings. </summary>
         /// <param name="ldaps"> A flag to determine whether or not Secure LDAP is enabled or disabled. </param>
         /// <param name="pfxCertificate"> The certificate required to configure Secure LDAP. The parameter passed here should be a base64encoded representation of the certificate pfx file. </param>
         /// <param name="pfxCertificatePassword"> The password to decrypt the provided Secure LDAP certificate pfx file. </param>
@@ -163,6 +167,7 @@ namespace Azure.ResourceManager.DomainServices.Models
                 default);
         }
 
+        /// <summary> Settings for Resource Forest. </summary>
         /// <param name="settings"> List of settings for Resource Forest. </param>
         /// <param name="resourceForest"> Resource Forest. </param>
         /// <returns> A new <see cref="Models.ResourceForestSettings"/> instance for mocking. </returns>
@@ -173,6 +178,7 @@ namespace Azure.ResourceManager.DomainServices.Models
             return new ResourceForestSettings((settings ?? new ChangeTrackingList<ForestTrust>()).ToList(), resourceForest, default);
         }
 
+        /// <summary> Forest Trust Setting. </summary>
         /// <param name="trustedDomainFqdn"> Trusted Domain FQDN. </param>
         /// <param name="trustDirection"> Trust Direction. </param>
         /// <param name="friendlyName"> Friendly Name. </param>
@@ -190,6 +196,7 @@ namespace Azure.ResourceManager.DomainServices.Models
                 default);
         }
 
+        /// <summary> Domain Security Settings. </summary>
         /// <param name="ntlmV1"> A flag to determine whether or not NtlmV1 is enabled or disabled. </param>
         /// <param name="tlsV1"> A flag to determine whether or not TlsV1 is enabled or disabled. </param>
         /// <param name="syncNtlmPasswords"> A flag to determine whether or not SyncNtlmPasswords is enabled or disabled. </param>
@@ -217,6 +224,7 @@ namespace Azure.ResourceManager.DomainServices.Models
                 default);
         }
 
+        /// <summary> Settings for notification. </summary>
         /// <param name="notifyGlobalAdmins"> Should global admins be notified. </param>
         /// <param name="notifyDcAdmins"> Should domain controller admins be notified. </param>
         /// <param name="additionalRecipients"> The list of additional recipients. </param>
@@ -228,6 +236,7 @@ namespace Azure.ResourceManager.DomainServices.Models
             return new DomainServiceNotificationSettings(notifyGlobalAdmins, notifyDcAdmins, (additionalRecipients ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Migration Properties. </summary>
         /// <param name="oldSubnetId"> Old Subnet Id. </param>
         /// <param name="oldVnetSiteId"> Old Vnet Site Id. </param>
         /// <param name="migrationProgress"> Migration Progress. </param>
@@ -237,6 +246,7 @@ namespace Azure.ResourceManager.DomainServices.Models
             return new DomainServiceMigrationProperties(oldSubnetId, oldVnetSiteId, migrationProgress, default);
         }
 
+        /// <summary> Migration Progress. </summary>
         /// <param name="completionPercentage"> Completion Percentage. </param>
         /// <param name="progressMessage"> Progress Message. </param>
         /// <returns> A new <see cref="Models.DomainServiceMigrationProgress"/> instance for mocking. </returns>
@@ -245,6 +255,7 @@ namespace Azure.ResourceManager.DomainServices.Models
             return new DomainServiceMigrationProgress(completionPercentage, progressMessage, default);
         }
 
+        /// <summary> Configuration Diagnostics. </summary>
         /// <param name="lastExecutedOn"> Last domain configuration diagnostics DateTime. </param>
         /// <param name="validatorResults"> List of Configuration Diagnostics validator results. </param>
         /// <returns> A new <see cref="Models.DomainServiceConfigDiagnostics"/> instance for mocking. </returns>
@@ -255,6 +266,7 @@ namespace Azure.ResourceManager.DomainServices.Models
             return new DomainServiceConfigDiagnostics(lastExecutedOn, (validatorResults ?? new ChangeTrackingList<DomainServiceConfigDiagnosticsValidatorResult>()).ToList(), default);
         }
 
+        /// <summary> Config Diagnostics validator result data. </summary>
         /// <param name="validatorId"> Validator identifier. </param>
         /// <param name="replicaSetSubnetDisplayName"> Replica set location and subnet name. </param>
         /// <param name="status"> Status for individual validator after running diagnostics. </param>
@@ -267,6 +279,7 @@ namespace Azure.ResourceManager.DomainServices.Models
             return new DomainServiceConfigDiagnosticsValidatorResult(validatorId, replicaSetSubnetDisplayName, status, (issues ?? new ChangeTrackingList<DomainServiceConfigDiagnosticsValidatorResultIssue>()).ToList(), default);
         }
 
+        /// <summary> Specific issue for a particular config diagnostics validator. </summary>
         /// <param name="id"> Validation issue identifier. </param>
         /// <param name="descriptionParams"> List of domain resource property name or values used to compose a rich description. </param>
         /// <returns> A new <see cref="Models.DomainServiceConfigDiagnosticsValidatorResultIssue"/> instance for mocking. </returns>
@@ -277,6 +290,7 @@ namespace Azure.ResourceManager.DomainServices.Models
             return new DomainServiceConfigDiagnosticsValidatorResultIssue(id, (descriptionParams ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Response for successful unsuspend of a domain service. </summary>
         /// <param name="message"></param>
         /// <returns> A new <see cref="Models.DomainServiceUnsuspendResult"/> instance for mocking. </returns>
         public static DomainServiceUnsuspendResult DomainServiceUnsuspendResult(string message = default)
@@ -325,6 +339,7 @@ namespace Azure.ResourceManager.DomainServices.Models
                 default);
         }
 
+        /// <summary> Container Account Description. </summary>
         /// <param name="accountName"> The account name. </param>
         /// <param name="spn"> The account spn. </param>
         /// <param name="password"> The account password. </param>

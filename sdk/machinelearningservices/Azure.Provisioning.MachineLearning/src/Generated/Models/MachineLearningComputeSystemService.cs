@@ -14,7 +14,7 @@ namespace Azure.Provisioning.MachineLearning
     public partial class MachineLearningComputeSystemService : ProvisionableConstruct
     {
         private BicepValue<string> _systemServiceType;
-        private BicepValue<string> _publicIpAddress;
+        private BicepValue<string> _publicIPAddress;
         private BicepValue<string> _version;
 
         /// <summary> Creates a new MachineLearningComputeSystemService. </summary>
@@ -32,13 +32,13 @@ namespace Azure.Provisioning.MachineLearning
             }
         }
 
-        /// <summary> Gets the PublicIpAddress. </summary>
-        public BicepValue<string> PublicIpAddress
+        /// <summary> Gets the PublicIPAddress. </summary>
+        public BicepValue<string> PublicIPAddress
         {
             get
             {
                 Initialize();
-                return _publicIpAddress;
+                return _publicIPAddress;
             }
         }
 
@@ -57,7 +57,7 @@ namespace Azure.Provisioning.MachineLearning
         {
             base.DefineProvisionableProperties();
             _systemServiceType = DefineProperty<string>(nameof(SystemServiceType), new string[] { "systemServiceType" }, isOutput: true);
-            _publicIpAddress = DefineProperty<string>(nameof(PublicIpAddress), new string[] { "publicIpAddress" }, isOutput: true);
+            _publicIPAddress = DefineProperty<string>(nameof(PublicIPAddress), new string[] { "publicIpAddress" }, isOutput: true);
             _version = DefineProperty<string>(nameof(Version), new string[] { "version" }, isOutput: true);
             DefineAdditionalProperties();
         }

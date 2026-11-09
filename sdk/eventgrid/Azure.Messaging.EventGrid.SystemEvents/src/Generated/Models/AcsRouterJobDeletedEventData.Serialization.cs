@@ -168,7 +168,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AcsRouterJobDeletedEventData(
@@ -177,8 +177,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 channelId,
                 additionalBinaryDataProperties,
                 queueId,
-                labels,
-                tags);
+                labels ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>());
         }
 
         internal partial class AcsRouterJobDeletedEventDataConverter : JsonConverter<AcsRouterJobDeletedEventData>

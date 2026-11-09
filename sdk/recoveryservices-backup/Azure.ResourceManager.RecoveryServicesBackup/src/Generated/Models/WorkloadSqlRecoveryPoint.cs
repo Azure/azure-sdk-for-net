@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class WorkloadSqlRecoveryPoint : WorkloadRecoveryPoint
     {
         /// <summary> Initializes a new instance of <see cref="WorkloadSqlRecoveryPoint"/>. </summary>
-        public WorkloadSqlRecoveryPoint()
+        public WorkloadSqlRecoveryPoint() : base("AzureWorkloadSQLRecoveryPoint")
         {
         }
 
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="WorkloadSqlRecoveryPoint"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        private protected WorkloadSqlRecoveryPoint(string objectType) : base("AzureWorkloadSQLRecoveryPoint")
+        private protected WorkloadSqlRecoveryPoint(string objectType) : base(objectType)
         {
         }
 

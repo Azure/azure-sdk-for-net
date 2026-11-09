@@ -38,7 +38,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
 
         private ClientDiagnostics RegistriesClientDiagnostics => _registriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Registries RegistriesRestClient => _registriesRestClient ??= new Registries(RegistriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
+        private Registries RegistriesRestClient => _registriesRestClient ??= new Registries(
+            RegistriesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-09-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
         /// Lists all the container registries under the specified subscription.
@@ -53,7 +59,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -65,7 +71,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerRegistryData, ContainerRegistryResource>(new RegistriesGetAllAsyncCollectionResultOfT(RegistriesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerRegistrySubscriptionResource.GetContainerRegistries"), data => new ContainerRegistryResource(Client, data));
+            return new AsyncPageableWrapper<ContainerRegistryData, ContainerRegistryResource>(new ContainerRegistryDataAsync0CollectionResultOfT(RegistriesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerRegistrySubscriptionResource.GetContainerRegistries"), data => new ContainerRegistryResource(Client, data));
         }
 
         /// <summary>
@@ -81,7 +87,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -93,7 +99,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerRegistryData, ContainerRegistryResource>(new RegistriesGetAllCollectionResultOfT(RegistriesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerRegistrySubscriptionResource.GetContainerRegistries"), data => new ContainerRegistryResource(Client, data));
+            return new PageableWrapper<ContainerRegistryData, ContainerRegistryResource>(new ContainerRegistryData0CollectionResultOfT(RegistriesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerRegistrySubscriptionResource.GetContainerRegistries"), data => new ContainerRegistryResource(Client, data));
         }
 
         /// <summary>
@@ -109,7 +115,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -157,7 +163,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

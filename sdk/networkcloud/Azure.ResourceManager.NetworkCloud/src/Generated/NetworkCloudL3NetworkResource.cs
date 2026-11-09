@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.NetworkCloud.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
@@ -51,9 +52,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkCloudL3NetworkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string networkCloudL3NetworkApiVersion);
             _l3NetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", ResourceType.Namespace, Diagnostics);
-            _l3NetworksRestClient = new L3Networks(_l3NetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudL3NetworkApiVersion ?? "2026-05-01-preview");
+            _l3NetworksRestClient = new L3Networks(_l3NetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.NetworkCloud/l3Networks", out string l3NetworksApiVersionOverride) ? l3NetworksApiVersionOverride : "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -399,10 +399,9 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -442,10 +441,9 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

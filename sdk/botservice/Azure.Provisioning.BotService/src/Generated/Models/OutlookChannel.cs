@@ -13,13 +13,13 @@ namespace Azure.Provisioning.BotService
         /// <summary> Creates a new OutlookChannel. </summary>
         public OutlookChannel()
         {
+            ChannelName.Assign("OutlookChannel");
         }
 
         /// <summary> Define all the provisionable properties for OutlookChannel. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("channelName", new string[] { "channelName" }, defaultValue: "OutlookChannel");
             DefineAdditionalProperties();
         }
 

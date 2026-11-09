@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     ReadEnableCompression(prop, ref enableCompression);
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new StagingSettings(linkedServiceName, path, enableCompression, additionalProperties);
         }

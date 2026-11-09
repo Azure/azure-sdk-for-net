@@ -17,6 +17,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new MachineLearningLiteralJobInput. </summary>
         public MachineLearningLiteralJobInput()
         {
+            JobInputType.Assign(MachineLearning.JobInputType.Literal);
         }
 
         /// <summary> Gets or sets the Value. </summary>
@@ -38,7 +39,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("jobInputType", new string[] { "jobInputType" }, defaultValue: "literal");
             _value = DefineProperty<string>(nameof(Value), new string[] { "value" }, isRequired: true);
             DefineAdditionalProperties();
         }

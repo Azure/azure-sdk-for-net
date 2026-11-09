@@ -13,7 +13,7 @@ namespace Azure.Analytics.OnlineExperimentation
 {
     /// <summary>
     /// The metric definition, which determines how the metric value is calculated from event data.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EventCountMetricDefinition"/>, <see cref="UserCountMetricDefinition"/>, <see cref="EventRateMetricDefinition"/>, <see cref="UserRateMetricDefinition"/>, <see cref="SumMetricDefinition"/>, <see cref="AverageMetricDefinition"/>, and <see cref="PercentileMetricDefinition"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AverageMetricDefinition"/>, <see cref="EventCountMetricDefinition"/>, <see cref="EventRateMetricDefinition"/>, <see cref="PercentileMetricDefinition"/>, <see cref="SumMetricDefinition"/>, <see cref="UserCountMetricDefinition"/>, and <see cref="UserRateMetricDefinition"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownExperimentMetricDefinition))]
     public abstract partial class ExperimentMetricDefinition : IJsonModel<ExperimentMetricDefinition>
@@ -129,20 +129,20 @@ namespace Azure.Analytics.OnlineExperimentation
             {
                 switch (discriminator.GetString())
                 {
-                    case "EventCount":
-                        return EventCountMetricDefinition.DeserializeEventCountMetricDefinition(element, options);
-                    case "UserCount":
-                        return UserCountMetricDefinition.DeserializeUserCountMetricDefinition(element, options);
-                    case "EventRate":
-                        return EventRateMetricDefinition.DeserializeEventRateMetricDefinition(element, options);
-                    case "UserRate":
-                        return UserRateMetricDefinition.DeserializeUserRateMetricDefinition(element, options);
-                    case "Sum":
-                        return SumMetricDefinition.DeserializeSumMetricDefinition(element, options);
                     case "Average":
                         return AverageMetricDefinition.DeserializeAverageMetricDefinition(element, options);
+                    case "EventCount":
+                        return EventCountMetricDefinition.DeserializeEventCountMetricDefinition(element, options);
+                    case "EventRate":
+                        return EventRateMetricDefinition.DeserializeEventRateMetricDefinition(element, options);
                     case "Percentile":
                         return PercentileMetricDefinition.DeserializePercentileMetricDefinition(element, options);
+                    case "Sum":
+                        return SumMetricDefinition.DeserializeSumMetricDefinition(element, options);
+                    case "UserCount":
+                        return UserCountMetricDefinition.DeserializeUserCountMetricDefinition(element, options);
+                    case "UserRate":
+                        return UserRateMetricDefinition.DeserializeUserRateMetricDefinition(element, options);
                 }
             }
             return UnknownExperimentMetricDefinition.DeserializeUnknownExperimentMetricDefinition(element, options);

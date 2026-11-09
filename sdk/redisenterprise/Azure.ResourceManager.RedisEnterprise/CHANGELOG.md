@@ -1,14 +1,36 @@
 # Release History
 
-## 1.4.0-beta.2 (Unreleased)
+## 1.4.0 (2026-10-30)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Updated the default service API version to stable `2026-09-01`.
+- Added migration workflows for validation, start, retrieval, undo, and migrated-endpoint unlink.
+- Added migration rollback metadata through `RollbackEligibilityExpiresOn`.
+- Added `Undo` and `UndoAsync` migration operations with optional rollback reasons.
+- Added migrated-endpoint unlink operations for Azure Cache for Redis and Azure Cache for Redis Enterprise migration workflows.
+- Added `Unlinking`, `Unlinked`, and `UnlinkFailed` migration provisioning states.
 
 ### Other Changes
+
+- The stable `1.3.0` to `1.4.0` upgrade remains API compatible. The following changes apply only when moving from the prerelease `1.4.0-beta.2` package:
+  - Renamed the preview migration `Cancel` and `CancelAsync` operations to `Undo` and `UndoAsync`. The undo operations also accept an optional rollback reason.
+  - Removed the preview-only `AccessString` and `ProvisioningError` properties from access policy assignments and removed the `AccessPolicyAssignmentProvisioningError` model. Access policy assignments again use `AccessPolicyName`, with only the `"default"` policy currently supported.
+  - Updated the related model factory methods to match the stable API, removing preview-only parameters and adding migration rollback metadata.
+
+## 1.4.0-beta.2 (2026-09-14)
+
+### Features Added
+
+- Updated the default service API version from `2025-08-01-preview` to `2026-06-01-preview`, incorporating the `2026-02-01-preview` and `2026-05-01-preview` API updates.
+- Added `NotifyKeyspaceEvents` to database create, update, and response models for configuring Redis keyspace event notifications, introduced in `2026-02-01-preview`.
+- Added `AccessString` to access policy assignments for configuring custom Redis ACL permissions, introduced in `2026-05-01-preview`.
+- Added `AccessPolicyAssignmentProvisioningError` and the `ProvisioningError` response property to expose access-string provisioning failure details, introduced in `2026-05-01-preview`.
+- Made `AccessPolicyName` optional and deprecated it in favor of `AccessString`, as introduced in `2026-05-01-preview`.
+
+### Breaking Changes
+
+- Removed the service no-op `IsForceMigrate` property from `RedisEnterpriseMigrationValidationRequestContent`. `IsForceMigrate` remains available when starting a migration.
 
 ## 1.4.0-beta.1 (2026-06-28)
 
@@ -181,4 +203,3 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 This package is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
 > NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
-

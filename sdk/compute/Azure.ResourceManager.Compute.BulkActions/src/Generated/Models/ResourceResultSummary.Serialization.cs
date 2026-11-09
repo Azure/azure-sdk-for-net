@@ -15,7 +15,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The status of the resources. </summary>
+    /// <summary> Summary of operation results across targeted resources. </summary>
     public partial class ResourceResultSummary : IJsonModel<ResourceResultSummary>
     {
         /// <summary> Initializes a new instance of <see cref="ResourceResultSummary"/> for deserialization. </summary>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ResourceResultSummary(code, count, errorDetails, additionalBinaryDataProperties);

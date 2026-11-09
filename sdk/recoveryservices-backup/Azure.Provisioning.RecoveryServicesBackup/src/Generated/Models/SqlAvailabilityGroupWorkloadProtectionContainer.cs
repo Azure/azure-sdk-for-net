@@ -13,13 +13,13 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new SqlAvailabilityGroupWorkloadProtectionContainer. </summary>
         public SqlAvailabilityGroupWorkloadProtectionContainer()
         {
+            ContainerType.Assign(ProtectableContainerType.SQLAGWorkLoadContainer);
         }
 
         /// <summary> Define all the provisionable properties for SqlAvailabilityGroupWorkloadProtectionContainer. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("containerType", new string[] { "containerType" }, defaultValue: "SQLAGWorkLoadContainer");
             DefineAdditionalProperties();
         }
 

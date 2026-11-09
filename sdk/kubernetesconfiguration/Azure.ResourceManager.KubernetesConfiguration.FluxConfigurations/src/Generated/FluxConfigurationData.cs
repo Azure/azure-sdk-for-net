@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
         }
 
         /// <summary> Array of kustomizations used to reconcile the artifact pulled by the source type on the cluster. </summary>
-        public IDictionary<string, Kustomization> Kustomizations
+        public IDictionary<string, FluxConfigurationsKustomization> Kustomizations
         {
             get
             {

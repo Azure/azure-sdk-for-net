@@ -33,8 +33,9 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="daysOfMonth"> Days of the month for monthly schedules. </param>
         /// <param name="cronExpression"> Optional CRON expression for advanced scheduling. </param>
         /// <param name="endOn"> End time of the schedule (in UTC). </param>
+        /// <param name="repeatInterval"> Repeat interval used for sub-daily schedules. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageMoverScheduleInfo(StorageMoverScheduleFrequency? frequency, bool? isActive, StorageMoverSchedulerTime executionTime, DateTimeOffset? startOn, IList<string> daysOfWeek, IList<int> daysOfMonth, string cronExpression, DateTimeOffset? endOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageMoverScheduleInfo(StorageMoverScheduleFrequency? frequency, bool? isActive, StorageMoverSchedulerTime executionTime, DateTimeOffset? startOn, IList<string> daysOfWeek, IList<int> daysOfMonth, string cronExpression, DateTimeOffset? endOn, string repeatInterval, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Frequency = frequency;
             IsActive = isActive;
@@ -44,6 +45,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             DaysOfMonth = daysOfMonth;
             CronExpression = cronExpression;
             EndOn = endOn;
+            RepeatInterval = repeatInterval;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -70,5 +72,8 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         /// <summary> End time of the schedule (in UTC). </summary>
         public DateTimeOffset? EndOn { get; set; }
+
+        /// <summary> Repeat interval used for sub-daily schedules. </summary>
+        public string RepeatInterval { get; set; }
     }
 }

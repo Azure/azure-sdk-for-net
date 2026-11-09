@@ -17,6 +17,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string virtualNetworkGatewayApiVersion);
             _virtualNetworkGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _virtualNetworkGatewaysRestClient = new VirtualNetworkGateways(_virtualNetworkGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualNetworkGatewayApiVersion ?? "2025-07-01");
+            _virtualNetworkGatewaysRestClient = new VirtualNetworkGateways(_virtualNetworkGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualNetworkGatewayApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -155,7 +156,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -203,7 +204,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -262,7 +263,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -321,7 +322,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -370,7 +371,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -419,7 +420,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -428,12 +429,12 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The parameters are supplied to disconnect vpn connections. </param>
+        /// <param name="request"> The parameters are supplied to disconnect vpn connections. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> DisconnectVirtualNetworkGatewayVpnConnectionsAsync(WaitUntil waitUntil, P2SVpnConnectionRequest content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
+        public virtual async Task<ArmOperation> DisconnectVirtualNetworkGatewayVpnConnectionsAsync(WaitUntil waitUntil, P2SVpnConnectionRequest request, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(request, nameof(request));
 
             using DiagnosticScope scope = _virtualNetworkGatewaysClientDiagnostics.CreateScope("VirtualNetworkGatewayResource.DisconnectVirtualNetworkGatewayVpnConnections");
             scope.Start();
@@ -443,7 +444,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateDisconnectVirtualNetworkGatewayVpnConnectionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, P2SVpnConnectionRequest.ToRequestContent(content), context);
+                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateDisconnectVirtualNetworkGatewayVpnConnectionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, P2SVpnConnectionRequest.ToRequestContent(request), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation operation = new NetworkArmOperation(_virtualNetworkGatewaysClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -472,7 +473,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -481,12 +482,12 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The parameters are supplied to disconnect vpn connections. </param>
+        /// <param name="request"> The parameters are supplied to disconnect vpn connections. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation DisconnectVirtualNetworkGatewayVpnConnections(WaitUntil waitUntil, P2SVpnConnectionRequest content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
+        public virtual ArmOperation DisconnectVirtualNetworkGatewayVpnConnections(WaitUntil waitUntil, P2SVpnConnectionRequest request, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(request, nameof(request));
 
             using DiagnosticScope scope = _virtualNetworkGatewaysClientDiagnostics.CreateScope("VirtualNetworkGatewayResource.DisconnectVirtualNetworkGatewayVpnConnections");
             scope.Start();
@@ -496,7 +497,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateDisconnectVirtualNetworkGatewayVpnConnectionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, P2SVpnConnectionRequest.ToRequestContent(content), context);
+                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateDisconnectVirtualNetworkGatewayVpnConnectionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, P2SVpnConnectionRequest.ToRequestContent(request), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation operation = new NetworkArmOperation(_virtualNetworkGatewaysClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -525,7 +526,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -537,11 +538,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to the generate virtual network gateway VPN client package operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<string>> GeneratevpnclientpackageAsync(WaitUntil waitUntil, VpnClientContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<string>> GenerateVpnClientPackageAsync(WaitUntil waitUntil, VpnClientContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _virtualNetworkGatewaysClientDiagnostics.CreateScope("VirtualNetworkGatewayResource.Generatevpnclientpackage");
+            using DiagnosticScope scope = _virtualNetworkGatewaysClientDiagnostics.CreateScope("VirtualNetworkGatewayResource.GenerateVpnClientPackage");
             scope.Start();
             try
             {
@@ -549,7 +550,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateGeneratevpnclientpackageRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VpnClientContent.ToRequestContent(content), context);
+                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateGenerateVpnClientPackageRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VpnClientContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<string> operation = new NetworkArmOperation<string>(
                     new StringOperationSource(),
@@ -584,7 +585,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -596,11 +597,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to the generate virtual network gateway VPN client package operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<string> Generatevpnclientpackage(WaitUntil waitUntil, VpnClientContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<string> GenerateVpnClientPackage(WaitUntil waitUntil, VpnClientContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _virtualNetworkGatewaysClientDiagnostics.CreateScope("VirtualNetworkGatewayResource.Generatevpnclientpackage");
+            using DiagnosticScope scope = _virtualNetworkGatewaysClientDiagnostics.CreateScope("VirtualNetworkGatewayResource.GenerateVpnClientPackage");
             scope.Start();
             try
             {
@@ -608,7 +609,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateGeneratevpnclientpackageRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VpnClientContent.ToRequestContent(content), context);
+                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateGenerateVpnClientPackageRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VpnClientContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<string> operation = new NetworkArmOperation<string>(
                     new StringOperationSource(),
@@ -643,7 +644,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -702,7 +703,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -761,7 +762,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -821,7 +822,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -881,7 +882,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -937,7 +938,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -981,6 +982,116 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// This operation retrieves a list of effective routes for the virtual network gateway.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getEffectiveRoutes. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualNetworkGateways_GetEffectiveRoutes. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="VirtualNetworkGatewayResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<GatewayEffectiveRouteListResult>> GetEffectiveRoutesAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _virtualNetworkGatewaysClientDiagnostics.CreateScope("VirtualNetworkGatewayResource.GetEffectiveRoutes");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateGetEffectiveRoutesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkArmOperation<GatewayEffectiveRouteListResult> operation = new NetworkArmOperation<GatewayEffectiveRouteListResult>(
+                    new GatewayEffectiveRouteListResultOperationSource(),
+                    _virtualNetworkGatewaysClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// This operation retrieves a list of effective routes for the virtual network gateway.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getEffectiveRoutes. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualNetworkGateways_GetEffectiveRoutes. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="VirtualNetworkGatewayResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<GatewayEffectiveRouteListResult> GetEffectiveRoutes(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _virtualNetworkGatewaysClientDiagnostics.CreateScope("VirtualNetworkGatewayResource.GetEffectiveRoutes");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateGetEffectiveRoutesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkArmOperation<GatewayEffectiveRouteListResult> operation = new NetworkArmOperation<GatewayEffectiveRouteListResult>(
+                    new GatewayEffectiveRouteListResultOperationSource(),
+                    _virtualNetworkGatewaysClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// This operation retrieves the details of all the failover tests performed on the gateway for different peering locations
         /// <list type="bullet">
         /// <item>
@@ -993,7 +1104,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1054,7 +1165,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1115,7 +1226,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1177,7 +1288,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1239,7 +1350,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1294,7 +1405,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1349,7 +1460,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1405,7 +1516,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1461,7 +1572,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1517,7 +1628,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1573,7 +1684,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1628,7 +1739,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1683,7 +1794,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1738,7 +1849,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1781,6 +1892,116 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Gets pre-generated VPN profile for P2S client of the virtual network gateway in the specified resource group. The profile needs to be generated first using generateVpnProfile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getvpnprofilepackageurl. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualNetworkGateways_GetVpnProfilePackageUrl. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="VirtualNetworkGatewayResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<string>> GetVpnProfilePackageUrlAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _virtualNetworkGatewaysClientDiagnostics.CreateScope("VirtualNetworkGatewayResource.GetVpnProfilePackageUrl");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateGetVpnProfilePackageUrlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkArmOperation<string> operation = new NetworkArmOperation<string>(
+                    new StringOperationSource(),
+                    _virtualNetworkGatewaysClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets pre-generated VPN profile for P2S client of the virtual network gateway in the specified resource group. The profile needs to be generated first using generateVpnProfile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getvpnprofilepackageurl. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualNetworkGateways_GetVpnProfilePackageUrl. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="VirtualNetworkGatewayResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<string> GetVpnProfilePackageUrl(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _virtualNetworkGatewaysClientDiagnostics.CreateScope("VirtualNetworkGatewayResource.GetVpnProfilePackageUrl");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateGetVpnProfilePackageUrlRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkArmOperation<string> operation = new NetworkArmOperation<string>(
+                    new StringOperationSource(),
+                    _virtualNetworkGatewaysClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Trigger abort migration for the virtual network gateway.
         /// <list type="bullet">
         /// <item>
@@ -1793,7 +2014,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1842,7 +2063,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1891,7 +2112,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1940,7 +2161,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1989,7 +2210,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2038,7 +2259,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2087,7 +2308,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2140,7 +2361,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2193,7 +2414,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2209,7 +2430,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new VirtualNetworkGatewaysGetConnectionsAsyncCollectionResultOfT(
+            return new VirtualNetworkGatewayConnectionListEntityAsyncCollectionResultOfT(
                 _virtualNetworkGatewaysRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2231,7 +2452,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2247,13 +2468,89 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new VirtualNetworkGatewaysGetConnectionsCollectionResultOfT(
+            return new VirtualNetworkGatewayConnectionListEntityCollectionResultOfT(
                 _virtualNetworkGatewaysRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
                 "VirtualNetworkGatewayResource.GetConnections");
+        }
+
+        /// <summary>
+        /// List all Radius servers with respective radius secrets from virtual network gateway VpnClientConfiguration.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/listRadiusSecrets. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualNetworkGateways_ListRadiusSecrets. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="VirtualNetworkGatewayResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="RadiusAuthServer"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RadiusAuthServer> GetRadiusSecretsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new RadiusAuthServerAsyncCollectionResultOfT(
+                _virtualNetworkGatewaysRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "VirtualNetworkGatewayResource.GetRadiusSecrets");
+        }
+
+        /// <summary>
+        /// List all Radius servers with respective radius secrets from virtual network gateway VpnClientConfiguration.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/listRadiusSecrets. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualNetworkGateways_ListRadiusSecrets. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="VirtualNetworkGatewayResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="RadiusAuthServer"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RadiusAuthServer> GetRadiusSecrets(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new RadiusAuthServerCollectionResultOfT(
+                _virtualNetworkGatewaysRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "VirtualNetworkGatewayResource.GetRadiusSecrets");
         }
 
         /// <summary>
@@ -2269,7 +2566,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2325,7 +2622,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2381,7 +2678,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2430,7 +2727,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2479,7 +2776,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2488,12 +2785,12 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Parameters supplied to the Begin Set vpnclient ipsec parameters of Virtual Network Gateway P2S client operation through Network resource provider. </param>
+        /// <param name="vpnclientIPsecParams"> Parameters supplied to the Begin Set vpnclient ipsec parameters of Virtual Network Gateway P2S client operation through Network resource provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<VpnClientIPsecParameters>> SetVpnclientIPsecParametersAsync(WaitUntil waitUntil, VpnClientIPsecParameters content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vpnclientIPsecParams"/> is null. </exception>
+        public virtual async Task<ArmOperation<VpnClientIPsecParameters>> SetVpnclientIPsecParametersAsync(WaitUntil waitUntil, VpnClientIPsecParameters vpnclientIPsecParams, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(vpnclientIPsecParams, nameof(vpnclientIPsecParams));
 
             using DiagnosticScope scope = _virtualNetworkGatewaysClientDiagnostics.CreateScope("VirtualNetworkGatewayResource.SetVpnclientIPsecParameters");
             scope.Start();
@@ -2503,7 +2800,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateSetVpnclientIPsecParametersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VpnClientIPsecParameters.ToRequestContent(content), context);
+                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateSetVpnclientIPsecParametersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VpnClientIPsecParameters.ToRequestContent(vpnclientIPsecParams), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<VpnClientIPsecParameters> operation = new NetworkArmOperation<VpnClientIPsecParameters>(
                     new VpnClientIPsecParametersOperationSource(),
@@ -2538,7 +2835,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2547,12 +2844,12 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Parameters supplied to the Begin Set vpnclient ipsec parameters of Virtual Network Gateway P2S client operation through Network resource provider. </param>
+        /// <param name="vpnclientIPsecParams"> Parameters supplied to the Begin Set vpnclient ipsec parameters of Virtual Network Gateway P2S client operation through Network resource provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<VpnClientIPsecParameters> SetVpnclientIPsecParameters(WaitUntil waitUntil, VpnClientIPsecParameters content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vpnclientIPsecParams"/> is null. </exception>
+        public virtual ArmOperation<VpnClientIPsecParameters> SetVpnclientIPsecParameters(WaitUntil waitUntil, VpnClientIPsecParameters vpnclientIPsecParams, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(vpnclientIPsecParams, nameof(vpnclientIPsecParams));
 
             using DiagnosticScope scope = _virtualNetworkGatewaysClientDiagnostics.CreateScope("VirtualNetworkGatewayResource.SetVpnclientIPsecParameters");
             scope.Start();
@@ -2562,7 +2859,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateSetVpnclientIPsecParametersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VpnClientIPsecParameters.ToRequestContent(content), context);
+                HttpMessage message = _virtualNetworkGatewaysRestClient.CreateSetVpnclientIPsecParametersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VpnClientIPsecParameters.ToRequestContent(vpnclientIPsecParams), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<VpnClientIPsecParameters> operation = new NetworkArmOperation<VpnClientIPsecParameters>(
                     new VpnClientIPsecParametersOperationSource(),
@@ -2597,7 +2894,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2657,7 +2954,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2717,7 +3014,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2773,7 +3070,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2829,7 +3126,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2888,7 +3185,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2947,7 +3244,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -3006,7 +3303,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -3065,7 +3362,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -3113,7 +3410,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -3258,10 +3555,9 @@ namespace Azure.ResourceManager.Network
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -3301,10 +3597,9 @@ namespace Azure.ResourceManager.Network
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

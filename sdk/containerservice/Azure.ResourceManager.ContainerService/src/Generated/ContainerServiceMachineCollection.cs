@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             TryGetApiVersion(ContainerServiceMachineResource.ResourceType, out string containerServiceMachineApiVersion);
             _machinesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ContainerServiceMachineResource.ResourceType.Namespace, Diagnostics);
-            _machinesRestClient = new Machines(_machinesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerServiceMachineApiVersion ?? "2026-05-02-preview");
+            _machinesRestClient = new Machines(_machinesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerServiceMachineApiVersion ?? "2026-08-02-preview");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerServiceMachineData, ContainerServiceMachineResource>(new MachinesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ContainerServiceMachineData, ContainerServiceMachineResource>(new ContainerServiceMachineDataAsyncCollectionResultOfT(
                 _machinesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerServiceMachineData, ContainerServiceMachineResource>(new MachinesGetAllCollectionResultOfT(
+            return new PageableWrapper<ContainerServiceMachineData, ContainerServiceMachineResource>(new ContainerServiceMachineDataCollectionResultOfT(
                 _machinesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

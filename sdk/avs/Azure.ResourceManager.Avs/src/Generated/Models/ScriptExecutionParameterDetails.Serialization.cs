@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary>
     /// The arguments passed in to the execution
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ScriptSecureStringExecutionParameterDetails"/>, <see cref="ScriptStringExecutionParameterDetails"/>, and <see cref="PSCredentialExecutionParameterDetails"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PSCredentialExecutionParameterDetails"/>, <see cref="ScriptSecureStringExecutionParameterDetails"/>, and <see cref="ScriptStringExecutionParameterDetails"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownScriptExecutionParameter))]
     public abstract partial class ScriptExecutionParameterDetails : IJsonModel<ScriptExecutionParameterDetails>
@@ -132,12 +132,12 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "Credential":
+                        return PSCredentialExecutionParameterDetails.DeserializePSCredentialExecutionParameterDetails(element, options);
                     case "SecureValue":
                         return ScriptSecureStringExecutionParameterDetails.DeserializeScriptSecureStringExecutionParameterDetails(element, options);
                     case "Value":
                         return ScriptStringExecutionParameterDetails.DeserializeScriptStringExecutionParameterDetails(element, options);
-                    case "Credential":
-                        return PSCredentialExecutionParameterDetails.DeserializePSCredentialExecutionParameterDetails(element, options);
                 }
             }
             return UnknownScriptExecutionParameter.DeserializeUnknownScriptExecutionParameter(element, options);

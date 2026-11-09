@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.IotHub
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
                         }
                     }
                     properties = dictionary;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.IotHub
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new EventHubConsumerGroupInfoData(

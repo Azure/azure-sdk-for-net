@@ -54,10 +54,7 @@ namespace Azure.ResourceManager.HorizonDB
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HorizonDb/clusters/", false);
             uri.AppendPath(clusterName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -77,10 +74,7 @@ namespace Azure.ResourceManager.HorizonDB
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HorizonDb/clusters/", false);
             uri.AppendPath(clusterName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -102,10 +96,7 @@ namespace Azure.ResourceManager.HorizonDB
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HorizonDb/clusters/", false);
             uri.AppendPath(clusterName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -127,10 +118,7 @@ namespace Azure.ResourceManager.HorizonDB
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HorizonDb/clusters/", false);
             uri.AppendPath(clusterName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -148,10 +136,7 @@ namespace Azure.ResourceManager.HorizonDB
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HorizonDb/clusters", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -172,10 +157,7 @@ namespace Azure.ResourceManager.HorizonDB
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-05-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -192,10 +174,7 @@ namespace Azure.ResourceManager.HorizonDB
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.HorizonDb/clusters", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -216,14 +195,74 @@ namespace Azure.ResourceManager.HorizonDB
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-05-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateStartRequest(Guid subscriptionId, string resourceGroupName, string clusterName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HorizonDb/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/start", false);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01-preview", true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateStopRequest(Guid subscriptionId, string resourceGroupName, string clusterName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HorizonDb/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/stop", false);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01-preview", true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateRestartRequest(Guid subscriptionId, string resourceGroupName, string clusterName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HorizonDb/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/restart", false);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-05-01-preview", true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
             _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;

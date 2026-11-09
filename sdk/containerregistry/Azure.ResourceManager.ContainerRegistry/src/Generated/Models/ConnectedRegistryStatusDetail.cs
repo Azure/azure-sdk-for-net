@@ -28,14 +28,18 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="description"> The description of the status. </param>
         /// <param name="timestamp"> The timestamp of the status. </param>
         /// <param name="correlationId"> The correlation ID of the status. </param>
+        /// <param name="totalGib"> The total disk space in gibibytes (Gib, base-2). </param>
+        /// <param name="availableGib"> The available disk space in gibibytes (Gib, base-2). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedRegistryStatusDetail(string statusDetailType, string code, string description, DateTimeOffset? timestamp, Guid? correlationId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectedRegistryStatusDetail(string statusDetailType, string code, string description, DateTimeOffset? timestamp, Guid? correlationId, double? totalGib, double? availableGib, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StatusDetailType = statusDetailType;
             Code = code;
             Description = description;
             Timestamp = timestamp;
             CorrelationId = correlationId;
+            TotalGib = totalGib;
+            AvailableGib = availableGib;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -58,5 +62,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> The correlation ID of the status. </summary>
         [WirePath("correlationId")]
         public Guid? CorrelationId { get; }
+
+        /// <summary> The total disk space in gibibytes (Gib, base-2). </summary>
+        [WirePath("totalGib")]
+        public double? TotalGib { get; }
+
+        /// <summary> The available disk space in gibibytes (Gib, base-2). </summary>
+        [WirePath("availableGib")]
+        public double? AvailableGib { get; }
     }
 }

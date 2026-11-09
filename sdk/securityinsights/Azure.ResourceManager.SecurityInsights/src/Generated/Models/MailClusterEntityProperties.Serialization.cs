@@ -176,15 +176,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("clusterSourceType"u8);
                 writer.WriteStringValue(ClusterSourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(ClusterQueryStartOn))
+            if (options.Format != "W" && Optional.IsDefined(ClusterQueryStartsOn))
             {
                 writer.WritePropertyName("clusterQueryStartTime"u8);
-                writer.WriteStringValue(ClusterQueryStartOn.Value, "O");
+                writer.WriteStringValue(ClusterQueryStartsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ClusterQueryEndOn))
+            if (options.Format != "W" && Optional.IsDefined(ClusterQueryEndsOn))
             {
                 writer.WritePropertyName("clusterQueryEndTime"u8);
-                writer.WriteStringValue(ClusterQueryEndOn.Value, "O");
+                writer.WriteStringValue(ClusterQueryEndsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ClusterGroup))
             {
@@ -233,8 +233,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string source = default;
             string clusterSourceIdentifier = default;
             string clusterSourceType = default;
-            DateTimeOffset? clusterQueryStartOn = default;
-            DateTimeOffset? clusterQueryEndOn = default;
+            DateTimeOffset? clusterQueryStartsOn = default;
+            DateTimeOffset? clusterQueryEndsOn = default;
             string clusterGroup = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
                         }
                     }
                     additionalData = dictionary;
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    countByDeliveryStatus = BinaryData.FromString(prop.Value.GetRawText());
+                    countByDeliveryStatus = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("countByThreatType"u8))
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    countByThreatType = BinaryData.FromString(prop.Value.GetRawText());
+                    countByThreatType = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("countByProtectionStatus"u8))
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    countByProtectionStatus = BinaryData.FromString(prop.Value.GetRawText());
+                    countByProtectionStatus = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("threats"u8))
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    clusterQueryStartOn = prop.Value.GetDateTimeOffset("O");
+                    clusterQueryStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("clusterQueryEndTime"u8))
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    clusterQueryEndOn = prop.Value.GetDateTimeOffset("O");
+                    clusterQueryEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("clusterGroup"u8))
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MailClusterEntityProperties(
@@ -424,8 +424,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 source,
                 clusterSourceIdentifier,
                 clusterSourceType,
-                clusterQueryStartOn,
-                clusterQueryEndOn,
+                clusterQueryStartsOn,
+                clusterQueryEndsOn,
                 clusterGroup);
         }
     }

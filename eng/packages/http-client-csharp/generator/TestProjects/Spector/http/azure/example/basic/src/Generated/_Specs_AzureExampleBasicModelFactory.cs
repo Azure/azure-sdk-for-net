@@ -15,6 +15,6 @@ namespace Specs.Azure.Example.Basic
 
         public static Model Model(int? int32Property = default, float? float32Property = default, Enum? enumProperty = default) => throw null;
 
-        public static ActionResponse ActionResponse(string stringProperty = default, Model modelProperty = default, IEnumerable<string> arrayProperty = default, IDictionary<string, string> recordProperty = default) => throw null;
+        public static ActionResult ActionResult(string stringProperty = default, Model modelProperty = default, IEnumerable<string> arrayProperty = default, IDictionary<string, string> recordProperty = default) => throw null;
     }
 }

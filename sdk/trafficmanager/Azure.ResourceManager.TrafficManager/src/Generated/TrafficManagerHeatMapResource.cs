@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.TrafficManager
         {
             TryGetApiVersion(ResourceType, out string trafficManagerHeatMapApiVersion);
             _heatMapClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.TrafficManager", ResourceType.Namespace, Diagnostics);
-            _heatMapRestClient = new HeatMap(_heatMapClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, trafficManagerHeatMapApiVersion ?? "2024-04-01-preview");
+            _heatMapRestClient = new HeatMap(_heatMapClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, trafficManagerHeatMapApiVersion ?? "2026-09-01");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-04-01-preview. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-04-01-preview. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

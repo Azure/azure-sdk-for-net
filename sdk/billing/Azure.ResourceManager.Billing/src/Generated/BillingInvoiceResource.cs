@@ -645,7 +645,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new TransactionsGetByInvoiceAsyncCollectionResultOfT(
+            return new BillingTransactionDataAsyncCollectionResultOfT(
                 _transactionsRestClient,
                 Id.Parent.Name,
                 Id.Name,
@@ -694,7 +694,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new TransactionsGetByInvoiceCollectionResultOfT(
+            return new BillingTransactionDataCollectionResultOfT(
                 _transactionsRestClient,
                 Id.Parent.Name,
                 Id.Name,

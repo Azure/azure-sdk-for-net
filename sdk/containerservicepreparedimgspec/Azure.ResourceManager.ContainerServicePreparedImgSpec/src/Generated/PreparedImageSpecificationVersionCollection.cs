@@ -38,9 +38,8 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PreparedImageSpecificationVersionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(PreparedImageSpecificationVersionResource.ResourceType, out string preparedImageSpecificationVersionApiVersion);
             _preparedImageSpecificationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServicePreparedImgSpec", PreparedImageSpecificationVersionResource.ResourceType.Namespace, Diagnostics);
-            _preparedImageSpecificationsRestClient = new PreparedImageSpecifications(_preparedImageSpecificationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, preparedImageSpecificationVersionApiVersion ?? "2026-05-02-preview");
+            _preparedImageSpecificationsRestClient = new PreparedImageSpecifications(_preparedImageSpecificationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -177,7 +176,7 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PreparedImageSpecificationVersionData, PreparedImageSpecificationVersionResource>(new PreparedImageSpecificationsGetVersionsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PreparedImageSpecificationVersionData, PreparedImageSpecificationVersionResource>(new PreparedImageSpecificationVersionDataAsyncCollectionResultOfT(
                 _preparedImageSpecificationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +210,7 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PreparedImageSpecificationVersionData, PreparedImageSpecificationVersionResource>(new PreparedImageSpecificationsGetVersionsCollectionResultOfT(
+            return new PageableWrapper<PreparedImageSpecificationVersionData, PreparedImageSpecificationVersionResource>(new PreparedImageSpecificationVersionDataCollectionResultOfT(
                 _preparedImageSpecificationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

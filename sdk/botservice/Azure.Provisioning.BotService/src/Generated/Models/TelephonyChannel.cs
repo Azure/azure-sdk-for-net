@@ -15,6 +15,7 @@ namespace Azure.Provisioning.BotService
         /// <summary> Creates a new TelephonyChannel. </summary>
         public TelephonyChannel()
         {
+            ChannelName.Assign("TelephonyChannel");
         }
 
         /// <summary> Gets or sets the Properties. </summary>
@@ -36,7 +37,6 @@ namespace Azure.Provisioning.BotService
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("channelName", new string[] { "channelName" }, defaultValue: "TelephonyChannel");
             _properties = DefineModelProperty<TelephonyChannelProperties>(nameof(Properties), new string[] { "properties" });
             DefineAdditionalProperties();
         }

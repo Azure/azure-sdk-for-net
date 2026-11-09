@@ -137,14 +137,34 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                 var responseId = VoiceIds.CreateResponseId();
                 var itemId = VoiceIds.CreateItemId();
                 var text = string.Concat(message.Content.Select(part => part.Text));
+                using var turn = session.StartTurn(VoiceTurnOrigin.User, inputCount: 1);
 
-                await session.SendAsync(
-                    new VoiceResponseCreatedMessage(responseId, new[] { message.ItemId }),
-                    cancellationToken);
-                await session.SendAsync(
-                    new VoiceResponseOutputTextDoneMessage(responseId, itemId, $"You said: {text}"),
-                    cancellationToken);
-                await session.SendAsync(new VoiceResponseDoneMessage(responseId), cancellationToken);
+                try
+                {
+                    await session.SendAsync(
+                        new VoiceResponseCreatedMessage(responseId, new[] { message.ItemId }),
+                        cancellationToken);
+                    await session.SendAsync(
+                        new VoiceResponseOutputTextDoneMessage(responseId, itemId, $"You said: {text}"),
+                        cancellationToken);
+                    await session.SendAsync(new VoiceResponseDoneMessage(responseId), cancellationToken);
+                    turn.Complete(new VoiceTurnResult(
+                        VoiceTurnOutcome.Response,
+                        outputItemCount: 1,
+                        responseId));
+                }
+                catch (OperationCanceledException exception)
+                    when (exception.CancellationToken == cancellationToken &&
+                          cancellationToken.IsCancellationRequested)
+                {
+                    turn.Complete(new VoiceTurnResult(VoiceTurnOutcome.Cancelled));
+                    throw;
+                }
+                catch
+                {
+                    turn.Complete(new VoiceTurnResult(VoiceTurnOutcome.Error));
+                    throw;
+                }
             }
         }
 

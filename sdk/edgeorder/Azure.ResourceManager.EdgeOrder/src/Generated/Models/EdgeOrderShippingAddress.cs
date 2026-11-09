@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderShippingAddress"/>. </summary>
+        /// <param name="streetAddress1"> Street Address line 1. </param>
+        /// <param name="country"> Name of the Country. </param>
+        public EdgeOrderShippingAddress(string streetAddress1, string country) : this(country)
+        {
+            StreetAddress1 = streetAddress1;
+        }
+
         /// <summary> Street Address line 1. </summary>
         public string StreetAddress1 { get; set; }
 

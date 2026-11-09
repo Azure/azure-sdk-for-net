@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
+        /// <summary> Volume group properties. </summary>
         /// <param name="groupDescription"> Group Description. </param>
         /// <param name="applicationType"> Application Type. </param>
         /// <param name="applicationIdentifier"> Application specific identifier. </param>
@@ -80,6 +81,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
+        /// <summary> Application specific parameters for the placement of volumes in the volume group. </summary>
         /// <param name="key"> Key for an application specific parameter for the placement of volumes in the volume group. </param>
         /// <param name="value"> Value for an application specific parameter for the placement of volumes in the volume group. </param>
         /// <returns> A new <see cref="Models.NetAppVolumePlacementRule"/> instance for mocking. </returns>
@@ -88,6 +90,178 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppVolumePlacementRule(key, value, default);
         }
 
+        /// <param name="id"> Resource Id. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="zones"> Availability Zone. </param>
+        /// <param name="fileSystemId"> Unique FileSystem Identifier. </param>
+        /// <param name="creationToken"> A unique file path for the volume. Used when creating mount targets. </param>
+        /// <param name="serviceLevel"> The service level of the file system. </param>
+        /// <param name="usageThreshold">
+        /// Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB.
+        /// For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB.
+        /// For extra large volumes, valid values are in the range 2400GiB to 7200TiB. Values expressed in bytes as multiples of 1 GiB.
+        /// </param>
+        /// <param name="protocolTypes">
+        /// Specify the protocol types for the volume. Supported values are NFSv3, NFSv4.1, and CIFS. For SMB volumes, specify CIFS.
+        /// The value SMB isn't supported in the protocolTypes property. Default: NFSv3
+        /// </param>
+        /// <param name="provisioningState"> Azure lifecycle management. </param>
+        /// <param name="snapshotId"> Resource identifier used to identify the Snapshot. </param>
+        /// <param name="deleteBaseSnapshot"> If enabled (true) the snapshot the volume was created from will be automatically deleted after the volume create operation has finished.  Defaults to false. </param>
+        /// <param name="backupId"> Resource identifier used to identify the Backup. </param>
+        /// <param name="baremetalTenantId"> Unique Baremetal Tenant Identifier. </param>
+        /// <param name="subnetId"> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. </param>
+        /// <param name="networkFeatures"> The original value of the network features type available to the volume at the time it was created. </param>
+        /// <param name="effectiveNetworkFeatures"> The effective value of the network features type available to the volume, or current effective state of update. </param>
+        /// <param name="networkSiblingSetId"> Network Sibling Set ID for the the group of volumes sharing networking resources. </param>
+        /// <param name="storageToNetworkProximity"> Provides storage to network proximity information for the volume. </param>
+        /// <param name="mountTargets"> List of mount targets. </param>
+        /// <param name="volumeType"> What type of volume is this. For destination volumes in Cross Region Replication, set type to DataProtection. For creating clone volume, set type to ShortTermClone. </param>
+        /// <param name="dataProtection"> DataProtection type volumes include an object containing details of the replication. </param>
+        /// <param name="acceptGrowCapacityPoolForShortTermCloneSplit"> While auto splitting the short term clone volume, if the parent pool does not have enough space to accommodate the volume after split, it will be automatically resized, which will lead to increased billing. To accept capacity pool size auto grow and create a short term clone volume, set the property as accepted. </param>
+        /// <param name="isRestoring"> Restoring. </param>
+        /// <param name="isSnapshotDirectoryVisible"> If enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots (defaults to true). </param>
+        /// <param name="isKerberosEnabled"> Describe if a volume is KerberosEnabled. To be use with swagger version 2020-05-01 or later. </param>
+        /// <param name="securityStyle"> The security style of volume, default unix, defaults to ntfs for dual protocol or CIFS protocol. </param>
+        /// <param name="isSmbEncryptionEnabled"> Enables encryption for in-flight smb3 data. Only applicable for SMB/DualProtocol volume. To be used with swagger version 2020-08-01 or later. </param>
+        /// <param name="smbAccessBasedEnumeration"> Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
+        /// <param name="smbNonBrowsable"> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
+        /// <param name="isSmbContinuouslyAvailable"> Enables continuously available share property for smb volume. Only applicable for SMB volume. </param>
+        /// <param name="smbOplocks"> Enables or disables SMB opportunistic lock property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
+        /// <param name="throughputMibps"> Maximum throughput in MiB/s that can be achieved by this volume and this will be accepted as input only for manual qosType volume. </param>
+        /// <param name="actualThroughputMibps"> Actual throughput in MiB/s for auto qosType volumes calculated based on size and serviceLevel. </param>
+        /// <param name="encryptionKeySource"> Source of key used to encrypt data in volume. Applicable if NetApp account has encryption.keySource = 'Microsoft.KeyVault'. Possible values (case-insensitive) are: 'Microsoft.NetApp, Microsoft.KeyVault'. </param>
+        /// <param name="keyVaultPrivateEndpointResourceId"> The resource ID of private endpoint for KeyVault. It must reside in the same VNET as the volume. Only applicable if encryptionKeySource = 'Microsoft.KeyVault'. </param>
+        /// <param name="isLdapEnabled"> Specifies whether LDAP is enabled or not for a given NFS volume. </param>
+        /// <param name="ldapServerType"> Specifies the type of LDAP server for a given NFS volume. </param>
+        /// <param name="isCoolAccessEnabled"> Specifies whether Cool Access(tiering) is enabled for the volume. </param>
+        /// <param name="coolnessPeriod"> Specifies the number of days after which data that is not accessed by clients will be tiered. </param>
+        /// <param name="coolAccessRetrievalPolicy">
+        /// coolAccessRetrievalPolicy determines the data retrieval behavior from the cool tier to standard storage based on the read pattern for cool access enabled volumes. The possible values for this field are:
+        /// Default - Data will be pulled from cool tier to standard storage on random reads. This policy is the default.
+        /// OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
+        /// Never - No client-driven data is pulled from cool tier to standard storage.
+        /// </param>
+        /// <param name="coolAccessTieringPolicy"> coolAccessTieringPolicy determines which cold data blocks are moved to cool tier. The possible values for this field are: Auto - Moves cold user data blocks in both the Snapshot copies and the active file system to the cool tier tier. This policy is the default. SnapshotOnly - Moves user data blocks of the Volume Snapshot copies that are not associated with the active file system to the cool tier. </param>
+        /// <param name="unixPermissions"> UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users. </param>
+        /// <param name="cloneProgress"> When a volume is being restored from another volume's snapshot, will show the percentage completion of this cloning process. When this value is empty/null there is no cloning process currently happening on this volume. This value will update every 5 minutes during cloning. </param>
+        /// <param name="fileAccessLogs"> Flag indicating whether file access logs are enabled for the volume, based on active diagnostic settings present on the volume. </param>
+        /// <param name="avsDataStore"> Specifies whether the volume is enabled for Azure VMware Solution (AVS) datastore purpose. </param>
+        /// <param name="dataStoreResourceId"> Data store resource unique identifier. </param>
+        /// <param name="isDefaultQuotaEnabled"> Specifies if default quota is enabled for the volume. </param>
+        /// <param name="asyncDirectoryDelete"> Async Directory Delete configuration for the volume. </param>
+        /// <param name="defaultUserQuotaInKiBs"> Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies . </param>
+        /// <param name="defaultGroupQuotaInKiBs"> Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies. </param>
+        /// <param name="maximumNumberOfFiles"> Maximum number of files allowed. Needs a service request in order to be changed. Only allowed to be changed if volume quota is more than 4TiB. </param>
+        /// <param name="volumeGroupName"> Volume Group Name. </param>
+        /// <param name="capacityPoolResourceId"> Pool Resource Id used in case of creating a volume through volume group. </param>
+        /// <param name="proximityPlacementGroupId"> Proximity placement group associated with the volume. </param>
+        /// <param name="t2Network"> T2 network information. </param>
+        /// <param name="volumeSpecName"> Volume spec name is the application specific designation or identifier for the particular volume in a volume group for e.g. data, log. </param>
+        /// <param name="isEncrypted"> Specifies if the volume is encrypted or not. Only available on volumes created or updated after 2022-01-01. </param>
+        /// <param name="placementRules"> Application specific placement rules for the particular volume. </param>
+        /// <param name="enableSubvolumes">
+        /// Flag indicating whether subvolume operations are enabled on the volume
+        /// Deprecated. Subvolume operations and this flag will be removed in a future API version.
+        /// </param>
+        /// <param name="provisionedAvailabilityZone"> The availability zone where the volume is provisioned. This refers to the logical availability zone where the volume resides. </param>
+        /// <param name="isLargeVolume"> Specifies whether volume is a Large Volume or Regular Volume. </param>
+        /// <param name="largeVolumeType">
+        /// Specifies the type of the Large Volume. When set to 'LargeVolume', the large volume is created with standard configuration.
+        /// If it is set to 'ExtraLargeVolume7Dot2PiB', the extra large volume is created with higher capacity limit 7.2PiB with cool access enabled,
+        /// delivering higher capacity limit with lower costs.
+        /// </param>
+        /// <param name="originatingResourceId"> Id of the snapshot or backup that the volume is restored from. </param>
+        /// <param name="inheritedSizeInBytes"> Space shared by short term clone volume with parent volume in bytes. </param>
+        /// <param name="language"> Language supported for volume. </param>
+        /// <param name="breakthroughMode"> Specifies whether the volume operates in Breakthrough Mode. </param>
+        /// <param name="exportRules"> Export policy rule. </param>
+        /// <param name="geoNamespaceOriginVolume"> Indicates whether this volume is designated as an origin for cache volumes. </param>
+        /// <returns> A new <see cref="Models.NetAppVolumeGroupVolume"/> instance for mocking. </returns>
+        public static NetAppVolumeGroupVolume NetAppVolumeGroupVolume(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, string> tags, IEnumerable<string> zones, Guid? fileSystemId, string creationToken, NetAppFileServiceLevel? serviceLevel, long usageThreshold, IEnumerable<string> protocolTypes, string provisioningState, string snapshotId, bool? deleteBaseSnapshot, string backupId, string baremetalTenantId, ResourceIdentifier subnetId, NetAppNetworkFeature? networkFeatures, NetAppNetworkFeature? effectiveNetworkFeatures, Guid? networkSiblingSetId, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, IEnumerable<NetAppVolumeMountTarget> mountTargets, string volumeType, NetAppVolumeDataProtection dataProtection, AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, bool? isSmbContinuouslyAvailable, SmbOplocks? smbOplocks, float? throughputMibps, float? actualThroughputMibps, NetAppEncryptionKeySource? encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, NetAppLdapServerType? ldapServerType, bool? isCoolAccessEnabled, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, CoolAccessTieringPolicy? coolAccessTieringPolicy, string unixPermissions, int? cloneProgress, NetAppFileAccessLog? fileAccessLogs, NetAppAvsDataStore? avsDataStore, IEnumerable<ResourceIdentifier> dataStoreResourceId, bool? isDefaultQuotaEnabled, AsyncDirectoryDelete asyncDirectoryDelete, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, ResourceIdentifier capacityPoolResourceId, ResourceIdentifier proximityPlacementGroupId, string t2Network, string volumeSpecName, bool? isEncrypted, IEnumerable<NetAppVolumePlacementRule> placementRules, EnableNetAppSubvolume? enableSubvolumes, string provisionedAvailabilityZone, bool? isLargeVolume, LargeVolumeType? largeVolumeType, ResourceIdentifier originatingResourceId, long? inheritedSizeInBytes, NetAppVolumeLanguage? language, BreakthroughMode? breakthroughMode, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = default, OriginVolume? geoNamespaceOriginVolume = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            zones ??= new ChangeTrackingList<string>();
+
+            return new NetAppVolumeGroupVolume(
+                id,
+                name,
+                resourceType,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
+                new VolumeProperties(
+                    fileSystemId,
+                    creationToken,
+                    serviceLevel,
+                    usageThreshold,
+                    exportRules is null ? default : new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                    (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
+                    provisioningState,
+                    snapshotId,
+                    deleteBaseSnapshot,
+                    backupId,
+                    baremetalTenantId,
+                    subnetId,
+                    networkFeatures,
+                    effectiveNetworkFeatures,
+                    networkSiblingSetId,
+                    storageToNetworkProximity,
+                    (mountTargets ?? new ChangeTrackingList<NetAppVolumeMountTarget>()).ToList(),
+                    volumeType,
+                    dataProtection,
+                    acceptGrowCapacityPoolForShortTermCloneSplit,
+                    isRestoring,
+                    isSnapshotDirectoryVisible,
+                    isKerberosEnabled,
+                    securityStyle,
+                    isSmbEncryptionEnabled,
+                    smbAccessBasedEnumeration,
+                    smbNonBrowsable,
+                    isSmbContinuouslyAvailable,
+                    smbOplocks,
+                    throughputMibps,
+                    actualThroughputMibps,
+                    encryptionKeySource,
+                    keyVaultPrivateEndpointResourceId,
+                    isLdapEnabled,
+                    ldapServerType,
+                    isCoolAccessEnabled,
+                    coolnessPeriod,
+                    coolAccessRetrievalPolicy,
+                    coolAccessTieringPolicy,
+                    unixPermissions,
+                    cloneProgress,
+                    fileAccessLogs,
+                    avsDataStore,
+                    (dataStoreResourceId ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    isDefaultQuotaEnabled,
+                    asyncDirectoryDelete,
+                    defaultUserQuotaInKiBs,
+                    defaultGroupQuotaInKiBs,
+                    maximumNumberOfFiles,
+                    volumeGroupName,
+                    capacityPoolResourceId,
+                    proximityPlacementGroupId,
+                    t2Network,
+                    volumeSpecName,
+                    isEncrypted,
+                    (placementRules ?? new ChangeTrackingList<NetAppVolumePlacementRule>()).ToList(),
+                    enableSubvolumes,
+                    provisionedAvailabilityZone,
+                    isLargeVolume,
+                    largeVolumeType,
+                    originatingResourceId,
+                    inheritedSizeInBytes,
+                    language,
+                    breakthroughMode,
+                    geoNamespaceOriginVolume is null ? default : new VolumeNamespaceProperties(geoNamespaceOriginVolume, default),
+                    default),
+                default);
+        }
+
+        /// <summary> Volume Export Policy Rule. </summary>
         /// <param name="ruleIndex"> Order index. </param>
         /// <param name="isUnixReadOnly"> Read only access. </param>
         /// <param name="isUnixReadWrite"> Read and write access. </param>
@@ -125,6 +299,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
+        /// <summary> Mount target properties. </summary>
         /// <param name="mountTargetId"> UUID v4 used to identify the MountTarget. </param>
         /// <param name="fileSystemId"> UUID v4 used to identify the MountTarget. </param>
         /// <param name="ipAddress"> The mount target's IPv4 address. </param>
@@ -152,6 +327,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
+        /// <summary> Volume Backup Properties. </summary>
         /// <param name="backupPolicyId"> Backup Policy Resource ID. </param>
         /// <param name="isPolicyEnforced"> Policy Enforced. </param>
         /// <param name="backupVaultId"> Backup Vault Resource ID. </param>
@@ -161,6 +337,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppVolumeBackupConfiguration(backupPolicyId, isPolicyEnforced, backupVaultId, default);
         }
 
+        /// <summary> Replication properties. </summary>
         /// <param name="replicationId"> Id. </param>
         /// <param name="endpointType"> Indicates whether the local volume is the source or destination for the Volume Replication. </param>
         /// <param name="replicationSchedule"> Schedule. </param>
@@ -192,6 +369,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
+        /// <summary> The full path to a volume that is to be migrated into ANF. Required for Migration volumes. </summary>
         /// <param name="externalHostName"> The Path to a ONTAP Host. </param>
         /// <param name="serverName"> The name of a server on the ONTAP Host. </param>
         /// <param name="volumeName"> The name of a volume on the server. </param>
@@ -201,6 +379,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new RemotePath(externalHostName, serverName, volumeName, default);
         }
 
+        /// <summary> Destination replication properties. </summary>
         /// <param name="resourceId"> The resource ID of the remote volume. </param>
         /// <param name="replicationType"> Indicates whether the replication is cross zone or cross region. </param>
         /// <param name="region"> The remote region for the destination volume. </param>
@@ -211,6 +390,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppDestinationReplication(resourceId, replicationType, region, zone, default);
         }
 
+        /// <summary> Volume relocation properties. </summary>
         /// <param name="isRelocationRequested"> Has relocation been requested for this volume. </param>
         /// <param name="isReadyToBeFinalized"> Has relocation finished and is ready to be cleaned up. </param>
         /// <returns> A new <see cref="Models.NetAppVolumeRelocationProperties"/> instance for mocking. </returns>
@@ -219,12 +399,22 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppVolumeRelocationProperties(isRelocationRequested, isReadyToBeFinalized, default);
         }
 
+        /// <summary> Advanced Ransomware Protection reports (ARP) settings. </summary>
         /// <param name="desiredRansomwareProtectionState"> The desired value of the Advanced Ransomware Protection feature state available to the volume. </param>
         /// <param name="actualRansomwareProtectionState"> The actual state of the Advanced Ransomware Protection feature currently active on the volume. </param>
         /// <returns> A new <see cref="Models.RansomwareProtectionSettings"/> instance for mocking. </returns>
         public static RansomwareProtectionSettings RansomwareProtectionSettings(DesiredRansomwareProtectionState? desiredRansomwareProtectionState = default, ActualRansomwareProtectionState? actualRansomwareProtectionState = default)
         {
             return new RansomwareProtectionSettings(desiredRansomwareProtectionState, actualRansomwareProtectionState, default);
+        }
+
+        /// <summary> Async Directory Delete configuration for the volume. </summary>
+        /// <param name="status"> Specifies whether Async Directory Delete is enabled for the volume. </param>
+        /// <param name="trashBinName"> The name of the Trash bin folder for deleted files. Max length of 255. Must contain at least one alphanumeric character (A-Z, a-z, 0-9) and may include dots (.), underscores (_), and hyphens (-). </param>
+        /// <returns> A new <see cref="Models.AsyncDirectoryDelete"/> instance for mocking. </returns>
+        public static AsyncDirectoryDelete AsyncDirectoryDelete(AsyncDirectoryDeleteStatus? status = default, string trashBinName = default)
+        {
+            return new AsyncDirectoryDelete(status, trashBinName, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -260,16 +450,197 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="fileSystemId"> Unique FileSystem Identifier. </param>
+        /// <param name="creationToken"> A unique file path for the volume. Used when creating mount targets. </param>
         /// <param name="serviceLevel"> The service level of the file system. </param>
         /// <param name="usageThreshold">
         /// Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB.
         /// For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB.
         /// For extra large volumes, valid values are in the range 2400GiB to 7200TiB. Values expressed in bytes as multiples of 1 GiB.
         /// </param>
-        /// <param name="protocolTypes"> Set of protocol types, default NFSv3, CIFS for SMB protocol. </param>
+        /// <param name="protocolTypes">
+        /// Specify the protocol types for the volume. Supported values are NFSv3, NFSv4.1, and CIFS. For SMB volumes, specify CIFS.
+        /// The value SMB isn't supported in the protocolTypes property. Default: NFSv3
+        /// </param>
+        /// <param name="provisioningState"> Azure lifecycle management. </param>
+        /// <param name="snapshotId"> Resource identifier used to identify the Snapshot. </param>
+        /// <param name="deleteBaseSnapshot"> If enabled (true) the snapshot the volume was created from will be automatically deleted after the volume create operation has finished.  Defaults to false. </param>
+        /// <param name="backupId"> Resource identifier used to identify the Backup. </param>
+        /// <param name="baremetalTenantId"> Unique Baremetal Tenant Identifier. </param>
+        /// <param name="subnetId"> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. </param>
+        /// <param name="networkFeatures"> The original value of the network features type available to the volume at the time it was created. </param>
+        /// <param name="effectiveNetworkFeatures"> The effective value of the network features type available to the volume, or current effective state of update. </param>
+        /// <param name="networkSiblingSetId"> Network Sibling Set ID for the the group of volumes sharing networking resources. </param>
+        /// <param name="storageToNetworkProximity"> Provides storage to network proximity information for the volume. </param>
+        /// <param name="mountTargets"> List of mount targets. </param>
+        /// <param name="volumeType"> What type of volume is this. For destination volumes in Cross Region Replication, set type to DataProtection. For creating clone volume, set type to ShortTermClone. </param>
+        /// <param name="dataProtection"> DataProtection type volumes include an object containing details of the replication. </param>
+        /// <param name="acceptGrowCapacityPoolForShortTermCloneSplit"> While auto splitting the short term clone volume, if the parent pool does not have enough space to accommodate the volume after split, it will be automatically resized, which will lead to increased billing. To accept capacity pool size auto grow and create a short term clone volume, set the property as accepted. </param>
+        /// <param name="isRestoring"> Restoring. </param>
+        /// <param name="isSnapshotDirectoryVisible"> If enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots (defaults to true). </param>
+        /// <param name="isKerberosEnabled"> Describe if a volume is KerberosEnabled. To be use with swagger version 2020-05-01 or later. </param>
+        /// <param name="securityStyle"> The security style of volume, default unix, defaults to ntfs for dual protocol or CIFS protocol. </param>
+        /// <param name="isSmbEncryptionEnabled"> Enables encryption for in-flight smb3 data. Only applicable for SMB/DualProtocol volume. To be used with swagger version 2020-08-01 or later. </param>
+        /// <param name="smbAccessBasedEnumeration"> Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
+        /// <param name="smbNonBrowsable"> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
+        /// <param name="isSmbContinuouslyAvailable"> Enables continuously available share property for smb volume. Only applicable for SMB volume. </param>
+        /// <param name="smbOplocks"> Enables or disables SMB opportunistic lock property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
+        /// <param name="throughputMibps"> Maximum throughput in MiB/s that can be achieved by this volume and this will be accepted as input only for manual qosType volume. </param>
+        /// <param name="actualThroughputMibps"> Actual throughput in MiB/s for auto qosType volumes calculated based on size and serviceLevel. </param>
+        /// <param name="encryptionKeySource"> Source of key used to encrypt data in volume. Applicable if NetApp account has encryption.keySource = 'Microsoft.KeyVault'. Possible values (case-insensitive) are: 'Microsoft.NetApp, Microsoft.KeyVault'. </param>
+        /// <param name="keyVaultPrivateEndpointResourceId"> The resource ID of private endpoint for KeyVault. It must reside in the same VNET as the volume. Only applicable if encryptionKeySource = 'Microsoft.KeyVault'. </param>
+        /// <param name="isLdapEnabled"> Specifies whether LDAP is enabled or not for a given NFS volume. </param>
+        /// <param name="ldapServerType"> Specifies the type of LDAP server for a given NFS volume. </param>
+        /// <param name="isCoolAccessEnabled"> Specifies whether Cool Access(tiering) is enabled for the volume. </param>
+        /// <param name="coolnessPeriod"> Specifies the number of days after which data that is not accessed by clients will be tiered. </param>
+        /// <param name="coolAccessRetrievalPolicy">
+        /// coolAccessRetrievalPolicy determines the data retrieval behavior from the cool tier to standard storage based on the read pattern for cool access enabled volumes. The possible values for this field are:
+        /// Default - Data will be pulled from cool tier to standard storage on random reads. This policy is the default.
+        /// OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
+        /// Never - No client-driven data is pulled from cool tier to standard storage.
+        /// </param>
+        /// <param name="coolAccessTieringPolicy"> coolAccessTieringPolicy determines which cold data blocks are moved to cool tier. The possible values for this field are: Auto - Moves cold user data blocks in both the Snapshot copies and the active file system to the cool tier tier. This policy is the default. SnapshotOnly - Moves user data blocks of the Volume Snapshot copies that are not associated with the active file system to the cool tier. </param>
+        /// <param name="unixPermissions"> UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users. </param>
+        /// <param name="cloneProgress"> When a volume is being restored from another volume's snapshot, will show the percentage completion of this cloning process. When this value is empty/null there is no cloning process currently happening on this volume. This value will update every 5 minutes during cloning. </param>
+        /// <param name="fileAccessLogs"> Flag indicating whether file access logs are enabled for the volume, based on active diagnostic settings present on the volume. </param>
+        /// <param name="avsDataStore"> Specifies whether the volume is enabled for Azure VMware Solution (AVS) datastore purpose. </param>
+        /// <param name="dataStoreResourceId"> Data store resource unique identifier. </param>
+        /// <param name="isDefaultQuotaEnabled"> Specifies if default quota is enabled for the volume. </param>
+        /// <param name="asyncDirectoryDelete"> Async Directory Delete configuration for the volume. </param>
+        /// <param name="defaultUserQuotaInKiBs"> Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies . </param>
+        /// <param name="defaultGroupQuotaInKiBs"> Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies. </param>
+        /// <param name="maximumNumberOfFiles"> Maximum number of files allowed. Needs a service request in order to be changed. Only allowed to be changed if volume quota is more than 4TiB. </param>
+        /// <param name="volumeGroupName"> Volume Group Name. </param>
+        /// <param name="capacityPoolResourceId"> Pool Resource Id used in case of creating a volume through volume group. </param>
+        /// <param name="proximityPlacementGroupId"> Proximity placement group associated with the volume. </param>
+        /// <param name="t2Network"> T2 network information. </param>
+        /// <param name="volumeSpecName"> Volume spec name is the application specific designation or identifier for the particular volume in a volume group for e.g. data, log. </param>
+        /// <param name="isEncrypted"> Specifies if the volume is encrypted or not. Only available on volumes created or updated after 2022-01-01. </param>
+        /// <param name="placementRules"> Application specific placement rules for the particular volume. </param>
+        /// <param name="enableSubvolumes">
+        /// Flag indicating whether subvolume operations are enabled on the volume
+        /// Deprecated. Subvolume operations and this flag will be removed in a future API version.
+        /// </param>
+        /// <param name="provisionedAvailabilityZone"> The availability zone where the volume is provisioned. This refers to the logical availability zone where the volume resides. </param>
+        /// <param name="isLargeVolume"> Specifies whether volume is a Large Volume or Regular Volume. </param>
+        /// <param name="largeVolumeType">
+        /// Specifies the type of the Large Volume. When set to 'LargeVolume', the large volume is created with standard configuration.
+        /// If it is set to 'ExtraLargeVolume7Dot2PiB', the extra large volume is created with higher capacity limit 7.2PiB with cool access enabled,
+        /// delivering higher capacity limit with lower costs.
+        /// </param>
+        /// <param name="originatingResourceId"> Id of the snapshot or backup that the volume is restored from. </param>
+        /// <param name="inheritedSizeInBytes"> Space shared by short term clone volume with parent volume in bytes. </param>
+        /// <param name="language"> Language supported for volume. </param>
+        /// <param name="breakthroughMode"> Specifies whether the volume operates in Breakthrough Mode. </param>
+        /// <param name="exportRules"> Export policy rule. </param>
+        /// <param name="geoNamespaceOriginVolume"> Indicates whether this volume is designated as an origin for cache volumes. </param>
+        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
+        /// <param name="zones"> The availability zones. </param>
+        /// <returns> A new <see cref="NetApp.NetAppVolumeData"/> instance for mocking. </returns>
+        public static NetAppVolumeData NetAppVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Guid? fileSystemId, string creationToken, NetAppFileServiceLevel? serviceLevel, long usageThreshold, IEnumerable<string> protocolTypes, string provisioningState, string snapshotId, bool? deleteBaseSnapshot, string backupId, string baremetalTenantId, ResourceIdentifier subnetId, NetAppNetworkFeature? networkFeatures, NetAppNetworkFeature? effectiveNetworkFeatures, Guid? networkSiblingSetId, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, IEnumerable<NetAppVolumeMountTarget> mountTargets, string volumeType, NetAppVolumeDataProtection dataProtection, AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, bool? isSmbContinuouslyAvailable, SmbOplocks? smbOplocks, float? throughputMibps, float? actualThroughputMibps, NetAppEncryptionKeySource? encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, NetAppLdapServerType? ldapServerType, bool? isCoolAccessEnabled, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, CoolAccessTieringPolicy? coolAccessTieringPolicy, string unixPermissions, int? cloneProgress, NetAppFileAccessLog? fileAccessLogs, NetAppAvsDataStore? avsDataStore, IEnumerable<ResourceIdentifier> dataStoreResourceId, bool? isDefaultQuotaEnabled, AsyncDirectoryDelete asyncDirectoryDelete, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, ResourceIdentifier capacityPoolResourceId, ResourceIdentifier proximityPlacementGroupId, string t2Network, string volumeSpecName, bool? isEncrypted, IEnumerable<NetAppVolumePlacementRule> placementRules, EnableNetAppSubvolume? enableSubvolumes, string provisionedAvailabilityZone, bool? isLargeVolume, LargeVolumeType? largeVolumeType, ResourceIdentifier originatingResourceId, long? inheritedSizeInBytes, NetAppVolumeLanguage? language, BreakthroughMode? breakthroughMode, IEnumerable<NetAppVolumeExportPolicyRule> exportRules, OriginVolume? geoNamespaceOriginVolume, ETag? eTag = default, IEnumerable<string> zones = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            zones ??= new ChangeTrackingList<string>();
+
+            return new NetAppVolumeData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                new VolumeProperties(
+                    fileSystemId,
+                    creationToken,
+                    serviceLevel,
+                    usageThreshold,
+                    exportRules is null ? default : new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                    (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
+                    provisioningState,
+                    snapshotId,
+                    deleteBaseSnapshot,
+                    backupId,
+                    baremetalTenantId,
+                    subnetId,
+                    networkFeatures,
+                    effectiveNetworkFeatures,
+                    networkSiblingSetId,
+                    storageToNetworkProximity,
+                    (mountTargets ?? new ChangeTrackingList<NetAppVolumeMountTarget>()).ToList(),
+                    volumeType,
+                    dataProtection,
+                    acceptGrowCapacityPoolForShortTermCloneSplit,
+                    isRestoring,
+                    isSnapshotDirectoryVisible,
+                    isKerberosEnabled,
+                    securityStyle,
+                    isSmbEncryptionEnabled,
+                    smbAccessBasedEnumeration,
+                    smbNonBrowsable,
+                    isSmbContinuouslyAvailable,
+                    smbOplocks,
+                    throughputMibps,
+                    actualThroughputMibps,
+                    encryptionKeySource,
+                    keyVaultPrivateEndpointResourceId,
+                    isLdapEnabled,
+                    ldapServerType,
+                    isCoolAccessEnabled,
+                    coolnessPeriod,
+                    coolAccessRetrievalPolicy,
+                    coolAccessTieringPolicy,
+                    unixPermissions,
+                    cloneProgress,
+                    fileAccessLogs,
+                    avsDataStore,
+                    (dataStoreResourceId ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    isDefaultQuotaEnabled,
+                    asyncDirectoryDelete,
+                    defaultUserQuotaInKiBs,
+                    defaultGroupQuotaInKiBs,
+                    maximumNumberOfFiles,
+                    volumeGroupName,
+                    capacityPoolResourceId,
+                    proximityPlacementGroupId,
+                    t2Network,
+                    volumeSpecName,
+                    isEncrypted,
+                    (placementRules ?? new ChangeTrackingList<NetAppVolumePlacementRule>()).ToList(),
+                    enableSubvolumes,
+                    provisionedAvailabilityZone,
+                    isLargeVolume,
+                    largeVolumeType,
+                    originatingResourceId,
+                    inheritedSizeInBytes,
+                    language,
+                    breakthroughMode,
+                    geoNamespaceOriginVolume is null ? default : new VolumeNamespaceProperties(geoNamespaceOriginVolume, default),
+                    default),
+                eTag,
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="serviceLevel"> The service level of the file system. </param>
+        /// <param name="usageThreshold">
+        /// Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB.
+        /// For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB.
+        /// For extra large volumes, valid values are in the range 2400GiB to 7200TiB. Values expressed in bytes as multiples of 1 GiB.
+        /// </param>
+        /// <param name="protocolTypes">
+        /// Specify the protocol types for the volume. Supported values are NFSv3, NFSv4.1, and CIFS. For SMB volumes, specify CIFS.
+        /// The value SMB isn't supported in the protocolTypes property. Default: NFSv3
+        /// </param>
         /// <param name="throughputMibps"> Maximum throughput in MiB/s that can be achieved by this volume and this will be accepted as input only for manual qosType volume. </param>
         /// <param name="dataProtection"> DataProtection type volumes include an object containing details of the replication. </param>
         /// <param name="isDefaultQuotaEnabled"> Specifies if default quota is enabled for the volume. </param>
+        /// <param name="asyncDirectoryDelete"> Async Directory Delete configuration for the volume. </param>
         /// <param name="defaultUserQuotaInKiBs"> Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies . </param>
         /// <param name="defaultGroupQuotaInKiBs"> Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies. </param>
         /// <param name="unixPermissions"> UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users. </param>
@@ -285,9 +656,11 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="isSnapshotDirectoryVisible"> If enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots. </param>
         /// <param name="smbAccessBasedEnumeration"> Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
         /// <param name="smbNonBrowsable"> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
+        /// <param name="smbOplocks"> Enables or disables SMB opportunistic lock property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
         /// <param name="exportRules"> Export policy rule. </param>
+        /// <param name="geoNamespaceOriginVolume"> Indicates whether this volume is designated as an origin for cache volumes. </param>
         /// <returns> A new <see cref="Models.NetAppVolumePatch"/> instance for mocking. </returns>
-        public static NetAppVolumePatch NetAppVolumePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NetAppFileServiceLevel? serviceLevel = default, long? usageThreshold = default, IEnumerable<string> protocolTypes = default, float? throughputMibps = default, NetAppVolumePatchDataProtection dataProtection = default, bool? isDefaultQuotaEnabled = default, long? defaultUserQuotaInKiBs = default, long? defaultGroupQuotaInKiBs = default, string unixPermissions = default, bool? isCoolAccessEnabled = default, int? coolnessPeriod = default, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = default, CoolAccessTieringPolicy? coolAccessTieringPolicy = default, bool? isSnapshotDirectoryVisible = default, SmbAccessBasedEnumeration? smbAccessBasedEnumeration = default, SmbNonBrowsable? smbNonBrowsable = default, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = default)
+        public static NetAppVolumePatch NetAppVolumePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetAppFileServiceLevel? serviceLevel, long? usageThreshold, IEnumerable<string> protocolTypes, float? throughputMibps, NetAppVolumePatchDataProtection dataProtection, bool? isDefaultQuotaEnabled, AsyncDirectoryDelete asyncDirectoryDelete, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, string unixPermissions, bool? isCoolAccessEnabled, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, CoolAccessTieringPolicy? coolAccessTieringPolicy, bool? isSnapshotDirectoryVisible, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable = default, SmbOplocks? smbOplocks = default, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = default, OriginVolume? geoNamespaceOriginVolume = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -298,14 +671,15 @@ namespace Azure.ResourceManager.NetApp.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                serviceLevel is null && usageThreshold is null && exportRules is null && protocolTypes is null && throughputMibps is null && dataProtection is null && isDefaultQuotaEnabled is null && defaultUserQuotaInKiBs is null && defaultGroupQuotaInKiBs is null && unixPermissions is null && isCoolAccessEnabled is null && coolnessPeriod is null && coolAccessRetrievalPolicy is null && coolAccessTieringPolicy is null && isSnapshotDirectoryVisible is null && smbAccessBasedEnumeration is null && smbNonBrowsable is null ? default : new VolumePatchProperties(
+                serviceLevel is null && usageThreshold is null && exportRules is null && protocolTypes is null && throughputMibps is null && dataProtection is null && isDefaultQuotaEnabled is null && asyncDirectoryDelete is null && defaultUserQuotaInKiBs is null && defaultGroupQuotaInKiBs is null && unixPermissions is null && isCoolAccessEnabled is null && coolnessPeriod is null && coolAccessRetrievalPolicy is null && coolAccessTieringPolicy is null && isSnapshotDirectoryVisible is null && smbAccessBasedEnumeration is null && smbNonBrowsable is null && smbOplocks is null && geoNamespaceOriginVolume is null ? default : new VolumePatchProperties(
                     serviceLevel,
                     usageThreshold,
-                    new VolumePatchPropertiesExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                    exportRules is null ? default : new VolumePatchPropertiesExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
                     (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
                     throughputMibps,
                     dataProtection,
                     isDefaultQuotaEnabled,
+                    asyncDirectoryDelete,
                     defaultUserQuotaInKiBs,
                     defaultGroupQuotaInKiBs,
                     unixPermissions,
@@ -316,6 +690,8 @@ namespace Azure.ResourceManager.NetApp.Models
                     isSnapshotDirectoryVisible,
                     smbAccessBasedEnumeration,
                     smbNonBrowsable,
+                    smbOplocks,
+                    geoNamespaceOriginVolume is null ? default : new VolumePatchNamespaceProperties(geoNamespaceOriginVolume, default),
                     default),
                 default);
         }
@@ -329,6 +705,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppVolumePatchDataProtection(backup, snapshotPolicyId is null ? default : new VolumeSnapshotProperties(snapshotPolicyId, default), desiredRansomwareProtectionState is null ? default : new RansomwareProtectionPatchSettings(desiredRansomwareProtectionState, default), default);
         }
 
+        /// <summary> revert a volume to the snapshot. </summary>
         /// <param name="snapshotId"> Resource id of the snapshot. </param>
         /// <returns> A new <see cref="Models.NetAppVolumeRevertContent"/> instance for mocking. </returns>
         public static NetAppVolumeRevertContent NetAppVolumeRevertContent(string snapshotId = default)
@@ -336,6 +713,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppVolumeRevertContent(snapshotId, default);
         }
 
+        /// <summary> Break file locks request. </summary>
         /// <param name="clientIP"> To clear file locks on a volume for a particular client. </param>
         /// <param name="confirmRunningDisruptiveOperation"> Break File locks could be a disruptive operation for application as locks on the volume will be broken, if want to process, set to true. </param>
         /// <returns> A new <see cref="Models.NetAppVolumeBreakFileLocksContent"/> instance for mocking. </returns>
@@ -344,6 +722,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppVolumeBreakFileLocksContent(clientIP, confirmRunningDisruptiveOperation, default);
         }
 
+        /// <summary> Get group Id list for LDAP User request. </summary>
         /// <param name="username"> username is required to fetch the group to which user is part of. </param>
         /// <returns> A new <see cref="Models.GetGroupIdListForLdapUserContent"/> instance for mocking. </returns>
         public static GetGroupIdListForLdapUserContent GetGroupIdListForLdapUserContent(string username = default)
@@ -351,6 +730,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new GetGroupIdListForLdapUserContent(username, default);
         }
 
+        /// <summary> Group Id list for Ldap user. </summary>
         /// <param name="groupIdsForLdapUser"> Group Id list. </param>
         /// <returns> A new <see cref="Models.GetGroupIdListForLdapUserResult"/> instance for mocking. </returns>
         public static GetGroupIdListForLdapUserResult GetGroupIdListForLdapUserResult(IEnumerable<string> groupIdsForLdapUser = default)
@@ -360,6 +740,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new GetGroupIdListForLdapUserResult((groupIdsForLdapUser ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Break replication request. </summary>
         /// <param name="forceBreakReplication"> If replication is in status transferring and you want to force break the replication, set to true. </param>
         /// <returns> A new <see cref="Models.NetAppVolumeBreakReplicationContent"/> instance for mocking. </returns>
         public static NetAppVolumeBreakReplicationContent NetAppVolumeBreakReplicationContent(bool? forceBreakReplication = default)
@@ -367,6 +748,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppVolumeBreakReplicationContent(forceBreakReplication, default);
         }
 
+        /// <summary> Re-establish request object supplied in the body of the operation. </summary>
         /// <param name="sourceVolumeId"> Resource id of the source volume for the replication. </param>
         /// <returns> A new <see cref="Models.NetAppVolumeReestablishReplicationContent"/> instance for mocking. </returns>
         public static NetAppVolumeReestablishReplicationContent NetAppVolumeReestablishReplicationContent(ResourceIdentifier sourceVolumeId = default)
@@ -374,6 +756,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppVolumeReestablishReplicationContent(sourceVolumeId, default);
         }
 
+        /// <summary> Body for the list replications endpoint. If supplied, the body will be used as a filter for example to exclude deleted replications. If omitted, the endpoint returns all replications. </summary>
         /// <param name="excludeReplicationsFilter"> Exclude Replications filter. 'None' returns all replications, 'Deleted' excludes deleted replications. Default is 'None'. </param>
         /// <returns> A new <see cref="Models.ListReplicationsContent"/> instance for mocking. </returns>
         public static ListReplicationsContent ListReplicationsContent(ExcludeReplicationsFilter? excludeReplicationsFilter = default)
@@ -381,6 +764,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new ListReplicationsContent(excludeReplicationsFilter, default);
         }
 
+        /// <summary> Replication properties. </summary>
         /// <param name="replicationId"> UUID v4 used to identify the replication. </param>
         /// <param name="endpointType"> Indicates whether the local volume is the source or destination for the Volume Replication. </param>
         /// <param name="replicationSchedule"> Schedule. </param>
@@ -404,6 +788,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
+        /// <summary> Authorize request. </summary>
         /// <param name="remoteVolumeResourceId"> Resource id of the remote volume. </param>
         /// <returns> A new <see cref="Models.NetAppVolumeAuthorizeReplicationContent"/> instance for mocking. </returns>
         public static NetAppVolumeAuthorizeReplicationContent NetAppVolumeAuthorizeReplicationContent(ResourceIdentifier remoteVolumeResourceId = default)
@@ -411,6 +796,17 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppVolumeAuthorizeReplicationContent(remoteVolumeResourceId, default);
         }
 
+        /// <summary> Source Cluster properties for a cluster peer request. </summary>
+        /// <param name="peerIPAddresses"> A list of IC-LIF IPs that can be used to connect to the On-prem cluster. </param>
+        /// <returns> A new <see cref="Models.PeerClusterForVolumeMigrationContent"/> instance for mocking. </returns>
+        public static PeerClusterForVolumeMigrationContent PeerClusterForVolumeMigrationContent(IEnumerable<string> peerIPAddresses = default)
+        {
+            peerIPAddresses ??= new ChangeTrackingList<string>();
+
+            return new PeerClusterForVolumeMigrationContent((peerIPAddresses ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <summary> Information about cluster peering process. </summary>
         /// <param name="properties"> Represents the properties of the cluster peer command response. </param>
         /// <returns> A new <see cref="Models.ClusterPeerCommandResult"/> instance for mocking. </returns>
         public static ClusterPeerCommandResult ClusterPeerCommandResult(ClusterPeerCommandResponseProperties properties = default)
@@ -418,6 +814,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new ClusterPeerCommandResult(properties, default);
         }
 
+        /// <summary> Properties of the cluster peer command response. </summary>
         /// <param name="clusterPeeringCommand"> ClusterPeeringCommand to run to accept cluster peer. Will only be present if &lt;code&gt;clusterPeeringStatus&lt;/code&gt; is &lt;code&gt;pending&lt;/code&gt;. </param>
         /// <param name="passphrase"> Passphrase for use with cluster peer command. </param>
         /// <returns> A new <see cref="Models.ClusterPeerCommandResponseProperties"/> instance for mocking. </returns>
@@ -433,6 +830,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new SvmPeerCommandResult(svmPeeringCommand is null ? default : new SvmPeerCommandResponseProperties(svmPeeringCommand, default), default);
         }
 
+        /// <summary> Pool change request. </summary>
         /// <param name="newPoolResourceId"> Resource id of the pool to move volume to. </param>
         /// <returns> A new <see cref="Models.NetAppVolumePoolChangeContent"/> instance for mocking. </returns>
         public static NetAppVolumePoolChangeContent NetAppVolumePoolChangeContent(ResourceIdentifier newPoolResourceId = default)
@@ -440,6 +838,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppVolumePoolChangeContent(newPoolResourceId, default);
         }
 
+        /// <summary> Relocate volume request. </summary>
         /// <param name="creationToken"> New creation token for the volume that controls the mount point name. </param>
         /// <returns> A new <see cref="Models.RelocateVolumeContent"/> instance for mocking. </returns>
         public static RelocateVolumeContent RelocateVolumeContent(string creationToken = default)
@@ -447,6 +846,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new RelocateVolumeContent(creationToken, default);
         }
 
+        /// <summary> Quota report filters. When filtering by quotaType or quotaTarget, both properties must be supplied together. This constraint is enforced by the service/API at runtime, and requests violating this rule will return a validation error. The usageThresholdPercentage filter is independent and can be used alone or in combination with quotaType and quotaTarget to further refine results. </summary>
         /// <param name="quotaType"> Type of quota. If provided, quotaTarget must also be specified. The quotaType and quotaTarget properties are optional, but when filtering by quota type, quotaType and quotaTarget must be supplied together. Service/API will return an error if only one is provided. </param>
         /// <param name="quotaTarget"> UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running 'id' or 'getent' command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;. If provided, quotaType must also be specified. The quotaType and quotaTarget properties are optional, but when filtering by quota target, quotaType and quotaTarget must be supplied together. Service/API will return an error if only one is provided. </param>
         /// <param name="usageThresholdPercentage"> The usageThresholdPercentage filter takes the usage threshold percentage and returns records where the usage is greater than or equal to the input value. This is an optional property. </param>
@@ -463,6 +863,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new ListQuotaReportResult(quotaReportRecords is null ? default : new NetAppVolumeQuotaReportListResult((quotaReportRecords ?? new ChangeTrackingList<NetAppVolumeQuotaReport>()).ToList(), default), default);
         }
 
+        /// <summary> Quota report record properties. </summary>
         /// <param name="quotaType"> Type of quota. </param>
         /// <param name="quotaTarget"> UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;. </param>
         /// <param name="quotaLimitUsedInKiBs"> Specifies the current usage in kibibytes for the user/group quota. </param>
@@ -503,12 +904,14 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
+        /// <summary> Snapshot of a Volume. </summary>
         /// <returns> A new <see cref="Models.NetAppVolumeSnapshotPatch"/> instance for mocking. </returns>
         public static NetAppVolumeSnapshotPatch NetAppVolumeSnapshotPatch()
         {
             return new NetAppVolumeSnapshotPatch(default);
         }
 
+        /// <summary> Restore payload for Single File Snapshot Restore. </summary>
         /// <param name="filePaths"> List of files to be restored. </param>
         /// <param name="destinationPath"> Destination folder where the files will be restored. </param>
         /// <returns> A new <see cref="Models.NetAppVolumeSnapshotRestoreFilesContent"/> instance for mocking. </returns>
@@ -544,18 +947,19 @@ namespace Azure.ResourceManager.NetApp.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                isEnabled is null ? default : new SnapshotPolicyProperties(
-                    default,
-                    default,
-                    default,
-                    default,
+                hourlySchedule is null && dailySchedule is null && weeklySchedule is null && monthlySchedule is null && isEnabled is null && provisioningState is null ? default : new SnapshotPolicyProperties(
+                    hourlySchedule,
+                    dailySchedule,
+                    weeklySchedule,
+                    monthlySchedule,
                     isEnabled,
-                    default,
+                    provisioningState,
                     default),
                 eTag,
                 default);
         }
 
+        /// <summary> Hourly Schedule properties. </summary>
         /// <param name="snapshotsToKeep"> Hourly snapshot count to keep. </param>
         /// <param name="minute"> Indicates which minute snapshot should be taken. </param>
         /// <param name="usedBytes"> Resource size in bytes, current storage usage for the volume in bytes. </param>
@@ -565,6 +969,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new SnapshotPolicyHourlySchedule(snapshotsToKeep, minute, usedBytes, default);
         }
 
+        /// <summary> Daily Schedule properties. </summary>
         /// <param name="snapshotsToKeep"> Daily snapshot count to keep. </param>
         /// <param name="hour"> Indicates which hour in UTC timezone a snapshot should be taken. </param>
         /// <param name="minute"> Indicates which minute snapshot should be taken. </param>
@@ -575,6 +980,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new SnapshotPolicyDailySchedule(snapshotsToKeep, hour, minute, usedBytes, default);
         }
 
+        /// <summary> Weekly Schedule properties, make a snapshot every week at a specific day or days. </summary>
         /// <param name="snapshotsToKeep"> Weekly snapshot count to keep. </param>
         /// <param name="day"> Indicates which weekdays snapshot should be taken, accepts a comma separated list of week day names in english. </param>
         /// <param name="hour"> Indicates which hour in UTC timezone a snapshot should be taken. </param>
@@ -592,6 +998,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
+        /// <summary> Monthly Schedule properties. </summary>
         /// <param name="snapshotsToKeep"> Monthly snapshot count to keep. </param>
         /// <param name="daysOfMonth"> Indicates which days of the month snapshot should be taken. A comma delimited string. </param>
         /// <param name="hour"> Indicates which hour in UTC timezone a snapshot should be taken. </param>
@@ -671,13 +1078,13 @@ namespace Azure.ResourceManager.NetApp.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                backupPolicyId is null && isEnabled is null && volumeBackups is null ? default : new BackupPolicyProperties(
+                backupPolicyId is null && provisioningState is null && dailyBackupsToKeep is null && weeklyBackupsToKeep is null && monthlyBackupsToKeep is null && volumesAssigned is null && isEnabled is null && volumeBackups is null ? default : new BackupPolicyProperties(
                     backupPolicyId,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                    provisioningState,
+                    dailyBackupsToKeep,
+                    weeklyBackupsToKeep,
+                    monthlyBackupsToKeep,
+                    volumesAssigned,
                     isEnabled,
                     (volumeBackups ?? new ChangeTrackingList<NetAppVolumeBackupDetail>()).ToList(),
                     default),
@@ -685,6 +1092,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
+        /// <summary> Volume details using the backup policy. </summary>
         /// <param name="volumeName"> Volume name. </param>
         /// <param name="volumeResourceId"> ResourceId used to identify the Volume. </param>
         /// <param name="backupsCount"> Total count of backups for volume. </param>
@@ -756,7 +1164,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                quotaSizeInKiBs is null && quotaType is null && quotaTarget is null ? default : new VolumeQuotaRulesProperties(default, quotaSizeInKiBs, quotaType, quotaTarget, default),
+                provisioningState is null && quotaSizeInKiBs is null && quotaType is null && quotaTarget is null ? default : new VolumeQuotaRulesProperties(provisioningState, quotaSizeInKiBs, quotaType, quotaTarget, default),
                 default);
         }
 
@@ -770,9 +1178,15 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NetAppVolumeQuotaRulePatch(tags ?? new ChangeTrackingDictionary<string, string>(), quotaSizeInKiBs is null && quotaType is null && quotaTarget is null ? default : new VolumeQuotaRulesProperties(default, quotaSizeInKiBs, quotaType, quotaTarget, default), default);
+            return new NetAppVolumeQuotaRulePatch(tags ?? new ChangeTrackingDictionary<string, string>(), provisioningState is null && quotaSizeInKiBs is null && quotaType is null && quotaTarget is null ? default : new VolumeQuotaRulesProperties(provisioningState, quotaSizeInKiBs, quotaType, quotaTarget, default), default);
         }
 
+        /// <summary>
+        /// Advanced Ransomware Protection (ARP) report
+        /// Get details of the specified Advanced Ransomware Protection report (ARP).
+        /// ARP reports are created with a list of suspected files when it detects any combination of high data entropy, abnormal volume activity with data encryption, and unusual file extensions.
+        /// ARP creates snapshots named Anti_ransomware_backup when it detects a potential ransomware threat. You can use one of these ARP snapshots or another snapshot of your volume to restore data.
+        /// </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -790,6 +1204,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
+        /// <summary>
+        /// Advanced Ransomware Protection (ARP) report properties.
+        /// Evaluate the report to determine whether the activity is acceptable (false positive) or whether an attack seems malicious using the ClearSuspects operation.
+        /// Advanced Ransomware Protection (ARP) creates snapshots named Anti_ransomware_backup when it detects a potential ransomware threat. You can use one of the ARP snapshots or another snapshot of your volume to restore data.
+        /// </summary>
         /// <param name="eventOn"> The creation date and time of the report. </param>
         /// <param name="state"> State of the Advanced Ransomware Protection (ARP) report. </param>
         /// <param name="severity"> Severity of the Advanced Ransomware Protection (ARP) report. </param>
@@ -813,6 +1232,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
+        /// <summary> List of suspects identified in an Advanced Ransomware Protection (ARP) report. </summary>
         /// <param name="extension"> Suspect File extension. </param>
         /// <param name="resolution"> ARP report suspect resolution. </param>
         /// <param name="fileCount"> The number of suspect files at the time of ARP report, this number can change as files get created and report status progresses. </param>
@@ -825,6 +1245,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new RansomwareSuspects(extension, resolution, fileCount, (suspectFiles ?? new ChangeTrackingList<SuspectFile>()).ToList(), default);
         }
 
+        /// <summary> Suspect file information. </summary>
         /// <param name="suspectFileName"> Suspect filename. </param>
         /// <param name="fileTimestamp"> The creation date and time of the file. </param>
         /// <returns> A new <see cref="Models.SuspectFile"/> instance for mocking. </returns>
@@ -833,6 +1254,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new SuspectFile(suspectFileName, fileTimestamp, default);
         }
 
+        /// <summary> Clear suspects for Advanced Ransomware Protection (ARP) report. </summary>
         /// <param name="resolution"> ARP report suspect resolution. </param>
         /// <param name="extensions"> List of file extensions resolved (PotentialThreat or FalsePositive). </param>
         /// <returns> A new <see cref="Models.RansomwareSuspectsClearContent"/> instance for mocking. </returns>
@@ -866,6 +1288,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
+        /// <summary> Backup Vault information. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.NetAppBackupVaultPatch"/> instance for mocking. </returns>
         public static NetAppBackupVaultPatch NetAppBackupVaultPatch(IDictionary<string, string> tags = default)
@@ -925,6 +1348,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppFileSystemUser(nfsUser, cifsUserUsername is null ? default : new CifsUser(cifsUserUsername, default), default);
         }
 
+        /// <summary> The effective NFS User ID and Group ID when accessing the volume data. </summary>
         /// <param name="userId"> The NFS user's UID. </param>
         /// <param name="groupId"> The NFS user's GID. </param>
         /// <returns> A new <see cref="Models.NetAppNfsUser"/> instance for mocking. </returns>
@@ -933,6 +1357,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppNfsUser(userId, groupId, default);
         }
 
+        /// <summary> Properties of the server managing the lifecycle of volume buckets. </summary>
         /// <param name="fqdn"> The host part of the bucket URL, resolving to the bucket IP address and allowed by the server certificate. </param>
         /// <param name="certificateCommonName"> Certificate Common Name taken from the certificate installed on the bucket server. </param>
         /// <param name="certificateExpiryOn"> The bucket server's certificate expiry date. </param>
@@ -958,6 +1383,14 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
+        /// <summary>
+        /// Specifies the Azure Key Vault settings. These are used when
+        /// a) retrieving the bucket server certificate, and
+        /// b) storing the bucket credentials
+        /// Notes:
+        /// <list type="number"><item><description>If a bucket certificate was previously provided directly using the certificateObject property, it is possible to subsequently use the Azure Key Vault for certificate management by using these 'akvDetails' properties. However, once Azure Key Vault is configured, it is no longer possible to provide the certificate directly via the certificateObject property.</description></item></list>
+        /// <list type="number"><item><description>These properties are mutually exclusive with the server.certificateObject property.</description></item></list>
+        /// </summary>
         /// <param name="certificateKeyVaultDetails"> Specifies the Azure Key Vault settings for retrieving the bucket server certificate. </param>
         /// <param name="credentialsKeyVaultDetails"> Specifies the Azure Key Vault settings for storing the bucket credentials. </param>
         /// <returns> A new <see cref="Models.NetAppKeyVaultDetails"/> instance for mocking. </returns>
@@ -966,6 +1399,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppKeyVaultDetails(certificateKeyVaultDetails, credentialsKeyVaultDetails, default);
         }
 
+        /// <summary> Specifies the Azure Key Vault settings for retrieving the bucket server certificate. </summary>
         /// <param name="certificateKeyVaultUri"> The base URI of the Azure Key Vault that is used when retrieving the bucket certificate. </param>
         /// <param name="certificateName"> The name of the bucket server certificate stored in the Azure Key Vault. </param>
         /// <param name="userAssignedIdentity"> Optional resource ID of the managed identity that has access to the Azure Key Vault (AKV) secret. If a value is provided, it is used to find a matching entry in the account's collection of user-assigned managed identities. If no match is found, an exception is thrown. If no value is provided, the system-assigned managed identity is used. </param>
@@ -975,6 +1409,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new CertificateKeyVaultDetails(certificateKeyVaultUri, certificateName, userAssignedIdentity, default);
         }
 
+        /// <summary> Specifies the Azure Key Vault settings for storing the bucket credentials. </summary>
         /// <param name="credentialsKeyVaultUri"> The base URI of the Azure Key Vault that is used when storing the bucket credentials. </param>
         /// <param name="secretName">
         /// The name of the secret stored in Azure Key Vault. The associated key pair has the following structure:
@@ -1023,6 +1458,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
+        /// <summary> Properties of the server managing the lifecycle of volume buckets. </summary>
         /// <param name="fqdn"> The host part of the bucket URL, resolving to the bucket IP address and allowed by the server certificate. </param>
         /// <param name="certificateObject">
         /// The base64-encoded contents of a PEM file, which includes both the bucket server's certificate and private key. It is generated by the end user and allows the user to access volume data in a read-only manner.
@@ -1038,6 +1474,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppBucketServerPatchProperties(fqdn, certificateObject, onCertificateConflictAction, default);
         }
 
+        /// <summary> The bucket's Access and Secret key pair Expiry Time expressed as the number of days from now. </summary>
         /// <param name="keyPairExpiryDays"> The number of days from now until the newly generated Access and Secret key pair will expire. </param>
         /// <returns> A new <see cref="Models.NetAppBucketCredentialsExpiry"/> instance for mocking. </returns>
         public static NetAppBucketCredentialsExpiry NetAppBucketCredentialsExpiry(int? keyPairExpiryDays = default)
@@ -1045,6 +1482,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppBucketCredentialsExpiry(keyPairExpiryDays, default);
         }
 
+        /// <summary> Bucket Access Key, Secret Key, and Expiry date and time of the key pair. </summary>
         /// <param name="accessKey"> The Access Key that is required along with the Secret Key to access the bucket. </param>
         /// <param name="secretKey"> The Secret Key that is required along with the Access Key to access the bucket. </param>
         /// <param name="keyPairExpiresOn"> The bucket's Access and Secret key pair expiry date and time (in UTC). </param>
@@ -1142,6 +1580,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
+        /// <summary> Contains all the information needed to mount a cache. </summary>
         /// <param name="mountTargetId"> UUID v4 used to identify the MountTarget. </param>
         /// <param name="ipAddress"> The mount target's IPv4 address, used to mount the cache. </param>
         /// <param name="smbServerFqdn"> The SMB server's Fully Qualified Domain Name, FQDN. </param>
@@ -1151,15 +1590,18 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppCacheMountTargetProperties(mountTargetId, ipAddress, smbServerFqdn, default);
         }
 
+        /// <summary> SMB settings for the cache. </summary>
         /// <param name="smbEncryption"> Enables encryption for in-flight smb3 data. Only applicable for SMB/DualProtocol cache. </param>
-        /// <param name="smbAccessBasedEnumeration"> Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
-        /// <param name="smbNonBrowsable"> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
+        /// <param name="smbAccessBasedEnumeration"> Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol cache. </param>
+        /// <param name="smbNonBrowsable"> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol cache. </param>
+        /// <param name="smbOplocks"> Enables or disables SMB opportunistic lock property for SMB Shares. Only applicable for SMB/DualProtocol cache. </param>
         /// <returns> A new <see cref="Models.NetAppSmbSettings"/> instance for mocking. </returns>
-        public static NetAppSmbSettings NetAppSmbSettings(NetAppSmbEncryptionState? smbEncryption = default, SmbAccessBasedEnumeration? smbAccessBasedEnumeration = default, SmbNonBrowsable? smbNonBrowsable = default)
+        public static NetAppSmbSettings NetAppSmbSettings(NetAppSmbEncryptionState? smbEncryption = default, SmbAccessBasedEnumeration? smbAccessBasedEnumeration = default, SmbNonBrowsable? smbNonBrowsable = default, SmbOplocks? smbOplocks = default)
         {
-            return new NetAppSmbSettings(smbEncryption, smbAccessBasedEnumeration, smbNonBrowsable, default);
+            return new NetAppSmbSettings(smbEncryption, smbAccessBasedEnumeration, smbNonBrowsable, smbOplocks, default);
         }
 
+        /// <summary> Stores the origin cluster information associated to a cache. </summary>
         /// <param name="peerClusterName"> ONTAP cluster name of external cluster hosting the origin volume. Must match the exact cluster name. </param>
         /// <param name="peerAddresses"> ONTAP Intercluster LIF IP addresses. One IP address per cluster node is required. </param>
         /// <param name="peerVserverName"> External Vserver (SVM) name  name of the SVM hosting the origin volume. </param>
@@ -1172,6 +1614,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppOriginClusterInformation(peerClusterName, (peerAddresses ?? new ChangeTrackingList<string>()).ToList(), peerVserverName, peerVolumeName, default);
         }
 
+        /// <summary> The type used for update operations of the Cache. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.NetAppCachePatch"/> instance for mocking. </returns>
@@ -1207,6 +1650,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
+        /// <summary> The response containing peering passphrases and commands for cluster and vserver peering. </summary>
         /// <param name="clusterPeeringCommand"> The cluster peering command. </param>
         /// <param name="clusterPeeringPassphrase"> The cluster peering passphrase. </param>
         /// <param name="vserverPeeringCommand"> The vserver peering command. </param>
@@ -1217,33 +1661,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppPeeringPassphrases(clusterPeeringCommand, clusterPeeringPassphrase, vserverPeeringCommand, criticalWarning, default);
         }
 
-        /// <param name="provisioningState"> Azure lifecycle management. </param>
-        /// <param name="size"> Size of backup in bytes. </param>
-        /// <param name="label"> Label for backup. </param>
-        /// <param name="backupType"> Type of backup Manual or Scheduled. </param>
-        /// <param name="failureReason"> Failure reason. </param>
-        /// <param name="elasticVolumeResourceId"> ResourceId used to identify the Elastic Volume. </param>
-        /// <param name="snapshotUsage"> Manual backup using an already existing snapshot. This will always be CreateNewSnapshot for scheduled backups and UseExistingSnapshot/CreateNewSnapshot for manual backups. </param>
-        /// <param name="elasticSnapshotResourceId"> ResourceId used to identify the elastic snapshot resource. This is required when an existing snapshot needs to be used for creating a manual backup. </param>
-        /// <param name="elasticBackupPolicyResourceId"> ResourceId used to identify the elastic backup policy. </param>
-        /// <param name="volumeSize"> Specifies if the backup is for a large volume. </param>
-        /// <returns> A new <see cref="Models.ElasticBackupProperties"/> instance for mocking. </returns>
-        public static ElasticBackupProperties ElasticBackupProperties(NetAppProvisioningState? provisioningState = default, long? size = default, string label = default, ElasticBackupType? backupType = default, string failureReason = default, ResourceIdentifier elasticVolumeResourceId = default, ElasticBackupSnapshotUsage? snapshotUsage = default, ResourceIdentifier elasticSnapshotResourceId = default, ResourceIdentifier elasticBackupPolicyResourceId = default, ElasticBackupVolumeSize? volumeSize = default)
-        {
-            return new ElasticBackupProperties(
-                provisioningState,
-                size,
-                label,
-                backupType,
-                failureReason,
-                elasticVolumeResourceId,
-                snapshotUsage,
-                elasticSnapshotResourceId,
-                elasticBackupPolicyResourceId,
-                volumeSize,
-                default);
-        }
-
+        /// <summary> Active Directory Configuration resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1253,7 +1671,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="NetApp.NetAppActiveDirectoryConfigData"/> instance for mocking. </returns>
-        public static NetAppActiveDirectoryConfigData NetAppActiveDirectoryConfigData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ActiveDirectoryConfigProperties properties = default, ManagedServiceIdentity identity = default)
+        public static NetAppActiveDirectoryConfigData NetAppActiveDirectoryConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ActiveDirectoryConfigProperties properties, ManagedServiceIdentity identity)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1267,6 +1685,350 @@ namespace Azure.ResourceManager.NetApp.Models
                 properties,
                 identity,
                 default);
+        }
+
+        /// <summary> External Cluster resource, representing a cluster on an external NetApp ONTAP system. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="NetApp.ExternalClusterData"/> instance for mocking. </returns>
+        public static ExternalClusterData ExternalClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExternalClusterProperties properties = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ExternalClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                identity,
+                default);
+        }
+
+        /// <summary> External Cluster properties. </summary>
+        /// <param name="provisioningState"> Azure lifecycle management. </param>
+        /// <param name="interclusterLifsIPAddresses"> Intercluster LIFs, external cluster IPs for cluster peer connection. </param>
+        /// <param name="clusterPeerPassphraseKeyVault"> Key Vault authentication configuration for cluster peering passphrase. </param>
+        /// <returns> A new <see cref="Models.ExternalClusterProperties"/> instance for mocking. </returns>
+        public static ExternalClusterProperties ExternalClusterProperties(NetAppProvisioningState? provisioningState = default, IEnumerable<IPAddress> interclusterLifsIPAddresses = default, KeyVaultClusterPeerPassphraseProperties clusterPeerPassphraseKeyVault = default)
+        {
+            interclusterLifsIPAddresses ??= new ChangeTrackingList<IPAddress>();
+
+            return new ExternalClusterProperties(provisioningState, (interclusterLifsIPAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(), clusterPeerPassphraseKeyVault, default);
+        }
+
+        /// <summary> Key Vault authentication properties. </summary>
+        /// <param name="keyVaultUri"> The Azure Key Vault URI where the passphrase for cluster peering handshake is stored. </param>
+        /// <param name="secretName"> The name of the secret in Azure Key Vault. Passphrase for cluster peering handshake is stored in this secret. </param>
+        /// <param name="userAssignedIdentityResourceId"> The ARM resource identifier of the user assigned identity used to authenticate with key vault. If not provided, system-assigned identity will be used. </param>
+        /// <returns> A new <see cref="Models.KeyVaultClusterPeerPassphraseProperties"/> instance for mocking. </returns>
+        public static KeyVaultClusterPeerPassphraseProperties KeyVaultClusterPeerPassphraseProperties(Uri keyVaultUri = default, string secretName = default, ResourceIdentifier userAssignedIdentityResourceId = default)
+        {
+            return new KeyVaultClusterPeerPassphraseProperties(keyVaultUri, secretName, userAssignedIdentityResourceId, default);
+        }
+
+        /// <summary> The type used for update operations of the ExternalCluster. </summary>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.ExternalClusterPatch"/> instance for mocking. </returns>
+        public static ExternalClusterPatch ExternalClusterPatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, ExternalClusterUpdateProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ExternalClusterPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
+        }
+
+        /// <summary> The updatable properties of the ExternalCluster. </summary>
+        /// <param name="interclusterLifsIPAddresses"> Intercluster LIFs, external cluster IPs for cluster peer connection. </param>
+        /// <param name="clusterPeerPassphraseKeyVault"> Key Vault authentication configuration for cluster peering passphrase. </param>
+        /// <returns> A new <see cref="Models.ExternalClusterUpdateProperties"/> instance for mocking. </returns>
+        public static ExternalClusterUpdateProperties ExternalClusterUpdateProperties(IEnumerable<IPAddress> interclusterLifsIPAddresses = default, KeyVaultClusterPeerPassphrasePatchProperties clusterPeerPassphraseKeyVault = default)
+        {
+            interclusterLifsIPAddresses ??= new ChangeTrackingList<IPAddress>();
+
+            return new ExternalClusterUpdateProperties((interclusterLifsIPAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(), clusterPeerPassphraseKeyVault, default);
+        }
+
+        /// <summary> Key Vault authentication properties for PATCH operations. </summary>
+        /// <param name="keyVaultUri"> The Azure Key Vault URI where the passphrase for cluster peering handshake is stored. </param>
+        /// <param name="secretName"> The name of the secret in Azure Key Vault. Passphrase for cluster peering handshake is stored in this secret. </param>
+        /// <param name="userAssignedIdentityResourceId"> The ARM resource identifier of the user assigned identity used to authenticate with key vault. If not provided, system-assigned identity will be used. </param>
+        /// <returns> A new <see cref="Models.KeyVaultClusterPeerPassphrasePatchProperties"/> instance for mocking. </returns>
+        public static KeyVaultClusterPeerPassphrasePatchProperties KeyVaultClusterPeerPassphrasePatchProperties(Uri keyVaultUri = default, string secretName = default, ResourceIdentifier userAssignedIdentityResourceId = default)
+        {
+            return new KeyVaultClusterPeerPassphrasePatchProperties(keyVaultUri, secretName, userAssignedIdentityResourceId, default);
+        }
+
+        /// <summary> Cluster Peer resource, represents a peer relationship between an external cluster and an Azure NetApp Files cluster. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="NetApp.ClusterPeerData"/> instance for mocking. </returns>
+        public static ClusterPeerData ClusterPeerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ClusterPeerProperties properties = default)
+        {
+            return new ClusterPeerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> Cluster Peer properties. </summary>
+        /// <param name="provisioningState"> Azure lifecycle management. </param>
+        /// <param name="anfClusterName"> Name of the Azure NetApp Files (ANF) cluster. </param>
+        /// <param name="ontapClusterName"> Name of the external ONTAP cluster, discovered during cluster peering. </param>
+        /// <param name="ontapVersion"> The ONTAP version of the external cluster. </param>
+        /// <param name="status"> Status of the peer relationship. </param>
+        /// <param name="hybridReplicationResourceIds"> External volume replication resource IDs. </param>
+        /// <param name="externalCacheConnectionResourceIds"> External cache connection resource IDs. </param>
+        /// <param name="command"> Command to execute to create the peer relationship. </param>
+        /// <param name="networkInterfaces"> Network interfaces created that allow communications between the clusters. </param>
+        /// <param name="clusterPeerSubnetResourceId"> Cluster Peer Subnet Resource ID. </param>
+        /// <returns> A new <see cref="Models.ClusterPeerProperties"/> instance for mocking. </returns>
+        public static ClusterPeerProperties ClusterPeerProperties(NetAppProvisioningState? provisioningState = default, string anfClusterName = default, string ontapClusterName = default, string ontapVersion = default, ClusterPeerStatus? status = default, IEnumerable<ResourceIdentifier> hybridReplicationResourceIds = default, IEnumerable<ResourceIdentifier> externalCacheConnectionResourceIds = default, string command = default, IEnumerable<ExternalResourceNetworkInterfaces> networkInterfaces = default, ResourceIdentifier clusterPeerSubnetResourceId = default)
+        {
+            hybridReplicationResourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
+            externalCacheConnectionResourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
+            networkInterfaces ??= new ChangeTrackingList<ExternalResourceNetworkInterfaces>();
+
+            return new ClusterPeerProperties(
+                provisioningState,
+                anfClusterName,
+                ontapClusterName,
+                ontapVersion,
+                status,
+                (hybridReplicationResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                (externalCacheConnectionResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                command,
+                (networkInterfaces ?? new ChangeTrackingList<ExternalResourceNetworkInterfaces>()).ToList(),
+                clusterPeerSubnetResourceId,
+                default);
+        }
+
+        /// <summary> External Resource Network Interfaces. </summary>
+        /// <param name="networkInterfaceResourceId"> Network Interface Resource ID. </param>
+        /// <param name="peerIPAddress"> Peer IP address used for peering. </param>
+        /// <returns> A new <see cref="Models.ExternalResourceNetworkInterfaces"/> instance for mocking. </returns>
+        public static ExternalResourceNetworkInterfaces ExternalResourceNetworkInterfaces(ResourceIdentifier networkInterfaceResourceId = default, IPAddress peerIPAddress = default)
+        {
+            return new ExternalResourceNetworkInterfaces(networkInterfaceResourceId, peerIPAddress, default);
+        }
+
+        /// <summary> External SVM (Storage Virtual Machine, Vserver) resource, representing an SVM on an external NetApp ONTAP system. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="NetApp.ExternalSvmData"/> instance for mocking. </returns>
+        public static ExternalSvmData ExternalSvmData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExternalSvmProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ExternalSvmData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
+        }
+
+        /// <summary> External SVM properties. </summary>
+        /// <param name="provisioningState"> Azure lifecycle management. </param>
+        /// <param name="ontapSvmName"> Name of the external ONTAP SVM (different from Azure resource name). Must be unique across the cluster. </param>
+        /// <param name="svmPeerResourceIds"> Resource IDs of associated SVM Peer relationships. </param>
+        /// <returns> A new <see cref="Models.ExternalSvmProperties"/> instance for mocking. </returns>
+        public static ExternalSvmProperties ExternalSvmProperties(NetAppProvisioningState? provisioningState = default, string ontapSvmName = default, IEnumerable<ResourceIdentifier> svmPeerResourceIds = default)
+        {
+            svmPeerResourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
+
+            return new ExternalSvmProperties(provisioningState, ontapSvmName, (svmPeerResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
+        }
+
+        /// <summary> The type used for updating tags in ExternalSvm resources. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.ExternalSvmPatch"/> instance for mocking. </returns>
+        public static ExternalSvmPatch ExternalSvmPatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ExternalSvmPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <summary> SVM Peer resource, represents a peer relationship between an external SVM and an Azure NetApp Files SVM. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="NetApp.SvmPeerData"/> instance for mocking. </returns>
+        public static SvmPeerData SvmPeerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SvmPeerProperties properties = default)
+        {
+            return new SvmPeerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> SVM Peer properties. </summary>
+        /// <param name="provisioningState"> Azure lifecycle management. </param>
+        /// <param name="acceptCommand"> Command to accept the peer relationship. </param>
+        /// <param name="anfSvmName"> Name of the Azure Net App Files (ANF) SVM. </param>
+        /// <param name="externalSvmResourceId"> Resource ID of the external SVM. </param>
+        /// <param name="status"> Status of the peer relationship. </param>
+        /// <param name="peerTypes"> Peer types; expected values include "Replication" or "Cache". </param>
+        /// <param name="hybridReplicationResourceIds"> Resource IDs of Hybrid Replication resources associated with this SVM peer. </param>
+        /// <param name="externalCacheConnectionResourceIds"> Resource IDs of External Cache Connections associated with this SVM peer. </param>
+        /// <returns> A new <see cref="Models.SvmPeerProperties"/> instance for mocking. </returns>
+        public static SvmPeerProperties SvmPeerProperties(NetAppProvisioningState? provisioningState = default, string acceptCommand = default, string anfSvmName = default, ResourceIdentifier externalSvmResourceId = default, SvmPeerStatus? status = default, IEnumerable<SvmPeerType> peerTypes = default, IEnumerable<ResourceIdentifier> hybridReplicationResourceIds = default, IEnumerable<ResourceIdentifier> externalCacheConnectionResourceIds = default)
+        {
+            peerTypes ??= new ChangeTrackingList<SvmPeerType>();
+            hybridReplicationResourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
+            externalCacheConnectionResourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
+
+            return new SvmPeerProperties(
+                provisioningState,
+                acceptCommand,
+                anfSvmName,
+                externalSvmResourceId,
+                status,
+                (peerTypes ?? new ChangeTrackingList<SvmPeerType>()).ToList(),
+                (hybridReplicationResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                (externalCacheConnectionResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                default);
+        }
+
+        /// <summary> External Cache resource, representing a cache volume on an external ONTAP system. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="NetApp.ExternalCacheData"/> instance for mocking. </returns>
+        public static ExternalCacheData ExternalCacheData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ExternalCacheProperties properties = default)
+        {
+            return new ExternalCacheData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> External Cache properties. </summary>
+        /// <param name="provisioningState"> Azure lifecycle management. </param>
+        /// <param name="externalCacheName"> Name of the cache volume on the external ONTAP system. </param>
+        /// <param name="originVolumeResourceId"> Origin volume resource ID, the ANF volume that acts as the origin for this cache. </param>
+        /// <param name="originVolumeName"> Name of the origin volume associated with this cache. </param>
+        /// <param name="originSvmName"> Name of the origin SVM (Storage Virtual Machine) associated with this cache. </param>
+        /// <param name="sizeInBytes"> Size of the cache in bytes. </param>
+        /// <param name="state"> State of the remote cache volume. </param>
+        /// <param name="createCommand"> The ONTAP CLI command to create this cache. </param>
+        /// <param name="connectionStatus"> Connection status of the external cache. </param>
+        /// <returns> A new <see cref="Models.ExternalCacheProperties"/> instance for mocking. </returns>
+        public static ExternalCacheProperties ExternalCacheProperties(NetAppProvisioningState? provisioningState = default, string externalCacheName = default, ResourceIdentifier originVolumeResourceId = default, string originVolumeName = default, string originSvmName = default, long? sizeInBytes = default, ExternalCacheState? state = default, string createCommand = default, ExternalCacheConnectionStatus? connectionStatus = default)
+        {
+            return new ExternalCacheProperties(
+                provisioningState,
+                externalCacheName,
+                originVolumeResourceId,
+                originVolumeName,
+                originSvmName,
+                sizeInBytes,
+                state,
+                createCommand,
+                connectionStatus,
+                default);
+        }
+
+        /// <summary> External Cache Connection resource, representing a cache connection relationship between External and Azure NetApp Files volumes. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="NetApp.ExternalCacheConnectionData"/> instance for mocking. </returns>
+        public static ExternalCacheConnectionData ExternalCacheConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExternalCacheConnectionProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ExternalCacheConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
+        }
+
+        /// <summary> External Cache Connection properties. </summary>
+        /// <param name="provisioningState"> Current status of the operation. </param>
+        /// <param name="originVolumeResourceId"> Origin volume resource ID, the ANF volume that acts as the origin for the cache connection. </param>
+        /// <param name="externalCacheName"> Name of the cache associated with this connection. </param>
+        /// <param name="externalSvmResourceId"> External SVM resource ID, the external storage virtual machine associated with this cache connection. </param>
+        /// <param name="clusterPeerSubnetResourceId"> The Azure Resource URI for a delegated subnet used for cluster peering. </param>
+        /// <param name="clusterPeerResourceId"> Resource ID of the cluster peer. </param>
+        /// <param name="svmPeerResourceId"> Resource ID of the SVM peer. </param>
+        /// <param name="setupInformation"> Setup information for the external cache connection. </param>
+        /// <returns> A new <see cref="Models.ExternalCacheConnectionProperties"/> instance for mocking. </returns>
+        public static ExternalCacheConnectionProperties ExternalCacheConnectionProperties(NetAppProvisioningState? provisioningState = default, ResourceIdentifier originVolumeResourceId = default, string externalCacheName = default, ResourceIdentifier externalSvmResourceId = default, ResourceIdentifier clusterPeerSubnetResourceId = default, ResourceIdentifier clusterPeerResourceId = default, ResourceIdentifier svmPeerResourceId = default, SetupInformation setupInformation = default)
+        {
+            return new ExternalCacheConnectionProperties(
+                provisioningState,
+                originVolumeResourceId,
+                externalCacheName,
+                externalSvmResourceId,
+                clusterPeerSubnetResourceId,
+                clusterPeerResourceId,
+                svmPeerResourceId,
+                setupInformation,
+                default);
+        }
+
+        /// <summary> Setup Information for External Connection Setups. </summary>
+        /// <param name="setupStatus"> Setup status indicating the current step in the setup process. </param>
+        /// <param name="statusInformation"> Additional status information. </param>
+        /// <param name="command"> Command to execute. </param>
+        /// <returns> A new <see cref="Models.SetupInformation"/> instance for mocking. </returns>
+        public static SetupInformation SetupInformation(ExternalConnectionSetupState? setupStatus = default, string statusInformation = default, string command = default)
+        {
+            return new SetupInformation(setupStatus, statusInformation, command, default);
+        }
+
+        /// <summary> The type used for updating tags in ExternalCacheConnection resources. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.ExternalCacheConnectionPatch"/> instance for mocking. </returns>
+        public static ExternalCacheConnectionPatch ExternalCacheConnectionPatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ExternalCacheConnectionPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1287,6 +2049,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
+        /// <summary> Provides region specific information. </summary>
         /// <param name="storageToNetworkProximity"> Provides storage to network proximity information in the region. </param>
         /// <param name="availabilityZoneMappings"> Provides logical availability zone mappings for the subscription for a region. </param>
         /// <returns> A new <see cref="Models.NetAppRegionInfo"/> instance for mocking. </returns>
@@ -1297,6 +2060,16 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppRegionInfo(storageToNetworkProximity, (availabilityZoneMappings ?? new ChangeTrackingList<AvailabilityZoneMapping>()).ToList(), default);
         }
 
+        /// <summary> The AvailabilityZoneMapping. </summary>
+        /// <param name="availabilityZone"> Logical availability zone. </param>
+        /// <param name="isAvailable"> Available availability zone. </param>
+        /// <returns> A new <see cref="Models.AvailabilityZoneMapping"/> instance for mocking. </returns>
+        public static AvailabilityZoneMapping AvailabilityZoneMapping(string availabilityZone = default, bool? isAvailable = default)
+        {
+            return new AvailabilityZoneMapping(availabilityZone, isAvailable, default);
+        }
+
+        /// <summary> Active Directory. </summary>
         /// <param name="activeDirectoryId"> Id of the Active Directory. </param>
         /// <param name="username"> A domain user account with permission to create machine accounts. </param>
         /// <param name="password"> Plain text password of Active Directory domain administrator, value is masked in the response. </param>
@@ -1354,6 +2127,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
+        /// <summary> LDAP search scope. </summary>
         /// <param name="userDN"> This specifies the user DN, which overrides the base DN for user lookups. </param>
         /// <param name="groupDN"> This specifies the group DN, which overrides the base DN for group lookups. </param>
         /// <param name="groupMembershipFilter"> This specifies the custom LDAP search filter to be used when looking up group membership from LDAP server. </param>
@@ -1363,6 +2137,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppLdapSearchScopeConfiguration(userDN, groupDN, groupMembershipFilter, default);
         }
 
+        /// <summary> Encryption settings. </summary>
         /// <param name="keySource"> The encryption keySource (provider). Possible values (case-insensitive):  Microsoft.NetApp, Microsoft.KeyVault. </param>
         /// <param name="keyVaultProperties"> Properties provided by KeVault. Applicable if keySource is 'Microsoft.KeyVault'. </param>
         /// <param name="identity"> Identity used to authenticate to KeyVault. Applicable if keySource is 'Microsoft.KeyVault'. </param>
@@ -1372,6 +2147,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppAccountEncryption(keySource, keyVaultProperties, identity, default);
         }
 
+        /// <summary> Properties of key vault. </summary>
         /// <param name="keyVaultId"> UUID v4 used to identify the Azure Key Vault configuration. </param>
         /// <param name="keyVaultUri"> The Uri of KeyVault. </param>
         /// <param name="keyName"> The name of KeyVault key. </param>
@@ -1389,6 +2165,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
+        /// <summary> Identity used to authenticate with key vault. </summary>
         /// <param name="principalId"> The principal ID (object ID) of the identity used to authenticate with key vault. Read-only. </param>
         /// <param name="userAssignedIdentity"> The ARM resource identifier of the user assigned identity used to authenticate with key vault. Applicable if identity.type has 'UserAssigned'. It should match key of identity.userAssignedIdentities. </param>
         /// <param name="federatedClientId"> ClientId of the multi-tenant Entra ID Application. Used to access cross-tenant keyvaults. </param>
@@ -1398,9 +2175,10 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppEncryptionIdentity(principalId, userAssignedIdentity, federatedClientId, default);
         }
 
+        /// <summary> LDAP configuration. </summary>
         /// <param name="domain"> Name of the LDAP configuration domain. </param>
         /// <param name="ldapServers"> List of LDAP server IP addresses (IPv4 only) for the LDAP domain. </param>
-        /// <param name="isLdapOverTlsEnabled"> Specifies whether or not the LDAP traffic needs to be secured via TLS. </param>
+        /// <param name="secureLdapType"> Indicates the secure LDAP mode for encrypting communication between ANF storage and customer LDAP servers. </param>
         /// <param name="serverCACertificate"> When LDAP over SSL/TLS is enabled, the LDAP client is required to have base64 encoded ldap servers CA certificate. </param>
         /// <param name="certificateCNHost"> The CN host name used while generating the certificate, LDAP Over TLS requires the CN host name to create DNS host entry. </param>
         /// <param name="dnsServers"> List of DNS server IPv4 addresses for resolving the CN host certificate. This parameter is used when LDAP over TLS is enabled. </param>
@@ -1412,7 +2190,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="bindDN"> The distinguished name (DN) to bind as when performing LDAP operations. </param>
         /// <param name="bindPasswordAkvConfig"> The Azure Key Vault configuration where the Bind DN (Distinguished Name) user password is stored. </param>
         /// <returns> A new <see cref="Models.LdapConfiguration"/> instance for mocking. </returns>
-        public static LdapConfiguration LdapConfiguration(string domain = default, IEnumerable<IPAddress> ldapServers = default, bool? isLdapOverTlsEnabled = default, string serverCACertificate = default, string certificateCNHost = default, IEnumerable<IPAddress> dnsServers = default, int? ldapPort = default, string userDN = default, string groupDN = default, string netGroupDN = default, BindAuthenticationLevel? bindAuthenticationLevel = default, string bindDN = default, BindPasswordKeyVaultConfig bindPasswordAkvConfig = default)
+        public static LdapConfiguration LdapConfiguration(string domain, IEnumerable<IPAddress> ldapServers, SecureLdapType? secureLdapType, string serverCACertificate, string certificateCNHost, IEnumerable<IPAddress> dnsServers, int? ldapPort = default, string userDN = default, string groupDN = default, string netGroupDN = default, BindAuthenticationLevel? bindAuthenticationLevel = default, string bindDN = default, BindPasswordKeyVaultConfig bindPasswordAkvConfig = default)
         {
             ldapServers ??= new ChangeTrackingList<IPAddress>();
             dnsServers ??= new ChangeTrackingList<IPAddress>();
@@ -1420,7 +2198,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new LdapConfiguration(
                 domain,
                 (ldapServers ?? new ChangeTrackingList<IPAddress>()).ToList(),
-                isLdapOverTlsEnabled,
+                secureLdapType,
                 serverCACertificate,
                 certificateCNHost,
                 (dnsServers ?? new ChangeTrackingList<IPAddress>()).ToList(),
@@ -1434,6 +2212,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
+        /// <summary> The Azure Key Vault configuration where the Bind DN (Distinguished Name) user password is stored. </summary>
         /// <param name="azureKeyVaultUri"> The Azure Key Vault URI where the Bind DN user password is stored. </param>
         /// <param name="secretName"> The name of the secret in Azure Key Vault that contains the Bind DN user password. </param>
         /// <param name="userAssignedIdentity"> The ARM resource identifier of the user assigned identity used to authenticate with key vault. </param>
@@ -1456,7 +2235,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="entraIdConfig"> Entra ID configuration for the account. </param>
         /// <param name="ldapConfiguration"> LDAP Configuration for the account. </param>
         /// <returns> A new <see cref="Models.NetAppAccountPatch"/> instance for mocking. </returns>
-        public static NetAppAccountPatch NetAppAccountPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, IEnumerable<NetAppAccountActiveDirectory> activeDirectories = default, NetAppAccountEncryption encryption = default, string nfsV4IdDomain = default, EntraIdConfigPatch entraIdConfig = default, LdapConfigurationPatch ldapConfiguration = default)
+        public static NetAppAccountPatch NetAppAccountPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, IEnumerable<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, string nfsV4IdDomain, EntraIdConfigPatch entraIdConfig, LdapConfigurationPatch ldapConfiguration)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1478,9 +2257,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
+        /// <summary> LDAP configuration for PATCH operations (no default values). </summary>
         /// <param name="domain"> Name of the LDAP configuration domain. </param>
         /// <param name="ldapServers"> List of LDAP server IP addresses (IPv4 only) for the LDAP domain. </param>
-        /// <param name="isLdapOverTlsEnabled"> Specifies whether or not the LDAP traffic needs to be secured via TLS. </param>
+        /// <param name="secureLdapType"> Indicates the secure LDAP mode for encrypting communication between ANF storage and customer LDAP servers. </param>
         /// <param name="serverCACertificate"> When LDAP over SSL/TLS is enabled, the LDAP client is required to have base64 encoded ldap servers CA certificate. </param>
         /// <param name="certificateCNHost"> The CN host name used while generating the certificate, LDAP Over TLS requires the CN host name to create DNS host entry. </param>
         /// <param name="dnsServers"> List of DNS server IPv4 addresses for resolving the CN host certificate. This parameter is used when LDAP over TLS is enabled. </param>
@@ -1492,7 +2272,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="bindDN"> The distinguished name (DN) to bind as when performing LDAP operations. </param>
         /// <param name="bindPasswordAkvConfig"> The Azure Key Vault configuration where the Bind DN (Distinguished Name) user password is stored. </param>
         /// <returns> A new <see cref="Models.LdapConfigurationPatch"/> instance for mocking. </returns>
-        public static LdapConfigurationPatch LdapConfigurationPatch(string domain = default, IEnumerable<IPAddress> ldapServers = default, bool? isLdapOverTlsEnabled = default, string serverCACertificate = default, string certificateCNHost = default, IEnumerable<IPAddress> dnsServers = default, int? ldapPort = default, string userDN = default, string groupDN = default, string netGroupDN = default, BindAuthenticationLevel? bindAuthenticationLevel = default, string bindDN = default, BindPasswordKeyVaultConfigPatch bindPasswordAkvConfig = default)
+        public static LdapConfigurationPatch LdapConfigurationPatch(string domain = default, IEnumerable<IPAddress> ldapServers = default, SecureLdapType? secureLdapType = default, string serverCACertificate = default, string certificateCNHost = default, IEnumerable<IPAddress> dnsServers = default, int? ldapPort = default, string userDN = default, string groupDN = default, string netGroupDN = default, BindAuthenticationLevel? bindAuthenticationLevel = default, string bindDN = default, BindPasswordKeyVaultConfigPatch bindPasswordAkvConfig = default)
         {
             ldapServers ??= new ChangeTrackingList<IPAddress>();
             dnsServers ??= new ChangeTrackingList<IPAddress>();
@@ -1500,7 +2280,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new LdapConfigurationPatch(
                 domain,
                 (ldapServers ?? new ChangeTrackingList<IPAddress>()).ToList(),
-                isLdapOverTlsEnabled,
+                secureLdapType,
                 serverCACertificate,
                 certificateCNHost,
                 (dnsServers ?? new ChangeTrackingList<IPAddress>()).ToList(),
@@ -1514,6 +2294,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
+        /// <summary> The Azure Key Vault configuration where the Bind DN (Distinguished Name) user password is stored. </summary>
         /// <param name="azureKeyVaultUri"> The Azure Key Vault URI where the Bind DN user password is stored. </param>
         /// <param name="secretName"> The name of the secret in Azure Key Vault that contains the Bind DN user password. </param>
         /// <param name="userAssignedIdentity"> The ARM resource identifier of the user assigned identity used to authenticate with key vault. </param>
@@ -1523,6 +2304,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new BindPasswordKeyVaultConfigPatch(azureKeyVaultUri, secretName, userAssignedIdentity, default);
         }
 
+        /// <summary> Encryption transition request. </summary>
         /// <param name="virtualNetworkId"> Identifier for the virtual network. </param>
         /// <param name="privateEndpointId"> Identifier of the private endpoint to reach the Azure Key Vault. </param>
         /// <returns> A new <see cref="Models.NetAppEncryptionTransitionContent"/> instance for mocking. </returns>
@@ -1541,6 +2323,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppKeyVaultStatusResult(keyVaultUri is null && keyName is null && keyVaultResourceId is null && keyVaultPrivateEndpoints is null ? default : new GetKeyVaultStatusResponseProperties(keyVaultUri, keyName, keyVaultResourceId, (keyVaultPrivateEndpoints ?? new ChangeTrackingList<NetAppKeyVaultPrivateEndpoint>()).ToList(), default), default);
         }
 
+        /// <summary> Pairs of virtual network ID and private endpoint ID. Every virtual network that has volumes encrypted with customer-managed keys needs its own key vault private endpoint. </summary>
         /// <param name="virtualNetworkId"> Identifier for the virtual network id. </param>
         /// <param name="privateEndpointId"> Identifier of the private endpoint to reach the Azure Key Vault. </param>
         /// <returns> A new <see cref="Models.NetAppKeyVaultPrivateEndpoint"/> instance for mocking. </returns>
@@ -1549,6 +2332,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppKeyVaultPrivateEndpoint(virtualNetworkId, privateEndpointId, default);
         }
 
+        /// <summary> Change key vault request. </summary>
         /// <param name="keyVaultUri"> The URI of the key vault/managed HSM that should be used for encryption. </param>
         /// <param name="keyName"> The name of the key that should be used for encryption. </param>
         /// <param name="keyVaultResourceId"> Azure resource ID of the key vault/managed HSM that should be used for encryption. </param>
@@ -1561,6 +2345,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppChangeKeyVault(keyVaultUri, keyName, keyVaultResourceId, (keyVaultPrivateEndpoints ?? new ChangeTrackingList<NetAppKeyVaultPrivateEndpoint>()).ToList(), default);
         }
 
+        /// <summary> Migrate Backups Request. </summary>
         /// <param name="backupVaultResourceId"> The ResourceId of the Backup Vault. </param>
         /// <returns> A new <see cref="Models.BackupsMigrationContent"/> instance for mocking. </returns>
         public static BackupsMigrationContent BackupsMigrationContent(ResourceIdentifier backupVaultResourceId = default)
@@ -1597,17 +2382,17 @@ namespace Azure.ResourceManager.NetApp.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                poolId is null && isCoolAccessEnabled is null ? default : new PoolProperties(
+                new PoolProperties(
                     poolId,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                    size,
+                    serviceLevel,
+                    provisioningState,
+                    totalThroughputMibps,
+                    utilizedThroughputMibps,
+                    customThroughputMibpsInt,
+                    qosType,
                     isCoolAccessEnabled,
-                    default,
+                    encryptionType,
                     default),
                 eTag,
                 default);
@@ -1639,6 +2424,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
+        /// <summary> Restore payload for Single File Backup Restore. </summary>
         /// <param name="fileList"> List of files to be restored. </param>
         /// <param name="restoreFilePath"> Destination folder where the files will be restored. The path name should start with a forward slash. If it is omitted from request then restore is done at the root folder of the destination volume by default. </param>
         /// <param name="destinationVolumeId"> Resource Id of the destination volume on which the files need to be restored. </param>
@@ -1715,6 +2501,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
+        /// <summary> Resource name availability request content. </summary>
         /// <param name="name"> Resource name to verify. </param>
         /// <param name="resourceType"> Resource type used for verification. </param>
         /// <param name="resourceGroup"> Resource group name. </param>
@@ -1724,6 +2511,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppNameAvailabilityContent(name, resourceType, resourceGroup, default);
         }
 
+        /// <summary> Information regarding availability of a resource. </summary>
         /// <param name="isAvailable"> &lt;code&gt;true&lt;/code&gt; indicates name is valid and available. &lt;code&gt;false&lt;/code&gt; indicates the name is invalid, unavailable, or both. </param>
         /// <param name="reason"> &lt;code&gt;Invalid&lt;/code&gt; indicates the name provided does not match Azure App Service naming requirements. &lt;code&gt;AlreadyExists&lt;/code&gt; indicates that the name is already in use and is therefore unavailable. </param>
         /// <param name="message"> If reason == invalid, provide the user with the reason why the given name is invalid, and provide the resource naming requirements so that the user can select a valid name. If reason == AlreadyExists, explain that resource name is already in use, and direct them to select a different name. </param>
@@ -1733,6 +2521,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppCheckAvailabilityResult(isAvailable, reason, message, default);
         }
 
+        /// <summary> File path availability request content - availability is based on the name and the subnetId. </summary>
         /// <param name="name"> File path to verify. </param>
         /// <param name="subnetId"> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. </param>
         /// <param name="availabilityZone"> The Azure Resource logical availability zone which is used within zone mapping lookup for the subscription and region. The lookup will retrieve the physical zone where volume is placed. </param>
@@ -1742,6 +2531,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppFilePathAvailabilityContent(name, subnetId, availabilityZone, default);
         }
 
+        /// <summary> Quota availability request content. </summary>
         /// <param name="name"> Name of the resource to verify. </param>
         /// <param name="availabilityResourceType"> Resource type used for verification. </param>
         /// <param name="resourceGroup"> Resource group name. </param>
@@ -1751,6 +2541,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppQuotaAvailabilityContent(name, availabilityResourceType, resourceGroup, default);
         }
 
+        /// <summary> Network sibling set query. </summary>
         /// <param name="networkSiblingSetId"> Network Sibling Set ID for a group of volumes sharing networking resources in a subnet. </param>
         /// <param name="subnetId"> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. Example /subscriptions/subscriptionId/resourceGroups/resourceGroup/providers/Microsoft.Network/virtualNetworks/testVnet/subnets/{mySubnet}. </param>
         /// <returns> A new <see cref="Models.QueryNetworkSiblingSetContent"/> instance for mocking. </returns>
@@ -1759,6 +2550,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new QueryNetworkSiblingSetContent(networkSiblingSetId, subnetId, default);
         }
 
+        /// <summary> Describes the contents of a network sibling set. </summary>
         /// <param name="networkSiblingSetId"> Network Sibling Set ID for a group of volumes sharing networking resources in a subnet. </param>
         /// <param name="subnetId"> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. Example /subscriptions/subscriptionId/resourceGroups/resourceGroup/providers/Microsoft.Network/virtualNetworks/testVnet/subnets/{mySubnet}. </param>
         /// <param name="networkSiblingSetStateId"> Network sibling set state Id identifying the current state of the sibling set. </param>
@@ -1780,6 +2572,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
+        /// <summary> NIC information and list of volumes for which the NIC has the primary mount IP Address. </summary>
         /// <param name="ipAddress"> IP Address. </param>
         /// <param name="volumeResourceIds"> Volume resource Ids. </param>
         /// <returns> A new <see cref="Models.NicInfo"/> instance for mocking. </returns>
@@ -1790,6 +2583,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NicInfo(ipAddress, (volumeResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
         }
 
+        /// <summary> Network sibling set update. </summary>
         /// <param name="networkSiblingSetId"> Network Sibling Set ID for a group of volumes sharing networking resources in a subnet. </param>
         /// <param name="subnetId"> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. Example /subscriptions/subscriptionId/resourceGroups/resourceGroup/providers/Microsoft.Network/virtualNetworks/testVnet/subnets/{mySubnet}. </param>
         /// <param name="networkSiblingSetStateId"> Network sibling set state Id identifying the current state of the sibling set. </param>
@@ -1811,6 +2605,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppUsageResult(id, name, currentValue is null && limit is null && unit is null ? default : new UsageProperties(currentValue, limit, unit, default), default);
         }
 
+        /// <summary> The name of the usage. </summary>
         /// <param name="value"> The name of the usage. </param>
         /// <param name="localizedValue"> The localized name of the usage. </param>
         /// <returns> A new <see cref="Models.NetAppUsageName"/> instance for mocking. </returns>
@@ -1819,6 +2614,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppUsageName(value, localizedValue, default);
         }
 
+        /// <summary> Volume resource. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -1827,8 +2623,15 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="fileSystemId"> Unique FileSystem Identifier. </param>
         /// <param name="creationToken"> A unique file path for the volume. Used when creating mount targets. </param>
         /// <param name="serviceLevel"> The service level of the file system. </param>
-        /// <param name="usageThreshold"> Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB. For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB. Values expressed in bytes as multiples of 1 GiB. </param>
-        /// <param name="protocolTypes"> Set of protocol types, default NFSv3, CIFS for SMB protocol. </param>
+        /// <param name="usageThreshold">
+        /// Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB.
+        /// For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB.
+        /// For extra large volumes, valid values are in the range 2400GiB to 7200TiB. Values expressed in bytes as multiples of 1 GiB.
+        /// </param>
+        /// <param name="protocolTypes">
+        /// Specify the protocol types for the volume. Supported values are NFSv3, NFSv4.1, and CIFS. For SMB volumes, specify CIFS.
+        /// The value SMB isn't supported in the protocolTypes property. Default: NFSv3
+        /// </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="snapshotId"> Resource identifier used to identify the Snapshot. </param>
         /// <param name="deleteBaseSnapshot"> If enabled (true) the snapshot the volume was created from will be automatically deleted after the volume create operation has finished.  Defaults to false. </param>
@@ -1860,9 +2663,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="coolnessPeriod"> Specifies the number of days after which data that is not accessed by clients will be tiered. </param>
         /// <param name="coolAccessRetrievalPolicy">
         /// coolAccessRetrievalPolicy determines the data retrieval behavior from the cool tier to standard storage based on the read pattern for cool access enabled volumes. The possible values for this field are:
-        ///             Default - Data will be pulled from cool tier to standard storage on random reads. This policy is the default.
-        ///             OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
-        ///             Never - No client-driven data is pulled from cool tier to standard storage.
+        /// Default - Data will be pulled from cool tier to standard storage on random reads. This policy is the default.
+        /// OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
+        /// Never - No client-driven data is pulled from cool tier to standard storage.
         /// </param>
         /// <param name="coolAccessTieringPolicy"> coolAccessTieringPolicy determines which cold data blocks are moved to cool tier. The possible values for this field are: Auto - Moves cold user data blocks in both the Snapshot copies and the active file system to the cool tier tier. This policy is the default. SnapshotOnly - Moves user data blocks of the Volume Snapshot copies that are not associated with the active file system to the cool tier. </param>
         /// <param name="unixPermissions"> UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users. </param>
@@ -1883,7 +2686,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="placementRules"> Application specific placement rules for the particular volume. </param>
         /// <param name="enableSubvolumes">
         /// Flag indicating whether subvolume operations are enabled on the volume
-        ///             Deprecated. Subvolume operations and this flag will be removed in a future API version.
+        /// Deprecated. Subvolume operations and this flag will be removed in a future API version.
         /// </param>
         /// <param name="provisionedAvailabilityZone"> The availability zone where the volume is provisioned. This refers to the logical availability zone where the volume resides. </param>
         /// <param name="isLargeVolume"> Specifies whether volume is a Large Volume or Regular Volume. </param>
@@ -1893,7 +2696,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="exportRules"> Export policy rule. </param>
         /// <returns> A new <see cref="Models.NetAppVolumeGroupVolume"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppVolumeGroupVolume NetAppVolumeGroupVolume(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, IDictionary<string, string> tags = default, IEnumerable<string> zones = default, Guid? fileSystemId = default, string creationToken = default, NetAppFileServiceLevel? serviceLevel = default, long usageThreshold = 0L, IEnumerable<string> protocolTypes = default, string provisioningState = default, string snapshotId = default, bool? deleteBaseSnapshot = default, string backupId = default, string baremetalTenantId = default, ResourceIdentifier subnetId = default, NetAppNetworkFeature? networkFeatures = default, NetAppNetworkFeature? effectiveNetworkFeatures = default, Guid? networkSiblingSetId = default, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity = default, IEnumerable<NetAppVolumeMountTarget> mountTargets = default, string volumeType = default, NetAppVolumeDataProtection dataProtection = default, AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit = default, bool? isRestoring = default, bool? isSnapshotDirectoryVisible = default, bool? isKerberosEnabled = default, NetAppVolumeSecurityStyle? securityStyle = default, bool? isSmbEncryptionEnabled = default, SmbAccessBasedEnumeration? smbAccessBasedEnumeration = default, SmbNonBrowsable? smbNonBrowsable = default, bool? isSmbContinuouslyAvailable = default, float? throughputMibps = default, float? actualThroughputMibps = default, NetAppEncryptionKeySource? encryptionKeySource = default, ResourceIdentifier keyVaultPrivateEndpointResourceId = default, bool? isLdapEnabled = default, bool? isCoolAccessEnabled = default, int? coolnessPeriod = default, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = default, CoolAccessTieringPolicy? coolAccessTieringPolicy = default, string unixPermissions = default, int? cloneProgress = default, NetAppFileAccessLog? fileAccessLogs = default, NetAppAvsDataStore? avsDataStore = default, IEnumerable<ResourceIdentifier> dataStoreResourceId = default, bool? isDefaultQuotaEnabled = default, long? defaultUserQuotaInKiBs = default, long? defaultGroupQuotaInKiBs = default, long? maximumNumberOfFiles = default, string volumeGroupName = default, ResourceIdentifier capacityPoolResourceId = default, ResourceIdentifier proximityPlacementGroupId = default, string t2Network = default, string volumeSpecName = default, bool? isEncrypted = default, IEnumerable<NetAppVolumePlacementRule> placementRules = default, EnableNetAppSubvolume? enableSubvolumes = default, string provisionedAvailabilityZone = default, bool? isLargeVolume = default, ResourceIdentifier originatingResourceId = default, long? inheritedSizeInBytes = default, BreakthroughMode? breakthroughMode = default, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = default)
+        public static NetAppVolumeGroupVolume NetAppVolumeGroupVolume(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, string> tags, IEnumerable<string> zones, Guid? fileSystemId, string creationToken, NetAppFileServiceLevel? serviceLevel, long usageThreshold, IEnumerable<string> protocolTypes, string provisioningState, string snapshotId, bool? deleteBaseSnapshot, string backupId, string baremetalTenantId, ResourceIdentifier subnetId, NetAppNetworkFeature? networkFeatures, NetAppNetworkFeature? effectiveNetworkFeatures, Guid? networkSiblingSetId, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, IEnumerable<NetAppVolumeMountTarget> mountTargets, string volumeType, NetAppVolumeDataProtection dataProtection, AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, bool? isSmbContinuouslyAvailable, float? throughputMibps, float? actualThroughputMibps, NetAppEncryptionKeySource? encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, bool? isCoolAccessEnabled, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, CoolAccessTieringPolicy? coolAccessTieringPolicy, string unixPermissions, int? cloneProgress, NetAppFileAccessLog? fileAccessLogs, NetAppAvsDataStore? avsDataStore, IEnumerable<ResourceIdentifier> dataStoreResourceId, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, ResourceIdentifier capacityPoolResourceId, ResourceIdentifier proximityPlacementGroupId, string t2Network, string volumeSpecName, bool? isEncrypted, IEnumerable<NetAppVolumePlacementRule> placementRules, EnableNetAppSubvolume? enableSubvolumes, string provisionedAvailabilityZone, bool? isLargeVolume, ResourceIdentifier originatingResourceId, long? inheritedSizeInBytes, BreakthroughMode? breakthroughMode, IEnumerable<NetAppVolumeExportPolicyRule> exportRules)
         {
             return new NetAppVolumeGroupVolume(
                 id,
@@ -1901,12 +2704,12 @@ namespace Azure.ResourceManager.NetApp.Models
                 resourceType,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
-                fileSystemId is null && creationToken is null && serviceLevel is null && exportRules is null && protocolTypes is null && provisioningState is null && snapshotId is null && deleteBaseSnapshot is null && backupId is null && baremetalTenantId is null && subnetId is null && networkFeatures is null && effectiveNetworkFeatures is null && networkSiblingSetId is null && storageToNetworkProximity is null && mountTargets is null && volumeType is null && dataProtection is null && acceptGrowCapacityPoolForShortTermCloneSplit is null && isRestoring is null && isSnapshotDirectoryVisible is null && isKerberosEnabled is null && securityStyle is null && isSmbEncryptionEnabled is null && smbAccessBasedEnumeration is null && smbNonBrowsable is null && isSmbContinuouslyAvailable is null && throughputMibps is null && actualThroughputMibps is null && encryptionKeySource is null && keyVaultPrivateEndpointResourceId is null && isLdapEnabled is null && isCoolAccessEnabled is null && coolnessPeriod is null && coolAccessRetrievalPolicy is null && coolAccessTieringPolicy is null && unixPermissions is null && cloneProgress is null && fileAccessLogs is null && avsDataStore is null && dataStoreResourceId is null && isDefaultQuotaEnabled is null && defaultUserQuotaInKiBs is null && defaultGroupQuotaInKiBs is null && maximumNumberOfFiles is null && volumeGroupName is null && capacityPoolResourceId is null && proximityPlacementGroupId is null && t2Network is null && volumeSpecName is null && isEncrypted is null && placementRules is null && enableSubvolumes is null && provisionedAvailabilityZone is null && isLargeVolume is null && originatingResourceId is null && inheritedSizeInBytes is null && breakthroughMode is null ? default : new VolumeProperties(
+                new VolumeProperties(
                     fileSystemId,
                     creationToken,
                     serviceLevel,
                     usageThreshold,
-                    new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                    exportRules is null ? default : new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
                     (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
                     provisioningState,
                     snapshotId,
@@ -1930,6 +2733,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     smbAccessBasedEnumeration,
                     smbNonBrowsable,
                     isSmbContinuouslyAvailable,
+                    default,
                     throughputMibps,
                     actualThroughputMibps,
                     encryptionKeySource,
@@ -1946,6 +2750,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     avsDataStore,
                     (dataStoreResourceId ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                     isDefaultQuotaEnabled,
+                    default,
                     defaultUserQuotaInKiBs,
                     defaultGroupQuotaInKiBs,
                     maximumNumberOfFiles,
@@ -1964,10 +2769,12 @@ namespace Azure.ResourceManager.NetApp.Models
                     inheritedSizeInBytes,
                     default,
                     breakthroughMode,
+                    default,
                     default),
                 default);
         }
 
+        /// <summary> Volume resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1977,8 +2784,15 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="fileSystemId"> Unique FileSystem Identifier. </param>
         /// <param name="creationToken"> A unique file path for the volume. Used when creating mount targets. </param>
         /// <param name="serviceLevel"> The service level of the file system. </param>
-        /// <param name="usageThreshold"> Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB. For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB. Values expressed in bytes as multiples of 1 GiB. </param>
-        /// <param name="protocolTypes"> Set of protocol types, default NFSv3, CIFS for SMB protocol. </param>
+        /// <param name="usageThreshold">
+        /// Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB.
+        /// For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB.
+        /// For extra large volumes, valid values are in the range 2400GiB to 7200TiB. Values expressed in bytes as multiples of 1 GiB.
+        /// </param>
+        /// <param name="protocolTypes">
+        /// Specify the protocol types for the volume. Supported values are NFSv3, NFSv4.1, and CIFS. For SMB volumes, specify CIFS.
+        /// The value SMB isn't supported in the protocolTypes property. Default: NFSv3
+        /// </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="snapshotId"> Resource identifier used to identify the Snapshot. </param>
         /// <param name="deleteBaseSnapshot"> If enabled (true) the snapshot the volume was created from will be automatically deleted after the volume create operation has finished.  Defaults to false. </param>
@@ -2010,9 +2824,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="coolnessPeriod"> Specifies the number of days after which data that is not accessed by clients will be tiered. </param>
         /// <param name="coolAccessRetrievalPolicy">
         /// coolAccessRetrievalPolicy determines the data retrieval behavior from the cool tier to standard storage based on the read pattern for cool access enabled volumes. The possible values for this field are:
-        ///             Default - Data will be pulled from cool tier to standard storage on random reads. This policy is the default.
-        ///             OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
-        ///             Never - No client-driven data is pulled from cool tier to standard storage.
+        /// Default - Data will be pulled from cool tier to standard storage on random reads. This policy is the default.
+        /// OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
+        /// Never - No client-driven data is pulled from cool tier to standard storage.
         /// </param>
         /// <param name="coolAccessTieringPolicy"> coolAccessTieringPolicy determines which cold data blocks are moved to cool tier. The possible values for this field are: Auto - Moves cold user data blocks in both the Snapshot copies and the active file system to the cool tier tier. This policy is the default. SnapshotOnly - Moves user data blocks of the Volume Snapshot copies that are not associated with the active file system to the cool tier. </param>
         /// <param name="unixPermissions"> UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users. </param>
@@ -2033,7 +2847,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="placementRules"> Application specific placement rules for the particular volume. </param>
         /// <param name="enableSubvolumes">
         /// Flag indicating whether subvolume operations are enabled on the volume
-        ///             Deprecated. Subvolume operations and this flag will be removed in a future API version.
+        /// Deprecated. Subvolume operations and this flag will be removed in a future API version.
         /// </param>
         /// <param name="provisionedAvailabilityZone"> The availability zone where the volume is provisioned. This refers to the logical availability zone where the volume resides. </param>
         /// <param name="isLargeVolume"> Specifies whether volume is a Large Volume or Regular Volume. </param>
@@ -2045,7 +2859,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="zones"> The availability zones. </param>
         /// <returns> A new <see cref="NetApp.NetAppVolumeData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppVolumeData NetAppVolumeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Guid? fileSystemId = default, string creationToken = default, NetAppFileServiceLevel? serviceLevel = default, long usageThreshold = 0L, IEnumerable<string> protocolTypes = default, string provisioningState = default, string snapshotId = default, bool? deleteBaseSnapshot = default, string backupId = default, string baremetalTenantId = default, ResourceIdentifier subnetId = default, NetAppNetworkFeature? networkFeatures = default, NetAppNetworkFeature? effectiveNetworkFeatures = default, Guid? networkSiblingSetId = default, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity = default, IEnumerable<NetAppVolumeMountTarget> mountTargets = default, string volumeType = default, NetAppVolumeDataProtection dataProtection = default, AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit = default, bool? isRestoring = default, bool? isSnapshotDirectoryVisible = default, bool? isKerberosEnabled = default, NetAppVolumeSecurityStyle? securityStyle = default, bool? isSmbEncryptionEnabled = default, SmbAccessBasedEnumeration? smbAccessBasedEnumeration = default, SmbNonBrowsable? smbNonBrowsable = default, bool? isSmbContinuouslyAvailable = default, float? throughputMibps = default, float? actualThroughputMibps = default, NetAppEncryptionKeySource? encryptionKeySource = default, ResourceIdentifier keyVaultPrivateEndpointResourceId = default, bool? isLdapEnabled = default, bool? isCoolAccessEnabled = default, int? coolnessPeriod = default, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = default, CoolAccessTieringPolicy? coolAccessTieringPolicy = default, string unixPermissions = default, int? cloneProgress = default, NetAppFileAccessLog? fileAccessLogs = default, NetAppAvsDataStore? avsDataStore = default, IEnumerable<ResourceIdentifier> dataStoreResourceId = default, bool? isDefaultQuotaEnabled = default, long? defaultUserQuotaInKiBs = default, long? defaultGroupQuotaInKiBs = default, long? maximumNumberOfFiles = default, string volumeGroupName = default, ResourceIdentifier capacityPoolResourceId = default, ResourceIdentifier proximityPlacementGroupId = default, string t2Network = default, string volumeSpecName = default, bool? isEncrypted = default, IEnumerable<NetAppVolumePlacementRule> placementRules = default, EnableNetAppSubvolume? enableSubvolumes = default, string provisionedAvailabilityZone = default, bool? isLargeVolume = default, ResourceIdentifier originatingResourceId = default, long? inheritedSizeInBytes = default, BreakthroughMode? breakthroughMode = default, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = default, ETag? eTag = default, IEnumerable<string> zones = default)
+        public static NetAppVolumeData NetAppVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Guid? fileSystemId, string creationToken, NetAppFileServiceLevel? serviceLevel, long usageThreshold, IEnumerable<string> protocolTypes, string provisioningState, string snapshotId, bool? deleteBaseSnapshot, string backupId, string baremetalTenantId, ResourceIdentifier subnetId, NetAppNetworkFeature? networkFeatures, NetAppNetworkFeature? effectiveNetworkFeatures, Guid? networkSiblingSetId, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, IEnumerable<NetAppVolumeMountTarget> mountTargets, string volumeType, NetAppVolumeDataProtection dataProtection, AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, bool? isSmbContinuouslyAvailable, float? throughputMibps, float? actualThroughputMibps, NetAppEncryptionKeySource? encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, bool? isCoolAccessEnabled, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, CoolAccessTieringPolicy? coolAccessTieringPolicy, string unixPermissions, int? cloneProgress, NetAppFileAccessLog? fileAccessLogs, NetAppAvsDataStore? avsDataStore, IEnumerable<ResourceIdentifier> dataStoreResourceId, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, ResourceIdentifier capacityPoolResourceId, ResourceIdentifier proximityPlacementGroupId, string t2Network, string volumeSpecName, bool? isEncrypted, IEnumerable<NetAppVolumePlacementRule> placementRules, EnableNetAppSubvolume? enableSubvolumes, string provisionedAvailabilityZone, bool? isLargeVolume, ResourceIdentifier originatingResourceId, long? inheritedSizeInBytes, BreakthroughMode? breakthroughMode, IEnumerable<NetAppVolumeExportPolicyRule> exportRules, ETag? eTag, IEnumerable<string> zones)
         {
             return new NetAppVolumeData(
                 id,
@@ -2054,12 +2868,12 @@ namespace Azure.ResourceManager.NetApp.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                fileSystemId is null && creationToken is null && serviceLevel is null && exportRules is null && protocolTypes is null && provisioningState is null && snapshotId is null && deleteBaseSnapshot is null && backupId is null && baremetalTenantId is null && subnetId is null && networkFeatures is null && effectiveNetworkFeatures is null && networkSiblingSetId is null && storageToNetworkProximity is null && mountTargets is null && volumeType is null && dataProtection is null && acceptGrowCapacityPoolForShortTermCloneSplit is null && isRestoring is null && isSnapshotDirectoryVisible is null && isKerberosEnabled is null && securityStyle is null && isSmbEncryptionEnabled is null && smbAccessBasedEnumeration is null && smbNonBrowsable is null && isSmbContinuouslyAvailable is null && throughputMibps is null && actualThroughputMibps is null && encryptionKeySource is null && keyVaultPrivateEndpointResourceId is null && isLdapEnabled is null && isCoolAccessEnabled is null && coolnessPeriod is null && coolAccessRetrievalPolicy is null && coolAccessTieringPolicy is null && unixPermissions is null && cloneProgress is null && fileAccessLogs is null && avsDataStore is null && dataStoreResourceId is null && isDefaultQuotaEnabled is null && defaultUserQuotaInKiBs is null && defaultGroupQuotaInKiBs is null && maximumNumberOfFiles is null && volumeGroupName is null && capacityPoolResourceId is null && proximityPlacementGroupId is null && t2Network is null && volumeSpecName is null && isEncrypted is null && placementRules is null && enableSubvolumes is null && provisionedAvailabilityZone is null && isLargeVolume is null && originatingResourceId is null && inheritedSizeInBytes is null && breakthroughMode is null ? default : new VolumeProperties(
+                new VolumeProperties(
                     fileSystemId,
                     creationToken,
                     serviceLevel,
                     usageThreshold,
-                    new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                    exportRules is null ? default : new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
                     (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
                     provisioningState,
                     snapshotId,
@@ -2083,6 +2897,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     smbAccessBasedEnumeration,
                     smbNonBrowsable,
                     isSmbContinuouslyAvailable,
+                    default,
                     throughputMibps,
                     actualThroughputMibps,
                     encryptionKeySource,
@@ -2099,6 +2914,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     avsDataStore,
                     (dataStoreResourceId ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                     isDefaultQuotaEnabled,
+                    default,
                     defaultUserQuotaInKiBs,
                     defaultGroupQuotaInKiBs,
                     maximumNumberOfFiles,
@@ -2117,36 +2933,266 @@ namespace Azure.ResourceManager.NetApp.Models
                     inheritedSizeInBytes,
                     default,
                     breakthroughMode,
+                    default,
                     default),
                 eTag,
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
                 default);
         }
 
+        /// <summary> Volume patch resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="serviceLevel"> The service level of the file system. </param>
+        /// <param name="usageThreshold">
+        /// Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB.
+        /// For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB.
+        /// For extra large volumes, valid values are in the range 2400GiB to 7200TiB. Values expressed in bytes as multiples of 1 GiB.
+        /// </param>
+        /// <param name="protocolTypes">
+        /// Specify the protocol types for the volume. Supported values are NFSv3, NFSv4.1, and CIFS. For SMB volumes, specify CIFS.
+        /// The value SMB isn't supported in the protocolTypes property. Default: NFSv3
+        /// </param>
+        /// <param name="throughputMibps"> Maximum throughput in MiB/s that can be achieved by this volume and this will be accepted as input only for manual qosType volume. </param>
+        /// <param name="dataProtection"> DataProtection type volumes include an object containing details of the replication. </param>
+        /// <param name="isDefaultQuotaEnabled"> Specifies if default quota is enabled for the volume. </param>
+        /// <param name="defaultUserQuotaInKiBs"> Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies . </param>
+        /// <param name="defaultGroupQuotaInKiBs"> Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies. </param>
+        /// <param name="unixPermissions"> UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users. </param>
+        /// <param name="isCoolAccessEnabled"> Specifies whether Cool Access(tiering) is enabled for the volume. </param>
+        /// <param name="coolnessPeriod"> Specifies the number of days after which data that is not accessed by clients will be tiered. </param>
+        /// <param name="coolAccessRetrievalPolicy">
+        /// coolAccessRetrievalPolicy determines the data retrieval behavior from the cool tier to standard storage based on the read pattern for cool access enabled volumes. The possible values for this field are:
+        /// Default - Data will be pulled from cool tier to standard storage on random reads. This policy is the default.
+        /// OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
+        /// Never - No client-driven data is pulled from cool tier to standard storage.
+        /// </param>
+        /// <param name="coolAccessTieringPolicy"> coolAccessTieringPolicy determines which cold data blocks are moved to cool tier. The possible values for this field are: Auto - Moves cold user data blocks in both the Snapshot copies and the active file system to the cool tier tier. This policy is the default. SnapshotOnly - Moves user data blocks of the Volume Snapshot copies that are not associated with the active file system to the cool tier. </param>
+        /// <param name="isSnapshotDirectoryVisible"> If enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots. </param>
+        /// <param name="smbAccessBasedEnumeration"> Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
+        /// <param name="smbNonBrowsable"> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
+        /// <param name="exportRules"> Export policy rule. </param>
+        /// <returns> A new <see cref="Models.NetAppVolumePatch"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppVolumePatch NetAppVolumePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetAppFileServiceLevel? serviceLevel, long? usageThreshold, IEnumerable<string> protocolTypes, float? throughputMibps, NetAppVolumePatchDataProtection dataProtection, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, string unixPermissions, bool? isCoolAccessEnabled, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, CoolAccessTieringPolicy? coolAccessTieringPolicy, bool? isSnapshotDirectoryVisible, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, IEnumerable<NetAppVolumeExportPolicyRule> exportRules)
+        {
+            return new NetAppVolumePatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                serviceLevel is null && usageThreshold is null && exportRules is null && protocolTypes is null && throughputMibps is null && dataProtection is null && isDefaultQuotaEnabled is null && defaultUserQuotaInKiBs is null && defaultGroupQuotaInKiBs is null && unixPermissions is null && isCoolAccessEnabled is null && coolnessPeriod is null && coolAccessRetrievalPolicy is null && coolAccessTieringPolicy is null && isSnapshotDirectoryVisible is null && smbAccessBasedEnumeration is null && smbNonBrowsable is null ? default : new VolumePatchProperties(
+                    serviceLevel,
+                    usageThreshold,
+                    exportRules is null ? default : new VolumePatchPropertiesExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                    (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
+                    throughputMibps,
+                    dataProtection,
+                    isDefaultQuotaEnabled,
+                    default,
+                    defaultUserQuotaInKiBs,
+                    defaultGroupQuotaInKiBs,
+                    unixPermissions,
+                    isCoolAccessEnabled,
+                    coolnessPeriod,
+                    coolAccessRetrievalPolicy,
+                    coolAccessTieringPolicy,
+                    isSnapshotDirectoryVisible,
+                    smbAccessBasedEnumeration,
+                    smbNonBrowsable,
+                    default,
+                    default,
+                    default),
+                default);
+        }
+
+        /// <summary> Specifies the Azure Key Vault settings for retrieving the bucket server certificate. </summary>
         /// <param name="certificateKeyVaultUri"> The base URI of the Azure Key Vault that is used when retrieving the bucket certificate. </param>
         /// <param name="certificateName"> The name of the bucket server certificate stored in the Azure Key Vault. </param>
         /// <returns> A new <see cref="Models.CertificateKeyVaultDetails"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CertificateKeyVaultDetails CertificateKeyVaultDetails(Uri certificateKeyVaultUri = default, string certificateName = default)
+        public static CertificateKeyVaultDetails CertificateKeyVaultDetails(Uri certificateKeyVaultUri, string certificateName)
         {
             return new CertificateKeyVaultDetails(certificateKeyVaultUri, certificateName, default, default);
         }
 
+        /// <summary> Specifies the Azure Key Vault settings for storing the bucket credentials. </summary>
         /// <param name="credentialsKeyVaultUri"> The base URI of the Azure Key Vault that is used when storing the bucket credentials. </param>
         /// <param name="secretName">
         /// The name of the secret stored in Azure Key Vault. The associated key pair has the following structure:
-        ///             {
-        ///             "access_key_id": "&lt;REDACTED&gt;",
-        ///             "secret_access_key": "&lt;REDACTED&gt;"
-        ///             }
+        /// {
+        /// "access_key_id": "&lt;REDACTED&gt;",
+        /// "secret_access_key": "&lt;REDACTED&gt;"
+        /// }
         /// </param>
         /// <returns> A new <see cref="Models.CredentialsKeyVaultDetails"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CredentialsKeyVaultDetails CredentialsKeyVaultDetails(Uri credentialsKeyVaultUri = default, string secretName = default)
+        public static CredentialsKeyVaultDetails CredentialsKeyVaultDetails(Uri credentialsKeyVaultUri, string secretName)
         {
             return new CredentialsKeyVaultDetails(credentialsKeyVaultUri, secretName, default, default);
         }
 
+        /// <summary> SMB settings for the cache. </summary>
+        /// <param name="smbEncryption"> Enables encryption for in-flight smb3 data. Only applicable for SMB/DualProtocol cache. </param>
+        /// <param name="smbAccessBasedEnumeration"> Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol cache. </param>
+        /// <param name="smbNonBrowsable"> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol cache. </param>
+        /// <returns> A new <see cref="Models.NetAppSmbSettings"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppSmbSettings NetAppSmbSettings(NetAppSmbEncryptionState? smbEncryption, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable)
+        {
+            return new NetAppSmbSettings(smbEncryption, smbAccessBasedEnumeration, smbNonBrowsable, default, default);
+        }
+
+        /// <summary> Volume patch resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="serviceLevel"> The service level of the file system. </param>
+        /// <param name="usageThreshold">
+        /// Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB.
+        /// For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB.
+        /// For extra large volumes, valid values are in the range 2400GiB to 7200TiB. Values expressed in bytes as multiples of 1 GiB.
+        /// </param>
+        /// <param name="exportRules"> Export policy rule. </param>
+        /// <param name="protocolTypes">
+        /// Specify the protocol types for the volume. Supported values are NFSv3, NFSv4.1, and CIFS. For SMB volumes, specify CIFS.
+        /// The value SMB isn't supported in the protocolTypes property. Default: NFSv3
+        /// </param>
+        /// <param name="throughputMibps"> Maximum throughput in MiB/s that can be achieved by this volume and this will be accepted as input only for manual qosType volume. </param>
+        /// <param name="dataProtection"> DataProtection type volumes include an object containing details of the replication. </param>
+        /// <param name="isDefaultQuotaEnabled"> Specifies if default quota is enabled for the volume. </param>
+        /// <param name="defaultUserQuotaInKiBs"> Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies . </param>
+        /// <param name="defaultGroupQuotaInKiBs"> Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies. </param>
+        /// <param name="unixPermissions"> UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users. </param>
+        /// <param name="isCoolAccessEnabled"> Specifies whether Cool Access(tiering) is enabled for the volume. </param>
+        /// <param name="coolnessPeriod"> Specifies the number of days after which data that is not accessed by clients will be tiered. </param>
+        /// <param name="coolAccessRetrievalPolicy">
+        /// coolAccessRetrievalPolicy determines the data retrieval behavior from the cool tier to standard storage based on the read pattern for cool access enabled volumes. The possible values for this field are:
+        /// Default - Data will be pulled from cool tier to standard storage on random reads. This policy is the default.
+        /// OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
+        /// Never - No client-driven data is pulled from cool tier to standard storage.
+        /// </param>
+        /// <param name="coolAccessTieringPolicy"> coolAccessTieringPolicy determines which cold data blocks are moved to cool tier. The possible values for this field are: Auto - Moves cold user data blocks in both the Snapshot copies and the active file system to the cool tier tier. This policy is the default. SnapshotOnly - Moves user data blocks of the Volume Snapshot copies that are not associated with the active file system to the cool tier. </param>
+        /// <param name="isSnapshotDirectoryVisible"> If enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots. </param>
+        /// <param name="smbAccessBasedEnumeration"> Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
+        /// <param name="smbNonBrowsable"> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
+        /// <returns> A new <see cref="Models.NetAppVolumePatch"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppVolumePatch NetAppVolumePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetAppFileServiceLevel? serviceLevel, long? usageThreshold, IEnumerable<NetAppVolumeExportPolicyRule> exportRules, IEnumerable<string> protocolTypes, float? throughputMibps, NetAppVolumePatchDataProtection dataProtection, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, string unixPermissions, bool? isCoolAccessEnabled, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, CoolAccessTieringPolicy? coolAccessTieringPolicy, bool? isSnapshotDirectoryVisible, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable)
+        {
+            return new NetAppVolumePatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                serviceLevel is null && usageThreshold is null && exportRules is null && protocolTypes is null && throughputMibps is null && dataProtection is null && isDefaultQuotaEnabled is null && defaultUserQuotaInKiBs is null && defaultGroupQuotaInKiBs is null && unixPermissions is null && isCoolAccessEnabled is null && coolnessPeriod is null && coolAccessRetrievalPolicy is null && coolAccessTieringPolicy is null && isSnapshotDirectoryVisible is null && smbAccessBasedEnumeration is null && smbNonBrowsable is null ? default : new VolumePatchProperties(
+                    serviceLevel,
+                    usageThreshold,
+                    exportRules is null ? default : new VolumePatchPropertiesExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                    (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
+                    throughputMibps,
+                    dataProtection,
+                    isDefaultQuotaEnabled,
+                    default,
+                    defaultUserQuotaInKiBs,
+                    defaultGroupQuotaInKiBs,
+                    unixPermissions,
+                    isCoolAccessEnabled,
+                    coolnessPeriod,
+                    coolAccessRetrievalPolicy,
+                    coolAccessTieringPolicy,
+                    isSnapshotDirectoryVisible,
+                    smbAccessBasedEnumeration,
+                    smbNonBrowsable,
+                    default,
+                    default,
+                    default),
+                default);
+        }
+
+        /// <summary> Volume patch resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="serviceLevel"> The service level of the file system. </param>
+        /// <param name="usageThreshold">
+        /// Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB.
+        /// For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB.
+        /// For extra large volumes, valid values are in the range 2400GiB to 7200TiB. Values expressed in bytes as multiples of 1 GiB.
+        /// </param>
+        /// <param name="exportRules"> Export policy rule. </param>
+        /// <param name="protocolTypes">
+        /// Specify the protocol types for the volume. Supported values are NFSv3, NFSv4.1, and CIFS. For SMB volumes, specify CIFS.
+        /// The value SMB isn't supported in the protocolTypes property. Default: NFSv3
+        /// </param>
+        /// <param name="throughputMibps"> Maximum throughput in MiB/s that can be achieved by this volume and this will be accepted as input only for manual qosType volume. </param>
+        /// <param name="dataProtection"> DataProtection type volumes include an object containing details of the replication. </param>
+        /// <param name="isDefaultQuotaEnabled"> Specifies if default quota is enabled for the volume. </param>
+        /// <param name="defaultUserQuotaInKiBs"> Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies . </param>
+        /// <param name="defaultGroupQuotaInKiBs"> Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies. </param>
+        /// <param name="unixPermissions"> UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users. </param>
+        /// <param name="isCoolAccessEnabled"> Specifies whether Cool Access(tiering) is enabled for the volume. </param>
+        /// <param name="coolnessPeriod"> Specifies the number of days after which data that is not accessed by clients will be tiered. </param>
+        /// <param name="coolAccessRetrievalPolicy">
+        /// coolAccessRetrievalPolicy determines the data retrieval behavior from the cool tier to standard storage based on the read pattern for cool access enabled volumes. The possible values for this field are:
+        /// Default - Data will be pulled from cool tier to standard storage on random reads. This policy is the default.
+        /// OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
+        /// Never - No client-driven data is pulled from cool tier to standard storage.
+        /// </param>
+        /// <param name="isSnapshotDirectoryVisible"> If enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots. </param>
+        /// <param name="smbAccessBasedEnumeration"> Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
+        /// <param name="smbNonBrowsable"> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
+        /// <returns> A new <see cref="Models.NetAppVolumePatch"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppVolumePatch NetAppVolumePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetAppFileServiceLevel? serviceLevel, long? usageThreshold, IEnumerable<NetAppVolumeExportPolicyRule> exportRules, IEnumerable<string> protocolTypes, float? throughputMibps, NetAppVolumePatchDataProtection dataProtection, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, string unixPermissions, bool? isCoolAccessEnabled, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, bool? isSnapshotDirectoryVisible, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable)
+        {
+            return new NetAppVolumePatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                serviceLevel is null && usageThreshold is null && exportRules is null && protocolTypes is null && throughputMibps is null && dataProtection is null && isDefaultQuotaEnabled is null && defaultUserQuotaInKiBs is null && defaultGroupQuotaInKiBs is null && unixPermissions is null && isCoolAccessEnabled is null && coolnessPeriod is null && coolAccessRetrievalPolicy is null && isSnapshotDirectoryVisible is null && smbAccessBasedEnumeration is null && smbNonBrowsable is null ? default : new VolumePatchProperties(
+                    serviceLevel,
+                    usageThreshold,
+                    exportRules is null ? default : new VolumePatchPropertiesExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                    (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
+                    throughputMibps,
+                    dataProtection,
+                    isDefaultQuotaEnabled,
+                    default,
+                    defaultUserQuotaInKiBs,
+                    defaultGroupQuotaInKiBs,
+                    unixPermissions,
+                    isCoolAccessEnabled,
+                    coolnessPeriod,
+                    coolAccessRetrievalPolicy,
+                    default,
+                    isSnapshotDirectoryVisible,
+                    smbAccessBasedEnumeration,
+                    smbNonBrowsable,
+                    default,
+                    default,
+                    default),
+                default);
+        }
+
+        /// <summary> NetApp account resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -2163,7 +3209,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="NetApp.NetAppAccountData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppAccountData NetAppAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string provisioningState = default, IEnumerable<NetAppAccountActiveDirectory> activeDirectories = default, NetAppAccountEncryption encryption = default, bool? disableShowmount = default, string nfsV4IdDomain = default, MultiAdStatus? multiAdStatus = default, ETag? eTag = default, ManagedServiceIdentity identity = default)
+        public static NetAppAccountData NetAppAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, IEnumerable<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, bool? disableShowmount, string nfsV4IdDomain, MultiAdStatus? multiAdStatus, ETag? eTag, ManagedServiceIdentity identity)
         {
             return new NetAppAccountData(
                 id,
@@ -2187,22 +3233,23 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
+        /// <summary> NetApp account patch resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="provisioningState"> Azure lifecycle management. </param>
+        /// <param name="provisioningState"></param>
         /// <param name="activeDirectories"> Active Directories. </param>
         /// <param name="encryption"> Encryption settings. </param>
-        /// <param name="disableShowmount"> Shows the status of disableShowmount for all volumes under the subscription, null equals false. </param>
+        /// <param name="disableShowmount"></param>
         /// <param name="nfsV4IdDomain"> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </param>
-        /// <param name="multiAdStatus"> MultiAD Status for the account. </param>
-        /// <param name="identity"> The identity used for the resource. </param>
+        /// <param name="multiAdStatus"></param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Models.NetAppAccountPatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppAccountPatch NetAppAccountPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string provisioningState = default, IEnumerable<NetAppAccountActiveDirectory> activeDirectories = default, NetAppAccountEncryption encryption = default, bool? disableShowmount = default, string nfsV4IdDomain = default, MultiAdStatus? multiAdStatus = default, ManagedServiceIdentity identity = default)
+        public static NetAppAccountPatch NetAppAccountPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, IEnumerable<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, bool? disableShowmount, string nfsV4IdDomain, MultiAdStatus? multiAdStatus, ManagedServiceIdentity identity)
         {
             return new NetAppAccountPatch(
                 id,
@@ -2222,6 +3269,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
+        /// <summary> Volume resource. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -2230,8 +3278,15 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="fileSystemId"> Unique FileSystem Identifier. </param>
         /// <param name="creationToken"> A unique file path for the volume. Used when creating mount targets. </param>
         /// <param name="serviceLevel"> The service level of the file system. </param>
-        /// <param name="usageThreshold"> Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB. For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB. Values expressed in bytes as multiples of 1 GiB. </param>
-        /// <param name="protocolTypes"> Set of protocol types, default NFSv3, CIFS for SMB protocol. </param>
+        /// <param name="usageThreshold">
+        /// Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB.
+        /// For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB.
+        /// For extra large volumes, valid values are in the range 2400GiB to 7200TiB. Values expressed in bytes as multiples of 1 GiB.
+        /// </param>
+        /// <param name="protocolTypes">
+        /// Specify the protocol types for the volume. Supported values are NFSv3, NFSv4.1, and CIFS. For SMB volumes, specify CIFS.
+        /// The value SMB isn't supported in the protocolTypes property. Default: NFSv3
+        /// </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="snapshotId"> Resource identifier used to identify the Snapshot. </param>
         /// <param name="deleteBaseSnapshot"> If enabled (true) the snapshot the volume was created from will be automatically deleted after the volume create operation has finished.  Defaults to false. </param>
@@ -2263,9 +3318,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="coolnessPeriod"> Specifies the number of days after which data that is not accessed by clients will be tiered. </param>
         /// <param name="coolAccessRetrievalPolicy">
         /// coolAccessRetrievalPolicy determines the data retrieval behavior from the cool tier to standard storage based on the read pattern for cool access enabled volumes. The possible values for this field are:
-        ///                         Default - Data will be pulled from cool tier to standard storage on random reads. This policy is the default.
-        ///                         OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
-        ///                         Never - No client-driven data is pulled from cool tier to standard storage.
+        /// Default - Data will be pulled from cool tier to standard storage on random reads. This policy is the default.
+        /// OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
+        /// Never - No client-driven data is pulled from cool tier to standard storage.
         /// </param>
         /// <param name="coolAccessTieringPolicy"> coolAccessTieringPolicy determines which cold data blocks are moved to cool tier. The possible values for this field are: Auto - Moves cold user data blocks in both the Snapshot copies and the active file system to the cool tier tier. This policy is the default. SnapshotOnly - Moves user data blocks of the Volume Snapshot copies that are not associated with the active file system to the cool tier. </param>
         /// <param name="unixPermissions"> UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users. </param>
@@ -2284,7 +3339,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="volumeSpecName"> Volume spec name is the application specific designation or identifier for the particular volume in a volume group for e.g. data, log. </param>
         /// <param name="isEncrypted"> Specifies if the volume is encrypted or not. Only available on volumes created or updated after 2022-01-01. </param>
         /// <param name="placementRules"> Application specific placement rules for the particular volume. </param>
-        /// <param name="enableSubvolumes"> Flag indicating whether subvolume operations are enabled on the volume. </param>
+        /// <param name="enableSubvolumes">
+        /// Flag indicating whether subvolume operations are enabled on the volume
+        /// Deprecated. Subvolume operations and this flag will be removed in a future API version.
+        /// </param>
         /// <param name="provisionedAvailabilityZone"> The availability zone where the volume is provisioned. This refers to the logical availability zone where the volume resides. </param>
         /// <param name="isLargeVolume"> Specifies whether volume is a Large Volume or Regular Volume. </param>
         /// <param name="originatingResourceId"> Id of the snapshot or backup that the volume is restored from. </param>
@@ -2292,7 +3350,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="exportRules"> Export policy rule. </param>
         /// <returns> A new <see cref="Models.NetAppVolumeGroupVolume"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppVolumeGroupVolume NetAppVolumeGroupVolume(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, IDictionary<string, string> tags = default, IEnumerable<string> zones = default, Guid? fileSystemId = default, string creationToken = default, NetAppFileServiceLevel? serviceLevel = default, long usageThreshold = 0L, IEnumerable<string> protocolTypes = default, string provisioningState = default, string snapshotId = default, bool? deleteBaseSnapshot = default, string backupId = default, string baremetalTenantId = default, ResourceIdentifier subnetId = default, NetAppNetworkFeature? networkFeatures = default, NetAppNetworkFeature? effectiveNetworkFeatures = default, Guid? networkSiblingSetId = default, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity = default, IEnumerable<NetAppVolumeMountTarget> mountTargets = default, string volumeType = default, NetAppVolumeDataProtection dataProtection = default, AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit = default, bool? isRestoring = default, bool? isSnapshotDirectoryVisible = default, bool? isKerberosEnabled = default, NetAppVolumeSecurityStyle? securityStyle = default, bool? isSmbEncryptionEnabled = default, SmbAccessBasedEnumeration? smbAccessBasedEnumeration = default, SmbNonBrowsable? smbNonBrowsable = default, bool? isSmbContinuouslyAvailable = default, float? throughputMibps = default, float? actualThroughputMibps = default, NetAppEncryptionKeySource? encryptionKeySource = default, ResourceIdentifier keyVaultPrivateEndpointResourceId = default, bool? isLdapEnabled = default, bool? isCoolAccessEnabled = default, int? coolnessPeriod = default, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = default, CoolAccessTieringPolicy? coolAccessTieringPolicy = default, string unixPermissions = default, int? cloneProgress = default, NetAppFileAccessLog? fileAccessLogs = default, NetAppAvsDataStore? avsDataStore = default, IEnumerable<ResourceIdentifier> dataStoreResourceId = default, bool? isDefaultQuotaEnabled = default, long? defaultUserQuotaInKiBs = default, long? defaultGroupQuotaInKiBs = default, long? maximumNumberOfFiles = default, string volumeGroupName = default, ResourceIdentifier capacityPoolResourceId = default, ResourceIdentifier proximityPlacementGroupId = default, string t2Network = default, string volumeSpecName = default, bool? isEncrypted = default, IEnumerable<NetAppVolumePlacementRule> placementRules = default, EnableNetAppSubvolume? enableSubvolumes = default, string provisionedAvailabilityZone = default, bool? isLargeVolume = default, ResourceIdentifier originatingResourceId = default, long? inheritedSizeInBytes = default, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = default)
+        public static NetAppVolumeGroupVolume NetAppVolumeGroupVolume(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, string> tags, IEnumerable<string> zones, Guid? fileSystemId, string creationToken, NetAppFileServiceLevel? serviceLevel, long usageThreshold, IEnumerable<string> protocolTypes, string provisioningState, string snapshotId, bool? deleteBaseSnapshot, string backupId, string baremetalTenantId, ResourceIdentifier subnetId, NetAppNetworkFeature? networkFeatures, NetAppNetworkFeature? effectiveNetworkFeatures, Guid? networkSiblingSetId, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, IEnumerable<NetAppVolumeMountTarget> mountTargets, string volumeType, NetAppVolumeDataProtection dataProtection, AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, bool? isSmbContinuouslyAvailable, float? throughputMibps, float? actualThroughputMibps, NetAppEncryptionKeySource? encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, bool? isCoolAccessEnabled, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, CoolAccessTieringPolicy? coolAccessTieringPolicy, string unixPermissions, int? cloneProgress, NetAppFileAccessLog? fileAccessLogs, NetAppAvsDataStore? avsDataStore, IEnumerable<ResourceIdentifier> dataStoreResourceId, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, ResourceIdentifier capacityPoolResourceId, ResourceIdentifier proximityPlacementGroupId, string t2Network, string volumeSpecName, bool? isEncrypted, IEnumerable<NetAppVolumePlacementRule> placementRules, EnableNetAppSubvolume? enableSubvolumes, string provisionedAvailabilityZone, bool? isLargeVolume, ResourceIdentifier originatingResourceId, long? inheritedSizeInBytes, IEnumerable<NetAppVolumeExportPolicyRule> exportRules)
         {
             return new NetAppVolumeGroupVolume(
                 id,
@@ -2300,12 +3358,12 @@ namespace Azure.ResourceManager.NetApp.Models
                 resourceType,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
-                fileSystemId is null && creationToken is null && serviceLevel is null && exportRules is null && protocolTypes is null && provisioningState is null && snapshotId is null && deleteBaseSnapshot is null && backupId is null && baremetalTenantId is null && subnetId is null && networkFeatures is null && effectiveNetworkFeatures is null && networkSiblingSetId is null && storageToNetworkProximity is null && mountTargets is null && volumeType is null && dataProtection is null && acceptGrowCapacityPoolForShortTermCloneSplit is null && isRestoring is null && isSnapshotDirectoryVisible is null && isKerberosEnabled is null && securityStyle is null && isSmbEncryptionEnabled is null && smbAccessBasedEnumeration is null && smbNonBrowsable is null && isSmbContinuouslyAvailable is null && throughputMibps is null && actualThroughputMibps is null && encryptionKeySource is null && keyVaultPrivateEndpointResourceId is null && isLdapEnabled is null && isCoolAccessEnabled is null && coolnessPeriod is null && coolAccessRetrievalPolicy is null && coolAccessTieringPolicy is null && unixPermissions is null && cloneProgress is null && fileAccessLogs is null && avsDataStore is null && dataStoreResourceId is null && isDefaultQuotaEnabled is null && defaultUserQuotaInKiBs is null && defaultGroupQuotaInKiBs is null && maximumNumberOfFiles is null && volumeGroupName is null && capacityPoolResourceId is null && proximityPlacementGroupId is null && t2Network is null && volumeSpecName is null && isEncrypted is null && placementRules is null && enableSubvolumes is null && provisionedAvailabilityZone is null && isLargeVolume is null && originatingResourceId is null && inheritedSizeInBytes is null ? default : new VolumeProperties(
+                new VolumeProperties(
                     fileSystemId,
                     creationToken,
                     serviceLevel,
                     usageThreshold,
-                    new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                    exportRules is null ? default : new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
                     (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
                     provisioningState,
                     snapshotId,
@@ -2329,6 +3387,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     smbAccessBasedEnumeration,
                     smbNonBrowsable,
                     isSmbContinuouslyAvailable,
+                    default,
                     throughputMibps,
                     actualThroughputMibps,
                     encryptionKeySource,
@@ -2345,6 +3404,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     avsDataStore,
                     (dataStoreResourceId ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                     isDefaultQuotaEnabled,
+                    default,
                     defaultUserQuotaInKiBs,
                     defaultGroupQuotaInKiBs,
                     maximumNumberOfFiles,
@@ -2363,10 +3423,12 @@ namespace Azure.ResourceManager.NetApp.Models
                     inheritedSizeInBytes,
                     default,
                     default,
+                    default,
                     default),
                 default);
         }
 
+        /// <summary> Volume resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -2376,8 +3438,15 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="fileSystemId"> Unique FileSystem Identifier. </param>
         /// <param name="creationToken"> A unique file path for the volume. Used when creating mount targets. </param>
         /// <param name="serviceLevel"> The service level of the file system. </param>
-        /// <param name="usageThreshold"> Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB. For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB. Values expressed in bytes as multiples of 1 GiB. </param>
-        /// <param name="protocolTypes"> Set of protocol types, default NFSv3, CIFS for SMB protocol. </param>
+        /// <param name="usageThreshold">
+        /// Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB.
+        /// For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB.
+        /// For extra large volumes, valid values are in the range 2400GiB to 7200TiB. Values expressed in bytes as multiples of 1 GiB.
+        /// </param>
+        /// <param name="protocolTypes">
+        /// Specify the protocol types for the volume. Supported values are NFSv3, NFSv4.1, and CIFS. For SMB volumes, specify CIFS.
+        /// The value SMB isn't supported in the protocolTypes property. Default: NFSv3
+        /// </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="snapshotId"> Resource identifier used to identify the Snapshot. </param>
         /// <param name="deleteBaseSnapshot"> If enabled (true) the snapshot the volume was created from will be automatically deleted after the volume create operation has finished.  Defaults to false. </param>
@@ -2409,9 +3478,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="coolnessPeriod"> Specifies the number of days after which data that is not accessed by clients will be tiered. </param>
         /// <param name="coolAccessRetrievalPolicy">
         /// coolAccessRetrievalPolicy determines the data retrieval behavior from the cool tier to standard storage based on the read pattern for cool access enabled volumes. The possible values for this field are:
-        ///                         Default - Data will be pulled from cool tier to standard storage on random reads. This policy is the default.
-        ///                         OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
-        ///                         Never - No client-driven data is pulled from cool tier to standard storage.
+        /// Default - Data will be pulled from cool tier to standard storage on random reads. This policy is the default.
+        /// OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
+        /// Never - No client-driven data is pulled from cool tier to standard storage.
         /// </param>
         /// <param name="coolAccessTieringPolicy"> coolAccessTieringPolicy determines which cold data blocks are moved to cool tier. The possible values for this field are: Auto - Moves cold user data blocks in both the Snapshot copies and the active file system to the cool tier tier. This policy is the default. SnapshotOnly - Moves user data blocks of the Volume Snapshot copies that are not associated with the active file system to the cool tier. </param>
         /// <param name="unixPermissions"> UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users. </param>
@@ -2430,7 +3499,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="volumeSpecName"> Volume spec name is the application specific designation or identifier for the particular volume in a volume group for e.g. data, log. </param>
         /// <param name="isEncrypted"> Specifies if the volume is encrypted or not. Only available on volumes created or updated after 2022-01-01. </param>
         /// <param name="placementRules"> Application specific placement rules for the particular volume. </param>
-        /// <param name="enableSubvolumes"> Flag indicating whether subvolume operations are enabled on the volume. </param>
+        /// <param name="enableSubvolumes">
+        /// Flag indicating whether subvolume operations are enabled on the volume
+        /// Deprecated. Subvolume operations and this flag will be removed in a future API version.
+        /// </param>
         /// <param name="provisionedAvailabilityZone"> The availability zone where the volume is provisioned. This refers to the logical availability zone where the volume resides. </param>
         /// <param name="isLargeVolume"> Specifies whether volume is a Large Volume or Regular Volume. </param>
         /// <param name="originatingResourceId"> Id of the snapshot or backup that the volume is restored from. </param>
@@ -2440,7 +3512,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="zones"> The availability zones. </param>
         /// <returns> A new <see cref="NetApp.NetAppVolumeData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppVolumeData NetAppVolumeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Guid? fileSystemId = default, string creationToken = default, NetAppFileServiceLevel? serviceLevel = default, long usageThreshold = 0L, IEnumerable<string> protocolTypes = default, string provisioningState = default, string snapshotId = default, bool? deleteBaseSnapshot = default, string backupId = default, string baremetalTenantId = default, ResourceIdentifier subnetId = default, NetAppNetworkFeature? networkFeatures = default, NetAppNetworkFeature? effectiveNetworkFeatures = default, Guid? networkSiblingSetId = default, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity = default, IEnumerable<NetAppVolumeMountTarget> mountTargets = default, string volumeType = default, NetAppVolumeDataProtection dataProtection = default, AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit = default, bool? isRestoring = default, bool? isSnapshotDirectoryVisible = default, bool? isKerberosEnabled = default, NetAppVolumeSecurityStyle? securityStyle = default, bool? isSmbEncryptionEnabled = default, SmbAccessBasedEnumeration? smbAccessBasedEnumeration = default, SmbNonBrowsable? smbNonBrowsable = default, bool? isSmbContinuouslyAvailable = default, float? throughputMibps = default, float? actualThroughputMibps = default, NetAppEncryptionKeySource? encryptionKeySource = default, ResourceIdentifier keyVaultPrivateEndpointResourceId = default, bool? isLdapEnabled = default, bool? isCoolAccessEnabled = default, int? coolnessPeriod = default, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = default, CoolAccessTieringPolicy? coolAccessTieringPolicy = default, string unixPermissions = default, int? cloneProgress = default, NetAppFileAccessLog? fileAccessLogs = default, NetAppAvsDataStore? avsDataStore = default, IEnumerable<ResourceIdentifier> dataStoreResourceId = default, bool? isDefaultQuotaEnabled = default, long? defaultUserQuotaInKiBs = default, long? defaultGroupQuotaInKiBs = default, long? maximumNumberOfFiles = default, string volumeGroupName = default, ResourceIdentifier capacityPoolResourceId = default, ResourceIdentifier proximityPlacementGroupId = default, string t2Network = default, string volumeSpecName = default, bool? isEncrypted = default, IEnumerable<NetAppVolumePlacementRule> placementRules = default, EnableNetAppSubvolume? enableSubvolumes = default, string provisionedAvailabilityZone = default, bool? isLargeVolume = default, ResourceIdentifier originatingResourceId = default, long? inheritedSizeInBytes = default, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = default, ETag? eTag = default, IEnumerable<string> zones = default)
+        public static NetAppVolumeData NetAppVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Guid? fileSystemId, string creationToken, NetAppFileServiceLevel? serviceLevel, long usageThreshold, IEnumerable<string> protocolTypes, string provisioningState, string snapshotId, bool? deleteBaseSnapshot, string backupId, string baremetalTenantId, ResourceIdentifier subnetId, NetAppNetworkFeature? networkFeatures, NetAppNetworkFeature? effectiveNetworkFeatures, Guid? networkSiblingSetId, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, IEnumerable<NetAppVolumeMountTarget> mountTargets, string volumeType, NetAppVolumeDataProtection dataProtection, AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, bool? isSmbContinuouslyAvailable, float? throughputMibps, float? actualThroughputMibps, NetAppEncryptionKeySource? encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, bool? isCoolAccessEnabled, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, CoolAccessTieringPolicy? coolAccessTieringPolicy, string unixPermissions, int? cloneProgress, NetAppFileAccessLog? fileAccessLogs, NetAppAvsDataStore? avsDataStore, IEnumerable<ResourceIdentifier> dataStoreResourceId, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, ResourceIdentifier capacityPoolResourceId, ResourceIdentifier proximityPlacementGroupId, string t2Network, string volumeSpecName, bool? isEncrypted, IEnumerable<NetAppVolumePlacementRule> placementRules, EnableNetAppSubvolume? enableSubvolumes, string provisionedAvailabilityZone, bool? isLargeVolume, ResourceIdentifier originatingResourceId, long? inheritedSizeInBytes, IEnumerable<NetAppVolumeExportPolicyRule> exportRules, ETag? eTag, IEnumerable<string> zones)
         {
             return new NetAppVolumeData(
                 id,
@@ -2449,12 +3521,12 @@ namespace Azure.ResourceManager.NetApp.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                fileSystemId is null && creationToken is null && serviceLevel is null && exportRules is null && protocolTypes is null && provisioningState is null && snapshotId is null && deleteBaseSnapshot is null && backupId is null && baremetalTenantId is null && subnetId is null && networkFeatures is null && effectiveNetworkFeatures is null && networkSiblingSetId is null && storageToNetworkProximity is null && mountTargets is null && volumeType is null && dataProtection is null && acceptGrowCapacityPoolForShortTermCloneSplit is null && isRestoring is null && isSnapshotDirectoryVisible is null && isKerberosEnabled is null && securityStyle is null && isSmbEncryptionEnabled is null && smbAccessBasedEnumeration is null && smbNonBrowsable is null && isSmbContinuouslyAvailable is null && throughputMibps is null && actualThroughputMibps is null && encryptionKeySource is null && keyVaultPrivateEndpointResourceId is null && isLdapEnabled is null && isCoolAccessEnabled is null && coolnessPeriod is null && coolAccessRetrievalPolicy is null && coolAccessTieringPolicy is null && unixPermissions is null && cloneProgress is null && fileAccessLogs is null && avsDataStore is null && dataStoreResourceId is null && isDefaultQuotaEnabled is null && defaultUserQuotaInKiBs is null && defaultGroupQuotaInKiBs is null && maximumNumberOfFiles is null && volumeGroupName is null && capacityPoolResourceId is null && proximityPlacementGroupId is null && t2Network is null && volumeSpecName is null && isEncrypted is null && placementRules is null && enableSubvolumes is null && provisionedAvailabilityZone is null && isLargeVolume is null && originatingResourceId is null && inheritedSizeInBytes is null ? default : new VolumeProperties(
+                new VolumeProperties(
                     fileSystemId,
                     creationToken,
                     serviceLevel,
                     usageThreshold,
-                    new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                    exportRules is null ? default : new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
                     (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
                     provisioningState,
                     snapshotId,
@@ -2478,6 +3550,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     smbAccessBasedEnumeration,
                     smbNonBrowsable,
                     isSmbContinuouslyAvailable,
+                    default,
                     throughputMibps,
                     actualThroughputMibps,
                     encryptionKeySource,
@@ -2494,6 +3567,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     avsDataStore,
                     (dataStoreResourceId ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                     isDefaultQuotaEnabled,
+                    default,
                     defaultUserQuotaInKiBs,
                     defaultGroupQuotaInKiBs,
                     maximumNumberOfFiles,
@@ -2512,12 +3586,14 @@ namespace Azure.ResourceManager.NetApp.Models
                     inheritedSizeInBytes,
                     default,
                     default,
+                    default,
                     default),
                 eTag,
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
                 default);
         }
 
+        /// <summary> Cache resource properties. </summary>
         /// <param name="filePath"> The file path of the Cache. </param>
         /// <param name="size"> Maximum storage quota allowed for a file system in bytes. Valid values are in the range 50GiB to 1PiB. Values expressed in bytes as multiples of 1GiB. </param>
         /// <param name="exportRules"> Export policy rule. </param>
@@ -2544,7 +3620,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="writeBack"> Flag indicating whether writeback is enabled for the cache. </param>
         /// <returns> A new <see cref="Models.NetAppCacheProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppCacheProperties NetAppCacheProperties(string filePath = default, long size = 0L, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = default, IEnumerable<NetAppProtocolType> protocolTypes = default, NetAppCacheProvisioningState? provisioningState = default, NetAppCacheLifeCycleState? cacheState = default, ResourceIdentifier cacheSubnetResourceId = default, ResourceIdentifier peeringSubnetResourceId = default, IEnumerable<NetAppCacheMountTargetProperties> mountTargets = default, NetAppKerberosState? kerberos = default, NetAppSmbSettings smbSettings = default, float? throughputMibps = default, float? actualThroughputMibps = default, NetAppEncryptionKeySource encryptionKeySource = default, ResourceIdentifier keyVaultPrivateEndpointResourceId = default, long? maximumNumberOfFiles = default, NetAppEncryptionState? encryption = default, NetAppVolumeLanguage? language = default, NetAppLdapState? ldap = default, NetAppLdapServerType? ldapServerType = default, NetAppOriginClusterInformation originClusterInformation = default, NetAppCifsChangeNotifyState? cifsChangeNotifications = default, NetAppGlobalFileLockingState? globalFileLocking = default, NetAppEnableWriteBackState? writeBack = default)
+        public static NetAppCacheProperties NetAppCacheProperties(string filePath, long size, IEnumerable<NetAppVolumeExportPolicyRule> exportRules, IEnumerable<NetAppProtocolType> protocolTypes, NetAppCacheProvisioningState? provisioningState, NetAppCacheLifeCycleState? cacheState, ResourceIdentifier cacheSubnetResourceId, ResourceIdentifier peeringSubnetResourceId, IEnumerable<NetAppCacheMountTargetProperties> mountTargets, NetAppKerberosState? kerberos, NetAppSmbSettings smbSettings, float? throughputMibps, float? actualThroughputMibps, NetAppEncryptionKeySource encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, long? maximumNumberOfFiles, NetAppEncryptionState? encryption, NetAppVolumeLanguage? language, NetAppLdapState? ldap, NetAppLdapServerType? ldapServerType, NetAppOriginClusterInformation originClusterInformation, NetAppCifsChangeNotifyState? cifsChangeNotifications, NetAppGlobalFileLockingState? globalFileLocking, NetAppEnableWriteBackState? writeBack)
         {
             return new NetAppCacheProperties(
                 filePath,
@@ -2575,13 +3651,13 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetApp.NetAppAccountData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> NetApp account resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
@@ -2592,7 +3668,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="multiAdStatus"> MultiAD Status for the account. </param>
         /// <returns> A new <see cref="NetApp.NetAppAccountData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppAccountData NetAppAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? etag = default, ManagedServiceIdentity identity = default, string provisioningState = default, IEnumerable<NetAppAccountActiveDirectory> activeDirectories = default, NetAppAccountEncryption encryption = default, bool? disableShowmount = default, string nfsV4IdDomain = default, MultiAdStatus? multiAdStatus = default)
+        public static NetAppAccountData NetAppAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ManagedServiceIdentity identity, string provisioningState, IEnumerable<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, bool? disableShowmount, string nfsV4IdDomain, MultiAdStatus? multiAdStatus)
         {
             return new NetAppAccountData(
                 id,
@@ -2616,13 +3692,13 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetApp.NetAppBackupPolicyData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> Backup policy information. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <param name="backupPolicyId"> Backup Policy GUID ID. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
@@ -2634,7 +3710,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="volumeBackups"> A list of volumes assigned to this policy. </param>
         /// <returns> A new <see cref="NetApp.NetAppBackupPolicyData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppBackupPolicyData NetAppBackupPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? etag = default, ResourceIdentifier backupPolicyId = default, string provisioningState = default, int? dailyBackupsToKeep = default, int? weeklyBackupsToKeep = default, int? monthlyBackupsToKeep = default, int? volumesAssigned = default, bool? isEnabled = default, IEnumerable<NetAppVolumeBackupDetail> volumeBackups = default)
+        public static NetAppBackupPolicyData NetAppBackupPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ResourceIdentifier backupPolicyId, string provisioningState, int? dailyBackupsToKeep, int? weeklyBackupsToKeep, int? monthlyBackupsToKeep, int? volumesAssigned, bool? isEnabled, IEnumerable<NetAppVolumeBackupDetail> volumeBackups)
         {
             return new NetAppBackupPolicyData(
                 id,
@@ -2657,36 +3733,32 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetApp.NetAppBucketData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Bucket resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="path"> The volume path mounted inside the bucket. The default is the root path '/' if no value is provided when the bucket is created. </param>
         /// <param name="fileSystemUser"> File System user having access to volume data. For Unix, this is the user's uid and gid. For Windows, this is the user's username. Note that the Unix and Windows user details are mutually exclusive, meaning one or other must be supplied, but not both. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="provisioningState"></param>
         /// <param name="status">
         /// The bucket credentials status. There states:
-        ///                                                 
-        ///                                                  "NoCredentialsSet": Access and Secret key pair have not been generated.
-        ///                                                  "CredentialsExpired": Access and Secret key pair have expired.
-        ///                                                  "Active": The certificate has been installed and credentials are unexpired.
+        /// "NoCredentialsSet": Access and Secret key pair have not been generated.
+        /// "CredentialsExpired": Access and Secret key pair have expired.
+        /// "Active": The certificate has been installed and credentials are unexpired.
         /// </param>
         /// <param name="server"> Properties of the server managing the lifecycle of volume buckets. </param>
         /// <param name="permissions"> Access permissions for the bucket. Either ReadOnly or ReadWrite. The default is ReadOnly if no value is provided during bucket creation. </param>
         /// <param name="keyVaultDetails">
         /// Specifies the Azure Key Vault settings. These are used when
-        ///                                                  a) retrieving the bucket server certificate, and
-        ///                                                  b) storing the bucket credentials
-        ///                                                 
-        ///                                                  Notes:
-        ///                                                 
-        ///                                                  1. If a bucket certificate was previously provided directly using the certificateObject property, it is possible to subsequently use the Azure Key Vault for certificate management by using these 'akvDetails' properties. However, once Azure Key Vault is configured, it is no longer possible to provide the certificate directly via the certificateObject property.
-        ///                                                  2. These properties are mutually exclusive with the server.certificateObject property.
+        /// a) retrieving the bucket server certificate, and
+        /// b) storing the bucket credentials
+        /// Notes:
+        /// <list type="number"><item><description>If a bucket certificate was previously provided directly using the certificateObject property, it is possible to subsequently use the Azure Key Vault for certificate management by using these 'akvDetails' properties. However, once Azure Key Vault is configured, it is no longer possible to provide the certificate directly via the certificateObject property.</description></item><item><description>These properties are mutually exclusive with the server.certificateObject property.</description></item></list>
         /// </param>
         /// <returns> A new <see cref="NetApp.NetAppBucketData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppBucketData NetAppBucketData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string path = default, NetAppFileSystemUser fileSystemUser = default, NetAppVolumeQuotaRuleProvisioningState? provisioningState = default, NetAppCredentialsStatus? status = default, NetAppBucketServerProperties server = default, NetAppBucketPermission? permissions = default, NetAppKeyVaultDetails keyVaultDetails = default)
+        public static NetAppBucketData NetAppBucketData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string path, NetAppFileSystemUser fileSystemUser, NetAppVolumeQuotaRuleProvisioningState? provisioningState, NetAppCredentialsStatus? status, NetAppBucketServerProperties server, NetAppBucketPermission? permissions, NetAppKeyVaultDetails keyVaultDetails)
         {
             return new NetAppBucketData(
                 id,
@@ -2705,28 +3777,25 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NetAppBucketPatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Bucket resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="fileSystemUser"> File System user having access to volume data. For Unix, this is the user's uid and gid. For Windows, this is the user's username. Note that the Unix and Windows user details are mutually exclusive, meaning one or other must be supplied, but not both. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="provisioningState"></param>
         /// <param name="server"> Properties of the server managing the lifecycle of volume buckets. </param>
         /// <param name="permissions"> Access permissions for the bucket. Either ReadOnly or ReadWrite. </param>
         /// <param name="keyVaultDetails">
         /// Specifies the Azure Key Vault settings. These are used when
-        ///                                                  a) retrieving the bucket server certificate, and
-        ///                                                  b) storing the bucket credentials
-        ///                                                 
-        ///                                                  Notes:
-        ///                                                 
-        ///                                                  1. If a bucket certificate was previously provided directly using the certificateObject property, it is possible to subsequently use the Azure Key Vault for certificate management by using these 'akvDetails' properties. However, once Azure Key Vault is configured, it is no longer possible to provide the certificate directly via the certificateObject property.
-        ///                                                  2. These properties are mutually exclusive with the server.certificateObject property.
+        /// a) retrieving the bucket server certificate, and
+        /// b) storing the bucket credentials
+        /// Notes:
+        /// <list type="number"><item><description>If a bucket certificate was previously provided directly using the certificateObject property, it is possible to subsequently use the Azure Key Vault for certificate management by using these 'akvDetails' properties. However, once Azure Key Vault is configured, it is no longer possible to provide the certificate directly via the certificateObject property.</description></item><item><description>These properties are mutually exclusive with the server.certificateObject property.</description></item></list>
         /// </param>
         /// <returns> A new <see cref="Models.NetAppBucketPatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppBucketPatch NetAppBucketPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NetAppFileSystemUser fileSystemUser = default, NetAppVolumeQuotaRuleProvisioningState? provisioningState = default, NetAppBucketServerPatchProperties server = default, NetAppBucketPatchPermission? permissions = default, NetAppKeyVaultDetails keyVaultDetails = default)
+        public static NetAppBucketPatch NetAppBucketPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetAppFileSystemUser fileSystemUser, NetAppVolumeQuotaRuleProvisioningState? provisioningState, NetAppBucketServerPatchProperties server, NetAppBucketPatchPermission? permissions, NetAppKeyVaultDetails keyVaultDetails)
         {
             return new NetAppBucketPatch(
                 id,
@@ -2743,18 +3812,18 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetApp.NetAppVolumeSnapshotData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Snapshot of a Volume. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="snapshotId"> UUID v4 used to identify the Snapshot. </param>
         /// <param name="created"> The creation date of the snapshot. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <returns> A new <see cref="NetApp.NetAppVolumeSnapshotData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppVolumeSnapshotData NetAppVolumeSnapshotData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, string snapshotId = default, DateTimeOffset? created = default, string provisioningState = default)
+        public static NetAppVolumeSnapshotData NetAppVolumeSnapshotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation location, string snapshotId, DateTimeOffset? created, string provisioningState)
         {
             return new NetAppVolumeSnapshotData(
                 id,
@@ -2766,20 +3835,20 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetApp.NetAppVolumeQuotaRuleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="volumeQuotaRuleProvisioningState"> Gets the status of the VolumeQuotaRule at the time the operation was called. </param>
+        /// <summary> Quota Rule of a Volume. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="volumeQuotaRuleProvisioningState"></param>
         /// <param name="quotaSizeInKiBs"> Size of quota. </param>
         /// <param name="quotaType"> Type of quota. </param>
         /// <param name="quotaTarget"> UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;. </param>
         /// <returns> A new <see cref="NetApp.NetAppVolumeQuotaRuleData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppVolumeQuotaRuleData NetAppVolumeQuotaRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NetAppVolumeQuotaRuleProvisioningState? volumeQuotaRuleProvisioningState = default, long? quotaSizeInKiBs = default, NetAppVolumeQuotaType? quotaType = default, string quotaTarget = default)
+        public static NetAppVolumeQuotaRuleData NetAppVolumeQuotaRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetAppVolumeQuotaRuleProvisioningState? volumeQuotaRuleProvisioningState, long? quotaSizeInKiBs, NetAppVolumeQuotaType? quotaType, string quotaTarget)
         {
             return new NetAppVolumeQuotaRuleData(
                 id,
@@ -2792,26 +3861,26 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeQuotaRulePatch"/>. </summary>
+        /// <summary> Patchable Quota Rule of a Volume. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="volumeQuotaRuleProvisioningState"> Gets the status of the VolumeQuotaRule at the time the operation was called. </param>
+        /// <param name="volumeQuotaRuleProvisioningState"></param>
         /// <param name="quotaSizeInKiBs"> Size of quota. </param>
         /// <param name="quotaType"> Type of quota. </param>
         /// <param name="quotaTarget"> UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;. </param>
         /// <returns> A new <see cref="Models.NetAppVolumeQuotaRulePatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppVolumeQuotaRulePatch NetAppVolumeQuotaRulePatch(IDictionary<string, string> tags = default, NetAppVolumeQuotaRuleProvisioningState? volumeQuotaRuleProvisioningState = default, long? quotaSizeInKiBs = default, NetAppVolumeQuotaType? quotaType = default, string quotaTarget = default)
+        public static NetAppVolumeQuotaRulePatch NetAppVolumeQuotaRulePatch(IDictionary<string, string> tags, NetAppVolumeQuotaRuleProvisioningState? volumeQuotaRuleProvisioningState, long? quotaSizeInKiBs, NetAppVolumeQuotaType? quotaType, string quotaTarget)
         {
             return new NetAppVolumeQuotaRulePatch(tags ?? new ChangeTrackingDictionary<string, string>(), quotaSizeInKiBs is null && quotaType is null && quotaTarget is null ? default : new VolumeQuotaRulesProperties(default, quotaSizeInKiBs, quotaType, quotaTarget, default), default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetApp.SnapshotPolicyData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> Snapshot policy information. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <param name="hourlySchedule"> Schedule for hourly snapshots. </param>
         /// <param name="dailySchedule"> Schedule for daily snapshots. </param>
@@ -2821,7 +3890,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <returns> A new <see cref="NetApp.SnapshotPolicyData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SnapshotPolicyData SnapshotPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? etag = default, SnapshotPolicyHourlySchedule hourlySchedule = default, SnapshotPolicyDailySchedule dailySchedule = default, SnapshotPolicyWeeklySchedule weeklySchedule = default, SnapshotPolicyMonthlySchedule monthlySchedule = default, bool? isEnabled = default, string provisioningState = default)
+        public static SnapshotPolicyData SnapshotPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, SnapshotPolicyHourlySchedule hourlySchedule, SnapshotPolicyDailySchedule dailySchedule, SnapshotPolicyWeeklySchedule weeklySchedule, SnapshotPolicyMonthlySchedule monthlySchedule, bool? isEnabled, string provisioningState)
         {
             return new SnapshotPolicyData(
                 id,
@@ -2842,18 +3911,18 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetApp.NetAppVolumeGroupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Volume group resource for create. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="groupMetaData"> Volume group details. </param>
         /// <param name="volumes"> List of volumes from group. </param>
         /// <returns> A new <see cref="NetApp.NetAppVolumeGroupData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppVolumeGroupData NetAppVolumeGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, string provisioningState = default, NetAppVolumeGroupMetadata groupMetaData = default, IEnumerable<NetAppVolumeGroupVolume> volumes = default)
+        public static NetAppVolumeGroupData NetAppVolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string provisioningState, NetAppVolumeGroupMetadata groupMetaData, IEnumerable<NetAppVolumeGroupVolume> volumes)
         {
             return new NetAppVolumeGroupData(
                 id,
@@ -2865,7 +3934,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeGroupVolume"/>. </summary>
+        /// <summary> Volume resource. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -2874,9 +3943,16 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="fileSystemId"> Unique FileSystem Identifier. </param>
         /// <param name="creationToken"> A unique file path for the volume. Used when creating mount targets. </param>
         /// <param name="serviceLevel"> The service level of the file system. </param>
-        /// <param name="usageThreshold"> Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB. For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB. Values expressed in bytes as multiples of 1 GiB. </param>
-        /// <param name="exportRules"> Set of export policy rules. </param>
-        /// <param name="protocolTypes"> Set of protocol types, default NFSv3, CIFS for SMB protocol. </param>
+        /// <param name="usageThreshold">
+        /// Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB.
+        /// For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB.
+        /// For extra large volumes, valid values are in the range 2400GiB to 7200TiB. Values expressed in bytes as multiples of 1 GiB.
+        /// </param>
+        /// <param name="exportRules"> Export policy rule. </param>
+        /// <param name="protocolTypes">
+        /// Specify the protocol types for the volume. Supported values are NFSv3, NFSv4.1, and CIFS. For SMB volumes, specify CIFS.
+        /// The value SMB isn't supported in the protocolTypes property. Default: NFSv3
+        /// </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="snapshotId"> Resource identifier used to identify the Snapshot. </param>
         /// <param name="deleteBaseSnapshot"> If enabled (true) the snapshot the volume was created from will be automatically deleted after the volume create operation has finished.  Defaults to false. </param>
@@ -2908,9 +3984,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="coolnessPeriod"> Specifies the number of days after which data that is not accessed by clients will be tiered. </param>
         /// <param name="coolAccessRetrievalPolicy">
         /// coolAccessRetrievalPolicy determines the data retrieval behavior from the cool tier to standard storage based on the read pattern for cool access enabled volumes. The possible values for this field are:
-        ///                                                 Default - Data will be pulled from cool tier to standard storage on random reads. This policy is the default.
-        ///                                                 OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
-        ///                                                 Never - No client-driven data is pulled from cool tier to standard storage.
+        /// Default - Data will be pulled from cool tier to standard storage on random reads. This policy is the default.
+        /// OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
+        /// Never - No client-driven data is pulled from cool tier to standard storage.
         /// </param>
         /// <param name="coolAccessTieringPolicy"> coolAccessTieringPolicy determines which cold data blocks are moved to cool tier. The possible values for this field are: Auto - Moves cold user data blocks in both the Snapshot copies and the active file system to the cool tier tier. This policy is the default. SnapshotOnly - Moves user data blocks of the Volume Snapshot copies that are not associated with the active file system to the cool tier. </param>
         /// <param name="unixPermissions"> UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users. </param>
@@ -2929,14 +4005,17 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="volumeSpecName"> Volume spec name is the application specific designation or identifier for the particular volume in a volume group for e.g. data, log. </param>
         /// <param name="isEncrypted"> Specifies if the volume is encrypted or not. Only available on volumes created or updated after 2022-01-01. </param>
         /// <param name="placementRules"> Application specific placement rules for the particular volume. </param>
-        /// <param name="enableSubvolumes"> Flag indicating whether subvolume operations are enabled on the volume. </param>
+        /// <param name="enableSubvolumes">
+        /// Flag indicating whether subvolume operations are enabled on the volume
+        /// Deprecated. Subvolume operations and this flag will be removed in a future API version.
+        /// </param>
         /// <param name="provisionedAvailabilityZone"> The availability zone where the volume is provisioned. This refers to the logical availability zone where the volume resides. </param>
         /// <param name="isLargeVolume"> Specifies whether volume is a Large Volume or Regular Volume. </param>
         /// <param name="originatingResourceId"> Id of the snapshot or backup that the volume is restored from. </param>
         /// <param name="inheritedSizeInBytes"> Space shared by short term clone volume with parent volume in bytes. </param>
         /// <returns> A new <see cref="Models.NetAppVolumeGroupVolume"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppVolumeGroupVolume NetAppVolumeGroupVolume(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, IDictionary<string, string> tags = default, IEnumerable<string> zones = default, Guid? fileSystemId = default, string creationToken = default, NetAppFileServiceLevel? serviceLevel = default, long usageThreshold = 0L, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = default, IEnumerable<string> protocolTypes = default, string provisioningState = default, string snapshotId = default, bool? deleteBaseSnapshot = default, string backupId = default, string baremetalTenantId = default, ResourceIdentifier subnetId = default, NetAppNetworkFeature? networkFeatures = default, NetAppNetworkFeature? effectiveNetworkFeatures = default, Guid? networkSiblingSetId = default, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity = default, IEnumerable<NetAppVolumeMountTarget> mountTargets = default, string volumeType = default, NetAppVolumeDataProtection dataProtection = default, AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit = default, bool? isRestoring = default, bool? isSnapshotDirectoryVisible = default, bool? isKerberosEnabled = default, NetAppVolumeSecurityStyle? securityStyle = default, bool? isSmbEncryptionEnabled = default, SmbAccessBasedEnumeration? smbAccessBasedEnumeration = default, SmbNonBrowsable? smbNonBrowsable = default, bool? isSmbContinuouslyAvailable = default, float? throughputMibps = default, float? actualThroughputMibps = default, NetAppEncryptionKeySource? encryptionKeySource = default, ResourceIdentifier keyVaultPrivateEndpointResourceId = default, bool? isLdapEnabled = default, bool? isCoolAccessEnabled = default, int? coolnessPeriod = default, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = default, CoolAccessTieringPolicy? coolAccessTieringPolicy = default, string unixPermissions = default, int? cloneProgress = default, NetAppFileAccessLog? fileAccessLogs = default, NetAppAvsDataStore? avsDataStore = default, IEnumerable<ResourceIdentifier> dataStoreResourceId = default, bool? isDefaultQuotaEnabled = default, long? defaultUserQuotaInKiBs = default, long? defaultGroupQuotaInKiBs = default, long? maximumNumberOfFiles = default, string volumeGroupName = default, ResourceIdentifier capacityPoolResourceId = default, ResourceIdentifier proximityPlacementGroupId = default, string t2Network = default, string volumeSpecName = default, bool? isEncrypted = default, IEnumerable<NetAppVolumePlacementRule> placementRules = default, EnableNetAppSubvolume? enableSubvolumes = default, string provisionedAvailabilityZone = default, bool? isLargeVolume = default, ResourceIdentifier originatingResourceId = default, long? inheritedSizeInBytes = default)
+        public static NetAppVolumeGroupVolume NetAppVolumeGroupVolume(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, string> tags, IEnumerable<string> zones, Guid? fileSystemId, string creationToken, NetAppFileServiceLevel? serviceLevel, long usageThreshold, IEnumerable<NetAppVolumeExportPolicyRule> exportRules, IEnumerable<string> protocolTypes, string provisioningState, string snapshotId, bool? deleteBaseSnapshot, string backupId, string baremetalTenantId, ResourceIdentifier subnetId, NetAppNetworkFeature? networkFeatures, NetAppNetworkFeature? effectiveNetworkFeatures, Guid? networkSiblingSetId, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, IEnumerable<NetAppVolumeMountTarget> mountTargets, string volumeType, NetAppVolumeDataProtection dataProtection, AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, bool? isSmbContinuouslyAvailable, float? throughputMibps, float? actualThroughputMibps, NetAppEncryptionKeySource? encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, bool? isCoolAccessEnabled, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, CoolAccessTieringPolicy? coolAccessTieringPolicy, string unixPermissions, int? cloneProgress, NetAppFileAccessLog? fileAccessLogs, NetAppAvsDataStore? avsDataStore, IEnumerable<ResourceIdentifier> dataStoreResourceId, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, ResourceIdentifier capacityPoolResourceId, ResourceIdentifier proximityPlacementGroupId, string t2Network, string volumeSpecName, bool? isEncrypted, IEnumerable<NetAppVolumePlacementRule> placementRules, EnableNetAppSubvolume? enableSubvolumes, string provisionedAvailabilityZone, bool? isLargeVolume, ResourceIdentifier originatingResourceId, long? inheritedSizeInBytes)
         {
             return new NetAppVolumeGroupVolume(
                 id,
@@ -2944,12 +4023,12 @@ namespace Azure.ResourceManager.NetApp.Models
                 resourceType,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
-                fileSystemId is null && creationToken is null && serviceLevel is null && exportRules is null && protocolTypes is null && provisioningState is null && snapshotId is null && deleteBaseSnapshot is null && backupId is null && baremetalTenantId is null && subnetId is null && networkFeatures is null && effectiveNetworkFeatures is null && networkSiblingSetId is null && storageToNetworkProximity is null && mountTargets is null && volumeType is null && dataProtection is null && acceptGrowCapacityPoolForShortTermCloneSplit is null && isRestoring is null && isSnapshotDirectoryVisible is null && isKerberosEnabled is null && securityStyle is null && isSmbEncryptionEnabled is null && smbAccessBasedEnumeration is null && smbNonBrowsable is null && isSmbContinuouslyAvailable is null && throughputMibps is null && actualThroughputMibps is null && encryptionKeySource is null && keyVaultPrivateEndpointResourceId is null && isLdapEnabled is null && isCoolAccessEnabled is null && coolnessPeriod is null && coolAccessRetrievalPolicy is null && coolAccessTieringPolicy is null && unixPermissions is null && cloneProgress is null && fileAccessLogs is null && avsDataStore is null && dataStoreResourceId is null && isDefaultQuotaEnabled is null && defaultUserQuotaInKiBs is null && defaultGroupQuotaInKiBs is null && maximumNumberOfFiles is null && volumeGroupName is null && capacityPoolResourceId is null && proximityPlacementGroupId is null && t2Network is null && volumeSpecName is null && isEncrypted is null && placementRules is null && enableSubvolumes is null && provisionedAvailabilityZone is null && isLargeVolume is null && originatingResourceId is null && inheritedSizeInBytes is null ? default : new VolumeProperties(
+                new VolumeProperties(
                     fileSystemId,
                     creationToken,
                     serviceLevel,
                     usageThreshold,
-                    new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                    exportRules is null ? default : new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
                     (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
                     provisioningState,
                     snapshotId,
@@ -2973,6 +4052,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     smbAccessBasedEnumeration,
                     smbNonBrowsable,
                     isSmbContinuouslyAvailable,
+                    default,
                     throughputMibps,
                     actualThroughputMibps,
                     encryptionKeySource,
@@ -2989,6 +4069,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     avsDataStore,
                     (dataStoreResourceId ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                     isDefaultQuotaEnabled,
+                    default,
                     defaultUserQuotaInKiBs,
                     defaultGroupQuotaInKiBs,
                     maximumNumberOfFiles,
@@ -3007,11 +4088,12 @@ namespace Azure.ResourceManager.NetApp.Models
                     inheritedSizeInBytes,
                     default,
                     default,
+                    default,
                     default),
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NetAppReplicationObject"/>. </summary>
+        /// <summary> Replication properties. </summary>
         /// <param name="replicationId"> Id. </param>
         /// <param name="endpointType"> Indicates whether the local volume is the source or destination for the Volume Replication. </param>
         /// <param name="replicationSchedule"> Schedule. </param>
@@ -3038,7 +4120,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeReplication"/>. </summary>
+        /// <summary> Replication properties. </summary>
         /// <param name="replicationId"> UUID v4 used to identify the replication. </param>
         /// <param name="endpointType"> Indicates whether the local volume is the source or destination for the Volume Replication. </param>
         /// <param name="replicationSchedule"> Schedule. </param>
@@ -3060,14 +4142,14 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CapacityPoolPatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="size"> Provisioned size of the pool (in bytes). Allowed values are in 1TiB chunks (value must be multiple of 1099511627776). </param>
+        /// <summary> Capacity pool patch resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="size"> Provisioned size of the pool (in bytes). Allowed values are 512GiB (549755813888 bytes) or in 1TiB chunks (value must be multiple of 1099511627776). </param>
         /// <param name="qosType"> The qos type of the pool. </param>
         /// <param name="isCoolAccessEnabled"> If enabled (true) the pool can contain cool Access enabled volumes. </param>
         /// <returns> A new <see cref="Models.CapacityPoolPatch"/> instance for mocking. </returns>
@@ -3085,7 +4167,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeGroupVolume"/>. </summary>
+        /// <summary> Volume resource. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -3094,9 +4176,16 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="fileSystemId"> Unique FileSystem Identifier. </param>
         /// <param name="creationToken"> A unique file path for the volume. Used when creating mount targets. </param>
         /// <param name="serviceLevel"> The service level of the file system. </param>
-        /// <param name="usageThreshold"> Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB. For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB. Values expressed in bytes as multiples of 1 GiB. </param>
-        /// <param name="exportRules"> Set of export policy rules. </param>
-        /// <param name="protocolTypes"> Set of protocol types, default NFSv3, CIFS for SMB protocol. </param>
+        /// <param name="usageThreshold">
+        /// Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB.
+        /// For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB.
+        /// For extra large volumes, valid values are in the range 2400GiB to 7200TiB. Values expressed in bytes as multiples of 1 GiB.
+        /// </param>
+        /// <param name="exportRules"> Export policy rule. </param>
+        /// <param name="protocolTypes">
+        /// Specify the protocol types for the volume. Supported values are NFSv3, NFSv4.1, and CIFS. For SMB volumes, specify CIFS.
+        /// The value SMB isn't supported in the protocolTypes property. Default: NFSv3
+        /// </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="snapshotId"> Resource identifier used to identify the Snapshot. </param>
         /// <param name="deleteBaseSnapshot"> If enabled (true) the snapshot the volume was created from will be automatically deleted after the volume create operation has finished.  Defaults to false. </param>
@@ -3108,7 +4197,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="networkSiblingSetId"> Network Sibling Set ID for the the group of volumes sharing networking resources. </param>
         /// <param name="storageToNetworkProximity"> Provides storage to network proximity information for the volume. </param>
         /// <param name="mountTargets"> List of mount targets. </param>
-        /// <param name="volumeType"> What type of volume is this. For destination volumes in Cross Region Replication, set type to DataProtection. </param>
+        /// <param name="volumeType"> What type of volume is this. For destination volumes in Cross Region Replication, set type to DataProtection. For creating clone volume, set type to ShortTermClone. </param>
         /// <param name="dataProtection"> DataProtection type volumes include an object containing details of the replication. </param>
         /// <param name="isRestoring"> Restoring. </param>
         /// <param name="isSnapshotDirectoryVisible"> If enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots (defaults to true). </param>
@@ -3127,9 +4216,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="coolnessPeriod"> Specifies the number of days after which data that is not accessed by clients will be tiered. </param>
         /// <param name="coolAccessRetrievalPolicy">
         /// coolAccessRetrievalPolicy determines the data retrieval behavior from the cool tier to standard storage based on the read pattern for cool access enabled volumes. The possible values for this field are:
-        ///                                                 Default - Data will be pulled from cool tier to standard storage on random reads. This policy is the default.
-        ///                                                 OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
-        ///                                                 Never - No client-driven data is pulled from cool tier to standard storage.
+        /// Default - Data will be pulled from cool tier to standard storage on random reads. This policy is the default.
+        /// OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
+        /// Never - No client-driven data is pulled from cool tier to standard storage.
         /// </param>
         /// <param name="coolAccessTieringPolicy"> coolAccessTieringPolicy determines which cold data blocks are moved to cool tier. The possible values for this field are: Auto - Moves cold user data blocks in both the Snapshot copies and the active file system to the cool tier tier. This policy is the default. SnapshotOnly - Moves user data blocks of the Volume Snapshot copies that are not associated with the active file system to the cool tier. </param>
         /// <param name="unixPermissions"> UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users. </param>
@@ -3148,7 +4237,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="volumeSpecName"> Volume spec name is the application specific designation or identifier for the particular volume in a volume group for e.g. data, log. </param>
         /// <param name="isEncrypted"> Specifies if the volume is encrypted or not. Only available on volumes created or updated after 2022-01-01. </param>
         /// <param name="placementRules"> Application specific placement rules for the particular volume. </param>
-        /// <param name="enableSubvolumes"> Flag indicating whether subvolume operations are enabled on the volume. </param>
+        /// <param name="enableSubvolumes">
+        /// Flag indicating whether subvolume operations are enabled on the volume
+        /// Deprecated. Subvolume operations and this flag will be removed in a future API version.
+        /// </param>
         /// <param name="provisionedAvailabilityZone"> The availability zone where the volume is provisioned. This refers to the logical availability zone where the volume resides. </param>
         /// <param name="isLargeVolume"> Specifies whether volume is a Large Volume or Regular Volume. </param>
         /// <param name="originatingResourceId"> Id of the snapshot or backup that the volume is restored from. </param>
@@ -3162,12 +4254,12 @@ namespace Azure.ResourceManager.NetApp.Models
                 resourceType,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
-                fileSystemId is null && creationToken is null && serviceLevel is null && exportRules is null && protocolTypes is null && provisioningState is null && snapshotId is null && deleteBaseSnapshot is null && backupId is null && baremetalTenantId is null && subnetId is null && networkFeatures is null && effectiveNetworkFeatures is null && networkSiblingSetId is null && storageToNetworkProximity is null && mountTargets is null && volumeType is null && dataProtection is null && isRestoring is null && isSnapshotDirectoryVisible is null && isKerberosEnabled is null && securityStyle is null && isSmbEncryptionEnabled is null && smbAccessBasedEnumeration is null && smbNonBrowsable is null && isSmbContinuouslyAvailable is null && throughputMibps is null && actualThroughputMibps is null && encryptionKeySource is null && keyVaultPrivateEndpointResourceId is null && isLdapEnabled is null && isCoolAccessEnabled is null && coolnessPeriod is null && coolAccessRetrievalPolicy is null && coolAccessTieringPolicy is null && unixPermissions is null && cloneProgress is null && fileAccessLogs is null && avsDataStore is null && dataStoreResourceId is null && isDefaultQuotaEnabled is null && defaultUserQuotaInKiBs is null && defaultGroupQuotaInKiBs is null && maximumNumberOfFiles is null && volumeGroupName is null && capacityPoolResourceId is null && proximityPlacementGroupId is null && t2Network is null && volumeSpecName is null && isEncrypted is null && placementRules is null && enableSubvolumes is null && provisionedAvailabilityZone is null && isLargeVolume is null && originatingResourceId is null ? default : new VolumeProperties(
+                new VolumeProperties(
                     fileSystemId,
                     creationToken,
                     serviceLevel,
                     usageThreshold,
-                    new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                    exportRules is null ? default : new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
                     (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
                     provisioningState,
                     snapshotId,
@@ -3191,6 +4283,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     smbAccessBasedEnumeration,
                     smbNonBrowsable,
                     isSmbContinuouslyAvailable,
+                    default,
                     throughputMibps,
                     actualThroughputMibps,
                     encryptionKeySource,
@@ -3207,6 +4300,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     avsDataStore,
                     (dataStoreResourceId ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                     isDefaultQuotaEnabled,
+                    default,
                     defaultUserQuotaInKiBs,
                     defaultGroupQuotaInKiBs,
                     maximumNumberOfFiles,
@@ -3225,19 +4319,20 @@ namespace Azure.ResourceManager.NetApp.Models
                     default,
                     default,
                     default,
+                    default,
                     default),
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetApp.NetAppAccountData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="identity"> The identity used for the resource. </param>
+        /// <summary> NetApp account resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="activeDirectories"> Active Directories. </param>
         /// <param name="encryption"> Encryption settings. </param>
@@ -3268,7 +4363,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NetAppEncryptionIdentity"/>. </summary>
+        /// <summary> Identity used to authenticate with key vault. </summary>
         /// <param name="principalId"> The principal ID (object ID) of the identity used to authenticate with key vault. Read-only. </param>
         /// <param name="userAssignedIdentity"> The ARM resource identifier of the user assigned identity used to authenticate with key vault. Applicable if identity.type has 'UserAssigned'. It should match key of identity.userAssignedIdentities. </param>
         /// <returns> A new <see cref="Models.NetAppEncryptionIdentity"/> instance for mocking. </returns>
@@ -3278,7 +4373,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppEncryptionIdentity(principalId, userAssignedIdentity, default, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NetAppReplicationObject"/>. </summary>
+        /// <summary> Replication properties. </summary>
         /// <param name="replicationId"> Id. </param>
         /// <param name="endpointType"> Indicates whether the local volume is the source or destination for the Volume Replication. </param>
         /// <param name="replicationSchedule"> Schedule. </param>
@@ -3304,7 +4399,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of NetAppVolumeGroupVolume. </summary>
+        /// <summary> Volume resource. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -3312,28 +4407,35 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="fileSystemId"> Unique FileSystem Identifier. </param>
         /// <param name="creationToken"> A unique file path for the volume. Used when creating mount targets. </param>
         /// <param name="serviceLevel"> The service level of the file system. </param>
-        /// <param name="usageThreshold"> Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. Minimum size is 100 GiB. Upper limit is 100TiB, 500Tib for LargeVolume. Specified in bytes. </param>
-        /// <param name="exportRules"> Set of export policy rules. </param>
-        /// <param name="protocolTypes"> Set of protocol types, default NFSv3, CIFS for SMB protocol. </param>
+        /// <param name="usageThreshold">
+        /// Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB.
+        /// For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB.
+        /// For extra large volumes, valid values are in the range 2400GiB to 7200TiB. Values expressed in bytes as multiples of 1 GiB.
+        /// </param>
+        /// <param name="exportRules"> Export policy rule. </param>
+        /// <param name="protocolTypes">
+        /// Specify the protocol types for the volume. Supported values are NFSv3, NFSv4.1, and CIFS. For SMB volumes, specify CIFS.
+        /// The value SMB isn't supported in the protocolTypes property. Default: NFSv3
+        /// </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
-        /// <param name="snapshotId"> UUID v4 or resource identifier used to identify the Snapshot. </param>
+        /// <param name="snapshotId"> Resource identifier used to identify the Snapshot. </param>
         /// <param name="deleteBaseSnapshot"> If enabled (true) the snapshot the volume was created from will be automatically deleted after the volume create operation has finished.  Defaults to false. </param>
-        /// <param name="backupId"> UUID v4 or resource identifier used to identify the Backup. </param>
+        /// <param name="backupId"> Resource identifier used to identify the Backup. </param>
         /// <param name="baremetalTenantId"> Unique Baremetal Tenant Identifier. </param>
         /// <param name="subnetId"> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. </param>
-        /// <param name="networkFeatures"> Basic network, or Standard features available to the volume. </param>
+        /// <param name="networkFeatures"> The original value of the network features type available to the volume at the time it was created. </param>
         /// <param name="networkSiblingSetId"> Network Sibling Set ID for the the group of volumes sharing networking resources. </param>
         /// <param name="storageToNetworkProximity"> Provides storage to network proximity information for the volume. </param>
         /// <param name="mountTargets"> List of mount targets. </param>
-        /// <param name="volumeType"> What type of volume is this. For destination volumes in Cross Region Replication, set type to DataProtection. </param>
+        /// <param name="volumeType"> What type of volume is this. For destination volumes in Cross Region Replication, set type to DataProtection. For creating clone volume, set type to ShortTermClone. </param>
         /// <param name="dataProtection"> DataProtection type volumes include an object containing details of the replication. </param>
         /// <param name="isRestoring"> Restoring. </param>
         /// <param name="isSnapshotDirectoryVisible"> If enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots (defaults to true). </param>
         /// <param name="isKerberosEnabled"> Describe if a volume is KerberosEnabled. To be use with swagger version 2020-05-01 or later. </param>
         /// <param name="securityStyle"> The security style of volume, default unix, defaults to ntfs for dual protocol or CIFS protocol. </param>
         /// <param name="isSmbEncryptionEnabled"> Enables encryption for in-flight smb3 data. Only applicable for SMB/DualProtocol volume. To be used with swagger version 2020-08-01 or later. </param>
-        /// <param name="smbAccessBasedEnumeration"> Enables access based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
-        /// <param name="smbNonBrowsable"> Enables non browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
+        /// <param name="smbAccessBasedEnumeration"> Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
+        /// <param name="smbNonBrowsable"> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
         /// <param name="isSmbContinuouslyAvailable"> Enables continuously available share property for smb volume. Only applicable for SMB volume. </param>
         /// <param name="throughputMibps"> Maximum throughput in MiB/s that can be achieved by this volume and this will be accepted as input only for manual qosType volume. </param>
         /// <param name="actualThroughputMibps"> Actual throughput in MiB/s for auto qosType volumes calculated based on size and serviceLevel. </param>
@@ -3358,7 +4460,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="volumeSpecName"> Volume spec name is the application specific designation or identifier for the particular volume in a volume group for e.g. data, log. </param>
         /// <param name="isEncrypted"> Specifies if the volume is encrypted or not. Only available on volumes created or updated after 2022-01-01. </param>
         /// <param name="placementRules"> Application specific placement rules for the particular volume. </param>
-        /// <param name="enableSubvolumes"> Flag indicating whether subvolume operations are enabled on the volume. </param>
+        /// <param name="enableSubvolumes">
+        /// Flag indicating whether subvolume operations are enabled on the volume
+        /// Deprecated. Subvolume operations and this flag will be removed in a future API version.
+        /// </param>
         /// <param name="provisionedAvailabilityZone"> The availability zone where the volume is provisioned. This refers to the logical availability zone where the volume resides. </param>
         /// <param name="isLargeVolume"> Specifies whether volume is a Large Volume or Regular Volume. </param>
         /// <param name="originatingResourceId"> Id of the snapshot or backup that the volume is restored from. </param>
@@ -3372,12 +4477,12 @@ namespace Azure.ResourceManager.NetApp.Models
                 resourceType,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                fileSystemId is null && creationToken is null && serviceLevel is null && exportRules is null && protocolTypes is null && provisioningState is null && snapshotId is null && deleteBaseSnapshot is null && backupId is null && baremetalTenantId is null && subnetId is null && networkFeatures is null && networkSiblingSetId is null && storageToNetworkProximity is null && mountTargets is null && volumeType is null && dataProtection is null && isRestoring is null && isSnapshotDirectoryVisible is null && isKerberosEnabled is null && securityStyle is null && isSmbEncryptionEnabled is null && smbAccessBasedEnumeration is null && smbNonBrowsable is null && isSmbContinuouslyAvailable is null && throughputMibps is null && actualThroughputMibps is null && encryptionKeySource is null && keyVaultPrivateEndpointResourceId is null && isLdapEnabled is null && isCoolAccessEnabled is null && coolnessPeriod is null && unixPermissions is null && cloneProgress is null && fileAccessLogs is null && avsDataStore is null && dataStoreResourceId is null && isDefaultQuotaEnabled is null && defaultUserQuotaInKiBs is null && defaultGroupQuotaInKiBs is null && maximumNumberOfFiles is null && volumeGroupName is null && capacityPoolResourceId is null && proximityPlacementGroupId is null && t2Network is null && volumeSpecName is null && isEncrypted is null && placementRules is null && enableSubvolumes is null && provisionedAvailabilityZone is null && isLargeVolume is null && originatingResourceId is null ? default : new VolumeProperties(
+                new VolumeProperties(
                     fileSystemId,
                     creationToken,
                     serviceLevel,
                     usageThreshold,
-                    new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                    exportRules is null ? default : new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
                     (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
                     provisioningState,
                     snapshotId,
@@ -3401,6 +4506,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     smbAccessBasedEnumeration,
                     smbNonBrowsable,
                     isSmbContinuouslyAvailable,
+                    default,
                     throughputMibps,
                     actualThroughputMibps,
                     encryptionKeySource,
@@ -3417,6 +4523,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     avsDataStore,
                     (dataStoreResourceId ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                     isDefaultQuotaEnabled,
+                    default,
                     defaultUserQuotaInKiBs,
                     defaultGroupQuotaInKiBs,
                     maximumNumberOfFiles,
@@ -3435,11 +4542,12 @@ namespace Azure.ResourceManager.NetApp.Models
                     default,
                     default,
                     default,
+                    default,
                     default),
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeGroupVolume"/>. </summary>
+        /// <summary> Volume resource. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -3448,20 +4556,27 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="fileSystemId"> Unique FileSystem Identifier. </param>
         /// <param name="creationToken"> A unique file path for the volume. Used when creating mount targets. </param>
         /// <param name="serviceLevel"> The service level of the file system. </param>
-        /// <param name="usageThreshold"> Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB. For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB. Values expressed in bytes as multiples of 1 GiB. </param>
-        /// <param name="exportRules"> Set of export policy rules. </param>
-        /// <param name="protocolTypes"> Set of protocol types, default NFSv3, CIFS for SMB protocol. </param>
+        /// <param name="usageThreshold">
+        /// Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB.
+        /// For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB.
+        /// For extra large volumes, valid values are in the range 2400GiB to 7200TiB. Values expressed in bytes as multiples of 1 GiB.
+        /// </param>
+        /// <param name="exportRules"> Export policy rule. </param>
+        /// <param name="protocolTypes">
+        /// Specify the protocol types for the volume. Supported values are NFSv3, NFSv4.1, and CIFS. For SMB volumes, specify CIFS.
+        /// The value SMB isn't supported in the protocolTypes property. Default: NFSv3
+        /// </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="snapshotId"> Resource identifier used to identify the Snapshot. </param>
         /// <param name="deleteBaseSnapshot"> If enabled (true) the snapshot the volume was created from will be automatically deleted after the volume create operation has finished.  Defaults to false. </param>
         /// <param name="backupId"> Resource identifier used to identify the Backup. </param>
         /// <param name="baremetalTenantId"> Unique Baremetal Tenant Identifier. </param>
         /// <param name="subnetId"> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. </param>
-        /// <param name="networkFeatures"> Network features available to the volume, or current state of update. </param>
+        /// <param name="networkFeatures"> The original value of the network features type available to the volume at the time it was created. </param>
         /// <param name="networkSiblingSetId"> Network Sibling Set ID for the the group of volumes sharing networking resources. </param>
         /// <param name="storageToNetworkProximity"> Provides storage to network proximity information for the volume. </param>
         /// <param name="mountTargets"> List of mount targets. </param>
-        /// <param name="volumeType"> What type of volume is this. For destination volumes in Cross Region Replication, set type to DataProtection. </param>
+        /// <param name="volumeType"> What type of volume is this. For destination volumes in Cross Region Replication, set type to DataProtection. For creating clone volume, set type to ShortTermClone. </param>
         /// <param name="dataProtection"> DataProtection type volumes include an object containing details of the replication. </param>
         /// <param name="isRestoring"> Restoring. </param>
         /// <param name="isSnapshotDirectoryVisible"> If enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots (defaults to true). </param>
@@ -3480,9 +4595,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="coolnessPeriod"> Specifies the number of days after which data that is not accessed by clients will be tiered. </param>
         /// <param name="coolAccessRetrievalPolicy">
         /// coolAccessRetrievalPolicy determines the data retrieval behavior from the cool tier to standard storage based on the read pattern for cool access enabled volumes. The possible values for this field are:
-        ///                                                 Default - Data will be pulled from cool tier to standard storage on random reads. This policy is the default.
-        ///                                                 OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
-        ///                                                 Never - No client-driven data is pulled from cool tier to standard storage.
+        /// Default - Data will be pulled from cool tier to standard storage on random reads. This policy is the default.
+        /// OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
+        /// Never - No client-driven data is pulled from cool tier to standard storage.
         /// </param>
         /// <param name="unixPermissions"> UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users. </param>
         /// <param name="cloneProgress"> When a volume is being restored from another volume's snapshot, will show the percentage completion of this cloning process. When this value is empty/null there is no cloning process currently happening on this volume. This value will update every 5 minutes during cloning. </param>
@@ -3500,7 +4615,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="volumeSpecName"> Volume spec name is the application specific designation or identifier for the particular volume in a volume group for e.g. data, log. </param>
         /// <param name="isEncrypted"> Specifies if the volume is encrypted or not. Only available on volumes created or updated after 2022-01-01. </param>
         /// <param name="placementRules"> Application specific placement rules for the particular volume. </param>
-        /// <param name="enableSubvolumes"> Flag indicating whether subvolume operations are enabled on the volume. </param>
+        /// <param name="enableSubvolumes">
+        /// Flag indicating whether subvolume operations are enabled on the volume
+        /// Deprecated. Subvolume operations and this flag will be removed in a future API version.
+        /// </param>
         /// <param name="provisionedAvailabilityZone"> The availability zone where the volume is provisioned. This refers to the logical availability zone where the volume resides. </param>
         /// <param name="isLargeVolume"> Specifies whether volume is a Large Volume or Regular Volume. </param>
         /// <param name="originatingResourceId"> Id of the snapshot or backup that the volume is restored from. </param>
@@ -3514,12 +4632,12 @@ namespace Azure.ResourceManager.NetApp.Models
                 resourceType,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
-                fileSystemId is null && creationToken is null && serviceLevel is null && exportRules is null && protocolTypes is null && provisioningState is null && snapshotId is null && deleteBaseSnapshot is null && backupId is null && baremetalTenantId is null && subnetId is null && networkFeatures is null && networkSiblingSetId is null && storageToNetworkProximity is null && mountTargets is null && volumeType is null && dataProtection is null && isRestoring is null && isSnapshotDirectoryVisible is null && isKerberosEnabled is null && securityStyle is null && isSmbEncryptionEnabled is null && smbAccessBasedEnumeration is null && smbNonBrowsable is null && isSmbContinuouslyAvailable is null && throughputMibps is null && actualThroughputMibps is null && encryptionKeySource is null && keyVaultPrivateEndpointResourceId is null && isLdapEnabled is null && isCoolAccessEnabled is null && coolnessPeriod is null && coolAccessRetrievalPolicy is null && unixPermissions is null && cloneProgress is null && fileAccessLogs is null && avsDataStore is null && dataStoreResourceId is null && isDefaultQuotaEnabled is null && defaultUserQuotaInKiBs is null && defaultGroupQuotaInKiBs is null && maximumNumberOfFiles is null && volumeGroupName is null && capacityPoolResourceId is null && proximityPlacementGroupId is null && t2Network is null && volumeSpecName is null && isEncrypted is null && placementRules is null && enableSubvolumes is null && provisionedAvailabilityZone is null && isLargeVolume is null && originatingResourceId is null ? default : new VolumeProperties(
+                new VolumeProperties(
                     fileSystemId,
                     creationToken,
                     serviceLevel,
                     usageThreshold,
-                    new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                    exportRules is null ? default : new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
                     (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
                     provisioningState,
                     snapshotId,
@@ -3543,6 +4661,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     smbAccessBasedEnumeration,
                     smbNonBrowsable,
                     isSmbContinuouslyAvailable,
+                    default,
                     throughputMibps,
                     actualThroughputMibps,
                     encryptionKeySource,
@@ -3559,6 +4678,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     avsDataStore,
                     (dataStoreResourceId ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                     isDefaultQuotaEnabled,
+                    default,
                     defaultUserQuotaInKiBs,
                     defaultGroupQuotaInKiBs,
                     maximumNumberOfFiles,
@@ -3577,11 +4697,12 @@ namespace Azure.ResourceManager.NetApp.Models
                     default,
                     default,
                     default,
+                    default,
                     default),
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeGroupVolume"/>. </summary>
+        /// <summary> Volume resource. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -3590,9 +4711,16 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="fileSystemId"> Unique FileSystem Identifier. </param>
         /// <param name="creationToken"> A unique file path for the volume. Used when creating mount targets. </param>
         /// <param name="serviceLevel"> The service level of the file system. </param>
-        /// <param name="usageThreshold"> Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB. For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB. Values expressed in bytes as multiples of 1 GiB. </param>
-        /// <param name="exportRules"> Set of export policy rules. </param>
-        /// <param name="protocolTypes"> Set of protocol types, default NFSv3, CIFS for SMB protocol. </param>
+        /// <param name="usageThreshold">
+        /// Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB.
+        /// For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB.
+        /// For extra large volumes, valid values are in the range 2400GiB to 7200TiB. Values expressed in bytes as multiples of 1 GiB.
+        /// </param>
+        /// <param name="exportRules"> Export policy rule. </param>
+        /// <param name="protocolTypes">
+        /// Specify the protocol types for the volume. Supported values are NFSv3, NFSv4.1, and CIFS. For SMB volumes, specify CIFS.
+        /// The value SMB isn't supported in the protocolTypes property. Default: NFSv3
+        /// </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="snapshotId"> Resource identifier used to identify the Snapshot. </param>
         /// <param name="deleteBaseSnapshot"> If enabled (true) the snapshot the volume was created from will be automatically deleted after the volume create operation has finished.  Defaults to false. </param>
@@ -3604,7 +4732,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="networkSiblingSetId"> Network Sibling Set ID for the the group of volumes sharing networking resources. </param>
         /// <param name="storageToNetworkProximity"> Provides storage to network proximity information for the volume. </param>
         /// <param name="mountTargets"> List of mount targets. </param>
-        /// <param name="volumeType"> What type of volume is this. For destination volumes in Cross Region Replication, set type to DataProtection. </param>
+        /// <param name="volumeType"> What type of volume is this. For destination volumes in Cross Region Replication, set type to DataProtection. For creating clone volume, set type to ShortTermClone. </param>
         /// <param name="dataProtection"> DataProtection type volumes include an object containing details of the replication. </param>
         /// <param name="isRestoring"> Restoring. </param>
         /// <param name="isSnapshotDirectoryVisible"> If enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots (defaults to true). </param>
@@ -3623,9 +4751,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="coolnessPeriod"> Specifies the number of days after which data that is not accessed by clients will be tiered. </param>
         /// <param name="coolAccessRetrievalPolicy">
         /// coolAccessRetrievalPolicy determines the data retrieval behavior from the cool tier to standard storage based on the read pattern for cool access enabled volumes. The possible values for this field are:
-        ///                                                 Default - Data will be pulled from cool tier to standard storage on random reads. This policy is the default.
-        ///                                                 OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
-        ///                                                 Never - No client-driven data is pulled from cool tier to standard storage.
+        /// Default - Data will be pulled from cool tier to standard storage on random reads. This policy is the default.
+        /// OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
+        /// Never - No client-driven data is pulled from cool tier to standard storage.
         /// </param>
         /// <param name="unixPermissions"> UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users. </param>
         /// <param name="cloneProgress"> When a volume is being restored from another volume's snapshot, will show the percentage completion of this cloning process. When this value is empty/null there is no cloning process currently happening on this volume. This value will update every 5 minutes during cloning. </param>
@@ -3643,7 +4771,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="volumeSpecName"> Volume spec name is the application specific designation or identifier for the particular volume in a volume group for e.g. data, log. </param>
         /// <param name="isEncrypted"> Specifies if the volume is encrypted or not. Only available on volumes created or updated after 2022-01-01. </param>
         /// <param name="placementRules"> Application specific placement rules for the particular volume. </param>
-        /// <param name="enableSubvolumes"> Flag indicating whether subvolume operations are enabled on the volume. </param>
+        /// <param name="enableSubvolumes">
+        /// Flag indicating whether subvolume operations are enabled on the volume
+        /// Deprecated. Subvolume operations and this flag will be removed in a future API version.
+        /// </param>
         /// <param name="provisionedAvailabilityZone"> The availability zone where the volume is provisioned. This refers to the logical availability zone where the volume resides. </param>
         /// <param name="isLargeVolume"> Specifies whether volume is a Large Volume or Regular Volume. </param>
         /// <param name="originatingResourceId"> Id of the snapshot or backup that the volume is restored from. </param>
@@ -3657,12 +4788,12 @@ namespace Azure.ResourceManager.NetApp.Models
                 resourceType,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
-                fileSystemId is null && creationToken is null && serviceLevel is null && exportRules is null && protocolTypes is null && provisioningState is null && snapshotId is null && deleteBaseSnapshot is null && backupId is null && baremetalTenantId is null && subnetId is null && networkFeatures is null && effectiveNetworkFeatures is null && networkSiblingSetId is null && storageToNetworkProximity is null && mountTargets is null && volumeType is null && dataProtection is null && isRestoring is null && isSnapshotDirectoryVisible is null && isKerberosEnabled is null && securityStyle is null && isSmbEncryptionEnabled is null && smbAccessBasedEnumeration is null && smbNonBrowsable is null && isSmbContinuouslyAvailable is null && throughputMibps is null && actualThroughputMibps is null && encryptionKeySource is null && keyVaultPrivateEndpointResourceId is null && isLdapEnabled is null && isCoolAccessEnabled is null && coolnessPeriod is null && coolAccessRetrievalPolicy is null && unixPermissions is null && cloneProgress is null && fileAccessLogs is null && avsDataStore is null && dataStoreResourceId is null && isDefaultQuotaEnabled is null && defaultUserQuotaInKiBs is null && defaultGroupQuotaInKiBs is null && maximumNumberOfFiles is null && volumeGroupName is null && capacityPoolResourceId is null && proximityPlacementGroupId is null && t2Network is null && volumeSpecName is null && isEncrypted is null && placementRules is null && enableSubvolumes is null && provisionedAvailabilityZone is null && isLargeVolume is null && originatingResourceId is null ? default : new VolumeProperties(
+                new VolumeProperties(
                     fileSystemId,
                     creationToken,
                     serviceLevel,
                     usageThreshold,
-                    new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                    exportRules is null ? default : new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
                     (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
                     provisioningState,
                     snapshotId,
@@ -3686,6 +4817,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     smbAccessBasedEnumeration,
                     smbNonBrowsable,
                     isSmbContinuouslyAvailable,
+                    default,
                     throughputMibps,
                     actualThroughputMibps,
                     encryptionKeySource,
@@ -3702,6 +4834,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     avsDataStore,
                     (dataStoreResourceId ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                     isDefaultQuotaEnabled,
+                    default,
                     defaultUserQuotaInKiBs,
                     defaultGroupQuotaInKiBs,
                     maximumNumberOfFiles,
@@ -3720,15 +4853,16 @@ namespace Azure.ResourceManager.NetApp.Models
                     default,
                     default,
                     default,
+                    default,
                     default),
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NetAppReplicationObject"/>. </summary>
+        /// <summary> Replication properties. </summary>
         /// <param name="replicationId"> Id. </param>
         /// <param name="endpointType"> Indicates whether the local volume is the source or destination for the Volume Replication. </param>
         /// <param name="replicationSchedule"> Schedule. </param>
-        /// <param name="remoteVolumeResourceId"> The resource ID of the remote volume. </param>
+        /// <param name="remoteVolumeResourceId"> The resource ID of the remote volume. Required for cross region and cross zone replication. </param>
         /// <param name="remoteVolumeRegion"> The remote region for the other end of the Volume Replication. </param>
         /// <returns> A new <see cref="Models.NetAppReplicationObject"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -3749,7 +4883,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeReplication"/>. </summary>
+        /// <summary> Replication properties. </summary>
         /// <param name="endpointType"> Indicates whether the local volume is the source or destination for the Volume Replication. </param>
         /// <param name="replicationSchedule"> Schedule. </param>
         /// <param name="remoteVolumeResourceId"> The resource ID of the remote volume. </param>
@@ -3770,7 +4904,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeBackupDetail"/>. </summary>
+        /// <summary> Volume details using the backup policy. </summary>
         /// <param name="volumeName"> Volume name. </param>
         /// <param name="backupsCount"> Total count of backups for volume. </param>
         /// <param name="isPolicyEnabled"> Policy enabled. </param>

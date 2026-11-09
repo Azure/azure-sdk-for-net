@@ -11,11 +11,13 @@ using Azure.ResourceManager.Enclave;
 
 namespace Azure.ResourceManager.Enclave.Models
 {
-    /// <summary></summary>
+    /// <summary> The enforcement state for a governed service. </summary>
     public readonly partial struct VirtualEnclaveGovernedServiceItemEnforcement : IEquatable<VirtualEnclaveGovernedServiceItemEnforcement>
     {
         private readonly string _value;
+        /// <summary> Enforcement is enabled. </summary>
         private const string EnabledValue = "Enabled";
+        /// <summary> Enforcement is disabled. </summary>
         private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="VirtualEnclaveGovernedServiceItemEnforcement"/>. </summary>
@@ -28,10 +30,10 @@ namespace Azure.ResourceManager.Enclave.Models
             _value = value;
         }
 
-        /// <summary> Gets the Enabled. </summary>
+        /// <summary> Enforcement is enabled. </summary>
         public static VirtualEnclaveGovernedServiceItemEnforcement Enabled { get; } = new VirtualEnclaveGovernedServiceItemEnforcement(EnabledValue);
 
-        /// <summary> Gets the Disabled. </summary>
+        /// <summary> Enforcement is disabled. </summary>
         public static VirtualEnclaveGovernedServiceItemEnforcement Disabled { get; } = new VirtualEnclaveGovernedServiceItemEnforcement(DisabledValue);
 
         /// <summary> Determines if two <see cref="VirtualEnclaveGovernedServiceItemEnforcement"/> values are the same. </summary>

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TenantActivityLogAlertData, TenantActivityLogAlertResource>(new TenantActivityLogAlertResourcesGetTenantActivityLogAlertsAsyncCollectionResultOfT(TenantActivityLogAlertResourcesRestClient, context, "MockableTenantActivityLogAlertsTenantResource.GetTenantActivityLogAlerts"), data => new TenantActivityLogAlertResource(Client, data));
+            return new AsyncPageableWrapper<TenantActivityLogAlertData, TenantActivityLogAlertResource>(new TenantActivityLogAlertDataAsyncCollectionResultOfT(TenantActivityLogAlertResourcesRestClient, context, "MockableTenantActivityLogAlertsTenantResource.GetTenantActivityLogAlerts"), data => new TenantActivityLogAlertResource(Client, data));
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TenantActivityLogAlertData, TenantActivityLogAlertResource>(new TenantActivityLogAlertResourcesGetTenantActivityLogAlertsCollectionResultOfT(TenantActivityLogAlertResourcesRestClient, context, "MockableTenantActivityLogAlertsTenantResource.GetTenantActivityLogAlerts"), data => new TenantActivityLogAlertResource(Client, data));
+            return new PageableWrapper<TenantActivityLogAlertData, TenantActivityLogAlertResource>(new TenantActivityLogAlertDataCollectionResultOfT(TenantActivityLogAlertResourcesRestClient, context, "MockableTenantActivityLogAlertsTenantResource.GetTenantActivityLogAlerts"), data => new TenantActivityLogAlertResource(Client, data));
         }
     }
 }

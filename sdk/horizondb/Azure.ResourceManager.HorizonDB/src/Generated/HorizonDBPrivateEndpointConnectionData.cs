@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HorizonDB
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HorizonDBPrivateEndpointConnectionData"/>. </summary>
-        internal HorizonDBPrivateEndpointConnectionData()
+        public HorizonDBPrivateEndpointConnectionData()
         {
         }
 
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary> The private endpoint connection properties. </summary>
-        public HorizonDBPrivateEndpointConnectionProperties Properties { get; }
+        public HorizonDBPrivateEndpointConnectionProperties Properties { get; set; }
     }
 }

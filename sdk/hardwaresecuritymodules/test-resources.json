@@ -76,6 +76,33 @@
         "description": "Dedicated HSM SKU to deploy. The default is 'payShield10K_LMK1_CPS60'"
       }
     },
+    "phsmLocation": {
+      "type": "string",
+      "defaultValue": "centraluseuap",
+      "allowedValues": [
+        "ukwest",
+        "centraluseuap",
+        "eastus",
+        "australiacentral"
+      ],
+      "metadata": {
+        "description": "The location of the resource. The default is centraluseuap."
+      }
+    },
+    "paymentHsmSkuFamily": {
+      "type": "string",
+      "defaultValue": "B",
+      "metadata": {
+        "description": "Payment HSM SKU Family. The default is 'B'"
+      }
+    },
+    "paymentHsmSkuName": {
+      "type": "string",
+      "defaultValue": "Payments_v2",
+      "metadata": {
+        "description": "Payment HSM SKU to deploy. The default is 'Payments_v2'"
+      }
+    },
     "provisionerApplicationOid": {
       "type": "string",
       "metadata": {
@@ -88,6 +115,8 @@
     "cloudHsmName": "sdk-test-chsm",
     "dedicatedhsmApiVersion": "2024-06-30-preview",
     "dedicatedHsmName": "sdk-test-dhsm",
+    "paymentHsmApiVersion": "2025-12-01-preview",
+    "paymentHsmName": "sdk-test-phsm",
     "contributorRoleId": "b24988ac-6180-42a0-ab88-20f7382dd24c",
     "vmName": "dhsm-vnet"
   },
@@ -100,6 +129,16 @@
       "Sku": {
         "Family": "[parameters('cloudHsmSkuFamily')]",
         "Name": "[parameters('cloudHsmSkuName')]"
+      }
+    },
+    {
+      "type": "Microsoft.HardwareSecurityModules/paymentHsmClusters",
+      "apiVersion": "[variables('paymentHsmApiVersion')]",
+      "name": "[variables('paymentHsmName')]",
+      "location": "[parameters('phsmLocation')]",
+      "Sku": {
+        "Family": "[parameters('paymentHsmSkuFamily')]",
+        "Name": "[parameters('paymentHsmSkuName')]"
       }
     },
     {

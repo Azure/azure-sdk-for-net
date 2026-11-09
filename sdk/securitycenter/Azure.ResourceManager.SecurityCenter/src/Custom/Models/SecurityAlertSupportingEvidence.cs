@@ -10,6 +10,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     // Compatibility customization: preserve the GA public parameterless constructor for the open supporting-evidence payload.
     public partial class SecurityAlertSupportingEvidence
     {
+        // TODO: Remove this constructor when https://github.com/Azure/azure-sdk-for-net/issues/62678 is fixed.
+        internal SecurityAlertSupportingEvidence(string securityAlertSupportingEvidenceType)
+            : this(securityAlertSupportingEvidenceType, null)
+        {
+        }
+
         /// <summary> Initializes a new instance of <see cref="SecurityAlertSupportingEvidence"/>. </summary>
         public SecurityAlertSupportingEvidence()
         {

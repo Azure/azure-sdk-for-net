@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Response.BodyOrNoContent.csproj" />
+  <Project Path="tests/Response.BodyOrNoContent.Tests.csproj" />
+</Solution>

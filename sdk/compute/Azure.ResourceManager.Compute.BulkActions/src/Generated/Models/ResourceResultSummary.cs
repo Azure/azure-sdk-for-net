@@ -11,15 +11,15 @@ using Azure;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The status of the resources. </summary>
+    /// <summary> Summary of operation results across targeted resources. </summary>
     public partial class ResourceResultSummary
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResourceResultSummary"/>. </summary>
-        /// <param name="code"> The error code for those resources. In case of success, code is populated with Success. </param>
-        /// <param name="count"> The number of resources that the code applies to. </param>
+        /// <param name="code"> The result code shared by the resources in this group. A successful result uses `Success`. </param>
+        /// <param name="count"> The number of resources with this result code. </param>
         internal ResourceResultSummary(string code, int count)
         {
             Code = code;
@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceResultSummary"/>. </summary>
-        /// <param name="code"> The error code for those resources. In case of success, code is populated with Success. </param>
-        /// <param name="count"> The number of resources that the code applies to. </param>
-        /// <param name="errorDetails"> The error details for the resources. Not populated on success cases. </param>
+        /// <param name="code"> The result code shared by the resources in this group. A successful result uses `Success`. </param>
+        /// <param name="count"> The number of resources with this result code. </param>
+        /// <param name="errorDetails"> Error details for failed resources. This property is omitted for successful results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ResourceResultSummary(string code, int count, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -39,13 +39,13 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The error code for those resources. In case of success, code is populated with Success. </summary>
+        /// <summary> The result code shared by the resources in this group. A successful result uses `Success`. </summary>
         public string Code { get; }
 
-        /// <summary> The number of resources that the code applies to. </summary>
+        /// <summary> The number of resources with this result code. </summary>
         public int Count { get; }
 
-        /// <summary> The error details for the resources. Not populated on success cases. </summary>
+        /// <summary> Error details for failed resources. This property is omitted for successful results. </summary>
         public ResponseError ErrorDetails { get; }
     }
 }

@@ -82,7 +82,7 @@ namespace Azure.Provisioning.ContainerRegistry
             _statusDetailType = DefineProperty<string>(nameof(StatusDetailType), new string[] { "type" }, isOutput: true);
             _code = DefineProperty<string>(nameof(Code), new string[] { "code" }, isOutput: true);
             _description = DefineProperty<string>(nameof(Description), new string[] { "description" }, isOutput: true);
-            _timestamp = DefineProperty<DateTimeOffset>(nameof(Timestamp), new string[] { "timestamp" }, isOutput: true);
+            _timestamp = DefineProperty<DateTimeOffset>(nameof(Timestamp), new string[] { "timestamp" }, isOutput: true, format: "O");
             _correlationId = DefineProperty<Guid>(nameof(CorrelationId), new string[] { "correlationId" }, isOutput: true);
             DefineAdditionalProperties();
         }

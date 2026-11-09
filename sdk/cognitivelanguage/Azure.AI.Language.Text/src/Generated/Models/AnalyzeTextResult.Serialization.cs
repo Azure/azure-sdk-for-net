@@ -14,7 +14,7 @@ namespace Azure.AI.Language.Text
 {
     /// <summary>
     /// The result object for the analyze task.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AnalyzeTextEntityLinkingResult"/>, <see cref="AnalyzeTextEntitiesResult"/>, <see cref="AnalyzeTextKeyPhraseResult"/>, <see cref="AnalyzeTextLanguageDetectionResult"/>, <see cref="AnalyzeTextPiiResult"/>, and <see cref="AnalyzeTextSentimentResult"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AnalyzeTextEntitiesResult"/>, <see cref="AnalyzeTextEntityLinkingResult"/>, <see cref="AnalyzeTextKeyPhraseResult"/>, <see cref="AnalyzeTextLanguageDetectionResult"/>, <see cref="AnalyzeTextPiiResult"/>, and <see cref="AnalyzeTextSentimentResult"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAnalyzeTextResult))]
     public abstract partial class AnalyzeTextResult : IJsonModel<AnalyzeTextResult>
@@ -137,10 +137,10 @@ namespace Azure.AI.Language.Text
             {
                 switch (discriminator.GetString())
                 {
-                    case "EntityLinkingResults":
-                        return AnalyzeTextEntityLinkingResult.DeserializeAnalyzeTextEntityLinkingResult(element, options);
                     case "EntityRecognitionResults":
                         return AnalyzeTextEntitiesResult.DeserializeAnalyzeTextEntitiesResult(element, options);
+                    case "EntityLinkingResults":
+                        return AnalyzeTextEntityLinkingResult.DeserializeAnalyzeTextEntityLinkingResult(element, options);
                     case "KeyPhraseExtractionResults":
                         return AnalyzeTextKeyPhraseResult.DeserializeAnalyzeTextKeyPhraseResult(element, options);
                     case "LanguageDetectionResults":

@@ -169,20 +169,20 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("billingProperties"u8);
                 writer.WriteObjectValue(BillingProperties, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(RegistrationTimestamp))
+            if (options.Format != "W" && Optional.IsDefined(RegistrationOn))
             {
                 writer.WritePropertyName("registrationTimestamp"u8);
-                writer.WriteStringValue(RegistrationTimestamp.Value, "O");
+                writer.WriteStringValue(RegistrationOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastSyncTimestamp))
+            if (options.Format != "W" && Optional.IsDefined(LastSyncOn))
             {
                 writer.WritePropertyName("lastSyncTimestamp"u8);
-                writer.WriteStringValue(LastSyncTimestamp.Value, "O");
+                writer.WriteStringValue(LastSyncOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastBillingTimestamp))
+            if (options.Format != "W" && Optional.IsDefined(LastBillingOn))
             {
                 writer.WritePropertyName("lastBillingTimestamp"u8);
-                writer.WriteStringValue(LastBillingTimestamp.Value, "O");
+                writer.WriteStringValue(LastBillingOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ServiceEndpoint))
             {
@@ -208,6 +208,11 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 writer.WritePropertyName("clusterPattern"u8);
                 writer.WriteStringValue(ClusterPattern.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(SdnProperties))
+            {
+                writer.WritePropertyName("sdnProperties"u8);
+                writer.WriteObjectValue(SdnProperties, options);
             }
             if (Optional.IsCollectionDefined(LocalAvailabilityZones))
             {
@@ -290,13 +295,14 @@ namespace Azure.ResourceManager.Hci.Models
             float? trialDaysRemaining = default;
             string billingModel = default;
             ClusterBillingProperties billingProperties = default;
-            DateTimeOffset? registrationTimestamp = default;
-            DateTimeOffset? lastSyncTimestamp = default;
-            DateTimeOffset? lastBillingTimestamp = default;
+            DateTimeOffset? registrationOn = default;
+            DateTimeOffset? lastSyncOn = default;
+            DateTimeOffset? lastBillingOn = default;
             string serviceEndpoint = default;
             string resourceProviderObjectId = default;
             IList<SecretsLocationDetails> secretsLocations = default;
             ClusterPattern? clusterPattern = default;
+            ClusterSdnProperties sdnProperties = default;
             IList<LocalAvailabilityZones> localAvailabilityZones = default;
             HciIdentityProvider? identityProvider = default;
             HciStorageType? storageType = default;
@@ -472,7 +478,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    registrationTimestamp = prop.Value.GetDateTimeOffset("O");
+                    registrationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastSyncTimestamp"u8))
@@ -481,7 +487,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    lastSyncTimestamp = prop.Value.GetDateTimeOffset("O");
+                    lastSyncOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastBillingTimestamp"u8))
@@ -490,7 +496,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    lastBillingTimestamp = prop.Value.GetDateTimeOffset("O");
+                    lastBillingOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("serviceEndpoint"u8))
@@ -524,6 +530,15 @@ namespace Azure.ResourceManager.Hci.Models
                         continue;
                     }
                     clusterPattern = new ClusterPattern(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("sdnProperties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sdnProperties = ClusterSdnProperties.DeserializeClusterSdnProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("localAvailabilityZones"u8))
@@ -560,7 +575,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ClusterProperties(
@@ -583,13 +598,14 @@ namespace Azure.ResourceManager.Hci.Models
                 trialDaysRemaining,
                 billingModel,
                 billingProperties,
-                registrationTimestamp,
-                lastSyncTimestamp,
-                lastBillingTimestamp,
+                registrationOn,
+                lastSyncOn,
+                lastBillingOn,
                 serviceEndpoint,
                 resourceProviderObjectId,
                 secretsLocations ?? new ChangeTrackingList<SecretsLocationDetails>(),
                 clusterPattern,
+                sdnProperties,
                 localAvailabilityZones ?? new ChangeTrackingList<LocalAvailabilityZones>(),
                 identityProvider,
                 storageType,

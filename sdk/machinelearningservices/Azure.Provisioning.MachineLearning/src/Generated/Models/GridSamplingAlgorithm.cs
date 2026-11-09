@@ -13,13 +13,13 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new GridSamplingAlgorithm. </summary>
         public GridSamplingAlgorithm()
         {
+            SamplingAlgorithmType.Assign(MachineLearning.SamplingAlgorithmType.Grid);
         }
 
         /// <summary> Define all the provisionable properties for GridSamplingAlgorithm. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("samplingAlgorithmType", new string[] { "samplingAlgorithmType" }, defaultValue: "Grid");
             DefineAdditionalProperties();
         }
 

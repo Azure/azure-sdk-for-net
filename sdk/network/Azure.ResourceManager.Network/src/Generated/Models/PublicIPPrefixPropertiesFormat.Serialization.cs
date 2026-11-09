@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -103,9 +105,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("publicIPAddresses"u8);
                 writer.WriteStartArray();
-                foreach (ReferencedPublicIpAddress item in PublicIPAddresses)
+                foreach (SubResource item in PublicIPAddresses)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -133,6 +140,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("natGateway"u8);
                 writer.WriteObjectValue(NatGateway, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsUpgradedToV2))
+            {
+                writer.WritePropertyName("upgradedToV2"u8);
+                writer.WriteBooleanValue(IsUpgradedToV2.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -180,12 +192,13 @@ namespace Azure.ResourceManager.Network.Models
             IList<IPTag> ipTags = default;
             int? prefixLength = default;
             string ipPrefix = default;
-            IReadOnlyList<ReferencedPublicIpAddress> publicIPAddresses = default;
+            IReadOnlyList<SubResource> publicIPAddresses = default;
             NetworkSubResource loadBalancerFrontendIPConfiguration = default;
             NetworkSubResource customIPPrefix = default;
             Guid? resourceGuid = default;
             NetworkProvisioningState? provisioningState = default;
             NatGatewayData natGateway = default;
+            bool? isUpgradedToV2 = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -232,10 +245,17 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<ReferencedPublicIpAddress> array = new List<ReferencedPublicIpAddress>();
+                    List<SubResource> array = new List<SubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ReferencedPublicIpAddress.DeserializeReferencedPublicIpAddress(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
+                        }
                     }
                     publicIPAddresses = array;
                     continue;
@@ -285,9 +305,18 @@ namespace Azure.ResourceManager.Network.Models
                     natGateway = NatGatewayData.DeserializeNatGatewayData(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("upgradedToV2"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isUpgradedToV2 = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new PublicIPPrefixPropertiesFormat(
@@ -295,12 +324,13 @@ namespace Azure.ResourceManager.Network.Models
                 ipTags ?? new ChangeTrackingList<IPTag>(),
                 prefixLength,
                 ipPrefix,
-                publicIPAddresses ?? new ChangeTrackingList<ReferencedPublicIpAddress>(),
+                publicIPAddresses ?? new ChangeTrackingList<SubResource>(),
                 loadBalancerFrontendIPConfiguration,
                 customIPPrefix,
                 resourceGuid,
                 provisioningState,
                 natGateway,
+                isUpgradedToV2,
                 additionalBinaryDataProperties);
         }
     }

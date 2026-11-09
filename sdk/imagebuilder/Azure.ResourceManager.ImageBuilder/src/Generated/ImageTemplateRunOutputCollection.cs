@@ -38,9 +38,8 @@ namespace Azure.ResourceManager.ImageBuilder
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ImageTemplateRunOutputCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ImageTemplateRunOutputResource.ResourceType, out string imageTemplateRunOutputApiVersion);
             _virtualMachineImageTemplatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ImageBuilder", ImageTemplateRunOutputResource.ResourceType.Namespace, Diagnostics);
-            _virtualMachineImageTemplatesRestClient = new VirtualMachineImageTemplates(_virtualMachineImageTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, imageTemplateRunOutputApiVersion ?? "2025-10-01");
+            _virtualMachineImageTemplatesRestClient = new VirtualMachineImageTemplates(_virtualMachineImageTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -177,7 +176,7 @@ namespace Azure.ResourceManager.ImageBuilder
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ImageTemplateRunOutputData, ImageTemplateRunOutputResource>(new VirtualMachineImageTemplatesGetRunOutputsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ImageTemplateRunOutputData, ImageTemplateRunOutputResource>(new ImageTemplateRunOutputDataAsyncCollectionResultOfT(
                 _virtualMachineImageTemplatesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -211,7 +210,7 @@ namespace Azure.ResourceManager.ImageBuilder
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ImageTemplateRunOutputData, ImageTemplateRunOutputResource>(new VirtualMachineImageTemplatesGetRunOutputsCollectionResultOfT(
+            return new PageableWrapper<ImageTemplateRunOutputData, ImageTemplateRunOutputResource>(new ImageTemplateRunOutputDataCollectionResultOfT(
                 _virtualMachineImageTemplatesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

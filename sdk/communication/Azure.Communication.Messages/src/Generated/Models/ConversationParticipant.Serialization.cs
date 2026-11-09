@@ -13,7 +13,7 @@ namespace Azure.Communication.Messages
 {
     /// <summary>
     /// Advanced Messaging conversation participant.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="InternalConversationParticipant"/> and <see cref="ExternalConversationParticipant"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ExternalConversationParticipant"/> and <see cref="InternalConversationParticipant"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownConversationParticipant))]
     public abstract partial class ConversationParticipant : IJsonModel<ConversationParticipant>
@@ -139,10 +139,10 @@ namespace Azure.Communication.Messages
             {
                 switch (discriminator.GetString())
                 {
-                    case "internal":
-                        return InternalConversationParticipant.DeserializeInternalConversationParticipant(element, options);
                     case "external":
                         return ExternalConversationParticipant.DeserializeExternalConversationParticipant(element, options);
+                    case "internal":
+                        return InternalConversationParticipant.DeserializeInternalConversationParticipant(element, options);
                 }
             }
             return UnknownConversationParticipant.DeserializeUnknownConversationParticipant(element, options);

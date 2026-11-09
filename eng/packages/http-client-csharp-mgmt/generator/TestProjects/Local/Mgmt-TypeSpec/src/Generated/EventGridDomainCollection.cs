@@ -296,7 +296,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EventGridDomainData, EventGridDomainResource>(new EventGridDomainsGetByResourceGroupAsyncCollectionResultOfT(_eventGridDomainsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EventGridDomainCollection.GetAll"), data => new EventGridDomainResource(Client, data));
+            return new AsyncPageableWrapper<EventGridDomainData, EventGridDomainResource>(new EventGridDomainDataAsyncCollectionResultOfT(_eventGridDomainsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EventGridDomainCollection.GetAll"), data => new EventGridDomainResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EventGridDomainData, EventGridDomainResource>(new EventGridDomainsGetByResourceGroupCollectionResultOfT(_eventGridDomainsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EventGridDomainCollection.GetAll"), data => new EventGridDomainResource(Client, data));
+            return new PageableWrapper<EventGridDomainData, EventGridDomainResource>(new EventGridDomainDataCollectionResultOfT(_eventGridDomainsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EventGridDomainCollection.GetAll"), data => new EventGridDomainResource(Client, data));
         }
 
         /// <summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.MachineLearning
@@ -15,15 +16,28 @@ namespace Azure.Provisioning.MachineLearning
     /// </summary>
     public partial class TargetRollingWindowSize : ProvisionableConstruct
     {
+        private BicepValue<TargetRollingWindowSizeMode> _mode;
+
         /// <summary> Creates a new TargetRollingWindowSize. </summary>
         public TargetRollingWindowSize()
         {
+        }
+
+        /// <summary> [Required] TargetRollingWindowSiz detection mode. </summary>
+        internal BicepValue<TargetRollingWindowSizeMode> Mode
+        {
+            get
+            {
+                Initialize();
+                return _mode;
+            }
         }
 
         /// <summary> Define all the provisionable properties for TargetRollingWindowSize. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _mode = DefineProperty<TargetRollingWindowSizeMode>(nameof(Mode), new string[] { "mode" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
