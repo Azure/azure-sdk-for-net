@@ -2,16 +2,19 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.AI.Projects;
 using Azure.AI.Projects.Agents;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
+using OpenAI;
 using OpenAI.Files;
 using OpenAI.Responses;
 
@@ -41,61 +44,83 @@ public class Sample_ComputerUse : ProjectsOpenAITestBase
     #region Snippet:Sample_ProcessComputerUseCall_ComputerUse
     private static string ProcessComputerUseCall(ComputerCallResponseItem item, string oldScreenshot)
     {
-        string currentScreenshot = "browser_search";
-        switch (item.Action.Kind)
+        string currentScreenshot = oldScreenshot;
+        List<ComputerCallAction> actions = [];
+        if (item.Patch.TryGetJson("$.actions"u8, out ReadOnlyMemory<byte> actionsJson))
         {
-            case ComputerCallActionKind.Type:
-                Console.WriteLine($"  Typing text \"{item.Action.TypeText}\" - Simulating keyboard input");
-                currentScreenshot = "search_typed";
-                break;
-            case ComputerCallActionKind.KeyPress:
-                HashSet<string> codes = [.. item.Action.KeyPressKeyCodes];
-                if (codes.Contains("Return") || codes.Contains("ENTER"))
+            using JsonDocument doc = JsonDocument.Parse(actionsJson);
+            foreach (JsonElement element in doc.RootElement.EnumerateArray())
+            {
+                ComputerCallAction? parsed = ModelReaderWriter.Read<ComputerCallAction>(
+                    BinaryData.FromString(element.GetRawText()),
+                    ModelReaderWriterOptions.Json,
+                    OpenAIContext.Default);
+                if (parsed is not null)
                 {
-                    // If we have typed the value to the search field, go to search results.
-                    if (string.Equals(oldScreenshot, "search_typed"))
+                    actions.Add(parsed);
+                }
+            }
+        }
+        else if (item.Action is not null)
+        {
+            actions.Add(item.Action);
+        }
+
+        foreach (ComputerCallAction action in actions)
+        {
+            switch (action.Kind)
+            {
+                case ComputerCallActionKind.Type:
+                    Console.WriteLine($"  Typing text \"{action.TypeText}\" - Simulating keyboard input");
+                    currentScreenshot = "search_typed";
+                    break;
+                case ComputerCallActionKind.KeyPress:
+                    HashSet<string> codes = [.. action.KeyPressKeyCodes];
+                    if (codes.Contains("Return") || codes.Contains("ENTER"))
                     {
-                        Console.WriteLine("  -> Detected ENTER key press, when search field was populated, displaying results.");
+                        // If we have typed the value to the search field, go to search results.
+                        if (string.Equals(currentScreenshot, "search_typed"))
+                        {
+                            Console.WriteLine("  -> Detected ENTER key press, when search field was populated, displaying results.");
+                            currentScreenshot = "search_results";
+                        }
+                        else
+                        {
+                            Console.WriteLine("  -> Detected ENTER key press, on results or unpopulated search, do nothing.");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine($"  Key press: {action.KeyPressKeyCodes.Aggregate("", (agg, next) => agg + "+" + next)} - Simulating key combination");
+                    }
+                    break;
+                case ComputerCallActionKind.Click:
+                    Console.WriteLine($"  Click at ({action.ClickCoordinates.Value.X}, {action.ClickCoordinates.Value.Y}) - Simulating click on UI element");
+                    if (string.Equals(currentScreenshot, "search_typed"))
+                    {
+                        Console.WriteLine("  -> Assuming click on Search button when search field was populated, displaying results.");
                         currentScreenshot = "search_results";
                     }
                     else
                     {
-                        Console.WriteLine("  -> Detected ENTER key press, on results or unpopulated search, do nothing.");
-                        currentScreenshot = oldScreenshot;
+                        Console.WriteLine("  -> Assuming click on Search on results or when search was not populated, do nothing.");
                     }
-                }
-                else
-                {
-                    Console.WriteLine($"  Key press: {item.Action.KeyPressKeyCodes.Aggregate("", (agg, next) => agg + "+" + next)} - Simulating key combination");
-                }
-                break;
-            case ComputerCallActionKind.Click:
-                Console.WriteLine($"  Click at ({item.Action.ClickCoordinates.Value.X}, {item.Action.ClickCoordinates.Value.Y}) - Simulating click on UI element");
-                if (string.Equals(oldScreenshot, "search_typed"))
-                {
-                    Console.WriteLine("  -> Assuming click on Search button when search field was populated, displaying results.");
-                    currentScreenshot = "search_results";
-                }
-                else
-                {
-                    Console.WriteLine("  -> Assuming click on Search on results or when search was not populated, do nothing.");
-                    currentScreenshot = oldScreenshot;
-                }
-                break;
-            case ComputerCallActionKind.Drag:
-                string pathStr = item.Action.DragPath.ToArray().Select(p => $"{p.X}, {p.Y}").Aggregate("", (agg, next) => $"{agg} -> {next}");
-                Console.WriteLine($"  Drag path: {pathStr} - Simulating drag operation");
-                break;
-            case ComputerCallActionKind.Scroll:
-                Console.WriteLine($"  Scroll at ({item.Action.ScrollCoordinates.Value.X}, {item.Action.ScrollCoordinates.Value.Y}) - Simulating scroll action");
-                break;
-            case ComputerCallActionKind.Screenshot:
-                Console.WriteLine("  Taking screenshot - Capturing current screen state");
-                break;
-            default:
-                break;
+                    break;
+                case ComputerCallActionKind.Drag:
+                    string pathStr = action.DragPath.ToArray().Select(p => $"{p.X}, {p.Y}").Aggregate("", (agg, next) => $"{agg} -> {next}");
+                    Console.WriteLine($"  Drag path: {pathStr} - Simulating drag operation");
+                    break;
+                case ComputerCallActionKind.Scroll:
+                    Console.WriteLine($"  Scroll at ({action.ScrollCoordinates.Value.X}, {action.ScrollCoordinates.Value.Y}) - Simulating scroll action");
+                    break;
+                case ComputerCallActionKind.Screenshot:
+                    Console.WriteLine("  Taking screenshot - Capturing current screen state");
+                    break;
+                default:
+                    break;
+            }
+            Console.WriteLine($"  -> Action processed: {action.Kind}");
         }
-        Console.WriteLine($"  -> Action processed: {item.Action.Kind}");
 
         return currentScreenshot;
     }
@@ -130,11 +155,11 @@ public class Sample_ComputerUse : ProjectsOpenAITestBase
             Instructions = "You are a computer automation assistant.\n\n" +
                            "Be direct and efficient. When you reach the search results page, read and describe the actual search result titles and descriptions you can see.",
             Tools = {
-                ResponseTool.CreateComputerTool(
-                    environment: new ComputerToolEnvironment("windows"),
-                    displayWidth: 1026,
-                    displayHeight: 769
-                ),
+                ModelReaderWriter.Read<ResponseTool>(
+                    BinaryData.FromBytes("""{"type":"computer"}"""u8.ToArray()),
+                    ModelReaderWriterOptions.Json,
+                    OpenAIContext.Default
+                )!,
             }
         };
         ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
@@ -233,11 +258,11 @@ public class Sample_ComputerUse : ProjectsOpenAITestBase
             Instructions = "You are a computer automation assistant.\n\n" +
                            "Be direct and efficient. When you reach the search results page, read and describe the actual search result titles and descriptions you can see.",
             Tools = {
-                ResponseTool.CreateComputerTool(
-                    environment: new ComputerToolEnvironment("windows"),
-                    displayWidth: 1026,
-                    displayHeight: 769
-                ),
+                ModelReaderWriter.Read<ResponseTool>(
+                    BinaryData.FromBytes("""{"type":"computer"}"""u8.ToArray()),
+                    ModelReaderWriterOptions.Json,
+                    OpenAIContext.Default
+                )!,
             }
         };
         ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
