@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
     public readonly partial struct AuthCredentialsKind : IEquatable<AuthCredentialsKind>
     {
         private readonly string _value;
+        /// <summary> OAuth Client Credential type. </summary>
+        private const string OAuthClientCredentialsValue = "OAuthClientCredentials";
+        /// <summary> API Key Auth Credential type. </summary>
+        private const string ApiKeyAuthCredentialsValue = "ApiKeyAuthCredentials";
 
         /// <summary> Initializes a new instance of <see cref="AuthCredentialsKind"/>. </summary>
         /// <param name="value"> The value. </param>
