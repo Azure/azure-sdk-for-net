@@ -18,7 +18,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="conversationInput"> The input ConversationItem and its optional parameters. </param>
         /// <param name="actionContent"> Input parameters necessary for a Conversation language understanding task. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversationInput"/> or <paramref name="actionContent"/> is null. </exception>
-        public ConversationLanguageUnderstandingInput(ConversationAnalysisInput conversationInput, ConversationLanguageUnderstandingActionContent actionContent) : base(AnalyzeConversationInputKind.Conversation)
+        public ConversationLanguageUnderstandingInput(ConversationAnalysisInput conversationInput, ConversationLanguageUnderstandingActionRequest actionContent) : base(AnalyzeConversationInputKind.Conversation)
         {
             Argument.AssertNotNull(conversationInput, nameof(conversationInput));
             Argument.AssertNotNull(actionContent, nameof(actionContent));
@@ -32,7 +32,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="conversationInput"> The input ConversationItem and its optional parameters. </param>
         /// <param name="actionContent"> Input parameters necessary for a Conversation language understanding task. </param>
-        internal ConversationLanguageUnderstandingInput(AnalyzeConversationInputKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, ConversationAnalysisInput conversationInput, ConversationLanguageUnderstandingActionContent actionContent) : base(kind, additionalBinaryDataProperties)
+        internal ConversationLanguageUnderstandingInput(AnalyzeConversationInputKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, ConversationAnalysisInput conversationInput, ConversationLanguageUnderstandingActionRequest actionContent) : base(kind, additionalBinaryDataProperties)
         {
             ConversationInput = conversationInput;
             ActionContent = actionContent;
@@ -42,6 +42,6 @@ namespace Azure.AI.Language.Conversations.Models
         public ConversationAnalysisInput ConversationInput { get; }
 
         /// <summary> Input parameters necessary for a Conversation language understanding task. </summary>
-        public ConversationLanguageUnderstandingActionContent ActionContent { get; }
+        public ConversationLanguageUnderstandingActionRequest ActionContent { get; }
     }
 }

@@ -23,7 +23,7 @@ namespace Azure.AI.Language.Text
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="textInput"> Documents to be analyzed. </param>
         /// <param name="actionContent"> task parameters. </param>
-        internal TextLanguageDetectionInput(AnalyzeTextInputKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, LanguageDetectionTextInput textInput, LanguageDetectionActionContent actionContent) : base(kind, additionalBinaryDataProperties)
+        internal TextLanguageDetectionInput(AnalyzeTextInputKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, LanguageDetectionTextInput textInput, LanguageDetectionActionRequest actionContent) : base(kind, additionalBinaryDataProperties)
         {
             TextInput = textInput;
             ActionContent = actionContent;
@@ -33,6 +33,6 @@ namespace Azure.AI.Language.Text
         public LanguageDetectionTextInput TextInput { get; set; }
 
         /// <summary> task parameters. </summary>
-        public LanguageDetectionActionContent ActionContent { get; set; }
+        public LanguageDetectionActionRequest ActionContent { get; set; }
     }
 }

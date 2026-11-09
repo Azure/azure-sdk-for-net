@@ -114,7 +114,7 @@ namespace Azure.AI.Language.Text
             AnalyzeTextInputKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             MultiLanguageTextInput textInput = default;
-            SentimentAnalysisActionContent actionContent = default;
+            SentimentAnalysisActionRequest actionContent = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
@@ -137,7 +137,7 @@ namespace Azure.AI.Language.Text
                     {
                         continue;
                     }
-                    actionContent = SentimentAnalysisActionContent.DeserializeSentimentAnalysisActionContent(prop.Value, options);
+                    actionContent = SentimentAnalysisActionRequest.DeserializeSentimentAnalysisActionRequest(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -114,7 +114,7 @@ namespace Azure.AI.Language.Conversations.Models
             AnalyzeConversationInputKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ConversationAnalysisInput conversationInput = default;
-            ConversationLanguageUnderstandingActionContent actionContent = default;
+            ConversationLanguageUnderstandingActionRequest actionContent = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
@@ -129,7 +129,7 @@ namespace Azure.AI.Language.Conversations.Models
                 }
                 if (prop.NameEquals("parameters"u8))
                 {
-                    actionContent = ConversationLanguageUnderstandingActionContent.DeserializeConversationLanguageUnderstandingActionContent(prop.Value, options);
+                    actionContent = ConversationLanguageUnderstandingActionRequest.DeserializeConversationLanguageUnderstandingActionRequest(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

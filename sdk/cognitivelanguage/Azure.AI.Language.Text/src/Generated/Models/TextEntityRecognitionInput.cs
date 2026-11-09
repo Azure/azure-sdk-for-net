@@ -23,7 +23,7 @@ namespace Azure.AI.Language.Text
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="textInput"> The input to be analyzed. </param>
         /// <param name="actionContent"> Task parameters. </param>
-        internal TextEntityRecognitionInput(AnalyzeTextInputKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, MultiLanguageTextInput textInput, EntitiesActionContent actionContent) : base(kind, additionalBinaryDataProperties)
+        internal TextEntityRecognitionInput(AnalyzeTextInputKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, MultiLanguageTextInput textInput, EntitiesActionRequest actionContent) : base(kind, additionalBinaryDataProperties)
         {
             TextInput = textInput;
             ActionContent = actionContent;
@@ -33,6 +33,6 @@ namespace Azure.AI.Language.Text
         public MultiLanguageTextInput TextInput { get; set; }
 
         /// <summary> Task parameters. </summary>
-        public EntitiesActionContent ActionContent { get; set; }
+        public EntitiesActionRequest ActionContent { get; set; }
     }
 }

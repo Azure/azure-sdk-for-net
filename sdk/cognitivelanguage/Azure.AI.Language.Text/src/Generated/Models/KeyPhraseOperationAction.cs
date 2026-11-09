@@ -23,12 +23,12 @@ namespace Azure.AI.Language.Text
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameters"> Key phrase extraction task parameters. </param>
-        internal KeyPhraseOperationAction(string name, AnalyzeTextOperationActionKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, KeyPhraseActionContent parameters) : base(name, kind, additionalBinaryDataProperties)
+        internal KeyPhraseOperationAction(string name, AnalyzeTextOperationActionKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, KeyPhraseActionRequest parameters) : base(name, kind, additionalBinaryDataProperties)
         {
             Parameters = parameters;
         }
 
         /// <summary> Key phrase extraction task parameters. </summary>
-        public KeyPhraseActionContent Parameters { get; set; }
+        public KeyPhraseActionRequest Parameters { get; set; }
     }
 }

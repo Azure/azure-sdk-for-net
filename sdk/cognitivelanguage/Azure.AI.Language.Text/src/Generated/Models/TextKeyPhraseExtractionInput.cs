@@ -23,7 +23,7 @@ namespace Azure.AI.Language.Text
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="textInput"> Contains the input documents. </param>
         /// <param name="actionContent"> Key phrase extraction task parameters. </param>
-        internal TextKeyPhraseExtractionInput(AnalyzeTextInputKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, MultiLanguageTextInput textInput, KeyPhraseActionContent actionContent) : base(kind, additionalBinaryDataProperties)
+        internal TextKeyPhraseExtractionInput(AnalyzeTextInputKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, MultiLanguageTextInput textInput, KeyPhraseActionRequest actionContent) : base(kind, additionalBinaryDataProperties)
         {
             TextInput = textInput;
             ActionContent = actionContent;
@@ -33,6 +33,6 @@ namespace Azure.AI.Language.Text
         public MultiLanguageTextInput TextInput { get; set; }
 
         /// <summary> Key phrase extraction task parameters. </summary>
-        public KeyPhraseActionContent ActionContent { get; set; }
+        public KeyPhraseActionRequest ActionContent { get; set; }
     }
 }
