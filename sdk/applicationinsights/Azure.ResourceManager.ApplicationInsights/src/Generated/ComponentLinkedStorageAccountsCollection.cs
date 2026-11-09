@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApplicationInsights
     /// <summary>
     /// A class representing a collection of <see cref="ComponentLinkedStorageAccountsResource"/> and their operations.
     /// Each <see cref="ComponentLinkedStorageAccountsResource"/> in the collection will belong to the same instance of <see cref="ApplicationInsightsComponentResource"/>.
-    /// To get a <see cref="ComponentLinkedStorageAccountsCollection"/> instance call the GetComponentLinkedStorageAccounts method from an instance of <see cref="ApplicationInsightsComponentResource"/>.
+    /// To get a <see cref="ComponentLinkedStorageAccountsCollection"/> instance call the GetAllComponentLinkedStorageAccounts method from an instance of <see cref="ApplicationInsightsComponentResource"/>.
     /// </summary>
     public partial class ComponentLinkedStorageAccountsCollection : ArmCollection
     {
