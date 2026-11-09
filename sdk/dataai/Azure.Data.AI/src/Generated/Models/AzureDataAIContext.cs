@@ -13,10 +13,19 @@ namespace Azure.Data.AI
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(EmbeddingContentItem))]
     [ModelReaderWriterBuildable(typeof(LatencyResult))]
-    [ModelReaderWriterBuildable(typeof(SemanticRerankingInferenceContent))]
-    [ModelReaderWriterBuildable(typeof(SemanticRerankingInferenceResult))]
-    [ModelReaderWriterBuildable(typeof(SemanticRerankingMetaResult))]
+    [ModelReaderWriterBuildable(typeof(MultimodalDenseAndMultiVectorEmbedding))]
+    [ModelReaderWriterBuildable(typeof(MultimodalDenseEmbedding))]
+    [ModelReaderWriterBuildable(typeof(MultimodalEmbeddingItem))]
+    [ModelReaderWriterBuildable(typeof(MultimodalEmbeddingOutput))]
+    [ModelReaderWriterBuildable(typeof(MultimodalEmbeddingResult))]
+    [ModelReaderWriterBuildable(typeof(MultimodalEmbeddingUsage))]
+    [ModelReaderWriterBuildable(typeof(MultimodalEmbeddingWarning))]
+    [ModelReaderWriterBuildable(typeof(MultimodalMultiVectorEmbedding))]
+    [ModelReaderWriterBuildable(typeof(SemanticRerankingMetadata))]
+    [ModelReaderWriterBuildable(typeof(SemanticRerankingOptions))]
+    [ModelReaderWriterBuildable(typeof(SemanticRerankingResult))]
     [ModelReaderWriterBuildable(typeof(SemanticRerankingScore))]
     [ModelReaderWriterBuildable(typeof(SentenceScore))]
     [ModelReaderWriterBuildable(typeof(TokenUsageResult))]

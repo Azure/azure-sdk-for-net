@@ -14,66 +14,66 @@ using Azure.Core;
 namespace Azure.Data.AI
 {
     /// <summary> The input for a semantic reranking operation. </summary>
-    public partial class SemanticRerankingInferenceContent : IJsonModel<SemanticRerankingInferenceContent>
+    public partial class SemanticRerankingOptions : IJsonModel<SemanticRerankingOptions>
     {
-        /// <summary> Initializes a new instance of <see cref="SemanticRerankingInferenceContent"/> for deserialization. </summary>
-        internal SemanticRerankingInferenceContent()
+        /// <summary> Initializes a new instance of <see cref="SemanticRerankingOptions"/> for deserialization. </summary>
+        internal SemanticRerankingOptions()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SemanticRerankingInferenceContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SemanticRerankingOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SemanticRerankingInferenceContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SemanticRerankingOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSemanticRerankingInferenceContent(document.RootElement, options);
+                        return DeserializeSemanticRerankingOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SemanticRerankingInferenceContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SemanticRerankingOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SemanticRerankingInferenceContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SemanticRerankingOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureDataAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SemanticRerankingInferenceContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SemanticRerankingOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SemanticRerankingInferenceContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SemanticRerankingOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SemanticRerankingInferenceContent IPersistableModel<SemanticRerankingInferenceContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SemanticRerankingOptions IPersistableModel<SemanticRerankingOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SemanticRerankingInferenceContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SemanticRerankingOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="semanticRerankingInferenceContent"> The <see cref="SemanticRerankingInferenceContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(SemanticRerankingInferenceContent semanticRerankingInferenceContent)
+        /// <param name="semanticRerankingOptions"> The <see cref="SemanticRerankingOptions"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(SemanticRerankingOptions semanticRerankingOptions)
         {
-            if (semanticRerankingInferenceContent == null)
+            if (semanticRerankingOptions == null)
             {
                 return null;
             }
-            return RequestContent.Create(semanticRerankingInferenceContent, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(semanticRerankingOptions, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SemanticRerankingInferenceContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SemanticRerankingOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -84,10 +84,10 @@ namespace Azure.Data.AI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SemanticRerankingInferenceContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SemanticRerankingOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SemanticRerankingInferenceContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SemanticRerankingOptions)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("query"u8);
             writer.WriteStringValue(Query);
@@ -128,10 +128,10 @@ namespace Azure.Data.AI
                 writer.WritePropertyName("documentType"u8);
                 writer.WriteStringValue(DocumentType.Value.ToString());
             }
-            if (Optional.IsDefined(TargetPaths))
+            if (Optional.IsCollectionDefined(TargetPaths))
             {
                 writer.WritePropertyName("targetPaths"u8);
-                writer.WriteStringValue(TargetPaths);
+                writer.WriteStringValue(string.Join(",", TargetPaths));
             }
             if (Optional.IsDefined(Model))
             {
@@ -162,24 +162,24 @@ namespace Azure.Data.AI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SemanticRerankingInferenceContent IJsonModel<SemanticRerankingInferenceContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SemanticRerankingOptions IJsonModel<SemanticRerankingOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SemanticRerankingInferenceContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SemanticRerankingOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SemanticRerankingInferenceContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SemanticRerankingOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SemanticRerankingInferenceContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SemanticRerankingOptions)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSemanticRerankingInferenceContent(document.RootElement, options);
+            return DeserializeSemanticRerankingOptions(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SemanticRerankingInferenceContent DeserializeSemanticRerankingInferenceContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static SemanticRerankingOptions DeserializeSemanticRerankingOptions(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -192,7 +192,7 @@ namespace Azure.Data.AI
             int? batchSize = default;
             bool? sort = default;
             SemanticRerankingDocumentType? documentType = default;
-            string targetPaths = default;
+            IList<string> targetPaths = default;
             string model = default;
             bool? returnSentenceScore = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -267,7 +267,12 @@ namespace Azure.Data.AI
                 }
                 if (prop.NameEquals("targetPaths"u8))
                 {
-                    targetPaths = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    string stringValue = prop.Value.GetString();
+                    targetPaths = string.IsNullOrEmpty(stringValue) ? new List<string>() : new List<string>(stringValue.Split(','));
                     continue;
                 }
                 if (prop.NameEquals("model"u8))
@@ -289,7 +294,7 @@ namespace Azure.Data.AI
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SemanticRerankingInferenceContent(
+            return new SemanticRerankingOptions(
                 query,
                 documents ?? new ChangeTrackingList<string>(),
                 returnDocuments,
@@ -297,7 +302,7 @@ namespace Azure.Data.AI
                 batchSize,
                 sort,
                 documentType,
-                targetPaths,
+                targetPaths ?? new ChangeTrackingList<string>(),
                 model,
                 returnSentenceScore,
                 additionalBinaryDataProperties);

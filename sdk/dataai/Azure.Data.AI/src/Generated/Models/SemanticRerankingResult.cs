@@ -11,25 +11,25 @@ using System.Collections.Generic;
 namespace Azure.Data.AI
 {
     /// <summary> The result of a semantic reranking operation. </summary>
-    public partial class SemanticRerankingInferenceResult
+    public partial class SemanticRerankingResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SemanticRerankingInferenceResult"/>. </summary>
-        internal SemanticRerankingInferenceResult()
+        /// <summary> Initializes a new instance of <see cref="SemanticRerankingResult"/>. </summary>
+        internal SemanticRerankingResult()
         {
             Scores = new ChangeTrackingList<SemanticRerankingScore>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SemanticRerankingInferenceResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SemanticRerankingResult"/>. </summary>
         /// <param name="scores"> The relevance scores for the submitted documents. </param>
-        /// <param name="meta"> Additional metadata about the semantic reranking operation. </param>
+        /// <param name="metadata"> Additional metadata about the semantic reranking operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SemanticRerankingInferenceResult(IList<SemanticRerankingScore> scores, SemanticRerankingMetaResult meta, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SemanticRerankingResult(IList<SemanticRerankingScore> scores, SemanticRerankingMetadata metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Scores = scores;
-            Meta = meta;
+            Metadata = metadata;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -37,6 +37,6 @@ namespace Azure.Data.AI
         public IList<SemanticRerankingScore> Scores { get; }
 
         /// <summary> Additional metadata about the semantic reranking operation. </summary>
-        public SemanticRerankingMetaResult Meta { get; }
+        public SemanticRerankingMetadata Metadata { get; }
     }
 }

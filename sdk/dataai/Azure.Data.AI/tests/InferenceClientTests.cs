@@ -38,11 +38,11 @@ namespace Azure.Data.AI.Tests
             Assert.That(client, Is.Not.Null);
         }
 
-        [TestCase(false)]
-        [TestCase(true)]
-        public async Task RerankingUsesGaApiVersion(bool explicitVersion)
+        [TestCase(false, "2026-11-01-preview")]
+        [TestCase(true, "2026-10-30")]
+        public async Task RerankingUsesExpectedApiVersion(bool explicitVersion, string expectedVersion)
         {
-            using var handler = new ApiVersionHandler("2026-10-30");
+            using var handler = new ApiVersionHandler(expectedVersion);
             using var httpClient = new HttpClient(handler);
             var options = explicitVersion
                 ? new InferenceClientOptions(InferenceClientOptions.ServiceVersion.V2026_10_30)
@@ -54,13 +54,13 @@ namespace Azure.Data.AI.Tests
                 options);
 
             await client.SemanticRerankAsync(
-                new SemanticRerankingInferenceContent("query", new[] { "document" }));
+                new SemanticRerankingOptions("query", new[] { "document" }));
         }
 
         // InferenceClientSettings and the settings-based constructor are gated behind
         // the SCME0002 experimental diagnostic while the configuration binding API stabilizes.
 #pragma warning disable SCME0002
-        [TestCase(null, "2026-10-30")]
+        [TestCase(null, "2026-11-01-preview")]
         [TestCase("2026-10-30", "2026-10-30")]
         [TestCase("custom-version", "custom-version")]
         public async Task ConfiguredRerankingUsesExpectedApiVersion(string configuredVersion, string expectedVersion)
@@ -87,7 +87,7 @@ namespace Azure.Data.AI.Tests
             var client = new InferenceClient(settings);
 
             await client.SemanticRerankAsync(
-                new SemanticRerankingInferenceContent("query", new[] { "document" }));
+                new SemanticRerankingOptions("query", new[] { "document" }));
         }
 
         [Test]
@@ -143,13 +143,13 @@ namespace Azure.Data.AI.Tests
         public void RequestRequiresQuery()
         {
             Assert.Throws<ArgumentNullException>(() =>
-                new SemanticRerankingInferenceContent(null, new[] { "document" }));
+                new SemanticRerankingOptions(null, new[] { "document" }));
         }
 
         [Test]
         public void RequestSerializesSentenceScoreOption()
         {
-            var request = new SemanticRerankingInferenceContent("query", new[] { "document" })
+            var request = new SemanticRerankingOptions("query", new[] { "document" })
             {
                 ReturnDocuments = true,
                 ReturnSentenceScore = true
@@ -182,7 +182,7 @@ namespace Azure.Data.AI.Tests
                 }
                 """);
 
-            SemanticRerankingInferenceResult result = ModelReaderWriter.Read<SemanticRerankingInferenceResult>(
+            SemanticRerankingResult result = ModelReaderWriter.Read<SemanticRerankingResult>(
                 json,
                 ModelReaderWriterOptions.Json,
                 AzureDataAIContext.Default);

@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -157,12 +159,12 @@ namespace Azure.Data.AI
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<SemanticRerankingInferenceResult> SemanticRerank(SemanticRerankingInferenceContent request, CancellationToken cancellationToken = default)
+        public virtual Response<SemanticRerankingResult> SemanticRerank(SemanticRerankingOptions request, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(request, nameof(request));
 
             Response result = SemanticRerank(request, cancellationToken.ToRequestContext());
-            return Response.FromValue((SemanticRerankingInferenceResult)result, result);
+            return Response.FromValue((SemanticRerankingResult)result, result);
         }
 
         /// <summary> Reranks documents by their relevance to a query. </summary>
@@ -170,12 +172,190 @@ namespace Azure.Data.AI
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<SemanticRerankingInferenceResult>> SemanticRerankAsync(SemanticRerankingInferenceContent request, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SemanticRerankingResult>> SemanticRerankAsync(SemanticRerankingOptions request, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(request, nameof(request));
 
             Response result = await SemanticRerankAsync(request, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((SemanticRerankingInferenceResult)result, result);
+            return Response.FromValue((SemanticRerankingResult)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Embeds text, queries and document images and returns dense or multi-vector embeddings as numbers or base64. Text
+        /// and queries are sent inline. Images are read from the caller's Azure Blob Storage with a caller-signed user
+        /// delegation SAS (Microsoft Entra callers only). Results come back in the response or, with `delivery: link`, as a
+        /// time-limited read-only link.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response MultiModalEmbed(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("InferenceClient.MultiModalEmbed");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateMultiModalEmbedRequest(content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Embeds text, queries and document images and returns dense or multi-vector embeddings as numbers or base64. Text
+        /// and queries are sent inline. Images are read from the caller's Azure Blob Storage with a caller-signed user
+        /// delegation SAS (Microsoft Entra callers only). Results come back in the response or, with `delivery: link`, as a
+        /// time-limited read-only link.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> MultiModalEmbedAsync(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("InferenceClient.MultiModalEmbed");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateMultiModalEmbedRequest(content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Embeds text, queries and document images and returns dense or multi-vector embeddings as numbers or base64. Text
+        /// and queries are sent inline. Images are read from the caller's Azure Blob Storage with a caller-signed user
+        /// delegation SAS (Microsoft Entra callers only). Results come back in the response or, with `delivery: link`, as a
+        /// time-limited read-only link.
+        /// </summary>
+        /// <param name="contents">
+        /// The items to embed, in order: 1 to 32 items. Currently a request can have at most one `text` or `query` item and
+        /// at most 8 images. Images can be up to 20 MiB and 50 megapixels each (JPEG, PNG, GIF or WebP), with at most 20 MiB
+        /// of images per request. The request body can be up to 30,000,000 bytes.
+        /// </param>
+        /// <param name="model"> The model to use. Defaults to `microsoft-embedding-1-large` (Microsoft Embedding 1-large). </param>
+        /// <param name="modelVersion"> The model version. Defaults to the latest; the response always names the version used. </param>
+        /// <param name="vectorType"> The kind of vectors to return. Defaults to `dense`. </param>
+        /// <param name="dimensions">
+        /// The number of dimensions per vector; with `dense_multi`, of the dense vector. Must be a value the model supports for the
+        /// requested vector type; the model's native width is the default.
+        /// </param>
+        /// <param name="multiDimensions">
+        /// For `dense_multi` only: the number of dimensions per multi-vector. Must be a value the model supports for multi-vectors;
+        /// the model's native multi-vector width is the default.
+        /// </param>
+        /// <param name="maxNumVectors"> For `multi` and `dense_multi` only: the most multi-vectors to return per item. </param>
+        /// <param name="outputDataType">
+        /// The numeric type of the returned values, for every vector in the response. Defaults to `float32` for `dense` and
+        /// `float16` for `multi` and `dense_multi`.
+        /// </param>
+        /// <param name="encodingFormat"> How vectors are encoded in the response. Defaults to `float`. </param>
+        /// <param name="delivery">
+        /// How to return the results. An explicit value wins. Without it, a request with images gets `link` where the
+        /// endpoint has a result store, and every other request gets `inline`.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="contents"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<MultimodalEmbeddingResult> MultiModalEmbed(IEnumerable<EmbeddingContentItem> contents, string model = default, string modelVersion = default, EmbeddingVectorType? vectorType = default, int? dimensions = default, int? multiDimensions = default, int? maxNumVectors = default, EmbeddingOutputDataType? outputDataType = default, EmbeddingEncodingFormat? encodingFormat = default, EmbeddingDelivery? delivery = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(contents, nameof(contents));
+
+            MultiModalEmbedRequest spreadModel = new MultiModalEmbedRequest(
+                contents?.ToList() as IList<EmbeddingContentItem> ?? new ChangeTrackingList<EmbeddingContentItem>(),
+                model,
+                modelVersion,
+                vectorType,
+                dimensions,
+                multiDimensions,
+                maxNumVectors,
+                outputDataType,
+                encodingFormat,
+                delivery,
+                default);
+            Response result = MultiModalEmbed(spreadModel, cancellationToken.ToRequestContext());
+            return Response.FromValue((MultimodalEmbeddingResult)result, result);
+        }
+
+        /// <summary>
+        /// Embeds text, queries and document images and returns dense or multi-vector embeddings as numbers or base64. Text
+        /// and queries are sent inline. Images are read from the caller's Azure Blob Storage with a caller-signed user
+        /// delegation SAS (Microsoft Entra callers only). Results come back in the response or, with `delivery: link`, as a
+        /// time-limited read-only link.
+        /// </summary>
+        /// <param name="contents">
+        /// The items to embed, in order: 1 to 32 items. Currently a request can have at most one `text` or `query` item and
+        /// at most 8 images. Images can be up to 20 MiB and 50 megapixels each (JPEG, PNG, GIF or WebP), with at most 20 MiB
+        /// of images per request. The request body can be up to 30,000,000 bytes.
+        /// </param>
+        /// <param name="model"> The model to use. Defaults to `microsoft-embedding-1-large` (Microsoft Embedding 1-large). </param>
+        /// <param name="modelVersion"> The model version. Defaults to the latest; the response always names the version used. </param>
+        /// <param name="vectorType"> The kind of vectors to return. Defaults to `dense`. </param>
+        /// <param name="dimensions">
+        /// The number of dimensions per vector; with `dense_multi`, of the dense vector. Must be a value the model supports for the
+        /// requested vector type; the model's native width is the default.
+        /// </param>
+        /// <param name="multiDimensions">
+        /// For `dense_multi` only: the number of dimensions per multi-vector. Must be a value the model supports for multi-vectors;
+        /// the model's native multi-vector width is the default.
+        /// </param>
+        /// <param name="maxNumVectors"> For `multi` and `dense_multi` only: the most multi-vectors to return per item. </param>
+        /// <param name="outputDataType">
+        /// The numeric type of the returned values, for every vector in the response. Defaults to `float32` for `dense` and
+        /// `float16` for `multi` and `dense_multi`.
+        /// </param>
+        /// <param name="encodingFormat"> How vectors are encoded in the response. Defaults to `float`. </param>
+        /// <param name="delivery">
+        /// How to return the results. An explicit value wins. Without it, a request with images gets `link` where the
+        /// endpoint has a result store, and every other request gets `inline`.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="contents"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<MultimodalEmbeddingResult>> MultiModalEmbedAsync(IEnumerable<EmbeddingContentItem> contents, string model = default, string modelVersion = default, EmbeddingVectorType? vectorType = default, int? dimensions = default, int? multiDimensions = default, int? maxNumVectors = default, EmbeddingOutputDataType? outputDataType = default, EmbeddingEncodingFormat? encodingFormat = default, EmbeddingDelivery? delivery = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(contents, nameof(contents));
+
+            MultiModalEmbedRequest spreadModel = new MultiModalEmbedRequest(
+                contents?.ToList() as IList<EmbeddingContentItem> ?? new ChangeTrackingList<EmbeddingContentItem>(),
+                model,
+                modelVersion,
+                vectorType,
+                dimensions,
+                multiDimensions,
+                maxNumVectors,
+                outputDataType,
+                encodingFormat,
+                delivery,
+                default);
+            Response result = await MultiModalEmbedAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((MultimodalEmbeddingResult)result, result);
         }
     }
 }

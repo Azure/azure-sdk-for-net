@@ -29,12 +29,13 @@ namespace Azure.Data.AI
         /// </param>
         /// <param name="model"> The name of the model used for the semantic reranking operation. </param>
         /// <param name="returnSentenceScore"> Whether to return sentence-level scores in the response. </param>
-        /// <returns> A new <see cref="AI.SemanticRerankingInferenceContent"/> instance for mocking. </returns>
-        public static SemanticRerankingInferenceContent SemanticRerankingInferenceContent(string query = default, IEnumerable<string> documents = default, bool? returnDocuments = default, int? topK = default, int? batchSize = default, bool? sort = default, SemanticRerankingDocumentType? documentType = default, string targetPaths = default, string model = default, bool? returnSentenceScore = default)
+        /// <returns> A new <see cref="AI.SemanticRerankingOptions"/> instance for mocking. </returns>
+        public static SemanticRerankingOptions SemanticRerankingOptions(string query = default, IEnumerable<string> documents = default, bool? returnDocuments = default, int? topK = default, int? batchSize = default, bool? sort = default, SemanticRerankingDocumentType? documentType = default, IEnumerable<string> targetPaths = default, string model = default, bool? returnSentenceScore = default)
         {
             documents ??= new ChangeTrackingList<string>();
+            targetPaths ??= new ChangeTrackingList<string>();
 
-            return new SemanticRerankingInferenceContent(
+            return new SemanticRerankingOptions(
                 query,
                 documents.ToList(),
                 returnDocuments,
@@ -42,7 +43,7 @@ namespace Azure.Data.AI
                 batchSize,
                 sort,
                 documentType,
-                targetPaths,
+                targetPaths.ToList(),
                 model,
                 returnSentenceScore,
                 additionalBinaryDataProperties: null);
@@ -50,13 +51,13 @@ namespace Azure.Data.AI
 
         /// <summary> The result of a semantic reranking operation. </summary>
         /// <param name="scores"> The relevance scores for the submitted documents. </param>
-        /// <param name="meta"> Additional metadata about the semantic reranking operation. </param>
-        /// <returns> A new <see cref="AI.SemanticRerankingInferenceResult"/> instance for mocking. </returns>
-        public static SemanticRerankingInferenceResult SemanticRerankingInferenceResult(IEnumerable<SemanticRerankingScore> scores = default, SemanticRerankingMetaResult meta = default)
+        /// <param name="metadata"> Additional metadata about the semantic reranking operation. </param>
+        /// <returns> A new <see cref="AI.SemanticRerankingResult"/> instance for mocking. </returns>
+        public static SemanticRerankingResult SemanticRerankingResult(IEnumerable<SemanticRerankingScore> scores = default, SemanticRerankingMetadata metadata = default)
         {
             scores ??= new ChangeTrackingList<SemanticRerankingScore>();
 
-            return new SemanticRerankingInferenceResult(scores.ToList(), meta, additionalBinaryDataProperties: null);
+            return new SemanticRerankingResult(scores.ToList(), metadata, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A relevance score assigned to a submitted document. </summary>
@@ -86,10 +87,10 @@ namespace Azure.Data.AI
         /// <param name="latency"> The latency of the semantic reranking operation. </param>
         /// <param name="modelName"> The name of the model used for the semantic reranking operation. </param>
         /// <param name="modelVersion"> The version of the model used for the semantic reranking operation. </param>
-        /// <returns> A new <see cref="AI.SemanticRerankingMetaResult"/> instance for mocking. </returns>
-        public static SemanticRerankingMetaResult SemanticRerankingMetaResult(TokenUsageResult tokenUsage = default, LatencyResult latency = default, string modelName = default, string modelVersion = default)
+        /// <returns> A new <see cref="AI.SemanticRerankingMetadata"/> instance for mocking. </returns>
+        public static SemanticRerankingMetadata SemanticRerankingMetadata(TokenUsageResult tokenUsage = default, LatencyResult latency = default, string modelName = default, string modelVersion = default)
         {
-            return new SemanticRerankingMetaResult(tokenUsage, latency, modelName, modelVersion, additionalBinaryDataProperties: null);
+            return new SemanticRerankingMetadata(tokenUsage, latency, modelName, modelVersion, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The result of the token usage in the semantic reranking operation. </summary>
@@ -108,6 +109,270 @@ namespace Azure.Data.AI
         public static LatencyResult LatencyResult(TimeSpan? dataPreprocessDuration = default, TimeSpan? inferenceDuration = default, TimeSpan? postProcessDuration = default)
         {
             return new LatencyResult(dataPreprocessDuration, inferenceDuration, postProcessDuration, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> One item to embed: its `type`, an optional `id`, and exactly one source: `content`, or `url` with `sasToken`. </summary>
+        /// <param name="id"> A caller-chosen identifier, up to 256 characters, echoed on the matching result. </param>
+        /// <param name="type"> What the item is: a document (`text`), a search query (`query`) or a document image (`image`). </param>
+        /// <param name="content">
+        /// The item, inline. For `text` and `query`: the text, up to 100,000 characters; text over the model's token limit
+        /// (currently 8,192 tokens) isn't rejected: only its start is embedded, and the result is flagged with `truncated` and
+        /// an `EMBEDDING_INPUT_TRUNCATED` warning. For `image`, only where the endpoint accepts inline images (off by
+        /// default): a `data:image/...;base64,` URI or raw base64. The service never fetches URLs in `content`.
+        /// </param>
+        /// <param name="url">
+        /// For `text` and `image` items, from Microsoft Entra callers, where enabled: the Azure Blob Storage URL of the blob
+        /// to embed, `https://{account}.blob.core.windows.net/{container}/{blob}`, with no query string. This is how images
+        /// are sent by default. Text blobs are read as UTF-8, currently up to 1 MiB. Queries must be sent inline.
+        /// </param>
+        /// <param name="sasToken">
+        /// Required with `url`: a user delegation SAS for that one blob (its query string, with or without a leading `?`):
+        /// read-only (`sp=r`), for the blob (`sr=b`), https-only (`spr=https`), and signed by the identity that calls this
+        /// API. A SAS valid for more than 15 minutes is accepted with warning `EMBEDDING_SAS_LONG_LIVED`. The service uses
+        /// it for one read and never stores, logs or returns it.
+        /// </param>
+        /// <returns> A new <see cref="AI.EmbeddingContentItem"/> instance for mocking. </returns>
+        public static EmbeddingContentItem EmbeddingContentItem(string id = default, EmbeddingContentType @type = default, string content = default, Uri url = default, string sasToken = default)
+        {
+            return new EmbeddingContentItem(
+                id,
+                @type,
+                content,
+                url,
+                sasToken,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The result of a multimodal embedding operation. </summary>
+        /// <param name="model"> The name of the model that produced the vectors. </param>
+        /// <param name="modelVersion"> The model version that produced the vectors. Pin it to keep an index stable. </param>
+        /// <param name="outputDataType"> The numeric type of the returned values. </param>
+        /// <param name="data"> One entry per item in `contents`, in request order. Empty when `output` is present. </param>
+        /// <param name="usage"> Usage for the operation. </param>
+        /// <param name="warnings"> Things to know about a successful response, such as truncated items. Omitted when there are none. </param>
+        /// <param name="output"> With `delivery: link`: where to read the results. </param>
+        /// <returns> A new <see cref="AI.MultimodalEmbeddingResult"/> instance for mocking. </returns>
+        public static MultimodalEmbeddingResult MultimodalEmbeddingResult(string model = default, string modelVersion = default, EmbeddingOutputDataType outputDataType = default, IEnumerable<MultimodalEmbeddingItem> data = default, MultimodalEmbeddingUsage usage = default, IEnumerable<MultimodalEmbeddingWarning> warnings = default, MultimodalEmbeddingOutput output = default)
+        {
+            data ??= new ChangeTrackingList<MultimodalEmbeddingItem>();
+            warnings ??= new ChangeTrackingList<MultimodalEmbeddingWarning>();
+
+            return new MultimodalEmbeddingResult(
+                "list",
+                model,
+                modelVersion,
+                outputDataType,
+                data.ToList(),
+                usage,
+                warnings.ToList(),
+                output,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The result for one item when `vectorType` is `dense`: one vector. </summary>
+        /// <param name="index"> The zero-based position of the item in the request. </param>
+        /// <param name="id"> The item's `id` from the request, if it had one. </param>
+        /// <param name="type"> The item's kind. </param>
+        /// <param name="width"> For images: the width in pixels. </param>
+        /// <param name="height"> For images: the height in pixels. </param>
+        /// <param name="format"> For images: the detected image format. </param>
+        /// <param name="tokens">
+        /// The tokens the model read for this item, including any text the service adds to queries and, for images, the
+        /// image prompt and image tokens. For a truncated item, the tokens embedded. Omitted when the model doesn't report it.
+        /// </param>
+        /// <param name="visualTokens"> For images: how many of `tokens` were image tokens. </param>
+        /// <param name="truncated">
+        /// `true` when the item was over the model's token limit and only its start was embedded; `warnings` then has an
+        /// `EMBEDDING_INPUT_TRUNCATED` entry for it. Omitted otherwise.
+        /// </param>
+        /// <param name="inputTokens"> For truncated items only: the item's tokens before truncation. </param>
+        /// <param name="embedding">
+        /// The vector: an array of numbers, or, when `encodingFormat` is `base64`, a base64 string of its little-endian
+        /// `outputDtype` values.
+        /// </param>
+        /// <returns> A new <see cref="AI.MultimodalDenseEmbedding"/> instance for mocking. </returns>
+        public static MultimodalDenseEmbedding MultimodalDenseEmbedding(int index = default, string id = default, EmbeddingContentType @type = default, int? width = default, int? height = default, EmbeddingImageFormat? format = default, long? tokens = default, long? visualTokens = default, bool? truncated = default, long? inputTokens = default, BinaryData embedding = default)
+        {
+            return new MultimodalDenseEmbedding(
+                index,
+                id,
+                @type,
+                EmbeddingVectorType.Dense,
+                width,
+                height,
+                format,
+                tokens,
+                visualTokens,
+                truncated,
+                inputTokens,
+                additionalBinaryDataProperties: null,
+                embedding);
+        }
+
+        /// <summary> The result for one item when `vectorType` is `multi`: one vector per token, for late-interaction (MaxSim) scoring. </summary>
+        /// <param name="index"> The zero-based position of the item in the request. </param>
+        /// <param name="id"> The item's `id` from the request, if it had one. </param>
+        /// <param name="type"> The item's kind. </param>
+        /// <param name="width"> For images: the width in pixels. </param>
+        /// <param name="height"> For images: the height in pixels. </param>
+        /// <param name="format"> For images: the detected image format. </param>
+        /// <param name="tokens">
+        /// The tokens the model read for this item, including any text the service adds to queries and, for images, the
+        /// image prompt and image tokens. For a truncated item, the tokens embedded. Omitted when the model doesn't report it.
+        /// </param>
+        /// <param name="visualTokens"> For images: how many of `tokens` were image tokens. </param>
+        /// <param name="truncated">
+        /// `true` when the item was over the model's token limit and only its start was embedded; `warnings` then has an
+        /// `EMBEDDING_INPUT_TRUNCATED` entry for it. Omitted otherwise.
+        /// </param>
+        /// <param name="inputTokens"> For truncated items only: the item's tokens before truncation. </param>
+        /// <param name="shape"> The number of vectors and the number of dimensions: `[vectors, dimensions]`. </param>
+        /// <param name="multiEmbedding">
+        /// The vectors: an array of arrays of numbers, or, when `encodingFormat` is `base64`, one base64 string of all their
+        /// little-endian `outputDtype` values in row-major order. Decode it and reshape it to `shape`.
+        /// </param>
+        /// <returns> A new <see cref="AI.MultimodalMultiVectorEmbedding"/> instance for mocking. </returns>
+        public static MultimodalMultiVectorEmbedding MultimodalMultiVectorEmbedding(int index = default, string id = default, EmbeddingContentType @type = default, int? width = default, int? height = default, EmbeddingImageFormat? format = default, long? tokens = default, long? visualTokens = default, bool? truncated = default, long? inputTokens = default, IEnumerable<int> shape = default, BinaryData multiEmbedding = default)
+        {
+            shape ??= new ChangeTrackingList<int>();
+
+            return new MultimodalMultiVectorEmbedding(
+                index,
+                id,
+                @type,
+                EmbeddingVectorType.Multi,
+                width,
+                height,
+                format,
+                tokens,
+                visualTokens,
+                truncated,
+                inputTokens,
+                additionalBinaryDataProperties: null,
+                shape.ToList(),
+                multiEmbedding);
+        }
+
+        /// <summary> The result for one item when `vectorType` is `dense_multi`: a dense vector and one vector per token, from one model run. </summary>
+        /// <param name="index"> The zero-based position of the item in the request. </param>
+        /// <param name="id"> The item's `id` from the request, if it had one. </param>
+        /// <param name="type"> The item's kind. </param>
+        /// <param name="width"> For images: the width in pixels. </param>
+        /// <param name="height"> For images: the height in pixels. </param>
+        /// <param name="format"> For images: the detected image format. </param>
+        /// <param name="tokens">
+        /// The tokens the model read for this item, including any text the service adds to queries and, for images, the
+        /// image prompt and image tokens. For a truncated item, the tokens embedded. Omitted when the model doesn't report it.
+        /// </param>
+        /// <param name="visualTokens"> For images: how many of `tokens` were image tokens. </param>
+        /// <param name="truncated">
+        /// `true` when the item was over the model's token limit and only its start was embedded; `warnings` then has an
+        /// `EMBEDDING_INPUT_TRUNCATED` entry for it. Omitted otherwise.
+        /// </param>
+        /// <param name="inputTokens"> For truncated items only: the item's tokens before truncation. </param>
+        /// <param name="shape"> The number of multi-vectors and their number of dimensions: `[vectors, multiDimensions]`. </param>
+        /// <param name="embedding">
+        /// The dense vector: an array of numbers, or, when `encodingFormat` is `base64`, a base64 string of its little-endian
+        /// `outputDtype` values.
+        /// </param>
+        /// <param name="multiEmbedding">
+        /// The multi-vectors: an array of arrays of numbers, or, when `encodingFormat` is `base64`, one base64 string of all
+        /// their little-endian `outputDtype` values in row-major order. Decode it and reshape it to `shape`.
+        /// </param>
+        /// <returns> A new <see cref="AI.MultimodalDenseAndMultiVectorEmbedding"/> instance for mocking. </returns>
+        public static MultimodalDenseAndMultiVectorEmbedding MultimodalDenseAndMultiVectorEmbedding(int index = default, string id = default, EmbeddingContentType @type = default, int? width = default, int? height = default, EmbeddingImageFormat? format = default, long? tokens = default, long? visualTokens = default, bool? truncated = default, long? inputTokens = default, IEnumerable<int> shape = default, BinaryData embedding = default, BinaryData multiEmbedding = default)
+        {
+            shape ??= new ChangeTrackingList<int>();
+
+            return new MultimodalDenseAndMultiVectorEmbedding(
+                index,
+                id,
+                @type,
+                EmbeddingVectorType.DenseAndMulti,
+                width,
+                height,
+                format,
+                tokens,
+                visualTokens,
+                truncated,
+                inputTokens,
+                additionalBinaryDataProperties: null,
+                shape.ToList(),
+                embedding,
+                multiEmbedding);
+        }
+
+        /// <summary> Usage for a multimodal embedding operation. Token counts are omitted when the model doesn't report them. </summary>
+        /// <param name="promptTokens"> The number of input tokens. </param>
+        /// <param name="totalTokens"> The total number of tokens. </param>
+        /// <param name="textTokens">
+        /// Tokens that aren't image tokens: the query and text items (including the query instruction) and the short prompt
+        /// the model adds around each image. Equal to `promptTokens` minus `visualTokens`, so text and image tokens can be
+        /// priced separately. Omitted when the split isn't known: `promptTokens` isn't reported, or the request has images
+        /// and `visualTokens` isn't reported.
+        /// </param>
+        /// <param name="imageCount"> The number of images embedded. </param>
+        /// <param name="visualTokens"> The number of tokens the images produced. </param>
+        /// <returns> A new <see cref="AI.MultimodalEmbeddingUsage"/> instance for mocking. </returns>
+        public static MultimodalEmbeddingUsage MultimodalEmbeddingUsage(long? promptTokens = default, long? totalTokens = default, long? textTokens = default, int imageCount = default, long? visualTokens = default)
+        {
+            return new MultimodalEmbeddingUsage(
+                promptTokens,
+                totalTokens,
+                textTokens,
+                imageCount,
+                visualTokens,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Something about a successful multimodal embedding response the caller should know. </summary>
+        /// <param name="code"> A machine-readable warning code. </param>
+        /// <param name="number"> A stable numeric alias of `code`: `1001` for `EMBEDDING_INPUT_TRUNCATED`, `1002` for `EMBEDDING_SAS_LONG_LIVED`. </param>
+        /// <param name="index"> The zero-based position of the item the warning is about, in `contents` and `data`. </param>
+        /// <param name="inputTokens"> For `EMBEDDING_INPUT_TRUNCATED`: the item's tokens before truncation. </param>
+        /// <param name="tokens"> For `EMBEDDING_INPUT_TRUNCATED`: the tokens embedded. </param>
+        /// <param name="message"> A human-readable description that names the item, for example `contents[1]`. </param>
+        /// <returns> A new <see cref="AI.MultimodalEmbeddingWarning"/> instance for mocking. </returns>
+        public static MultimodalEmbeddingWarning MultimodalEmbeddingWarning(EmbeddingWarningCode code = default, int? number = default, int index = default, long? inputTokens = default, long? tokens = default, string message = default)
+        {
+            return new MultimodalEmbeddingWarning(
+                code,
+                number,
+                index,
+                inputTokens,
+                tokens,
+                message,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// A `delivery: link` result: a JSON file with the complete response (the same body as an inline response, including
+        /// `data`), readable with `sasToken` until `expiresAt`.
+        /// </summary>
+        /// <param name="id"> The result's identifier, for support requests. </param>
+        /// <param name="url"> The result file's URL, without a query string. Read it with `sasToken`. </param>
+        /// <param name="sasToken">
+        /// A read-only SAS for the result file only, valid until `expiresAt` (at most 15 minutes). Read the file with
+        /// `GET {url}?{sasToken}`.
+        /// </param>
+        /// <param name="expiresOn"> When `sasToken` stops working. After that, send the request again, or use `delivery: inline`. </param>
+        /// <param name="records"> The number of `data` items in the file. </param>
+        /// <param name="bytes"> The size of the file in bytes. </param>
+        /// <param name="sha256"> The lowercase hexadecimal SHA-256 hash of the file. </param>
+        /// <param name="contentType"> The media type of the file: `application/json`. </param>
+        /// <returns> A new <see cref="AI.MultimodalEmbeddingOutput"/> instance for mocking. </returns>
+        public static MultimodalEmbeddingOutput MultimodalEmbeddingOutput(string id = default, Uri url = default, string sasToken = default, DateTimeOffset expiresOn = default, int records = default, long bytes = default, string sha256 = default, string contentType = default)
+        {
+            return new MultimodalEmbeddingOutput(
+                id,
+                url,
+                sasToken,
+                expiresOn,
+                records,
+                bytes,
+                sha256,
+                contentType,
+                additionalBinaryDataProperties: null);
         }
     }
 }
