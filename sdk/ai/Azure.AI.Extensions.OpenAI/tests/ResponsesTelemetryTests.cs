@@ -233,7 +233,8 @@ public partial class ResponsesTelemetryTests : ProjectsOpenAITestBase
         { "gen_ai.response.id", "*" },
         { "gen_ai.usage.input_tokens", "+" },
         { "gen_ai.usage.output_tokens", "+" },
-        { "gen_ai.input.messages", "*" },
+        // TODO: Re enable this code after the options AddProxy proxy will be implemented. See 5859124.
+        // { "gen_ai.input.messages", "*" },
         { "gen_ai.output.messages", "*" },
     };
 

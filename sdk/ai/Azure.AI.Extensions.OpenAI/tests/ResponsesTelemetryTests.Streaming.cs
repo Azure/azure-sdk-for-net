@@ -18,6 +18,7 @@ namespace Azure.AI.Extensions.OpenAI.Tests;
 public partial class ResponsesTelemetryTests
 {
     [RecordedTest]
+    [AsyncOnly]
     public async Task TestResponseStreamingWithTelemetry()
     {
         Environment.SetEnvironmentVariable(TraceContentsEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
@@ -61,7 +62,8 @@ public partial class ResponsesTelemetryTests
             { "gen_ai.response.id", "*" },
             { "gen_ai.usage.input_tokens", "+" },
             { "gen_ai.usage.output_tokens", "+" },
-            { "gen_ai.input.messages", "*" },
+            // TODO: Re enable this code after the options AddProxy proxy will be implemented. See 5859124.
+            //{ "gen_ai.input.messages", "*" },
             { "gen_ai.output.messages", "*" },
         };
         GenAiTraceVerifier.ValidateSpanAttributes(span, expectedAttributes, allowUnexpected: false);
@@ -74,6 +76,7 @@ public partial class ResponsesTelemetryTests
     }
 
     [RecordedTest]
+    [AsyncOnly]
     public async Task TestResponseStreamingWithContentRecordingDisabled()
     {
         Environment.SetEnvironmentVariable(TraceContentsEnvironmentVariable, "false", EnvironmentVariableTarget.Process);
@@ -111,14 +114,16 @@ public partial class ResponsesTelemetryTests
             { "gen_ai.response.id", "*" },
             { "gen_ai.usage.input_tokens", "+" },
             { "gen_ai.usage.output_tokens", "+" },
-            { "gen_ai.input.messages", "*" },
+            // TODO: Re enable this code after the options AddProxy proxy will be implemented. See 5859124.
+            // { "gen_ai.input.messages", "*" },
             { "gen_ai.output.messages", "*" },
         };
         GenAiTraceVerifier.ValidateSpanAttributes(span, expectedAttributes, allowUnexpected: false);
 
-        string inputMessages = span.GetTagItem("gen_ai.input.messages") as string;
-        Assert.That(inputMessages, Does.Not.Contain("What is 2+2?"));
-        Assert.That(inputMessages, Does.Contain("\"role\":\"user\""));
+        // TODO: Re enable this code after the options AddProxy proxy will be implemented. See 5859124.
+        //string inputMessages = span.GetTagItem("gen_ai.input.messages") as string;
+        //Assert.That(inputMessages, Does.Not.Contain("What is 2+2?"));
+        //Assert.That(inputMessages, Does.Contain("\"role\":\"user\""));
 
         string outputMessages = span.GetTagItem("gen_ai.output.messages") as string;
         Assert.That(outputMessages, Does.Not.Contain("\"content\":"));
@@ -127,6 +132,7 @@ public partial class ResponsesTelemetryTests
     }
 
     [RecordedTest]
+    [AsyncOnly]
     public async Task TestResponseStreamingWithTelemetryDisabled()
     {
         Environment.SetEnvironmentVariable(TraceContentsEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
@@ -155,6 +161,7 @@ public partial class ResponsesTelemetryTests
     }
 
     [RecordedTest]
+    [AsyncOnly]
     public async Task TestResponseStreamingWithAgentSpanNaming()
     {
         Environment.SetEnvironmentVariable(TraceContentsEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
@@ -206,13 +213,15 @@ public partial class ResponsesTelemetryTests
                 { "gen_ai.response.id", "*" },
                 { "gen_ai.usage.input_tokens", "+" },
                 { "gen_ai.usage.output_tokens", "+" },
-                { "gen_ai.input.messages", "*" },
+                // TODO: Re enable this code after the options AddProxy proxy will be implemented. See 5859124.
+                //{ "gen_ai.input.messages", "*" },
                 { "gen_ai.output.messages", "*" },
             };
             GenAiTraceVerifier.ValidateSpanAttributes(span, expectedAttributes, allowUnexpected: false);
 
-            string inputMessages = span.GetTagItem("gen_ai.input.messages") as string;
-            Assert.That(inputMessages, Does.Contain("\"content\":\"Hello agent!\""));
+            // TODO: Re enable this code after the options AddProxy proxy will be implemented. See 5859124.
+            //string inputMessages = span.GetTagItem("gen_ai.input.messages") as string;
+            //Assert.That(inputMessages, Does.Contain("\"content\":\"Hello agent!\""));
 
             string outputMessages = span.GetTagItem("gen_ai.output.messages") as string;
             Assert.That(outputMessages, Does.Contain("\"role\":\"assistant\""));

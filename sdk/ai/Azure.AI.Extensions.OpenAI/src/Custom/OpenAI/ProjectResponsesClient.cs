@@ -401,6 +401,7 @@ public partial class ProjectResponsesClient : ResponsesClient
         CreateResponseOptions options = new()
         {
             StreamingEnabled = true,
+            // TODO: Re enable this code after the options AddProxy proxy will be implemented. See 5859124.
             //PreviousResponseId = previousResponseId,
             //InputItems = { ResponseItem.CreateUserMessageItem(userInputText) },
             //Model = model,

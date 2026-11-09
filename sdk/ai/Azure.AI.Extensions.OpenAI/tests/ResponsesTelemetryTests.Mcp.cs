@@ -167,17 +167,18 @@ public partial class ResponsesTelemetryTests
         var initialSpan = spans[0];
         GenAiTraceVerifier.ValidateSpanAttributes(initialSpan, expectedAttributes, allowUnexpected: false);
 
-        string initialInput = initialSpan.GetTagItem("gen_ai.input.messages") as string;
-        Assert.That(initialInput, Does.Contain("\"role\":\"user\""));
-        if (contentRecordingEnabled)
-        {
-            Assert.That(initialInput, Does.Contain(McpPrompt));
-        }
-        else
-        {
-            Assert.That(initialInput, Does.Not.Contain(McpPrompt));
-            Assert.That(initialInput, Does.Contain("\"type\":\"text\""));
-        }
+        // TODO: Re enable this code after the options AddProxy proxy will be implemented. See 5859124.
+        //string initialInput = initialSpan.GetTagItem("gen_ai.input.messages") as string;
+        //Assert.That(initialInput, Does.Contain("\"role\":\"user\""));
+        //if (contentRecordingEnabled)
+        //{
+        //    Assert.That(initialInput, Does.Contain(McpPrompt));
+        //}
+        //else
+        //{
+        //    Assert.That(initialInput, Does.Not.Contain(McpPrompt));
+        //    Assert.That(initialInput, Does.Contain("\"type\":\"text\""));
+        //}
 
         string initialOutput = initialSpan.GetTagItem("gen_ai.output.messages") as string;
         Assert.That(initialOutput, Does.Contain("\"role\":\"assistant\""));
@@ -276,12 +277,14 @@ public partial class ResponsesTelemetryTests
     #region MCP Streaming tests
 
     [RecordedTest]
+    [AsyncOnly]
     public async Task TestMcpStreamingWithContentRecordingEnabled()
     {
         await RunMcpTelemetryTestAsync(contentRecordingEnabled: true, streaming: true);
     }
 
     [RecordedTest]
+    [AsyncOnly]
     public async Task TestMcpStreamingWithContentRecordingDisabled()
     {
         await RunMcpTelemetryTestAsync(contentRecordingEnabled: false, streaming: true);

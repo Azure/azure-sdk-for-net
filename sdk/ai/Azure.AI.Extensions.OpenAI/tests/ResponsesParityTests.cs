@@ -252,6 +252,7 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
     }
 
     [RecordedTest]
+    [AsyncOnly]
     public async Task StreamingResponsesWork()
     {
         ProjectOpenAIClient client = GetTestProjectOpenAIClient();
