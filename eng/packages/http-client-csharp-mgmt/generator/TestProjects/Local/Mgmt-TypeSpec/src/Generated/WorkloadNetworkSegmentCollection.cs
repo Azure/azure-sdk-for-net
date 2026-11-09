@@ -95,7 +95,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _workloadNetworkSegmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, segmentId, WorkloadNetworkSegmentData.ToRequestContent(data), context);
+                HttpMessage message = _workloadNetworkSegmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, segmentId, WorkloadNetworkSegmentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<WorkloadNetworkSegmentResource> operation = new TestsArmOperation<WorkloadNetworkSegmentResource>(
                     new WorkloadNetworkSegmentResourceOperationSource(Client),
@@ -154,7 +154,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _workloadNetworkSegmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, segmentId, WorkloadNetworkSegmentData.ToRequestContent(data), context);
+                HttpMessage message = _workloadNetworkSegmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, segmentId, WorkloadNetworkSegmentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<WorkloadNetworkSegmentResource> operation = new TestsArmOperation<WorkloadNetworkSegmentResource>(
                     new WorkloadNetworkSegmentResourceOperationSource(Client),
@@ -211,7 +211,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, segmentId, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, segmentId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WorkloadNetworkSegmentData> response = Response.FromValue(WorkloadNetworkSegmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -261,7 +261,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, segmentId, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, segmentId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WorkloadNetworkSegmentData> response = Response.FromValue(WorkloadNetworkSegmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -366,7 +366,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, segmentId, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, segmentId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WorkloadNetworkSegmentData> response = default;
@@ -423,7 +423,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, segmentId, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, segmentId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WorkloadNetworkSegmentData> response = default;
@@ -480,7 +480,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, segmentId, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, segmentId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WorkloadNetworkSegmentData> response = default;
@@ -541,7 +541,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, segmentId, context);
+                HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, segmentId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WorkloadNetworkSegmentData> response = default;

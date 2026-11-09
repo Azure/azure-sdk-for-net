@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.OperationTemplates
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _pagingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _pagingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MonitorData> response = Response.FromValue(MonitorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.OperationTemplates
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _pagingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _pagingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MonitorData> response = Response.FromValue(MonitorData.FromResponse(result), result);
                 if (response.Value == null)

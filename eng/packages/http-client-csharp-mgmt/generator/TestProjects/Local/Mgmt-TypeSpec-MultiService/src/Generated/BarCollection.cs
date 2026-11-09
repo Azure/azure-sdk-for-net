@@ -91,7 +91,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _barsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, barName, BarData.ToRequestContent(data), context);
+                HttpMessage message = _barsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, barName, BarData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<BarResource> operation = new TestsArmOperation<BarResource>(
                     new BarResourceOperationSource(Client),
@@ -149,7 +149,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _barsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, barName, BarData.ToRequestContent(data), context);
+                HttpMessage message = _barsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, barName, BarData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<BarResource> operation = new TestsArmOperation<BarResource>(
                     new BarResourceOperationSource(Client),
@@ -204,7 +204,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _barsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, barName, context);
+                HttpMessage message = _barsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, barName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BarData> response = Response.FromValue(BarData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _barsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, barName, context);
+                HttpMessage message = _barsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, barName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BarData> response = Response.FromValue(BarData.FromResponse(result), result);
                 if (response.Value == null)
@@ -358,7 +358,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _barsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, barName, context);
+                HttpMessage message = _barsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, barName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BarData> response = default;
@@ -415,7 +415,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _barsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, barName, context);
+                HttpMessage message = _barsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, barName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BarData> response = default;
@@ -472,7 +472,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _barsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, barName, context);
+                HttpMessage message = _barsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, barName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BarData> response = default;
@@ -533,7 +533,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _barsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, barName, context);
+                HttpMessage message = _barsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, barName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BarData> response = default;
