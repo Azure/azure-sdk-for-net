@@ -21,7 +21,7 @@ namespace Azure.Provisioning.SecurityCenter
         private BicepValue<string> _name;
         private SystemData _systemData;
         private InformationProtectionPolicyProperties _properties;
-        private ResourceReference<ProvisionableResource> _scope;
+        private ProvisioningResourceReference<ProvisionableResource> _scope;
 
         /// <summary> Creates a new InformationProtectionPolicy. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -163,7 +163,7 @@ namespace Azure.Provisioning.SecurityCenter
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<InformationProtectionPolicyProperties>(nameof(Properties), new string[] { "properties" });
-            _scope = DefineResource<ProvisionableResource>(nameof(Scope), new string[] { "scope" });
+            _scope = new ProvisioningResourceReference<ProvisionableResource>(DefineProperty<string>(nameof(Scope), new string[] { "scope" }));
             DefineAdditionalProperties();
         }
 

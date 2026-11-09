@@ -58,5 +58,33 @@ namespace Azure.ResourceManager.Sql
                 Properties.RetentionDays = value;
             }
         }
+
+        /// <summary> Whether to lock the immutability of the backups governed by this short term retention policy. </summary>
+        [WirePath("properties.lockImmutability")]
+        public bool? ShouldLockImmutability
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ShouldLockImmutability;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedBackupShortTermRetentionPolicyProperties();
+                }
+                Properties.ShouldLockImmutability = value;
+            }
+        }
+
+        /// <summary> The immutability status of the backups governed by this short term retention policy. </summary>
+        [WirePath("properties.immutabilityStatus")]
+        public ImmutabilityStatus? ImmutabilityStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ImmutabilityStatus;
+            }
+        }
     }
 }

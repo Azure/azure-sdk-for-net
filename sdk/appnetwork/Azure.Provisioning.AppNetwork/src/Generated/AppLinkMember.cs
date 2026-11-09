@@ -23,7 +23,7 @@ namespace Azure.Provisioning.AppNetwork
         private BicepDictionary<string> _tags;
         private BicepValue<AzureLocation> _location;
         private AppLinkMemberProperties _properties;
-        private ResourceReference<AppLink> _parent;
+        private ProvisioningResourceReference<AppLink> _parent;
 
         /// <summary> Creates a new AppLinkMember. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -137,7 +137,7 @@ namespace Azure.Provisioning.AppNetwork
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<AppLinkMemberProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<AppLink>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<AppLink>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

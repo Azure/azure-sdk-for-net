@@ -75,11 +75,8 @@ namespace Azure.AI.Projects.Agents
             {
                 throw new FormatException($"The model {nameof(TelephonyTransferTarget)} does not support writing '{format}' format.");
             }
-            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
             writer.WritePropertyName("description"u8);
             writer.WriteStringValue(Description);
             writer.WritePropertyName("destination"u8);

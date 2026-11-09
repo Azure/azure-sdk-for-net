@@ -1511,16 +1511,6 @@ namespace Azure.AI.Projects.Agents
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The AzureFunctionDefinitionFunction. </summary>
-        /// <param name="name"> The name of the function to be called. </param>
-        /// <param name="description"> A description of what the function does, used by the model to choose when and how to call the function. </param>
-        /// <param name="parameters"> The parameters the functions accepts, described as a JSON Schema object. </param>
-        /// <returns> A new <see cref="Agents.AzureFunctionDefinitionFunction"/> instance for mocking. </returns>
-        public static AzureFunctionDefinitionFunction AzureFunctionDefinitionFunction(string name = default, string description = default, BinaryData parameters = default)
-        {
-            return new AzureFunctionDefinitionFunction(name, description, parameters, additionalBinaryDataProperties: null);
-        }
-
         /// <summary>
         /// The ContainerSkill.
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.InlineSkillParam"/> and <see cref="Agents.SkillReferenceParam"/>.
@@ -1909,16 +1899,16 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// The request to create a telephony binding.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.CreateTeamsPhoneExtensibilityTelephonyBindingContent"/> and <see cref="Agents.CreateTwilioTelephonyBindingContent"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.CreateTeamsPhoneExtensibilityTelephonyBindingRequest"/> and <see cref="Agents.CreateTwilioTelephonyBindingRequest"/>.
         /// </summary>
         /// <param name="provider"> The telephony provider. </param>
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> An optional display label for the binding. </param>
-        /// <returns> A new <see cref="Agents.CreateTelephonyBindingContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.CreateTelephonyBindingRequest"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static CreateTelephonyBindingContent CreateTelephonyBindingContent(string provider = default, string connectionName = default, string label = default)
+        public static CreateTelephonyBindingRequest CreateTelephonyBindingRequest(string provider = default, string connectionName = default, string label = default)
         {
-            return new UnknownCreateTelephonyBindingContent(new TelephonyProvider(provider), connectionName, label, additionalBinaryDataProperties: null);
+            return new UnknownCreateTelephonyBindingRequest(new TelephonyProvider(provider), connectionName, label, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The request to create a Microsoft Teams Phone extensibility binding. </summary>
@@ -1926,11 +1916,11 @@ namespace Azure.AI.Projects.Agents
         /// <param name="label"> An optional display label for the binding. </param>
         /// <param name="phoneNumber"> The optional display phone number for the Teams resource account. </param>
         /// <param name="resourceAccountObjectId"> The Microsoft Teams resource-account object identifier as a GUID. </param>
-        /// <returns> A new <see cref="Agents.CreateTeamsPhoneExtensibilityTelephonyBindingContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.CreateTeamsPhoneExtensibilityTelephonyBindingRequest"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static CreateTeamsPhoneExtensibilityTelephonyBindingContent CreateTeamsPhoneExtensibilityTelephonyBindingContent(string connectionName = default, string label = default, string phoneNumber = default, string resourceAccountObjectId = default)
+        public static CreateTeamsPhoneExtensibilityTelephonyBindingRequest CreateTeamsPhoneExtensibilityTelephonyBindingRequest(string connectionName = default, string label = default, string phoneNumber = default, string resourceAccountObjectId = default)
         {
-            return new CreateTeamsPhoneExtensibilityTelephonyBindingContent(
+            return new CreateTeamsPhoneExtensibilityTelephonyBindingRequest(
                 TelephonyProvider.TeamsPhoneExtensibility,
                 connectionName,
                 label,
@@ -1943,11 +1933,11 @@ namespace Azure.AI.Projects.Agents
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> An optional display label for the binding. </param>
         /// <param name="phoneNumber"> The Twilio E.164 phone number. </param>
-        /// <returns> A new <see cref="Agents.CreateTwilioTelephonyBindingContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.CreateTwilioTelephonyBindingRequest"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static CreateTwilioTelephonyBindingContent CreateTwilioTelephonyBindingContent(string connectionName = default, string label = default, string phoneNumber = default)
+        public static CreateTwilioTelephonyBindingRequest CreateTwilioTelephonyBindingRequest(string connectionName = default, string label = default, string phoneNumber = default)
         {
-            return new CreateTwilioTelephonyBindingContent(TelephonyProvider.Twilio, connectionName, label, additionalBinaryDataProperties: null, phoneNumber);
+            return new CreateTwilioTelephonyBindingRequest(TelephonyProvider.Twilio, connectionName, label, additionalBinaryDataProperties: null, phoneNumber);
         }
 
         /// <summary>
@@ -2346,13 +2336,13 @@ namespace Azure.AI.Projects.Agents
         /// <param name="structuredInputs"> Structured input values available to the agent and greeting for this call. Agent-declared inputs are validated against their schemas; omitted optional inputs may use their Agent-defined default values, while omitted required inputs are rejected. Additional inputs remain available as dynamic template variables. </param>
         /// <param name="schedule"> The optional execution window. </param>
         /// <param name="retryPolicy"> The provider-attempt retry policy. Omit it for one attempt with no retry delay. </param>
-        /// <returns> A new <see cref="Agents.CreateTelephonyCallJobContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.CreateTelephonyCallJobRequest"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static CreateTelephonyCallJobContent CreateTelephonyCallJobContent(TelephonyOutboundDestination destination = default, string connectionName = default, string source = default, string purpose = default, IDictionary<string, BinaryData> structuredInputs = default, TelephonyCallJobSchedule schedule = default, TelephonyOutboundRetryPolicy retryPolicy = default)
+        public static CreateTelephonyCallJobRequest CreateTelephonyCallJobRequest(TelephonyOutboundDestination destination = default, string connectionName = default, string source = default, string purpose = default, IDictionary<string, BinaryData> structuredInputs = default, TelephonyCallJobSchedule schedule = default, TelephonyOutboundRetryPolicy retryPolicy = default)
         {
             structuredInputs ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new CreateTelephonyCallJobContent(
+            return new CreateTelephonyCallJobRequest(
                 destination,
                 connectionName,
                 source,
@@ -3179,14 +3169,14 @@ namespace Azure.AI.Projects.Agents
         /// <param name="compatibility"> Environment requirements or compatibility notes for the skill. </param>
         /// <param name="metadata"> Arbitrary key-value metadata for additional properties. </param>
         /// <param name="allowedTools"> List of pre-approved tools the skill may use. Experimental. </param>
-        /// <returns> A new <see cref="Agents.SkillInlineContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.SkillInlineRequest"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static SkillInlineContent SkillInlineContent(string description = default, string instructions = default, string license = default, string compatibility = default, IDictionary<string, string> metadata = default, IEnumerable<string> allowedTools = default)
+        public static SkillInlineRequest SkillInlineRequest(string description = default, string instructions = default, string license = default, string compatibility = default, IDictionary<string, string> metadata = default, IEnumerable<string> allowedTools = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
             allowedTools ??= new ChangeTrackingList<string>();
 
-            return new SkillInlineContent(
+            return new SkillInlineRequest(
                 description,
                 instructions,
                 license,

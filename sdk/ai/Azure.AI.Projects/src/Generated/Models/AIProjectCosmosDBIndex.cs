@@ -11,8 +11,25 @@ namespace Azure.AI.Projects
     public partial class AIProjectCosmosDBIndex : AIProjectIndex
     {
         /// <summary> Initializes a new instance of <see cref="AIProjectCosmosDBIndex"/>. </summary>
-        public AIProjectCosmosDBIndex() : base(IndexType.CosmosDB)
+        /// <param name="connectionName"> Name of connection to CosmosDB. </param>
+        /// <param name="databaseName"> Name of the CosmosDB Database. </param>
+        /// <param name="containerName"> Name of CosmosDB Container. </param>
+        /// <param name="embeddingConfiguration"> Embedding model configuration. </param>
+        /// <param name="fieldMapping"> Field mapping configuration. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, <paramref name="embeddingConfiguration"/> or <paramref name="fieldMapping"/> is null. </exception>
+        public AIProjectCosmosDBIndex(string connectionName, string databaseName, string containerName, EmbeddingConfiguration embeddingConfiguration, AIProjectIndexFieldMapping fieldMapping) : base(IndexType.CosmosDB)
         {
+            Argument.AssertNotNull(connectionName, nameof(connectionName));
+            Argument.AssertNotNull(databaseName, nameof(databaseName));
+            Argument.AssertNotNull(containerName, nameof(containerName));
+            Argument.AssertNotNull(embeddingConfiguration, nameof(embeddingConfiguration));
+            Argument.AssertNotNull(fieldMapping, nameof(fieldMapping));
+
+            ConnectionName = connectionName;
+            DatabaseName = databaseName;
+            ContainerName = containerName;
+            EmbeddingConfiguration = embeddingConfiguration;
+            FieldMapping = fieldMapping;
         }
 
         /// <summary> Initializes a new instance of <see cref="AIProjectCosmosDBIndex"/>. </summary>
@@ -30,28 +47,6 @@ namespace Azure.AI.Projects
         /// <param name="fieldMapping"> Field mapping configuration. </param>
         internal AIProjectCosmosDBIndex(IndexType @type, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, string connectionName, string databaseName, string containerName, EmbeddingConfiguration embeddingConfiguration, AIProjectIndexFieldMapping fieldMapping) : base(@type, id, name, version, description, tags, additionalBinaryDataProperties)
         {
-            ConnectionName = connectionName;
-            DatabaseName = databaseName;
-            ContainerName = containerName;
-            EmbeddingConfiguration = embeddingConfiguration;
-            FieldMapping = fieldMapping;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AIProjectCosmosDBIndex"/>. </summary>
-        /// <param name="connectionName"> Name of connection to CosmosDB. </param>
-        /// <param name="databaseName"> Name of the CosmosDB Database. </param>
-        /// <param name="containerName"> Name of CosmosDB Container. </param>
-        /// <param name="embeddingConfiguration"> Embedding model configuration. </param>
-        /// <param name="fieldMapping"> Field mapping configuration. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/>, <paramref name="databaseName"/>, <paramref name="containerName"/>, <paramref name="embeddingConfiguration"/> or <paramref name="fieldMapping"/> is null. </exception>
-        public AIProjectCosmosDBIndex(string connectionName, string databaseName, string containerName, EmbeddingConfiguration embeddingConfiguration, AIProjectIndexFieldMapping fieldMapping) : this()
-        {
-            Argument.AssertNotNull(connectionName, nameof(connectionName));
-            Argument.AssertNotNull(databaseName, nameof(databaseName));
-            Argument.AssertNotNull(containerName, nameof(containerName));
-            Argument.AssertNotNull(embeddingConfiguration, nameof(embeddingConfiguration));
-            Argument.AssertNotNull(fieldMapping, nameof(fieldMapping));
-
             ConnectionName = connectionName;
             DatabaseName = databaseName;
             ContainerName = containerName;

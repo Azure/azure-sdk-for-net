@@ -41,7 +41,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             AssertDoesNotContainAttribute(log, MainAgentName);
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/64547")]
         public void OnEnd_ActivityHasMainAgentAttrs_CopiedToLog()
         {
             // Arrange
@@ -108,7 +108,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             AssertDoesNotContainAttribute(log, MainAgentId);
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/64547")]
         public void OnEnd_ActivityHasPartialMainAgentAttrs_CopiesOnlyPresent()
         {
             // Arrange
@@ -142,7 +142,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             AssertDoesNotContainAttribute(log, MainAgentConversationId);
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/64547")]
         public void OnEnd_LogAlreadyHasMainAgentAttrs_NoDuplicates()
         {
             // This test uses a custom processor that pre-sets a main_agent attribute
@@ -191,7 +191,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             AssertContainsAttribute(log, MainAgentId, "bot-999");
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/64547")]
         public void OnEnd_ActivityHasBothFoundryProjectIds_BothCopiedToLog()
         {
             var exportedItems = new List<LogRecord>();
@@ -221,7 +221,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             AssertContainsAttribute(log, GenAiAzureAiProjectId, "azure-ai-project-1");
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/64547")]
         public void OnEnd_ActivityHasOnlyFoundryProjectId_OnlyThatCopiedToLog()
         {
             var exportedItems = new List<LogRecord>();
@@ -250,7 +250,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             AssertDoesNotContainAttribute(log, GenAiAzureAiProjectId);
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/64547")]
         public void OnEnd_ActivityHasOnlyAzureAiProjectId_OnlyThatCopiedToLog()
         {
             var exportedItems = new List<LogRecord>();
