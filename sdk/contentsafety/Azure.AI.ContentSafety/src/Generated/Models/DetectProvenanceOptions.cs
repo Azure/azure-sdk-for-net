@@ -19,7 +19,7 @@ namespace Azure.AI.ContentSafety
         /// <summary> Initializes a new instance of <see cref="DetectProvenanceOptions"/>. </summary>
         /// <param name="content"> Source content to inspect. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public DetectProvenanceOptions(ProvenanceContent content)
+        public DetectProvenanceOptions(ProvenanceRequest content)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -29,13 +29,13 @@ namespace Azure.AI.ContentSafety
         /// <summary> Initializes a new instance of <see cref="DetectProvenanceOptions"/>. </summary>
         /// <param name="content"> Source content to inspect. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DetectProvenanceOptions(ProvenanceContent content, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DetectProvenanceOptions(ProvenanceRequest content, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Content = content;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Source content to inspect. </summary>
-        public ProvenanceContent Content { get; }
+        public ProvenanceRequest Content { get; }
     }
 }

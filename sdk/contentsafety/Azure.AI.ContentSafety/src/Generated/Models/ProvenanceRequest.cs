@@ -11,25 +11,25 @@ using System.Collections.Generic;
 namespace Azure.AI.ContentSafety
 {
     /// <summary> Source content descriptor for a Content Provenance Detection operation. </summary>
-    public partial class ProvenanceContent
+    public partial class ProvenanceRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ProvenanceContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvenanceRequest"/>. </summary>
         /// <param name="uri"> Blob URI of the media to inspect. Media up to 100 MB is supported. Supported formats: image (JPEG, PNG, GIF, WebP), audio (MP3, WAV), and video (MP4). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
-        public ProvenanceContent(Uri uri)
+        public ProvenanceRequest(Uri uri)
         {
             Argument.AssertNotNull(uri, nameof(uri));
 
             Uri = uri;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProvenanceContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvenanceRequest"/>. </summary>
         /// <param name="uri"> Blob URI of the media to inspect. Media up to 100 MB is supported. Supported formats: image (JPEG, PNG, GIF, WebP), audio (MP3, WAV), and video (MP4). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProvenanceContent(Uri uri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProvenanceRequest(Uri uri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Uri = uri;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
