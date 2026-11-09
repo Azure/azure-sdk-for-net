@@ -36,6 +36,8 @@ namespace Azure.ResourceManager.Quota.Mocking
 
         private ClientDiagnostics IncomingQuotaTransfersClientDiagnostics => _incomingQuotaTransfersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Quota.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
+        private IncomingQuotaTransfers IncomingQuotaTransfersRestClient => _incomingQuotaTransfersRestClient ??= new IncomingQuotaTransfers(IncomingQuotaTransfersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-01-preview");
+
         /// <summary>
         /// List incoming quota transfers across every targetProvider and region for the
         /// subscription.

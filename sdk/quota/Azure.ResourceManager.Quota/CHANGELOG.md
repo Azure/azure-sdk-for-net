@@ -10,8 +10,6 @@
 
 ### Bugs Fixed
 
-- Subscription-wide incoming quota transfer listing honors `ArmClientOptions.SetApiVersion` overrides, including continuation requests.
-
 ### Other Changes
 
 ## 1.2.1 (2026-06-28)
