@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/databaseAccounts") ?? "2026-04-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/databaseAccounts") ?? "2026-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/databaseAccounts") ?? "2026-04-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/databaseAccounts") ?? "2026-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/databaseAccounts") ?? "2026-04-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/databaseAccounts") ?? "2026-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/databaseAccounts") ?? "2026-04-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/databaseAccounts") ?? "2026-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/databaseAccounts") ?? "2026-04-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/databaseAccounts") ?? "2026-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/databaseAccounts") ?? "2026-04-01-preview");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/databaseAccounts") ?? "2026-07-15");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/databaseAccounts") ?? "2026-04-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/databaseAccounts") ?? "2026-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/databaseAccounts") ?? "2026-04-01-preview");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/databaseAccounts") ?? "2026-07-15");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/failoverPriorityChange", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/databaseAccounts") ?? "2026-04-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/databaseAccounts") ?? "2026-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/listKeys", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/databaseAccounts") ?? "2026-04-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/databaseAccounts") ?? "2026-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/listConnectionStrings", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/databaseAccounts") ?? "2026-04-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/databaseAccounts") ?? "2026-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/offlineRegion", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/databaseAccounts") ?? "2026-04-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/databaseAccounts") ?? "2026-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/onlineRegion", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/databaseAccounts") ?? "2026-04-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/databaseAccounts") ?? "2026-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/readonlykeys", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/databaseAccounts") ?? "2026-04-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/databaseAccounts") ?? "2026-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/regenerateKey", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/databaseAccounts") ?? "2026-04-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/databaseAccounts") ?? "2026-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/metrics", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/databaseAccounts") ?? "2026-04-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/databaseAccounts") ?? "2026-07-15", true);
             uri.AppendQuery("$filter", filter, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/databaseAccounts") ?? "2026-04-01-preview");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/databaseAccounts") ?? "2026-07-15");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/usages", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/databaseAccounts") ?? "2026-04-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/databaseAccounts") ?? "2026-07-15", true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/databaseAccounts") ?? "2026-04-01-preview");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/databaseAccounts") ?? "2026-07-15");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/metricDefinitions", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/databaseAccounts") ?? "2026-04-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/databaseAccounts") ?? "2026-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/databaseAccounts") ?? "2026-04-01-preview");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.DocumentDB/databaseAccounts") ?? "2026-07-15");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DocumentDB/cassandraClusters/", false);
             uri.AppendPath(clusterName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DocumentDB/cassandraClusters/", false);
             uri.AppendPath(clusterName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DocumentDB/cassandraClusters/", false);
             uri.AppendPath(clusterName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DocumentDB/cassandraClusters/", false);
             uri.AppendPath(clusterName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DocumentDB/cassandraClusters", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-04-01-preview");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-07-15");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.DocumentDB/cassandraClusters", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-04-01-preview");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-07-15");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/providers/Microsoft.DocumentDB/cassandraClusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/invokeCommand", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -225,157 +225,6 @@ namespace Azure.ResourceManager.CosmosDB
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateInvokeCommandAsyncRequest(Guid subscriptionId, string resourceGroupName, string clusterName, RequestContent content, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DocumentDB/cassandraClusters/", false);
-            uri.AppendPath(clusterName, true);
-            uri.AppendPath("/invokeCommandAsync", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01-preview", true);
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            _userAgent.Apply(message);
-            request.Headers.SetValue("Content-Type", "application/json");
-            request.Headers.SetValue("Accept", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateGetCommandRequest(Guid subscriptionId, string resourceGroupName, string clusterName, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DocumentDB/cassandraClusters/", false);
-            uri.AppendPath(clusterName, true);
-            uri.AppendPath("/commands", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01-preview", true);
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            _userAgent.Apply(message);
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateNextGetCommandRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string clusterName, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            if (nextPage.IsAbsoluteUri)
-            {
-                uri.Reset(nextPage);
-            }
-            else
-            {
-                uri.Reset(new Uri(_endpoint, nextPage));
-            }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-04-01-preview");
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            _userAgent.Apply(message);
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetCommandAsyncRequest(Guid subscriptionId, string resourceGroupName, string clusterName, string commandId, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DocumentDB/cassandraClusters/", false);
-            uri.AppendPath(clusterName, true);
-            uri.AppendPath("/commands/", false);
-            uri.AppendPath(commandId, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01-preview", true);
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            _userAgent.Apply(message);
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetBackupsRequest(Guid subscriptionId, string resourceGroupName, string clusterName, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DocumentDB/cassandraClusters/", false);
-            uri.AppendPath(clusterName, true);
-            uri.AppendPath("/backups", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01-preview", true);
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            _userAgent.Apply(message);
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateNextGetBackupsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string clusterName, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            if (nextPage.IsAbsoluteUri)
-            {
-                uri.Reset(nextPage);
-            }
-            else
-            {
-                uri.Reset(new Uri(_endpoint, nextPage));
-            }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-04-01-preview");
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            _userAgent.Apply(message);
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetBackupRequest(Guid subscriptionId, string resourceGroupName, string clusterName, string backupId, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DocumentDB/cassandraClusters/", false);
-            uri.AppendPath(clusterName, true);
-            uri.AppendPath("/backups/", false);
-            uri.AppendPath(backupId, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01-preview", true);
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            _userAgent.Apply(message);
-            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
@@ -390,7 +239,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/providers/Microsoft.DocumentDB/cassandraClusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/deallocate", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -414,7 +263,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/providers/Microsoft.DocumentDB/cassandraClusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/start", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -434,7 +283,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath("/providers/Microsoft.DocumentDB/cassandraClusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/status", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-04-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-15", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

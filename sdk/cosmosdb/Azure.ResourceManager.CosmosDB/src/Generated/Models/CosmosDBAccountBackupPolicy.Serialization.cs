@@ -84,6 +84,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("migrationState"u8);
                 writer.WriteObjectValue(MigrationState, options);
             }
+            if (Optional.IsDefined(BackupRetentionLockExpiresOn))
+            {
+                writer.WritePropertyName("backupRetentionLockExpirationTimestamp"u8);
+                writer.WriteStringValue(BackupRetentionLockExpiresOn.Value, "O");
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

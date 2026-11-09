@@ -35,24 +35,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
             return new CosmosDBAccountResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="CosmosDBCopyJobResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CosmosDBCopyJobResource"/> object. </returns>
-        public virtual CosmosDBCopyJobResource GetCosmosDBCopyJobResource(ResourceIdentifier id)
-        {
-            CosmosDBCopyJobResource.ValidateResourceId(id);
-            return new CosmosDBCopyJobResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="CosmosDBGraphResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CosmosDBGraphResource"/> object. </returns>
-        public virtual CosmosDBGraphResource GetCosmosDBGraphResource(ResourceIdentifier id)
-        {
-            CosmosDBGraphResource.ValidateResourceId(id);
-            return new CosmosDBGraphResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="CosmosDBSqlDatabaseResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CosmosDBSqlDatabaseResource"/> object. </returns>
@@ -251,15 +233,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
             return new CassandraTableThroughputSettingResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="CassandraViewThroughputSettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CassandraViewThroughputSettingResource"/> object. </returns>
-        public virtual CassandraViewThroughputSettingResource GetCassandraViewThroughputSettingResource(ResourceIdentifier id)
-        {
-            CassandraViewThroughputSettingResource.ValidateResourceId(id);
-            return new CassandraViewThroughputSettingResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="CassandraKeyspaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CassandraKeyspaceResource"/> object. </returns>
@@ -276,15 +249,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         {
             CassandraTableResource.ValidateResourceId(id);
             return new CassandraTableResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="CassandraViewResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CassandraViewResource"/> object. </returns>
-        public virtual CassandraViewResource GetCassandraViewResource(ResourceIdentifier id)
-        {
-            CassandraViewResource.ValidateResourceId(id);
-            return new CassandraViewResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="CassandraRoleDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -359,33 +323,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
             return new GremlinRoleAssignmentResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="DataTransferJobResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataTransferJobResource"/> object. </returns>
-        public virtual DataTransferJobResource GetDataTransferJobResource(ResourceIdentifier id)
-        {
-            DataTransferJobResource.ValidateResourceId(id);
-            return new DataTransferJobResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="GarnetClusterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GarnetClusterResource"/> object. </returns>
-        public virtual GarnetClusterResource GetGarnetClusterResource(ResourceIdentifier id)
-        {
-            GarnetClusterResource.ValidateResourceId(id);
-            return new GarnetClusterResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="NetworkSecurityPerimeterConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkSecurityPerimeterConfigurationResource"/> object. </returns>
-        public virtual NetworkSecurityPerimeterConfigurationResource GetNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier id)
-        {
-            NetworkSecurityPerimeterConfigurationResource.ValidateResourceId(id);
-            return new NetworkSecurityPerimeterConfigurationResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="NotebookWorkspaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NotebookWorkspaceResource"/> object. </returns>
@@ -411,42 +348,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         {
             CosmosDBPrivateLinkResource.ValidateResourceId(id);
             return new CosmosDBPrivateLinkResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="SoftDeletedDatabaseAccountGetResultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SoftDeletedDatabaseAccountGetResultResource"/> object. </returns>
-        public virtual SoftDeletedDatabaseAccountGetResultResource GetSoftDeletedDatabaseAccountGetResultResource(ResourceIdentifier id)
-        {
-            SoftDeletedDatabaseAccountGetResultResource.ValidateResourceId(id);
-            return new SoftDeletedDatabaseAccountGetResultResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="SoftDeletedSqlDatabaseGetResultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SoftDeletedSqlDatabaseGetResultResource"/> object. </returns>
-        public virtual SoftDeletedSqlDatabaseGetResultResource GetSoftDeletedSqlDatabaseGetResultResource(ResourceIdentifier id)
-        {
-            SoftDeletedSqlDatabaseGetResultResource.ValidateResourceId(id);
-            return new SoftDeletedSqlDatabaseGetResultResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="SoftDeletedSqlContainerGetResultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SoftDeletedSqlContainerGetResultResource"/> object. </returns>
-        public virtual SoftDeletedSqlContainerGetResultResource GetSoftDeletedSqlContainerGetResultResource(ResourceIdentifier id)
-        {
-            SoftDeletedSqlContainerGetResultResource.ValidateResourceId(id);
-            return new SoftDeletedSqlContainerGetResultResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="ChaosFaultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ChaosFaultResource"/> object. </returns>
-        public virtual ChaosFaultResource GetChaosFaultResource(ResourceIdentifier id)
-        {
-            ChaosFaultResource.ValidateResourceId(id);
-            return new ChaosFaultResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="CosmosDBLocationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -494,24 +395,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
             return new CosmosDBServiceResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="CosmosDBThroughputPoolResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CosmosDBThroughputPoolResource"/> object. </returns>
-        public virtual CosmosDBThroughputPoolResource GetCosmosDBThroughputPoolResource(ResourceIdentifier id)
-        {
-            CosmosDBThroughputPoolResource.ValidateResourceId(id);
-            return new CosmosDBThroughputPoolResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="CosmosDBThroughputPoolAccountResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CosmosDBThroughputPoolAccountResource"/> object. </returns>
-        public virtual CosmosDBThroughputPoolAccountResource GetCosmosDBThroughputPoolAccountResource(ResourceIdentifier id)
-        {
-            CosmosDBThroughputPoolAccountResource.ValidateResourceId(id);
-            return new CosmosDBThroughputPoolAccountResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="MongoMIRoleDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="MongoMIRoleDefinitionResource"/> object. </returns>
@@ -537,15 +420,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         {
             CosmosDBFleetResource.ValidateResourceId(id);
             return new CosmosDBFleetResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="FleetAnalyticsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FleetAnalyticsResource"/> object. </returns>
-        public virtual FleetAnalyticsResource GetFleetAnalyticsResource(ResourceIdentifier id)
-        {
-            FleetAnalyticsResource.ValidateResourceId(id);
-            return new FleetAnalyticsResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="CosmosDBFleetspaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>

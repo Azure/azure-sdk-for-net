@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
             Pipeline,
             Diagnostics.ApplicationId,
             Endpoint,
-            "2026-04-01-preview",
+            "2026-07-15",
             resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
     }
 }
