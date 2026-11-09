@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.Chaos
 {
     /// <summary></summary>
-    public partial class ChaosWorkspaceTemplateEvaluationDataResource : IJsonModel<ChaosWorkspaceTemplateEvaluationData>
+    public partial class ChaosWorkspaceTemplateEvaluationResource : IJsonModel<ChaosWorkspaceTemplateEvaluationData>
     {
         private static IJsonModel<ChaosWorkspaceTemplateEvaluationData> s_dataDeserializationInstance;
 

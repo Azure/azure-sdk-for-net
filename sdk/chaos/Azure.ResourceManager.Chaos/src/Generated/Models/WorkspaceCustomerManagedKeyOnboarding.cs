@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// The Workspace's top-level identity does not select this application.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceCustomerManagedKeyOnboarding(string applicationId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkspaceCustomerManagedKeyOnboarding(Guid applicationId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ApplicationId = applicationId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -53,6 +53,6 @@ namespace Azure.ResourceManager.Chaos.Models
         /// This is not a service principal object ID or an identity selector.
         /// The Workspace's top-level identity does not select this application.
         /// </summary>
-        public string ApplicationId { get; }
+        public Guid ApplicationId { get; }
     }
 }

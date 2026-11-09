@@ -613,9 +613,9 @@ namespace Azure.ResourceManager.Chaos.Models
         /// </param>
         /// <param name="status"> The observed result, separate from the requested setting. </param>
         /// <returns> A new <see cref="Models.WorkspaceEncryption"/> instance for mocking. </returns>
-        public static WorkspaceEncryption WorkspaceEncryption(WorkspaceCustomerManagedKeyEncryption customerManagedKeyEncryption = default, string customerManagedKeyOnboardingApplicationId = default, WorkspaceEncryptionStatus status = default)
+        public static WorkspaceEncryption WorkspaceEncryption(WorkspaceCustomerManagedKeyEncryption customerManagedKeyEncryption = default, Guid? customerManagedKeyOnboardingApplicationId = default, WorkspaceEncryptionStatus status = default)
         {
-            return new WorkspaceEncryption(customerManagedKeyEncryption, customerManagedKeyOnboardingApplicationId is null ? default : new WorkspaceCustomerManagedKeyOnboarding(customerManagedKeyOnboardingApplicationId, default), status, default);
+            return new WorkspaceEncryption(customerManagedKeyEncryption, customerManagedKeyOnboardingApplicationId is null ? default : new WorkspaceCustomerManagedKeyOnboarding(customerManagedKeyOnboardingApplicationId.GetValueOrDefault(), default), status, default);
         }
 
         /// <summary> A customer-managed key reference, not key material. </summary>

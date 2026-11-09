@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Chaos
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ChaosWorkspaceTemplateEvaluationDataResource"/> and their operations.
-    /// Each <see cref="ChaosWorkspaceTemplateEvaluationDataResource"/> in the collection will belong to the same instance of <see cref="ChaosWorkspaceResource"/>.
-    /// To get a <see cref="ChaosWorkspaceTemplateEvaluationDataCollection"/> instance call the GetChaosWorkspaceTemplateEvaluationDatas method from an instance of <see cref="ChaosWorkspaceResource"/>.
+    /// A class representing a collection of <see cref="ChaosWorkspaceTemplateEvaluationResource"/> and their operations.
+    /// Each <see cref="ChaosWorkspaceTemplateEvaluationResource"/> in the collection will belong to the same instance of <see cref="ChaosWorkspaceResource"/>.
+    /// To get a <see cref="ChaosWorkspaceTemplateEvaluationCollection"/> instance call the GetChaosWorkspaceTemplateEvaluations method from an instance of <see cref="ChaosWorkspaceResource"/>.
     /// </summary>
-    public partial class ChaosWorkspaceTemplateEvaluationDataCollection : ArmCollection, IEnumerable<ChaosWorkspaceTemplateEvaluationDataResource>, IAsyncEnumerable<ChaosWorkspaceTemplateEvaluationDataResource>
+    public partial class ChaosWorkspaceTemplateEvaluationCollection : ArmCollection, IEnumerable<ChaosWorkspaceTemplateEvaluationResource>, IAsyncEnumerable<ChaosWorkspaceTemplateEvaluationResource>
     {
         private readonly ClientDiagnostics _workspaceEvaluationsClientDiagnostics;
         private readonly WorkspaceEvaluations _workspaceEvaluationsRestClient;
 
-        /// <summary> Initializes a new instance of ChaosWorkspaceTemplateEvaluationDataCollection for mocking. </summary>
-        protected ChaosWorkspaceTemplateEvaluationDataCollection()
+        /// <summary> Initializes a new instance of ChaosWorkspaceTemplateEvaluationCollection for mocking. </summary>
+        protected ChaosWorkspaceTemplateEvaluationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChaosWorkspaceTemplateEvaluationDataCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChaosWorkspaceTemplateEvaluationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ChaosWorkspaceTemplateEvaluationDataCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ChaosWorkspaceTemplateEvaluationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ChaosWorkspaceTemplateEvaluationDataResource.ResourceType, out string chaosWorkspaceTemplateEvaluationDataApiVersion);
-            _workspaceEvaluationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ChaosWorkspaceTemplateEvaluationDataResource.ResourceType.Namespace, Diagnostics);
-            _workspaceEvaluationsRestClient = new WorkspaceEvaluations(_workspaceEvaluationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, chaosWorkspaceTemplateEvaluationDataApiVersion ?? "2026-11-01");
+            TryGetApiVersion(ChaosWorkspaceTemplateEvaluationResource.ResourceType, out string chaosWorkspaceTemplateEvaluationApiVersion);
+            _workspaceEvaluationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ChaosWorkspaceTemplateEvaluationResource.ResourceType.Namespace, Diagnostics);
+            _workspaceEvaluationsRestClient = new WorkspaceEvaluations(_workspaceEvaluationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, chaosWorkspaceTemplateEvaluationApiVersion ?? "2026-11-01");
             ValidateResourceId(id);
         }
 
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="evaluationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="evaluationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ChaosWorkspaceTemplateEvaluationDataResource>> GetAsync(string evaluationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ChaosWorkspaceTemplateEvaluationResource>> GetAsync(string evaluationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(evaluationName, nameof(evaluationName));
 
-            using DiagnosticScope scope = _workspaceEvaluationsClientDiagnostics.CreateScope("ChaosWorkspaceTemplateEvaluationDataCollection.Get");
+            using DiagnosticScope scope = _workspaceEvaluationsClientDiagnostics.CreateScope("ChaosWorkspaceTemplateEvaluationCollection.Get");
             scope.Start();
             try
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ChaosWorkspaceTemplateEvaluationDataResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ChaosWorkspaceTemplateEvaluationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="evaluationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="evaluationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ChaosWorkspaceTemplateEvaluationDataResource> Get(string evaluationName, CancellationToken cancellationToken = default)
+        public virtual Response<ChaosWorkspaceTemplateEvaluationResource> Get(string evaluationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(evaluationName, nameof(evaluationName));
 
-            using DiagnosticScope scope = _workspaceEvaluationsClientDiagnostics.CreateScope("ChaosWorkspaceTemplateEvaluationDataCollection.Get");
+            using DiagnosticScope scope = _workspaceEvaluationsClientDiagnostics.CreateScope("ChaosWorkspaceTemplateEvaluationCollection.Get");
             scope.Start();
             try
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ChaosWorkspaceTemplateEvaluationDataResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ChaosWorkspaceTemplateEvaluationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -171,21 +171,21 @@ namespace Azure.ResourceManager.Chaos
         /// </summary>
         /// <param name="continuationToken"> Opaque continuation token supplied by the returned nextLink. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ChaosWorkspaceTemplateEvaluationDataResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ChaosWorkspaceTemplateEvaluationDataResource> GetAllAsync(string continuationToken = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ChaosWorkspaceTemplateEvaluationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ChaosWorkspaceTemplateEvaluationResource> GetAllAsync(string continuationToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ChaosWorkspaceTemplateEvaluationData, ChaosWorkspaceTemplateEvaluationDataResource>(new ChaosWorkspaceTemplateEvaluationDataAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ChaosWorkspaceTemplateEvaluationData, ChaosWorkspaceTemplateEvaluationResource>(new ChaosWorkspaceTemplateEvaluationDataAsyncCollectionResultOfT(
                 _workspaceEvaluationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 continuationToken,
                 context,
-                "ChaosWorkspaceTemplateEvaluationDataCollection.GetAll"), data => new ChaosWorkspaceTemplateEvaluationDataResource(Client, data));
+                "ChaosWorkspaceTemplateEvaluationCollection.GetAll"), data => new ChaosWorkspaceTemplateEvaluationResource(Client, data));
         }
 
         /// <summary>
@@ -207,21 +207,21 @@ namespace Azure.ResourceManager.Chaos
         /// </summary>
         /// <param name="continuationToken"> Opaque continuation token supplied by the returned nextLink. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ChaosWorkspaceTemplateEvaluationDataResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ChaosWorkspaceTemplateEvaluationDataResource> GetAll(string continuationToken = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ChaosWorkspaceTemplateEvaluationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ChaosWorkspaceTemplateEvaluationResource> GetAll(string continuationToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ChaosWorkspaceTemplateEvaluationData, ChaosWorkspaceTemplateEvaluationDataResource>(new ChaosWorkspaceTemplateEvaluationDataCollectionResultOfT(
+            return new PageableWrapper<ChaosWorkspaceTemplateEvaluationData, ChaosWorkspaceTemplateEvaluationResource>(new ChaosWorkspaceTemplateEvaluationDataCollectionResultOfT(
                 _workspaceEvaluationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 continuationToken,
                 context,
-                "ChaosWorkspaceTemplateEvaluationDataCollection.GetAll"), data => new ChaosWorkspaceTemplateEvaluationDataResource(Client, data));
+                "ChaosWorkspaceTemplateEvaluationCollection.GetAll"), data => new ChaosWorkspaceTemplateEvaluationResource(Client, data));
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Chaos
         {
             Argument.AssertNotNullOrEmpty(evaluationName, nameof(evaluationName));
 
-            using DiagnosticScope scope = _workspaceEvaluationsClientDiagnostics.CreateScope("ChaosWorkspaceTemplateEvaluationDataCollection.Exists");
+            using DiagnosticScope scope = _workspaceEvaluationsClientDiagnostics.CreateScope("ChaosWorkspaceTemplateEvaluationCollection.Exists");
             scope.Start();
             try
             {
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Chaos
         {
             Argument.AssertNotNullOrEmpty(evaluationName, nameof(evaluationName));
 
-            using DiagnosticScope scope = _workspaceEvaluationsClientDiagnostics.CreateScope("ChaosWorkspaceTemplateEvaluationDataCollection.Exists");
+            using DiagnosticScope scope = _workspaceEvaluationsClientDiagnostics.CreateScope("ChaosWorkspaceTemplateEvaluationCollection.Exists");
             scope.Start();
             try
             {
@@ -359,11 +359,11 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="evaluationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="evaluationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<ChaosWorkspaceTemplateEvaluationDataResource>> GetIfExistsAsync(string evaluationName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ChaosWorkspaceTemplateEvaluationResource>> GetIfExistsAsync(string evaluationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(evaluationName, nameof(evaluationName));
 
-            using DiagnosticScope scope = _workspaceEvaluationsClientDiagnostics.CreateScope("ChaosWorkspaceTemplateEvaluationDataCollection.GetIfExists");
+            using DiagnosticScope scope = _workspaceEvaluationsClientDiagnostics.CreateScope("ChaosWorkspaceTemplateEvaluationCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -388,9 +388,9 @@ namespace Azure.ResourceManager.Chaos
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ChaosWorkspaceTemplateEvaluationDataResource>(response.GetRawResponse());
+                    return new NoValueResponse<ChaosWorkspaceTemplateEvaluationResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ChaosWorkspaceTemplateEvaluationDataResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ChaosWorkspaceTemplateEvaluationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -420,11 +420,11 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="evaluationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="evaluationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<ChaosWorkspaceTemplateEvaluationDataResource> GetIfExists(string evaluationName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ChaosWorkspaceTemplateEvaluationResource> GetIfExists(string evaluationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(evaluationName, nameof(evaluationName));
 
-            using DiagnosticScope scope = _workspaceEvaluationsClientDiagnostics.CreateScope("ChaosWorkspaceTemplateEvaluationDataCollection.GetIfExists");
+            using DiagnosticScope scope = _workspaceEvaluationsClientDiagnostics.CreateScope("ChaosWorkspaceTemplateEvaluationCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -449,9 +449,9 @@ namespace Azure.ResourceManager.Chaos
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ChaosWorkspaceTemplateEvaluationDataResource>(response.GetRawResponse());
+                    return new NoValueResponse<ChaosWorkspaceTemplateEvaluationResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ChaosWorkspaceTemplateEvaluationDataResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ChaosWorkspaceTemplateEvaluationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.Chaos
             }
         }
 
-        IEnumerator<ChaosWorkspaceTemplateEvaluationDataResource> IEnumerable<ChaosWorkspaceTemplateEvaluationDataResource>.GetEnumerator()
+        IEnumerator<ChaosWorkspaceTemplateEvaluationResource> IEnumerable<ChaosWorkspaceTemplateEvaluationResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Chaos
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<ChaosWorkspaceTemplateEvaluationDataResource> IAsyncEnumerable<ChaosWorkspaceTemplateEvaluationDataResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ChaosWorkspaceTemplateEvaluationResource> IAsyncEnumerable<ChaosWorkspaceTemplateEvaluationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

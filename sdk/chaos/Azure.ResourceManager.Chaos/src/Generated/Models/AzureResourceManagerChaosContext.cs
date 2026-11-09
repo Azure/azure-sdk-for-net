@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Chaos
     [ModelReaderWriterBuildable(typeof(ChaosWorkspacePatch))]
     [ModelReaderWriterBuildable(typeof(ChaosWorkspaceResource))]
     [ModelReaderWriterBuildable(typeof(ChaosWorkspaceTemplateEvaluationData))]
-    [ModelReaderWriterBuildable(typeof(ChaosWorkspaceTemplateEvaluationDataResource))]
+    [ModelReaderWriterBuildable(typeof(ChaosWorkspaceTemplateEvaluationResource))]
     [ModelReaderWriterBuildable(typeof(CustomerDataStorageProperties))]
     [ModelReaderWriterBuildable(typeof(DiscoveredResourceProperties))]
     [ModelReaderWriterBuildable(typeof(EntraIdentity))]

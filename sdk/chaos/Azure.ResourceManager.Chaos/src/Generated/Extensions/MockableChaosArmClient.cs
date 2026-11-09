@@ -192,13 +192,13 @@ namespace Azure.ResourceManager.Chaos.Mocking
             return new WorkspaceDiscoveryResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ChaosWorkspaceTemplateEvaluationDataResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ChaosWorkspaceTemplateEvaluationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ChaosWorkspaceTemplateEvaluationDataResource"/> object. </returns>
-        public virtual ChaosWorkspaceTemplateEvaluationDataResource GetChaosWorkspaceTemplateEvaluationDataResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ChaosWorkspaceTemplateEvaluationResource"/> object. </returns>
+        public virtual ChaosWorkspaceTemplateEvaluationResource GetChaosWorkspaceTemplateEvaluationResource(ResourceIdentifier id)
         {
-            ChaosWorkspaceTemplateEvaluationDataResource.ValidateResourceId(id);
-            return new ChaosWorkspaceTemplateEvaluationDataResource(Client, id);
+            ChaosWorkspaceTemplateEvaluationResource.ValidateResourceId(id);
+            return new ChaosWorkspaceTemplateEvaluationResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ChaosDiscoveredResource"/> along with the instance operations that can be performed on it but with no data. </summary>

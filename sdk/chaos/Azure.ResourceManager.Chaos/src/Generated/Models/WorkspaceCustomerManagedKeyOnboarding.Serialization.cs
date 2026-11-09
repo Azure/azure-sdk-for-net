@@ -121,13 +121,13 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            string applicationId = default;
+            Guid applicationId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("applicationId"u8))
                 {
-                    applicationId = prop.Value.GetString();
+                    applicationId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

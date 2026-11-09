@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Chaos
 {
     /// <summary></summary>
-    internal partial class ChaosWorkspaceTemplateEvaluationDataResourceOperationSource : IOperationSource<ChaosWorkspaceTemplateEvaluationDataResource>
+    internal partial class ChaosWorkspaceTemplateEvaluationResourceOperationSource : IOperationSource<ChaosWorkspaceTemplateEvaluationResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal ChaosWorkspaceTemplateEvaluationDataResourceOperationSource(ArmClient client)
+        internal ChaosWorkspaceTemplateEvaluationResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        ChaosWorkspaceTemplateEvaluationDataResource IOperationSource<ChaosWorkspaceTemplateEvaluationDataResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ChaosWorkspaceTemplateEvaluationResource IOperationSource<ChaosWorkspaceTemplateEvaluationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
             ChaosWorkspaceTemplateEvaluationData data = ChaosWorkspaceTemplateEvaluationData.DeserializeChaosWorkspaceTemplateEvaluationData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ChaosWorkspaceTemplateEvaluationDataResource(_client, data);
+            return new ChaosWorkspaceTemplateEvaluationResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<ChaosWorkspaceTemplateEvaluationDataResource> IOperationSource<ChaosWorkspaceTemplateEvaluationDataResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ChaosWorkspaceTemplateEvaluationResource> IOperationSource<ChaosWorkspaceTemplateEvaluationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             ChaosWorkspaceTemplateEvaluationData data = ChaosWorkspaceTemplateEvaluationData.DeserializeChaosWorkspaceTemplateEvaluationData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ChaosWorkspaceTemplateEvaluationDataResource(_client, data);
+            return new ChaosWorkspaceTemplateEvaluationResource(_client, data);
         }
     }
 }

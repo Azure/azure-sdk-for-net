@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.Chaos.Models
         /// This is not a service principal object ID or an identity selector.
         /// The Workspace's top-level identity does not select this application.
         /// </summary>
-        public string CustomerManagedKeyOnboardingApplicationId
+        public Guid? CustomerManagedKeyOnboardingApplicationId
         {
             get
             {
-                return CustomerManagedKeyOnboarding is null ? default : CustomerManagedKeyOnboarding.ApplicationId;
+                return CustomerManagedKeyOnboarding is null ? (Guid?)default : CustomerManagedKeyOnboarding.ApplicationId;
             }
         }
     }

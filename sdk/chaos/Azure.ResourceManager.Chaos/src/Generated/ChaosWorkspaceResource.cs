@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.Chaos
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<ChaosWorkspaceTemplateEvaluationDataResource>> EvaluateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ChaosWorkspaceTemplateEvaluationResource>> EvaluateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("ChaosWorkspaceResource.Evaluate");
             scope.Start();
@@ -550,8 +550,8 @@ namespace Azure.ResourceManager.Chaos
                 };
                 HttpMessage message = _workspacesRestClient.CreateEvaluateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ChaosArmOperation<ChaosWorkspaceTemplateEvaluationDataResource> operation = new ChaosArmOperation<ChaosWorkspaceTemplateEvaluationDataResource>(
-                    new ChaosWorkspaceTemplateEvaluationDataResourceOperationSource(Client),
+                ChaosArmOperation<ChaosWorkspaceTemplateEvaluationResource> operation = new ChaosArmOperation<ChaosWorkspaceTemplateEvaluationResource>(
+                    new ChaosWorkspaceTemplateEvaluationResourceOperationSource(Client),
                     _workspacesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.Chaos
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<ChaosWorkspaceTemplateEvaluationDataResource> Evaluate(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ChaosWorkspaceTemplateEvaluationResource> Evaluate(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("ChaosWorkspaceResource.Evaluate");
             scope.Start();
@@ -605,8 +605,8 @@ namespace Azure.ResourceManager.Chaos
                 };
                 HttpMessage message = _workspacesRestClient.CreateEvaluateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ChaosArmOperation<ChaosWorkspaceTemplateEvaluationDataResource> operation = new ChaosArmOperation<ChaosWorkspaceTemplateEvaluationDataResource>(
-                    new ChaosWorkspaceTemplateEvaluationDataResourceOperationSource(Client),
+                ChaosArmOperation<ChaosWorkspaceTemplateEvaluationResource> operation = new ChaosArmOperation<ChaosWorkspaceTemplateEvaluationResource>(
+                    new ChaosWorkspaceTemplateEvaluationResourceOperationSource(Client),
                     _workspacesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -930,11 +930,11 @@ namespace Azure.ResourceManager.Chaos
             return GetWorkspaceDiscoveries().Get(discoveryName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ChaosWorkspaceTemplateEvaluationData in the <see cref="ChaosWorkspaceResource"/>. </summary>
-        /// <returns> An object representing collection of ChaosWorkspaceTemplateEvaluationData and their operations over a ChaosWorkspaceTemplateEvaluationDataResource. </returns>
-        public virtual ChaosWorkspaceTemplateEvaluationDataCollection GetAllChaosWorkspaceTemplateEvaluationData()
+        /// <summary> Gets a collection of ChaosWorkspaceTemplateEvaluations in the <see cref="ChaosWorkspaceResource"/>. </summary>
+        /// <returns> An object representing collection of ChaosWorkspaceTemplateEvaluations and their operations over a ChaosWorkspaceTemplateEvaluationResource. </returns>
+        public virtual ChaosWorkspaceTemplateEvaluationCollection GetChaosWorkspaceTemplateEvaluations()
         {
-            return GetCachedClient(client => new ChaosWorkspaceTemplateEvaluationDataCollection(client, Id));
+            return GetCachedClient(client => new ChaosWorkspaceTemplateEvaluationCollection(client, Id));
         }
 
         /// <summary> Gets a retained template evaluation by its ID, or uses latest to select the most recently durably admitted GA template evaluation. Returns 200 with the current representation while processing or terminal. Returns 404 if no qualifying retained result exists; scenario-backed legacy operations are not substituted. This is not an LRO polling endpoint. </summary>
@@ -943,11 +943,11 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="evaluationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="evaluationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ChaosWorkspaceTemplateEvaluationDataResource>> GetChaosWorkspaceTemplateEvaluationDataAsync(string evaluationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ChaosWorkspaceTemplateEvaluationResource>> GetChaosWorkspaceTemplateEvaluationAsync(string evaluationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(evaluationName, nameof(evaluationName));
 
-            return await GetAllChaosWorkspaceTemplateEvaluationData().GetAsync(evaluationName, cancellationToken).ConfigureAwait(false);
+            return await GetChaosWorkspaceTemplateEvaluations().GetAsync(evaluationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets a retained template evaluation by its ID, or uses latest to select the most recently durably admitted GA template evaluation. Returns 200 with the current representation while processing or terminal. Returns 404 if no qualifying retained result exists; scenario-backed legacy operations are not substituted. This is not an LRO polling endpoint. </summary>
@@ -956,11 +956,11 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="evaluationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="evaluationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ChaosWorkspaceTemplateEvaluationDataResource> GetChaosWorkspaceTemplateEvaluationData(string evaluationName, CancellationToken cancellationToken = default)
+        public virtual Response<ChaosWorkspaceTemplateEvaluationResource> GetChaosWorkspaceTemplateEvaluation(string evaluationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(evaluationName, nameof(evaluationName));
 
-            return GetAllChaosWorkspaceTemplateEvaluationData().Get(evaluationName, cancellationToken);
+            return GetChaosWorkspaceTemplateEvaluations().Get(evaluationName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ChaosDiscovereds in the <see cref="ChaosWorkspaceResource"/>. </summary>

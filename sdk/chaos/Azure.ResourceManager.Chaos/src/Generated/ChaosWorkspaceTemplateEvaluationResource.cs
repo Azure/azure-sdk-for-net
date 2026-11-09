@@ -17,11 +17,11 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Chaos
 {
     /// <summary>
-    /// A class representing a ChaosWorkspaceTemplateEvaluationData along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ChaosWorkspaceTemplateEvaluationDataResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ChaosWorkspaceResource"/> using the GetAllChaosWorkspaceTemplateEvaluationData method.
+    /// A class representing a ChaosWorkspaceTemplateEvaluation along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ChaosWorkspaceTemplateEvaluationResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ChaosWorkspaceResource"/> using the GetChaosWorkspaceTemplateEvaluations method.
     /// </summary>
-    public partial class ChaosWorkspaceTemplateEvaluationDataResource : ArmResource
+    public partial class ChaosWorkspaceTemplateEvaluationResource : ArmResource
     {
         private readonly ClientDiagnostics _workspaceEvaluationsClientDiagnostics;
         private readonly WorkspaceEvaluations _workspaceEvaluationsRestClient;
@@ -29,28 +29,28 @@ namespace Azure.ResourceManager.Chaos
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Chaos/workspaces/evaluations";
 
-        /// <summary> Initializes a new instance of ChaosWorkspaceTemplateEvaluationDataResource for mocking. </summary>
-        protected ChaosWorkspaceTemplateEvaluationDataResource()
+        /// <summary> Initializes a new instance of ChaosWorkspaceTemplateEvaluationResource for mocking. </summary>
+        protected ChaosWorkspaceTemplateEvaluationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChaosWorkspaceTemplateEvaluationDataResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChaosWorkspaceTemplateEvaluationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ChaosWorkspaceTemplateEvaluationDataResource(ArmClient client, ChaosWorkspaceTemplateEvaluationData data) : this(client, data.Id)
+        internal ChaosWorkspaceTemplateEvaluationResource(ArmClient client, ChaosWorkspaceTemplateEvaluationData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChaosWorkspaceTemplateEvaluationDataResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChaosWorkspaceTemplateEvaluationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ChaosWorkspaceTemplateEvaluationDataResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ChaosWorkspaceTemplateEvaluationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string chaosWorkspaceTemplateEvaluationDataApiVersion);
+            TryGetApiVersion(ResourceType, out string chaosWorkspaceTemplateEvaluationApiVersion);
             _workspaceEvaluationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ResourceType.Namespace, Diagnostics);
-            _workspaceEvaluationsRestClient = new WorkspaceEvaluations(_workspaceEvaluationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, chaosWorkspaceTemplateEvaluationDataApiVersion ?? "2026-11-01");
+            _workspaceEvaluationsRestClient = new WorkspaceEvaluations(_workspaceEvaluationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, chaosWorkspaceTemplateEvaluationApiVersion ?? "2026-11-01");
             ValidateResourceId(id);
         }
 
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ChaosWorkspaceTemplateEvaluationDataResource"/>. </description>
+        /// <description> <see cref="ChaosWorkspaceTemplateEvaluationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ChaosWorkspaceTemplateEvaluationDataResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ChaosWorkspaceTemplateEvaluationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _workspaceEvaluationsClientDiagnostics.CreateScope("ChaosWorkspaceTemplateEvaluationDataResource.Get");
+            using DiagnosticScope scope = _workspaceEvaluationsClientDiagnostics.CreateScope("ChaosWorkspaceTemplateEvaluationResource.Get");
             scope.Start();
             try
             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ChaosWorkspaceTemplateEvaluationDataResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ChaosWorkspaceTemplateEvaluationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ChaosWorkspaceTemplateEvaluationDataResource"/>. </description>
+        /// <description> <see cref="ChaosWorkspaceTemplateEvaluationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ChaosWorkspaceTemplateEvaluationDataResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ChaosWorkspaceTemplateEvaluationResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _workspaceEvaluationsClientDiagnostics.CreateScope("ChaosWorkspaceTemplateEvaluationDataResource.Get");
+            using DiagnosticScope scope = _workspaceEvaluationsClientDiagnostics.CreateScope("ChaosWorkspaceTemplateEvaluationResource.Get");
             scope.Start();
             try
             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ChaosWorkspaceTemplateEvaluationDataResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ChaosWorkspaceTemplateEvaluationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -341,21 +341,21 @@ namespace Azure.ResourceManager.Chaos
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ChaosWorkspaceTemplateEvaluationDataResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ChaosWorkspaceTemplateEvaluationResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableChaosArmClient.GetChaosWorkspaceTemplateEvaluationDataResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableChaosArmClient.GetChaosWorkspaceTemplateEvaluationResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ChaosWorkspaceTemplateEvaluationDataResource"/> object. </returns>
-        public static ChaosWorkspaceTemplateEvaluationDataResource GetChaosWorkspaceTemplateEvaluationDataResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ChaosWorkspaceTemplateEvaluationResource"/> object. </returns>
+        public static ChaosWorkspaceTemplateEvaluationResource GetChaosWorkspaceTemplateEvaluationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableChaosArmClient(client).GetChaosWorkspaceTemplateEvaluationDataResource(id);
+            return GetMockableChaosArmClient(client).GetChaosWorkspaceTemplateEvaluationResource(id);
         }
 
         /// <summary>

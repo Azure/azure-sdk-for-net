@@ -13,6 +13,27 @@ namespace Azure.ResourceManager.Chaos.Tests
     public class WorkspaceEncryptionTests
     {
         [Test]
+        public void CustomerManagedKeyOnboardingDeserializesApplicationIdAsGuid()
+        {
+            var applicationId = new Guid("12345678-1234-5678-9abc-123456789abc");
+            BinaryData data = BinaryData.FromString("{\"customerManagedKeyOnboarding\":{\"applicationId\":\"12345678-1234-5678-9abc-123456789abc\"}}");
+
+            WorkspaceEncryption encryption = ModelReaderWriter.Read<WorkspaceEncryption>(data);
+            Guid? actual = encryption.CustomerManagedKeyOnboardingApplicationId;
+
+            Assert.That(actual, Is.EqualTo(applicationId));
+        }
+
+        [Test]
+        public void CustomerManagedKeyOnboardingApplicationIdIsNullWhenOnboardingIsAbsent()
+        {
+            WorkspaceEncryption encryption = ModelReaderWriter.Read<WorkspaceEncryption>(BinaryData.FromString("{}"));
+            Guid? actual = encryption.CustomerManagedKeyOnboardingApplicationId;
+
+            Assert.That(actual, Is.Null);
+        }
+
+        [Test]
         public void CustomerManagedKeyPatchOmitsUnchangedProperties()
         {
             var patch = new ChaosWorkspacePatch
