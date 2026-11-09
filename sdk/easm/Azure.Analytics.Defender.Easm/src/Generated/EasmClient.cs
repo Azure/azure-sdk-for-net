@@ -470,7 +470,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TaskResource> GetAssetsExport(AssetsExportRequestContent body, string filter = default, string @orderby = default, CancellationToken cancellationToken = default)
+        public virtual Response<TaskResource> GetAssetsExport(AssetsExportRequestRequest body, string filter = default, string @orderby = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -485,7 +485,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TaskResource>> GetAssetsExportAsync(AssetsExportRequestContent body, string filter = default, string @orderby = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TaskResource>> GetAssetsExportAsync(AssetsExportRequestRequest body, string filter = default, string @orderby = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -664,7 +664,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<DeltaResult> GetDeltaDetails(DeltaDetailsRequestContent body, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<DeltaResult> GetDeltaDetails(DeltaDetailsRequestRequest body, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -684,7 +684,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<DeltaResult> GetDeltaDetailsAsync(DeltaDetailsRequestContent body, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DeltaResult> GetDeltaDetailsAsync(DeltaDetailsRequestRequest body, int? skip = default, int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -764,7 +764,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<DeltaSummaryResult> GetDeltaSummary(DeltaSummaryRequestContent body, CancellationToken cancellationToken = default)
+        public virtual Response<DeltaSummaryResult> GetDeltaSummary(DeltaSummaryRequestRequest body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -777,7 +777,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<DeltaSummaryResult>> GetDeltaSummaryAsync(DeltaSummaryRequestContent body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeltaSummaryResult>> GetDeltaSummaryAsync(DeltaSummaryRequestRequest body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -1930,7 +1930,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AssetChainSummaryResult> GetAssetChainSummary(AssetChainRequestContent body, CancellationToken cancellationToken = default)
+        public virtual Response<AssetChainSummaryResult> GetAssetChainSummary(AssetChainRequestRequest body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -1943,7 +1943,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AssetChainSummaryResult>> GetAssetChainSummaryAsync(AssetChainRequestContent body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AssetChainSummaryResult>> GetAssetChainSummaryAsync(AssetChainRequestRequest body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -2018,7 +2018,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TaskResource> DismissAssetChain(AssetChainRequestContent body, CancellationToken cancellationToken = default)
+        public virtual Response<TaskResource> DismissAssetChain(AssetChainRequestRequest body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -2031,7 +2031,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TaskResource>> DismissAssetChainAsync(AssetChainRequestContent body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TaskResource>> DismissAssetChainAsync(AssetChainRequestRequest body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
