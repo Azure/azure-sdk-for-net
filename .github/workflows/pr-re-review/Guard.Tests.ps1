@@ -37,12 +37,15 @@ BeforeAll {
     }
 
     function New-ThreadsPage {
-        param([string[]]$Opened, [int]$TotalCount, [string]$EndCursor, [int]$ChangedFiles = 32, [string]$HeadSha = ('a' * 40))
+        param([object[]]$Opened, [int]$TotalCount, [string]$EndCursor, [int]$ChangedFiles = 32, [string]$HeadSha = ('a' * 40))
 
-        $nodes = @(foreach ($created in $Opened) { @{ comments = @{ nodes = @(@{ createdAt = $created }) } } })
+        $nodes = @(foreach ($entry in $Opened) {
+            $comment = if ($entry -is [System.Collections.IDictionary]) { $entry } else { @{ createdAt = $entry; publishedAt = $entry; pullRequestReview = @{ submittedAt = $entry } } }
+            @{ comments = @{ nodes = @($comment) } }
+        })
         $threads = @{ totalCount = $TotalCount; pageInfo = @{ hasNextPage = [bool]$EndCursor; endCursor = $EndCursor }; nodes = $nodes }
         $data = @{ repository = @{ pullRequest = @{ headRefOid = $HeadSha; changedFiles = $ChangedFiles; reviewThreads = $threads } } }
-        return [pscustomobject]@{ Content = ConvertTo-Json -Depth 10 -Compress -InputObject @{ data = $data } }
+        return [pscustomobject]@{ Content = ConvertTo-Json -Depth 20 -Compress -InputObject @{ data = $data } }
     }
 
     function Get-YamlBlock {
@@ -259,6 +262,21 @@ Describe 'Get-PrReReviewTotals' {
         $totals.ChangedFiles | Should -Be 32
         $totals.HeadSha | Should -BeExactly $script:HeadSha
         Should -Invoke -ModuleName PrReReviewGuard Invoke-WebRequest -Times 2 -Exactly
+    }
+
+    It 'does not let a thread drafted before the run but submitted after it raise the floor' {
+        Mock -ModuleName PrReReviewGuard Invoke-WebRequest {
+            New-ThreadsPage -TotalCount 3 -Opened @(
+                '2026-11-02T10:00:00Z'
+                @{ createdAt = '2026-11-02T09:00:00Z'; publishedAt = '2026-11-03T00:50:00Z'; pullRequestReview = @{ submittedAt = '2026-11-03T00:50:00Z' } }
+                @{ createdAt = '2026-11-02T09:00:00Z'; publishedAt = '2026-11-02T09:00:00Z'; pullRequestReview = @{ submittedAt = '2026-11-03T00:50:00Z' } }
+            )
+        }
+
+        $totals = Get-PrReReviewTotals @script:TotalsArguments
+
+        $totals.ThreadsBefore | Should -Be 1
+        $totals.ThreadsNow | Should -Be 3
     }
 
     It 'fails when GitHub returns <Label>' -ForEach @(

@@ -19,7 +19,7 @@ query($owner: String!, $repo: String!, $number: Int!, $cursor: String) {
       reviewThreads(first: 100, after: $cursor) {
         totalCount
         pageInfo { hasNextPage endCursor }
-        nodes { comments(first: 1) { nodes { createdAt } } }
+        nodes { comments(first: 1) { nodes { publishedAt pullRequestReview { submittedAt } } } }
       }
     }
   }
@@ -66,8 +66,14 @@ function Get-PrReReviewTotals {
         $threads = $pullRequest.reviewThreads
         foreach ($thread in $threads.nodes) {
             # Threads opened after the run started may be missing from the agent's count, so only earlier ones set the floor.
+            # A comment drafted in a pending review stays hidden until the review is submitted, so use the later timestamp.
             $first = @($thread.comments.nodes)[0]
-            if ($first -and [DateTimeOffset]::Parse($first.createdAt, [Globalization.CultureInfo]::InvariantCulture) -le $Since) {
+            $public = @($first.publishedAt, $first.pullRequestReview.submittedAt) |
+                Where-Object { $_ } |
+                ForEach-Object { [DateTimeOffset]::Parse($_, [Globalization.CultureInfo]::InvariantCulture) } |
+                Sort-Object -Descending |
+                Select-Object -First 1
+            if ($public -and $public -le $Since) {
                 $before++
             }
         }
