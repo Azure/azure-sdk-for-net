@@ -6,6 +6,7 @@ on:
       - '.github/workflows/pr-re-review*'
       - '.github/workflows/pr-re-review/**'
       - '.github/workflows/test/**'
+      - '.github/skills/code-review/**'
 
 permissions:
   contents: read

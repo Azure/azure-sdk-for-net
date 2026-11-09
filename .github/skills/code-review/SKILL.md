@@ -1,6 +1,6 @@
 ---
 name: code-review
-description: "MUST USE for every Azure SDK for .NET code review. WHEN: review this PR or pull request; review my changes, diff, patch, or commit; API review; pre-PR review; automatic GitHub Copilot review. Performs open-ended bug, security, correctness, reliability, and maintainability analysis plus Azure SDK API design, analyzer, packaging, testing, documentation, and generated-code checks. Applies management-plane guidance per owning library."
+description: "MUST USE for every Azure SDK for .NET code review. WHEN: review this PR or pull request; review my changes, diff, patch, or commit; API review; pre-PR review; automatic GitHub Copilot review. Performs open-ended bug, security, correctness, reliability, and maintainability analysis plus Azure SDK API design, analyzer, packaging, testing, documentation, and generated-code checks. Applies management-plane and provisioning guidance per owning library."
 ---
 
 # Azure SDK for .NET Code Review
@@ -25,6 +25,11 @@ Classify each library independently. Associate tests and samples with their owni
 library, but review them in their own roles rather than as additional shipping API surfaces.
 For the `Azure.ResourceManager` framework package, judge the actual framework role rather than
 assuming every type is a service-specific resource or request model.
+
+For packages whose IDs start with `Azure.Provisioning.`, and for the `Azure.Provisioning`
+framework itself, also apply the Provisioning Libraries section of
+`references/repository-rules.md`. Provisioning libraries emit Bicep rather than management
+HTTP clients; do not apply management-client conventions merely because they target ARM.
 
 ## Non-Negotiable Review Quality
 
@@ -85,6 +90,7 @@ Use the changed paths and symbols to select sections from
 | `api/*.cs`, new or changed `public`/`protected` API | Breaking Changes; Client Design; Naming; Semantic Value Types; Commonly Overlooked; Generated Code |
 | Client or model implementation under `src/**` | Client Design; Naming; Semantic Value Types; Analyzer Warnings and Suppressions; Implementation |
 | Management library | Applicable sections above; management clauses in Naming and Packaging, Versioning, Dependencies |
+| Provisioning library or provisioning generator | Applicable sections above; Provisioning Libraries, including the trusted source-only schema helper |
 | Tests, test projects, test infrastructure | Analyzer Warnings and Suppressions; Testing |
 | `.csproj`, package versions, references, feeds, CPM files | Shared Configuration; Packaging, Versioning, Dependencies |
 | README, samples, snippets, doc settings, links | Docs & Samples; Broken-Link Ignores |
