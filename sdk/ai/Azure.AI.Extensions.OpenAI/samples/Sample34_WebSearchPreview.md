@@ -79,7 +79,7 @@ CreateResponseOptions options = new()
     InputItems = { ResponseItem.CreateUserMessageItem("Show me the latest London Underground service updates") },
 };
 
-foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreaming(options))
+foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreamingAsync(options).Result.ToEnumerable())
 {
     if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
     {
@@ -119,7 +119,7 @@ CreateResponseOptions options = new()
     ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
     InputItems = { ResponseItem.CreateUserMessageItem("Show me the latest London Underground service updates") },
 };
-await foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreamingAsync(options))
+await foreach (StreamingResponseUpdate streamResponse in await responseClient.CreateResponseStreamingAsync(options))
 {
     if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
     {

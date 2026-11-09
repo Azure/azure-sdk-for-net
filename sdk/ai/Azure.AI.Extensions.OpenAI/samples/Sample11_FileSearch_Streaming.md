@@ -154,7 +154,7 @@ Synchronous sample:
 ```C# Snippet:Sample_StreamingResponse_FileSearch_Streaming_Sync
 responseOptions.InputItems.Clear();
 responseOptions.InputItems.Add(ResponseItem.CreateUserMessageItem("Can you give me the documented codes for 'banana' and 'orange'?"));
-foreach (StreamingResponseUpdate streamResponse in projectClient.ProjectOpenAIClient.GetProjectResponsesClient().CreateResponseStreaming(responseOptions))
+foreach (StreamingResponseUpdate streamResponse in projectClient.ProjectOpenAIClient.GetProjectResponsesClient().CreateResponseStreamingAsync(responseOptions).Result.ToEnumerable())
 {
     ParseResponse(streamResponse);
 }
@@ -164,7 +164,7 @@ Asynchronous sample:
 ```C# Snippet:Sample_StreamingResponse_FileSearch_Streaming_Async
 responseOptions.InputItems.Clear();
 responseOptions.InputItems.Add(ResponseItem.CreateUserMessageItem("Can you give me the documented codes for 'banana' and 'orange'?"));
-await foreach (StreamingResponseUpdate streamResponse in projectClient.ProjectOpenAIClient.GetProjectResponsesClient().CreateResponseStreamingAsync(responseOptions))
+await foreach (StreamingResponseUpdate streamResponse in await projectClient.ProjectOpenAIClient.GetProjectResponsesClient().CreateResponseStreamingAsync(responseOptions))
 {
     ParseResponse(streamResponse);
 }
@@ -177,7 +177,7 @@ Synchronous sample:
 Console.WriteLine("Demonstrating follow-up query with streaming...");
 responseOptions.InputItems.Clear();
 responseOptions.InputItems.Add(ResponseItem.CreateUserMessageItem("What was my previous question about?"));
-foreach (StreamingResponseUpdate streamResponse in projectClient.ProjectOpenAIClient.GetProjectResponsesClient().CreateResponseStreaming(responseOptions))
+foreach (StreamingResponseUpdate streamResponse in projectClient.ProjectOpenAIClient.GetProjectResponsesClient().CreateResponseStreamingAsync(responseOptions).Result.ToEnumerable())
 {
     ParseResponse(streamResponse);
 }
@@ -188,7 +188,7 @@ Asynchronous sample:
 Console.WriteLine("Demonstrating follow-up query with streaming...");
 responseOptions.InputItems.Clear();
 responseOptions.InputItems.Add(ResponseItem.CreateUserMessageItem("What was my previous question about?"));
-await foreach (StreamingResponseUpdate streamResponse in projectClient.ProjectOpenAIClient.GetProjectResponsesClient().CreateResponseStreamingAsync(responseOptions))
+await foreach (StreamingResponseUpdate streamResponse in await projectClient.ProjectOpenAIClient.GetProjectResponsesClient().CreateResponseStreamingAsync(responseOptions))
 {
     ParseResponse(streamResponse);
 }

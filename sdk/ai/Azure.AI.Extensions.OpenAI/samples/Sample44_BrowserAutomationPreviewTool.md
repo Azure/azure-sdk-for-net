@@ -134,7 +134,7 @@ CreateResponseOptions responseOptions = new()
             "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it.")
     }
 };
-foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreaming(responseOptions))
+foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreamingAsync(responseOptions).Result.ToEnumerable())
 {
     ParseResponse(update);
 }
@@ -157,7 +157,7 @@ CreateResponseOptions responseOptions = new()
             "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it.")
     }
 };
-await foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreamingAsync(responseOptions))
+await foreach (StreamingResponseUpdate update in await responseClient.CreateResponseStreamingAsync(responseOptions))
 {
     ParseResponse(update);
 }
