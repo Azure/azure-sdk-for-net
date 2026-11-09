@@ -200,6 +200,43 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             );
         }
 
+        // Keep the expanded factory optional: generated required parameters break historical forwarders and parameterless calls.
+        /// <summary> Initializes a new instance of <see cref="Models.CveResult"/>. </summary>
+        public static CveResult CveResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string cveId = default, string componentId = default, string componentName = default, string componentVersion = default, string severity = default, string cveName = default, CveComponent component = default, string cvssScore = default, string cvssV2Score = default, string cvssV3Score = default, string cvssVersion = default, float? effectiveCvssScore = default, int? effectiveCvssVersion = default, string effectiveVectorString = default, ExploitMaturityLevel? effectiveExploitMaturity = default, IEnumerable<CvssScore> cvssScores = default, IEnumerable<CveLink> links = default, string description = default, EpssProperties epss = default, IEnumerable<CweProperties> cwes = default, KevProperties kev = default, IEnumerable<string> fixedInVersions = default, FirmwareProvisioningState? provisioningState = default)
+        {
+            return new CveResult(
+                id,
+                name,
+                resourceType,
+                systemData,
+                cveId is null && componentId is null && componentName is null && componentVersion is null && severity is null && cveName is null && component is null && cvssScore is null && cvssV2Score is null && cvssV3Score is null && cvssVersion is null && effectiveCvssScore is null && effectiveCvssVersion is null && effectiveVectorString is null && effectiveExploitMaturity is null && cvssScores is null && links is null && description is null && epss is null && cwes is null && kev is null && fixedInVersions is null && provisioningState is null ? default : new CveResultProperties(
+                    cveId,
+                    componentId,
+                    componentName,
+                    componentVersion,
+                    severity,
+                    cveName,
+                    component,
+                    cvssScore,
+                    cvssV2Score,
+                    cvssV3Score,
+                    cvssVersion,
+                    effectiveCvssScore,
+                    effectiveCvssVersion,
+                    effectiveVectorString,
+                    effectiveExploitMaturity,
+                    (cvssScores ?? new ChangeTrackingList<CvssScore>()).ToList(),
+                    (links ?? new ChangeTrackingList<CveLink>()).ToList(),
+                    description,
+                    epss,
+                    (cwes ?? new ChangeTrackingList<CweProperties>()).ToList(),
+                    kev,
+                    (fixedInVersions ?? new ChangeTrackingList<string>()).ToList(),
+                    provisioningState,
+                    default),
+                default);
+        }
+
         // Keep the legacy binary signature without optional arguments that conflict with the expanded factory.
         /// <summary> Initializes a new instance of <see cref="Models.CveResult"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -214,6 +251,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <summary> Initializes a new instance of <see cref="Models.IotFirmwareDefenseSkuUpdate"/>. </summary>
         public static IotFirmwareDefenseSkuUpdate IotFirmwareDefenseSkuUpdate(string name = default, IotFirmwareDefenseSkuTier? tier = default, string size = default, string family = default, int? capacity = default) =>
             new IotFirmwareDefenseSkuUpdate { Name = name, Tier = tier, Size = size, Family = family, Capacity = capacity };
+
+        // Preserve calls that specify only SKU or only tags; generated factory parameters otherwise become required.
+        /// <summary> Initializes a new instance of <see cref="Models.FirmwareAnalysisWorkspacePatch"/>. </summary>
+        public static FirmwareAnalysisWorkspacePatch FirmwareAnalysisWorkspacePatch(IotFirmwareDefenseSkuUpdate sku = default, IDictionary<string, string> tags = default) =>
+            new FirmwareAnalysisWorkspacePatch(sku, tags ?? new ChangeTrackingDictionary<string, string>(), default);
 
         /// <summary> Initializes a new instance of <see cref="Models.FirmwareAnalysisWorkspacePatch"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>

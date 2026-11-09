@@ -7,6 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -14,7 +17,7 @@ using Azure.ResourceManager.IotFirmwareDefense.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense
 {
-    internal partial class CryptoKeysGetCryptoKeysCollectionResultOfT : Pageable<CryptoKeyResult>
+    internal partial class CryptoKeyResultAsyncCollectionResultOfT : AsyncPageable<CryptoKeyResult>
     {
         private readonly CryptoKeys _client;
         private readonly Guid _subscriptionId;
@@ -24,7 +27,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of CryptoKeysGetCryptoKeysCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of CryptoKeyResultAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The CryptoKeys client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -32,7 +35,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="firmwareId"> The id of the firmware. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public CryptoKeysGetCryptoKeysCollectionResultOfT(CryptoKeys client, Guid subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public CryptoKeyResultAsyncCollectionResultOfT(CryptoKeys client, Guid subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -43,16 +46,24 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of CryptoKeysGetCryptoKeysCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of CryptoKeyResultAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of CryptoKeysGetCryptoKeysCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<CryptoKeyResult>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of CryptoKeyResultAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override IAsyncEnumerable<Page<CryptoKeyResult>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            return AsPagesAsync(continuationToken, pageSizeHint, _context?.CancellationToken ?? default);
+        }
+
+        /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
+        /// <param name="pageSizeHint"> The number of items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        private async IAsyncEnumerable<Page<CryptoKeyResult>> AsPagesAsync(string continuationToken, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken)
+        {
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage, cancellationToken).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
@@ -70,14 +81,23 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink, CancellationToken cancellationToken)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetCryptoKeysRequest(nextLink, _subscriptionId, _resourceGroupName, _workspaceName, _firmwareId, _context) : _client.CreateGetCryptoKeysRequest(_subscriptionId, _resourceGroupName, _workspaceName, _firmwareId, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
-                return _client.Pipeline.ProcessMessage(message, _context);
+                ErrorOptions errorOptions = _context?.ErrorOptions ?? ErrorOptions.Default;
+                await _client.Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+
+                if (message.Response.IsError && (errorOptions & ErrorOptions.NoThrow) != ErrorOptions.NoThrow)
+                {
+                    throw new RequestFailedException(message.Response);
+                }
+
+                return message.Response;
             }
             catch (Exception e)
             {

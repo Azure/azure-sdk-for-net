@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IotFirmwareData, IotFirmwareResource>(new FirmwaresGetByWorkspaceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<IotFirmwareData, IotFirmwareResource>(new IotFirmwareDataAsyncCollectionResultOfT(
                 _firmwaresRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IotFirmwareData, IotFirmwareResource>(new FirmwaresGetByWorkspaceCollectionResultOfT(
+            return new PageableWrapper<IotFirmwareData, IotFirmwareResource>(new IotFirmwareDataCollectionResultOfT(
                 _firmwaresRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

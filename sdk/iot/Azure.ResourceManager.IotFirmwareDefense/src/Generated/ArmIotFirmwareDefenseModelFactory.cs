@@ -54,6 +54,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 default);
         }
 
+        /// <summary> Error and status message. </summary>
         /// <param name="errorCode"> The error code. </param>
         /// <param name="message"> The error or status message. </param>
         /// <returns> A new <see cref="Models.FirmwareAnalysisStatusMessage"/> instance for mocking. </returns>
@@ -87,6 +88,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 default), default);
         }
 
+        /// <summary> The resource model definition representing SKU. </summary>
         /// <param name="name"> The name of the SKU. Ex - P3. It is typically a letter+number code. </param>
         /// <param name="tier"> This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT. </param>
         /// <param name="size"> The SKU size. When the name field is the combination of tier and some other value, this would be the standalone code. </param>
@@ -104,16 +106,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 default);
         }
 
-        /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.FirmwareAnalysisWorkspacePatch"/> instance for mocking. </returns>
-        public static FirmwareAnalysisWorkspacePatch FirmwareAnalysisWorkspacePatch(IotFirmwareDefenseSkuUpdate sku = default, IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new FirmwareAnalysisWorkspacePatch(sku, tags ?? new ChangeTrackingDictionary<string, string>(), default);
-        }
-
+        /// <summary> Properties for generating an upload URL. </summary>
         /// <param name="firmwareId"> A unique ID for the firmware to be uploaded. </param>
         /// <returns> A new <see cref="Models.FirmwareUploadUriContent"/> instance for mocking. </returns>
         public static FirmwareUploadUriContent FirmwareUploadUriContent(string firmwareId = default)
@@ -121,6 +114,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new FirmwareUploadUriContent(firmwareId, default);
         }
 
+        /// <summary> Url data for creating or accessing a blob file. </summary>
         /// <param name="uri"> SAS URL for creating or accessing a blob file. </param>
         /// <returns> A new <see cref="Models.FirmwareUriToken"/> instance for mocking. </returns>
         public static FirmwareUriToken FirmwareUriToken(Uri uri = default)
@@ -161,6 +155,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 default);
         }
 
+        /// <summary> Binary hardening features. </summary>
         /// <param name="noExecute"> Flag indicating the binary's stack is set to NX (no-execute). </param>
         /// <param name="positionIndependentExecutable"> Flag indicating the binary was compiled to be a position independent executable. </param>
         /// <param name="relocationReadOnly"> Flag indicating the binary has enabled relocation read-only protections. </param>
@@ -237,6 +232,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 default);
         }
 
+        /// <summary> Information on an entity (distinguished name) in a cryptographic certificate. </summary>
         /// <param name="commonName"> Common name of the certificate entity. </param>
         /// <param name="organization"> Organization of the certificate entity. </param>
         /// <param name="organizationalUnit"> The organizational unit of the certificate entity. </param>
@@ -254,6 +250,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 default);
         }
 
+        /// <summary> Details of a matching paired key or certificate. </summary>
         /// <param name="pairedKeyId"> ID of the paired key or certificate. </param>
         /// <param name="pairedKeyType"> The type indicating whether the paired object is a key or certificate. </param>
         /// <returns> A new <see cref="Models.CryptoPairedKey"/> instance for mocking. </returns>
@@ -297,69 +294,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="cveId"> ID of the CVE result. </param>
-        /// <param name="componentId"> ID of the affected SBOM component. </param>
-        /// <param name="componentName"> Name of the affected SBOM component. </param>
-        /// <param name="componentVersion"> Version of the affected SBOM component. </param>
-        /// <param name="severity"> Severity of the CVE. </param>
-        /// <param name="cveName"> Name of the CVE. </param>
-        /// <param name="component"> Legacy property for what is now componentName. </param>
-        /// <param name="cvssScore"> Legacy property for the effective CVE score (deprecated). </param>
-        /// <param name="cvssV2Score"> Legacy property for the CVE CVSS version 2 score, if one existed. (deprecated). </param>
-        /// <param name="cvssV3Score"> Legacy property for the CVE CVSS version 3 score, if one existed. (deprecated). </param>
-        /// <param name="cvssVersion"> Legacy property for the what CVSS version score was stored in the cvssScore property (deprecated). </param>
-        /// <param name="effectiveCvssScore"> The most recent CVSS score of the CVE. </param>
-        /// <param name="effectiveCvssVersion"> The version of the effectiveCvssScore property. </param>
-        /// <param name="effectiveVectorString"> The CVSS vector string for the effectiveCvssVersion. </param>
-        /// <param name="effectiveExploitMaturity"> The CVSS exploit maturity value for the effectiveCvssVersion. </param>
-        /// <param name="cvssScores"> All known CVSS scores for the CVE. </param>
-        /// <param name="links"> The list of reference links for the CVE. </param>
-        /// <param name="description"> The CVE description. </param>
-        /// <param name="epss"> EPSS (Exploit Prediction Scoring System) information related to this CVE. </param>
-        /// <param name="cwes"> CWE (Common Weakness Enumeration) information related to this CVE. </param>
-        /// <param name="kev"> KEV (Known Exploited Vulnerabilities) information related to this CVE. </param>
-        /// <param name="fixedInVersions"> The component versions in which this weakness was fixed, if any. </param>
-        /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <returns> A new <see cref="Models.CveResult"/> instance for mocking. </returns>
-        public static CveResult CveResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string cveId = default, string componentId = default, string componentName = default, string componentVersion = default, string severity = default, string cveName = default, CveComponent component = default, string cvssScore = default, string cvssV2Score = default, string cvssV3Score = default, string cvssVersion = default, float? effectiveCvssScore = default, int? effectiveCvssVersion = default, string effectiveVectorString = default, ExploitMaturityLevel? effectiveExploitMaturity = default, IEnumerable<CvssScore> cvssScores = default, IEnumerable<CveLink> links = default, string description = default, EpssProperties epss = default, IEnumerable<CweProperties> cwes = default, KevProperties kev = default, IEnumerable<string> fixedInVersions = default, FirmwareProvisioningState? provisioningState = default)
-        {
-            return new CveResult(
-                id,
-                name,
-                resourceType,
-                systemData,
-                cveId is null && componentId is null && componentName is null && componentVersion is null && severity is null && cveName is null && component is null && cvssScore is null && cvssV2Score is null && cvssV3Score is null && cvssVersion is null && effectiveCvssScore is null && effectiveCvssVersion is null && effectiveVectorString is null && effectiveExploitMaturity is null && cvssScores is null && links is null && description is null && epss is null && cwes is null && kev is null && fixedInVersions is null && provisioningState is null ? default : new CveResultProperties(
-                    cveId,
-                    componentId,
-                    componentName,
-                    componentVersion,
-                    severity,
-                    cveName,
-                    component,
-                    cvssScore,
-                    cvssV2Score,
-                    cvssV3Score,
-                    cvssVersion,
-                    effectiveCvssScore,
-                    effectiveCvssVersion,
-                    effectiveVectorString,
-                    effectiveExploitMaturity,
-                    (cvssScores ?? new ChangeTrackingList<CvssScore>()).ToList(),
-                    (links ?? new ChangeTrackingList<CveLink>()).ToList(),
-                    description,
-                    epss,
-                    (cwes ?? new ChangeTrackingList<CweProperties>()).ToList(),
-                    kev,
-                    (fixedInVersions ?? new ChangeTrackingList<string>()).ToList(),
-                    provisioningState,
-                    default),
-                default);
-        }
-
+        /// <summary> Legacy component of a CVE result. </summary>
         /// <param name="componentId"> ID of the SBOM component. </param>
         /// <param name="name"> Name of the SBOM component. </param>
         /// <param name="version"> Version of the SBOM component. </param>
@@ -369,6 +304,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new CveComponent(componentId, name, version, default);
         }
 
+        /// <summary> Common Vulnerability Scoring System values. </summary>
         /// <param name="version"> The version of the Common Vulnerability Scoring System (CVSS). </param>
         /// <param name="score"> The score of the CVE according to the CVSS specified. </param>
         /// <param name="vectorString"> The CVSS vector for the specified score. </param>
@@ -379,6 +315,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new CvssScore(version, score, vectorString, exploitMaturity, default);
         }
 
+        /// <summary> Properties of a reference link for a CVE. </summary>
         /// <param name="href"> The destination of the reference link. </param>
         /// <param name="label"> The label of the reference link. </param>
         /// <returns> A new <see cref="Models.CveLink"/> instance for mocking. </returns>
@@ -387,6 +324,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new CveLink(href, label, default);
         }
 
+        /// <summary> EPSS (Exploit Prediction Scoring System) data related to a CVE. </summary>
         /// <param name="score"> The probability of observing exploitation activity in the next 30 days. </param>
         /// <param name="percentile"> The rank ordering of probabilities from high to low. </param>
         /// <returns> A new <see cref="Models.EpssProperties"/> instance for mocking. </returns>
@@ -395,6 +333,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new EpssProperties(score, percentile, default);
         }
 
+        /// <summary> CWE (Common Weakness Enumeration) data related to a CVE. </summary>
         /// <param name="cweId"> The id of the CWE. </param>
         /// <param name="cweName"> The name of the CWE. </param>
         /// <param name="description"> The description of the CWE. </param>
@@ -404,6 +343,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new CweProperties(cweId, cweName, description, default);
         }
 
+        /// <summary> KEV (Known Exploited Vulnerabilities) data related to a CVE, published by CISA. </summary>
         /// <param name="knownRansomwareCampaignUse"> Indication if the vulnerability is known to have been leveraged as part of a ransomware campaign. </param>
         /// <param name="addedOn"> The date the vulnerability was added to the KEV catalog. </param>
         /// <param name="remediationDueOn"> The date the required action is due. </param>
@@ -476,6 +416,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 default);
         }
 
+        /// <summary> The object representing a firmware analysis summary resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -493,14 +434,19 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 default);
         }
 
+        /// <summary>
+        /// Properties of an analysis summary.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.BinaryHardeningSummary"/>, <see cref="Models.CryptoCertificateSummary"/>, <see cref="Models.CryptoKeySummary"/>, <see cref="Models.CveAnalysisSummary"/>, <see cref="Models.CveSummary"/>, <see cref="Models.FirmwareSummary"/>, <see cref="Models.PasswordHashSummary"/>, <see cref="Models.SbomSummary"/>, and <see cref="Models.UnsafeFunctionCallsSummary"/>.
+        /// </summary>
         /// <param name="summaryType"> The type of summary. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <returns> A new <see cref="Models.FirmwareAnalysisSummaryProperties"/> instance for mocking. </returns>
         public static FirmwareAnalysisSummaryProperties FirmwareAnalysisSummaryProperties(string summaryType = default, FirmwareProvisioningState? provisioningState = default)
         {
-            return new UnknownSummaryResourceProperties(default, provisioningState, default);
+            return new UnknownSummaryResourceProperties(summaryType is null ? default : new FirmwareAnalysisSummaryType(summaryType), provisioningState, default);
         }
 
+        /// <summary> Properties for high level summary of firmware analysis results. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="extractedSize"> Total extracted size of the firmware in bytes. </param>
         /// <param name="fileSize"> Firmware file size in bytes. </param>
@@ -513,7 +459,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         public static FirmwareSummary FirmwareSummary(FirmwareProvisioningState? provisioningState = default, long? extractedSize = default, long? fileSize = default, long? extractedFileCount = default, long? componentCount = default, long? binaryCount = default, long? analysisTimeSeconds = default, long? rootFileSystems = default)
         {
             return new FirmwareSummary(
-                default,
+                FirmwareAnalysisSummaryType.Firmware,
                 provisioningState,
                 default,
                 extractedSize,
@@ -525,6 +471,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 rootFileSystems);
         }
 
+        /// <summary> Properties for a CVE (Common Vulnerabilities and Exposures) analysis summary (deprecated). </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="criticalCveCount"> The total number of critical severity CVEs detected. </param>
         /// <param name="highCveCount"> The total number of high severity CVEs detected. </param>
@@ -535,7 +482,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         public static CveSummary CveSummary(FirmwareProvisioningState? provisioningState = default, long? criticalCveCount = default, long? highCveCount = default, long? mediumCveCount = default, long? lowCveCount = default, long? unknownCveCount = default)
         {
             return new CveSummary(
-                default,
+                FirmwareAnalysisSummaryType.CommonVulnerabilitiesAndExposures,
                 provisioningState,
                 default,
                 criticalCveCount,
@@ -545,6 +492,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 unknownCveCount);
         }
 
+        /// <summary> Properties for a binary hardening analysis summary. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="totalFiles"> Total number of binaries that were analyzed. </param>
         /// <param name="notExecutableStackCount"> Total number of analyzed files that were found to have a nonexecutable stack. </param>
@@ -556,7 +504,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         public static BinaryHardeningSummary BinaryHardeningSummary(FirmwareProvisioningState? provisioningState = default, long? totalFiles = default, long? notExecutableStackCount = default, long? positionIndependentExecutableCount = default, long? relocationReadOnlyCount = default, long? stackCanaryCount = default, long? strippedBinaryCount = default)
         {
             return new BinaryHardeningSummary(
-                default,
+                FirmwareAnalysisSummaryType.BinaryHardening,
                 provisioningState,
                 default,
                 totalFiles,
@@ -567,6 +515,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 strippedBinaryCount);
         }
 
+        /// <summary> Properties for cryptographic certificate summary. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="totalCertificateCount"> Total number of certificates found. </param>
         /// <param name="pairedKeyCount"> Total number of paired private keys found for the certificates. </param>
@@ -579,7 +528,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         public static CryptoCertificateSummary CryptoCertificateSummary(FirmwareProvisioningState? provisioningState = default, long? totalCertificateCount = default, long? pairedKeyCount = default, long? expiredCertificateCount = default, long? expiringSoonCertificateCount = default, long? weakSignatureCount = default, long? selfSignedCertificateCount = default, long? shortKeySizeCount = default)
         {
             return new CryptoCertificateSummary(
-                default,
+                FirmwareAnalysisSummaryType.CryptoCertificate,
                 provisioningState,
                 default,
                 totalCertificateCount,
@@ -591,6 +540,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 shortKeySizeCount);
         }
 
+        /// <summary> Properties for cryptographic key summary. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="totalKeyCount"> Total number of cryptographic keys found. </param>
         /// <param name="publicKeyCount"> Total number of (non-certificate) public keys found. </param>
@@ -601,7 +551,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         public static CryptoKeySummary CryptoKeySummary(FirmwareProvisioningState? provisioningState = default, long? totalKeyCount = default, long? publicKeyCount = default, long? privateKeyCount = default, long? pairedKeyCount = default, long? shortKeySizeCount = default)
         {
             return new CryptoKeySummary(
-                default,
+                FirmwareAnalysisSummaryType.CryptoKey,
                 provisioningState,
                 default,
                 totalKeyCount,
@@ -611,6 +561,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 shortKeySizeCount);
         }
 
+        /// <summary> Properties for a CVE analysis summary. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="totalCveCount"> Total number of CVEs found. </param>
         /// <param name="criticalCveCount"> The total number of critical severity CVEs detected. </param>
@@ -623,7 +574,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         public static CveAnalysisSummary CveAnalysisSummary(FirmwareProvisioningState? provisioningState = default, long? totalCveCount = default, long? criticalCveCount = default, long? highCveCount = default, long? mediumCveCount = default, long? lowCveCount = default, long? unknownCveCount = default, string schemaVersion = default)
         {
             return new CveAnalysisSummary(
-                default,
+                FirmwareAnalysisSummaryType.Cve,
                 provisioningState,
                 default,
                 totalCveCount,
@@ -635,22 +586,25 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 schemaVersion);
         }
 
+        /// <summary> Properties for SBOM analysis summary. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="totalComponentCount"> Total number of SBOM components found. </param>
         /// <returns> A new <see cref="Models.SbomSummary"/> instance for mocking. </returns>
         public static SbomSummary SbomSummary(FirmwareProvisioningState? provisioningState = default, long? totalComponentCount = default)
         {
-            return new SbomSummary(default, provisioningState, default, totalComponentCount);
+            return new SbomSummary(FirmwareAnalysisSummaryType.Sbom, provisioningState, default, totalComponentCount);
         }
 
+        /// <summary> Properties for Password hash analysis summary. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="totalPasswordHashCount"> Total number of password hashes found. </param>
         /// <returns> A new <see cref="Models.PasswordHashSummary"/> instance for mocking. </returns>
         public static PasswordHashSummary PasswordHashSummary(FirmwareProvisioningState? provisioningState = default, long? totalPasswordHashCount = default)
         {
-            return new PasswordHashSummary(default, provisioningState, default, totalPasswordHashCount);
+            return new PasswordHashSummary(FirmwareAnalysisSummaryType.PasswordHash, provisioningState, default, totalPasswordHashCount);
         }
 
+        /// <summary> Properties for unsafe function calls analysis summary. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="totalFileCount"> Total number of files analyzed for unsafe function calls. </param>
         /// <param name="totalUnsafeCallCount"> Total number of unsafe function calls found. </param>
@@ -662,7 +616,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             unsafeCallTotals ??= new ChangeTrackingList<FirmwareFunctionCallCount>();
 
             return new UnsafeFunctionCallsSummary(
-                default,
+                FirmwareAnalysisSummaryType.UnsafeFunctionCalls,
                 provisioningState,
                 default,
                 totalFileCount,
@@ -671,6 +625,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 (unsafeCallTotals ?? new ChangeTrackingList<FirmwareFunctionCallCount>()).ToList());
         }
 
+        /// <summary> Function call count for a specific function. </summary>
         /// <param name="functionName"> The name of the function. </param>
         /// <param name="count"> The number of calls to this function within a single binary. </param>
         /// <returns> A new <see cref="Models.FirmwareFunctionCallCount"/> instance for mocking. </returns>
@@ -679,6 +634,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new FirmwareFunctionCallCount(functionName, count, default);
         }
 
+        /// <summary> The object representing how many firmwares the user has uploaded to the workspace. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -696,6 +652,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 default);
         }
 
+        /// <summary> Properties of a workspaces usage metrics. </summary>
         /// <param name="monthlyFirmwareUploadCount"> The number of firmware analysis jobs that have been submitted in the current month. </param>
         /// <param name="totalFirmwareCount"> The total number of firmwares that are in the workspace. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
@@ -734,11 +691,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PasswordHashResult"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> The object representing a firmware analysis password hash result resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="passwordHashId"> ID for password hash. </param>
         /// <param name="filePath"> File path of the password hash. </param>
         /// <param name="salt"> Salt of the password hash. </param>
@@ -768,16 +725,16 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SbomComponentResult"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> The object representing a firmware analysis SBOM component result resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="componentId"> ID for the component. </param>
         /// <param name="componentName"> Name for the component. </param>
         /// <param name="version"> Version for the component. </param>
         /// <param name="license"> License for the component. </param>
-        /// <param name="filePaths"> File paths related to the component. </param>
+        /// <param name="filePaths"> File paths related to the component. Note, relatedFiles should be used instead of this property. </param>
         /// <returns> A new <see cref="Models.SbomComponentResult"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SbomComponentResult SbomComponentResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string componentId, string componentName, string version, string license, IEnumerable<string> filePaths)
@@ -798,13 +755,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="IotFirmwareDefense.FirmwareAnalysisWorkspaceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> Firmware analysis workspace. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="IotFirmwareDefense.FirmwareAnalysisWorkspaceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -822,7 +779,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.FirmwareSummary"/>. </summary>
+        /// <summary> Properties for high level summary of firmware analysis results. </summary>
         /// <param name="extractedSize"> Total extracted size of the firmware in bytes. </param>
         /// <param name="fileSize"> Firmware file size in bytes. </param>
         /// <param name="extractedFileCount"> Extracted file count. </param>
@@ -835,7 +792,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         public static FirmwareSummary FirmwareSummary(long? extractedSize, long? fileSize, long? extractedFileCount, long? componentCount, long? binaryCount, long? analysisTimeSeconds, long? rootFileSystems)
         {
             return new FirmwareSummary(
-                default,
+                FirmwareAnalysisSummaryType.Firmware,
                 default,
                 default,
                 extractedSize,

@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new UnsafeFunctionCallsResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new UnsafeFunctionCallsResourceListResult(value ?? new ChangeTrackingList<UnsafeFunctionCallsResult>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }
