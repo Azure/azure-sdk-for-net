@@ -5,16 +5,128 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
 using System.Reflection;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
+using OpenTelemetry.Resources;
 using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.NetworkSdkStats
 {
-    public class NetworkSdkStatsManagerTests
+    public class NetworkSdkStatsManagerTests : IDisposable
     {
+        private readonly string? _sdkPrefix = SdkVersionUtils.SdkVersionPrefix;
+        private readonly string _sdkVersion = SdkVersionUtils.s_sdkVersion;
+        private readonly SdkVersionType? _sdkVersionType = SdkVersionUtils.s_sdkVersionType;
+        private readonly string? _extensionVersion = SdkVersionUtils.s_extensionVersion;
+        private readonly string? _extensionVersionOverride = SdkVersionUtils.s_extensionVersionOverride;
+        private readonly string? _extensionLabel = SdkVersionUtils.ExtensionLabel;
+
+        public NetworkSdkStatsManagerTests()
+        {
+            SdkVersionUtils.VersionType = SdkVersionType.Exporter;
+            SdkVersionUtils.SdkVersionPrefix = null;
+        }
+
+        public void Dispose()
+        {
+            SdkVersionUtils.SdkVersionPrefix = _sdkPrefix;
+            SdkVersionUtils.s_sdkVersion = _sdkVersion;
+            SdkVersionUtils.s_sdkVersionType = _sdkVersionType;
+            SdkVersionUtils.s_extensionVersion = _extensionVersion;
+            SdkVersionUtils.s_extensionVersionOverride = _extensionVersionOverride;
+            SdkVersionUtils.ExtensionLabel = _extensionLabel;
+        }
+
+        [Theory]
+        [InlineData("Microsoft.OpenTelemetry", false)]
+        [InlineData("Microsoft.OpenTelemetry", true)]
+        [InlineData("Azure.Monitor.OpenTelemetry.AspNetCore", false)]
+        [InlineData("Azure.Monitor.OpenTelemetry.AspNetCore", true)]
+        [InlineData("Microsoft.ApplicationInsights", false)]
+        [InlineData("Microsoft.ApplicationInsights.AspNetCore", false)]
+        [InlineData("Microsoft.ApplicationInsights.WorkerService", false)]
+        [InlineData("Microsoft.ApplicationInsights.Web", false)]
+        [InlineData("Microsoft.ApplicationInsights.NLogTarget", false)]
+        public void AllSignalsUseDistroVersionAtRecordingTime(string distroName, bool hydrateBeforeCreation)
+        {
+            const string distroVersion = "1.2.3-beta.12345678901234567890";
+            var exporterVersion = SdkVersionUtils.GetVersion(typeof(AzureMonitorTraceExporter), truncate: false);
+            if (hydrateBeforeCreation)
+            {
+                HydrateDistro(distroName, distroVersion);
+            }
+
+            using var manager = CreateManager("00000000-0000-0000-0000-000000000018");
+            var versions = new List<string?>();
+            using var listener = new MeterListener
+            {
+                InstrumentPublished = (instrument, l) =>
+                {
+                    if (manager.Owns(instrument))
+                    {
+                        l.EnableMeasurementEvents(instrument);
+                    }
+                },
+            };
+            listener.SetMeasurementEventCallback<long>((_, _, tags, _) => versions.Add(GetTag(tags.ToArray(), "version")));
+            listener.SetMeasurementEventCallback<double>((_, _, tags, _) => versions.Add(GetTag(tags.ToArray(), "version")));
+            listener.Start();
+
+            RecordAllSignals();
+            AssertVersions(hydrateBeforeCreation ? distroVersion : exporterVersion);
+
+            HydrateDistro(distroName, distroVersion);
+            RecordAllSignals();
+            AssertVersions(distroVersion);
+
+            SdkVersionUtils.VersionType = SdkVersionType.Exporter;
+            RecordAllSignals();
+            AssertVersions(exporterVersion);
+
+            void RecordAllSignals()
+            {
+                const string host = "westus-0.in.applicationinsights.azure.com";
+                manager.TrackSuccess(host);
+                manager.TrackPartialSuccessAccepted(host, 2);
+                manager.TrackDuration(host, 12.5);
+                manager.TrackFailure(host, 400);
+                manager.TrackRetry(host, 503);
+                manager.TrackThrottle(host, 439);
+                manager.TrackException(host, "System.TimeoutException");
+            }
+
+            void AssertVersions(string? expected)
+            {
+                Assert.Equal(7, versions.Count);
+                Assert.All(versions, version => Assert.Equal(expected, version));
+                versions.Clear();
+            }
+        }
+
+        [Theory]
+        [InlineData(null, null)]
+        [InlineData(null, "9.9.9")]
+        [InlineData("Customer.Distro", "9.9.9")]
+        [InlineData("Microsoft.OpenTelemetry", null)]
+        [InlineData("Azure.Monitor.OpenTelemetry.AspNetCore", null)]
+        [InlineData("Microsoft.OpenTelemetry", "")]
+        [InlineData("Azure.Monitor.OpenTelemetry.AspNetCore", " ")]
+        public void BuildBaseTags_FallsBackToFullExporterVersion(string? distroName, string? distroVersion)
+        {
+            HydrateDistro(distroName, distroVersion);
+            // The legacy SDK-version fallback may have been truncated.
+            SdkVersionUtils.s_extensionVersion = "truncated-exporter";
+            using var manager = CreateManager("00000000-0000-0000-0000-000000000019");
+            var packageVersion = typeof(AzureMonitorTraceExporter).Assembly
+                .GetCustomAttribute<AssemblyInformationalVersionAttribute>()!.InformationalVersion.Split('+', '@', ' ')[0];
+
+            Assert.Contains(manager.BuildBaseTags("westus-0"),
+                tag => tag.Key == "version" && (string?)tag.Value == packageVersion);
+        }
+
         [Theory]
         [InlineData("westus-0.in.applicationinsights.azure.com", "westus-0")]
         [InlineData("westus2-1.in.applicationinsights.azure.com", "westus2-1")]
@@ -329,6 +441,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.NetworkSdkStats
             manager.TrackException(requestHost: null, exceptionType: "System.TimeoutException");
 
             Assert.Equal("westus-0", observedHost);
+        }
+
+        private static void HydrateDistro(string? distroName, string? distroVersion)
+        {
+            var attributes = new Dictionary<string, object> { ["ai.sdk.prefix"] = "test" };
+            if (distroName != null)
+            {
+                attributes["telemetry.distro.name"] = distroName;
+            }
+            if (distroVersion != null)
+            {
+                attributes["telemetry.distro.version"] = distroVersion;
+            }
+            _ = ResourceBuilder.CreateEmpty().AddAttributes(attributes).Build()
+                .CreateAzureMonitorResource(instrumentationKey: null, platform: new MockPlatform());
         }
 
         private static NetworkSdkStatsManager CreateManager(string instrumentationKey)

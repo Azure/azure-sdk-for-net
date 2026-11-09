@@ -15,7 +15,7 @@
 ### Bugs Fixed
 
 - Network request duration includes attempts that fail before receiving a response, including offline-storage replays.
-- Network SDK statistics report full exporter and runtime versions and omit cloud-role context.
+- Network SDK statistics report the full recognized distro version when available, otherwise the full exporter version, including after late resource initialization. Runtime versions are untruncated and cloud-role context is omitted.
 - Multi-endpoint Attach SDK statistics refresh version and attachment mode after late resource initialization.
 - Attach SDK statistics use monotonic time for reporting intervals and association expiry, avoiding delays caused by system clock adjustments.
 - Microsoft OpenTelemetry SDK statistics use the standard collector endpoint for all customer regions while retaining each item's EU/non-EU SDK statistics instrumentation key and customer key. Non-distro Breeze routing is unchanged.

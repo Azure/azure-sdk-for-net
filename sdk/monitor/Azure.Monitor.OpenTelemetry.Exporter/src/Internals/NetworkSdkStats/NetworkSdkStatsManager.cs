@@ -20,7 +20,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats
     /// One <see cref="NetworkSdkStatsManager"/> is created per <see cref="Statsbeat.AzureMonitorStatsbeat"/>
     /// instance. The dimensions <c>rp</c>, <c>cikey</c>, <c>runtimeVersion</c>,
     /// <c>os</c>, <c>language</c>, and <c>endpoint</c> are captured at
-    /// initialization time. The version identifies the exporter package, and attach mode is read at recording time.
+    /// initialization time. Version and attach mode are read at recording time to reflect late resource initialization.
+    /// The version identifies the recognized distro when available, otherwise the exporter package.
     /// The <c>host</c> dimension is added per recorded measurement, and
     /// <c>statusCode</c> / <c>exceptionType</c> are added for the relevant instruments.
     /// </remarks>
@@ -248,6 +249,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats
             // until the first measurement is recorded (matches AzureMonitorStatsbeat).
             _resourceProvider ??= ResourceProviderHelper.DetermineResourceProvider(_platform);
 
+            // Use the resource-provided distro version without the legacy label or truncated exporter fallback.
+            var distroVersion = SdkVersionUtils.s_extensionVersionOverride;
             return new TagList
             {
                 { "rp", _resourceProvider },
@@ -256,7 +259,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats
                 { "runtimeVersion", _runtimeVersion },
                 { "os", _operatingSystem },
                 { "language", Language },
-                { "version", s_exporterVersion },
+                { "version", string.IsNullOrWhiteSpace(distroVersion) ? s_exporterVersion : distroVersion },
                 { "endpoint", StatsbeatConstants.NetworkSdkStatsEndpointBreeze },
                 { "host", host },
             };

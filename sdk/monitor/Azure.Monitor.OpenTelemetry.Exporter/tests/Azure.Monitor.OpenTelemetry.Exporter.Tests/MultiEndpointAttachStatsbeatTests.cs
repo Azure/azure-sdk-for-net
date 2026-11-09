@@ -85,9 +85,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Theory]
-        [InlineData(false)]
-        [InlineData(true)]
-        public void AttachMetadataReflectsResourceHydrationAfterTheFirstCollection(bool useOverride)
+        [InlineData(false, "Microsoft.OpenTelemetry", "mot")]
+        [InlineData(true, "Microsoft.OpenTelemetry", "mot")]
+        [InlineData(false, "Azure.Monitor.OpenTelemetry.AspNetCore", "dst")]
+        [InlineData(true, "Azure.Monitor.OpenTelemetry.AspNetCore", "dst")]
+        public void AttachMetadataReflectsResourceHydrationAfterTheFirstCollection(bool useOverride, string distroName, string distroLabel)
         {
             var sdkPrefix = SdkVersionUtils.SdkVersionPrefix;
             var sdkVersion = SdkVersionUtils.s_sdkVersion;
@@ -113,7 +115,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 var resource = ResourceBuilder.CreateEmpty().AddAttributes(new Dictionary<string, object>
                 {
                     ["ai.sdk.prefix"] = "test",
-                    ["telemetry.distro.name"] = "Microsoft.OpenTelemetry",
+                    ["telemetry.distro.name"] = distroName,
                     ["telemetry.distro.version"] = "1.2.3",
                 }).Build();
                 _ = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: scope.Platform);
@@ -123,14 +125,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
                 Assert.Equal(2, scope.AttachMeasurements().Length);
                 var late = Assert.Single(scope.AttachMeasurements().Where(data => data.Properties["cikey"] == "late"));
-                Assert.Equal("mot1.2.3", late.Properties["version"]);
+                Assert.Equal(distroLabel + "1.2.3", late.Properties["version"]);
                 Assert.Equal("IntegratedAuto", late.Properties["attach"]);
                 Assert.Equal(scope.ResourceProviderId, late.Properties["rpId"]);
                 var network = scope.Measurements().Where(data => data.Metrics.Any(metric => metric.Name == "Request_Success_Count")).ToArray();
                 Assert.Equal(2, network.Length);
-                Assert.All(network, data => Assert.Equal(SdkVersionUtils.GetVersion(typeof(AzureMonitorTraceExporter), truncate: false), data.Properties["version"]));
-                Assert.Contains(network, data => data.Properties["attach"] == "Manual");
-                Assert.Contains(network, data => data.Properties["attach"] == "IntegratedAuto");
+                Assert.Equal(SdkVersionUtils.GetVersion(typeof(AzureMonitorTraceExporter), truncate: false),
+                    Assert.Single(network.Where(data => data.Properties["attach"] == "Manual")).Properties["version"]);
+                Assert.Equal("1.2.3",
+                    Assert.Single(network.Where(data => data.Properties["attach"] == "IntegratedAuto")).Properties["version"]);
             }
             finally
             {
